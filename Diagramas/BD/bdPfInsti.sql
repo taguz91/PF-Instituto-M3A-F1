@@ -76,13 +76,15 @@ CREATE TABLE "Materias"(
 	"materia_horas_auto_estudio" INTEGER NOT NULL,
 	"materia_total_horas" integer NOT NULL,
 	"materia_activa" BOOLEAN NOT NULL DEFAULT 'true',
+	"materia_objetivo" character varying(200) NOT NULL DEFAULT 'Sin objetivo', 
+	"materia_descripcion" character varying(200) NOT NULL DEFAULT 'Sin descripcion', 
 	CONSTRAINT materia_pk PRIMARY KEY ("id_materia")
 ) WITH (OIDS = FALSE);
 
 --Alumnos
 CREATE TABLE "Alumnos"(
 	"id_alumno" serial NOT NULL,
-	"id_persona" INTEGER NOT NULL,
+	"id_persona" INTEGER NOT NULL UNIQUE, 
 	"id_carrera" INTEGER NOT NULL,
 	"alumno_codigo" character varying(10) NOT NULL,
 	"alumno_tipo_colegio" character varying(30) NOT NULL,
@@ -112,6 +114,7 @@ CREATE TABLE "Carreras"(
   "carrera_fecha_fin" DATE NOT NULL,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true',
+  "carrera_coordinador" character varying(100) NOT NULL DEFAULT 'Sin coordinador', 
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
@@ -119,7 +122,7 @@ CREATE TABLE "Carreras"(
 --Docente
 CREATE TABLE "Docentes"(
   "id_docente" serial NOT NULL,
-  "id_persona" integer,
+  "id_persona" integer NOT NULL UNIQUE,
   "docente_codigo" character varying(10),
   "docente_otro_trabajo" boolean DEFAULT 'false',
   "docente_categoria" integer,
@@ -151,6 +154,7 @@ CREATE TABLE "Cursos"(
   "curso_jornada" character varying(20) NOT NULL,
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
+  "curso_permiso_ingreso_nt" boolean NOT NULL DEFAULT 'false', 
   CONSTRAINT curso_pk PRIMARY KEY ("id_curso")
 ) WITH (OIDS = FALSE);
 
@@ -159,11 +163,15 @@ CREATE TABLE "AlumnoCurso"(
   "id_almn_curso" serial NOT NULL,
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
-  "almn_curso_nota1" numeric(3, 2),
-  "almn_curso_nota2" numeric(3, 2),
-  "almn_curso_nota3" numeric(3, 2),
-  "almn_curso_observaciones" character varying(200),
-  "almn_curso_estado" character varying(1),
+  "almn_curso_nt_1_parcial" numeric(3, 2) DEFAULT '0',
+  "almn_curso_nt_examen_interciclo" numeric(3, 2) DEFAULT '0',
+  "almn_curso_nt_2_parcial" numeric(3, 2) DEFAULT '0',
+  "almn_curso_nt_examen_final" numeric(3, 2) DEFAULT '0' ,
+  "almn_curso_nt_examen_supletorio" numeric(3, 2) DEFAULT '0',
+  "almn_curso_asistencia" character varying(30) DEFAULT 'Asiste', 
+  "almn_curso_nota_final" numeric(3 ,2) DEFAULT '0', 
+  "almn_curso_estado" character varying(30) DEFAULT 'Reprobado', 
+  "almn_curso_num_faltas" integer DEFAULT '0', 
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 
@@ -175,6 +183,20 @@ CREATE TABLE "PreCoRequisitos" (
 	"id_materia_requisito" integer NOT NULL, 
 	CONSTRAINT pre_co_requisito_pk PRIMARY KEY ("id_pre_co_requisito")
 ) WITH (OIDS = FALSE); 
+
+
+--Malla Estudiante en su carrera  
+CREATE TABLE "MallaEstudiante"(
+	"id_malla_estudiante" serial NOT NULL, 
+	"id_materia" integer NOT NULL, 
+	"id_alumno" integer NOT NULL, 
+	"malla_est_nota1" numeric(3, 2) NOT NULL DEFAULT '0',
+	"malla_est_nota2" numeric(3, 2) NOT NULL DEFAULT '0',
+	"malla_est_nota3" numeric(3, 2) NOT NULL DEFAULT '0',
+	"malla_est_estado" character varying(1) NOT NULL DEFAULT 'P', 
+	CONSTRAINT malla_estudiante_pk PRIMARY KEY ("id_mallla_estudiante")
+) WITH (OIDS = FALSE); 
+
 
 
 ALTER TABLE "PeriodoLectivo" ADD CONSTRAINT "periodo_lectivo_fk1"
@@ -239,3 +261,12 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "PreCoRequisitos" ADD CONSTRAINT "pre_co_requisito_fk2"
 FOREIGN KEY ("id_materia_requisito") REFERENCES "Materias"("id_materia")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+ALTER TABLE "MallaEstudiante" ADD CONSTRAINT "malla_estudiante_fk1"
+FOREIGN KEY ("id_materia") REFERENCES "Materias"("id_materia")
+ON UPDATE CASCADE ON DELETE CASCADE; 
+
+ALTER TABLE "MallaEstudiante" ADD CONSTRAINT "malla_estudiante_fk2"
+FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE; 
