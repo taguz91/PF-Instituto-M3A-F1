@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.principal.VtnPrincipalCTR;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -12,7 +13,8 @@ public class run {
         estiloWindows();
         
         VtnPrincipal vtn = new VtnPrincipal(); 
-        vtn.setVisible(true); 
+        VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn); 
+        ctrVtnPrin.iniciar();
     }
     
     public static void estiloWindows(){

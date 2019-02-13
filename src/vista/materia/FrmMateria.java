@@ -9,12 +9,12 @@ package Vista;
  *
  * @author USUARIO
  */
-public class Materia extends javax.swing.JInternalFrame {
+public class FrmMateria extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Materia
      */
-    public Materia() {
+    public FrmMateria() {
         initComponents();
     }
 
@@ -51,7 +51,6 @@ public class Materia extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("Formulario Materias");
 
         lblNombreMateria.setText("Nombre:");

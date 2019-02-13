@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author ana96
  */
-public class Docente extends javax.swing.JInternalFrame {
+public class FrmDocente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Docente
      */
-    public Docente() {
+    public FrmDocente() {
         initComponents();
     }
 
@@ -270,8 +270,6 @@ public class Docente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Ingreso Docente");
         setName("infrmIngresoDocente"); // NOI18N
         try {
