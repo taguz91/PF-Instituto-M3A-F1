@@ -48,7 +48,6 @@ CREATE TABLE "Personas"(
   "persona_calle_secundaria" character varying(150) NOT NULL,
   "persona_referencia" character varying(200) NOT NULL,
   "persona_sector" character varying(200) NOT NULL,
-  "persona_nacionalidad" character varying(30) NOT  NULL,
   "persona_idioma" character varying(50) NOT NULL,
   "persona_provincia_reside" integer NOT NULL,
   "persona_tipo_residencia" character varying(30) NOT NULL,
@@ -71,10 +70,10 @@ CREATE TABLE "Materias"(
 	"materia_categoria" character varying(50) NOT NULL,
 	"materia_eje" character varying(100) NOT NULL,      --Preguntar para que es
 	"materia_tipo_acreditacion" character varying(1) NOT NULL,
-	"materia_horas_teoricas" INTEGER NOT NULL,
-	"materia_horas_practicas" INTEGER NOT NULL,
-	"materia_horas_auto_estudio" INTEGER NOT NULL,
-	"materia_total_horas" integer NOT NULL,
+	"materia_horas_teoricas" INTEGER NOT NULL DEFAULT '0',
+	"materia_horas_practicas" INTEGER NOT NULL DEFAULT '0',
+	"materia_horas_auto_estudio" INTEGER NOT NULL DEFAULT '0',
+	"materia_total_horas" integer NOT NULL DEFAULT '0',
 	"materia_activa" BOOLEAN NOT NULL DEFAULT 'true',
 	"materia_objetivo" character varying(200) NOT NULL DEFAULT 'Sin objetivo', 
 	"materia_descripcion" character varying(200) NOT NULL DEFAULT 'Sin descripcion', 
@@ -108,13 +107,14 @@ CREATE TABLE "Alumnos"(
 --carrera
 CREATE TABLE "Carreras"(
   "id_carrera" serial NOT NULL,
+  "id_docente_coordinador" integer NOT NULL, 
+  "carrera_nombre" character varying(100) NOT NULL,
   "carrera_codigo" character varying(15) NOT NULL,
   "carrera_descripcion" character varying(100) NOT NULL,
   "carrera_fecha_inicio" DATE NOT NULL,
   "carrera_fecha_fin" DATE NOT NULL,
   "carrera_modalidad" character varying(20) NOT NULL,
-  "carrera_activo" boolean DEFAULT 'true',
-  "carrera_coordinador" character varying(100) NOT NULL DEFAULT 'Sin coordinador', 
+  "carrera_activo" boolean DEFAULT 'true', 
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
@@ -198,6 +198,10 @@ CREATE TABLE "MallaEstudiante"(
 ) WITH (OIDS = FALSE); 
 
 
+
+ALTER TABLE "Carreras" ADD CONSTRAINT "carrera_fk1"
+FOREIGN KEY ("id_docente_coordinador") REFERENCES "Docentes"("id_docente")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "PeriodoLectivo" ADD CONSTRAINT "periodo_lectivo_fk1"
 FOREIGN KEY ("id_carrera") REFERENCES "Carreras"("id_carrera")

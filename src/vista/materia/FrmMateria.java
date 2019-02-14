@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Vista;
+package vista.materia;
 
 /**
  *
@@ -39,8 +34,6 @@ public class FrmMateria extends javax.swing.JInternalFrame {
         lblTeoricas = new javax.swing.JLabel();
         lblPracticas = new javax.swing.JLabel();
         lblAutoEvaluacion = new javax.swing.JLabel();
-        lblResponsable = new javax.swing.JLabel();
-        txtResponsable = new javax.swing.JTextField();
         btbBuscar = new javax.swing.JButton();
         chBActivo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
@@ -48,6 +41,7 @@ public class FrmMateria extends javax.swing.JInternalFrame {
         spAutoEvaluacion = new javax.swing.JSpinner();
         spPracticas = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setClosable(true);
         setIconifiable(true);
@@ -86,11 +80,9 @@ public class FrmMateria extends javax.swing.JInternalFrame {
 
         lblAutoEvaluacion.setText("Auto-evaluación:");
 
-        lblResponsable.setText("Responsable:");
+        btbBuscar.setText("Cancelar");
 
-        btbBuscar.setText("BUSCAR");
-
-        btnGuardar.setText("GUARDAR");
+        btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -129,35 +121,31 @@ public class FrmMateria extends javax.swing.JInternalFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel4)))
                                 .addGap(0, 138, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTeoricas)
-                            .addComponent(lblPracticas)
-                            .addComponent(lblAutoEvaluacion)
-                            .addComponent(lblResponsable))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTeoricas)
+                                    .addComponent(lblPracticas)
+                                    .addComponent(lblAutoEvaluacion))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spTeoricas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(spAutoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtResponsable)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGuardar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblActivo)
+                                    .addComponent(spPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblActivo))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(154, 154, 154)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,14 +183,13 @@ public class FrmMateria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAutoEvaluacion)
                     .addComponent(spAutoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblResponsable)
-                    .addComponent(txtResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btbBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btbBuscar))
+                .addGap(5, 5, 5))
         );
 
         pack();
@@ -230,18 +217,17 @@ public class FrmMateria extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblActivo;
     private javax.swing.JLabel lblAutoEvaluacion;
     private javax.swing.JLabel lblCategoriaMateria;
     private javax.swing.JLabel lblCiclo;
     private javax.swing.JLabel lblNombreMateria;
     private javax.swing.JLabel lblPracticas;
-    private javax.swing.JLabel lblResponsable;
     private javax.swing.JLabel lblTeoricas;
     private javax.swing.JSpinner spAutoEvaluacion;
     private javax.swing.JSpinner spPracticas;
     private javax.swing.JSpinner spTeoricas;
     private javax.swing.JTextField txtNombreMateria;
-    private javax.swing.JTextField txtResponsable;
     // End of variables declaration//GEN-END:variables
 }

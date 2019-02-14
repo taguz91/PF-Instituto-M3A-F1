@@ -38,8 +38,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return btnDocente;
     }
 
-    public JButton getBtnEstudiante() {
-        return btnEstudiante;
+    public JButton getBtnAlumno() {
+        return btnAlumno;
     }
 
     public JButton getBtnMateria() {
@@ -154,7 +154,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btngEstilo = new javax.swing.ButtonGroup();
         pnlMenu = new javax.swing.JPanel();
         btnDocente = new javax.swing.JButton();
-        btnEstudiante = new javax.swing.JButton();
+        btnAlumno = new javax.swing.JButton();
         btnCarrera = new javax.swing.JButton();
         btnCurso = new javax.swing.JButton();
         btnPrdLectivo = new javax.swing.JButton();
@@ -191,8 +191,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_25px.png"))); // NOI18N
         btnDocente.setToolTipText("Nuevo docente");
 
-        btnEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_25px.png"))); // NOI18N
-        btnEstudiante.setToolTipText("Nuevo alumno");
+        btnAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_25px.png"))); // NOI18N
+        btnAlumno.setToolTipText("Nuevo alumno");
 
         btnCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Graduation_Cap_25px.png"))); // NOI18N
         btnCarrera.setToolTipText("Nueva carrera");
@@ -217,7 +217,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(btnDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,7 +232,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnEstudiante)
+            .addComponent(btnAlumno)
             .addComponent(btnDocente)
             .addComponent(btnCarrera)
             .addComponent(btnCurso)
@@ -275,7 +275,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnConsultar.add(mnCtPrdLectivo);
 
         mnCtAlmnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
-        mnCtAlmnCurso.setText("Alumno en un curso");
+        mnCtAlmnCurso.setText("Alumno por curso");
         mnConsultar.add(mnCtAlmnCurso);
 
         mnCtMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Course_20px.png"))); // NOI18N
@@ -355,11 +355,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnCarrera;
     private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnCursoAlumno;
     private javax.swing.JButton btnDocente;
-    private javax.swing.JButton btnEstudiante;
     private javax.swing.JButton btnMateria;
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
