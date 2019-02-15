@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import vista.FrmPersona;
+import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
 
 /**

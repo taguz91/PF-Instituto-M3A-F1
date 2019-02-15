@@ -1,6 +1,5 @@
-package vista;
+package vista.persona; 
 
-import com.toedter.calendar.JDateChooser;
 import com.toedter.components.JLocaleChooser;
 import datechooser.beans.DateChooserCombo;
 import javax.swing.JButton;

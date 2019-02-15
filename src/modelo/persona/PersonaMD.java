@@ -1,16 +1,16 @@
 package modelo.persona;
 
-import datechooser.beans.DateChooserCombo;
 import java.awt.Image;
 import java.io.FileInputStream;
+import java.time.LocalDate;
+import modelo.lugar.LugarBD;
 
 /**
  *
  * @author Lina
  */
 public class PersonaMD {
-    
-    //Para subir la foto
+
     private FileInputStream file;
     private int logBytes;
     
@@ -18,16 +18,16 @@ public class PersonaMD {
 // En el diagrama de clases falta el atributo fecha de nacimiento..pero aqui ya lo incluyo
     
     private int idPersona;
- //   private TipoPersona tipo;
- //   private lugar lugarNatal;
- //   private lugar lugarResidencia;
+    private TipoPersonaBD tipo;
+    private LugarBD lugarNatal;
+    private LugarBD lugarResidencia;
     private Image foto;
     private String identificacion;
     private String primerApellido;
     private String segundoApellido;
     private String primerNombre;
     private String segundoNombre;
-    private DateChooserCombo fechaNacimiento;
+    private LocalDate fechaNacimiento; //falta
     private String genero;
     private char sexo;
     private String estadoCivil;
@@ -37,7 +37,7 @@ public class PersonaMD {
     private String telefono;
     private String celular;
     private String correo;
-    private DateChooserCombo fechaRegistro;
+    private LocalDate fechaRegistro;
     private boolean discapacidad;
     private String tipoDiscapacidad;
     private byte porcentajeDiscapacidad;
@@ -47,10 +47,11 @@ public class PersonaMD {
     private String calleSecundaria;
     private String referencia;
     private String sector;
-    private String nacionalidad;
     private String idioma;
     private String tipoResidencia;
 
+    //32 atributos
+    
     public PersonaMD() {
     }
 
@@ -78,30 +79,30 @@ public class PersonaMD {
         this.idPersona = idPersona;
     }
 
-   /* public TipoPersona getTipo() {
+    public TipoPersonaBD getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoPersona tipo) {
+    public void setTipo(TipoPersonaBD tipo) {
         this.tipo = tipo;
     }
 
-    public lugar getLugarNatal() {
+    public LugarBD getLugarNatal() {
         return lugarNatal;
     }
 
-    public void setLugarNatal(lugar lugarNatal) {
+    public void setLugarNatal(LugarBD lugarNatal) {
         this.lugarNatal = lugarNatal;
     }
 
-    public lugar getLugarResidencia() {
+    public LugarBD getLugarResidencia() {
         return lugarResidencia;
     }
 
-    public void setLugarResidencia(lugar lugarResidencia) {
+    public void setLugarResidencia(LugarBD lugarResidencia) {
         this.lugarResidencia = lugarResidencia;
     }
-*/
+
     public Image getFoto() {
         return foto;
     }
@@ -150,11 +151,11 @@ public class PersonaMD {
         this.segundoNombre = segundoNombre;
     }
 
-    public DateChooserCombo getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(DateChooserCombo fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -230,11 +231,11 @@ public class PersonaMD {
         this.correo = correo;
     }
 
-    public DateChooserCombo getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(DateChooserCombo fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
@@ -310,14 +311,6 @@ public class PersonaMD {
         this.sector = sector;
     }
 
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-
     public String getIdioma() {
         return idioma;
     }
@@ -333,7 +326,6 @@ public class PersonaMD {
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
     }
-
     
-
+    
 }

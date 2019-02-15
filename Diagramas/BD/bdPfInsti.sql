@@ -1,7 +1,11 @@
+--Informacion  
+--Postgresql Version 10 
+--Nombre: BDInstitutoPF
+
 CREATE TABLE "PeriodoLectivo"(
  "id_prd_lectivo" serial NOT NULL,
  "id_carrera" integer NOT NULL,
- "prd_lectivo_nombre" character varying(50) NOT NULL,
+ "prd_lectivo_nombre" character varying(100) NOT NULL,
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) NOT NULL,
@@ -21,8 +25,8 @@ CREATE TABLE "TipoPersona"(
 CREATE TABLE "Personas"(
   "id_persona" serial NOT NULL,
   "id_tipo_persona" integer NOT NULL,
-  "id_lugar_natal" integer NOT NULL,
-  "id_lugar_residencia" integer NOT NULL,
+  "id_lugar_natal" integer NOT NULL DEFAULT '1',
+  "id_lugar_residencia" integer NOT NULL DEFAULT '1',
   "persona_foto" bytea,
   "persona_identificacion" character varying(20) NOT NULL,
   "persona_primer_apellido" character varying(25) NOT NULL,
@@ -31,7 +35,7 @@ CREATE TABLE "Personas"(
   "persona_segundo_nombre" character varying(25) NOT NULL,
   "persona_genero" character varying(10) NOT NULL,
   "persona_sexo" character varying(1) NOT NULL,
-  "persona_estado_civil" character varying(25) NOT NULL,
+  "persona_estado_civil" character varying(30) NOT NULL,
   "persona_etnia" character varying(50) NOT NULL,
   "persona_idioma_raiz" character varying(30) NOT NULL,
   "persona_tipo_sangre" character varying(5) NOT NULL,
@@ -40,16 +44,18 @@ CREATE TABLE "Personas"(
   "persona_correo" character varying(30) NOT NULL,
   "persona_fecha_registro" date NOT NULL,
   "persona_discapacidad" boolean NOT NULL DEFAULT 'false',
-  "persona_tipo_discapacidad" character varying(20) NOT NULL,
-  "persona_porcenta_discapacidad" integer NOT NULL DEFAULT '0',
-  "persona_carnet_conadis" character varying(10),
-  "persona_calle_principal" character varying(120) NOT NULL,
+  "persona_tipo_discapacidad" character varying(20),
+  "persona_porcenta_discapacidad" integer DEFAULT '0',
+  "persona_carnet_conadis" character varying(20),
+  "persona_calle_principal" character varying(200) NOT NULL,
   "persona_numero_casa" character varying(10) NOT NULL,
-  "persona_calle_secundaria" character varying(150) NOT NULL,
+  "persona_calle_secundaria" character varying(200) NOT NULL,
   "persona_referencia" character varying(200) NOT NULL,
   "persona_sector" character varying(200) NOT NULL,
   "persona_idioma" character varying(50) NOT NULL,
   "persona_tipo_residencia" character varying(30) NOT NULL,
+  "persona_fecha_nacimiento" date NOT NULL, 
+  "persona_activa" BOOLEAN NOT NULL DEFAULT 'true', 
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
 
@@ -89,10 +95,10 @@ CREATE TABLE "Alumnos"(
 	"alumno_tipo_bachillerato" character varying(100) NOT NULL,
 	"alumno_anio_graduacion" character varying(4) NOT NULL,
 	"alumno_educacion_superior" BOOLEAN NOT NULL DEFAULT 'false',
-	"alumno_titulo_superior" character varying(200) NOT NULL,
+	"alumno_titulo_superior" character varying(200),
 	"alumno_nivel_academico" character varying(50) NOT NULL,
-	"alumno_pension" character varying(2) NOT NULL DEFAULT 'No',
-	"alumno_ocupacion" character varying(100) NOT NULL,
+	"alumno_pension" BOOLEAN NOT NULL DEFAULT 'false', 
+	"alumno_ocupacion" character varying(200) NOT NULL,
 	"alumno_trabaja" BOOLEAN NOT NULL DEFAULT 'false',
 	"alumno_sector_economico" character varying(100) NOT NULL,
 	"alumno_nivel_formacion_padre" character varying(100) NOT NULL,
@@ -100,6 +106,7 @@ CREATE TABLE "Alumnos"(
 	"alumno_nombre_contacto_emergencia" character varying(100) NOT NULL,
 	"alumno_parentesco_contacto" character varying(20) NOT NULL,
 	"alumno_numero_contacto" character varying(10) NOT NULL,
+	"alumno_estado" character varying(20) NOT NULL DEFAULT 'ACTIVO', 
 	CONSTRAINT alumno_pk PRIMARY KEY ("id_alumno")
 ) WITH (OIDS = FALSE);
 
@@ -125,10 +132,9 @@ CREATE TABLE "Docentes"(
   "docente_otro_trabajo" boolean DEFAULT 'false',
   "docente_categoria" integer,
   "docente_fecha_contrato" date,
-  "docente_capacitador" boolean,
   "docente_fecha_fin" date,
-  "docente_tipo_tiempo" character varying(1),
-  "docente_activo" boolean DEFAULT 'true',
+  "docente_tipo_tiempo" character varying(20),
+  "docente_estado" character varying(20) DEFAULT 'ACTIVO',
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
@@ -196,10 +202,88 @@ CREATE TABLE "MallaEstudiante"(
 ) WITH (OIDS = FALSE); 
 
 
+--Historial de usuarios  
+CREATE TABLE "HistorialUsuarios"(
+	"id_historial_user" serial NOT NULL, 
+	"id_usuario" integer NOT NULL, 
+	"historial_fecha" TIMESTAMP NOT NULL, 
+	"historial_tipo_accion" character varying(30) NOT NULL, 
+	"historial_nombre_tabla" character varying(30) NOT NULL, 
+	"historial_pk_tabla" integer NOT NULL, 
+	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user") 
+) WITH (OIDS = FALSE);
+
+/*
+	TABLAS GRUPO 16
+*/
+
+
+CREATE TABLE "Usuarios"(
+	"id_usuario" serial NOT NULL,
+	"usu_username" VARCHAR(200) NOT NULL,
+	"usu_password" bytea NOT NULL,
+	"id_persona" INTEGER NOT NULL,
+	"id_rol" INTEGER NOT NULL,
+	
+	CONSTRAINT usuario_pk PRIMARY KEY("id_usuario")
+
+)WITH (OIDS = FALSE); 
+
+
+CREATE TABLE "RolesUsuarios"(
+	"id_rol" serial NOT NULL,
+	"rol_nombre" VARCHAR(150) NOT NULL,
+	
+	CONSTRAINT rol_usuario_pk PRIMARY KEY("id_rol")
+	
+) WITH(OIDS = FALSE);
+
+CREATE TABLE "PeriodoIngresoNotas"(
+	"id_perd_ingr_notas" serial NOT NULL,
+	"perd_notas_fecha_inicio" DATE NOT NULL,
+	"perd_notas_fecha_cierre" DATE NOT NULL,
+	
+	"id_prd_lectivo" INTEGER NOT NULL,
+	"id_tipo_nota" INTEGER NOT NULL,
+	
+	CONSTRAINT perio_ingreso_notas_pk PRIMARY KEY("id_perd_ingr_notas")
+)WITH(OIDS = FALSE);
+
+
+CREATE TABLE "TipoDeNota"(
+	"id_tipo_nota" serial NOT NULL,
+	"tipo_nota_nombre" VARCHAR(50) NOT NULL,
+	"tipo_nota_valor_minimo" NUMERIC(3,2) NOT NULL,
+	"tipo_nota_valor_maximo" NUMERIC(3,2) NOT NULL,
+	
+	CONSTRAINT tipo_de_nota_pk PRIMARY KEY("id_tipo_nota")
+)WITH(OIDS = FALSE);
+
+
+CREATE TABLE "Accesos"(
+	"id_acceso" INTEGER NOT NULL,
+	"acc_nombre" VARCHAR(30) NOT NULL,
+	"acc_descripcion" VARCHAR(150),
+	
+	CONSTRAINT Acceso_pk PRIMARY KEY("id_acceso")
+)WITH (OIDS = FALSE);
+
+CREATE TABLE "AccesosDelRol"(
+	"id_acceso_del_rol" serial NOT NULL,
+	"id_rol" INTEGER NOT NULL,
+	"id_acceso" INTEGER NOT NULL,
+	
+	CONSTRAINT acceso_del_rol_pk PRIMARY KEY("id_acceso_del_rol")
+)WITH(OIDS = FALSE);
+
+/*
+FK G 23
+*/
 
 ALTER TABLE "Carreras" ADD CONSTRAINT "carrera_fk1"
 FOREIGN KEY ("id_docente_coordinador") REFERENCES "Docentes"("id_docente")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 ALTER TABLE "PeriodoLectivo" ADD CONSTRAINT "periodo_lectivo_fk1"
 FOREIGN KEY ("id_carrera") REFERENCES "Carreras"("id_carrera")
@@ -212,6 +296,10 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "Cursos" ADD CONSTRAINT "curso_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Cursos" ADD CONSTRAINT "curso_fk3"
+FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -273,6 +361,43 @@ ALTER TABLE "MallaEstudiante" ADD CONSTRAINT "malla_estudiante_fk2"
 FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
 ON UPDATE CASCADE ON DELETE CASCADE; 
 
+
 ALTER TABLE "Materias" ADD CONSTRAINT "materia_fk1"
 FOREIGN KEY ("id_carrera") REFERENCES "Carreras"("id_carrera")
 ON UPDATE CASCADE ON DELETE CASCADE; 
+
+
+ALTER TABLE "HistorialUsuarios" ADD CONSTRAINT "historial_user_fk1"
+FOREIGN KEY("id_usuario") REFERENCES "Usuarios"("id_usuario")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+/*
+	FK GRUPO 16
+*/
+
+ALTER TABLE "Usuarios" ADD CONSTRAINT "persona_fk"
+	FOREIGN KEY("id_persona") REFERENCES "Personas"("id_persona")
+		ON UPDATE CASCADE ON DELETE CASCADE;
+		
+ALTER TABLE "Usuarios" ADD CONSTRAINT "roles_usuarios_fk"
+	FOREIGN KEY("id_rol") REFERENCES "RolesUsuarios"("id_rol")
+		ON UPDATE CASCADE ON DELETE CASCADE;
+		
+ALTER TABLE "PeriodoIngresoNotas" ADD CONSTRAINT "periodo_lectivo_fk"
+	FOREIGN KEY("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+		ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+ALTER TABLE "PeriodoIngresoNotas" ADD CONSTRAINT "Tipo_de_nota_fk"
+	FOREIGN KEY("id_tipo_nota") REFERENCES "TipoDeNota"("id_tipo_nota")
+		ON UPDATE CASCADE ON DELETE CASCADE;
+	
+	
+ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "accesos_fk"
+	FOREIGN KEY("id_acceso") REFERENCES "Accesos" ("id_acceso")
+		 ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "rolesUsuarios_pk"
+	FOREIGN KEY("id_rol") REFERENCES "RolesUsuaios"("id_rol")
+		ON UPDATE CASCADE ON DELETE CASCADE;
