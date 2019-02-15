@@ -49,7 +49,6 @@ CREATE TABLE "Personas"(
   "persona_referencia" character varying(200) NOT NULL,
   "persona_sector" character varying(200) NOT NULL,
   "persona_idioma" character varying(50) NOT NULL,
-  "persona_provincia_reside" integer NOT NULL,
   "persona_tipo_residencia" character varying(30) NOT NULL,
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
@@ -63,12 +62,12 @@ CREATE TABLE "Materias"(
 	"id_materia" serial NOT NULL,
 	"id_carrera" INTEGER NOT NULL,
 	"materia_codigo" character varying(10) NOT NULL,
-	"materia_nombre" character varying(50) NOT NULL,
+	"materia_nombre" character varying(100) NOT NULL,
 	"materia_ciclo" INTEGER NOT NULL,
 	"materia_creditos" INTEGER NOT NULL,
-	"materia_tipo" character varying(1) NOT NULL,
-	"materia_categoria" character varying(50) NOT NULL,
-	"materia_eje" character varying(100) NOT NULL,      --Preguntar para que es
+	"materia_tipo" character varying(1),
+	"materia_categoria" character varying(50),
+	"materia_eje" character varying(100), 
 	"materia_tipo_acreditacion" character varying(1) NOT NULL,
 	"materia_horas_teoricas" INTEGER NOT NULL DEFAULT '0',
 	"materia_horas_practicas" INTEGER NOT NULL DEFAULT '0',
@@ -107,12 +106,11 @@ CREATE TABLE "Alumnos"(
 --carrera
 CREATE TABLE "Carreras"(
   "id_carrera" serial NOT NULL,
-  "id_docente_coordinador" integer NOT NULL, 
+  "id_docente_coordinador" integer, 
   "carrera_nombre" character varying(100) NOT NULL,
   "carrera_codigo" character varying(15) NOT NULL,
-  "carrera_descripcion" character varying(100) NOT NULL,
   "carrera_fecha_inicio" DATE NOT NULL,
-  "carrera_fecha_fin" DATE NOT NULL,
+  "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true', 
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
@@ -194,7 +192,7 @@ CREATE TABLE "MallaEstudiante"(
 	"malla_est_nota2" numeric(3, 2) NOT NULL DEFAULT '0',
 	"malla_est_nota3" numeric(3, 2) NOT NULL DEFAULT '0',
 	"malla_est_estado" character varying(1) NOT NULL DEFAULT 'P', 
-	CONSTRAINT malla_estudiante_pk PRIMARY KEY ("id_mallla_estudiante")
+	CONSTRAINT malla_estudiante_pk PRIMARY KEY ("id_malla_estudiante")
 ) WITH (OIDS = FALSE); 
 
 
@@ -273,4 +271,8 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "MallaEstudiante" ADD CONSTRAINT "malla_estudiante_fk2"
 FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE; 
+
+ALTER TABLE "Materias" ADD CONSTRAINT "materia_fk1"
+FOREIGN KEY ("id_carrera") REFERENCES "Carreras"("id_carrera")
 ON UPDATE CASCADE ON DELETE CASCADE; 
