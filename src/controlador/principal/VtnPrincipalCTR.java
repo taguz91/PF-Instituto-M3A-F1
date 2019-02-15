@@ -13,6 +13,7 @@ import controlador.persona.VtnAlumnoCTR;
 import controlador.persona.VtnDocenteCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import modelo.materia.MateriaBD;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.curso.FrmCurso;
@@ -55,6 +56,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocente().addActionListener(e -> abrirVtnDocente());
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
+        
+        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria()); 
 
         //Para abrir los formularios 
         vtnPrin.getBtnAlumno().addActionListener(e -> abrirFrmAlumno()); 
@@ -103,8 +106,9 @@ public class VtnPrincipalCTR {
     }
 
     public void abrirVtnMateria() {
+        MateriaBD materia = new MateriaBD();
         VtnMateria vtnMateria = new VtnMateria();
-        VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria);
+        VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria, materia);
         ctrVtnMateria.iniciar();
     }
 

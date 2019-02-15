@@ -6,21 +6,20 @@ import java.time.LocalDate;
  */
 
 public class DocenteMD {
-    private String codigo,docenteTipoTiempo;
+    private String codigo,docenteTipoTiempo, estado;
     private int docenteCategoria,idDocente;
-    private boolean docenteCapacitador, docenteActivo,docenteOtroTrabajo;
+    private boolean docenteOtroTrabajo;
     private LocalDate fechaInicioContratacion,fechaFinContratacion;
 
     public DocenteMD() {
     }
 
-    public DocenteMD(String codigo, String docenteTipoTiempo, int docenteCategoria, int idDocente, boolean docenteCapacitador, boolean docenteActivo, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion) {
+    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
+        this.estado = estado;
         this.docenteCategoria = docenteCategoria;
         this.idDocente = idDocente;
-        this.docenteCapacitador = docenteCapacitador;
-        this.docenteActivo = docenteActivo;
         this.docenteOtroTrabajo = docenteOtroTrabajo;
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
@@ -58,22 +57,6 @@ public class DocenteMD {
         this.idDocente = idDocente;
     }
 
-    public boolean isDocenteCapacitador() {
-        return docenteCapacitador;
-    }
-
-    public void setDocenteCapacitador(boolean docenteCapacitador) {
-        this.docenteCapacitador = docenteCapacitador;
-    }
-
-    public boolean isDocenteActivo() {
-        return docenteActivo;
-    }
-
-    public void setDocenteActivo(boolean docenteActivo) {
-        this.docenteActivo = docenteActivo;
-    }
-
     public boolean isDocenteOtroTrabajo() {
         return docenteOtroTrabajo;
     }
@@ -96,6 +79,14 @@ public class DocenteMD {
 
     public void setFechaFinContratacion(LocalDate fechaFinContratacion) {
         this.fechaFinContratacion = fechaFinContratacion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
         
 }

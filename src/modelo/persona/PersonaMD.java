@@ -325,7 +325,5 @@ public class PersonaMD {
 
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
-    }
-    
-    
+    }  
 }

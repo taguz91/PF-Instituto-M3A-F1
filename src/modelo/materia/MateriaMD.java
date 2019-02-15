@@ -22,11 +22,13 @@ public class MateriaMD {
     private int horasPracticas;
     private int horasAutoEstudio;
     private int totalHoras;
+    private String objetivo;
+    private String descripcion;
 
     public MateriaMD() {
     }
 
-    public MateriaMD(int id, CarreraMD carrera, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, String eje, char tipoAcreditacion, int horasTeoricas, int horasPracticas, int horasAutoEstudio, int totalHoras) {
+    public MateriaMD(int id, CarreraMD carrera, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, String eje, char tipoAcreditacion, int horasTeoricas, int horasPracticas, int horasAutoEstudio, int totalHoras, String objetivo, String descripcion) {
         this.id = id;
         this.carrera = carrera;
         this.codigo = codigo;
@@ -41,6 +43,8 @@ public class MateriaMD {
         this.horasPracticas = horasPracticas;
         this.horasAutoEstudio = horasAutoEstudio;
         this.totalHoras = totalHoras;
+        this.objetivo = objetivo;
+        this.descripcion = descripcion;
     }
 
     public int getId() {
@@ -155,4 +159,19 @@ public class MateriaMD {
         this.totalHoras = totalHoras;
     }
 
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

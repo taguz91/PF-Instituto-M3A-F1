@@ -399,5 +399,15 @@ ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "accesos_fk"
 		 ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "rolesUsuarios_pk"
-	FOREIGN KEY("id_rol") REFERENCES "RolesUsuaios"("id_rol")
+	FOREIGN KEY("id_rol") REFERENCES "RolesUsuarios"("id_rol")
 		ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+/*VALORES POR DEFECTO EN LA BASE DE DATOS*/
+
+INSERT INTO public."TipoPersona"(
+	tipo_persona)
+	VALUES ('DOCENTE'),
+	('ALUMNO'),
+	('ADMINISTRADOR');

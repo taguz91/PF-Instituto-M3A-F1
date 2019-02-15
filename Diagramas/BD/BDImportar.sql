@@ -101,3 +101,40 @@ SELECT 1, mat_id, mat_nombre, mat_ciclo, mat_creditos, mat_tipo,
 'Sin categoria', 'Sin eje', mat_tipoacreditacion
 FROM public.materias 
 WHERE mat_carrera = 2 ORDER BY mat_ciclo ASC;
+
+INSERT INTO public."TipoPersona"(
+	tipo_persona)
+	VALUES ('DOCENTE'),
+	('ALUMNO'),
+	('ADMINISTRADOR');
+
+
+INSERT INTO public."Personas"(
+	 id_tipo_persona, id_lugar_natal, id_lugar_residencia, 
+	 persona_identificacion, 
+	 persona_primer_apellido, persona_segundo_apellido, 
+	 persona_primer_nombre, persona_segundo_nombre,
+	 persona_genero, persona_sexo,
+	 persona_estado_civil, persona_etnia, 
+	 persona_idioma_raiz, persona_tipo_sangre,
+	 persona_telefono, persona_celular, 
+	 persona_correo, persona_fecha_registro,
+	 persona_discapacidad, persona_calle_principal, 
+	 persona_numero_casa, persona_calle_secundaria,
+	 persona_referencia, persona_sector,
+	 persona_idioma, persona_tipo_residencia, 
+	 persona_fecha_nacimiento)
+	VALUES ( 2, 1, 1, 
+		'0107390270',
+		'GARCÍA', 'INGA',
+		'JOHNNY', 'GUSTAVO',
+		'M', 'M',
+		'SOLTERO', 'MESTIZO', 
+		'ESPAÑOL', 'ORH+', 
+		'0968796010', '0968796010', 
+		'GUS199811@GMAIL.COM', '15/2/2019', 
+		'false', 'AV. AMERICAS',
+		'00-00', 'TURUHUAYCO', 
+		'FRENTE A UNA TIENDA', 'BELLA VISTA', 
+		'ESPAÑOL', 'ARRENDADA', 
+		'24/11/1998');
