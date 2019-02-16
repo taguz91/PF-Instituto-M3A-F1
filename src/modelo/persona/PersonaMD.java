@@ -10,13 +10,11 @@ import modelo.lugar.LugarBD;
  * @author Lina
  */
 public class PersonaMD {
-
+    
+    //Atributos para la foto
     private FileInputStream file;
     private int logBytes;
-    
-
-// En el diagrama de clases falta el atributo fecha de nacimiento..pero aqui ya lo incluyo
-    
+    //Atributos de la clase Persona
     private int idPersona;
     private TipoPersonaBD tipo;
     private LugarBD lugarNatal;
@@ -27,7 +25,7 @@ public class PersonaMD {
     private String segundoApellido;
     private String primerNombre;
     private String segundoNombre;
-    private LocalDate fechaNacimiento; //falta
+    private LocalDate fechaNacimiento; 
     private String genero;
     private char sexo;
     private String estadoCivil;
@@ -49,12 +47,52 @@ public class PersonaMD {
     private String sector;
     private String idioma;
     private String tipoResidencia;
+    private boolean personaActiva;
 
-    //32 atributos
+    //33 atributos
     
+    //Constructor vacio
     public PersonaMD() {
     }
+    
+    //Constructor con todos los atributos de la clase Persona
+    public PersonaMD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+        this.idPersona = idPersona;
+        this.tipo = tipo;
+        this.lugarNatal = lugarNatal;
+        this.lugarResidencia = lugarResidencia;
+        this.foto = foto;
+        this.identificacion = identificacion;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+        this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
+        this.etnia = etnia;
+        this.idiomaRaiz = idiomaRaiz;
+        this.tipoSangre = tipoSangre;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+        this.discapacidad = discapacidad;
+        this.tipoDiscapacidad = tipoDiscapacidad;
+        this.porcentajeDiscapacidad = porcentajeDiscapacidad;
+        this.carnetConadis = carnetConadis;
+        this.callePrincipal = callePrincipal;
+        this.numeroCasa = numeroCasa;
+        this.calleSecundaria = calleSecundaria;
+        this.referencia = referencia;
+        this.sector = sector;
+        this.idioma = idioma;
+        this.tipoResidencia = tipoResidencia;
+        this.personaActiva = personaActiva;
+    }
 
+    
     public FileInputStream getFile() {
         return file;
     }
@@ -129,6 +167,14 @@ public class PersonaMD {
 
     public String getSegundoApellido() {
         return segundoApellido;
+    }
+
+    public boolean isPersonaActiva() {
+        return personaActiva;
+    }
+
+    public void setPersonaActiva(boolean personaActiva) {
+        this.personaActiva = personaActiva;
     }
 
     public void setSegundoApellido(String segundoApellido) {
