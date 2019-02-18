@@ -9,10 +9,15 @@ import controlador.curso.VtnCursoCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
+import controlador.persona.FrmPersonaCTR;
 import controlador.persona.VtnAlumnoCTR;
 import controlador.persona.VtnDocenteCTR;
+import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
 import modelo.materia.MateriaBD;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -22,8 +27,10 @@ import vista.curso.VtnCurso;
 import vista.materia.VtnMateria;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
+import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
 import vista.persona.VtnDocente;
+import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
@@ -43,12 +50,16 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciar() {
+        //eventoTeclado(vtnPrin.getPnlMenu());
+        vtnPrin.setFocusable(true);
+        eventoTeclado(vtnPrin);
         //Para el estilo 
         vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());
         vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
         vtnPrin.getMnRbtnWindows().addActionListener(e -> estiloVtn());
 
         //Para abrir las ventanas 
+        vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlmnCurso().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
         vtnPrin.getMnCtCarrera().addActionListener(e -> abrirVtnCarrera());
@@ -56,17 +67,24 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocente().addActionListener(e -> abrirVtnDocente());
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
-        
-        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria()); 
+
+        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
         //Para abrir los formularios 
-        vtnPrin.getBtnAlumno().addActionListener(e -> abrirFrmAlumno()); 
-        vtnPrin.getBtnCarrera().addActionListener(e -> abrirFrmCarrera()); 
+        vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
+
+        vtnPrin.getBtnAlumno().addActionListener(e -> abrirFrmAlumno());
+        vtnPrin.getBtnCarrera().addActionListener(e -> abrirFrmCarrera());
         vtnPrin.getBtnCurso().addActionListener(e -> abrirFrmCurso());
         vtnPrin.getBtnCursoAlumno().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getBtnDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
+    }
 
+    public void abrirVtnPersona() {
+        VtnPersona vtnPersona = new VtnPersona();
+        VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
+        ctrVtnPersona.iniciar();
     }
 
     public void abrirVtnDocente() {
@@ -113,8 +131,14 @@ public class VtnPrincipalCTR {
     }
 
     //Para abrir todos los formularios
+    public void abrirFrmPersona() {
+        FrmPersona frmPersona = new FrmPersona();
+        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
+        ctrFrmPersona.iniciar();
+    }
+
     public void abrirFrmDocente() {
-        FrmDocente frmDocente  = new FrmDocente(); 
+        FrmDocente frmDocente = new FrmDocente();
         FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente);
         ctrFrmDocente.iniciar();
     }
@@ -126,20 +150,20 @@ public class VtnPrincipalCTR {
     }
 
     public void abrirFrmCarrera() {
-        FrmCarrera frmCarrera = new FrmCarrera(); 
-        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera); 
+        FrmCarrera frmCarrera = new FrmCarrera();
+        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
         ctrFrmCarrera.iniciar();
     }
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso); 
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
         ctrFrmCurso.iniciar();
     }
 
     public void abrirFrmPrdLectivo() {
-        FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo(); 
-        FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo); 
+        FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
+        FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo);
         ctrFrmPrdLectivo.iniciar();
     }
 
@@ -184,6 +208,35 @@ public class VtnPrincipalCTR {
 
         vtnPrin = new VtnPrincipal();
         vtnPrin.setVisible(true);
+    }
+
+    public void eventoTeclado(JFrame vtn) {
+        
+        vtn.addKeyListener(new KeyAdapter() {
+            boolean ctr = false;
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.VK_CONTROL == e.getKeyCode()) {
+                    ctr = true; 
+                }else{
+                    if (ctr && e.VK_A == e.getKeyCode()) {
+                        System.out.println("Presionamos ctr + a");
+                        //ctr = false; 
+                    }else if(ctr && e.VK_B == e.getKeyCode()){
+                        System.out.println("Presionamos ctr + b"); 
+                        //ctr = false;
+                    }
+                }
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e){
+                if (e.VK_CONTROL == e.getKeyCode()) {
+                    System.out.println("Se solto control");
+                    ctr = false;
+                }
+            }
+        });
     }
 
 }

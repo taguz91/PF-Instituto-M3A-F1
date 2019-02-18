@@ -19,7 +19,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
      */
     public FrmPersona() {
         initComponents();
-        this.setTitle("Ingresar una nueva Persona");
     }
 
     /**
@@ -113,11 +112,9 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jdcFechaNacimiento = new datechooser.beans.DateChooserCombo();
         jdcFechaRegistro = new datechooser.beans.DateChooserCombo();
 
+        setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("CREAR NUEVA PERSONA");
-        setMinimumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1020, 10));
 
@@ -151,11 +148,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, -1, -1));
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
-        cmbSexo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSexoActionPerformed(evt);
-            }
-        });
         getContentPane().add(cmbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 127, -1));
 
         jLabel9.setText("Estado Civil *");
@@ -163,12 +155,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
 
         cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO/A", "CASADO/A", "DIVORCIADO/A", "UNION LIBRE", "VIUDO/A" }));
         getContentPane().add(cmbEstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 133, -1));
-
-        txtSegundoApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSegundoApellidoActionPerformed(evt);
-            }
-        });
         getContentPane().add(txtSegundoApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 130, -1));
         getContentPane().add(txtPrimerApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 130, -1));
         getContentPane().add(txtPrimerNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 59, 130, -1));
@@ -292,19 +278,9 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(txtCalleSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 420, 250, -1));
 
         cmbTipoResidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Zona Urbana", "Zona Rural" }));
-        cmbTipoResidencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoResidenciaActionPerformed(evt);
-            }
-        });
         getContentPane().add(cmbTipoResidencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 450, 158, -1));
 
         btnGuardarPersona.setText("Guardar");
-        btnGuardarPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarPersonaActionPerformed(evt);
-            }
-        });
         getContentPane().add(btnGuardarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 590, -1, -1));
 
         btnCancelar.setText("Cancelar");
@@ -322,29 +298,13 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         btnBuscarFoto.setText("Buscar Foto");
         getContentPane().add(btnBuscarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 250, -1, -1));
 
-        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/buscar.png"))); // NOI18N
-        getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 40, 20));
+        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+        getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 30, 20));
         getContentPane().add(jdcFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 130, -1));
         getContentPane().add(jdcFechaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 130, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cmbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSexoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSexoActionPerformed
-
-    private void cmbTipoResidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoResidenciaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTipoResidenciaActionPerformed
-
-    private void btnGuardarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPersonaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarPersonaActionPerformed
-
-    private void txtSegundoApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSegundoApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSegundoApellidoActionPerformed
 
     public JButton getBtnBuscarPersona() {
         return btnBuscarPersona;

@@ -2,6 +2,8 @@ package controlador.persona;
 
 import java.awt.Image;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -55,7 +57,22 @@ public class FrmPersonaCTR {
     }
 
     public void guardarPersona() {
-
+        String identificacion = frmPersona.getTxtIdentificacion().getText(); 
+        String priNombre = frmPersona.getTxtPrimerNombre().getText(); 
+        String segNombre = frmPersona.getTxtSegundoNombre().getText(); 
+        String priApellido = frmPersona.getTxtPrimerApellido().getText(); 
+        String segApellido = frmPersona.getTxtSegundoApellido().getText(); 
+        String fechaNac = frmPersona.getJdcFechaNacimiento().getDateFormat().getCalendar().toString(); 
+        
+        System.out.println("Fecha: "+fechaNac);
+        fechaNac = frmPersona.getJdcFechaNacimiento().getText();
+        System.out.println("Fecha nacimiento: "+fechaNac);
+        String fec [] = fechaNac.split("/"); 
+        System.out.println(fec[0]+" | "+ fec[1] + " | "+ fec[2]);
+        LocalDate fecha = LocalDate.of(Integer.parseInt(fec[2]),
+                Integer.parseInt(fec[1]), Integer.parseInt(fec[0])); 
+        System.out.println(fecha);
+        System.out.println(fecha.getYear());
     }
 
     public void buscarPersona() {

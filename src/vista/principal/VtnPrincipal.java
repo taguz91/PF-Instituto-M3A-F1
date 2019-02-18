@@ -142,6 +142,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return pnlMenu;
     }
 
+    public JButton getBtnPersona() {
+        return btnPersona;
+    }
+
+    public JMenuItem getMnCtPersona() {
+        return mnCtPersona;
+    }
+
+    public JMenuItem getMnIgPersona() {
+        return mnIgPersona;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,9 +172,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnPrdLectivo = new javax.swing.JButton();
         btnCursoAlumno = new javax.swing.JButton();
         btnMateria = new javax.swing.JButton();
+        btnPersona = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         menuCrud = new javax.swing.JMenuBar();
         mnConsultar = new javax.swing.JMenu();
+        mnCtPersona = new javax.swing.JMenuItem();
         mnCtDocente = new javax.swing.JMenuItem();
         mnCtAlumno = new javax.swing.JMenuItem();
         mnCtCarrera = new javax.swing.JMenuItem();
@@ -171,6 +185,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAlmnCurso = new javax.swing.JMenuItem();
         mnCtMateria = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
+        mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
         mnIgAlumno = new javax.swing.JMenuItem();
         mnIgCarrera = new javax.swing.JMenuItem();
@@ -190,31 +205,44 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         btnDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_25px.png"))); // NOI18N
         btnDocente.setToolTipText("Nuevo docente");
+        btnDocente.setFocusPainted(false);
 
         btnAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_25px.png"))); // NOI18N
         btnAlumno.setToolTipText("Nuevo alumno");
+        btnAlumno.setFocusPainted(false);
 
         btnCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Graduation_Cap_25px.png"))); // NOI18N
         btnCarrera.setToolTipText("Nueva carrera");
+        btnCarrera.setFocusPainted(false);
 
         btnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Class_25px.png"))); // NOI18N
         btnCurso.setToolTipText("Nuevo curso");
+        btnCurso.setFocusPainted(false);
 
         btnPrdLectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Calendar_25px.png"))); // NOI18N
         btnPrdLectivo.setToolTipText("Nuevo periodo lectivo");
+        btnPrdLectivo.setFocusPainted(false);
 
         btnCursoAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_25px.png"))); // NOI18N
         btnCursoAlumno.setToolTipText("Nuevo alumno en un curso");
+        btnCursoAlumno.setFocusPainted(false);
 
         btnMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Course_25px.png"))); // NOI18N
         btnMateria.setToolTipText("Ver materias");
+        btnMateria.setFocusPainted(false);
+
+        btnPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Team_25px_1.png"))); // NOI18N
+        btnPersona.setToolTipText("Nuevo docente");
+        btnPersona.setFocusPainted(false);
 
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(6, 6, 6)
+                .addComponent(btnPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,7 +256,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnCursoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(468, Short.MAX_VALUE))
+                .addContainerGap(416, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,8 +265,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
             .addComponent(btnCarrera)
             .addComponent(btnCurso)
             .addComponent(btnPrdLectivo)
-            .addComponent(btnMateria)
+            .addComponent(btnMateria, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(btnCursoAlumno)
+            .addComponent(btnPersona)
         );
 
         javax.swing.GroupLayout dpnlPrincipalLayout = new javax.swing.GroupLayout(dpnlPrincipal);
@@ -253,6 +282,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
 
         mnConsultar.setText("Consultar");
+
+        mnCtPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Team_20px.png"))); // NOI18N
+        mnCtPersona.setText("Persona");
+        mnConsultar.add(mnCtPersona);
 
         mnCtDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_20px.png"))); // NOI18N
         mnCtDocente.setText("Docente");
@@ -285,6 +318,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         menuCrud.add(mnConsultar);
 
         mnIngresar.setText("Ingresar");
+
+        mnIgPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Team_20px.png"))); // NOI18N
+        mnIgPersona.setText("Persona");
+        mnIngresar.add(mnIgPersona);
 
         mnIgDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_20px.png"))); // NOI18N
         mnIgDocente.setText("Docente");
@@ -361,6 +398,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCursoAlumno;
     private javax.swing.JButton btnDocente;
     private javax.swing.JButton btnMateria;
+    private javax.swing.JButton btnPersona;
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
@@ -372,6 +410,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
     private javax.swing.JMenuItem mnCtMateria;
+    private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenu mnEstilo;
     private javax.swing.JMenuItem mnIgAlmnCurso;
@@ -379,6 +418,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgCarrera;
     private javax.swing.JMenuItem mnIgCurso;
     private javax.swing.JMenuItem mnIgDocente;
+    private javax.swing.JMenuItem mnIgPersona;
     private javax.swing.JMenuItem mnIgPrdLectivo;
     private javax.swing.JMenu mnIngresar;
     private javax.swing.JMenu mnOpciones;
