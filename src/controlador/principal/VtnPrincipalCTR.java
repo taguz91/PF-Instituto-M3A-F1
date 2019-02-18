@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import modelo.materia.MateriaBD;
+import modelo.persona.UsuarioMD;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.curso.FrmCurso;
@@ -42,10 +43,12 @@ import vista.principal.VtnPrincipal;
 public class VtnPrincipalCTR {
 
     private VtnPrincipal vtnPrin;
+    private UsuarioMD usuario;
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin) {
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, UsuarioMD usuario) {
         this.vtnPrin = vtnPrin;
-
+        this.usuario = usuario;
+        
         vtnPrin.setVisible(true);
     }
 

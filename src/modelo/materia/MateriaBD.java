@@ -19,8 +19,8 @@ public class MateriaBD extends MateriaMD {
             ArrayList<MateriaMD> lista = new ArrayList();
             String sql = "SELECT id_materia, id_carrera, materia_codigo, "
                     + "materia_nombre, materia_ciclo, materia_creditos,"
-                    + " materia_tipo, materia_categoria, materia_eje, "
-                    + "materia_tipo_acreditacion, materia_horas_teoricas,"
+                    + " materia_tipo, materia_categoria, "
+                    + "materia_tipo_acreditacion, materia_horas_docencia,"
                     + " materia_horas_practicas, materia_horas_auto_estudio,"
                     + " materia_total_horas, materia_activa, materia_objetivo,"
                     + " materia_descripcion\n"
@@ -41,9 +41,8 @@ public class MateriaBD extends MateriaMD {
                     m.setCreditos(rs.getInt("materia_creditos"));
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
                     m.setCategoria(rs.getString("materia_categoria"));
-                    m.setEje(rs.getString("materia_eje"));
                     m.setTipoAcreditacion(rs.getString("materia_tipo_acreditacion").charAt(0));
-                    m.setHorasTeoricas(rs.getInt("materia_horas_teoricas"));
+                    m.setHorasTeoricas(rs.getInt("materia_horas_docencia"));
                     m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
                     m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
@@ -79,12 +78,11 @@ public class MateriaBD extends MateriaMD {
                 m.setCreditos(rs.getInt("materia_creditos"));
                 m.setTipo(rs.getString("materia_tipo").charAt(0));
                 m.setCategoria("materia_categoria");
-                m.setEje("materia_eje");
                 m.setTipoAcreditacion(rs.getString("materia_tipoacreditacion").charAt(0));
-                m.setHorasTeoricas(rs.getInt("materia_horasteoricas"));
-                m.setHorasPracticas(rs.getInt("materia_horasPracticas"));
-                m.setHorasAutoEstudio(rs.getInt("materia_horasautoestudipo"));
-                m.setTotalHoras(rs.getInt("materia_totalhoras"));
+                m.setHorasTeoricas(rs.getInt("materia_horas_docencia"));
+                m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudipo"));
+                m.setTotalHoras(rs.getInt("materia_total_horas"));
 
                 lista.add(m);
             }
@@ -117,12 +115,11 @@ public class MateriaBD extends MateriaMD {
                     m.setCreditos(rs.getInt("materia_creditos"));
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
                     m.setCategoria("materia_categoria");
-                    m.setEje("materia_eje");
                     m.setTipoAcreditacion(rs.getString("materia_tipoacreditacion").charAt(0));
-                    m.setHorasTeoricas(rs.getInt("materia_horasteoricas"));
-                    m.setHorasPracticas(rs.getInt("materia_horasPracticas"));
-                    m.setHorasAutoEstudio(rs.getInt("materia_horasautoestudipo"));
-                    m.setTotalHoras(rs.getInt("materia_totalhoras"));
+                    m.setHorasTeoricas(rs.getInt("materia_horas_docencia"));
+                    m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                    m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudipo"));
+                    m.setTotalHoras(rs.getInt("materia_total_horas"));
 
                 }
                 return m;
@@ -167,12 +164,11 @@ public class MateriaBD extends MateriaMD {
                     m.setCreditos(rs.getInt("materia_creditos"));
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
                     m.setCategoria("materia_categoria");
-                    m.setEje("materia_eje");
                     m.setTipoAcreditacion(rs.getString("materia_tipoacreditacion").charAt(0));
-                    m.setHorasTeoricas(rs.getInt("materia_horasteoricas"));
-                    m.setHorasPracticas(rs.getInt("materia_horasPracticas"));
-                    m.setHorasAutoEstudio(rs.getInt("materia_horasautoestudipo"));
-                    m.setTotalHoras(rs.getInt("materia_totalhoras"));
+                    m.setHorasTeoricas(rs.getInt("materia_horas_docencia"));
+                    m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                    m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudipo"));
+                    m.setTotalHoras(rs.getInt("materia_total_horas"));
                     lista.add(m);
                 }
                 rs.close();

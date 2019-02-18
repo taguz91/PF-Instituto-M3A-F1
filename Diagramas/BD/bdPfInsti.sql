@@ -47,9 +47,9 @@ CREATE TABLE "Personas"(
   "persona_tipo_discapacidad" character varying(20),
   "persona_porcenta_discapacidad" integer DEFAULT '0',
   "persona_carnet_conadis" character varying(20),
-  "persona_calle_principal" character varying(200) NOT NULL,
-  "persona_numero_casa" character varying(10) NOT NULL,
-  "persona_calle_secundaria" character varying(200) NOT NULL,
+  "persona_calle_principal" character varying(200) NOT NULL DEFAULT 'SN',
+  "persona_numero_casa" character varying(10) NOT NULL DEFAULT '00',
+  "persona_calle_secundaria" character varying(200) NOT NULL DEFAULT 'SN',
   "persona_referencia" character varying(200) NOT NULL,
   "persona_sector" character varying(200) NOT NULL,
   "persona_idioma" character varying(50) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE "Materias"(
 	"id_materia" serial NOT NULL,
 	"id_carrera" INTEGER NOT NULL,
 	"id_eje" integer NOT NULL,
-	"materia_codigo" character varying(10) NOT NULL,
+	"materia_codigo" character varying(30) NOT NULL,
 	"materia_nombre" character varying(100) NOT NULL,
 	"materia_ciclo" INTEGER NOT NULL,
 	"materia_creditos" INTEGER NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE "Carreras"(
   "id_docente_coordinador" integer, 
   "carrera_nombre" character varying(100) NOT NULL,
   "carrera_codigo" character varying(15) NOT NULL,
-  "carrera_fecha_inicio" DATE NOT NULL,
+  "carrera_fecha_inicio" DATE,
   "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true', 
@@ -203,7 +203,7 @@ CREATE TABLE "MallaEstudiante"(
 	"malla_almn_nota2" numeric(3, 2) NOT NULL DEFAULT '0',
 	"malla_almn_nota3" numeric(3, 2) NOT NULL DEFAULT '0',
 	"malla_almn_estado" character varying(1) NOT NULL DEFAULT 'P', 
-	CONSTRAINT malla_estudiante_pk PRIMARY KEY ("id_malla_estudiante")
+	CONSTRAINT malla_estudiante_pk PRIMARY KEY ("id_malla_alumno")
 ) WITH (OIDS = FALSE); 
 
 
