@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
@@ -31,6 +30,8 @@ public class PersonaBD extends PersonaMD {
     public boolean insertarPersona() {
 
         //Aqui id_persona ya no va porque es autoincrementable y el id_tipo_persona tampoco ???????
+        //El id persona no el id tipo si porque necesitamos saber si es estudiante
+        //docente u otro 
         
         String sql = "INSERT INTO public.\"Personas\"(\n"
                 + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
@@ -83,17 +84,24 @@ public class PersonaBD extends PersonaMD {
                 } catch (IOException ex) {
                     System.out.println("Error al pasar la foto: " + ex.getMessage());
                 }
-                persona.setIdPersona(rs.getByte("id_persona"));
-                persona.setTipo(rs.getByte("id_tipo_persona"));
-                persona.setLugarNatal(rs.getByte("id_lugar_natal"));
-                persona.setLugarResidencia(rs.getByte("id_lugar_residencia"));
+                persona.setIdPersona(rs.getInt("id_persona"));
+                //Aqui se crea un tipo persona  
+                TipoPersonaBD tipoPer = new TipoPersonaBD(); 
+                persona.setTipo(tipoPer.buscar(rs.getInt("id_tipo_persona")));
+                //Aqui igual se crear una clase lugar 
+                LugarBD lugar = new LugarBD(); 
+                //Buscamos el lugar que corresponde a cada cosa
+                persona.setLugarNatal(lugar.buscar(rs.getInt("id_lugar_natal")));
+                persona.setLugarResidencia(lugar.buscar(rs.getByte("id_lugar_residencia")));
+                
                 persona.setIdentificacion(rs.getString("persona_identificacion"));
                 persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 persona.setGenero(rs.getString("persona_genero"));
-                persona.setSexo(rs.getString("persona_sexo"));
+                //Aqui solo cojemos la letra de la posicion 0 porque solo recibe un char
+                persona.setSexo(rs.getString("persona_sexo").charAt(0)); 
                 persona.setEstadoCivil(rs.getString("persona_estado_civil"));
                 persona.setEtnia(rs.getString("persona_etnia"));
                 persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
@@ -101,7 +109,7 @@ public class PersonaBD extends PersonaMD {
                 persona.setTelefono(rs.getString("persona_telefono"));
                 persona.setCelular(rs.getString("persona_celular"));
                 persona.setCorreo(rs.getString("persona_correo"));
-                persona.setFechaRegistro(rs.getDate("persona_fecha_registro"));
+                persona.setFechaRegistro(rs.getDate("persona_fecha_registro").toLocalDate());
                 persona.setDiscapacidad(rs.getBoolean("persona_discapacidad"));
                 persona.setTipoDiscapacidad(rs.getString("persona_tipo_discapacidad"));
                 persona.setPorcentajeDiscapacidad(rs.getByte("persona_porcenta_discapacidad"));
@@ -113,8 +121,8 @@ public class PersonaBD extends PersonaMD {
                 persona.setSector(rs.getString("persona_sector"));
                 persona.setIdioma(rs.getString("persona_idioma"));
                 persona.setTipoResidencia(rs.getString("persona_tipo_residencia"));
-                persona.setFechaNacimiento(rs.toString("persona_fecha_nacimiento"));
-                persona.setFechaNacimiento(rs.toInstant().atZone(ZoneId.systemDefault()).toLocalDate("persona_fecha_nacimiento"));
+                //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
+                persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
                 persona.setPersonaActiva(rs.getBoolean("persona_activa"));
 
             }

@@ -17,7 +17,7 @@ public class TipoPersonaBD extends TipoPersonaMD{
         return tipos;
     }
     
-    public TipoPersonaBD buscar(int idTipoPersona){
+    public TipoPersonaMD buscar(int idTipoPersona){
         TipoPersonaBD tipo = new TipoPersonaBD(); 
         
         return tipo; 

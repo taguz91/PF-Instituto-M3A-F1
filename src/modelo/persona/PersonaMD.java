@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.FileInputStream;
 import java.time.LocalDate;
 import modelo.lugar.LugarBD;
+import modelo.lugar.LugarMD;
 
 /**
  *
@@ -16,9 +17,9 @@ public class PersonaMD {
     private int logBytes;
     //Atributos de la clase Persona
     private int idPersona;
-    private TipoPersonaBD tipo;
-    private LugarBD lugarNatal;
-    private LugarBD lugarResidencia;
+    private TipoPersonaMD tipo;
+    private LugarMD lugarNatal;
+    private LugarMD lugarResidencia;
     private Image foto;
     private String identificacion;
     private String primerApellido;
@@ -117,27 +118,27 @@ public class PersonaMD {
         this.idPersona = idPersona;
     }
 
-    public TipoPersonaBD getTipo() {
+    public TipoPersonaMD getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoPersonaBD tipo) {
+    public void setTipo(TipoPersonaMD tipo) {
         this.tipo = tipo;
     }
 
-    public LugarBD getLugarNatal() {
+    public LugarMD getLugarNatal() {
         return lugarNatal;
     }
 
-    public void setLugarNatal(LugarBD lugarNatal) {
+    public void setLugarNatal(LugarMD lugarNatal) {
         this.lugarNatal = lugarNatal;
     }
 
-    public LugarBD getLugarResidencia() {
+    public LugarMD getLugarResidencia() {
         return lugarResidencia;
     }
 
-    public void setLugarResidencia(LugarBD lugarResidencia) {
+    public void setLugarResidencia(LugarMD lugarResidencia) {
         this.lugarResidencia = lugarResidencia;
     }
 
