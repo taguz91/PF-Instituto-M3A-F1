@@ -252,6 +252,8 @@ CREATE TABLE "RolesUsuarios"(
 	
 ) WITH(OIDS = FALSE);
 
+
+
 CREATE TABLE "PeriodoIngresoNotas"(
 	"id_perd_ingr_notas" serial NOT NULL,
 	"perd_notas_fecha_inicio" DATE NOT NULL,
@@ -423,7 +425,8 @@ ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "accesos_fk"
 ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "rolesUsuarios_pk"
 	FOREIGN KEY("id_rol") REFERENCES "RolesUsuarios"("id_rol")
 		ON UPDATE CASCADE ON DELETE CASCADE;
-
+	
+	
 
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
