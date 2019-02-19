@@ -15,10 +15,14 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
-import java.awt.event.KeyAdapter;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.KeyStroke;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import modelo.materia.MateriaBD;
+import modelo.persona.UsuarioMD;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.curso.FrmCurso;
@@ -42,17 +46,75 @@ import vista.principal.VtnPrincipal;
 public class VtnPrincipalCTR {
 
     private VtnPrincipal vtnPrin;
+    private UsuarioMD usuario;
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin) {
+    private int numVtns = 0;
+    private String ERRORNUMVTNS = "No se pueden abrir mas de 5 ventanas";
+
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, UsuarioMD usuario) {
         this.vtnPrin = vtnPrin;
+        this.usuario = usuario;
 
         vtnPrin.setVisible(true);
     }
 
     public void iniciar() {
+        //Iniciamos los shotcuts 
+        /*Otra forma de poner atajos de teclado
+        vtnPrin.getMnCtAlmnCurso().setAccelerator(
+                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().
+                        getMenuShortcutKeyMask()));
+         */
+        //Acciones de las ventanas de consulta
+        vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtCarrera().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtDocente().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_D, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPersona().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+
+        //Acciones de los formularios de ingreso
+        vtnPrin.getMnIgAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_A, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgCarrera().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_R, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgDocente().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_D, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPersona().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_P, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.ALT_MASK));
+
+        //vtnPrin.getMnCtCurso().setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I + KeyEvent.VK_A, ActionEvent.ALT_MASK));
         //eventoTeclado(vtnPrin.getPnlMenu());
         vtnPrin.setFocusable(true);
-        eventoTeclado(vtnPrin);
         //Para el estilo 
         vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());
         vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
@@ -79,92 +141,183 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCursoAlumno().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getBtnDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
+
+        //Para los menus  
+        vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
+        vtnPrin.getMnIgCarrera().addActionListener(e -> abrirFrmCarrera());
+        vtnPrin.getMnIgCurso().addActionListener(e -> abrirFrmCurso());
+        vtnPrin.getMnIgAlmnCurso().addActionListener(e -> abrirFrmCursoAlumno());
+        vtnPrin.getMnIgDocente().addActionListener(e -> abrirFrmDocente());
+        vtnPrin.getMnIgPersona().addActionListener(e -> abrirFrmPersona());
+        vtnPrin.getMnIgPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
+
     }
 
     public void abrirVtnPersona() {
         VtnPersona vtnPersona = new VtnPersona();
-        VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
-        ctrVtnPersona.iniciar();
+        eventoInternal(vtnPersona);
+        if (numVtns < 5) {
+            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
+            ctrVtnPersona.iniciar();
+        }
     }
 
     public void abrirVtnDocente() {
         VtnDocente vtnDocente = new VtnDocente();
-        VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente);
-        ctrVtnDocente.iniciar();
+        eventoInternal(vtnDocente);
+        if (numVtns < 5) {
+            VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente);
+            ctrVtnDocente.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnAlumno() {
         VtnAlumno vtnAlumno = new VtnAlumno();
-        VtnAlumnoCTR ctrVtnAlumno = new VtnAlumnoCTR(vtnPrin, vtnAlumno);
-        ctrVtnAlumno.iniciar();
+        eventoInternal(vtnAlumno);
+        if (numVtns < 5) {
+            VtnAlumnoCTR ctrVtnAlumno = new VtnAlumnoCTR(vtnPrin, vtnAlumno);
+            ctrVtnAlumno.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnCarrera() {
         VtnCarrera vtnCarrera = new VtnCarrera();
-        VtnCarreraCTR ctrVtnCarrera = new VtnCarreraCTR(vtnPrin, vtnCarrera);
-        ctrVtnCarrera.iniciar();
+        eventoInternal(vtnCarrera);
+        if (numVtns < 5) {
+            VtnCarreraCTR ctrVtnCarrera = new VtnCarreraCTR(vtnPrin, vtnCarrera);
+            ctrVtnCarrera.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnCurso() {
         VtnCurso vtnCurso = new VtnCurso();
-        VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnPrin, vtnCurso);
-        ctrVtnCurso.iniciar();
+        eventoInternal(vtnCurso);
+        if (numVtns < 5) {
+            VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnPrin, vtnCurso);
+            ctrVtnCurso.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnPrdLectivo() {
         VtnPrdLectivo vtnPrdLectivo = new VtnPrdLectivo();
-        VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrin, vtnPrdLectivo);
-        ctrVtnPrdLectivo.iniciar();
+        eventoInternal(vtnPrdLectivo);
+        if (numVtns < 5) {
+            VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrin, vtnPrdLectivo);
+            ctrVtnPrdLectivo.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnAlumnoCurso() {
         VtnAlumnoCurso vtnAlmnCurso = new VtnAlumnoCurso();
-        VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso);
-        ctrVtnAlmnCurso.iniciar();
+        eventoInternal(vtnAlmnCurso);
+        if (numVtns < 5) {
+            VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso);
+            ctrVtnAlmnCurso.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirVtnMateria() {
         MateriaBD materia = new MateriaBD();
         VtnMateria vtnMateria = new VtnMateria();
-        VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria, materia);
-        ctrVtnMateria.iniciar();
+        eventoInternal(vtnMateria);
+        if (numVtns < 5) {
+            VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria, materia);
+            ctrVtnMateria.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     //Para abrir todos los formularios
     public void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
-        ctrFrmPersona.iniciar();
+        eventoInternal(frmPersona);
+        if (numVtns < 5) {
+            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
+            ctrFrmPersona.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente);
-        ctrFrmDocente.iniciar();
+        eventoInternal(frmDocente);
+        if (numVtns < 5) {
+            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente);
+            ctrFrmDocente.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmAlumno() {
         FrmAlumno frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
-        ctrFrmAlumno.iniciar();
+        eventoInternal(frmAlumno);
+        if (numVtns < 5) {
+            FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+            ctrFrmAlumno.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
-        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
-        ctrFrmCarrera.iniciar();
+        eventoInternal(frmCarrera);
+        if (numVtns < 5) {
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
+            ctrFrmCarrera.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
-        ctrFrmCurso.iniciar();
+        eventoInternal(frmCurso);
+        if (numVtns < 5) {
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
+            ctrFrmCurso.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmPrdLectivo() {
         FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
-        FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo);
-        ctrFrmPrdLectivo.iniciar();
+        eventoInternal(frmPrdLectivo);
+        if (numVtns < 5) {
+            FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo);
+            ctrFrmPrdLectivo.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
+
     }
 
     public void abrirFrmCursoAlumno() {
@@ -173,9 +326,14 @@ public class VtnPrincipalCTR {
 
     public void abrirFrmMateria() {
         FrmMateria frmMate = new FrmMateria();
+        eventoInternal(frmMate);
+        if (numVtns < 5) {
+            vtnPrin.getDpnlPrincipal().add(frmMate);
+            frmMate.show();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+        }
 
-        vtnPrin.getDpnlPrincipal().add(frmMate);
-        frmMate.show();
     }
 
     public void estiloVtn() {
@@ -210,33 +368,19 @@ public class VtnPrincipalCTR {
         vtnPrin.setVisible(true);
     }
 
-    public void eventoTeclado(JFrame vtn) {
-        
-        vtn.addKeyListener(new KeyAdapter() {
-            boolean ctr = false;
+    public void eventoInternal(JInternalFrame internal) {
+        internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.VK_CONTROL == e.getKeyCode()) {
-                    ctr = true; 
-                }else{
-                    if (ctr && e.VK_A == e.getKeyCode()) {
-                        System.out.println("Presionamos ctr + a");
-                        //ctr = false; 
-                    }else if(ctr && e.VK_B == e.getKeyCode()){
-                        System.out.println("Presionamos ctr + b"); 
-                        //ctr = false;
-                    }
-                }
+            public void internalFrameOpened(InternalFrameEvent e) {
+                numVtns++;
             }
-            
+
             @Override
-            public void keyReleased(KeyEvent e){
-                if (e.VK_CONTROL == e.getKeyCode()) {
-                    System.out.println("Se solto control");
-                    ctr = false;
-                }
+            public void internalFrameClosing(InternalFrameEvent e) {
+                numVtns--;
+                vtnPrin.getLblMensaje().setText(""); 
             }
+
         });
     }
-
 }

@@ -3,7 +3,6 @@ package controlador.persona;
 import java.awt.Image;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -16,19 +15,17 @@ import vista.principal.VtnPrincipal;
  * @author Lina
  */
 public class FrmPersonaCTR {
-    
+
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
-        
-        vtnPrin.getDpnlPrincipal().add(frmPersona); 
+
+        vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
     }
- 
-   
 
     public void iniciar() {
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
@@ -57,22 +54,67 @@ public class FrmPersonaCTR {
     }
 
     public void guardarPersona() {
-        String identificacion = frmPersona.getTxtIdentificacion().getText(); 
-        String priNombre = frmPersona.getTxtPrimerNombre().getText(); 
-        String segNombre = frmPersona.getTxtSegundoNombre().getText(); 
-        String priApellido = frmPersona.getTxtPrimerApellido().getText(); 
-        String segApellido = frmPersona.getTxtSegundoApellido().getText(); 
-        String fechaNac = frmPersona.getJdcFechaNacimiento().getDateFormat().getCalendar().toString(); 
-        String 
-        System.out.println("Fecha: "+fechaNac);
-        fechaNac = frmPersona.getJdcFechaNacimiento().getText();
-        System.out.println("Fecha nacimiento: "+fechaNac);
-        String fec [] = fechaNac.split("/"); 
-        System.out.println(fec[0]+" | "+ fec[1] + " | "+ fec[2]);
+
+        //Fecha actual usada para validaciones  
+        LocalDate fechaActual = LocalDate.now();
+        //Para validar todo  
+        boolean guardar = true;
+        //unicamente tocoa validar eso es lo feo :$$$$
+
+        String identificacion = frmPersona.getTxtIdentificacion().getText();
+        String priNombre = frmPersona.getTxtPrimerNombre().getText();
+        String segNombre = frmPersona.getTxtSegundoNombre().getText();
+        String priApellido = frmPersona.getTxtPrimerApellido().getText();
+        String segApellido = frmPersona.getTxtSegundoApellido().getText();
+        String fechaNac = frmPersona.getJdcFechaNacimiento().getText();
+        String fec[] = fechaNac.split("/");
+
         LocalDate fecha = LocalDate.of(Integer.parseInt(fec[2]),
-                Integer.parseInt(fec[1]), Integer.parseInt(fec[0])); 
-        System.out.println(fecha);
-        System.out.println(fecha.getYear());
+                Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
+        String estadoCivil = frmPersona.getCmbEstadoCivil().getSelectedItem().toString();
+        String genero = frmPersona.getCmbGenero().getSelectedItem().toString();
+        String sexo = frmPersona.getCmbSexo().getSelectedItem().toString();
+        String etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
+        String tipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
+        boolean discapcidad = frmPersona.getCbxDiscapacidad().isSelected();
+        String carnetConadis = frmPersona.getTxtCarnetConadis().getText();
+        String tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+        String porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+        String idiomaRaiz = frmPersona.getCmbIdiomas().getSelectedItem().toString();
+        String telefono = frmPersona.getTxtTelefono().getText();
+        //para saber como me devuelve el dato
+        System.out.println(idiomaRaiz);
+        
+        //Esto deberia ser automatico 
+        String fechaReg;
+        //Este dato no lo tenemos en base de datos 
+        String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
+
+        String callePrin = frmPersona.getTxtCallePrincipal().getText();
+        String referencia = frmPersona.getTxtReferencia().getText();
+        String celular = frmPersona.getTxtCelular().getText();
+        //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
+        String cantonReside = frmPersona.getCmbCantonReside().getSelectedItem().toString();
+        String provinciaReside = frmPersona.getCmbProvinciaReside().getSelectedItem().toString();
+        String parroquiaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
+        String numCasa = frmPersona.getTxtNumeroCasa().getText();
+        String sector = frmPersona.getTxtSector().getText();
+        String zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
+
+        //Esto igual deberiamos hacerlo de otra manera.
+        String nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
+        String pronvicia = frmPersona.getCmbProvincia().getSelectedItem().toString();
+        String canton = frmPersona.getCmbCanton().getSelectedItem().toString();
+
+        String correo = frmPersona.getTxtCorreo().getText();
+
+        System.out.println(idiomaRaiz);
+        if (guardar) {
+
+        } else {
+            System.out.println("Existen errores en los formularios");
+        }
+
     }
    
 
@@ -81,6 +123,6 @@ public class FrmPersonaCTR {
     }
 
     public void salirBoton() {
-        
+
     }
 }

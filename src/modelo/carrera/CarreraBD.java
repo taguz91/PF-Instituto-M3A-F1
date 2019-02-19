@@ -1,29 +1,94 @@
 package modelo.carrera;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import modelo.ConectarDB;
+import modelo.persona.DocenteMD;
+
 /**
  *
  * @author arman
  */
 public class CarreraBD extends CarreraMD {
 
-    private final String INSERT = "INSERT INTO public.\"Carreras\"(\n"
-            + "	id_carrera, carrera_codigo, carrera_descripcion, carrera_fecha_inicio, carrera_fecha_fin, carrera_modalidad, carrera_activo)\n"
-            + "	VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public CarreraBD() {
+    }
 
-    private final String SELECT_ALL = "SELECT * "
-            + " FROM Carreras ";
+    ConectarDB conecta = new ConectarDB();
 
-    private final String UPDATE = "UPDATE public.\"Carreras\"\n"
-            + "	SET id_carrera=?, carrera_codigo=?, carrera_descripcion=?, carrera_fecha_inicio=?, carrera_fecha_fin=?, carrera_modalidad=?, carrera_activo=?\n"
-            + "	WHERE id_carrera=?";
+    public CarreraMD buscar(int idCarrera) {
+        CarreraMD carrera = new CarreraMD();
+        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
+                + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
+                + " carrera_modalidad, carrera_activo\n"
+                + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
 
-    private final String DELETE = "DELETE FROM Carreras WHERE id_carrera=?";
+        ResultSet rs = conecta.sql(sql);
 
-    private String SELECT_ONE(String aguja) {
-        return "SELECT * FROM Carreras "
-                + "WHERE \"id_carrera\" LIKE '%" + aguja + "%'"
-                + "OR \"carrera_codigo\" LIKE '%" + aguja + "%'"
-                + "OR \"carrera_descripcion\" LIKE '%" + aguja + "%'"
-                + "OR \"carrera_modalidad\" LIKE '%" + aguja + "%'";
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    carrera.setCodigo(rs.getString("carrera_codigo"));
+                    DocenteMD docen = new DocenteMD();
+                    docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    carrera.setCoordinador(docen);
+                    carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                    carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
+                    carrera.setId(rs.getInt("id_carrera"));
+                    carrera.setModalidad(rs.getString("carrera_modalidad"));
+                    carrera.setNombre(rs.getString("carrera_nombre"));
+                }
+                return carrera;
+            } else {
+                System.out.println("No se pudo consultar una carreras");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<CarreraMD> cargarCarreras() {
+        ArrayList<CarreraMD> carreras = new ArrayList();
+        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
+                + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
+                + " carrera_modalidad, carrera_activo\n"
+                + "FROM public.\"Carreras\";";
+
+        ResultSet rs = conecta.sql(sql);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CarreraMD carrera = new CarreraMD();
+                    carrera.setCodigo(rs.getString("carrera_codigo"));
+                    DocenteMD docen = new DocenteMD();
+                    docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    carrera.setCoordinador(docen);
+                    if (rs.wasNull()) {
+                        carrera.setFechaFin(null);
+                    } else {
+                        carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                    }
+                    carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
+                    carrera.setId(rs.getInt("id_carrera"));
+                    carrera.setModalidad(rs.getString("carrera_modalidad"));
+                    carrera.setNombre(rs.getString("carrera_nombre"));
+
+                    carreras.add(carrera);
+                }
+                return carreras;
+            } else {
+                System.out.println("No se pudo consultar una carreras");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

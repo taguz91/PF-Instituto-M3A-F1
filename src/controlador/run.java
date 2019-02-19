@@ -1,6 +1,7 @@
 package controlador;
 
 import controlador.principal.VtnPrincipalCTR;
+import modelo.persona.UsuarioMD;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -12,8 +13,9 @@ public class run {
     public static void main(String[] args) {
         estiloWindows();
         
+        UsuarioMD usuario = new UsuarioMD();
         VtnPrincipal vtn = new VtnPrincipal(); 
-        VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn); 
+        VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn, usuario); 
         ctrVtnPrin.iniciar();
     }
     
