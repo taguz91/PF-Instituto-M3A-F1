@@ -63,7 +63,7 @@ public class FrmPersonaCTR {
         String priApellido = frmPersona.getTxtPrimerApellido().getText(); 
         String segApellido = frmPersona.getTxtSegundoApellido().getText(); 
         String fechaNac = frmPersona.getJdcFechaNacimiento().getDateFormat().getCalendar().toString(); 
-        
+        String 
         System.out.println("Fecha: "+fechaNac);
         fechaNac = frmPersona.getJdcFechaNacimiento().getText();
         System.out.println("Fecha nacimiento: "+fechaNac);
@@ -74,6 +74,7 @@ public class FrmPersonaCTR {
         System.out.println(fecha);
         System.out.println(fecha.getYear());
     }
+   
 
     public void buscarPersona() {
 
