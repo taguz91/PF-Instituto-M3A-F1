@@ -29,6 +29,9 @@ ALTER TABLE public."Lugares"
 ALTER COLUMN id_lugar
 TYPE integer;
 
+--Borrar la restriccion not null de una columna 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_segundo_apellido" DROP NOT NULL; 
+
 --Cambiar el tipo de dato de una columna 
 ALTER TABLE public."Materias" ALTER COLUMN "materia_codigo" TYPE character varying(30);
 /*Estos pasos segui para exportar los datos de lugares a la nueva base de datos*/
@@ -142,11 +145,9 @@ CREATE TABLE materias(
 	"mat_totalhoras" integer
 ) WITH (OIDS = FALSE);
 
-
-
 Copy materias("mat_codigo", "mat_carrera", "mat_id", "mat_nombre", "mat_creditos", 
 	"mat_ciclo", "mat_tipo", "mat_eje", "mat_tipoacreditacion", "mat_totalhoras")
-From 'C:\Backups Postgresql\materiasP2.csv' 
+From 'C:\Backups Postgresql\materiasP3.csv' 
 delimiter AS ';' NULL AS '' CSV HEADER;
 --Ahora se la pasamos a la nueva tabla 
 
@@ -229,3 +230,227 @@ INSERT INTO public."Personas"(
 		'FRENTE A UNA TIENDA', 'BELLA VISTA', 
 		'ESPAÑOL', 'ARRENDADA', 
 		'24/11/1998');
+
+--Consultas en la base de datos anterior
+--Consultamos todas las personas del base de datos anterior 
+SELECT * FROM public.personas ORDER BY per_codigo; 
+--Consultamos solo los docentes
+SELECT per_codigo, per_identificacion, per_primerapellido, 
+per_segundoapellido, per_primernombre, per_segundonombre, 
+per_fechanacimiento, per_genero, per_sexo, per_estadocivil,
+per_etnia, per_tiposangre, per_telefono, 
+per_celular, per_correo, per_fecharegistro,
+per_calleprincipal, per_numerocasa, per_callesecundaria, 
+per_referencia, per_sector, per_canton, per_parroquiareside,
+per_tiporesidencia
+FROM public.personas, public.profesores 
+WHERE profesores.pro_persona = personas.per_codigo
+ORDER BY per_codigo;
+
+--Importamos la consulta a un CSV
+Copy (SELECT per_codigo, per_identificacion, per_primerapellido, 
+per_segundoapellido, per_primernombre, per_segundonombre, 
+per_fechanacimiento, per_genero, per_sexo, per_estadocivil,
+per_etnia, per_tiposangre, per_telefono, 
+per_celular, per_correo, per_fecharegistro,
+per_calleprincipal, per_numerocasa, per_callesecundaria, 
+per_referencia, per_sector, per_canton, per_parroquiareside,
+per_tiporesidencia
+FROM public.personas, public.profesores 
+WHERE profesores.pro_persona = personas.per_codigo
+ORDER BY per_codigo) 
+To 'C:\Backups Postgresql\personasDocentesP2.csv' with CSV HEADER;
+
+
+CREATE TABLE "personas"(
+	"per_codigo" integer, 
+	"per_identificacion" character varying(20), 
+	"per_primerapellido" character varying(100), 
+	"per_segundoapellido" character varying(100), 
+	"per_primernombre" character varying(100), 
+	"per_segundonombre" character varying(100), 
+	"per_fechanacimiento" date, 
+	"per_genero" integer, 
+	"per_sexo" character varying(1), 
+	"per_estadocivil" integer, 
+	"per_etnia" integer, 
+	"per_tiposangre" character varying(5), 
+	"per_telefono" character varying(10), 
+	"per_celular" character varying(40), 
+	"per_correo" character varying(100), 
+	"per_fecharegistro" date, 
+	"per_calleprincipal" character varying(400),
+	"per_numerocasa" character varying(10), 
+	"per_callesecundaria" character varying(200), 
+	"per_referencia" character varying(300), 
+	"per_sector" character varying(200), 
+	"per_canton" integer, 
+	"per_parroquiareside" integer, 
+	"per_tiporesidencia" character varying(1)
+) WITH (OIDS = FALSE); 
+
+Copy personas("per_codigo", "per_identificacion", "per_primerapellido",
+	"per_segundoapellido", "per_primernombre", "per_segundonombre",
+	"per_fechanacimiento", "per_genero", "per_sexo", "per_estadocivil",
+	"per_etnia", "per_tiposangre", "per_telefono", "per_celular",
+	"per_correo", "per_fecharegistro", "per_calleprincipal",
+	"per_numerocasa", "per_callesecundaria", "per_referencia",
+	"per_sector", "per_canton", "per_parroquiareside", "per_tiporesidencia")
+From 'C:\Backups Postgresql\personasDocentesP2.csv' 
+delimiter AS ',' NULL AS '' CSV HEADER;
+
+UPDATE public.personas
+	SET per_parroquiareside=1
+	WHERE per_codigo = 857;
+
+INSERT INTO public."Personas"(
+	id_tipo_persona, id_lugar_natal, 
+	id_lugar_residencia, persona_identificacion, 
+	persona_primer_apellido, persona_segundo_apellido,
+	persona_primer_nombre, persona_segundo_nombre, 
+	persona_genero, persona_sexo,
+	persona_estado_civil, persona_etnia, persona_idioma_raiz,
+	persona_tipo_sangre, persona_fecha_registro,
+    persona_idioma, persona_tipo_residencia, 
+	persona_fecha_nacimiento)
+SELECT 1, per_canton, 
+	per_parroquiareside, per_identificacion,
+	per_primerapellido, per_segundoapellido,
+	per_primernombre, per_segundonombre, 
+	per_genero, per_sexo, 
+	per_estadocivil, per_etnia, 'ESPAÑOL', 
+	per_tiposangre, per_fecharegistro, 
+	'ESPAÑOL', per_tiporesidencia,
+	per_fechanacimiento
+	FROM public.personas;
+
+TRUNCATE TABLE public.personas;
+
+--Consultamos estudiantes 
+Copy (SELECT per_codigo, per_identificacion, per_primerapellido, 
+per_segundoapellido, per_primernombre, per_segundonombre, 
+per_fechanacimiento, per_genero, per_sexo, per_estadocivil,
+per_etnia, per_tiposangre, per_telefono, 
+per_celular, per_correo, per_fecharegistro,
+per_canton, per_parroquiareside,
+per_tiporesidencia
+FROM public.personas, public.alumnos 
+WHERE alumnos.alu_persona = personas.per_codigo
+ORDER BY per_codigo)
+To 'C:\Backups Postgresql\personasAlumnosP2.csv' with CSV HEADER
+
+Copy personas("per_codigo", "per_identificacion", "per_primerapellido",
+	"per_segundoapellido", "per_primernombre", "per_segundonombre",
+	"per_fechanacimiento", "per_genero", "per_sexo", "per_estadocivil",
+	"per_etnia", "per_tiposangre","per_celular",
+	"per_correo", "per_fecharegistro",
+	"per_canton", "per_parroquiareside", "per_tiporesidencia")
+From 'C:\Backups Postgresql\personasAlumnosP2.csv' 
+delimiter AS ',' NULL AS '' CSV HEADER;
+
+INSERT INTO public."Personas"(
+	id_tipo_persona, id_lugar_natal, 
+	id_lugar_residencia, persona_identificacion, 
+	persona_primer_apellido, persona_segundo_apellido,
+	persona_primer_nombre, persona_segundo_nombre, 
+	persona_genero, persona_sexo,
+	persona_estado_civil, persona_etnia, persona_idioma_raiz,
+	persona_tipo_sangre, persona_fecha_registro,
+    persona_idioma, persona_tipo_residencia, 
+	persona_fecha_nacimiento)
+SELECT 2, per_canton, 
+	per_parroquiareside, per_identificacion,
+	per_primerapellido, per_segundoapellido,
+	per_primernombre, per_segundonombre, 
+	per_genero, per_sexo, 
+	per_estadocivil, per_etnia, 'ESPAÑOL', 
+	per_tiposangre, per_fecharegistro, 
+	'ESPAÑOL', per_tiporesidencia,
+	per_fechanacimiento
+	FROM public.personas;
+
+DROP TABLE public.personas;
+
+--Updates a persona 
+
+UPDATE public."Personas"
+	SET persona_genero='MASCULINO'
+	WHERE persona_genero = '1';
+
+UPDATE public."Personas"
+	SET persona_genero='FEMENINO'
+	WHERE persona_genero = '2';
+
+UPDATE public."Personas"
+	SET persona_genero='LGBTI'
+	WHERE persona_genero = '3';
+
+UPDATE public."Personas"
+	SET persona_estado_civil='SOLTERO/A'
+	WHERE persona_estado_civil = '1';
+	
+UPDATE public."Personas"
+	SET persona_estado_civil='CASADO/A'
+	WHERE persona_estado_civil = '2';
+
+UPDATE public."Personas"
+	SET persona_estado_civil='DIVORCIADO/A'
+	WHERE persona_estado_civil = '3';
+
+UPDATE public."Personas"
+	SET persona_estado_civil='UNION LIBRE'
+	WHERE persona_estado_civil = '4';
+
+UPDATE public."Personas"
+	SET persona_estado_civil='VIUDO/A'
+	WHERE persona_estado_civil = '5';
+
+UPDATE public."Personas"
+	SET persona_etnia='INDIGENA'
+	WHERE persona_etnia = '1';
+
+UPDATE public."Personas"
+	SET persona_etnia='AFROECUATORIANO'
+	WHERE persona_etnia = '2';		
+
+UPDATE public."Personas"
+	SET persona_etnia='NEGRO'
+	WHERE persona_etnia = '3';	
+
+UPDATE public."Personas"
+	SET persona_etnia='MULATO'
+	WHERE persona_etnia = '4';
+
+UPDATE public."Personas"
+	SET persona_etnia='MONTUVIO'
+	WHERE persona_etnia = '5';	
+
+UPDATE public."Personas"
+	SET persona_etnia='MESTIZO'
+	WHERE persona_etnia = '6';		
+
+--Importamos el sector economico  
+
+Copy (SELECT sece_codigo, sece_id, sece_descripcion, sece_activo
+FROM public.sectoreconomicos)
+To 'C:\Backups Postgresql\sectorEconomicoP1.csv' with CSV HEADER
+
+CREATE TABLE "sectores"(
+	"sece_codigo" integer, 
+	"sece_ide" character varying(10), 
+	"sece_descripcion" character varying(200), 
+	"sece_activo" boolean
+) WITH (OIDS = FALSE);
+
+Copy sectores("sece_codigo", "sece_ide", "sece_descripcion", 
+"sece_activo")
+From 'C:\Backups Postgresql\sectorEconomicoP1.csv' 
+delimiter AS ',' NULL AS '' CSV HEADER;
+
+INSERT INTO public."SectorEconomico"(
+	id_sec_economico, sec_economico_codigo, sec_economico_descripcion, sec_economico_activo)
+	SELECT sece_codigo, sece_ide, 
+	sece_descripcion, sece_activo
+	FROM public.sectores; 
+
+DROP TABLE public.sectores;
