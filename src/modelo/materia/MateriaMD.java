@@ -25,11 +25,13 @@ public class MateriaMD {
     private int totalHoras;
     private String objetivo;
     private String descripcion;
-
+    private String objetivoespecifico;
+    private String organizacioncurricular;
+    private String materiacampoformacion;
     public MateriaMD() {
     }
 
-    public MateriaMD(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion) {
+    public MateriaMD(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion) {
         this.id = id;
         this.carrera = carrera;
         this.eje = eje;
@@ -47,8 +49,12 @@ public class MateriaMD {
         this.totalHoras = totalHoras;
         this.objetivo = objetivo;
         this.descripcion = descripcion;
+        this.objetivoespecifico = objetivoespecifico;
+        this.organizacioncurricular = organizacioncurricular;
+        this.materiacampoformacion = materiacampoformacion;
     }
 
+    
     public int getId() {
         return id;
     }
@@ -184,4 +190,30 @@ public class MateriaMD {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getObjetivoespecifico() {
+        return objetivoespecifico;
+    }
+
+    public void setObjetivoespecifico(String objetivoespecifico) {
+        this.objetivoespecifico = objetivoespecifico;
+    }
+
+    public String getOrganizacioncurricular() {
+        return organizacioncurricular;
+    }
+
+    public void setOrganizacioncurricular(String organizacioncurricular) {
+        this.organizacioncurricular = organizacioncurricular;
+    }
+
+    public String getMateriacampoformacion() {
+        return materiacampoformacion;
+    }
+
+    public void setMateriacampoformacion(String materiacampoformacion) {
+        this.materiacampoformacion = materiacampoformacion;
+    }
+    
+    
 }

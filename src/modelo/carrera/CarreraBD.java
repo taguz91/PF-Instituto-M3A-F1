@@ -66,7 +66,11 @@ public class CarreraBD extends CarreraMD {
                     CarreraMD carrera = new CarreraMD();
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     DocenteMD docen = new DocenteMD();
-                    docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    if (rs.wasNull()) {
+                        docen.setIdDocente(0);
+                    }else{
+                        docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    } 
                     carrera.setCoordinador(docen);
                     if (rs.wasNull()) {
                         carrera.setFechaFin(null);

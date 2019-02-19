@@ -23,7 +23,8 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas, materia_activa, materia_objetivo,"
-                + "materia_descripcion\n"
+                + "materia_descripcion,materia_objetivo_especifico,"
+                + "materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true';";
         ResultSet rs = conecta.sql(sql);
 
@@ -46,9 +47,22 @@ public class MateriaBD extends MateriaMD {
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
-                    m.setCreditos(rs.getInt("materia_creditos"));
+
+                    if (rs.wasNull()) {
+                        m.setCreditos(rs.getInt(null));
+
+                    } else {
+                        m.setCreditos(rs.getInt("materia_creditos"));
+
+                    }
+                    
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
-                    m.setCategoria(rs.getString("materia_categoria"));
+                    if (rs.wasNull()) {
+                        m.setCategoria(null);
+                    } else {
+                        m.setCategoria(rs.getString("materia_categoria"));
+                    }
+
                     m.setTipoAcreditacion(rs.getString("materia_tipo_acreditacion").charAt(0));
                     m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
                     m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
@@ -57,6 +71,27 @@ public class MateriaBD extends MateriaMD {
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
                     m.setObjetivo(rs.getString("materia_objetivo"));
                     m.setDescripcion(rs.getString("materia_descripcion"));
+
+                    if (rs.wasNull()) {
+                        m.setObjetivoespecifico(null);
+                    } else {
+                        m.setObjetivoespecifico("materia_objetivo_especifico");
+                    }
+
+                    if (rs.wasNull()) {
+                        m.setOrganizacioncurricular(null);
+
+                    } else {
+                        m.setOrganizacioncurricular("materia_organizacion_curricular");
+                    }
+
+                    if (rs.wasNull()) {
+
+                        m.setMateriacampoformacion(null);
+
+                    } else {
+                        m.setMateriacampoformacion("materia_campo_formacion");
+                    }
 
                     lista.add(m);
                 }
@@ -84,7 +119,8 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas, materia_activa, materia_objetivo,"
-                + "materia_descripcion\n"
+                + "materia_descripcion,"
+                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + ";";
         ResultSet rs = conecta.sql(sql);
@@ -109,9 +145,21 @@ public class MateriaBD extends MateriaMD {
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
-                    m.setCreditos(rs.getInt("materia_creditos"));
+                    if (rs.wasNull()) {
+                        m.setCreditos(rs.getInt(null));
+
+                    } else {
+                        m.setCreditos(rs.getInt("materia_creditos"));
+
+                    }
+                    
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
-                    m.setCategoria(rs.getString("materia_categoria"));
+                    if (rs.wasNull()) {
+                        m.setCategoria(null);
+                    } else {
+                        m.setCategoria(rs.getString("materia_categoria"));
+                    }
+
                     m.setTipoAcreditacion(rs.getString("materia_tipo_acreditacion").charAt(0));
                     m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
                     m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
@@ -120,7 +168,28 @@ public class MateriaBD extends MateriaMD {
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
                     m.setObjetivo(rs.getString("materia_objetivo"));
                     m.setDescripcion(rs.getString("materia_descripcion"));
+                    if (rs.wasNull()) {
+                        m.setObjetivoespecifico(null);
+                    } else {
+                        m.setObjetivoespecifico("materia_objetivo_especifico");
+                    }
 
+                    if (rs.wasNull()) {
+                        m.setOrganizacioncurricular(null);
+
+                    } else {
+                        m.setOrganizacioncurricular("materia_organizacion_curricular");
+                    }
+
+                    if (rs.wasNull()) {
+
+                        m.setMateriacampoformacion(null);
+
+                    } else {
+                        m.setMateriacampoformacion("materia_campo_formacion");
+                    }
+
+                    
                     lista.add(m);
                 }
                 return lista;
@@ -147,7 +216,8 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas, materia_activa, materia_objetivo,"
-                + "materia_descripcion\n"
+                + "materia_descripcion,"
+                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";
         ResultSet rs = conecta.sql(sql);
@@ -170,9 +240,22 @@ public class MateriaBD extends MateriaMD {
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
-                    m.setCreditos(rs.getInt("materia_creditos"));
+                    if (rs.wasNull()) {
+                        m.setCreditos(rs.getInt(null));
+
+                    } else {
+                        m.setCreditos(rs.getInt("materia_creditos"));
+
+                    }
+                    
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
-                    m.setCategoria(rs.getString("materia_categoria"));
+                    if (rs.wasNull()) {
+                        m.setCategoria(null);
+                    } else {
+                        m.setCategoria(rs.getString("materia_categoria"));
+                    }
+
+                    
                     m.setTipoAcreditacion(rs.getString("materia_tipo_acreditacion").charAt(0));
                     m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
                     m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
@@ -181,6 +264,23 @@ public class MateriaBD extends MateriaMD {
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
                     m.setObjetivo(rs.getString("materia_objetivo"));
                     m.setDescripcion(rs.getString("materia_descripcion"));
+                    if (rs.wasNull()) {
+                        m.setObjetivoespecifico(null);
+                    } else {
+                        m.setObjetivoespecifico("materia_objetivo_especifico");
+                    }
+
+                    if (rs.wasNull()) {
+                        m.setOrganizacioncurricular(null);
+                    } else {
+                        m.setOrganizacioncurricular("materia_organizacion_curricular");
+                    }
+
+                    if (rs.wasNull()) {
+                        m.setMateriacampoformacion(null);
+                    } else {
+                        m.setMateriacampoformacion("materia_campo_formacion");
+                    }
 
                 }
                 return m;
@@ -201,7 +301,7 @@ public class MateriaBD extends MateriaMD {
     public ArrayList<MateriaMD> cargarMaterias(String aguja) {
 
         ArrayList<MateriaMD> lista = new ArrayList();
-        
+
         String sql = "SELECT * FROM public.\"Materias\"\n"
                 + "WHERE \"id_materia\" ILKE '%" + aguja + "%' "
                 + "WHERE \"materia_nombre\" ILKE '%" + aguja + "%'"
@@ -228,9 +328,20 @@ public class MateriaBD extends MateriaMD {
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
-                    m.setCreditos(rs.getInt("materia_creditos"));
+                    
+                    if (rs.wasNull()) {
+                        m.setCreditos(rs.getInt(null));
+                    } else {
+                        m.setCreditos(rs.getInt("materia_creditos"));
+                    }
+                    
                     m.setTipo(rs.getString("materia_tipo").charAt(0));
-                    m.setCategoria(rs.getString("materia_categoria"));
+                    if (rs.wasNull()) {
+                        m.setCategoria(null);
+                    } else {
+                        m.setCategoria(rs.getString("materia_categoria"));
+                    }
+
                     m.setTipoAcreditacion(rs.getString("materia_tipo_acreditacion").charAt(0));
                     m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
                     m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
@@ -239,7 +350,26 @@ public class MateriaBD extends MateriaMD {
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
                     m.setObjetivo(rs.getString("materia_objetivo"));
                     m.setDescripcion(rs.getString("materia_descripcion"));
+                    
+                    
+                    if (rs.wasNull()) {
+                        m.setObjetivoespecifico(null);
+                    } else {
+                        m.setObjetivoespecifico("materia_objetivo_especifico");
+                    }
 
+                    if (rs.wasNull()) {
+                        m.setOrganizacioncurricular(null);
+                    } else {
+                        m.setOrganizacioncurricular("materia_organizacion_curricular");
+                    }
+
+                    if (rs.wasNull()) {
+                        m.setMateriacampoformacion(null);
+                    } else {
+                        m.setMateriacampoformacion("materia_campo_formacion");
+                    }
+                    
                     lista.add(m);
                 }
                 return lista;
