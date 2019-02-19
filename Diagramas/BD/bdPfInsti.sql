@@ -28,20 +28,20 @@ CREATE TABLE "Personas"(
   "id_lugar_natal" integer NOT NULL DEFAULT '1',
   "id_lugar_residencia" integer NOT NULL DEFAULT '1',
   "persona_foto" bytea,
-  "persona_identificacion" character varying(20) NOT NULL,
+  "persona_identificacion" character varying(20) NOT NULL UNIQUE,
   "persona_primer_apellido" character varying(25) NOT NULL,
-  "persona_segundo_apellido" character varying(25) NOT NULL,
+  "persona_segundo_apellido" character varying(25),
   "persona_primer_nombre" character varying(25) NOT NULL,
-  "persona_segundo_nombre" character varying(25) NOT NULL,
-  "persona_genero" character varying(10) NOT NULL,
+  "persona_segundo_nombre" character varying(25),
+  "persona_genero" character varying(10),
   "persona_sexo" character varying(1) NOT NULL,
   "persona_estado_civil" character varying(30) NOT NULL,
   "persona_etnia" character varying(50) NOT NULL,
-  "persona_idioma_raiz" character varying(30) NOT NULL,
+  "persona_idioma_raiz" character varying(30) NOT NULL DEFAULT 'ESPAÑOL',
   "persona_tipo_sangre" character varying(5) NOT NULL,
-  "persona_telefono" character varying(10) NOT NULL,
-  "persona_celular" character varying(10) NOT NULL,
-  "persona_correo" character varying(30) NOT NULL,
+  "persona_telefono" character varying(10),
+  "persona_celular" character varying(10),
+  "persona_correo" character varying(30),
   "persona_fecha_registro" date NOT NULL,
   "persona_discapacidad" boolean NOT NULL DEFAULT 'false',
   "persona_tipo_discapacidad" character varying(20),
@@ -50,10 +50,10 @@ CREATE TABLE "Personas"(
   "persona_calle_principal" character varying(200) NOT NULL DEFAULT 'SN',
   "persona_numero_casa" character varying(10) NOT NULL DEFAULT '00',
   "persona_calle_secundaria" character varying(200) NOT NULL DEFAULT 'SN',
-  "persona_referencia" character varying(200) NOT NULL,
-  "persona_sector" character varying(200) NOT NULL,
-  "persona_idioma" character varying(50) NOT NULL,
-  "persona_tipo_residencia" character varying(30) NOT NULL,
+  "persona_referencia" character varying(200),
+  "persona_sector" character varying(200),
+  "persona_idioma" character varying(50),
+  "persona_tipo_residencia" character varying(30),
   "persona_fecha_nacimiento" date NOT NULL, 
   "persona_activa" BOOLEAN NOT NULL DEFAULT 'true', 
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
@@ -81,8 +81,11 @@ CREATE TABLE "Materias"(
 	"materia_horas_presencial" INTEGER NOT NULL DEFAULT '0', 
 	"materia_total_horas" integer NOT NULL DEFAULT '0',
 	"materia_activa" BOOLEAN NOT NULL DEFAULT 'true',
-	"materia_objetivo" character varying(200) NOT NULL DEFAULT 'Sin objetivo', 
-	"materia_descripcion" character varying(200) NOT NULL DEFAULT 'Sin descripcion', 
+	"materia_objetivo" TEXT NOT NULL DEFAULT 'Sin objetivo', 
+	"materia_descripcion" TEXT NOT NULL DEFAULT 'Sin descripcion', 
+	"materia_objetivo_especifico" TEXT,
+	"materia_organizacion_curricular" TEXT,  
+	"materia_campo_formacion" character varying(200), 
 	CONSTRAINT materia_pk PRIMARY KEY ("id_materia")
 ) WITH (OIDS = FALSE);
 
@@ -91,7 +94,7 @@ CREATE TABLE "Alumnos"(
 	"id_alumno" serial NOT NULL,
 	"id_persona" INTEGER NOT NULL UNIQUE, 
 	"id_carrera" INTEGER NOT NULL,
-	"alumno_codigo" character varying(10) NOT NULL,
+	"id_sec_economico" INTEGER NOT NULL, 
 	"alumno_tipo_colegio" character varying(30) NOT NULL,
 	"alumno_tipo_bachillerato" character varying(100) NOT NULL,
 	"alumno_anio_graduacion" character varying(4) NOT NULL,
@@ -101,7 +104,6 @@ CREATE TABLE "Alumnos"(
 	"alumno_pension" BOOLEAN NOT NULL DEFAULT 'false', 
 	"alumno_ocupacion" character varying(200) NOT NULL,
 	"alumno_trabaja" BOOLEAN NOT NULL DEFAULT 'false',
-	"alumno_sector_economico" character varying(100) NOT NULL,
 	"alumno_nivel_formacion_padre" character varying(100) NOT NULL,
 	"alumno_nivel_formacion_madre" character varying(100) NOT NULL,
 	"alumno_nombre_contacto_emergencia" character varying(100) NOT NULL,
@@ -138,13 +140,14 @@ CREATE TABLE "Docentes"(
   "docente_tipo_tiempo" character varying(20),
   "docente_activo" boolean NOT NULL DEFAULT 'true',
   "docente_observacion" character varying(20),
+  "docente_capacitador" boolean NOT NULL DEFAULT 'false',
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
 --Lugar
 CREATE TABLE "Lugares"(
   "id_lugar" serial NOT NULL,
-  "lugar_codigo" character varying(20) NOT NULL,
+  "lugar_codigo" character varying(20),
   "lugar_nombre" character varying(100) NOT NULL,
   "lugar_nivel" integer NOT NULL,
   "id_lugar_referencia" integer,
@@ -157,8 +160,8 @@ CREATE TABLE "Cursos"(
   "id_materia" integer NOT NULL,
   "id_prd_lectivo" integer NOT NULL,
   "id_docente" integer NOT NULL,
+  "id_jornada" integer NOT NULL, 
   "curso_nombre" character varying(10) NOT NULL,
-  "curso_jornada" character varying(20) NOT NULL,
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
   "curso_permiso_ingreso_nt" boolean NOT NULL DEFAULT 'false', 
@@ -186,7 +189,7 @@ CREATE TABLE "AlumnoCurso"(
 CREATE TABLE "PreCoRequisitos" (
     "id_pre_co_requisito" serial NOT NULL, 
 	"id_materia" integer NOT NULL, 
-	"pre_co_tipo" character varying(1), 
+	"pre_requisito" boolean NOT NULL DEFAULT 'true',  
 	"id_materia_requisito" integer NOT NULL, 
 	CONSTRAINT pre_co_requisito_pk PRIMARY KEY ("id_pre_co_requisito")
 ) WITH (OIDS = FALSE); 
@@ -225,6 +228,15 @@ CREATE TABLE "EjesFormacion"(
 	"eje_codigo" character varying(10) NOT NULL, 
 	"eje_nombre" character varying(100) NOT NULL, 
 	CONSTRAINT eje_formacion_pk PRIMARY KEY ("id_eje") 
+) WITH (OIDS = FALSE); 
+
+--Sector economico  
+CREATE TABLE "SectorEconomico"(
+	"id_sec_economico" serial NOT NULL, 
+	"sec_economico_codigo" character varying(10),
+	"sec_economico_descripcion" character varying(200), 
+	"sec_economico_activo" boolean NOT NULL DEFAULT 'true',
+	CONSTRAINT sector_economico_pk PRIMARY KEY ("id_sec_economico")
 ) WITH (OIDS = FALSE); 
 
 /*
@@ -292,6 +304,14 @@ CREATE TABLE "AccesosDelRol"(
 	CONSTRAINT acceso_del_rol_pk PRIMARY KEY("id_acceso_del_rol")
 )WITH(OIDS = FALSE);
 
+/* Tablas GRUPO */
+CREATE TABLE "Jornadas"(
+	"id_jornada" serial NOT NULL, 
+	"jornada_nombre" character varying(100),
+	CONSTRAINT jornada_pk PRIMARY KEY ("id_jornada")
+) WITH (OIDS = FALSE); 
+
+
 /*
 FK G 23
 */
@@ -318,6 +338,10 @@ ALTER TABLE "Cursos" ADD CONSTRAINT "curso_fk3"
 FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "Cursos" ADD CONSTRAINT "curso_fk4"
+FOREIGN KEY ("id_jornada") REFERENCES "Jornadas"("id_jornada")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 ALTER TABLE "AlumnoCurso" ADD CONSTRAINT "alumno_curso_fk1"
 FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
@@ -335,6 +359,11 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "Alumnos" ADD CONSTRAINT "alumnos_fk2"
 FOREIGN KEY ("id_carrera") REFERENCES "Carreras"("id_carrera")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Alumnos" ADD CONSTRAINT "alumnos_fk3"
+FOREIGN KEY ("id_sec_economico") REFERENCES "SectorEconomico"("id_sec_economico")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 
 ALTER TABLE "Docentes" ADD CONSTRAINT "docentes_fk1"
@@ -425,9 +454,6 @@ ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "accesos_fk"
 ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "rolesUsuarios_pk"
 	FOREIGN KEY("id_rol") REFERENCES "RolesUsuarios"("id_rol")
 		ON UPDATE CASCADE ON DELETE CASCADE;
-	
-	
-
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
