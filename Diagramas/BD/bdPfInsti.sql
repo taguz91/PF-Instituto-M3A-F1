@@ -264,6 +264,8 @@ CREATE TABLE "RolesUsuarios"(
 	
 ) WITH(OIDS = FALSE);
 
+
+
 CREATE TABLE "PeriodoIngresoNotas"(
 	"id_perd_ingr_notas" serial NOT NULL,
 	"perd_notas_fecha_inicio" DATE NOT NULL,
