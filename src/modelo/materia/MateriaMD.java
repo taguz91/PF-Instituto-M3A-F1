@@ -10,17 +10,18 @@ public class MateriaMD {
 
     private int id;
     private CarreraMD carrera;
+    private EjeFormacionMD eje; 
     private String codigo;
     private String nombre;
     private int ciclo;
     private int creditos;
     private char tipo;
     private String categoria;
-    private String eje;
     private char tipoAcreditacion;
-    private int horasTeoricas;
+    private int horasDocencia;
     private int horasPracticas;
     private int horasAutoEstudio;
+    private int horasPresenciales; 
     private int totalHoras;
     private String objetivo;
     private String descripcion;
@@ -28,20 +29,21 @@ public class MateriaMD {
     public MateriaMD() {
     }
 
-    public MateriaMD(int id, CarreraMD carrera, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, String eje, char tipoAcreditacion, int horasTeoricas, int horasPracticas, int horasAutoEstudio, int totalHoras, String objetivo, String descripcion) {
+    public MateriaMD(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion) {
         this.id = id;
         this.carrera = carrera;
+        this.eje = eje;
         this.codigo = codigo;
         this.nombre = nombre;
         this.ciclo = ciclo;
         this.creditos = creditos;
         this.tipo = tipo;
         this.categoria = categoria;
-        this.eje = eje;
         this.tipoAcreditacion = tipoAcreditacion;
-        this.horasTeoricas = horasTeoricas;
+        this.horasDocencia = horasDocencia;
         this.horasPracticas = horasPracticas;
         this.horasAutoEstudio = horasAutoEstudio;
+        this.horasPresenciales = horasPresenciales;
         this.totalHoras = totalHoras;
         this.objetivo = objetivo;
         this.descripcion = descripcion;
@@ -111,11 +113,11 @@ public class MateriaMD {
         this.categoria = categoria;
     }
 
-    public String getEje() {
+    public EjeFormacionMD getEje() {
         return eje;
     }
 
-    public void setEje(String eje) {
+    public void setEje(EjeFormacionMD eje) {
         this.eje = eje;
     }
 
@@ -127,12 +129,20 @@ public class MateriaMD {
         this.tipoAcreditacion = tipoAcreditacion;
     }
 
-    public int getHorasTeoricas() {
-        return horasTeoricas;
+    public int getHorasDocencia() {
+        return horasDocencia;
     }
 
-    public void setHorasTeoricas(int horasTeoricas) {
-        this.horasTeoricas = horasTeoricas;
+    public void setHorasDocencia(int horasDocencia) {
+        this.horasDocencia = horasDocencia;
+    }
+
+    public int getHorasPresenciales() {
+        return horasPresenciales;
+    }
+
+    public void setHorasPresenciales(int horasPresenciales) {
+        this.horasPresenciales = horasPresenciales;
     }
 
     public int getHorasPracticas() {

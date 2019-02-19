@@ -21,7 +21,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 import modelo.materia.MateriaBD;
 import modelo.persona.UsuarioMD;
 import vista.carrera.FrmCarrera;
