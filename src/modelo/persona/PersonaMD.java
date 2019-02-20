@@ -93,6 +93,41 @@ public class PersonaMD {
         this.personaActiva = personaActiva;
     }
 
+    public PersonaMD(TipoPersonaMD tipo, LugarMD lugarNatal, LugarMD lugarResidencia, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+        this.tipo = tipo;
+        this.lugarNatal = lugarNatal;
+        this.lugarResidencia = lugarResidencia;
+        this.identificacion = identificacion;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+        this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
+        this.etnia = etnia;
+        this.idiomaRaiz = idiomaRaiz;
+        this.tipoSangre = tipoSangre;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+        this.discapacidad = discapacidad;
+        this.tipoDiscapacidad = tipoDiscapacidad;
+        this.porcentajeDiscapacidad = porcentajeDiscapacidad;
+        this.carnetConadis = carnetConadis;
+        this.callePrincipal = callePrincipal;
+        this.numeroCasa = numeroCasa;
+        this.calleSecundaria = calleSecundaria;
+        this.referencia = referencia;
+        this.sector = sector;
+        this.idioma = idioma;
+        this.tipoResidencia = tipoResidencia;
+        this.personaActiva = personaActiva;
+    }
+
+    
     
     public FileInputStream getFile() {
         return file;

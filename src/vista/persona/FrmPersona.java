@@ -1,4 +1,4 @@
-package vista.persona; 
+package vista.persona;
 
 import com.toedter.components.JLocaleChooser;
 import datechooser.beans.DateChooserCombo;
@@ -273,7 +273,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel1.setText("Tipo id *");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        cmbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CEDULA", "PASAPORTE" }));
+        cmbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "CEDULA", "PASAPORTE" }));
         cmbTipoId.setBorder(null);
         getContentPane().add(cmbTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 130, -1));
 
@@ -299,13 +299,13 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel8.setText("Sexo *");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, 20));
 
-        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
+        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "HOMBRE", "MUJER" }));
         getContentPane().add(cmbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, -1));
 
         jLabel9.setText("Estado Civil *");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, 20));
 
-        cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO/A", "CASADO/A", "DIVORCIADO/A", "UNION LIBRE", "VIUDO/A" }));
+        cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "SOLTERO/A", "CASADO/A", "DIVORCIADO/A", "UNION LIBRE", "VIUDO/A" }));
         getContentPane().add(cmbEstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 133, -1));
         getContentPane().add(txtSegundoApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 130, -1));
         getContentPane().add(txtPrimerApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 130, -1));
@@ -315,20 +315,20 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel10.setText("Etnia *");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, 20));
 
-        cmbEtnia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INDIGENA", "MESTIZOS", "MULATO", "AFROECUATORIANO", "BLANCO" }));
+        cmbEtnia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "sELECCIONE", "INDIGENA", "MESTIZOS", "MULATO", "AFROECUATORIANO", "BLANCO" }));
         getContentPane().add(cmbEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 130, 20));
 
         jLabel11.setText("Genero *");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, -1, 20));
 
-        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO", "LGBTI" }));
+        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selccione", "MASCULINO", "FEMENINO", "LGBTI" }));
         getContentPane().add(cmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 130, -1));
 
         jLabel12.setText("Tipo Sangre *");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 20));
 
-        cmbTipoSangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-" }));
-        getContentPane().add(cmbTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 61, -1));
+        cmbTipoSangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-" }));
+        getContentPane().add(cmbTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 130, -1));
 
         jLabel13.setText("Discapacidad");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, 20));
@@ -336,7 +336,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel14.setText("Tipo de discapacidad");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, 20));
 
-        cmbTipoDiscapacidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FÍSICA", "INTELECTUAL", "SENSORIAL", "PSÍQUICA", "VISCERAL", "MULTIPLE" }));
+        cmbTipoDiscapacidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "FÍSICA", "INTELECTUAL", "SENSORIAL", "PSÍQUICA", "VISCERAL", "MULTIPLE" }));
         getContentPane().add(cmbTipoDiscapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 160, -1));
 
         jLabel15.setText("Porcentaje");
@@ -434,6 +434,8 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 530, -1, -1));
         getContentPane().add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 1030, 10));
+
+        cmbIdiomas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "árabe (Emiratos Árabes Unidos)", "árabe (Jordania)", "árabe (Siria)", "croata (Croacia)", "francés (Bélgica)", "español (Panamá)", "maltés (Malta)", "español (Venezuela)", "chino (Taiwán)", "danés (Dinamarca)", "español (Puerto Rico)", "vietnamita (Vietnam)", "inglés (Estados Unidos)", "serbio (Montenegro)", "sueco (Suecia)", "español (Bolivia)", "inglés (Singapur)", "árabe (Bahráin)", "árabe (Arabia Saudita)", "árabe (Yemen)", "hindi (India)", "inglés (Malta)", "finés (Finlandia)", "serbio (latín", "Bosnia y Hercegovina)", "ucraniano (Ucrania)", "francés (Suiza)", "español (Argentina)", "árabe (Egipto)", "japonés (Japón", "JP)", "español (El Salvador)", "portugués (Brasil)", "islandés (Islandia)", "checo (Chequia)", "polaco (Polonia)", "catalán (España)", "serbio (Serbia y Montenegro)", "malayo (Malasia)", "español (España)", "español (Colombia)", "búlgaro (Bulgaria)", "serbio (Bosnia y Hercegovina)", "español (Paraguay)", "español (Ecuador)", "español (Estados Unidos)", "árabe (Sudán)", "rumano (Rumania)", "inglés (Filipinas)", "árabe (Túnez)", "serbio (latín", "Montenegro)", "español (Guatemala)", "coreano (Corea del Sur)", "griego (Chipre)", "español (México)", "ruso (Rusia)", "español (Honduras)", "chino (Hong Kong)", "noruego (Noruega", "Nynorsk)", "húngaro (Hungría)", "tailandés (Tailandia)", "árabe (Iraq)", "español (Chile)", "árabe (Marruecos)", "irlandés (Irlanda)", "turco (Turquía)", "estonio (Estonia)", "árabe (Qatar)", "portugués (Portugal)", "francés (Luxemburgo)", "árabe (Omán)", "albanés (Albania)", "español (República Dominicana)", "español (Cuba)", "inglés (Nueva Zelanda)", "serbio (Serbia)", "alemán (Suiza)", "español (Uruguay)", "griego (Grecia)", "hebreo (Israel)", "inglés (Sudáfrica)", "tailandés (Tailandia", "TH)", "francés (Francia)", "alemán (Austria)", "noruego (Noruega)", "inglés (Australia)", "neerlandés (Holanda)", "francés (Canadá)", "letón (Letonia)", "alemán (Luxemburgo)", "español (Costa Rica)", "árabe (Kuwait)", "árabe (Libia)", "italiano (Suiza)", "alemán (Alemania)", "árabe (Argelia)", "eslovaco (Eslovaquia)", "lituano (Lituania)", "italiano (Italia)", "inglés (Irlanda)", "chino (Singapur)", "inglés (Canadá)", "neerlandés (Bélgica)", "chino (China)", "japonés (Japón)", "alemán (Grecia)", "serbio (latín", "Serbia)", "inglés (India)", "árabe (Líbano)", "español (Nicaragua)", "macedonio (Macedonia)", "bielorruso (Bielorrusia)", "esloveno (Eslovenia)", "español (Perú)", "indonesio (Indonesia)", "inglés (Reino Unido)" }));
         getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 133, -1));
 
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
