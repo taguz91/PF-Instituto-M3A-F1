@@ -38,13 +38,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.btnGuardar = btnGuardar;
     }
 
-    public JCheckBox getCbxDocenteActivo() {
-        return cbxDocenteActivo;
-    }
-
-    public void setCbxDocenteActivo(JCheckBox cbxDocenteActivo) {
-        this.cbxDocenteActivo = cbxDocenteActivo;
-    }
 
     public JCheckBox getCbxDocenteCapacitador() {
         return cbxDocenteCapacitador;
@@ -132,14 +125,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
     public void setLblCategoria(JLabel lblCategoria) {
         this.lblCategoria = lblCategoria;
-    }
-
-    public JLabel getLblDocenteActivo() {
-        return lblDocenteActivo;
-    }
-
-    public void setLblDocenteActivo(JLabel lblDocenteActivo) {
-        this.lblDocenteActivo = lblDocenteActivo;
     }
 
     public JLabel getLblDocenteCapacitador() {
@@ -242,8 +227,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         cmbTipoTiempo = new javax.swing.JComboBox<>();
         spnCategoria = new javax.swing.JSpinner();
         lblCategoria = new javax.swing.JLabel();
-        lblDocenteActivo = new javax.swing.JLabel();
-        cbxDocenteActivo = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -268,7 +251,7 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         lblTipoId.setText("Tipo Id.*");
         getContentPane().add(lblTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        cmbCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cedula", "Pasaporte" }));
+        cmbCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "CEDULA", "PASAPORTE" }));
         cmbCedula.setToolTipText("Escoja el tipo de identificacion ");
         getContentPane().add(cmbCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 130, -1));
 
@@ -283,8 +266,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 150, -1));
 
         lblOtroTrabajo.setText("Otro Trabajo");
-        getContentPane().add(lblOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, 10));
-        getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, 20));
+        getContentPane().add(lblOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, 10));
+        getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, 20));
 
         jdcFechaInicioContratacion.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -343,7 +326,7 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     lblTipoTiempo.setText("Tipo Tiempo");
     getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, 10));
 
-    cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiempo Completo", "Tiempo Parcial", "Medio Tiempo", "Por Horas" }));
+    cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
     getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 130, 20));
 
     spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
@@ -352,10 +335,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
     lblCategoria.setText("Categoria");
     getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, 10));
-
-    lblDocenteActivo.setText("Docente Activo");
-    getContentPane().add(lblDocenteActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, 10));
-    getContentPane().add(cbxDocenteActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, 20));
     getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 530, 10));
 
     btnGuardar.setText("Guardar");
@@ -384,7 +363,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JCheckBox cbxDocenteActivo;
     private javax.swing.JCheckBox cbxDocenteCapacitador;
     private javax.swing.JCheckBox cbxOtroTrabajo;
     private javax.swing.JComboBox<String> cmbCedula;
@@ -396,7 +374,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo jdcFechaFinContratacion;
     private datechooser.beans.DateChooserCombo jdcFechaInicioContratacion;
     private javax.swing.JLabel lblCategoria;
-    private javax.swing.JLabel lblDocenteActivo;
     private javax.swing.JLabel lblDocenteCapacitador;
     private javax.swing.JLabel lblFechaFinContratacion;
     private javax.swing.JLabel lblFechaInicioContratacion;

@@ -22,13 +22,13 @@ public class ConectarDB {
 
     //private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
 
-    private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
-
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
+    private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
     private String user = "postgres";
     
-    private String pass = "Holapostgres"; //Clave Johnny
+    //private String pass = "Holapostgres"; //Clave Johnny
    // private String pass = "linis4413"; //Clave Lina
-
+   private String pass = "PAOLA"; //Clave Paola
     public ConectarDB() {
         try {
             //Cargamos el driver  
