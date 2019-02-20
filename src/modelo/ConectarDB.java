@@ -27,6 +27,7 @@ public class ConectarDB {
     private String user = "postgres";
     
     private String pass = "Holapostgres"; //Clave Johnny
+    
    // private String pass = "linis4413"; //Clave Lina
 
     public ConectarDB() {
