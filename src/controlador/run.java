@@ -1,6 +1,7 @@
 package controlador;
 
 import controlador.principal.VtnPrincipalCTR;
+import modelo.LlenarLugaresBD;
 import modelo.persona.UsuarioMD;
 import vista.principal.VtnPrincipal;
 
@@ -12,6 +13,9 @@ public class run {
 
     public static void main(String[] args) {
         estiloWindows();
+        //Con esta clase llene lugares 
+        /*LlenarLugaresBD prueba = new LlenarLugaresBD(); 
+        prueba.iniciar();*/
         
         UsuarioMD usuario = new UsuarioMD();
         VtnPrincipal vtn = new VtnPrincipal(); 
