@@ -73,12 +73,13 @@ public class FrmPersonaCTR {
 
         //Todas las variables del formulario
         String identificacion, priNombre, segNombre, priApellido, segApellido,
-                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis,
-                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz, telefono,
+                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis = null,
+                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz = null, telefono,
                 callePrin, calleSec, referencia, celular, numCasa, sector,
                 zonaResidencia, correo;
 
         boolean discapcidad;
+        
         identificacion = frmPersona.getTxtIdentificacion().getText();
 
         int tipoIdentifi = frmPersona.getCmbTipoId().getSelectedIndex();
@@ -112,7 +113,7 @@ public class FrmPersonaCTR {
             guardar = false;
             //Mostrar error
         } else {
-//Ocultamos error
+            //Ocultamos error
         }
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
@@ -174,7 +175,15 @@ public class FrmPersonaCTR {
             etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
             //Ocultar error
         }
-        tipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
+
+        if (frmPersona.getCmbTipoSangre().getSelectedIndex() < 1) {
+            guardar = false;
+            //mostrar error
+
+        } else {
+            tipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
+            //Ocultamos el error
+        }
 
         discapcidad = frmPersona.getCbxDiscapacidad().isSelected();
         if (discapcidad) {
@@ -182,19 +191,38 @@ public class FrmPersonaCTR {
             carnetConadis = frmPersona.getTxtCarnetConadis().getText();
 
             tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+            
             porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
             if (!Validar.esNumeros(porcentajeDiscapacidad)) {
                 guardar = false;
                 //mostramos error 
             } else {
-                //ocualtamos error
+                //ocultamos error
 
             }
 
         }
 
+        if(frmPersona.getCmbIdiomas().getSelectedIndex() < 1){
+            //Mostrar error
+            guardar = false;
+            
+        }else{
+            //Ocultar error
         idiomaRaiz = frmPersona.getCmbIdiomas().getSelectedItem().toString();
+        
+        }
+        
+        
         telefono = frmPersona.getTxtTelefono().getText();
+        if(!Validar.esNumeros(telefono)){
+            //Mostrar error
+            guardar = false;
+        }else{
+            //Ocultar error
+            
+        }
+        
         //para saber como me devuelve el dato
         System.out.println(idiomaRaiz + "htdfrggf");
         String idioma[] = idiomaRaiz.split(" ");
@@ -206,10 +234,38 @@ public class FrmPersonaCTR {
         //String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
 
         callePrin = frmPersona.getTxtCallePrincipal().getText();
+        if(!Validar.esLetras(callePrin)){
+            //Mostrar error
+            guardar = false;
+        }else{
+            //Ocultar error
+        }
+        
         calleSec = frmPersona.getTxtCalleSecundaria().getText();
+        if(!Validar.esLetras(calleSec)){
+            //Mostrar error
+            guardar = false;
+            
+        }else{
+            //Ocultar error
+        }
 
+        
         referencia = frmPersona.getTxtReferencia().getText();
+        if(!Validar.esLetras(referencia)){
+            //Mostrar error
+            guardar = false;
+        }else{
+            //Ocultar error
+        }
+        
         celular = frmPersona.getTxtCelular().getText();
+        if(!Validar.esNumeros(celular)){
+            //mostrar error
+            guardar = false;
+        }else{
+            //ocualtar error
+        }
 
         //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
         String cantonReside = frmPersona.getCmbCantonReside().getSelectedItem().toString();
@@ -224,15 +280,27 @@ public class FrmPersonaCTR {
         String pronvicia = frmPersona.getCmbProvincia().getSelectedItem().toString();
         String canton = frmPersona.getCmbCanton().getSelectedItem().toString();
 
+        //Crear validacion para correo
         correo = frmPersona.getTxtCorreo().getText();
 
         if (guardar) {
             //Llenar directo por el constructor
-            /* PersonaBD persona = new PersonaBD(tipoIdentifi, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, etnia, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, nacionalidad, 0, canton, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
+            PersonaBD persona = new PersonaBD();
+           
+//           String identificacion, priNombre, segNombre, priApellido, segApellido,
+//                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis = null,
+//                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz = null, telefono,
+//                callePrin, calleSec, referencia, celular, numCasa, sector,
+//                zonaResidencia, correo;
+//
+//        boolean discapcidad;
+//        
+           // PersonaBD persona = new PersonaBD(, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, tipoDiscapacidad, 0, carnetConadis, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
             persona.setCallePrincipal(callePrin);
             persona.setCalleSecundaria(calleSec);
             persona.setCarnetConadis(carnetConadis);
-             */
+            
+             
         } else {
             System.out.println("Existen errores en los formularios");
         }
