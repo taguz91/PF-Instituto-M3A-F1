@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -45,7 +47,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
                 + "persona_tipo_residencia, persona_fecha_nacimiento, persona_activa )\n"
                 + "VALUES ('" + getTipo() + "', '" + getLugarNatal() + "', '"
-                + getLugarResidencia() + "', '" + getFoto() + "', '" + getIdentificacion() + "', '"
+                + getLugarResidencia() + "', ? , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', " + getSegundoApellido() + ", " + getPrimerNombre() + "', '"
                 + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
                 + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
@@ -220,6 +222,7 @@ public class PersonaBD extends PersonaMD {
 
     }
 
+    
     //Buscar Persona con aguja
     public PersonaBD buscarPersona(String aguja) {
         String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
@@ -242,6 +245,84 @@ public class PersonaBD extends PersonaMD {
             return null;
         }
     }
+    
+    
+    //Metodo para cargar persona en un ArrayList
+     public ArrayList<PersonaMD> cargarPersonas() throws SQLException {
+        ArrayList<PersonaMD> personas = new ArrayList();
+        String sql = "select * from \"Persona\"";
+        ResultSet rs = conecta.sql(sql);
+        System.out.println(sql);
+        while (rs.next()) {
+            PersonaMD p = new PersonaMD();
+            p.setIdPersona(rs.getInt("id_persona"));
+            p.setIdentificacion(rs.getString("persona_identificacion"));
+            p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+            p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+            p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+            p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+            p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+            
+        }
 
-    //
+        return personas;
+    }
+
+    //Metodo para mostrar Datos de Persona
+    public List<PersonaMD> mostrarDatos() {
+        try {
+            List<PersonaMD> lista = new ArrayList<PersonaMD>();
+            String sql = "select * from \"Persona\"";
+            ResultSet rs = conecta.sql(sql);
+            System.out.println(sql);
+            while (rs.next()) {
+                PersonaMD p = new PersonaMD();
+                p.setIdPersona(rs.getInt("id_persona"));
+                p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                
+
+                lista.add(p);
+
+            }
+            //rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return null;
+        }
+
+    }
+    
+    
+    public PersonaBD buscarPersonaCedula (String identificacion){
+        PersonaBD p = new PersonaBD();
+        String sql = "Select id_persona, persona_primer_nombre "
+                + "from public.\"Personas\" "
+                + "where persona_identificacion ='"+identificacion+"'";
+        
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if(rs!=null){
+                while(rs.next()){
+                    p.setIdPersona(rs.getInt("id_persona"));
+                    p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    
+                }
+                rs.close();
+                return p;
+            }else{
+                return null;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("No se pudo consultar la persona"+ e.getMessage());
+            return null;
+        }
+        
+        
+    }
+    
 }

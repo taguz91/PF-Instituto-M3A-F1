@@ -3,13 +3,16 @@ package controlador.persona;
 import java.awt.Image;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.persona.PersonaBD;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
+import vista.persona.VtnPersona;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -20,11 +23,15 @@ public class FrmPersonaCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
+    private final VtnPersona vtnPer;
+    private PersonaBD per; 
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
+    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, VtnPersona vtnPer) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
-
+        this.vtnPer = vtnPer;
+        //Inicializamos persona
+        this.per = new PersonaBD(); 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
     }
@@ -32,7 +39,7 @@ public class FrmPersonaCTR {
     public void iniciar() {
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> pruebas());
-        frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
+      //  frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmPersona.getBtnCancelar().addActionListener(e -> salirBoton());
     }
 
@@ -307,8 +314,16 @@ public class FrmPersonaCTR {
 
     }
 
-    public void buscarPersona() {
-
+    public void buscarPersona(String aguja ) {
+        per = per.buscarPersonaCedula(aguja);
+             if(per != null){
+                 frmPersona.getTxtPrimerNombre().setText(per.getPrimerNombre());
+                 
+                 
+             }else{
+                 
+             }
+       
     }
 
     public void salirBoton() {
