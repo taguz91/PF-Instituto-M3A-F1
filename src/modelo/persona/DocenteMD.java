@@ -8,13 +8,13 @@ import java.time.LocalDate;
 public class DocenteMD {
     private String codigo,docenteTipoTiempo, estado;
     private int docenteCategoria,idDocente;
-    private boolean docenteOtroTrabajo;
+    private boolean docenteOtroTrabajo, docenteCapacitador;
     private LocalDate fechaInicioContratacion,fechaFinContratacion;
 
     public DocenteMD() {
     }
 
-    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion) {
+    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
         this.estado = estado;
@@ -23,6 +23,7 @@ public class DocenteMD {
         this.docenteOtroTrabajo = docenteOtroTrabajo;
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
+        this.docenteCapacitador=docenteCapacitador;
     }
 
     public String getCodigo() {
@@ -87,6 +88,14 @@ public class DocenteMD {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public boolean isDocenteCapacitador() {
+        return docenteCapacitador;
+    }
+
+    public void setDocenteCapacitador(boolean docenteCapacitador) {
+        this.docenteCapacitador = docenteCapacitador;
     }
         
 }

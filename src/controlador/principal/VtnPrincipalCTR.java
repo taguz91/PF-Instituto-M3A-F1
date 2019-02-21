@@ -22,6 +22,7 @@ import javax.swing.KeyStroke;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.materia.MateriaBD;
+import modelo.persona.DocenteBD;
 import modelo.persona.UsuarioMD;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -66,6 +67,7 @@ public class VtnPrincipalCTR {
                         getMenuShortcutKeyMask()));
          */
         //Acciones de las ventanas de consulta
+      
         vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_L, ActionEvent.CTRL_MASK));
 
@@ -262,9 +264,11 @@ public class VtnPrincipalCTR {
 
     public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
+        DocenteBD docente = new DocenteBD(); 
         eventoInternal(frmDocente);
         if (numVtns < 5) {
-            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente);
+            frmDocente.getBtnRegistrarPersona().setVisible(false);
+            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente);
             ctrFrmDocente.iniciar();
         } else {
             vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);

@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import modelo.persona.DocenteBD;
 import vista.persona.FrmDocente;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
@@ -26,8 +27,9 @@ public class VtnDocenteCTR {
     }
     
     public void abrirFrmDocente() {
+        DocenteBD docente = new DocenteBD(); 
         FrmDocente frmDocente  = new FrmDocente(); 
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente);
+        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente);
         ctrFrmDocente.iniciar();
     }
     
