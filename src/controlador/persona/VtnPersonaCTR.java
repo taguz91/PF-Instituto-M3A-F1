@@ -18,7 +18,14 @@ public class VtnPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
     private DefaultTableModel mdTbl;
-     private ArrayList<PersonaMD> personas; 
+    private ArrayList<PersonaMD> personas;
+
+//    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona) {
+//        this.vtnPrin = vtnPrin;
+//        this.vtnPersona = vtnPersona;
+//        vtnPrin.getDpnlPrincipal().add(vtnPersona);
+//        vtnPersona.show();
+//    }
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, PersonaBD dbp) {
         this.vtnPrin = vtnPrin;
@@ -29,7 +36,6 @@ public class VtnPersonaCTR {
         vtnPersona.show();
     }
 
-
     public void iniciar() throws SQLException {
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
@@ -39,7 +45,6 @@ public class VtnPersonaCTR {
         cargarLista();
     }
 
-    
     //carge de la lista de modelo a la tabla
     //formatear la tabla de mi modelo
     //obtenemos el modelo de la tabla de la vista y la pones en el modelo por defaulta con un castingt
