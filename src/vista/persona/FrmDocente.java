@@ -19,7 +19,9 @@ public class FrmDocente extends javax.swing.JInternalFrame {
      * Creates new form Docente
      */
     public FrmDocente() {
+       
         initComponents();
+        
     }
 
     public JButton getBtnCancelar() {
@@ -55,13 +57,7 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.cbxOtroTrabajo = cbxOtroTrabajo;
     }
 
-    public JComboBox<String> getCmbCedula() {
-        return cmbCedula;
-    }
 
-    public void setCmbCedula(JComboBox<String> cmbCedula) {
-        this.cmbCedula = cmbCedula;
-    }
 
     public JComboBox<String> getCmbTipoTiempo() {
         return cmbTipoTiempo;
@@ -167,14 +163,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.lblOtroTrabajo = lblOtroTrabajo;
     }
 
-    public JLabel getLblTipoId() {
-        return lblTipoId;
-    }
-
-    public void setLblTipoId(JLabel lblTipoId) {
-        this.lblTipoId = lblTipoId;
-    }
-
     public JLabel getLblTipoTiempo() {
         return lblTipoTiempo;
     }
@@ -199,6 +187,30 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.txtIdentificacion = txtIdentificacion;
     }
 
+    public JButton getBtnBuscarPersona() {
+        return btnBuscarPersona;
+    }
+
+    public void setBtnBuscarPersona(JButton btnBuscarPersona) {
+        this.btnBuscarPersona = btnBuscarPersona;
+    }
+
+    public JLabel getLblDatosPersona() {
+        return lblDatosPersona;
+    }
+
+    public void setLblDatosPersona(JLabel lblDatosPersona) {
+        this.lblDatosPersona = lblDatosPersona;
+    }
+
+    public JButton getBtnRegistrarPersona() {
+        return btnRegistrarPersona;
+    }
+
+    public void setBtnRegistrarPersona(JButton btnRegistrarPersona) {
+        this.btnRegistrarPersona = btnRegistrarPersona;
+    }
+
   
     
     
@@ -212,8 +224,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTipoId = new javax.swing.JLabel();
-        cmbCedula = new javax.swing.JComboBox<>();
         lblIdentificacion = new javax.swing.JLabel();
         txtIdentificacion = new javax.swing.JTextField();
         lblOtroTrabajo = new javax.swing.JLabel();
@@ -234,6 +244,9 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jdcFechaFinContratacion = new datechooser.beans.DateChooserCombo();
         jSeparator2 = new javax.swing.JSeparator();
+        btnBuscarPersona = new javax.swing.JButton();
+        lblDatosPersona = new javax.swing.JLabel();
+        btnRegistrarPersona = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -248,26 +261,19 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         setVisible(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTipoId.setText("Tipo Id.*");
-        getContentPane().add(lblTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
-
-        cmbCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "CEDULA", "PASAPORTE" }));
-        cmbCedula.setToolTipText("Escoja el tipo de identificacion ");
-        getContentPane().add(cmbCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 130, -1));
-
         lblIdentificacion.setText("Identificacion*");
-        getContentPane().add(lblIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+        getContentPane().add(lblIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         txtIdentificacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdentificacionActionPerformed(evt);
             }
         });
-        getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 150, -1));
+        getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 140, -1));
 
         lblOtroTrabajo.setText("Otro Trabajo");
-        getContentPane().add(lblOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, 10));
-        getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, 20));
+        getContentPane().add(lblOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, 10));
+        getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, 20));
 
         jdcFechaInicioContratacion.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -311,43 +317,50 @@ public class FrmDocente extends javax.swing.JInternalFrame {
                 false,
                 true)));
     jdcFechaInicioContratacion.setFormat(2);
-    getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 130, 20));
+    getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, 20));
 
     lblFechaInicioContratacion.setText("Fecha de Contratacion");
-    getContentPane().add(lblFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 10));
+    getContentPane().add(lblFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 10));
 
     lblDocenteCapacitador.setText("Docente Capacitador");
-    getContentPane().add(lblDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, 10));
-    getContentPane().add(cbxDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, 20));
+    getContentPane().add(lblDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, 10));
+    getContentPane().add(cbxDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, 20));
 
     lblFechaFinContratacion.setText("Fecha fin contratacion");
-    getContentPane().add(lblFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 10));
+    getContentPane().add(lblFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, 10));
 
     lblTipoTiempo.setText("Tipo Tiempo");
-    getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, 10));
+    getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 10));
 
     cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
-    getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 130, 20));
+    getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 130, 20));
 
     spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
     spnCategoria.setAutoscrolls(true);
-    getContentPane().add(spnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 72, 20));
+    getContentPane().add(spnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 72, 20));
 
     lblCategoria.setText("Categoria");
-    getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, 10));
-    getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 530, 10));
+    getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 10));
+    getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 470, 10));
 
     btnGuardar.setText("Guardar");
-    getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+    getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
     btnCancelar.setText("Cancelar");
-    getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, -1, -1));
+    getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, -1));
 
     jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-    getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 10, 180));
-    getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 530, 10));
-    getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 130, -1));
-    getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 530, 10));
+    getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 10, 180));
+    getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 470, 10));
+    getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
+    getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 470, 10));
+
+    btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+    getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 30, 20));
+    getContentPane().add(lblDatosPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 270, 20));
+
+    btnRegistrarPersona.setText("Registrar Persona");
+    getContentPane().add(btnRegistrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
 
     getAccessibleContext().setAccessibleDescription("");
     getAccessibleContext().setAccessibleParent(this);
@@ -361,11 +374,12 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarPersona;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnRegistrarPersona;
     private javax.swing.JCheckBox cbxDocenteCapacitador;
     private javax.swing.JCheckBox cbxOtroTrabajo;
-    private javax.swing.JComboBox<String> cmbCedula;
     private javax.swing.JComboBox<String> cmbTipoTiempo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -374,12 +388,12 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo jdcFechaFinContratacion;
     private datechooser.beans.DateChooserCombo jdcFechaInicioContratacion;
     private javax.swing.JLabel lblCategoria;
+    private javax.swing.JLabel lblDatosPersona;
     private javax.swing.JLabel lblDocenteCapacitador;
     private javax.swing.JLabel lblFechaFinContratacion;
     private javax.swing.JLabel lblFechaInicioContratacion;
     private javax.swing.JLabel lblIdentificacion;
     private javax.swing.JLabel lblOtroTrabajo;
-    private javax.swing.JLabel lblTipoId;
     private javax.swing.JLabel lblTipoTiempo;
     private javax.swing.JSpinner spnCategoria;
     private javax.swing.JTextField txtIdentificacion;
