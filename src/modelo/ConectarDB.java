@@ -16,12 +16,13 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
-    
-    //Si se cambia el url no borrar solo comentar 
-    //private String url = "jdbc:postgresql://localhost:5433/PFInstituto"; //BD Johnny PCPRO
 
+    //Si se cambia el url no borrar solo comentar 
+    private String url = "jdbc:postgresql://localhost:5433/BDPFInstituto"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
 
+<<<<<<< HEAD
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
     private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
     private String user = "postgres";
@@ -29,6 +30,13 @@ public class ConectarDB {
     //private String pass = "Holapostgres"; //Clave Johnny
    // private String pass = "linis4413"; //Clave Lina
    private String pass = "PAOLA"; //Clave Paola
+=======
+    private String user = "postgres";
+
+    private String pass = "Holapostgres"; //Clave Johnny
+    // private String pass = "linis4413"; //Clave Lina
+
+>>>>>>> a1a1663a9eebe294f867796be50d12ea022a22a4
     public ConectarDB() {
         try {
             //Cargamos el driver  
