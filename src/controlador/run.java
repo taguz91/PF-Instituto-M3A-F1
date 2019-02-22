@@ -1,7 +1,6 @@
 package controlador;
 
 import controlador.principal.VtnPrincipalCTR;
-import modelo.LlenarLugaresBD;
 import modelo.persona.UsuarioMD;
 import vista.principal.VtnPrincipal;
 
@@ -16,6 +15,14 @@ public class run {
         //Con esta clase llene lugares 
         /*LlenarLugaresBD prueba = new LlenarLugaresBD(); 
         prueba.iniciar();*/
+        
+        //Esto lo use para llenar docentes
+        /*LlenarDocentesBD lld = new LlenarDocentesBD();
+        lld.iniciar();*/
+        
+        //Esto lo use paa llenar alumnos  
+        /*LlenarAlumnosBD lla = new LlenarAlumnosBD(); 
+        lla.iniciar();*/
         
         UsuarioMD usuario = new UsuarioMD();
         VtnPrincipal vtn = new VtnPrincipal(); 
