@@ -24,10 +24,6 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         return btnBuscar;
     }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
-    }
-
     public JLabel getLblResultados() {
         return lblResultados;
     }
@@ -38,10 +34,6 @@ public class VtnMateria extends javax.swing.JInternalFrame {
 
     public JTextField getTxtBuscar() {
         return txtBuscar;
-    }
-
-    public JButton getBtnEditar() {
-        return btnEditar;
     }
 
     public JComboBox<String> getCmbCarreras() {
@@ -62,8 +54,6 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMateria = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         cmbCarreras = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -103,10 +93,6 @@ public class VtnMateria extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
         );
 
-        btnEditar.setText("Editar");
-
-        btnEliminar.setText("Eliminar");
-
         jLabel2.setText("Filtrar:");
 
         jLabel1.setText("Buscar:");
@@ -130,11 +116,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                         .addComponent(cmbCarreras, 0, 230, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(192, 192, 192)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addGap(368, 368, 368))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,9 +127,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                         .addGap(3, 3, 3)
                         .addComponent(jLabel1))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnBuscar))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -187,8 +167,6 @@ public class VtnMateria extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

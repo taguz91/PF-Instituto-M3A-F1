@@ -100,53 +100,19 @@ WHERE "country" ILIKE 'NOMBRE PAIS MAYUSCULAS';
 
 ------
 
-INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'AFGHANISTAN'
-) FROM public.city
-WHERE "country" ILIKE 'AFGHANISTAN';
 
 INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'ALBANIA'
+lugar_nombre, lugar_nivel, id_lugar_referencia)
+	SELECT DISTINCT name, 3 ,(
+	SELECT id_lugar FROM public."Lugares"
+	WHERE lugar_nombre  = 'nombreDistritos' AND 
+	lugar_nivel = 2 AND lugar_codigo IS NULL 
 ) FROM public.city
-WHERE "country" ILIKE 'ALBANIA';
+WHERE "district" ILIKE 'nombreDistritos';
 
-INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'ALGERIA'
-) FROM public.city
-WHERE "country" ILIKE 'ALGERIA';
-
-INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'AMERICAN SAMOA'
-) FROM public.city
-WHERE "country" ILIKE 'AMERICAN SAMOA';
-
-INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'ANDORRA'
-) FROM public.city
-WHERE "country" ILIKE 'ANDORRA';
-
-INSERT INTO public."Lugares"(
-	lugar_nombre, lugar_nivel, id_lugar_referencia)
-    SELECT "district", 2 ,(
-	SELECT id_lugar FROM public."Lugares" 
-	WHERE lugar_nombre = 'ANGOLA'
-) FROM public.city
-WHERE "country" ILIKE 'ANGOLA';
+--Ponemos todos los nombres de los paises en mayusculas
+UPDATE public."Lugares"
+	SET lugar_nombre=UPPER(lugar_nombre);
 
 
 DROP TABLE public.city;

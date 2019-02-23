@@ -170,6 +170,35 @@ UPDATE public."Carreras"
 	WHERE carrera_modalidad = '4';
 /*Terminamos de importar materias*/
 
+/*Importamos sectores economicos*/
+--Importamos el sector economico  
+
+Copy (SELECT sece_codigo, sece_id, sece_descripcion, sece_activo
+FROM public.sectoreconomicos)
+To 'C:\Backups Postgresql\sectorEconomicoP1.csv' with CSV HEADER
+
+CREATE TABLE "sectores"(
+	"sece_codigo" integer, 
+	"sece_ide" character varying(10), 
+	"sece_descripcion" character varying(200), 
+	"sece_activo" boolean
+) WITH (OIDS = FALSE);
+
+Copy sectores("sece_codigo", "sece_ide", "sece_descripcion", 
+"sece_activo")
+From 'C:\Backups Postgresql\sectorEconomicoP1.csv' 
+delimiter AS ',' NULL AS '' CSV HEADER;
+
+INSERT INTO public."SectorEconomico"(
+	id_sec_economico, sec_economico_codigo, sec_economico_descripcion, sec_economico_activo)
+	SELECT sece_codigo, sece_ide, 
+	sece_descripcion, sece_activo
+	FROM public.sectores; 
+
+DROP TABLE public.sectores;
+
+/*Terminamos de exporat sectores economicos*/
+
 /*Importamos pre y co requisitos de una materia*/
 Copy precorrequisitos("pre_numero", "preco_materia", "preco_tipo", "preco_precorrequisito") 
 To 'C:\Backups Postgresql\preCoRequisitosP1.csv' 
@@ -289,6 +318,17 @@ CREATE TABLE "personas"(
 	"per_tiporesidencia" character varying(1)
 ) WITH (OIDS = FALSE); 
 
+ALTER TABLE public."Personas" ALTER COLUMN "id_lugar_natal" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "id_lugar_residencia" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_identificacion" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_telefono" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_numero_casa" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_calle_secundaria" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_calle_principal" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_correo" DROP NOT NULL; 
+ALTER TABLE public."Personas" ALTER COLUMN "persona_idioma" DROP NOT NULL; 
+
+
 Copy personas("per_codigo", "per_identificacion", "per_primerapellido",
 	"per_segundoapellido", "per_primernombre", "per_segundonombre",
 	"per_fechanacimiento", "per_genero", "per_sexo", "per_estadocivil",
@@ -296,13 +336,16 @@ Copy personas("per_codigo", "per_identificacion", "per_primerapellido",
 	"per_correo", "per_fecharegistro", "per_calleprincipal",
 	"per_numerocasa", "per_callesecundaria", "per_referencia",
 	"per_sector", "per_canton", "per_parroquiareside", "per_tiporesidencia")
-From 'C:\Backups Postgresql\personasDocentesP2.csv' 
+From 'C:\Backups Postgresql\personasDocentesP3.csv' 
 delimiter AS ',' NULL AS '' CSV HEADER;
 
+--Esa persona tiene un null y me da error al ingresar
 UPDATE public.personas
 	SET per_parroquiareside=1
 	WHERE per_codigo = 857;
 
+--Tambien existe un docente duplicado  
+--904 es el id
 INSERT INTO public."Personas"(
 	id_tipo_persona, id_lugar_natal, 
 	id_lugar_residencia, persona_identificacion, 
@@ -312,7 +355,11 @@ INSERT INTO public."Personas"(
 	persona_estado_civil, persona_etnia, persona_idioma_raiz,
 	persona_tipo_sangre, persona_fecha_registro,
     persona_idioma, persona_tipo_residencia, 
-	persona_fecha_nacimiento)
+	persona_fecha_nacimiento, 
+	persona_telefono, persona_celular, persona_correo, 
+	persona_calle_principal, persona_numero_casa, 
+	persona_calle_secundaria, persona_referencia, 
+	persona_sector)
 SELECT 1, per_canton, 
 	per_parroquiareside, per_identificacion,
 	per_primerapellido, per_segundoapellido,
@@ -321,7 +368,11 @@ SELECT 1, per_canton,
 	per_estadocivil, per_etnia, 'ESPAÑOL', 
 	per_tiposangre, per_fecharegistro, 
 	'ESPAÑOL', per_tiporesidencia,
-	per_fechanacimiento
+	per_fechanacimiento, 
+	per_telefono, per_celular, per_correo, 
+	per_calleprincipal, per_numerocasa, 
+	per_callesecundaria, per_referencia, 
+	per_sector
 	FROM public.personas;
 
 TRUNCATE TABLE public.personas;
@@ -332,20 +383,22 @@ per_segundoapellido, per_primernombre, per_segundonombre,
 per_fechanacimiento, per_genero, per_sexo, per_estadocivil,
 per_etnia, per_tiposangre, per_telefono, 
 per_celular, per_correo, per_fecharegistro,
-per_canton, per_parroquiareside,
+per_calleprincipal, per_numerocasa, per_callesecundaria, 
+per_referencia, per_sector, per_canton, per_parroquiareside,
 per_tiporesidencia
 FROM public.personas, public.alumnos 
 WHERE alumnos.alu_persona = personas.per_codigo
 ORDER BY per_codigo)
-To 'C:\Backups Postgresql\personasAlumnosP2.csv' with CSV HEADER
+To 'C:\Backups Postgresql\personasAlumnosP3.csv' with CSV HEADER
 
 Copy personas("per_codigo", "per_identificacion", "per_primerapellido",
 	"per_segundoapellido", "per_primernombre", "per_segundonombre",
 	"per_fechanacimiento", "per_genero", "per_sexo", "per_estadocivil",
-	"per_etnia", "per_tiposangre","per_celular",
-	"per_correo", "per_fecharegistro",
-	"per_canton", "per_parroquiareside", "per_tiporesidencia")
-From 'C:\Backups Postgresql\personasAlumnosP2.csv' 
+	"per_etnia", "per_tiposangre", "per_telefono", "per_celular",
+	"per_correo", "per_fecharegistro", "per_calleprincipal",
+	"per_numerocasa", "per_callesecundaria", "per_referencia",
+	"per_sector", "per_canton", "per_parroquiareside", "per_tiporesidencia")
+From 'C:\Backups Postgresql\personasAlumnosP3.csv' 
 delimiter AS ',' NULL AS '' CSV HEADER;
 
 INSERT INTO public."Personas"(
@@ -357,7 +410,11 @@ INSERT INTO public."Personas"(
 	persona_estado_civil, persona_etnia, persona_idioma_raiz,
 	persona_tipo_sangre, persona_fecha_registro,
     persona_idioma, persona_tipo_residencia, 
-	persona_fecha_nacimiento)
+	persona_fecha_nacimiento, 
+	persona_telefono, persona_celular, persona_correo, 
+	persona_calle_principal, persona_numero_casa, 
+	persona_calle_secundaria, persona_referencia, 
+	persona_sector)
 SELECT 2, per_canton, 
 	per_parroquiareside, per_identificacion,
 	per_primerapellido, per_segundoapellido,
@@ -366,8 +423,13 @@ SELECT 2, per_canton,
 	per_estadocivil, per_etnia, 'ESPAÑOL', 
 	per_tiposangre, per_fecharegistro, 
 	'ESPAÑOL', per_tiporesidencia,
-	per_fechanacimiento
+	per_fechanacimiento, 
+	per_telefono, per_celular, per_correo, 
+	per_calleprincipal, per_numerocasa, 
+	per_callesecundaria, per_referencia, 
+	per_sector
 	FROM public.personas;
+
 
 DROP TABLE public.personas;
 
@@ -429,28 +491,256 @@ UPDATE public."Personas"
 	SET persona_etnia='MESTIZO'
 	WHERE persona_etnia = '6';		
 
---Importamos el sector economico  
 
-Copy (SELECT sece_codigo, sece_id, sece_descripcion, sece_activo
-FROM public.sectoreconomicos)
-To 'C:\Backups Postgresql\sectorEconomicoP1.csv' with CSV HEADER
+--Importamos docentes 
+Copy profesores(pro_codigo, pro_persona, pro_id, pro_nivel, 
+				pro_otrotrabajo, pro_categoria, 
+				pro_fechacontrato, pro_capacitador, 
+				pro_fechafin, pro_tipotiempo)
+TO 'C:\Backups Postgresql\profesoresP1.csv' 
+delimiters ';' with CSV HEADER;
 
-CREATE TABLE "sectores"(
-	"sece_codigo" integer, 
-	"sece_ide" character varying(10), 
-	"sece_descripcion" character varying(200), 
-	"sece_activo" boolean
-) WITH (OIDS = FALSE);
+CREATE TABLE "profesores"(
+	pro_codigo integer, 
+	pro_persona integer, 
+	pro_id character varying(10), 
+	pro_nivel integer, 
+	pro_otrotrabajo boolean, 
+	pro_categoria integer, 
+	pro_fechacontrato date, 
+	pro_capacitador boolean,  
+	pro_fechafin date, 
+	pro_tipotiempo character varying(10)
+) WITH (OIDS = FALSE); 
 
-Copy sectores("sece_codigo", "sece_ide", "sece_descripcion", 
-"sece_activo")
-From 'C:\Backups Postgresql\sectorEconomicoP1.csv' 
-delimiter AS ',' NULL AS '' CSV HEADER;
+Copy profesores(pro_codigo, pro_persona, pro_id, pro_nivel, 
+				pro_otrotrabajo, pro_categoria, 
+				pro_fechacontrato, pro_capacitador, 
+				pro_fechafin, pro_tipotiempo)
+From 'C:\Backups Postgresql\profesoresP1.csv' 
+delimiter AS ';' NULL AS '' CSV HEADER;
 
-INSERT INTO public."SectorEconomico"(
-	id_sec_economico, sec_economico_codigo, sec_economico_descripcion, sec_economico_activo)
-	SELECT sece_codigo, sece_ide, 
-	sece_descripcion, sece_activo
-	FROM public.sectores; 
+INSERT INTO public."Docentes"
+(docente_codigo, docente_otro_trabajo, docente_categoria, 
+docente_fecha_contrato, docente_tipo_tiempo, 
+docente_capacitador, id_persona)
+SELECT pro_id, pro_otrotrabajo, pro_categoria,
+pro_fechacontrato, pro_tipotiempo, pro_capacitador, (
+	SELECT id_persona 
+FROM public."Personas"
+WHERE persona_identificacion = '0103574257'
+) FROM public.profesores 
+WHERE pro_id = '9398956254';
 
-DROP TABLE public.sectores;
+DROP TABLE public."profesores";
+
+
+--Copiamos alumnos 
+Copy alumnos(alu_codigo, alu_id, 
+			 alu_tipocolegio, alu_tipobachillerato,
+			 alu_aniograduacion, alu_educacionsuperior, 
+			 alu_titulosuperior, alu_nivelacademico, 
+			 alu_pension, alu_ocupacion, alu_trabaja,
+			 alu_sectoreconomico, 
+			 alu_nivelformacionpadre, 
+			 alu_nivelformacionmadre, alu_contactoemergencia, 
+			 alu_parentescocontacto, alu_numerocontacto)
+To 'C:\Backups Postgresql\alumnosP1.csv' 
+delimiters ';' with CSV HEADER;
+
+CREATE TABLE "estudiantes"(
+	alu_codigo integer, 
+	alu_id character varying(20), 
+	alu_tipocolegio integer, 
+	alu_tipobachillerato integer, 
+	alu_aniograduacion integer,
+	alu_educacionsuperior boolean,
+	alu_titulosuperior character varying(200), 
+	alu_nivelacademico integer,  
+	alu_pension character varying(5),
+	alu_ocupacion character varying(200), 
+	alu_trabaja boolean, 
+	alu_sectoreconomico integer, 
+	alu_nivelformacionpadre integer, 
+	alu_nivelformacionmadre integer, 
+	alu_contactoemergencia character varying(100), 
+	alu_parentescocontacto integer, 
+	alu_numerocontacto character varying(20)
+) WITH (OIDS = FALSE); 
+
+
+ALTER TABLE public."Alumnos" ALTER COLUMN "alumno_ocupacion" DROP NOT NULL; 
+ALTER TABLE public."Alumnos" ALTER COLUMN "alumno_nivel_formacion_padre" DROP NOT NULL; 
+ALTER TABLE public."Alumnos" ALTER COLUMN "alumno_nivel_formacion_madre" DROP NOT NULL; 
+ALTER TABLE public."Alumnos" ALTER COLUMN "id_sec_economico" DROP NOT NULL; 
+ALTER TABLE public."Alumnos" ALTER COLUMN "alumno_numero_contacto" TYPE character varying(20); 
+
+Copy estudiantes(alu_codigo, alu_id, 
+			 alu_tipocolegio, alu_tipobachillerato,
+			 alu_aniograduacion, alu_educacionsuperior, 
+			 alu_titulosuperior, alu_nivelacademico, 
+			 alu_pension, alu_ocupacion, alu_trabaja,
+			 alu_sectoreconomico, alu_nivelformacionpadre, 
+			 alu_nivelformacionmadre, alu_contactoemergencia, 
+			 alu_parentescocontacto, alu_numerocontacto)
+From 'C:\Backups Postgresql\alumnosP1.csv' 
+delimiter AS ';' NULL AS '' CSV HEADER;
+
+
+INSERT INTO public."Alumnos"(
+	id_sec_economico, alumno_tipo_colegio, alumno_tipo_bachillerato,
+	alumno_anio_graduacion, alumno_educacion_superior, alumno_titulo_superior, 
+	alumno_nivel_academico, alumno_ocupacion, alumno_trabaja,
+	alumno_nivel_formacion_padre, alumno_nivel_formacion_madre,
+	alumno_nombre_contacto_emergencia, alumno_parentesco_contacto,
+	alumno_numero_contacto, id_persona)
+SELECT  alu_sectoreconomico, alu_tipocolegio, alu_tipobachillerato, alu_aniograduacion,
+ alu_educacionsuperior, alu_titulosuperior, alu_nivelacademico, 
+ alu_ocupacion, alu_trabaja, 
+ alu_nivelformacionpadre, alu_nivelformacionmadre, alu_contactoemergencia, 
+ alu_parentescocontacto, alu_numerocontacto, (
+ 	SELECT id_persona 
+	FROM public."Personas"
+	WHERE persona_identificacion = '0106777402'
+)FROM public.estudiantes;
+ WHERE alu_id = '0106777402';
+
+
+DROP TABLE public.estudiantes;
+
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'FISCAL'
+	WHERE alumno_tipo_colegio = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'FISCOMISIONAL'
+	WHERE  alumno_tipo_colegio = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'PARTICULAR'
+	WHERE  alumno_tipo_colegio = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'MUNICIPAL'
+	WHERE  alumno_tipo_colegio = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'EXTRANJERO'
+	WHERE  alumno_tipo_colegio = '5';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_colegio= 'NO REGISTRA'
+	WHERE  alumno_tipo_colegio = '6';
+
+	
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_bachillerato= 'TECNICO'
+	WHERE  alumno_tipo_bachillerato = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_bachillerato= 'TECNICO PRODUCTIVO'
+	WHERE  alumno_tipo_bachillerato = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_bachillerato= 'BGU'
+	WHERE  alumno_tipo_bachillerato = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_bachillerato= 'BI'
+	WHERE  alumno_tipo_bachillerato = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_tipo_bachillerato= 'OTRO'
+	WHERE  alumno_tipo_bachillerato = '5';
+
+	
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_academico= 'NINGUNO'
+	WHERE  alumno_nivel_academico = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_academico= 'PRIMARIA'
+	WHERE  alumno_nivel_academico = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_academico= 'SECUNDARIA'
+	WHERE  alumno_nivel_academico = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_academico= 'SUPERIOR'
+	WHERE  alumno_nivel_academico = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_academico= 'OTROS'
+	WHERE  alumno_nivel_academico = '5';
+
+
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_padre= 'NINGUNO'
+	WHERE  alumno_nivel_formacion_padre = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_padre= 'PRIMARIA'
+	WHERE  alumno_nivel_formacion_padre = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_padre= 'SECUNDARIA'
+	WHERE  alumno_nivel_formacion_padre = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_padre= 'SUPERIOR'
+	WHERE  alumno_nivel_formacion_padre = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_padre= 'OTROS'
+	WHERE  alumno_nivel_formacion_padre = '5';
+
+
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_madre= 'NINGUNO'
+	WHERE  alumno_nivel_formacion_madre = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_madre= 'PRIMARIA'
+	WHERE  alumno_nivel_formacion_madre = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_madre= 'SECUNDARIA'
+	WHERE  alumno_nivel_formacion_madre = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_madre= 'SUPERIOR'
+	WHERE  alumno_nivel_formacion_madre = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_nivel_formacion_madre= 'OTROS'
+	WHERE  alumno_nivel_formacion_madre = '5';
+
+
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'PADRE'
+	WHERE  alumno_parentesco_contacto = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'MADRE'
+	WHERE  alumno_parentesco_contacto = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'HERMANO/A'
+	WHERE  alumno_parentesco_contacto = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'ESPOSO/A'
+	WHERE  alumno_parentesco_contacto = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'OTRO'
+	WHERE  alumno_parentesco_contacto = '5';
+
+

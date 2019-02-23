@@ -47,10 +47,10 @@ import vista.principal.VtnPrincipal;
 public class VtnPrincipalCTR {
 
     private VtnPrincipal vtnPrin;
-    private UsuarioMD usuario;
+    private final UsuarioMD usuario;
 
     private int numVtns = 0;
-    private String ERRORNUMVTNS = "No se pueden abrir mas de 5 ventanas";
+    private final String ERRORNUMVTNS = "No se pueden abrir mas de 5 ventanas";
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, UsuarioMD usuario) {
         this.vtnPrin = vtnPrin;
