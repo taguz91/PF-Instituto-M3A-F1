@@ -159,8 +159,8 @@ public class VtnPrincipalCTR {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
-            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
-            ctrVtnPersona.iniciar();
+//            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
+//            ctrVtnPersona.iniciar();
         }
     }
 
@@ -254,8 +254,8 @@ public class VtnPrincipalCTR {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
-            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
-            ctrFrmPersona.iniciar();
+            //FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
+            //ctrFrmPersona.iniciar();
         } else {
             vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
         }

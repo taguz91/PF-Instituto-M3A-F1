@@ -228,7 +228,7 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="6">
-            <StringItem index="0" value="sELECCIONE"/>
+            <StringItem index="0" value="Seleccione"/>
             <StringItem index="1" value="INDIGENA"/>
             <StringItem index="2" value="MESTIZOS"/>
             <StringItem index="3" value="MULATO"/>
@@ -577,7 +577,9 @@
     <Component class="javax.swing.JComboBox" name="cmbProvincia">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -592,12 +594,13 @@
     <Component class="javax.swing.JComboBox" name="cmbNacionalidad">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="ECUATORIANO/A"/>
-            <StringItem index="1" value="COLOMBIANO/A"/>
-            <StringItem index="2" value="PERUANO/A"/>
-            <StringItem index="3" value="VENEZOLANO/A"/>
-            <StringItem index="4" value=" "/>
+          <StringArray count="6">
+            <StringItem index="0" value="Seleccione"/>
+            <StringItem index="1" value="ECUATORIANO/A"/>
+            <StringItem index="2" value="COLOMBIANO/A"/>
+            <StringItem index="3" value="PERUANO/A"/>
+            <StringItem index="4" value="VENEZOLANO/A"/>
+            <StringItem index="5" value=""/>
           </StringArray>
         </Property>
       </Properties>
@@ -613,7 +616,9 @@
     <Component class="javax.swing.JComboBox" name="cmbCanton">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -635,7 +640,9 @@
     <Component class="javax.swing.JComboBox" name="cmbProvinciaReside">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -650,7 +657,9 @@
     <Component class="javax.swing.JComboBox" name="cmbCantonReside">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -665,7 +674,9 @@
     <Component class="javax.swing.JComboBox" name="cmbParroquiaReside">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -755,9 +766,10 @@
     <Component class="javax.swing.JComboBox" name="cmbTipoResidencia">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Zona Urbana"/>
-            <StringItem index="1" value="Zona Rural"/>
+          <StringArray count="3">
+            <StringItem index="0" value="Seleccione"/>
+            <StringItem index="1" value="Zona Urbana"/>
+            <StringItem index="2" value="Zona Rural"/>
           </StringArray>
         </Property>
       </Properties>

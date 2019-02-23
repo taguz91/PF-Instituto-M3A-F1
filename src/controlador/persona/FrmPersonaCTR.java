@@ -25,7 +25,7 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private PersonaBD persona;
-
+    
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
     private ArrayList<LugarMD> distritos;
@@ -38,11 +38,16 @@ public class FrmPersonaCTR {
     //Para consultar lugares 
     LugarBD lug = new LugarBD();
 
+
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
+
+        //Inicializamos persona
+
         
         this.persona = new PersonaBD(); 
+
 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
@@ -65,7 +70,7 @@ public class FrmPersonaCTR {
         
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> pruebas());
-        frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
+      //  frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmPersona.getBtnCancelar().addActionListener(e -> salirBoton());
     }
 
@@ -97,6 +102,7 @@ public class FrmPersonaCTR {
     }
 
     public void guardarPersona() {
+
         //Fecha actual usada para validaciones  
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento;
@@ -106,12 +112,13 @@ public class FrmPersonaCTR {
 
         //Todas las variables del formulario
         String identificacion, priNombre, segNombre, priApellido, segApellido,
-                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis,
-                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz, telefono,
+                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis = null,
+                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz = null, telefono,
                 callePrin, calleSec, referencia, celular, numCasa, sector,
                 zonaResidencia, correo;
 
         boolean discapcidad;
+        
         identificacion = frmPersona.getTxtIdentificacion().getText();
 
         int tipoIdentifi = frmPersona.getCmbTipoId().getSelectedIndex();
@@ -144,6 +151,7 @@ public class FrmPersonaCTR {
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
             frmPersona.getLblErrorPriApellido().setVisible(true);
+
         } else {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
@@ -213,19 +221,19 @@ public class FrmPersonaCTR {
         if (discapcidad) {
             carnetConadis = frmPersona.getTxtCarnetConadis().getText();
 
+
             if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() < 1) {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(true);
             } else {
                 tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
             }
-
             porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
             if (!Validar.esNumeros(porcentajeDiscapacidad)) {
                 guardar = false;
                 frmPersona.getLblErrorPorcentaje().setVisible(true);
             } else {
-                frmPersona.getLblErrorPorcentaje().setVisible(false);
+
             }
 
         }
@@ -249,6 +257,7 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorTelefono().setVisible(false);
         }
+
         //para saber como me devuelve el dato
 
         //Esto deberia ser automatico 
@@ -257,7 +266,15 @@ public class FrmPersonaCTR {
         //String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
 
         callePrin = frmPersona.getTxtCallePrincipal().getText();
+        if(!Validar.esLetras(callePrin)){
+            //Mostrar error
+            guardar = false;
+        }else{
+            //Ocultar error
+        }
+        
         calleSec = frmPersona.getTxtCalleSecundaria().getText();
+
         referencia = frmPersona.getTxtReferencia().getText();
 
         celular = frmPersona.getTxtCelular().getText();
@@ -324,24 +341,43 @@ public class FrmPersonaCTR {
         numCasa = frmPersona.getTxtNumeroCasa().getText();        
         sector = frmPersona.getTxtSector().getText();
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
-
         correo = frmPersona.getTxtCorreo().getText();
 
         if (guardar) {
             //Llenar directo por el constructor
-            /* PersonaBD persona = new PersonaBD(tipoIdentifi, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, etnia, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, nacionalidad, 0, canton, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
-            persona.setCallePrincipal(callePrin);
-            persona.setCalleSecundaria(calleSec);
-            persona.setCarnetConadis(carnetConadis);
-             */
+            PersonaBD per = new PersonaBD();
+           
+//           String identificacion, priNombre, segNombre, priApellido, segApellido,
+//                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis = null,
+//                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz = null, telefono,
+//                callePrin, calleSec, referencia, celular, numCasa, sector,
+//                zonaResidencia, correo;
+//
+//        boolean discapcidad;
+//        
+           // PersonaBD persona = new PersonaBD(, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, tipoDiscapacidad, 0, carnetConadis, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
+            per.setCallePrincipal(callePrin);
+            per.setCalleSecundaria(calleSec);
+            per.setCarnetConadis(carnetConadis);
+            
+             
         } else {
             System.out.println("Existen errores en los formularios");
         }
 
     }
 
-    public void buscarPersona() {
-
+    public void buscarPersona(String aguja ) {
+        
+        persona = persona.buscarPersonaCedula(aguja);
+             if(persona != null){
+                 frmPersona.getTxtPrimerNombre().setText(persona.getPrimerNombre());
+                 
+                 
+             }else{
+                 
+             }
+       
     }
 
     public void salirBoton() {
