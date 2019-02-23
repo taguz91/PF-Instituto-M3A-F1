@@ -720,3 +720,27 @@ UPDATE public."Alumnos"
 UPDATE public."Alumnos"
 	SET alumno_nivel_formacion_madre= 'OTROS'
 	WHERE  alumno_nivel_formacion_madre = '5';
+
+
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'PADRE'
+	WHERE  alumno_parentesco_contacto = '1';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'MADRE'
+	WHERE  alumno_parentesco_contacto = '2';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'HERMANO/A'
+	WHERE  alumno_parentesco_contacto = '3';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'ESPOSO/A'
+	WHERE  alumno_parentesco_contacto = '4';
+
+UPDATE public."Alumnos"
+	SET alumno_parentesco_contacto= 'OTRO'
+	WHERE  alumno_parentesco_contacto = '5';
+
+

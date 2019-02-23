@@ -17,7 +17,7 @@ public class LugarBD extends LugarMD {
     }
 
     public LugarMD buscar(int idLugar) {
-        LugarBD lg = new LugarBD();
+        LugarMD lg = new LugarMD();
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
                 + "WHERE id_lugar ='" + idLugar + "'; ";
@@ -48,14 +48,14 @@ public class LugarBD extends LugarMD {
 
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
-                + "WHERE id_lugar_referencia IS NULL;";
+                + "WHERE id_lugar_referencia IS NULL ORDER BY lugar_nombre;";
 
         ResultSet rs = conecta.sql(sql);
 
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    LugarBD lg = new LugarBD();
+                    LugarMD lg = new LugarMD();
                     lg.setCodigo(rs.getString("lugar_codigo"));
                     lg.setId(rs.getInt("id_lugar"));
                     lg.setIdReferencia(rs.getInt("id_lugar_referencia"));
@@ -80,14 +80,15 @@ public class LugarBD extends LugarMD {
 
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
-                + "WHERE id_lugar_referencia = '" + idReferencia + "';";
+                + "WHERE id_lugar_referencia = '" + idReferencia + "' "
+                + "ORDER BY lugar_nombre;";
 
         ResultSet rs = conecta.sql(sql);
 
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    LugarBD lg = new LugarBD();
+                    LugarMD lg = new LugarMD();
                     lg.setCodigo(rs.getString("lugar_codigo"));
                     lg.setId(rs.getInt("id_lugar"));
                     lg.setIdReferencia(rs.getInt("id_lugar_referencia"));
@@ -119,7 +120,7 @@ public class LugarBD extends LugarMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    LugarBD lg = new LugarBD();
+                    LugarMD lg = new LugarMD();
                     lg.setCodigo(rs.getString("lugar_codigo"));
                     lg.setId(rs.getInt("id_lugar"));
                     lg.setIdReferencia(rs.getInt("id_lugar_referencia"));

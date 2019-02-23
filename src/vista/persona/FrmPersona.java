@@ -328,7 +328,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 20));
 
         cmbTipoSangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-" }));
-        getContentPane().add(cmbTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 130, -1));
+        getContentPane().add(cmbTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 130, -1));
 
         jLabel13.setText("Discapacidad");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, 20));
