@@ -11,7 +11,7 @@ import modelo.ConectarDB;
  */
 public class LugarBD extends LugarMD {
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Lugar");
 
     public LugarBD() {
     }

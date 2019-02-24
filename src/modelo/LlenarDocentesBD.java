@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class LlenarDocentesBD {
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Llena docentes BD");
 
     ArrayList<String> docentes;
 

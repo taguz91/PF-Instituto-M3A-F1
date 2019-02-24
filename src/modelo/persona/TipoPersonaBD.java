@@ -11,7 +11,7 @@ import modelo.ConectarDB;
  */
 public class TipoPersonaBD extends TipoPersonaMD {
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Tipo persona");
 
     public TipoPersonaBD() {
     }

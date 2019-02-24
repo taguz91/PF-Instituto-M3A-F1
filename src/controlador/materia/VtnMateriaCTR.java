@@ -27,10 +27,10 @@ public class VtnMateriaCTR {
     //Para el combo de filtrar por carrera
     private ArrayList<CarreraMD> carreras;
 
-    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, MateriaBD materia) {
+    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria) {
         this.vtnPrin = vtnPrin;
         this.vtnMateria = vtnMateria;
-        this.materia = materia;
+        this.materia = new MateriaBD();
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
@@ -49,12 +49,12 @@ public class VtnMateriaCTR {
         TblEstilo.formatoTbl(vtnMateria.getTblMateria());
         //Pasamos la columna de codigo para que sea de 20  
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 1, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 3, 35);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 65);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 5, 65);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 65);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 65);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 35);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 3, 40);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 5, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 40);
 
         materias = materia.cargarMaterias();
         cargarTblMaterias();

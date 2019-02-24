@@ -18,31 +18,24 @@ public class ConectarDB {
     private ResultSet rs;
 
     //Si se cambia el url no borrar solo comentar 
-   // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
+    private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
-    private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
-
-
-    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
+    // private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
+   
     //  private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
     private String user = "postgres";
-    
-    //private String pass = "Holapostgres"; //Clave Johnny
-    
-   private String pass = "linis4413"; //Clave Lina
 
- //  private String pass = "PAOLA"; //Clave Paola
+    private String pass = "Holapostgres"; //Clave Johnny
 
-
-
-
-    public ConectarDB() {
+    //private String pass = "linis4413"; //Clave Lina
+    //  private String pass = "PAOLA"; //Clave Paola
+    public ConectarDB(String mensaje) {
         try {
             //Cargamos el driver  
             Class.forName("org.postgresql.Driver");
             //Nos conectamos  
             ct = DriverManager.getConnection(url, user, pass);
-            System.out.println("Nos conectamos.");
+            System.out.println("Nos conectamos. Desde: "+mensaje);
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());

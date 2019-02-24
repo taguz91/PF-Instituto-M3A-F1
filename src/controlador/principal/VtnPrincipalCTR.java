@@ -18,7 +18,11 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.materia.MateriaBD;
@@ -67,7 +71,7 @@ public class VtnPrincipalCTR {
                         getMenuShortcutKeyMask()));
          */
         //Acciones de las ventanas de consulta
-      
+
         vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_L, ActionEvent.CTRL_MASK));
 
@@ -161,6 +165,8 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
 //            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
 //            ctrVtnPersona.iniciar();
+        } else {
+            errorNumVentanas();
         }
     }
 
@@ -171,7 +177,7 @@ public class VtnPrincipalCTR {
             VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente);
             ctrVtnDocente.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -183,7 +189,7 @@ public class VtnPrincipalCTR {
             VtnAlumnoCTR ctrVtnAlumno = new VtnAlumnoCTR(vtnPrin, vtnAlumno);
             ctrVtnAlumno.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -195,7 +201,7 @@ public class VtnPrincipalCTR {
             VtnCarreraCTR ctrVtnCarrera = new VtnCarreraCTR(vtnPrin, vtnCarrera);
             ctrVtnCarrera.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -207,7 +213,7 @@ public class VtnPrincipalCTR {
             VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnPrin, vtnCurso);
             ctrVtnCurso.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -219,7 +225,7 @@ public class VtnPrincipalCTR {
             VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrin, vtnPrdLectivo);
             ctrVtnPrdLectivo.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -231,20 +237,19 @@ public class VtnPrincipalCTR {
             VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso);
             ctrVtnAlmnCurso.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
-        }
 
+        }
+        errorNumVentanas();
     }
 
     public void abrirVtnMateria() {
-        MateriaBD materia = new MateriaBD();
         VtnMateria vtnMateria = new VtnMateria();
         eventoInternal(vtnMateria);
         if (numVtns < 5) {
-            VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria, materia);
+            VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria);
             ctrVtnMateria.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -257,21 +262,21 @@ public class VtnPrincipalCTR {
             //FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
             //ctrFrmPersona.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
 
     public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
-        DocenteBD docente = new DocenteBD(); 
+        DocenteBD docente = new DocenteBD();
         eventoInternal(frmDocente);
         if (numVtns < 5) {
             frmDocente.getBtnRegistrarPersona().setVisible(false);
             FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente);
             ctrFrmDocente.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -283,7 +288,7 @@ public class VtnPrincipalCTR {
             FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
             ctrFrmAlumno.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -295,7 +300,7 @@ public class VtnPrincipalCTR {
             FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
             ctrFrmCarrera.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -307,7 +312,7 @@ public class VtnPrincipalCTR {
             FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
             ctrFrmCurso.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -319,7 +324,7 @@ public class VtnPrincipalCTR {
             FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo);
             ctrFrmPrdLectivo.iniciar();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -335,7 +340,7 @@ public class VtnPrincipalCTR {
             vtnPrin.getDpnlPrincipal().add(frmMate);
             frmMate.show();
         } else {
-            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
+            errorNumVentanas();
         }
 
     }
@@ -349,27 +354,20 @@ public class VtnPrincipalCTR {
             estilo = "Nimbus";
         }
 
-        vtnPrin.dispose();
-
         try {
+            VtnPrincipal.setDefaultLookAndFeelDecorated(true);
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if (estilo.equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            //Actualizamos la ventana para que cargue el nuevo look an field
+            SwingUtilities.updateComponentTreeUI(vtnPrin);
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
+            System.out.println("No se pudo cambiar el estilo de la ventana");
+            System.out.println(e.getMessage());
         }
-
-        vtnPrin = new VtnPrincipal();
-        vtnPrin.setVisible(true);
     }
 
     public void eventoInternal(JInternalFrame internal) {
@@ -382,9 +380,13 @@ public class VtnPrincipalCTR {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
-                vtnPrin.getLblMensaje().setText(""); 
             }
 
         });
+    }
+
+    public void errorNumVentanas() {
+        JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
+                "Error Ventana", JOptionPane.ERROR_MESSAGE);
     }
 }

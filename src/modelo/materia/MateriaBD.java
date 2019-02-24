@@ -12,7 +12,7 @@ import modelo.carrera.CarreraMD;
  */
 public class MateriaBD extends MateriaMD {
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Materia");
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {

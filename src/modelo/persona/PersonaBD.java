@@ -22,7 +22,7 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Persona");
 
     public PersonaBD() {
     }

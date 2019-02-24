@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class LlenarLugaresBD {
 
     //Para que esto funcione debe existir la tabla city en la base de datos 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Llenar Lugares");
 
     ArrayList<String> lugares;
     ArrayList<String> distritos;
