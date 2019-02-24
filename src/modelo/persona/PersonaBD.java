@@ -78,7 +78,6 @@ public class PersonaBD extends PersonaMD {
             while (rs.next()) {
                 if (rs.wasNull()) {
                     is = rs.getBinaryStream(null);
-
                 } else {
 
                     is = rs.getBinaryStream("persona_foto");
@@ -264,18 +263,20 @@ public class PersonaBD extends PersonaMD {
                 p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
                 
+                personas.add(p);
             }
+            return personas; 
         } catch (SQLException ex) {
-            Logger.getLogger(PersonaBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("NO se pudieron consultar personas");
+            System.out.println(ex.getMessage());
+            return null;
         }
-
-        return personas;
     }
 
     //Metodo para mostrar Datos de Persona
     public List<PersonaMD> mostrarDatos() {
         try {
-            List<PersonaMD> lista = new ArrayList<PersonaMD>();
+            List<PersonaMD> lista = new ArrayList();
             String sql = "select * from \"Personas\"";
             ResultSet rs = conecta.sql(sql);
             System.out.println(sql);

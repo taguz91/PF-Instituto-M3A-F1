@@ -3,6 +3,7 @@ package controlador.persona;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import vista.persona.VtnPersona;
@@ -40,7 +41,16 @@ public class VtnPersonaCTR {
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
 
-        mdTbl = new DefaultTableModel(datos, titulo);
+        mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
+        //Pasamos el modelo a la tabla  
+        vtnPersona.getTblPersona().setModel(mdTbl);
+        //Pasamos el formato a la tabla  
+        TblEstilo.formatoTbl(vtnPersona.getTblPersona());
+        //Cambiamos el tamaño de las columnas  
+        TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 0, 40);
+        TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 1, 100);
+        TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 3, 120);
+        
         personas = dbp.cargarPersonas();
         cargarLista();
     }
@@ -58,7 +68,7 @@ public class VtnPersonaCTR {
 
             mdTbl.addRow(valores);
         }
-
+        vtnPersona.getLblResultados().setText(personas.size()+" resultados obtenidos."); 
     }
 
 }

@@ -1,5 +1,9 @@
 package vista.persona;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+
 
 /**
  *
@@ -12,6 +16,30 @@ public class VtnPersona extends javax.swing.JInternalFrame {
      */
     public VtnPersona() {
         initComponents();
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public JButton getBtnIngresar() {
+        return btnIngresar;
+    }
+
+    public JLabel getLblResultados() {
+        return lblResultados;
+    }
+
+    public JTable getTblPersona() {
+        return tblPersona;
     }
 
     /**
