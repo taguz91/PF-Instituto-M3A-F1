@@ -17,16 +17,13 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import modelo.materia.MateriaBD;
 import modelo.persona.DocenteBD;
 import modelo.persona.UsuarioMD;
 import vista.carrera.FrmCarrera;
@@ -71,57 +68,8 @@ public class VtnPrincipalCTR {
                 KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().
                         getMenuShortcutKeyMask()));
          */
+        
         //Acciones de las ventanas de consulta
-
-        vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_L, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_A, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtCarrera().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtDocente().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_D, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtMateria().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_M, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtPersona().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_P, ActionEvent.CTRL_MASK));
-
-        vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
-
-        //Acciones de los formularios de ingreso
-        vtnPrin.getMnIgAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_L, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_A, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgCarrera().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_R, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_S, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgDocente().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_D, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgPersona().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_P, ActionEvent.ALT_MASK));
-
-        vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.ALT_MASK));
-
-        //vtnPrin.getMnCtCurso().setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I + KeyEvent.VK_A, ActionEvent.ALT_MASK));
-        //eventoTeclado(vtnPrin.getPnlMenu());
-        vtnPrin.setFocusable(true);
         //Para el estilo 
         vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());
         vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
@@ -389,5 +337,54 @@ public class VtnPrincipalCTR {
     public void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void iniciarAtajosTeclado() {
+        vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtCarrera().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtDocente().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_D, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPersona().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+
+        //Acciones de los formularios de ingreso
+        vtnPrin.getMnIgAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_A, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgCarrera().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_R, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgCurso().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgDocente().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_D, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPersona().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_P, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.ALT_MASK));
+
     }
 }

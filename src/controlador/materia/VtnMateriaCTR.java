@@ -1,5 +1,7 @@
 package controlador.materia;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.carrera.CarreraBD;
@@ -60,6 +62,27 @@ public class VtnMateriaCTR {
         cargarTblMaterias();
         cargarCmbFiltrar();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
+
+        //Iniciamos el buscador  
+        vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
+        vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                buscar();
+            }
+        });
+    }
+
+    public void buscar() {
+        String buscar = vtnMateria.getTxtBuscar().getText().trim();
+        if (buscar.length() > 2) {
+            buscarMaterias(buscar);
+        }
+    }
+
+    public void buscarMaterias(String b) {
+        materias = materia.cargarMaterias(b);
+        cargarTblMaterias();
     }
 
     public void cargarCmbFiltrar() {
@@ -92,8 +115,8 @@ public class VtnMateriaCTR {
             for (MateriaMD mt : materias) {
                 Object valores[] = {mt.getId(),
                     mt.getCodigo(), mt.getNombre(),
-                    mt.getCiclo(),mt.getHorasDocencia(), 
-                    mt.getHorasPracticas(), mt.getHorasAutoEstudio(), 
+                    mt.getCiclo(), mt.getHorasDocencia(),
+                    mt.getHorasPracticas(), mt.getHorasAutoEstudio(),
                     mt.getHorasPresenciales(), mt.getTotalHoras()};
                 mdTblMat.addRow(valores);
             }

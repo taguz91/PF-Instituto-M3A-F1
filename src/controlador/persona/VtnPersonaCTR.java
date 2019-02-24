@@ -1,6 +1,5 @@
 package controlador.persona;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
