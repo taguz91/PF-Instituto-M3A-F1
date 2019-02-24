@@ -20,7 +20,7 @@ public class ConectarDB {
     //Si se cambia el url no borrar solo comentar 
    // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
-    private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
+    private String url = "jdbc:postgresql://localhost:5432/baseCompleta"; //BD Lina
 
 
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO

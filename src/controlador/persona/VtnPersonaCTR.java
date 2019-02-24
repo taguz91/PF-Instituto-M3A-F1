@@ -14,29 +14,29 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnPersonaCTR {
 
-    private final PersonaBD dbp;
+    private final PersonaBD dbp = new PersonaBD();
     private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
 
-//    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona) {
-//        this.vtnPrin = vtnPrin;
-//        this.vtnPersona = vtnPersona;
-//        vtnPrin.getDpnlPrincipal().add(vtnPersona);
-//        vtnPersona.show();
-//    }
-
-    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, PersonaBD dbp) {
+    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
-        this.dbp = dbp;
-
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
     }
 
-    public void iniciar() throws SQLException {
+//    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, PersonaBD dbp) {
+//        this.vtnPrin = vtnPrin;
+//        this.vtnPersona = vtnPersona;
+//        this.dbp = dbp;
+//
+//        vtnPrin.getDpnlPrincipal().add(vtnPersona);
+//        vtnPersona.show();
+//    }
+
+    public void iniciar() {
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
 

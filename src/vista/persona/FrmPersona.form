@@ -227,13 +227,37 @@
     <Component class="javax.swing.JComboBox" name="cmbEtnia">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="30">
             <StringItem index="0" value="Seleccione"/>
             <StringItem index="1" value="INDIGENA"/>
-            <StringItem index="2" value="MESTIZOS"/>
+            <StringItem index="2" value="MESTIZO"/>
             <StringItem index="3" value="MULATO"/>
-            <StringItem index="4" value="AFROECUATORIANO"/>
+            <StringItem index="4" value="AFRO-ECUATORIANO"/>
             <StringItem index="5" value="BLANCO"/>
+            <StringItem index="6" value="AWA"/>
+            <StringItem index="7" value="ACHUAR"/>
+            <StringItem index="8" value="CHACHI"/>
+            <StringItem index="9" value="COF&#xc1;N"/>
+            <StringItem index="10" value="SECOYA"/>
+            <StringItem index="11" value="SHIWIAR"/>
+            <StringItem index="12" value="SHUAR"/>
+            <StringItem index="13" value="TSACHILA"/>
+            <StringItem index="14" value="WAORANI"/>
+            <StringItem index="15" value="ANDOA"/>
+            <StringItem index="16" value="KICHWA DE LA SIERRA"/>
+            <StringItem index="17" value="PASTOS"/>
+            <StringItem index="18" value="OTAVALO"/>
+            <StringItem index="19" value="KARANKI"/>
+            <StringItem index="20" value="KAYAMBI"/>
+            <StringItem index="21" value="CHIBULEOSALASAKA"/>
+            <StringItem index="22" value="KISAPINCHA"/>
+            <StringItem index="23" value="PURUH&#xc1;"/>
+            <StringItem index="24" value="KA&#xd1;ARI"/>
+            <StringItem index="25" value="SARAGURO"/>
+            <StringItem index="26" value="PALTAS"/>
+            <StringItem index="27" value="HUANCAVILCA"/>
+            <StringItem index="28" value="OTRA ETNIA"/>
+            <StringItem index="29" value="SE IGNORA"/>
           </StringArray>
         </Property>
       </Properties>

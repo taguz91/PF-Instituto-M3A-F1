@@ -248,21 +248,25 @@ public class PersonaBD extends PersonaMD {
     
     
     //Metodo para cargar persona en un ArrayList
-     public ArrayList<PersonaMD> cargarPersonas() throws SQLException {
+     public ArrayList<PersonaMD> cargarPersonas() {
         ArrayList<PersonaMD> personas = new ArrayList();
-        String sql = "select * from \"Persona\"";
+        String sql = "select * from \"Personas\"";
         ResultSet rs = conecta.sql(sql);
         System.out.println(sql);
-        while (rs.next()) {
-            PersonaMD p = new PersonaMD();
-            p.setIdPersona(rs.getInt("id_persona"));
-            p.setIdentificacion(rs.getString("persona_identificacion"));
-            p.setPrimerNombre(rs.getString("persona_primer_nombre"));
-            p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-            p.setPrimerApellido(rs.getString("persona_primer_apellido"));
-            p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-            p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
-            
+        try {
+            while (rs.next()) {
+                PersonaMD p = new PersonaMD();
+                p.setIdPersona(rs.getInt("id_persona"));
+                p.setIdentificacion(rs.getString("persona_identificacion"));
+                p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return personas;
@@ -272,7 +276,7 @@ public class PersonaBD extends PersonaMD {
     public List<PersonaMD> mostrarDatos() {
         try {
             List<PersonaMD> lista = new ArrayList<PersonaMD>();
-            String sql = "select * from \"Persona\"";
+            String sql = "select * from \"Personas\"";
             ResultSet rs = conecta.sql(sql);
             System.out.println(sql);
             while (rs.next()) {

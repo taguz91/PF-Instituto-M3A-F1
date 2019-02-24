@@ -17,6 +17,7 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.event.InternalFrameAdapter;
@@ -159,8 +160,10 @@ public class VtnPrincipalCTR {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
-//            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
-//            ctrVtnPersona.iniciar();
+          VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona);
+           ctrVtnPersona.iniciar();
+        } else {
+            vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
         }
     }
 
@@ -254,8 +257,8 @@ public class VtnPrincipalCTR {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
-            //FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
-            //ctrFrmPersona.iniciar();
+            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
+            ctrFrmPersona.iniciar();
         } else {
             vtnPrin.getLblMensaje().setText(ERRORNUMVTNS);
         }
