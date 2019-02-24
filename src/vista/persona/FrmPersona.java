@@ -315,7 +315,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel10.setText("Etnia *");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, 20));
 
-        cmbEtnia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "INDIGENA", "MESTIZOS", "MULATO", "AFROECUATORIANO", "BLANCO" }));
+        cmbEtnia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "INDIGENA", "MESTIZO", "MULATO", "AFRO-ECUATORIANO", "BLANCO", "AWA", "ACHUAR", "CHACHI", "COFÁN", "SECOYA", "SHIWIAR", "SHUAR", "TSACHILA", "WAORANI", "ANDOA", "KICHWA DE LA SIERRA", "PASTOS", "OTAVALO", "KARANKI", "KAYAMBI", "CHIBULEOSALASAKA", "KISAPINCHA", "PURUHÁ", "KAÑARI", "SARAGURO", "PALTAS", "HUANCAVILCA", "OTRA ETNIA", "SE IGNORA" }));
         getContentPane().add(cmbEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 130, 20));
 
         jLabel11.setText("Genero *");
