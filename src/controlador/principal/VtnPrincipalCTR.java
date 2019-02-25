@@ -69,6 +69,8 @@ public class VtnPrincipalCTR {
                         getMenuShortcutKeyMask()));
          */
         
+        iniciarAtajosTeclado();
+        
         //Acciones de las ventanas de consulta
         //Para el estilo 
         vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());

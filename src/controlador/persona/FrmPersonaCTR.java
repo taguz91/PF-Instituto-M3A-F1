@@ -453,7 +453,7 @@ public class FrmPersonaCTR {
         int posDis = frmPersona.getCmbProvincia().getSelectedIndex();
         if (posDis > 0) {
             frmPersona.getLblErrorCanton().setVisible(false);
-            ciudades = lug.buscarPorReferencia(paises.get(posDis - 1).getId());
+            ciudades = lug.buscarPorReferencia(distritos.get(posDis - 1).getId());
             frmPersona.getCmbCanton().removeAllItems();
             frmPersona.getCmbCanton().addItem("Seleccione");
             ciudades.forEach((l) -> {
@@ -476,7 +476,7 @@ public class FrmPersonaCTR {
     }
 
     public void cargarCantonesProvincia() {
-        int posPr = frmPersona.getCmbNacionalidad().getSelectedIndex();
+        int posPr = frmPersona.getCmbProvinciaReside().getSelectedIndex();
         if (posPr > 0) {
             frmPersona.getLblErrorCantonReside().setVisible(false);
             cantones = lug.buscarPorReferencia(provincias.get(posPr - 1).getId());
