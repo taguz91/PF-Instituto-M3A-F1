@@ -3,7 +3,6 @@ package modelo.persona;
 
 
 import java.awt.Image;
-import java.io.FileInputStream;
 import java.time.LocalDate;
 import modelo.lugar.LugarBD;
 

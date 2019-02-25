@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
-import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
 import vista.persona.FrmAlumno;
 import vista.persona.VtnAlumno;
@@ -27,6 +27,9 @@ public class FrmAlumnoCTR {
     private AlumnoBD bdAlumno;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false;
+    //Para cargar los sectores economico  
+    private SectorEconomicoBD sectorE= new SectorEconomicoBD(); 
+        
 
     public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno) {
         this.vtnPrin = vtnPrin;
@@ -93,7 +96,7 @@ public class FrmAlumnoCTR {
                         frmAlumno.getCmBx_Modalidad().setSelectedItem(alumno.getModalidad());
                         frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
                         frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
-                        frmAlumno.getCmBx_SecEconomico().setSelectedItem(bdAlumno.capturarSector(alumno.getId_SecEconomico()).getDescrip_SecEconomico());
+                        frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(alumno.getId_SecEconomico()).getDescrip_SecEconomico());
                         frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
                         frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
                         frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
@@ -121,7 +124,7 @@ public class FrmAlumnoCTR {
     }
 
     public void iniciarSectores() {
-        List<SectorEconomicoMD> sector = bdAlumno.capturarSectores();
+        List<SectorEconomicoMD> sector = sectorE.capturarSectores();
         for (int i = 0; i < sector.size(); i++) {
             frmAlumno.getCmBx_SecEconomico().addItem(sector.get(i).getDescrip_SecEconomico());
         }
@@ -132,7 +135,7 @@ public class FrmAlumnoCTR {
         if (editar == false) {
             AlumnoBD persona = new AlumnoBD();
             this.bdAlumno = pasarDatos(persona, frmAlumno);
-            if (bdAlumno.guardarAlumno(bdAlumno.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
+            if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                 reiniciarComponentes(frmAlumno);
             } else {
@@ -153,7 +156,7 @@ public class FrmAlumnoCTR {
             frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(bdAlumno.getAnio_graduacion()));
             frmAlumno.getChkBx_Pension().setSelected(bdAlumno.isPension());
             frmAlumno.getChkBx_Trabaja().setSelected(bdAlumno.isTrabaja());
-            frmAlumno.getCmBx_SecEconomico().setSelectedItem(bdAlumno.capturarSector(bdAlumno.getId_SecEconomico()).getDescrip_SecEconomico());
+            frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(bdAlumno.getId_SecEconomico()).getDescrip_SecEconomico());
             frmAlumno.getCmBx_ForPadre().setSelectedItem(bdAlumno.getFormacion_Padre());
             frmAlumno.getCmBx_ForMadre().setSelectedItem(bdAlumno.getFormacion_Madre());
             frmAlumno.getTxt_NomContacto().setText(bdAlumno.getNom_Contacto());

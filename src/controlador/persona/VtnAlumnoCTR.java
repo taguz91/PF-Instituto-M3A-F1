@@ -31,6 +31,8 @@ public class VtnAlumnoCTR {
 
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
+        //Inicializamos la clase de alumno  
+        bdAlumno = new AlumnoBD();
     }
 
     public void iniciar() {
@@ -64,7 +66,7 @@ public class VtnAlumnoCTR {
     }
 
     public void abrirFrmAlumno() {
-        FrmAlumno frmAlumno = new FrmAlumno();
+        frmAlumno = new FrmAlumno();
         FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
         ctrFrmAlumno.iniciar();
     }

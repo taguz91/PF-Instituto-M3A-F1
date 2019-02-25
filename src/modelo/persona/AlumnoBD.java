@@ -97,63 +97,14 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public List<SectorEconomicoMD> capturarSectores() {
-        List<SectorEconomicoMD> sectores = new ArrayList<SectorEconomicoMD>();
-        String sql = "SELECT id_sec_economico, sec_economico_descripcion FROM public.\"SectorEconomico\";";
-        ResultSet rs = conecta.sql(sql);
-        try {
-            while (rs.next()) {
-                SectorEconomicoMD s = new SectorEconomicoMD();
-                s.setId_SecEconomico(rs.getInt("id_sec_economico"));
-                s.setDescrip_SecEconomico(rs.getString("sec_economico_descripcion"));
-                sectores.add(s);
-            }
-            rs.close();
-            return sectores;
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-
-    public SectorEconomicoMD capturarIdSector(String aguja) {
-        SectorEconomicoMD sector = new SectorEconomicoMD();
-        String sql = "SELECT id_sec_economico FROM public.\"SectorEconomico\" WHERE sec_economico_descripcion LIKE '%"
-                + aguja + "%';";
-        ResultSet rs = conecta.sql(sql);
-        try {
-            while (rs.next()) {
-                sector.setId_SecEconomico(rs.getInt("id_sec_economico"));
-            }
-            rs.close();
-            return sector;
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-    
-    public SectorEconomicoMD capturarSector(int aguja) {
-        SectorEconomicoMD sector = new SectorEconomicoMD();
-        String sql = "SELECT sec_economico_descripcion FROM public.\"SectorEconomico\" WHERE id_sec_economico = "
-                + aguja + ";";
-        ResultSet rs = conecta.sql(sql);
-        try {
-            while (rs.next()) {
-                sector.setDescrip_SecEconomico(rs.getString("sec_economico_descripcion"));
-            }
-            rs.close();
-            return sector;
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-
     public List<PersonaMD> llenarTabla() {
         List<PersonaMD> lista = new ArrayList();
-        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido, persona_correo"
-                + " FROM public.\"Personas\" WHERE alumno_activo = true;";
+        String sql = "SELECT id_persona, persona_identificacion, "
+                + "persona_primer_nombre, persona_segundo_nombre,"
+                + " persona_primer_apellido, persona_segundo_apellido,"
+                + " persona_correo"
+                + " FROM public.\"Personas\" ;";
+        //Esto estaba mal WHERE alumno_activo = 'true'
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -164,18 +115,20 @@ public class AlumnoBD extends AlumnoMD {
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 m.setCorreo(rs.getString("persona_correo"));
+                
                 lista.add(m);
             }
             rs.close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
             return null;
         } 
     }
 
     public List<PersonaMD> capturarPersona(String aguja) {
-        List<PersonaMD> lista = new ArrayList<PersonaMD>();
+        List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido, persona_correo"
                 + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' OR  persona_primer_nombre LIKE '"
                 + aguja + "%' OR persona_segundo_nombre LIKE '" + aguja + "%' OR persona_primer_apellido LIKE '"

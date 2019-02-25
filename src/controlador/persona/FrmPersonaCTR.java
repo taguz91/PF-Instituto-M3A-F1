@@ -12,6 +12,8 @@ import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.persona.TipoPersonaBD;
+import modelo.persona.TipoPersonaMD;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
@@ -25,44 +27,49 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private PersonaBD persona;
-    
+
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
     private ArrayList<LugarMD> distritos;
     private ArrayList<LugarMD> ciudades;
-
+    //Lugar donde reside  
     private ArrayList<LugarMD> provincias;
     private ArrayList<LugarMD> cantones;
     private ArrayList<LugarMD> parroquias;
 
     //Para consultar lugares 
     LugarBD lug = new LugarBD();
-
+    //Para consultar tipos de persona
+    TipoPersonaBD tip = new TipoPersonaBD();
+    //Aqui se guardaran los tipos de persona  
+    private ArrayList<TipoPersonaMD> tiposPer;
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
         //Inicializamos persona
-        this.persona = new PersonaBD(); 
-        
+        this.persona = new PersonaBD();
+
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
         //Para iniciar los combos de paises 
         cargarPaises();
-        cargarProvinciasEcuador();
     }
 
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
-        
+        //Cargamos los tipos de persona  
+        cargarTiposPersona();
+
         //Cuando se realice una accion en alguno de esos combos 
-        frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());  
-        frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito()); 
-        frmPersona.getCmbProvinciaReside().addActionListener(e -> cargarCantonesProvincia()); 
-        frmPersona.getCmbCantonReside().addActionListener(e -> cargarParroquiaCanton()); 
-        
-        
+        frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
+        frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito());
+        frmPersona.getCmbPaisReside().addActionListener(e -> cargarProvinciasResidencia()); 
+        frmPersona.getCmbProvinciaReside().addActionListener(e -> cargarCantonesProvincia());
+        frmPersona.getCmbCantonReside().addActionListener(e -> cargarParroquiaCanton());
+        frmPersona.getCmbParroquiaReside().addActionListener(e -> cargarCodigoPostal()); 
+
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> pruebas());
         //frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
@@ -113,7 +120,7 @@ public class FrmPersonaCTR {
                 zonaResidencia, correo;
 
         boolean discapcidad;
-        
+
         identificacion = frmPersona.getTxtIdentificacion().getText();
 
         int tipoIdentifi = frmPersona.getCmbTipoId().getSelectedIndex();
@@ -216,7 +223,6 @@ public class FrmPersonaCTR {
         if (discapcidad) {
             carnetConadis = frmPersona.getTxtCarnetConadis().getText();
 
-
             if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() < 1) {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(true);
             } else {
@@ -254,20 +260,19 @@ public class FrmPersonaCTR {
         }
 
         //para saber como me devuelve el dato
-
         //Esto deberia ser automatico 
         String fechaReg;
         //Este dato no lo tenemos en base de datos 
         //String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
 
         callePrin = frmPersona.getTxtCallePrincipal().getText();
-        if(!Validar.esLetras(callePrin)){
+        if (!Validar.esLetras(callePrin)) {
             //Mostrar error
             guardar = false;
-        }else{
+        } else {
             //Ocultar error
         }
-        
+
         calleSec = frmPersona.getTxtCalleSecundaria().getText();
 
         referencia = frmPersona.getTxtReferencia().getText();
@@ -279,10 +284,10 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorCelular().setVisible(false);
         }
-        
+
         // Lugares en donde reside y vive 
-        LugarMD lugarNac, lugarRes; 
-        
+        LugarMD lugarNac, lugarRes;
+
         //Esto igual deberiamos hacerlo de otra manera.
         //Aqui preguntamos siempre que sea mayor a la posicion 0 porque 
         //Ahi esta el texto seleccione  
@@ -290,50 +295,50 @@ public class FrmPersonaCTR {
         //tenga porque el ultimo siempre sera otro.
         //Si es otro se guardaria el aterior y no pasara
         int posNac = frmPersona.getCmbNacionalidad().getSelectedIndex();
-        if ( posNac > 0 && posNac <= paises.size()) {
+        if (posNac > 0 && posNac <= paises.size()) {
             frmPersona.getLblErrorNacionalidad().setVisible(false);
-            lugarNac = paises.get(posNac - 1);  
-            int posDis = frmPersona.getCmbProvincia().getSelectedIndex(); 
+            lugarNac = paises.get(posNac - 1);
+            int posDis = frmPersona.getCmbProvincia().getSelectedIndex();
             if (posDis > 0 && posDis <= distritos.size()) {
                 frmPersona.getLblErrorProvincia().setVisible(false);
                 lugarNac = distritos.get(posDis - 1);
-                int posCi = frmPersona.getCmbCanton().getSelectedIndex(); 
-                if (posCi > 0 && posCi <= ciudades.size()){
+                int posCi = frmPersona.getCmbCanton().getSelectedIndex();
+                if (posCi > 0 && posCi <= ciudades.size()) {
                     frmPersona.getLblErrorCanton().setVisible(false);
-                    lugarNac = ciudades.get(posCi - 1); 
-                }else{
+                    lugarNac = ciudades.get(posCi - 1);
+                } else {
                     frmPersona.getLblErrorCanton().setVisible(true);
                 }
-            }else{
+            } else {
                 frmPersona.getLblErrorProvincia().setVisible(true);
             }
-        }else{
+        } else {
             frmPersona.getLblErrorNacionalidad().setVisible(true);
         }
-        
+
         int posPro = frmPersona.getCmbProvinciaReside().getSelectedIndex();
-        if ( posPro > 0 && posPro <= provincias.size()) {
+        if (posPro > 0 && posPro <= provincias.size()) {
             frmPersona.getLblErrorProvinciaReside().setVisible(false);
-            lugarNac = provincias.get(posPro - 1);  
-            int posCa = frmPersona.getCmbCantonReside().getSelectedIndex(); 
+            lugarNac = provincias.get(posPro - 1);
+            int posCa = frmPersona.getCmbCantonReside().getSelectedIndex();
             if (posCa > 0 && posCa <= cantones.size()) {
                 frmPersona.getLblErrorCantonReside().setVisible(false);
                 lugarNac = cantones.get(posCa - 1);
-                int posPr = frmPersona.getCmbParroquiaReside().getSelectedIndex(); 
-                if (posPr > 0 && posPr <= parroquias.size()){
+                int posPr = frmPersona.getCmbParroquiaReside().getSelectedIndex();
+                if (posPr > 0 && posPr <= parroquias.size()) {
                     frmPersona.getLblErrorParroquiaReside().setVisible(false);
-                    lugarNac = parroquias.get(posPr - 1); 
-                }else{
+                    lugarNac = parroquias.get(posPr - 1);
+                } else {
                     frmPersona.getLblErrorParroquiaReside().setVisible(true);
                 }
-            }else{
+            } else {
                 frmPersona.getLblErrorCantonReside().setVisible(true);
             }
-        }else{
+        } else {
             frmPersona.getLblErrorProvinciaReside().setVisible(true);
         }
         //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
-        numCasa = frmPersona.getTxtNumeroCasa().getText();        
+        numCasa = frmPersona.getTxtNumeroCasa().getText();
         sector = frmPersona.getTxtSector().getText();
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         correo = frmPersona.getTxtCorreo().getText();
@@ -341,7 +346,7 @@ public class FrmPersonaCTR {
         if (guardar) {
             //Llenar directo por el constructor
             PersonaBD per = new PersonaBD();
-           
+
 //           String identificacion, priNombre, segNombre, priApellido, segApellido,
 //                fechaNac, estadoCivil, tipoSangre, genero, sexo, etnia, carnetConadis = null,
 //                tipoDiscapacidad, porcentajeDiscapacidad, idiomaRaiz = null, telefono,
@@ -350,40 +355,38 @@ public class FrmPersonaCTR {
 //
 //        boolean discapcidad;
 //        
-           // PersonaBD persona = new PersonaBD(, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, tipoDiscapacidad, 0, carnetConadis, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
+            // PersonaBD persona = new PersonaBD(, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, tipoDiscapacidad, 0, carnetConadis, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
             per.setCallePrincipal(callePrin);
             per.setCalleSecundaria(calleSec);
             per.setCarnetConadis(carnetConadis);
-            
-             
+
         } else {
             System.out.println("Existen errores en los formularios");
         }
 
     }
 
-    public void buscarPersona(String aguja ) {
-        
+    public void buscarPersona(String aguja) {
+
         persona = (PersonaBD) persona.buscarPersona(aguja);
-             if(persona != null){
-                 frmPersona.getTxtPrimerNombre().setText(persona.getPrimerNombre());
-                 
-                 
-             }else{
-                 
-             }
-       
+        if (persona != null) {
+            frmPersona.getTxtPrimerNombre().setText(persona.getPrimerNombre());
+
+        } else {
+
+        }
+
     }
 
     public void salirBoton() {
 
     }
-    
-    public void editar(PersonaMD per){
-        persona = (PersonaBD) per; 
+
+    public void editar(PersonaMD per) {
+        persona = (PersonaBD) per;
     }
-    
-    public void ocultarErrores(){
+
+    public void ocultarErrores() {
         frmPersona.getLblErrorCallePrin().setVisible(false);
         frmPersona.getLblErrorCalleSec().setVisible(false);
         frmPersona.getLblErrorCanton().setVisible(false);
@@ -415,17 +418,50 @@ public class FrmPersonaCTR {
         frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
         frmPersona.getLblErrorTipoResidencia().setVisible(false);
         frmPersona.getLblErrorTipoSangre().setVisible(false);
-        
+        frmPersona.getLblErrorPaisReside().setVisible(false);
     }
-    
-    //Metodos para los cobos de residencia yciudades natales
+
+    public void cargarTiposPersona() {
+        tiposPer = tip.cargarTipoPersona();
+        if (tiposPer != null) {
+            frmPersona.getCmbTipoPersona().removeAllItems();
+            frmPersona.getCmbTipoPersona().addItem("Seleccione");
+            tiposPer.forEach((t) -> {
+                frmPersona.getCmbTipoPersona().addItem(t.getTipo());
+            });
+        }
+    }
+
+    //Metodos para los combos de residencia y ciudades natales
     private void cargarPaises() {
         paises = lug.buscarPaises();
+        paises = ponerPrimeroPais(paises, "ECUADOR");
         frmPersona.getCmbNacionalidad().removeAllItems();
         frmPersona.getCmbNacionalidad().addItem("Seleccione");
+        //Cargamos el otro combo de paises 
+        frmPersona.getCmbPaisReside().removeAllItems();
+        frmPersona.getCmbPaisReside().addItem("Seleccione");
         paises.forEach((l) -> {
             frmPersona.getCmbNacionalidad().addItem(l.getNombre());
+            frmPersona.getCmbPaisReside().addItem(l.getNombre());
         });
+    }
+
+    //Reordenamos paises para que ecuador este primero  
+    private ArrayList<LugarMD> ponerPrimeroPais(ArrayList<LugarMD> lugares, String pais) {
+        ArrayList<LugarMD> lugaresOrdenados = new ArrayList();
+        lugares.forEach((l) -> {
+            if (l.getNombre().equalsIgnoreCase(pais)) {
+                lugaresOrdenados.add(l);
+            }
+        });
+
+        lugares.forEach((l) -> {
+            if (!l.getNombre().equalsIgnoreCase(pais)) {
+                lugaresOrdenados.add(l);
+            }
+        });
+        return lugaresOrdenados;
     }
 
     public void cargarDistritosPais() {
@@ -460,14 +496,19 @@ public class FrmPersonaCTR {
         }
     }
 
-    private void cargarProvinciasEcuador() {
-        //Buscamos por 1 porque 1 es el codigod e ecuador 
-        provincias = lug.buscarPorReferencia(1);
-        frmPersona.getCmbProvinciaReside().removeAllItems();
-        frmPersona.getCmbProvinciaReside().addItem("Seleccione");
-        provincias.forEach((l) -> {
-            frmPersona.getCmbProvinciaReside().addItem(l.getNombre());
-        });
+    private void cargarProvinciasResidencia() {
+        int posPaisRe = frmPersona.getCmbPaisReside().getSelectedIndex();
+        if (posPaisRe > 0) {
+            frmPersona.getLblErrorPaisReside().setVisible(false);
+            provincias = lug.buscarPorReferencia(paises.get(posPaisRe - 1).getId());
+            frmPersona.getCmbProvinciaReside().removeAllItems();
+            frmPersona.getCmbProvinciaReside().addItem("Seleccione");
+            provincias.forEach((l) -> {
+                frmPersona.getCmbProvinciaReside().addItem(l.getNombre());
+            });
+        } else {
+            frmPersona.getLblErrorPaisReside().setVisible(true);
+        }
     }
 
     public void cargarCantonesProvincia() {
@@ -499,6 +540,15 @@ public class FrmPersonaCTR {
             frmPersona.getCmbParroquiaReside().addItem("OTRO");
         } else {
             frmPersona.getLblErrorParroquiaReside().setVisible(true);
+        }
+    }
+    
+    public void cargarCodigoPostal(){
+        int posPa = frmPersona.getCmbParroquiaReside().getSelectedIndex(); 
+        if (posPa > 0 && posPa < parroquias.size()) { 
+            frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
+        }else{
+            frmPersona.getTxtCodigoPostal().setText("");
         }
     }
 }

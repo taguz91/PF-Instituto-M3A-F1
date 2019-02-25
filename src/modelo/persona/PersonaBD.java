@@ -136,6 +136,7 @@ public class PersonaBD extends PersonaMD {
                         pers.add(p);
                     }
                 }
+                rs.close();
                 return pers;
             } else {
                 return null;
@@ -156,6 +157,7 @@ public class PersonaBD extends PersonaMD {
                 while (rs.next()) {
                     p = obtenerPersona(rs);
                 }
+                rs.close();
                 return p;
             } else {
                 return null;
