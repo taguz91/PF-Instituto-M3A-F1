@@ -169,7 +169,7 @@ public class MateriaBD extends MateriaMD {
             m.setCiclo(rs.getInt("materia_ciclo"));
 
             if (rs.wasNull()) {
-                m.setCreditos(rs.getInt(null));
+                m.setCreditos(0);
             } else {
                 m.setCreditos(rs.getInt("materia_creditos"));
             }

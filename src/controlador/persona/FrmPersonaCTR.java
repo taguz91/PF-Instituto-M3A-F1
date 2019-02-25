@@ -42,16 +42,11 @@ public class FrmPersonaCTR {
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
-
         //Inicializamos persona
-
-        
         this.persona = new PersonaBD(); 
-
-
+        
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
-        
         //Para iniciar los combos de paises 
         cargarPaises();
         cargarProvinciasEcuador();
@@ -70,7 +65,7 @@ public class FrmPersonaCTR {
         
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> pruebas());
-      //  frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
+        //frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmPersona.getBtnCancelar().addActionListener(e -> salirBoton());
     }
 
@@ -369,7 +364,7 @@ public class FrmPersonaCTR {
 
     public void buscarPersona(String aguja ) {
         
-        persona = persona.buscarPersonaCedula(aguja);
+        persona = (PersonaBD) persona.buscarPersona(aguja);
              if(persona != null){
                  frmPersona.getTxtPrimerNombre().setText(persona.getPrimerNombre());
                  

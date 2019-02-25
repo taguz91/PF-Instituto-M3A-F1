@@ -20,9 +20,7 @@ public class TipoPersonaBD extends TipoPersonaMD {
         ArrayList<TipoPersonaMD> tipos = new ArrayList();
         String sql = "SELECT id_tipo_persona, tipo_persona\n"
                 + "FROM public.\"TipoPersona\" WHERE tipo_persona_activo = 'true';";
-
         ResultSet rs = conecta.sql(sql);
-
         try {
             if (rs != null) {
 
@@ -46,7 +44,7 @@ public class TipoPersonaBD extends TipoPersonaMD {
     }
 
     public TipoPersonaMD buscar(int idTipoPersona) {
-        TipoPersonaBD tipo = new TipoPersonaBD();
+        TipoPersonaMD tipo = new TipoPersonaMD();
         String sql = "SELECT id_tipo_persona, tipo_persona\n"
                 + "FROM public.\"TipoPersona\" WHERE tipo_persona_activo = 'true' "
                 + "and id_tipo_persona = '" + idTipoPersona + "';";

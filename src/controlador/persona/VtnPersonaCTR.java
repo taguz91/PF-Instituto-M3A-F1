@@ -14,7 +14,7 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnPersonaCTR {
 
-    private final PersonaBD dbp = new PersonaBD();
+    private final PersonaBD dbp;
     private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
     private DefaultTableModel mdTbl;
@@ -25,16 +25,9 @@ public class VtnPersonaCTR {
         this.vtnPersona = vtnPersona;
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
+        //Iniciamos la clase persona
+        dbp = new PersonaBD();
     }
-
-//    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, PersonaBD dbp) {
-//        this.vtnPrin = vtnPrin;
-//        this.vtnPersona = vtnPersona;
-//        this.dbp = dbp;
-//
-//        vtnPrin.getDpnlPrincipal().add(vtnPersona);
-//        vtnPersona.show();
-//    }
 
     public void iniciar() {
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
@@ -49,7 +42,7 @@ public class VtnPersonaCTR {
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 0, 40);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 1, 100);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 3, 120);
-        
+
         personas = dbp.cargarPersonas();
         cargarLista();
     }
@@ -59,15 +52,18 @@ public class VtnPersonaCTR {
     //obtenemos el modelo de la tabla de la vista y la pones en el modelo por defaulta con un castingt
     public void cargarLista() {
         mdTbl.setRowCount(0);
-        for (PersonaMD p : personas) {
-            Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
-                p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
-                + p.getPrimerApellido() + " " + p.getSegundoApellido(),
-                p.getFechaNacimiento()};
+        System.out.println("Tamaño "+personas.size());
+        if (personas != null) {
+            for (PersonaMD p : personas) {
+                Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
+                    p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
+                    + p.getPrimerApellido() + " " + p.getSegundoApellido(),
+                    p.getFechaNacimiento()};
 
-            mdTbl.addRow(valores);
+                mdTbl.addRow(valores);
+            }
         }
-        vtnPersona.getLblResultados().setText(personas.size()+" resultados obtenidos."); 
+        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
     }
 
 }
