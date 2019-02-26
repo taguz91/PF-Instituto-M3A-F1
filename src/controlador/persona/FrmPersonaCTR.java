@@ -57,11 +57,13 @@ public class FrmPersonaCTR {
         //Inicializamos persona
         this.persona = new PersonaBD();
 
-        vtnPrin.getDpnlPrincipal().add(frmPersona);
+      //  vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
         //Para iniciar los combos de paises 
         cargarPaises();
     }
+
+  
 
     public void iniciar() {
         //Ocultamos todos los erores del formulario 

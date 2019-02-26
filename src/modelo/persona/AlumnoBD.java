@@ -18,8 +18,8 @@ public class AlumnoBD extends AlumnoMD {
     public AlumnoBD() {
     }
 
-    public AlumnoBD(int id_Alumno, String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String modalidad, String ocupacion, String anio_graduacion, String observacion, String sector_Economico, String formacion_Padre, String formacion_Madre, String num_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_SecEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        super(id_Alumno, nombre, tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, modalidad, ocupacion, anio_graduacion, observacion, sector_Economico, formacion_Padre, formacion_Madre, num_Contacto, parentesco_Contacto, contacto_Emergencia, id_SecEconomico, educacion_Superior, pension, trabaja, activo, idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
+    public AlumnoBD(int id_Alumno, String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String sector_Economico, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_SecEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+        super(id_Alumno, nombre, tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, ocupacion, anio_graduacion, observacion, sector_Economico, formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia, id_SecEconomico, educacion_Superior, pension, trabaja, activo, idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
     }
 
     public boolean guardarAlumno(SectorEconomicoMD s) {
@@ -110,6 +110,7 @@ public class AlumnoBD extends AlumnoMD {
             while (rs.next()) {
                 PersonaMD m = new PersonaMD();
                 m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
@@ -130,15 +131,16 @@ public class AlumnoBD extends AlumnoMD {
     public List<PersonaMD> capturarPersona(String aguja) {
         List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido, persona_correo"
-                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' OR  persona_primer_nombre LIKE '"
-                + aguja + "%' OR persona_segundo_nombre LIKE '" + aguja + "%' OR persona_primer_apellido LIKE '"
-                + aguja + "%' OR persona_segundo_apellido LIKE ' " + aguja + "%' OR persona_correo LIKE '"
+                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' OR  persona_primer_nombre LIKE '%"
+                + aguja + "%' OR persona_segundo_nombre LIKE '%" + aguja + "%' OR persona_primer_apellido LIKE '%"
+                + aguja + "%' OR persona_segundo_apellido LIKE '%" + aguja + "%' OR persona_correo LIKE '%"
                 + aguja + "%' AND persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
                 PersonaMD m = new PersonaMD();
                 m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
@@ -167,28 +169,28 @@ public class AlumnoBD extends AlumnoMD {
         try {
             AlumnoMD a = new AlumnoMD();
             while (rs.next()) {
-                a.setIdPersona(rs.getInt("p.id_persona"));
-                a.setIdentificacion(rs.getString("p.persona_identificacion"));
-                a.setPrimerNombre(rs.getString("p.persona_primer_nombre"));
-                a.setSegundoNombre(rs.getString("p.persona_segundo_nombre"));
-                a.setPrimerApellido(rs.getString("p.persona_primer_apellido"));
-                a.setSegundoApellido(rs.getString("p.persona_segundo_apellido"));
-                a.setId_Alumno(rs.getInt("a.id_alumno"));
-                a.setId_SecEconomico(rs.getInt("a.id_sec_economico"));
-                a.setTipo_Colegio(rs.getString("a.alumno_tipo_colegio"));
-                a.setTipo_Bachillerato(rs.getString("a.alumno_tipo_bachillerato"));
-                a.setAnio_graduacion(rs.getString("a.alumno_anio_graduacion"));
-                a.setEducacion_Superior(rs.getBoolean("a.alumno_educacion_superior"));
-                a.setTitulo_Superior(rs.getString("a.alumno_educacion_superior"));
-                a.setNivel_Academico(rs.getString("a.alumno_nivel_academico"));
-                a.setPension(rs.getBoolean("a.alumno_pension"));
-                a.setOcupacion(rs.getString("a.alumno_ocupacion"));
-                a.setTrabaja(rs.getBoolean("a.alumno_trabaja"));
-                a.setFormacion_Padre(rs.getString("a.alumno_nivel_formacion_padre"));
-                a.setFormacion_Madre(rs.getString("a.alumno_nivel_formacion_madre"));
-                a.setContacto_Emergencia(rs.getString("a.alumno_nombre_contacto_emergencia"));
-                a.setParentesco_Contacto(rs.getString("a.alumno_parentesco_contacto"));
-                a.setNom_Contacto(rs.getString("a.alumno_numero_contacto"));
+                a.setIdPersona(rs.getInt("id_persona"));
+                a.setIdentificacion(rs.getString("persona_identificacion"));
+                a.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                a.setId_Alumno(rs.getInt("id_alumno"));
+                a.setId_SecEconomico(rs.getInt("id_sec_economico"));
+                a.setTipo_Colegio(rs.getString("alumno_tipo_colegio"));
+                a.setTipo_Bachillerato(rs.getString("alumno_tipo_bachillerato"));
+                a.setAnio_graduacion(rs.getString("alumno_anio_graduacion"));
+                a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
+                a.setTitulo_Superior(rs.getString("alumno_educacion_superior"));
+                a.setNivel_Academico(rs.getString("alumno_nivel_academico"));
+                a.setPension(rs.getBoolean("alumno_pension"));
+                a.setOcupacion(rs.getString("alumno_ocupacion"));
+                a.setTrabaja(rs.getBoolean("alumno_trabaja"));
+                a.setFormacion_Padre(rs.getString("alumno_nivel_formacion_padre"));
+                a.setFormacion_Madre(rs.getString("alumno_nivel_formacion_madre"));
+                a.setContacto_Emergencia(rs.getString("alumno_nombre_contacto_emergencia"));
+                a.setParentesco_Contacto(rs.getString("alumno_parentesco_contacto"));
+                a.setNom_Contacto(rs.getString("alumno_numero_contacto"));
             }
             rs.close();
             return a;
