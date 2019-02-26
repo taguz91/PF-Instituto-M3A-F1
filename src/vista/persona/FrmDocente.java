@@ -250,6 +250,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Ingreso Docente");
         setAutoscrolls(true);
         setName("infrmIngresoDocente"); // NOI18N
@@ -273,6 +275,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
         lblOtroTrabajo.setText("Otro Trabajo");
         getContentPane().add(lblOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, 10));
+
+        cbxOtroTrabajo.setEnabled(false);
         getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, 20));
 
         jdcFechaInicioContratacion.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
@@ -317,6 +321,7 @@ public class FrmDocente extends javax.swing.JInternalFrame {
                 false,
                 true)));
     jdcFechaInicioContratacion.setFormat(2);
+    jdcFechaInicioContratacion.setEnabled(false);
     getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, 20));
 
     lblFechaInicioContratacion.setText("Fecha de Contratacion");
@@ -324,6 +329,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
     lblDocenteCapacitador.setText("Docente Capacitador");
     getContentPane().add(lblDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, 10));
+
+    cbxDocenteCapacitador.setEnabled(false);
     getContentPane().add(cbxDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, 20));
 
     lblFechaFinContratacion.setText("Fecha fin contratacion");
@@ -333,10 +340,12 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 10));
 
     cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
+    cmbTipoTiempo.setEnabled(false);
     getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 130, 20));
 
     spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
     spnCategoria.setAutoscrolls(true);
+    spnCategoria.setEnabled(false);
     getContentPane().add(spnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 72, 20));
 
     lblCategoria.setText("Categoria");
@@ -344,6 +353,7 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 470, 10));
 
     btnGuardar.setText("Guardar");
+    btnGuardar.setEnabled(false);
     getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
     btnCancelar.setText("Cancelar");
@@ -352,6 +362,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
     getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 10, 180));
     getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 470, 10));
+
+    jdcFechaFinContratacion.setEnabled(false);
     getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
     getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 470, 10));
 

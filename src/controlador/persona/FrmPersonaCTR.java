@@ -25,9 +25,11 @@ public class FrmPersonaCTR {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
 
-        vtnPrin.getDpnlPrincipal().add(frmPersona);
+      //  vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
     }
+
+  
 
     public void iniciar() {
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
