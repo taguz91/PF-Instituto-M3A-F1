@@ -39,7 +39,7 @@ public class PersonaMD {
     private LocalDate fechaRegistro;
     private boolean discapacidad;
     private String tipoDiscapacidad;
-    private byte porcentajeDiscapacidad;
+    private int porcentajeDiscapacidad;
     private String carnetConadis;
     private String callePrincipal;
     private String numeroCasa;
@@ -337,11 +337,11 @@ public class PersonaMD {
         this.tipoDiscapacidad = tipoDiscapacidad;
     }
 
-    public byte getPorcentajeDiscapacidad() {
+    public int getPorcentajeDiscapacidad() {
         return porcentajeDiscapacidad;
     }
 
-    public void setPorcentajeDiscapacidad(byte porcentajeDiscapacidad) {
+    public void setPorcentajeDiscapacidad(int porcentajeDiscapacidad) {
         this.porcentajeDiscapacidad = porcentajeDiscapacidad;
     }
 

@@ -15,7 +15,7 @@ public class DocenteBD extends DocenteMD {
         super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador);
     }
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Docente BD");
     PersonaMD p = new PersonaMD();
 
     public boolean InsertarDocente() {

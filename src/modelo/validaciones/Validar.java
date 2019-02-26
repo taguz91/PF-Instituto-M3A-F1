@@ -18,7 +18,7 @@ public class Validar {
     }
     
     public static boolean esTelefono(String cadena){
-        return cadena.matches("[0-9]{8,10}");
+        return cadena.matches("[0-9]{7,10}");
     }
 
     public static boolean esAnio(String cadena) {
@@ -85,5 +85,9 @@ public class Validar {
             System.out.println("No contiene solo numeros. O no contine diez digitos.");
             return false;
         }
+    }
+    
+    public static boolean esCorreo(String entrada){
+        return entrada.matches("[A-Za-z0-9]+@[a-z]+\\.+[a-z]+$"); 
     }
 }

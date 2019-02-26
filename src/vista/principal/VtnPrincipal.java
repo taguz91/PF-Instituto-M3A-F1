@@ -155,10 +155,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnIgPersona;
     }
 
-    public JLabel getLblMensaje() {
-        return lblMensaje;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,8 +175,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnMateria = new javax.swing.JButton();
         btnPersona = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
-        pnlNotificaciones = new javax.swing.JPanel();
-        lblMensaje = new javax.swing.JLabel();
         menuCrud = new javax.swing.JMenuBar();
         mnConsultar = new javax.swing.JMenu();
         mnCtPersona = new javax.swing.JMenuItem();
@@ -290,30 +284,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         dpnlPrincipalLayout.setVerticalGroup(
             dpnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        pnlNotificaciones.setBackground(new java.awt.Color(204, 204, 204));
-
-        lblMensaje.setBackground(new java.awt.Color(255, 255, 255));
-        lblMensaje.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout pnlNotificacionesLayout = new javax.swing.GroupLayout(pnlNotificaciones);
-        pnlNotificaciones.setLayout(pnlNotificacionesLayout);
-        pnlNotificacionesLayout.setHorizontalGroup(
-            pnlNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNotificacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlNotificacionesLayout.setVerticalGroup(
-            pnlNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNotificacionesLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+            .addGap(0, 417, Short.MAX_VALUE)
         );
 
         mnConsultar.setText("Consultar");
@@ -413,17 +384,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dpnlPrincipal)
-            .addComponent(pnlNotificaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dpnlPrincipal)
-                .addGap(0, 0, 0)
-                .addComponent(pnlNotificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(2, 2, 2)
+                .addComponent(dpnlPrincipal))
         );
 
         pack();
@@ -441,7 +408,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
-    private javax.swing.JLabel lblMensaje;
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenu mnConsultar;
     private javax.swing.JMenuItem mnCtAlmnCurso;
@@ -466,6 +432,5 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem mnRbtnNimbus;
     private javax.swing.JRadioButtonMenuItem mnRbtnWindows;
     private javax.swing.JPanel pnlMenu;
-    private javax.swing.JPanel pnlNotificaciones;
     // End of variables declaration//GEN-END:variables
 }

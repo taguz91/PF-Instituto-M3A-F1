@@ -15,7 +15,7 @@ public class CarreraBD extends CarreraMD {
     public CarreraBD() {
     }
 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Carrera");
 
     public CarreraMD buscar(int idCarrera) {
         CarreraMD carrera = new CarreraMD();

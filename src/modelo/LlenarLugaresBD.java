@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class LlenarLugaresBD {
 
     //Para que esto funcione debe existir la tabla city en la base de datos 
-    ConectarDB conecta = new ConectarDB();
+    ConectarDB conecta = new ConectarDB("Llenar Lugares");
 
     ArrayList<String> lugares;
     ArrayList<String> distritos;
@@ -21,15 +21,25 @@ public class LlenarLugaresBD {
 
         if (lugares != null) {
             for (int i = 0; i < lugares.size(); i++) {
-                System.out.println(lugares.get(i));
+                //Aqui guardamos lugares 
+                /*System.out.println(lugares.get(i));
                 insertarDistritosDePais(lugares.get(i));
+                System.out.println("");
+                 */
+                System.out.println("Lugares ---- "+lugares.get(i)); 
+                distritos = cargarDistritosDePais(lugares.get(i));
+                for (int j = 0; j < distritos.size(); j++) {
+                    if (!"-".equals(distritos.get(j))) {
+                        System.out.println("Distrito "+distritos.get(j));
+                        insertarCiudadesDeDistritos(distritos.get(j)); 
+                    }
+                }
                 System.out.println("");
             }
             System.out.println("Numero de paises " + lugares.size());
         }
 
         //Solo para consultar a ver si funciona
-        distritos = cargarDistritosDePais(lugares.get(1));
         if (distritos != null) {
             System.out.println("Distritos de " + lugares.get(1));
             for (int i = 0; i < distritos.size(); i++) {
@@ -66,10 +76,8 @@ public class LlenarLugaresBD {
     public ArrayList<String> cargarDistritosDePais(String nombrePais) {
         ArrayList<String> districs = new ArrayList();
 
-        String sql = "SELECT DISTINCT \"district\", 2 ,(\n"
-                + "	SELECT id_lugar FROM public.\"Lugares\" \n"
-                + "	WHERE lugar_nombre = '" + nombrePais + "'\n"
-                + ") FROM public.city\n"
+        String sql = "SELECT DISTINCT \"district\"\n"
+                + "FROM public. city \n"
                 + "WHERE \"country\" ILIKE '" + nombrePais + "';";
 
         ResultSet rs = conecta.sql(sql);
@@ -84,7 +92,7 @@ public class LlenarLugaresBD {
                 System.out.println("No pudimos consultar distritos de " + nombrePais);
                 return null;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("No pudimos consultar distritos de " + nombrePais);
             System.out.println(e.getMessage());
             return null;
@@ -106,6 +114,24 @@ public class LlenarLugaresBD {
         } else {
             System.out.println("ERROR AL INSERTAR");
         }
+    }
+
+    public void insertarCiudadesDeDistritos(String nombreDistritos) {
+
+        String nosql = "INSERT INTO public.\"Lugares\"(\n"
+                + "lugar_nombre, lugar_nivel, id_lugar_referencia)\n"
+                + "SELECT DISTINCT \"name\", 3 ,(\n"
+                + "	SELECT id_lugar FROM public.\"Lugares\" \n"
+                + "	WHERE lugar_nombre  = '" + nombreDistritos + "' AND \n"
+                + "	lugar_nivel = 2 AND lugar_codigo IS NULL\n"
+                + ") FROM public.city\n"
+                + "WHERE \"district\" ILIKE '" + nombreDistritos + "';";
+        if (conecta.nosql(nosql) == null) {
+            System.out.println("Se guardaron ciudades perfectamente");
+        }else{
+            System.out.println("ERROR AL GUARDAR CIUDADES");
+        }
+
     }
 
 }
