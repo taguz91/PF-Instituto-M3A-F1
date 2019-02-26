@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -34,11 +35,62 @@ public class PersonaBD extends PersonaMD {
         super(idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
     }
     
-    public boolean insertarPersona() {
+    public void insertarPersona() {
         //Aqui id_persona ya no va porque es autoincrementable
         //TipoPersona si porque necesitamos saber si es estudiante
         //docente u otro 
-        String sql = "INSERT INTO public.\"Personas\"(\n"
+        String nsql = "INSERT INTO public.\"Personas\"(\n"
+                + "id_tipo_persona, id_lugar_natal, id_lugar_residencia,"
+                + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
+                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
+                + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
+                + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
+                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
+                + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
+                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
+                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
+                + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
+                + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
+                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
+                + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
+                + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
+                + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
+                + getFechaNacimiento() + "');";
+        
+        if (conecta.nosql(nsql) == null) { 
+            System.out.println("Se guardo correctamente");
+        }
+    }
+
+    
+    public void insertarPersonaConFoto() {
+        //Aqui id_persona ya no va porque es autoincrementable
+        //TipoPersona si porque necesitamos saber si es estudiante
+        //docente u otro 
+        String nsql = "INSERT INTO public.\"Personas\"(\n"
+                + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
+                + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
+                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
+                + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
+                + "persona_calle_principal, persona_numero_casa, "
+                + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
+                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
+                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
+                + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
+                + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
+                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" 
+                + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
+                + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
+                + getFechaNacimiento() + "');";
+        
+        if (isDiscapacidad()) {
+            nsql = "INSERT INTO public.\"Personas\"(\n"
                 + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
                 + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
@@ -47,23 +99,29 @@ public class PersonaBD extends PersonaMD {
                 + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                 + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_activa )\n"
-                + "VALUES ('" + getTipo() + "', '" + getLugarNatal() + "', '"
-                + getLugarResidencia() + "', ? , '" + getIdentificacion() + "', '"
-                + getPrimerApellido() + "', " + getSegundoApellido() + ", " + getPrimerNombre() + "', '"
+                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
+                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
                 + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
                 + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
                 + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
                 + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "', '" + isPersonaActiva() + ");";
-
-        if (conecta.nosql(sql) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
+                + getFechaNacimiento() + "');";
+        }
+        
+        PreparedStatement ps = conecta.sqlPS(nsql);  
+        if (ps != null) {
+            try {
+                ps.setBinaryStream(1, getFile(), getLogBytes());
+                ps.execute(); 
+                ps.close();
+            } catch (SQLException e) {
+                System.out.println("No se pudo guardar persona con foto");
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -109,15 +167,40 @@ public class PersonaBD extends PersonaMD {
 
     //Buscar Persona con aguja
     public PersonaMD buscarPersona(int idPersona) {
-        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
-                + " FROM public.\"Personas\" WHERE id_persona = " + idPersona + ";";
+        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+                + " id_persona = " + idPersona + ";";
         return consultarPor(sql);
     }
 
     public PersonaMD buscarPersona(String identificacion) {
-        String sql = "Select id_persona, persona_primer_nombre "
-                + "from public.\"Personas\" "
-                + "where persona_identificacion ='" + identificacion + "'";
+        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+                + " persona_identificacion ='" + identificacion + "'";
         return consultarPor(sql);
     }
 
