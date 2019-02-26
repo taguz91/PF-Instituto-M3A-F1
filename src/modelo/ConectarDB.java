@@ -18,12 +18,14 @@ public class ConectarDB {
     private ResultSet rs;
 
     //Si se cambia el url no borrar solo comentar 
-    private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/baseCompleta"; //BD Lina
     //  private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
+    private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres N
     private String user = "postgres";
-    private String pass = "Holapostgres"; //Clave Johnny
+    private String pass = "NuEvOsErVeR1997"; //Clave Andres
+    //private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = "linis4413"; //Clave Lina
     //  private String pass = "PAOLA"; //Clave Paola
 
