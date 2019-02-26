@@ -18,18 +18,26 @@ public class ConectarDB {
     private ResultSet rs;
 
     //Si se cambia el url no borrar solo comentar 
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
-    //private String url = "jdbc:postgresql://localhost:5432/baseCompleta"; //BD Lina
-    //  private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
-    private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres N
-    private String user = "postgres";
-    private String pass = "NuEvOsErVeR1997"; //Clave Andres
-    //private String pass = "Holapostgres"; //Clave Johnny
-    //private String pass = "linis4413"; //Clave Lina
-    //  private String pass = "PAOLA"; //Clave Paola
 
+    private String url = "jdbc:postgresql://localhost:5433/BDPFInstituto"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
+    //private String url = "jdbc:postgresql://localhost:5432/baseDatosProyectoIsta"; //BD Lina
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
+  //  private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA 
+    private String user = "postgres";
+
+    private String pass = "Holapostgres"; //Clave Johnny
+    // private String pass = "linis4413"; //Clave Lina
+    //private String pass = "PAOLA"; //Clave Paola
+
+    //  private String user = "postgres";
+    //private String pass = "Holapostgres"; //Clave Johnny
+    // private String pass = "linis4413"; //Clave Lina
+    public ConectarDB() {
+
+    }
     public ConectarDB(String mensaje) {
+
         try {
             //Cargamos el driver  
             Class.forName("org.postgresql.Driver");

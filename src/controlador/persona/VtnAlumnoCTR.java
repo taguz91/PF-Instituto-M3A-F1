@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.estilo.TblEstilo;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
@@ -59,6 +60,7 @@ public class VtnAlumnoCTR {
 
         };
 
+        ocultarAtributo();
         llenarTabla();
         vtnAlumno.getTxtBuscar().addKeyListener(kl);
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
@@ -69,6 +71,10 @@ public class VtnAlumnoCTR {
         frmAlumno = new FrmAlumno();
         FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
         ctrFrmAlumno.iniciar();
+    }
+    
+    public void ocultarAtributo(){
+        modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
     }
 
     public void llenarTabla() {
