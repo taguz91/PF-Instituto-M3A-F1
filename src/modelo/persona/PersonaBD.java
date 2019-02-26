@@ -33,7 +33,7 @@ public class PersonaBD extends PersonaMD {
     public PersonaBD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         super(idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
     }
-    
+
     public boolean insertarPersona() {
         //Aqui id_persona ya no va porque es autoincrementable
         //TipoPersona si porque necesitamos saber si es estudiante
@@ -86,6 +86,49 @@ public class PersonaBD extends PersonaMD {
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true';";
         return consultar(sql);
     }
+    
+    public ArrayList<PersonaMD> buscar(String aguja) {
+        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
+                + "persona_identificacion ILIKE '%"+aguja+"%' OR "
+                + "persona_primer_apellido ILIKE '%"+aguja+"%' OR  "
+                + "persona_segundo_apellido ILIKE '%"+aguja+"%' OR "
+                + "persona_primer_nombre ILIKE '%"+aguja+"%' OR "
+                + "persona_segundo_nombre ILIKE '%"+aguja+"%');";
+        
+        /*sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
+                + "persona_identificacion ILIKE '%"+aguja+"%' OR "
+                + "( persona_primer_apellido || "
+                + " persona_segundo_apellido || "
+                + " persona_primer_nombre ||  "
+                + " persona_segundo_nombre) ILIKE '%"+aguja+"%');";*/
+        return consultar(sql);
+    }
 
     //Consultamos unicamente a las personas que son alumnos  
     public ArrayList<PersonaMD> cargarPorTipo(int idTipoPersona) {
@@ -109,15 +152,38 @@ public class PersonaBD extends PersonaMD {
 
     //Buscar Persona con aguja
     public PersonaMD buscarPersona(int idPersona) {
-        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
-                + " FROM public.\"Personas\" WHERE id_persona = " + idPersona + ";";
+        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion, "
+                + "persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero, "
+                + "persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono, "
+                + "persona_celular, persona_correo, persona_fecha_registro, "
+                + "persona_discapacidad, persona_tipo_discapacidad, "
+                + "persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa, "
+                + "persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE id_persona = "+idPersona+";";
         return consultarPor(sql);
     }
 
     public PersonaMD buscarPersona(String identificacion) {
-        String sql = "Select id_persona, persona_primer_nombre "
-                + "from public.\"Personas\" "
-                + "where persona_identificacion ='" + identificacion + "'";
+        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion, "
+                + "persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero, "
+                + "persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono, "
+                + "persona_celular, persona_correo, persona_fecha_registro, "
+                + "persona_discapacidad, persona_tipo_discapacidad, "
+                + "persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa, "
+                + "persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_identificacion = "+identificacion+";";
         return consultarPor(sql);
     }
 

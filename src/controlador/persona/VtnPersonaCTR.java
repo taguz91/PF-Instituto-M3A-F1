@@ -1,10 +1,14 @@
 package controlador.persona;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.persona.TipoPersonaBD;
+import modelo.persona.TipoPersonaMD;
 import vista.persona.VtnPersona;
 import vista.principal.VtnPrincipal;
 
@@ -19,6 +23,10 @@ public class VtnPersonaCTR {
     private final VtnPersona vtnPersona;
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
+    //Para los tipos de persona  
+    private ArrayList<TipoPersonaMD> tipos;
+    //Para consultar los tipos de persona  
+    private final TipoPersonaBD tip = new TipoPersonaBD();
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona) {
         this.vtnPrin = vtnPrin;
@@ -45,6 +53,18 @@ public class VtnPersonaCTR {
 
         personas = dbp.cargarPersonas();
         cargarLista();
+        //Llenamos el combo de tipos de persona
+        cargarTipoPersona();
+        //Le asignamos la accion al combo de tipos de persona  
+        vtnPersona.getCmbTipoPersona().addActionListener(e -> filtrarPorTipoPersona());
+        
+        //Inciamos el txt de buscador  
+        vtnPersona.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                buscar();
+            }
+        });
     }
 
     //carge de la lista de modelo a la tabla
@@ -52,18 +72,50 @@ public class VtnPersonaCTR {
     //obtenemos el modelo de la tabla de la vista y la pones en el modelo por defaulta con un castingt
     public void cargarLista() {
         mdTbl.setRowCount(0);
-        System.out.println("Tamaño "+personas.size());
         if (personas != null) {
-            for (PersonaMD p : personas) {
+            personas.forEach((p) -> {
                 Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
                     p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                     + p.getPrimerApellido() + " " + p.getSegundoApellido(),
                     p.getFechaNacimiento()};
 
                 mdTbl.addRow(valores);
-            }
+            });
         }
         vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+    }
+
+    //Cargamos los tipos de persona para filtrarlos 
+    public void cargarTipoPersona() {
+        tipos = tip.cargarTipoPersona();
+        vtnPersona.getCmbTipoPersona().removeAllItems();
+        vtnPersona.getCmbTipoPersona().addItem("Todos");
+        tipos.forEach((t) -> {
+            vtnPersona.getCmbTipoPersona().addItem(t.getTipo());
+        });
+    }
+
+    //consultamos por tipo de persona 
+    public void filtrarPorTipoPersona() {
+        int posTip = vtnPersona.getCmbTipoPersona().getSelectedIndex();
+        if (posTip > 0) {
+            personas = dbp.cargarPorTipo(tipos.get(posTip - 1).getId());
+        } else {
+            personas = dbp.cargarPersonas();
+        }
+        cargarLista();
+    }
+    
+    //Buscamos persona
+    public void buscar(){
+        String busqueda = vtnPersona.getTxtBuscar().getText(); 
+        busqueda = busqueda.trim(); 
+        if (busqueda.length() > 2) {
+            personas = dbp.buscar(busqueda); 
+        }else if(busqueda.length() == 0){
+            personas = dbp.cargarPersonas(); 
+        }
+        cargarLista();
     }
 
 }
