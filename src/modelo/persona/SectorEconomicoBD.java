@@ -37,7 +37,7 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
 
     public SectorEconomicoMD capturarIdSector(String aguja) {
         SectorEconomicoMD sector = new SectorEconomicoMD();
-        String sql = "SELECT id_sec_economico FROM public.\"SectorEconomico\" WHERE sec_economico_descripcion LIKE '%"
+        String sql = "SELECT id_sec_economico FROM public.\"SectorEconomico\" WHERE UPPER(sec_economico_descripcion) LIKE '%"
                 + aguja + "%';";
         ResultSet rs = conecta.sql(sql);
         try {
