@@ -1,8 +1,10 @@
 package controlador.persona;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -57,13 +59,11 @@ public class FrmPersonaCTR {
         //Inicializamos persona
         this.persona = new PersonaBD();
 
-      //  vtnPrin.getDpnlPrincipal().add(frmPersona);
+        vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
         //Para iniciar los combos de paises 
         cargarPaises();
     }
-
-  
 
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
@@ -134,7 +134,7 @@ public class FrmPersonaCTR {
         boolean discapcidad = false;
         int tipoIdentifi;
 
-        identificacion = frmPersona.getTxtIdentificacion().getText();
+        identificacion = frmPersona.getTxtIdentificacion().getText().trim();
 
         /*tipoIdentifi = frmPersona.getCmbTipoId().getSelectedIndex();
         if (tipoIdentifi == 1) {
@@ -147,21 +147,21 @@ public class FrmPersonaCTR {
         } else {
             //Validar cuando es pasaporte 
         }*/
-        priNombre = frmPersona.getTxtPrimerNombre().getText();
+        priNombre = frmPersona.getTxtPrimerNombre().getText().trim();
         if (!Validar.esLetras(priNombre)) {
             guardar = false;
             frmPersona.getLblErrorPriNombre().setVisible(true);
         } else {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
-        segNombre = frmPersona.getTxtSegundoNombre().getText();
+        segNombre = frmPersona.getTxtSegundoNombre().getText().trim();
         if (!Validar.esLetras(segNombre)) {
             guardar = false;
             frmPersona.getLblErrorSegNombre().setVisible(true);
         } else {
             frmPersona.getLblErrorSegNombre().setVisible(false);
         }
-        priApellido = frmPersona.getTxtPrimerApellido().getText();
+        priApellido = frmPersona.getTxtPrimerApellido().getText().trim();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
             frmPersona.getLblErrorPriApellido().setVisible(true);
@@ -169,7 +169,7 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
-        segApellido = frmPersona.getTxtSegundoApellido().getText();
+        segApellido = frmPersona.getTxtSegundoApellido().getText().trim();
         if (!Validar.esLetras(segApellido)) {
             guardar = false;
             frmPersona.getLblErrorSegApellido().setVisible(true);
@@ -233,7 +233,7 @@ public class FrmPersonaCTR {
 
         discapcidad = frmPersona.getCbxDiscapacidad().isSelected();
         if (discapcidad) {
-            carnetConadis = frmPersona.getTxtCarnetConadis().getText();
+            carnetConadis = frmPersona.getTxtCarnetConadis().getText().trim();
 
             if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() < 1) {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(true);
@@ -241,7 +241,7 @@ public class FrmPersonaCTR {
                 tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
             }
-            porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+            porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText().trim();
             if (!Validar.esNumeros(porcentajeDiscapacidad)) {
                 guardar = false;
                 frmPersona.getLblErrorPorcentaje().setVisible(true);
@@ -265,7 +265,7 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorIdioma().setVisible(false);
         }
 
-        telefono = frmPersona.getTxtTelefono().getText();
+        telefono = frmPersona.getTxtTelefono().getText().trim();
         if (!Validar.esTelefono(telefono)) {
             guardar = false;
             frmPersona.getLblErrorTelefono().setVisible(true);
@@ -279,7 +279,7 @@ public class FrmPersonaCTR {
         //Este dato no lo tenemos en base de datos 
         //String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
 
-        callePrin = frmPersona.getTxtCallePrincipal().getText();
+        callePrin = frmPersona.getTxtCallePrincipal().getText().trim();
         if (!Validar.esLetras(callePrin)) {
             //Mostrar error
             guardar = false;
@@ -287,11 +287,11 @@ public class FrmPersonaCTR {
             //Ocultar error
         }
 
-        calleSec = frmPersona.getTxtCalleSecundaria().getText();
+        calleSec = frmPersona.getTxtCalleSecundaria().getText().trim();
 
-        referencia = frmPersona.getTxtReferencia().getText();
+        referencia = frmPersona.getTxtReferencia().getText().trim();
 
-        celular = frmPersona.getTxtCelular().getText();
+        celular = frmPersona.getTxtCelular().getText().trim();
         if (!Validar.esTelefono(celular)) {
             guardar = false;
             frmPersona.getLblErrorCelular().setVisible(true);
@@ -352,10 +352,10 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorProvinciaReside().setVisible(true);
         }
         //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
-        numCasa = frmPersona.getTxtNumeroCasa().getText();
-        sector = frmPersona.getTxtSector().getText();
-        zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
-        correo = frmPersona.getTxtCorreo().getText();
+        numCasa = frmPersona.getTxtNumeroCasa().getText().trim();
+        sector = frmPersona.getTxtSector().getText().trim();
+        zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim();
+        correo = frmPersona.getTxtCorreo().getText().trim();
 
         int tipoPer = frmPersona.getCmbTipoPersona().getSelectedIndex();
         if (tipoPer > 0) {
@@ -450,18 +450,29 @@ public class FrmPersonaCTR {
         frmPersona.getTxtSegundoApellido().setText(per.getSegundoApellido());
         frmPersona.getTxtSegundoNombre().setText(per.getSegundoNombre());
         frmPersona.getTxtTelefono().setText(per.getTelefono());
-        
-        
-        String idioma = per.getIdiomaRaiz();
-        System.out.println(idioma); 
-        frmPersona.getCmbIdiomas().setSelectedItem(idioma); 
-        
-        frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil()); 
+        frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
+        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
+        frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
+        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
+        frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
+        frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
+
         //Codigo postal
-        /*frmPersona.getTxtCodigoPostal().setText(p);
-        
+        frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());
+        frmPersona.getCmbProvinciaReside().setSelectedItem(per.getLugarResidencia());
+        //Discapacidad
+        frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
+        frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
-        frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad());*/
+        frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
+        //Cargar foto
+        Image icono = per.getFoto().getScaledInstance(frmPersona.getLblFoto().getWidth(),
+                frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
+        frmPersona.getLblFoto().setIcon(new ImageIcon(icono));
+        frmPersona.getLblFoto().updateUI();
+        
+
     }
 
     //Metodo para ocultar errores
