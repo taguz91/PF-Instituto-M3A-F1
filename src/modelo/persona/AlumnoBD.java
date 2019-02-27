@@ -39,13 +39,13 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public boolean editarAlumno(int aguja) {
+    public boolean editarAlumno(AlumnoBD persona, int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + " id_sec_economico = " + getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
-                + "', alumno_educacion_superior = '" + isEducacion_Superior() + "', alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = " + getNivel_Academico()
-                + ", alumno_pension = " + isPension() + ", alumno_ocupacion = " + getOcupacion() + ", alumno_trabaja = " + isTrabaja() + "', alumno_sector_economico = " + getSector_Economico()
-                + ", alumno_nivel_formacion_padre = " + getFormacion_Padre() + ", alumno_nivel_formacion_madre = " + getFormacion_Madre() + ", alumno_nombre_contacto_emergencia = " + getNom_Contacto()
-                + ", alumno_parentesco_contacto = " + getParentesco_Contacto() + ", alumno_numero_contacto = " + getNom_Contacto() + "\n"
+                + " id_sec_economico = " + persona.getId_SecEconomico() + ", alumno_tipo_colegio = '" + persona.getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + persona.getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + persona.getAnio_graduacion()
+                + "', alumno_educacion_superior = " + persona.isEducacion_Superior() + ", alumno_titulo_superior = '" + persona.getTitulo_Superior() + "', alumno_nivel_academico = '" + persona.getNivel_Academico()
+                + "', alumno_pension = " + persona.isPension() + ", alumno_ocupacion = '" + persona.getOcupacion() + "', alumno_trabaja = " + persona.isTrabaja() 
+                + ", alumno_nivel_formacion_padre = '" + persona.getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + persona.getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + persona.getNom_Contacto()
+                + "', alumno_parentesco_contacto = '" + persona.getParentesco_Contacto() + "', alumno_numero_contacto = '" + persona.getNom_Contacto() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -68,7 +68,7 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     public AlumnoMD capturarDatos_Alumno(String aguja) {
-        String sql = "SELECT * FROM public.\"Alumnos\" WHERE id_persona = '" + aguja + "';";
+        String sql = "SELECT * FROM public.\"Alumnos\" WHERE id_persona = '" + aguja + "' AND alumno_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
@@ -164,7 +164,7 @@ public class AlumnoBD extends AlumnoMD {
                 + "a.alumno_pension, a.alumno_ocupacion, a.alumno_trabaja, a.alumno_nivel_formacion_padre, a.alumno_nivel_formacion_madre,\n"
                 + "a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto, a.alumno_numero_contacto\n"
                 + "FROM public.\"Personas\" p, public.\"Alumnos\" a\n"
-                + "WHERE p.id_persona = a.id_persona AND a.id_persona = " + aguja + "AND alumno_activo = true;";
+                + "WHERE p.id_persona = a.id_persona AND a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
@@ -188,9 +188,9 @@ public class AlumnoBD extends AlumnoMD {
                 a.setTrabaja(rs.getBoolean("alumno_trabaja"));
                 a.setFormacion_Padre(rs.getString("alumno_nivel_formacion_padre"));
                 a.setFormacion_Madre(rs.getString("alumno_nivel_formacion_madre"));
-                a.setContacto_Emergencia(rs.getString("alumno_nombre_contacto_emergencia"));
+                a.setContacto_Emergencia(rs.getString("alumno_numero_contacto"));
                 a.setParentesco_Contacto(rs.getString("alumno_parentesco_contacto"));
-                a.setNom_Contacto(rs.getString("alumno_numero_contacto"));
+                a.setNom_Contacto(rs.getString("alumno_nombre_contacto_emergencia"));
             }
             rs.close();
             return a;

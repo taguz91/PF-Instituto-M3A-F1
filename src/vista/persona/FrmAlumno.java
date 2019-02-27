@@ -73,7 +73,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         CmBx_NvAcademico = new javax.swing.JComboBox<>();
         Btn_Buscar = new javax.swing.JButton();
         Lbl_ErrCedula = new javax.swing.JLabel();
-        Lbl_ErrNombre = new javax.swing.JLabel();
         Lbl_ErrTipColegio = new javax.swing.JLabel();
         Lbl_ErrTipBachillerato = new javax.swing.JLabel();
         Lbl_ErrNvAcademico = new javax.swing.JLabel();
@@ -128,12 +127,12 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(Spnr_Anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 137, -1));
 
         CmBx_SecEconomico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
-        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 300, 350, -1));
+        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 350, -1));
 
         CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR" }));
         jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 350, -1));
 
-        CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "OTRO" }));
+        CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "ESPOSO/A", "OTRO" }));
         jPanel1.add(CmBx_Parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 350, -1));
 
         jLabel21.setText("Parentesco Contacto: ");
@@ -154,7 +153,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Btn_Guardar.setText("Guardar");
         jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 560, 119, -1));
-        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 194, -1));
+        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 194, -1));
         jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 194, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR" }));
@@ -169,8 +168,8 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
 
         jLabel12.setText("Pension:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
-        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
+        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
 
         jLabel19.setText("Formacion Padre:");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
@@ -203,10 +202,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         Lbl_ErrCedula.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrCedula.setText("Ingrese solo números");
         jPanel1.add(Lbl_ErrCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 43, -1, -1));
-
-        Lbl_ErrNombre.setForeground(new java.awt.Color(204, 0, 0));
-        Lbl_ErrNombre.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(649, 43, -1, -1));
 
         Lbl_ErrTipColegio.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipColegio.setText("Seleccione un Colegio");
@@ -250,7 +245,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Lbl_ErrConEmergencia.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrConEmergencia.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 510, -1, -1));
+        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -260,7 +255,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
         );
 
         pack();
@@ -641,14 +636,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         this.Lbl_ErrNomContacto = Lbl_ErrNomContacto;
     }
 
-    public JLabel getLbl_ErrNombre() {
-        return Lbl_ErrNombre;
-    }
-
-    public void setLbl_ErrNombre(JLabel Lbl_ErrNombre) {
-        this.Lbl_ErrNombre = Lbl_ErrNombre;
-    }
-
     public JLabel getLbl_ErrNvAcademico() {
         return Lbl_ErrNvAcademico;
     }
@@ -728,7 +715,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_ErrForMadre;
     private javax.swing.JLabel Lbl_ErrForPadre;
     private javax.swing.JLabel Lbl_ErrNomContacto;
-    private javax.swing.JLabel Lbl_ErrNombre;
     private javax.swing.JLabel Lbl_ErrNvAcademico;
     private javax.swing.JLabel Lbl_ErrOcupacion;
     private javax.swing.JLabel Lbl_ErrParentesco;
