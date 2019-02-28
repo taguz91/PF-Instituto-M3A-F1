@@ -18,7 +18,7 @@ public class FrmDocenteCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmDocente frmDocente;
-    private DocenteBD docente;
+    private final DocenteBD docente;
     private ArrayList<String> info = new ArrayList();
 
     //Para verificar si existe la persona tipo docente  
