@@ -8,8 +8,8 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_nombre" character varying(100) NOT NULL,
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
- "prd_lectivo_observacion" character varying(200) NOT NULL,
- "prd_lectivo_activo" boolean NOT NULL,
+ "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
+ "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
 ) WITH (OIDS = FALSE);
 
@@ -164,7 +164,9 @@ CREATE TABLE "Cursos"(
   "curso_nombre" character varying(10) NOT NULL,
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
-  "curso_permiso_ingreso_nt" boolean NOT NULL DEFAULT 'false', 
+  "curso_permiso_ingreso_nt" boolean NOT NULL DEFAULT 'false',
+  --Aumentar en la base y restricciones 
+  "curso_paralelo" character varying(5) NOT NULL DEFAULT 'NA', 
   CONSTRAINT curso_pk PRIMARY KEY ("id_curso")
 ) WITH (OIDS = FALSE);
 
