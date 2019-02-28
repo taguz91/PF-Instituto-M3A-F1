@@ -5,7 +5,7 @@ import java.time.LocalDate;
  * @author ana96
  */
 
-public class DocenteMD {
+public class DocenteMD extends PersonaMD{
     private String codigo,docenteTipoTiempo, estado;
     private int docenteCategoria,idDocente;
     private boolean docenteOtroTrabajo, docenteCapacitador;

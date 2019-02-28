@@ -12,6 +12,10 @@ import javax.swing.table.TableColumnModel;
  * @author Johnny
  */
 public class TblEstilo {
+
+    public TblEstilo() {
+    }
+    
     
     public static void columnaMedida(JTable tbl, int columna, int medida){
         TableColumnModel mdColum = tbl.getColumnModel();

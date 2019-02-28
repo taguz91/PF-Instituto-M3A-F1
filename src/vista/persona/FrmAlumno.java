@@ -39,10 +39,8 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         Txt_Cedula = new javax.swing.JTextField();
         CmBx_TipoBachillerato = new javax.swing.JComboBox<>();
         Txt_TlSuperior = new javax.swing.JTextField();
-        CmBx_Modalidad = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         Spnr_Anio = new javax.swing.JSpinner();
         CmBx_SecEconomico = new javax.swing.JComboBox<>();
@@ -74,286 +72,190 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         CmBx_TipoColegio = new javax.swing.JComboBox<>();
         CmBx_NvAcademico = new javax.swing.JComboBox<>();
         Btn_Buscar = new javax.swing.JButton();
+        Lbl_ErrCedula = new javax.swing.JLabel();
+        Lbl_ErrTipColegio = new javax.swing.JLabel();
+        Lbl_ErrTipBachillerato = new javax.swing.JLabel();
+        Lbl_ErrNvAcademico = new javax.swing.JLabel();
+        Lbl_ErrTiSuperior = new javax.swing.JLabel();
+        Lbl_ErrOcupacion = new javax.swing.JLabel();
+        Lbl_ErrSecEconomico = new javax.swing.JLabel();
+        Lbl_ErrForPadre = new javax.swing.JLabel();
+        Lbl_ErrForMadre = new javax.swing.JLabel();
+        Lbl_ErrNomContacto = new javax.swing.JLabel();
+        Lbl_ErrParentesco = new javax.swing.JLabel();
+        Lbl_ErrConEmergencia = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel2.setText("Cedula: ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 16, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 68, 922, 6));
+        jPanel1.add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(474, 13, 436, -1));
 
         jLabel3.setText("Nombre:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 16, -1, -1));
 
         Txt_Cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_CedulaActionPerformed(evt);
             }
         });
+        jPanel1.add(Txt_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 13, 223, -1));
 
-        CmBx_TipoBachillerato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "BACHILLERATO GENERAL UNIFICADO", "BACHILLERATO INTERNACIONAL", "BACHILLERATO TECNICO" }));
+        CmBx_TipoBachillerato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "BGU", "BI", "TECNICO", "TECNICO PRODUCTIVO", "OTRO" }));
+        jPanel1.add(CmBx_TipoBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 81, 358, -1));
 
         Txt_TlSuperior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_TlSuperiorActionPerformed(evt);
             }
         });
-
-        CmBx_Modalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRESENCIAL", "DUAL", "INTENSIVO" }));
+        jPanel1.add(Txt_TlSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 142, 358, -1));
 
         jLabel8.setText("Titulo Superior: ");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 145, -1, -1));
 
         jLabel5.setText("Tipo de Bachillerato:");
-
-        jLabel11.setText("Modalidad:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 84, -1, -1));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 922, 7));
 
         Spnr_Anio.setModel(new javax.swing.SpinnerDateModel());
+        jPanel1.add(Spnr_Anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 137, -1));
 
         CmBx_SecEconomico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
+        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 350, -1));
 
         CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR" }));
+        jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 350, -1));
 
-        CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "OTRO" }));
+        CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "ESPOSO/A", "OTRO" }));
+        jPanel1.add(CmBx_Parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 350, -1));
 
         jLabel21.setText("Parentesco Contacto: ");
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, -1, -1));
 
         jLabel20.setText("Formacion Madre:");
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, -1, -1));
 
         jLabel15.setText("Sector Económico:");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, -1, -1));
 
         jLabel6.setText("Año de Graduacion:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, -1, -1));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 922, -1));
 
         Btn_Cancelar.setText("Cancelar");
+        jPanel1.add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, 119, -1));
 
         Btn_Guardar.setText("Guardar");
+        jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 560, 119, -1));
+        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 194, -1));
+        jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 194, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR" }));
+        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, 194, -1));
 
         jLabel14.setText("Trabaja:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, -1, -1));
+        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, -1, -1));
+        jPanel1.add(Txt_Ocupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 246, -1));
 
         jLabel13.setText("Ocupacion:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
 
         jLabel12.setText("Pension:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
+        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
 
         jLabel19.setText("Formacion Padre:");
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
 
         jLabel22.setText("Nombre Contacto:");
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
         jLabel23.setText("Contacto Emergencia:");
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
+        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 204, -1, -1));
 
         jLabel7.setText("Educación Superior: ");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 204, -1, -1));
 
         jLabel9.setText("Nivel Académico:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 145, -1, -1));
 
         jLabel4.setText("Tipo de Colegio:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 84, -1, -1));
 
         CmBx_TipoColegio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "FISCAL", "FISCOMISIONAL", "PRIVADA", "MUNICIPAL", "OTROS" }));
+        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 84, 203, -1));
 
         CmBx_NvAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "EDUCACIÓN MEDIA", "EDUCACIÓN SUPERIOR", "POST-GRADO", "PRIMARIA", "SECUNDARIA", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "NINGUNO" }));
+        jPanel1.add(CmBx_NvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 145, -1, -1));
 
         Btn_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+        jPanel1.add(Btn_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 13, 31, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(7, 7, 7)
-                .addComponent(Txt_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(Txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addComponent(Btn_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 283, Short.MAX_VALUE)
-                .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189))
-            .addComponent(jSeparator1)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(12, 12, 12)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(26, 26, 26)
-                            .addComponent(CmBx_TipoColegio, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(73, 73, 73)
-                            .addComponent(jLabel5)
-                            .addGap(26, 26, 26)
-                            .addComponent(CmBx_TipoBachillerato, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addGap(22, 22, 22)
-                            .addComponent(CmBx_NvAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(73, 73, 73)
-                            .addComponent(jLabel8)
-                            .addGap(50, 50, 50)
-                            .addComponent(Txt_TlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(21, 21, 21)
-                            .addComponent(ChkBx_EdcSuperior)
-                            .addGap(231, 231, 231)
-                            .addComponent(jLabel11)
-                            .addGap(81, 81, 81)
-                            .addComponent(CmBx_Modalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addGap(28, 28, 28)
-                            .addComponent(Txt_Ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(60, 60, 60)
-                            .addComponent(jLabel6)
-                            .addGap(37, 37, 37)
-                            .addComponent(Spnr_Anio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel12)
-                            .addGap(18, 18, 18)
-                            .addComponent(ChkBx_Pension)
-                            .addGap(153, 153, 153)
-                            .addComponent(jLabel14)
-                            .addGap(18, 18, 18)
-                            .addComponent(ChkBx_Trabaja)
-                            .addGap(60, 60, 60)
-                            .addComponent(jLabel15)
-                            .addGap(43, 43, 43)
-                            .addComponent(CmBx_SecEconomico, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel19)
-                            .addGap(42, 42, 42)
-                            .addComponent(CmBx_ForPadre, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(60, 60, 60)
-                            .addComponent(jLabel20)
-                            .addGap(45, 45, 45)
-                            .addComponent(CmBx_ForMadre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel22)
-                            .addGap(40, 40, 40)
-                            .addComponent(Txt_NomContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(60, 60, 60)
-                            .addComponent(jLabel21)
-                            .addGap(24, 24, 24)
-                            .addComponent(CmBx_Parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel23)
-                            .addGap(18, 18, 18)
-                            .addComponent(Txt_ConEmergency, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 45, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Txt_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)))
-                    .addComponent(Btn_Buscar))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 388, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_Cancelar)
-                    .addComponent(Btn_Guardar))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(68, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(CmBx_TipoBachillerato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(CmBx_TipoColegio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))))
-                    .addGap(15, 15, 15)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Txt_TlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
-                                .addComponent(CmBx_NvAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8))))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(CmBx_Modalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(1, 1, 1)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(ChkBx_EdcSuperior))))
-                    .addGap(18, 18, 18)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(14, 14, 14)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Txt_Ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Spnr_Anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel6))))
-                    .addGap(23, 23, 23)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel12)
-                        .addComponent(ChkBx_Pension)
-                        .addComponent(jLabel14)
-                        .addComponent(ChkBx_Trabaja)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jLabel15))
-                        .addComponent(CmBx_SecEconomico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(15, 15, 15)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(CmBx_ForMadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel19)
-                                .addComponent(CmBx_ForPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel20))))
-                    .addGap(15, 15, 15)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(CmBx_Parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel22)
-                                .addComponent(Txt_NomContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel21))))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jLabel23))
-                        .addComponent(Txt_ConEmergency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 40, Short.MAX_VALUE)))
-        );
+        Lbl_ErrCedula.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrCedula.setText("Ingrese solo números");
+        jPanel1.add(Lbl_ErrCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 43, -1, -1));
+
+        Lbl_ErrTipColegio.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrTipColegio.setText("Seleccione un Colegio");
+        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 113, -1, -1));
+
+        Lbl_ErrTipBachillerato.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrTipBachillerato.setText("Seleccione un Bachillerato");
+        jPanel1.add(Lbl_ErrTipBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(664, 113, -1, -1));
+
+        Lbl_ErrNvAcademico.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrNvAcademico.setText("Seleccione un Nivel Academico");
+        jPanel1.add(Lbl_ErrNvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 174, -1, -1));
+
+        Lbl_ErrTiSuperior.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrTiSuperior.setText("Ingrese solo letras");
+        jPanel1.add(Lbl_ErrTiSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(681, 174, -1, -1));
+
+        Lbl_ErrOcupacion.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrOcupacion.setText("Ingrese solo letras");
+        jPanel1.add(Lbl_ErrOcupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+
+        Lbl_ErrSecEconomico.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrSecEconomico.setText("Seleccione un Sector");
+        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, -1, -1));
+
+        Lbl_ErrForPadre.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrForPadre.setText("Seleccione la Formación del Padre");
+        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, -1, -1));
+
+        Lbl_ErrForMadre.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrForMadre.setText("Seleccione la Formacion de la Madre");
+        jPanel1.add(Lbl_ErrForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, -1, -1));
+
+        Lbl_ErrNomContacto.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrNomContacto.setText("Ingrese solo letras");
+        jPanel1.add(Lbl_ErrNomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, -1, -1));
+
+        Lbl_ErrParentesco.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrParentesco.setText("Seleccione un Parentesco");
+        jPanel1.add(Lbl_ErrParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, -1, -1));
+
+        Lbl_ErrConEmergencia.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrConEmergencia.setText("Ingrese solo letras");
+        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
         );
 
         pack();
@@ -430,15 +332,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     public void setCmBx_ForPadre(JComboBox<String> CmBx_ForPadre) {
         this.CmBx_ForPadre = CmBx_ForPadre;
     }
-
-    public JComboBox<String> getCmBx_Modalidad() {
-        return CmBx_Modalidad;
-    }
-
-    public void setCmBx_Modalidad(JComboBox<String> CmBx_Modalidad) {
-        this.CmBx_Modalidad = CmBx_Modalidad;
-    }
-
     public JComboBox<String> getCmBx_NvAcademico() {
         return CmBx_NvAcademico;
     }
@@ -533,14 +426,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
     public void setTxt_TlSuperior(JTextField Txt_TlSuperior) {
         this.Txt_TlSuperior = Txt_TlSuperior;
-    }
-
-    public JLabel getjLabel11() {
-        return jLabel11;
-    }
-
-    public void setjLabel11(JLabel jLabel11) {
-        this.jLabel11 = jLabel11;
     }
 
     public JLabel getjLabel12() {
@@ -711,6 +596,102 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         this.jSeparator3 = jSeparator3;
     }
 
+    public JLabel getLbl_ErrCedula() {
+        return Lbl_ErrCedula;
+    }
+
+    public void setLbl_ErrCedula(JLabel Lbl_ErrCedula) {
+        this.Lbl_ErrCedula = Lbl_ErrCedula;
+    }
+
+    public JLabel getLbl_ErrConEmergencia() {
+        return Lbl_ErrConEmergencia;
+    }
+
+    public void setLbl_ErrConEmergencia(JLabel Lbl_ErrConEmergencia) {
+        this.Lbl_ErrConEmergencia = Lbl_ErrConEmergencia;
+    }
+
+    public JLabel getLbl_ErrForMadre() {
+        return Lbl_ErrForMadre;
+    }
+
+    public void setLbl_ErrForMadre(JLabel Lbl_ErrForMadre) {
+        this.Lbl_ErrForMadre = Lbl_ErrForMadre;
+    }
+
+    public JLabel getLbl_ErrForPadre() {
+        return Lbl_ErrForPadre;
+    }
+
+    public void setLbl_ErrForPadre(JLabel Lbl_ErrForPadre) {
+        this.Lbl_ErrForPadre = Lbl_ErrForPadre;
+    }
+
+    public JLabel getLbl_ErrNomContacto() {
+        return Lbl_ErrNomContacto;
+    }
+
+    public void setLbl_ErrNomContacto(JLabel Lbl_ErrNomContacto) {
+        this.Lbl_ErrNomContacto = Lbl_ErrNomContacto;
+    }
+
+    public JLabel getLbl_ErrNvAcademico() {
+        return Lbl_ErrNvAcademico;
+    }
+
+    public void setLbl_ErrNvAcademico(JLabel Lbl_ErrNvAcademico) {
+        this.Lbl_ErrNvAcademico = Lbl_ErrNvAcademico;
+    }
+
+    public JLabel getLbl_ErrOcupacion() {
+        return Lbl_ErrOcupacion;
+    }
+
+    public void setLbl_ErrOcupacion(JLabel Lbl_ErrOcupacion) {
+        this.Lbl_ErrOcupacion = Lbl_ErrOcupacion;
+    }
+
+    public JLabel getLbl_ErrParentesco() {
+        return Lbl_ErrParentesco;
+    }
+
+    public void setLbl_ErrParentesco(JLabel Lbl_ErrParentesco) {
+        this.Lbl_ErrParentesco = Lbl_ErrParentesco;
+    }
+
+    public JLabel getLbl_ErrSecEconomico() {
+        return Lbl_ErrSecEconomico;
+    }
+
+    public void setLbl_ErrSecEconomico(JLabel Lbl_ErrSecEconomico) {
+        this.Lbl_ErrSecEconomico = Lbl_ErrSecEconomico;
+    }
+
+    public JLabel getLbl_ErrTiSuperior() {
+        return Lbl_ErrTiSuperior;
+    }
+
+    public void setLbl_ErrTiSuperior(JLabel Lbl_ErrTiSuperior) {
+        this.Lbl_ErrTiSuperior = Lbl_ErrTiSuperior;
+    }
+
+    public JLabel getLbl_ErrTipBachillerato() {
+        return Lbl_ErrTipBachillerato;
+    }
+
+    public void setLbl_ErrTipBachillerato(JLabel Lbl_ErrTipBachillerato) {
+        this.Lbl_ErrTipBachillerato = Lbl_ErrTipBachillerato;
+    }
+
+    public JLabel getLbl_ErrTipColegio() {
+        return Lbl_ErrTipColegio;
+    }
+
+    public void setLbl_ErrTipColegio(JLabel Lbl_ErrTipColegio) {
+        this.Lbl_ErrTipColegio = Lbl_ErrTipColegio;
+    }
+
 
 
     
@@ -724,12 +705,23 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox ChkBx_Trabaja;
     private javax.swing.JComboBox<String> CmBx_ForMadre;
     private javax.swing.JComboBox<String> CmBx_ForPadre;
-    private javax.swing.JComboBox<String> CmBx_Modalidad;
     private javax.swing.JComboBox<String> CmBx_NvAcademico;
     private javax.swing.JComboBox<String> CmBx_Parentesco;
     private javax.swing.JComboBox<String> CmBx_SecEconomico;
     private javax.swing.JComboBox<String> CmBx_TipoBachillerato;
     private javax.swing.JComboBox<String> CmBx_TipoColegio;
+    private javax.swing.JLabel Lbl_ErrCedula;
+    private javax.swing.JLabel Lbl_ErrConEmergencia;
+    private javax.swing.JLabel Lbl_ErrForMadre;
+    private javax.swing.JLabel Lbl_ErrForPadre;
+    private javax.swing.JLabel Lbl_ErrNomContacto;
+    private javax.swing.JLabel Lbl_ErrNvAcademico;
+    private javax.swing.JLabel Lbl_ErrOcupacion;
+    private javax.swing.JLabel Lbl_ErrParentesco;
+    private javax.swing.JLabel Lbl_ErrSecEconomico;
+    private javax.swing.JLabel Lbl_ErrTiSuperior;
+    private javax.swing.JLabel Lbl_ErrTipBachillerato;
+    private javax.swing.JLabel Lbl_ErrTipColegio;
     private javax.swing.JSpinner Spnr_Anio;
     private javax.swing.JTextField Txt_Cedula;
     private javax.swing.JTextField Txt_ConEmergency;
@@ -737,7 +729,6 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JTextField Txt_Nombre;
     private javax.swing.JTextField Txt_Ocupacion;
     private javax.swing.JTextField Txt_TlSuperior;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
