@@ -42,7 +42,7 @@ public class DocenteBD extends DocenteMD {
         ArrayList<String> datos = new ArrayList();
         String sql = "SELECT id_docente, docente_codigo \n"
                 + "FROM public.\"Docentes\" \n"
-                + "WHERE docente_codigo ='"+cedula+"';";
+                + "WHERE docente_codigo ='" + cedula + "';";
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -105,6 +105,40 @@ public class DocenteBD extends DocenteMD {
             }
         } catch (SQLException e) {
             System.out.println("no es posible realizar la consulta buscar persona" + e);
+            return null;
+        }
+    }
+
+    public DocenteMD buscarDocenteid(int id) {
+        String sql = "SELECT persona_identificacion FROM public.\"Personas\" "
+                + "WHERE id_docente = '" + id + "';";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            DocenteMD doc = new DocenteMD();
+            while (rs.next()) {
+                doc.setIdDocente(rs.getInt("id_docente"));
+                doc.setCodigo(rs.getString("docente_codigo"));
+                if (rs.wasNull()) {
+                    doc.setDocenteCapacitador(rs.getBoolean(null));
+                } else {
+                    doc.setDocenteCapacitador(rs.getBoolean("docente_capacitador"));
+                }
+                doc.setDocenteCategoria(rs.getInt("docente_categoria"));
+                if (rs.wasNull()) {
+                    doc.setDocenteOtroTrabajo(rs.getBoolean(null));
+                } else {
+                    doc.setDocenteOtroTrabajo(rs.getBoolean("docente_otro_trabajo"));
+                }
+                doc.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
+                // falta estado
+                doc.setEstado(rs.getString(""));
+                doc.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
+                doc.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
+            }
+            rs.close();
+            return doc;
+        } catch (SQLException ex) {
+            //Logger.getLogger(Modelo_Alumno.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
