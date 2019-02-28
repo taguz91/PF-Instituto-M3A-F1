@@ -129,6 +129,30 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         this.txtObservacion = txtObservacion;
     }
 
+    public JLabel getLbl_ErrCarrera() {
+        return Lbl_ErrCarrera;
+    }
+
+    public void setLbl_ErrCarrera(JLabel Lbl_ErrCarrera) {
+        this.Lbl_ErrCarrera = Lbl_ErrCarrera;
+    }
+
+    public JLabel getLbl_ErrNombre() {
+        return Lbl_ErrNombre;
+    }
+
+    public void setLbl_ErrNombre(JLabel Lbl_ErrNombre) {
+        this.Lbl_ErrNombre = Lbl_ErrNombre;
+    }
+
+    public JLabel getLbl_ErrObservacion() {
+        return Lbl_ErrObservacion;
+    }
+
+    public void setLbl_ErrObservacion(JLabel Lbl_ErrObservacion) {
+        this.Lbl_ErrObservacion = Lbl_ErrObservacion;
+    }
+
     
     
     /**
@@ -153,6 +177,9 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Dcr_FecConclusion = new datechooser.beans.DateChooserCombo();
+        Lbl_ErrCarrera = new javax.swing.JLabel();
+        Lbl_ErrNombre = new javax.swing.JLabel();
+        Lbl_ErrObservacion = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -188,36 +215,63 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     e1.printStackTrace();
     }
 
+    Lbl_ErrCarrera.setForeground(new java.awt.Color(204, 0, 0));
+    Lbl_ErrCarrera.setText("Seleccione una Carrera");
+
+    Lbl_ErrNombre.setForeground(new java.awt.Color(204, 0, 0));
+    Lbl_ErrNombre.setText("Ingrese solo letras");
+
+    Lbl_ErrObservacion.setForeground(new java.awt.Color(204, 0, 0));
+    Lbl_ErrObservacion.setText("Ingrese solo letras");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jSeparator1)
         .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
+                    .addComponent(jLabel4)
+                    .addGap(53, 53, 53)
+                    .addComponent(txtObservacion))
+                .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(91, 91, 91)
+                            .addComponent(Cbx_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
-                                .addComponent(jLabel5)
                                 .addComponent(jLabel1)
                                 .addComponent(jLabel6))
                             .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(Txt_Nombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(Dcr_FecInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(Dcr_FecConclusion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtObservacion, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Cbx_Carreras, 0, 357, Short.MAX_VALUE)))
-                        .addComponent(jLabel4)))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(83, 83, 83)
-                    .addComponent(Btn_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(143, 143, 143)
-                    .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(13, Short.MAX_VALUE))
+                                .addComponent(Txt_Nombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(Lbl_ErrCarrera)
+                    .addGap(135, 135, 135))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(Lbl_ErrNombre)
+                    .addGap(143, 143, 143))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(Lbl_ErrObservacion)
+                    .addGap(146, 146, 146))))
+        .addComponent(jSeparator1)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(83, 83, 83)
+            .addComponent(Btn_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(143, 143, 143)
+            .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,25 +280,28 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel5)
                 .addComponent(Cbx_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(Lbl_ErrCarrera)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel6)
                 .addComponent(Txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(Lbl_ErrNombre)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel1)
                 .addComponent(Dcr_FecInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(21, 21, 21)
+            .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel2)
                 .addComponent(Dcr_FecConclusion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(19, 19, 19)
-                    .addComponent(jLabel4))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel4))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(Lbl_ErrObservacion)
             .addGap(18, 18, 18)
             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
@@ -264,6 +321,9 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> Cbx_Carreras;
     private datechooser.beans.DateChooserCombo Dcr_FecConclusion;
     private datechooser.beans.DateChooserCombo Dcr_FecInicio;
+    private javax.swing.JLabel Lbl_ErrCarrera;
+    private javax.swing.JLabel Lbl_ErrNombre;
+    private javax.swing.JLabel Lbl_ErrObservacion;
     private javax.swing.JTextField Txt_Nombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

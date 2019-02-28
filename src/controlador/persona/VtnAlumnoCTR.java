@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.estilo.TblEstilo;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
@@ -59,6 +60,7 @@ public class VtnAlumnoCTR {
 
         };
 
+        ocultarAtributo();
         llenarTabla();
         vtnAlumno.getTxtBuscar().addKeyListener(kl);
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
@@ -69,6 +71,10 @@ public class VtnAlumnoCTR {
         frmAlumno = new FrmAlumno();
         FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
         ctrFrmAlumno.iniciar();
+    }
+    
+    public void ocultarAtributo(){
+        modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
     }
 
     public void llenarTabla() {
@@ -84,9 +90,9 @@ public class VtnAlumnoCTR {
             vtnAlumno.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                    + lista.get(i).getSegundoNombre(), i, 2);
+                    + " " + lista.get(i).getSegundoNombre(), i, 2);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                    + lista.get(i).getSegundoApellido(), i, 3);
+                    + " " + lista.get(i).getSegundoApellido(), i, 3);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
         }
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
@@ -106,9 +112,9 @@ public class VtnAlumnoCTR {
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdPersona(), i, 0);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                    + lista.get(i).getSegundoNombre(), i, 2);
+                    + " " + lista.get(i).getSegundoNombre(), i, 2);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                    + lista.get(i).getSegundoApellido(), i, 3);
+                    + " " + lista.get(i).getSegundoApellido(), i, 3);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
         }
     }
