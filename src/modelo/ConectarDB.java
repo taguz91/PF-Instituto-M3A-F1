@@ -32,10 +32,8 @@ public class ConectarDB {
     // private String pass = "linis4413"; //Clave Lina
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-
     //  private String user = "postgres";
     //private String pass = "Holapostgres"; //Clave Johnny
-    // private String pass = "linis4413"; //Clave Lina
     public ConectarDB() {
 
     }
