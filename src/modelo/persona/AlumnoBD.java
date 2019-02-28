@@ -39,13 +39,13 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public boolean editarAlumno(AlumnoBD persona, int aguja) {
+    public boolean editarAlumno(int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + " id_sec_economico = " + persona.getId_SecEconomico() + ", alumno_tipo_colegio = '" + persona.getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + persona.getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + persona.getAnio_graduacion()
-                + "', alumno_educacion_superior = " + persona.isEducacion_Superior() + ", alumno_titulo_superior = '" + persona.getTitulo_Superior() + "', alumno_nivel_academico = '" + persona.getNivel_Academico()
-                + "', alumno_pension = " + persona.isPension() + ", alumno_ocupacion = '" + persona.getOcupacion() + "', alumno_trabaja = " + persona.isTrabaja() 
-                + ", alumno_nivel_formacion_padre = '" + persona.getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + persona.getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + persona.getNom_Contacto()
-                + "', alumno_parentesco_contacto = '" + persona.getParentesco_Contacto() + "', alumno_numero_contacto = '" + persona.getNom_Contacto() + "'\n"
+                + " id_sec_economico = " + getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
+                + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = '" + getNivel_Academico()
+                + "', alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja() 
+                + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
+                + "', alumno_parentesco_contacto = '" + getParentesco_Contacto() + "', alumno_numero_contacto = '" + getContacto_Emergencia() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -55,10 +55,11 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public boolean eliminarAlumno(String aguja) {
+    public boolean eliminarAlumno(int aguja) {
         AlumnoMD m = new AlumnoMD();
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + "alumno_activo = false, alumno_observacion = '" + getObservacion() + "';";
+                + "alumno_activo = false, alumno_observacion = '" + getObservacion() 
+                + "' WHERE id_persona = " + aguja + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -99,11 +100,11 @@ public class AlumnoBD extends AlumnoMD {
 
     public List<PersonaMD> llenarTabla() {
         List<PersonaMD> lista = new ArrayList();
-        String sql = "SELECT id_persona, persona_identificacion, "
-                + "persona_primer_nombre, persona_segundo_nombre,"
-                + " persona_primer_apellido, persona_segundo_apellido,"
-                + " persona_correo"
-                + " FROM public.\"Personas\" ;";
+        String sql = "SELECT p.id_persona, p.persona_identificacion, "
+                + " p.persona_primer_nombre, p.persona_segundo_nombre,"
+                + " p.persona_primer_apellido, p.persona_segundo_apellido,"
+                + " p.persona_correo"
+                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) WHERE a.alumno_activo = true;";
         //Esto estaba mal WHERE alumno_activo = 'true'
         ResultSet rs = conecta.sql(sql);
         try {
@@ -130,11 +131,11 @@ public class AlumnoBD extends AlumnoMD {
 
     public List<PersonaMD> capturarPersona(String aguja) {
         List<PersonaMD> lista = new ArrayList();
-        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido, persona_correo"
-                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' OR  persona_primer_nombre LIKE '%"
-                + aguja + "%' OR persona_segundo_nombre LIKE '%" + aguja + "%' OR persona_primer_apellido LIKE '%"
-                + aguja + "%' OR persona_segundo_apellido LIKE '%" + aguja + "%' OR persona_correo LIKE '%"
-                + aguja + "%' AND persona_activa = true;";
+        String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo"
+                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) WHERE p.persona_identificacion LIKE '%" + aguja + "%' OR  p.persona_primer_nombre LIKE '%"
+                + aguja + "%' OR p.persona_segundo_nombre LIKE '%" + aguja + "%' OR p.persona_primer_apellido LIKE '%"
+                + aguja + "%' OR p.persona_segundo_apellido LIKE '%" + aguja + "%' OR p.persona_correo LIKE '%"
+                + aguja + "%' AND a.alumno_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {

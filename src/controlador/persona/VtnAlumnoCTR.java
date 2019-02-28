@@ -48,7 +48,7 @@ public class VtnAlumnoCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                buscaIncremental(vtnAlumno.getTxtBuscar().getText());
+                buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
             }
         };
 
@@ -72,8 +72,8 @@ public class VtnAlumnoCTR {
         FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
         ctrFrmAlumno.iniciar();
     }
-    
-    public void ocultarAtributo(){
+
+    public void ocultarAtributo() {
         modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
     }
 
@@ -119,28 +119,43 @@ public class VtnAlumnoCTR {
         }
     }
 
-    public AlumnoBD capturarFila() {
+    public AlumnoMD capturarFila() {
         int i = vtnAlumno.getTblAlumno().getSelectedRow();
         if (i >= 0) {
-            AlumnoBD alumno = new AlumnoBD();
-            alumno = (AlumnoBD) bdAlumno.buscarPersona(Integer.valueOf(vtnAlumno.getTblAlumno().getValueAt(i, 0).toString()));
+            AlumnoMD alumno;
+            alumno = bdAlumno.buscarPersona(Integer.valueOf(vtnAlumno.getTblAlumno().getValueAt(i, 0).toString()));
             return alumno;
         } else {
-            JOptionPane.showMessageDialog(null, "Advertencia!! | Seleccione una fila");
             return null;
         }
     }
 
     public void editarAlumno() {
-        FrmAlumnoCTR form = new FrmAlumnoCTR(vtnPrin, frmAlumno);
-        AlumnoBD alumno = new AlumnoBD();
-        if (capturarFila() == null) {
-            JOptionPane.showMessageDialog(null, "No se puede Editar si no selecciona a un Alumno");
+        AlumnoMD al = capturarFila();
+        if (al != null) {
+            frmAlumno = new FrmAlumno();
+            FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+            ctrFrm.iniciar();
+            ctrFrm.editar(al);
+            vtnAlumno.dispose();
         } else {
-            alumno = capturarFila();
-            form.editar(alumno);
-            vtnAlumno.setVisible(false);
-            frmAlumno.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
+        }
+        
+    }
+
+    public void eliminarAlumno() {
+         AlumnoBD alumno = new AlumnoBD();
+        if (capturarFila() == null) {
+            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
+        } else {
+            //alumno = capturarFila();
+            if(alumno.eliminarAlumno(alumno.getIdPersona()) == true){
+                JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+            } else{
+                String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
+                
+            }
         }
     }
 
