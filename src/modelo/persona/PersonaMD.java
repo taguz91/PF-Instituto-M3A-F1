@@ -405,9 +405,12 @@ public class PersonaMD {
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
     }
-
+    
+    //Guardamos todos los datos de una persona 
     public void setPersona(PersonaMD per) {
         this.primerApellido = per.getPrimerApellido();
-        this.primerNombre = per.getPrimerNombre(); 
+        this.primerNombre = per.getPrimerNombre();
+        this.callePrincipal = per.getCallePrincipal();
+        
     }
 }

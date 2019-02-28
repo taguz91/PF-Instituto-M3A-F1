@@ -7,7 +7,8 @@ INSERT INTO public."Jornadas"(
 	 nombre_jornada)
 	VALUES ('MATUTINA'),
 	('VESPERTINA'),
-	('NOCTURNA');
+	('NOCTURNA'),
+	('INTENSIVA');
 
 --Restriccion de campos unicos  
 --No se puede guardar una materia en el mismo periodo  
