@@ -261,38 +261,20 @@ public class FrmAlumnoCTR {
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }
-            } else if(editar == true){
+            } else if (editar == true) {
                 AlumnoBD persona = new AlumnoBD();
-                frmAlumno.getTxt_Cedula().setText(bdAlumno.getIdentificacion());
-                frmAlumno.getTxt_Nombre().setText(bdAlumno.getPrimerNombre() + " " + bdAlumno.getSegundoNombre()
-                        + " " + bdAlumno.getPrimerApellido() + " " + bdAlumno.getSegundoApellido());
-                frmAlumno.getCmBx_TipoColegio().setSelectedItem(bdAlumno.getTipo_Colegio());
-                frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(bdAlumno.getTipo_Bachillerato());
-                frmAlumno.getCmBx_NvAcademico().setSelectedItem(bdAlumno.getNivel_Academico());
-                frmAlumno.getTxt_TlSuperior().setText(bdAlumno.getTitulo_Superior());
-                frmAlumno.getChkBx_EdcSuperior().setSelected(bdAlumno.isEducacion_Superior());
-                frmAlumno.getTxt_Ocupacion().setText(bdAlumno.getOcupacion());
-                frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(bdAlumno.getAnio_graduacion()));
-                frmAlumno.getChkBx_Pension().setSelected(bdAlumno.isPension());
-                frmAlumno.getChkBx_Trabaja().setSelected(bdAlumno.isTrabaja());
-                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(bdAlumno.getId_SecEconomico()).getDescrip_SecEconomico());
-                frmAlumno.getCmBx_ForPadre().setSelectedItem(bdAlumno.getFormacion_Padre());
-                frmAlumno.getCmBx_ForMadre().setSelectedItem(bdAlumno.getFormacion_Madre());
-                frmAlumno.getTxt_NomContacto().setText(bdAlumno.getNom_Contacto());
-                frmAlumno.getCmBx_Parentesco().setSelectedItem(bdAlumno.getParentesco_Contacto());
-                frmAlumno.getTxt_ConEmergency().setText(bdAlumno.getContacto_Emergencia());
                 persona = pasarDatos(bdAlumno);
-                if (persona.editarAlumno(persona,persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
+                if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     reiniciarComponentes(frmAlumno);
                     editar = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
                 }
-            } else if(editar_2 == true){
+            } else if (editar_2 == true) {
                 AlumnoBD persona = new AlumnoBD();
                 persona = pasarDatos(bdAlumno);
-                if (persona.editarAlumno(persona,persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
+                if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     reiniciarComponentes(frmAlumno);
                     editar_2 = false;
@@ -303,9 +285,28 @@ public class FrmAlumnoCTR {
         }
     }
 
-    public void editar(AlumnoBD bdAlumno) {
+    public void editar(AlumnoMD persona) {
         editar = true;
-        this.bdAlumno = bdAlumno;
+        //El alumno que nos pasamos lo llenamos en el formulario  
+        frmAlumno.getTxt_Cedula().setText(persona.getIdentificacion());
+        frmAlumno.getTxt_Nombre().setText(bdAlumno.getPrimerNombre() + " " + bdAlumno.getSegundoNombre()
+                + " " + bdAlumno.getPrimerApellido() + " " + bdAlumno.getSegundoApellido());
+        frmAlumno.getCmBx_TipoColegio().setSelectedItem(bdAlumno.getTipo_Colegio());
+        frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(bdAlumno.getTipo_Bachillerato());
+        frmAlumno.getCmBx_NvAcademico().setSelectedItem(bdAlumno.getNivel_Academico());
+        frmAlumno.getTxt_TlSuperior().setText(bdAlumno.getTitulo_Superior());
+        frmAlumno.getChkBx_EdcSuperior().setSelected(bdAlumno.isEducacion_Superior());
+        frmAlumno.getTxt_Ocupacion().setText(bdAlumno.getOcupacion());
+        frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(bdAlumno.getAnio_graduacion()));
+        frmAlumno.getChkBx_Pension().setSelected(bdAlumno.isPension());
+        frmAlumno.getChkBx_Trabaja().setSelected(bdAlumno.isTrabaja());
+        frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(bdAlumno.getId_SecEconomico()).getDescrip_SecEconomico());
+        frmAlumno.getCmBx_ForPadre().setSelectedItem(bdAlumno.getFormacion_Padre());
+        frmAlumno.getCmBx_ForMadre().setSelectedItem(bdAlumno.getFormacion_Madre());
+        frmAlumno.getTxt_NomContacto().setText(bdAlumno.getNom_Contacto());
+        frmAlumno.getCmBx_Parentesco().setSelectedItem(bdAlumno.getParentesco_Contacto());
+        frmAlumno.getTxt_ConEmergency().setText(bdAlumno.getContacto_Emergencia());
+
     }
 
     public void reiniciarComponentes(FrmAlumno frmAlumno) {

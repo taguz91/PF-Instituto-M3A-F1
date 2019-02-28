@@ -23,7 +23,7 @@ public class VtnMateriaCTR {
     private final MateriaBD materia;
 
     //El modelo de la tabla materias  
-    DefaultTableModel mdTblMat;
+    private  DefaultTableModel mdTblMat;
     //Aqui guardamos todas las materias  
     private ArrayList<MateriaMD> materias;
     //Para el combo de filtrar por carrera
