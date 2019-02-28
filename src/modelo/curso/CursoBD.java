@@ -1,7 +1,7 @@
 package modelo.curso;
 
 import modelo.DAO.CursoDAO;
-import MODELO.conectBD.DAO.pgConection;
+import modelo.DAO.pgConection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

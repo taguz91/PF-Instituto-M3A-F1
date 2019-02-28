@@ -1,14 +1,13 @@
 package controlador.persona;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import modelo.lugar.LugarBD;
@@ -29,7 +28,7 @@ public class FrmPersonaCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
-    private PersonaBD persona;
+    private final PersonaBD persona;
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -131,10 +130,10 @@ public class FrmPersonaCTR {
                 celular = "aaaa", numCasa = "aaa", sector = "aaa",
                 zonaResidencia = "aaaaa", correo = "aaaa";
 
-        boolean discapcidad = false;
+        boolean discapcidad;
         int tipoIdentifi;
 
-        identificacion = frmPersona.getTxtIdentificacion().getText().trim();
+        identificacion = frmPersona.getTxtIdentificacion().getText().trim().toUpperCase();
 
         /*tipoIdentifi = frmPersona.getCmbTipoId().getSelectedIndex();
         if (tipoIdentifi == 1) {
@@ -147,21 +146,21 @@ public class FrmPersonaCTR {
         } else {
             //Validar cuando es pasaporte 
         }*/
-        priNombre = frmPersona.getTxtPrimerNombre().getText().trim();
+        priNombre = frmPersona.getTxtPrimerNombre().getText().trim().toUpperCase();
         if (!Validar.esLetras(priNombre)) {
             guardar = false;
             frmPersona.getLblErrorPriNombre().setVisible(true);
         } else {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
-        segNombre = frmPersona.getTxtSegundoNombre().getText().trim();
+        segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
         if (!Validar.esLetras(segNombre)) {
             guardar = false;
             frmPersona.getLblErrorSegNombre().setVisible(true);
         } else {
             frmPersona.getLblErrorSegNombre().setVisible(false);
         }
-        priApellido = frmPersona.getTxtPrimerApellido().getText().trim();
+        priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
             frmPersona.getLblErrorPriApellido().setVisible(true);
@@ -169,7 +168,7 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
-        segApellido = frmPersona.getTxtSegundoApellido().getText().trim();
+        segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(segApellido)) {
             guardar = false;
             frmPersona.getLblErrorSegApellido().setVisible(true);
@@ -177,7 +176,7 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
 
-        fechaNac = frmPersona.getJdcFechaNacimiento().getText();
+        fechaNac = frmPersona.getJdcFechaNacimiento().getText().toUpperCase();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         String fec[] = fechaNac.split("/");
 
@@ -233,7 +232,7 @@ public class FrmPersonaCTR {
 
         discapcidad = frmPersona.getCbxDiscapacidad().isSelected();
         if (discapcidad) {
-            carnetConadis = frmPersona.getTxtCarnetConadis().getText().trim();
+            carnetConadis = frmPersona.getTxtCarnetConadis().getText().trim().toUpperCase();
 
             if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() < 1) {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(true);
@@ -241,7 +240,7 @@ public class FrmPersonaCTR {
                 tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
             }
-            porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText().trim();
+            porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText().trim().toUpperCase();
             if (!Validar.esNumeros(porcentajeDiscapacidad)) {
                 guardar = false;
                 frmPersona.getLblErrorPorcentaje().setVisible(true);
@@ -265,7 +264,7 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorIdioma().setVisible(false);
         }
 
-        telefono = frmPersona.getTxtTelefono().getText().trim();
+        telefono = frmPersona.getTxtTelefono().getText().trim().toUpperCase();
         if (!Validar.esTelefono(telefono)) {
             guardar = false;
             frmPersona.getLblErrorTelefono().setVisible(true);
@@ -279,7 +278,7 @@ public class FrmPersonaCTR {
         //Este dato no lo tenemos en base de datos 
         //String codigoPostal = frmPersona.getTxtCodigoPostal().getText();
 
-        callePrin = frmPersona.getTxtCallePrincipal().getText().trim();
+        callePrin = frmPersona.getTxtCallePrincipal().getText().trim().toUpperCase();
         if (!Validar.esLetras(callePrin)) {
             //Mostrar error
             guardar = false;
@@ -287,11 +286,11 @@ public class FrmPersonaCTR {
             //Ocultar error
         }
 
-        calleSec = frmPersona.getTxtCalleSecundaria().getText().trim();
+        calleSec = frmPersona.getTxtCalleSecundaria().getText().trim().toUpperCase().toUpperCase();
 
-        referencia = frmPersona.getTxtReferencia().getText().trim();
+        referencia = frmPersona.getTxtReferencia().getText().trim().toUpperCase();
 
-        celular = frmPersona.getTxtCelular().getText().trim();
+        celular = frmPersona.getTxtCelular().getText().trim().toUpperCase();
         if (!Validar.esTelefono(celular)) {
             guardar = false;
             frmPersona.getLblErrorCelular().setVisible(true);
@@ -352,10 +351,10 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorProvinciaReside().setVisible(true);
         }
         //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
-        numCasa = frmPersona.getTxtNumeroCasa().getText().trim();
-        sector = frmPersona.getTxtSector().getText().trim();
-        zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim();
-        correo = frmPersona.getTxtCorreo().getText().trim();
+        numCasa = frmPersona.getTxtNumeroCasa().getText().trim().toUpperCase();
+        sector = frmPersona.getTxtSector().getText().trim().toUpperCase();
+        zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
+        correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
 
         int tipoPer = frmPersona.getCmbTipoPersona().getSelectedIndex();
         if (tipoPer > 0) {
@@ -436,8 +435,11 @@ public class FrmPersonaCTR {
     }
 
     public void editar(PersonaMD per) {
-        //Steamos los datos en el formulario  
+        //Seteamos los datos en el formulario  
+        boolean discapacidad;
         editar = true;
+        frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
+        frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
         frmPersona.getTxtCelular().setText(per.getCelular());
@@ -453,25 +455,102 @@ public class FrmPersonaCTR {
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        System.out.println(""+per.getSexo());
         frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
 
         //Codigo postal
+        frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());
+        frmPersona.getCmbCanton().setSelectedItem(per.getLugarNatal());
+        
         frmPersona.getCmbProvinciaReside().setSelectedItem(per.getLugarResidencia());
+        frmPersona.getCmbParroquiaReside().setSelectedItem(per.getLugarResidencia());
+        frmPersona.getCmbPaisReside().setSelectedItem(per.getLugarResidencia());
+        frmPersona.getCmbCantonReside().setSelectedItem(per.getLugarResidencia());
+        
         //Discapacidad
         frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
         frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
         //Cargar foto
-        Image icono = per.getFoto().getScaledInstance(frmPersona.getLblFoto().getWidth(),
-                frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
-        frmPersona.getLblFoto().setIcon(new ImageIcon(icono));
-        frmPersona.getLblFoto().updateUI();
-        
+        if (per.getFoto() != null) {
+            Image icono = per.getFoto().getScaledInstance(frmPersona.getLblFoto().getWidth(),
+                    frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
+            frmPersona.getLblFoto().setIcon(new ImageIcon(icono));
+            frmPersona.getLblFoto().updateUI();
+        }
+        //Cargamos los combos de lugar  
+        int nvlLugarNac = Integer.parseInt(per.getLugarNatal().getNivel());
+        String ciudad = null, distrito = null;
+        if (nvlLugarNac == 3) {
+            //Guardamos el nombre del ciudad/canton para luego selecionarlo
+            ciudad = per.getLugarNatal().getNombre();
+            per.setLugarNatal(lug.buscar(per.getLugarNatal().getIdReferencia()));
+        }
+        //Ahora preguntamos nuevamente el nivel del lugar 
+        nvlLugarNac = Integer.parseInt(per.getLugarNatal().getNivel());
+        if (nvlLugarNac == 2) {
+            //Guardamos el nombre del distrito/provincia para luego selecionarlo
+            distrito = per.getLugarNatal().getNombre();
+            per.setLugarNatal(lug.buscar(per.getLugarNatal().getIdReferencia()));
+        }
+        //Ahora preguntamos nuevamente el nivel 
+        nvlLugarNac = Integer.parseInt(per.getLugarNatal().getNivel());
+        if (nvlLugarNac == 1) {
+            cargarPaises();
+            frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal().getNombre());
+            //Seteamos el nuevo lugar de una
+            if (distrito != null) {
+                frmPersona.getCmbProvincia().setSelectedItem(distrito);
+            }
+            if (ciudad != null) {
+                frmPersona.getCmbCanton().setSelectedItem(ciudad);
+            }
+        }
+
+        System.out.println("Nivel de lugar residencia  " + per.getLugarResidencia().getNivel());
+
+        int nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        String parroquia = null, canton = null, provincia = null;
+        if (nvlLugarRes == 4) {
+            //Guardamos el nombre del parroquia para luego selecionarlo
+            parroquia = per.getLugarResidencia().getNombre();
+            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+        }
+        //Ahora preguntamos nuevamente el nivel del lugar 
+        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (nvlLugarRes == 3) {
+            //Guardamos el nombre del canton para luego selecionarlo
+            canton = per.getLugarResidencia().getNombre();
+            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+        }
+        //Ahora preguntamos nuevamente el nivel del lugar 
+        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (nvlLugarRes == 2) {
+            //Guardamos el nombre del provincia para luego selecionarlo
+            provincia = per.getLugarResidencia().getNombre();
+            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+        }
+        //Ahora preguntamos nuevamente el nivel 
+        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        System.out.println("Pais reside " + per.getLugarResidencia().getNombre());
+        if (nvlLugarRes == 1) {
+            frmPersona.getCmbPaisReside().setSelectedItem(per.getLugarResidencia().getNombre());
+            //Seteamos el nuevo lugar de una
+            if (provincia != null) {
+                frmPersona.getCmbProvinciaReside().setSelectedItem(provincia);
+            }
+            if (canton != null) {
+                frmPersona.getCmbCantonReside().setSelectedItem(canton);
+            }
+            if (parroquia != null) {
+                frmPersona.getCmbParroquiaReside().setSelectedItem(parroquia);
+            }
+        }
 
     }
 
@@ -559,12 +638,7 @@ public class FrmPersonaCTR {
         if (posNac > 0) {
             frmPersona.getLblErrorProvincia().setVisible(false);
             distritos = lug.buscarPorReferencia(paises.get(posNac - 1).getId());
-            frmPersona.getCmbProvincia().removeAllItems();
-            frmPersona.getCmbProvincia().addItem("Seleccione");
-            distritos.forEach((l) -> {
-                frmPersona.getCmbProvincia().addItem(l.getNombre());
-            });
-            frmPersona.getCmbProvincia().addItem("OTRO");
+            cargarCmbLugares(frmPersona.getCmbProvincia(), distritos);
         } else {
             frmPersona.getLblErrorProvincia().setVisible(true);
         }
@@ -575,12 +649,7 @@ public class FrmPersonaCTR {
         if (posDis > 0) {
             frmPersona.getLblErrorCanton().setVisible(false);
             ciudades = lug.buscarPorReferencia(distritos.get(posDis - 1).getId());
-            frmPersona.getCmbCanton().removeAllItems();
-            frmPersona.getCmbCanton().addItem("Seleccione");
-            ciudades.forEach((l) -> {
-                frmPersona.getCmbCanton().addItem(l.getNombre());
-            });
-            frmPersona.getCmbCanton().addItem("OTRO");
+            cargarCmbLugares(frmPersona.getCmbCanton(), ciudades);
         } else {
             frmPersona.getLblErrorCanton().setVisible(true);
         }
@@ -591,11 +660,7 @@ public class FrmPersonaCTR {
         if (posPaisRe > 0) {
             frmPersona.getLblErrorPaisReside().setVisible(false);
             provincias = lug.buscarPorReferencia(paises.get(posPaisRe - 1).getId());
-            frmPersona.getCmbProvinciaReside().removeAllItems();
-            frmPersona.getCmbProvinciaReside().addItem("Seleccione");
-            provincias.forEach((l) -> {
-                frmPersona.getCmbProvinciaReside().addItem(l.getNombre());
-            });
+            cargarCmbLugares(frmPersona.getCmbProvinciaReside(), provincias);
         } else {
             frmPersona.getLblErrorPaisReside().setVisible(true);
         }
@@ -606,12 +671,7 @@ public class FrmPersonaCTR {
         if (posPr > 0) {
             frmPersona.getLblErrorCantonReside().setVisible(false);
             cantones = lug.buscarPorReferencia(provincias.get(posPr - 1).getId());
-            frmPersona.getCmbCantonReside().removeAllItems();
-            frmPersona.getCmbCantonReside().addItem("Seleccione");
-            cantones.forEach((l) -> {
-                frmPersona.getCmbCantonReside().addItem(l.getNombre());
-            });
-            frmPersona.getCmbCantonReside().addItem("OTRO");
+            cargarCmbLugares(frmPersona.getCmbCantonReside(), cantones);
         } else {
             frmPersona.getLblErrorCantonReside().setVisible(true);
         }
@@ -622,15 +682,19 @@ public class FrmPersonaCTR {
         if (posCt > 0) {
             frmPersona.getLblErrorParroquiaReside().setVisible(false);
             parroquias = lug.buscarPorReferencia(cantones.get(posCt - 1).getId());
-            frmPersona.getCmbParroquiaReside().removeAllItems();
-            frmPersona.getCmbParroquiaReside().addItem("Seleccione");
-            parroquias.forEach((l) -> {
-                frmPersona.getCmbParroquiaReside().addItem(l.getNombre());
-            });
-            frmPersona.getCmbParroquiaReside().addItem("OTRO");
+            cargarCmbLugares(frmPersona.getCmbParroquiaReside(), parroquias);
         } else {
             frmPersona.getLblErrorParroquiaReside().setVisible(true);
         }
+    }
+
+    public void cargarCmbLugares(JComboBox cmb, ArrayList<LugarMD> lug) {
+        cmb.removeAllItems();
+        cmb.addItem("Seleccione");
+        lug.forEach((l) -> {
+            cmb.addItem(l.getNombre());
+        });
+        cmb.addItem("OTRO");
     }
 
     public void cargarCodigoPostal() {

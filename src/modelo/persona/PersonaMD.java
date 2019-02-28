@@ -11,7 +11,7 @@ import modelo.lugar.LugarMD;
  * @author Lina
  */
 public class PersonaMD {
-    
+
     //Atributos para la foto
     private FileInputStream file;
     private int logBytes;
@@ -26,7 +26,7 @@ public class PersonaMD {
     private String segundoApellido;
     private String primerNombre;
     private String segundoNombre;
-    private LocalDate fechaNacimiento; 
+    private LocalDate fechaNacimiento;
     private String genero;
     private char sexo;
     private String estadoCivil;
@@ -51,11 +51,10 @@ public class PersonaMD {
     private boolean personaActiva;
 
     //33 atributos
-    
     //Constructor vacio
     public PersonaMD() {
     }
-    
+
     //Constructor con todos los atributos de la clase Persona
     public PersonaMD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         this.idPersona = idPersona;
@@ -127,8 +126,6 @@ public class PersonaMD {
         this.personaActiva = personaActiva;
     }
 
-    
-    
     public FileInputStream getFile() {
         return file;
     }
@@ -407,5 +404,46 @@ public class PersonaMD {
 
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
-    }  
+    }
+       
+    //Guardamos todos los datos de una persona 
+    public void setPersona(PersonaMD per) {
+        this.idPersona = per.getIdPersona();
+        this.tipo = per.getTipo();
+        this.lugarNatal = per.getLugarNatal();
+        this.lugarResidencia = per.getLugarResidencia();
+        this.foto = per.getFoto();
+        this.identificacion = per.getIdentificacion();
+        this.primerApellido = per.getPrimerApellido();
+        this.segundoApellido = per.getSegundoApellido();
+        this.primerNombre = per.getPrimerNombre();
+        this.segundoNombre = per.getSegundoNombre();
+        this.fechaNacimiento = per.getFechaNacimiento();
+        this.genero = per.getGenero();
+        this.sexo = per.getSexo();
+        this.estadoCivil = per.getEstadoCivil();
+        this.etnia = per.getEtnia();
+        this.idiomaRaiz = per.getIdiomaRaiz();
+        this.tipoSangre = per.getTipoSangre();
+        this.telefono = per.getTelefono();
+        this.celular = per.getCelular();
+        this.correo = per.getCorreo();
+        this.fechaRegistro = per.getFechaRegistro();
+        this.discapacidad = per.isDiscapacidad();
+        this.tipoDiscapacidad = per.getTipoDiscapacidad();
+        this.porcentajeDiscapacidad = per.getPorcentajeDiscapacidad();
+        this.carnetConadis = per.getCarnetConadis();
+        this.callePrincipal = per.getCallePrincipal();
+        this.numeroCasa = per.getNumeroCasa();
+        this.calleSecundaria = per.getCalleSecundaria();
+        this.referencia = per.getReferencia();
+        this.sector = per.getSector();
+        this.idioma = per.getIdioma();
+        this.tipoResidencia = per.getTipoResidencia();
+        this.personaActiva = per.isPersonaActiva();
+        
+        
+    }
+    
+  
 }
