@@ -106,7 +106,7 @@ CREATE TABLE "Alumnos"(
 	"alumno_trabaja" BOOLEAN NOT NULL DEFAULT 'false',
 	"alumno_nivel_formacion_padre" character varying(100),
 	"alumno_nivel_formacion_madre" character varying(100),
-	"alumno_nombre_contacto_emergencia" character varying(100) NOT NULL,
+	"alumno_nombre_contacto_emergencia" character varying(100) NOT NULL,//
 	"alumno_parentesco_contacto" character varying(20) NOT NULL,
 	"alumno_numero_contacto" character varying(20) NOT NULL,
 	"alumno_activo" boolean NOT NULL DEFAULT 'true', 

@@ -35,6 +35,8 @@ public class VtnPrdLectivoCTR {
         this.vtnPrin = vtnPrin;
         this.vtnPrdLectivo = vtnPrdLectivo;
         
+        bdPerLectivo = new PeriodoLectivoBD();
+        
         vtnPrin.getDpnlPrincipal().add(vtnPrdLectivo);   
         vtnPrdLectivo.show(); 
     }
