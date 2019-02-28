@@ -64,12 +64,44 @@ public class MateriaBD extends MateriaMD {
                 + "AND id_carrera= " + idcarrera + ";";
         ResultSet rs = conecta.sql(sql);
 
-        CarreraMD carrera = new CarreraMD();
-        carrera.setId(idcarrera);
-
         try {
             if (rs != null) {
 
+                while (rs.next()) {
+                    lista.add(obtenerMateria(rs));
+                }
+                return lista;
+            } else {
+                System.out.println("No se pudo consultar carreras");
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    //Cargar datos de materia por carrera
+    public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
+
+        ArrayList<MateriaMD> lista = new ArrayList();
+
+        String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
+                + " materia_nombre, materia_ciclo, materia_creditos, "
+                + "materia_tipo, materia_categoria, materia_tipo_acreditacion, "
+                + "materia_horas_docencia, materia_horas_practicas, "
+                + "materia_horas_auto_estudio, materia_horas_presencial, "
+                + "materia_total_horas, materia_activa, materia_objetivo,"
+                + "materia_descripcion,"
+                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
+                + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
+                + "AND id_carrera= " + idcarrera + " "
+                + "AND materia_ciclo = "+ciclo+";";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
                 while (rs.next()) {
                     lista.add(obtenerMateria(rs));
                 }

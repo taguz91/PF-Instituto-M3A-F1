@@ -1,5 +1,5 @@
 
-package MODELO.conectBD.DAO;
+package modelo.DAO;
 
 import java.sql.Connection;
 import java.sql.Driver;

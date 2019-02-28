@@ -9,6 +9,7 @@ import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.persona.TipoPersonaBD;
 import modelo.persona.TipoPersonaMD;
+import vista.persona.FrmPersona;
 import vista.persona.VtnPersona;
 import vista.principal.VtnPrincipal;
 
@@ -38,6 +39,12 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
+        //Inicializamos el error para que no se vea  
+        vtnPersona.getLblError().setVisible(false);
+        //Le pasamos accion a los botones  
+        vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
+        vtnPersona.getBtnEditar().addActionListener(e -> editar());
+
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
 
@@ -57,7 +64,7 @@ public class VtnPersonaCTR {
         cargarTipoPersona();
         //Le asignamos la accion al combo de tipos de persona  
         vtnPersona.getCmbTipoPersona().addActionListener(e -> filtrarPorTipoPersona());
-        
+
         //Inciamos el txt de buscador  
         vtnPersona.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -105,17 +112,39 @@ public class VtnPersonaCTR {
         }
         cargarLista();
     }
-    
+
     //Buscamos persona
-    public void buscar(){
-        String busqueda = vtnPersona.getTxtBuscar().getText(); 
-        busqueda = busqueda.trim(); 
+    public void buscar() {
+        String busqueda = vtnPersona.getTxtBuscar().getText();
+        busqueda = busqueda.trim();
         if (busqueda.length() > 2) {
-            personas = dbp.buscar(busqueda); 
-        }else if(busqueda.length() == 0){
-            personas = dbp.cargarPersonas(); 
+            personas = dbp.buscar(busqueda);
+        } else if (busqueda.length() == 0) {
+            personas = dbp.cargarPersonas();
         }
         cargarLista();
+    }
+
+    //Damos accion al boton de guardar 
+    public void ingresar() {
+        FrmPersona frmPersona = new FrmPersona();
+        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona);
+        ctrFrm.iniciar();
+    }
+
+    //Para ejecutar el metodo editar del frm 
+    public void editar() {
+        int posFila = vtnPersona.getTblPersona().getSelectedRow();
+        if (posFila >= 0) {
+            vtnPersona.getLblError().setVisible(false);
+            FrmPersona frmPersona = new FrmPersona();
+            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona);
+            ctrFrm.iniciar();
+            //Le pasamos la persona de nuestro lista justo la persona seleccionada
+            ctrFrm.editar(personas.get(posFila));
+        } else {
+            vtnPersona.getLblError().setVisible(true);
+        }
     }
 
 }
