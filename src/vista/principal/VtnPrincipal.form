@@ -75,6 +75,14 @@
                 <Property name="text" type="java.lang.String" value="Materia"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtMatricula">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Matricula"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">
@@ -136,6 +144,14 @@
                   <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Alumno en un curso"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgMatricula">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Matricula"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -215,8 +231,8 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="pnlMenu" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="pnlMenu" min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="dpnlPrincipal" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -249,8 +265,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnCursoAlumno" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnMatricula" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMateria" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="412" max="32767" attributes="0"/>
+                  <EmptySpace pref="361" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -263,11 +281,12 @@
                       <Component id="btnCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCurso" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPrdLectivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnMateria" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMateria" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCursoAlumno" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPersona" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMatricula" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -345,6 +364,15 @@
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="btnMatricula">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Resume_25px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Ver materias"/>
+            <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDesktopPane" name="dpnlPrincipal">
@@ -362,7 +390,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="417" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="408" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

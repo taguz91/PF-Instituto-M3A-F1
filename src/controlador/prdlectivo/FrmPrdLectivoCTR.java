@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.AlumnoBD;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.principal.VtnPrincipal;
 
@@ -37,7 +36,7 @@ public class FrmPrdLectivoCTR {
         ActionListener Cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmPrdLectivo.setVisible(false);
+                frmPrdLectivo.dispose();
             }
         };
 
@@ -138,11 +137,11 @@ public class FrmPrdLectivoCTR {
         String fec_Inicio[] = date_Inicio.split("/");
         String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
         String fec_Fin[] = date_Fin.split("/");
-        LocalDate fecha_Inicio = fechaActual;
+        LocalDate fecha_Inicio;
         fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
                 Integer.parseInt(fec_Inicio[1]),
                 Integer.parseInt(fec_Inicio[0]));
-        LocalDate fecha_Fin = fechaActual;
+        LocalDate fecha_Fin;
         fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         periodo.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());

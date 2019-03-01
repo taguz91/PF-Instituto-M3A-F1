@@ -14,6 +14,7 @@ import modelo.lugar.LugarBD;
 public class AlumnoBD extends AlumnoMD {
 
     ConectarDB conecta = new ConectarDB("Alumno");
+    private PersonaBD per = new PersonaBD();
 
     public AlumnoBD() {
     }
@@ -43,7 +44,7 @@ public class AlumnoBD extends AlumnoMD {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
                 + " id_sec_economico = " + getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
                 + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = '" + getNivel_Academico()
-                + "', alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja() 
+                + "', alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja()
                 + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
                 + "', alumno_parentesco_contacto = '" + getParentesco_Contacto() + "', alumno_numero_contacto = '" + getContacto_Emergencia() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
@@ -58,7 +59,7 @@ public class AlumnoBD extends AlumnoMD {
     public boolean eliminarAlumno(int aguja) {
         AlumnoMD m = new AlumnoMD();
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + "alumno_activo = false, alumno_observacion = '" + getObservacion() 
+                + "alumno_activo = false, alumno_observacion = '" + getObservacion()
                 + "' WHERE id_persona = " + aguja + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -117,7 +118,7 @@ public class AlumnoBD extends AlumnoMD {
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 m.setCorreo(rs.getString("persona_correo"));
-                
+
                 lista.add(m);
             }
             rs.close();
@@ -126,7 +127,7 @@ public class AlumnoBD extends AlumnoMD {
             System.out.println("No se pudieron consultar alumnos");
             System.out.println(ex.getMessage());
             return null;
-        } 
+        }
     }
 
     public List<PersonaMD> capturarPersona(String aguja) {
@@ -200,5 +201,56 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
+    public AlumnoMD buscarAlumno(int idAlumno) {
+        AlumnoMD al = new AlumnoMD();
+        String sql = "SELECT id_alumno, id_persona\n"
+                + "	FROM public.\"Alumnos\" WHERE alumno_activo = 'true' AND "
+                + "id_alumno = " + idAlumno + ";";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+
+                    al.setId_Alumno(rs.getInt("id_alumno"));
+                    PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
+                    al.setPersona(p);
+                }
+                return al;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<AlumnoMD> cargarAlumnos() {
+        ArrayList<AlumnoMD> almns = new ArrayList();
+        String sql = "SELECT id_alumno, id_persona\n"
+                + "	FROM public.\"Alumnos\" WHERE alumno_activo = 'true';";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    AlumnoMD al = new AlumnoMD();
+                    al.setId_Alumno(rs.getInt("id_alumno"));
+                    PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
+                    al.setPersona(p);
+                    
+                    almns.add(al); 
+                }
+                return almns;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }
