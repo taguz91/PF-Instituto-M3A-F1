@@ -44,7 +44,7 @@ public class VtnPersonaCTR {
         //Le pasamos accion a los botones  
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
-
+        vtnPersona.getBtnEliminar().addActionListener(e -> eliminar());
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
 
@@ -145,6 +145,11 @@ public class VtnPersonaCTR {
         } else {
             vtnPersona.getLblError().setVisible(true);
         }
+    }
+
+    private void eliminar() {
+
+
     }
 
 }
