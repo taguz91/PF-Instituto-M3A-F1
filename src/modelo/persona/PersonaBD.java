@@ -34,9 +34,9 @@ public class PersonaBD extends PersonaMD {
     public PersonaBD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         super(idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
     }
-    
+
     public void insertarPersona() {
-   
+
         //Aqui id_persona ya no va porque es autoincrementable
         //TipoPersona si porque necesitamos saber si es estudiante
         //docente u otro 
@@ -60,13 +60,12 @@ public class PersonaBD extends PersonaMD {
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
                 + getFechaNacimiento() + "');";
-        
-        if (conecta.nosql(nsql) == null) { 
+
+        if (conecta.nosql(nsql) == null) {
             System.out.println("Se guardo correctamente");
         }
     }
 
-    
     public void insertarPersonaConFoto() {
         //Aqui id_persona ya no va porque es autoincrementable
         //TipoPersona si porque necesitamos saber si es estudiante
@@ -85,39 +84,39 @@ public class PersonaBD extends PersonaMD {
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
                 + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
                 + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" 
+                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
                 + getFechaNacimiento() + "');";
-        
+
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
-                + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
-                + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
-                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
-                + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
-                + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
-                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
-                + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
-                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
-                + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
-                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
-                + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
-                + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
-                + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
-                + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
-                + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "');";
+                    + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
+                    + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
+                    + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
+                    + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
+                    + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
+                    + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
+                    + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
+                    + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
+                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                    + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
+                    + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
+                    + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
+                    + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
+                    + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
+                    + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
+                    + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
+                    + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
+                    + getFechaNacimiento() + "');";
         }
-        
-        PreparedStatement ps = conecta.sqlPS(nsql);  
+
+        PreparedStatement ps = conecta.sqlPS(nsql);
         if (ps != null) {
             try {
                 ps.setBinaryStream(1, getFile(), getLogBytes());
-                ps.execute(); 
+                ps.execute();
                 ps.close();
             } catch (SQLException e) {
                 System.out.println("No se pudo guardar persona con foto");
@@ -125,12 +124,42 @@ public class PersonaBD extends PersonaMD {
             }
         }
     }
-    
-    
-    
-   // Utilizamos la sentencia update para modificar el estado de una persona
-   // y no eliminarla por completo con parametro por identidicacion
-    public boolean eliminarPersona(String identificacion) {
+
+    //Sentencia para editar una Persona
+    public boolean editarPersona(int aguja) {
+        String sql = "UPDATE public.\"Personass\" SET\n"
+                + " id_tipo_persona = " + getTipo() + ", id_lugar_natal = '" + getLugarNatal()
+                + "', id_lugar_residencia = '" + getLugarResidencia() + "', persona_foto = '" + getFoto()
+                + "', persona_identificacion = " + getIdentificacion() + ", persona_primer_apellido = '"
+                + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                + "', persona_primer_nombre = " + getPrimerNombre() + ", persona_segundo_nombre = '"
+                + getSegundoNombre() + "', persona_genero = " + getGenero()
+                + ", persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
+                + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
+                + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
+                + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
+                + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                 +" WHERE id_persona = " + aguja + ";";
+        
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    // Utilizamos la sentencia update para modificar el estado de una persona
+    // y no eliminarla por completo con parametro por identidicacion
+    public boolean eliminarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
@@ -142,10 +171,10 @@ public class PersonaBD extends PersonaMD {
             return false;
         }
     }
-    
+
     // Utilizamos la sentencia update para modificar el estado de una persona
-   // y no eliminarla por completo con parametro por id_persona
-    public boolean editarPersona(int idpersona) {
+    // y no eliminarla por completo con parametro por id_persona
+    public boolean eliminarPersonaId(int idpersona) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE id_persona = '" + idpersona + "';";
@@ -177,7 +206,7 @@ public class PersonaBD extends PersonaMD {
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true';";
         return consultar(sql);
     }
-    
+
     public ArrayList<PersonaMD> buscar(String aguja) {
         String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -193,12 +222,12 @@ public class PersonaBD extends PersonaMD {
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
                 + "persona_fecha_nacimiento, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
-                + "persona_identificacion ILIKE '%"+aguja+"%' OR "
-                + "persona_primer_apellido ILIKE '%"+aguja+"%' OR  "
-                + "persona_segundo_apellido ILIKE '%"+aguja+"%' OR "
-                + "persona_primer_nombre ILIKE '%"+aguja+"%' OR "
-                + "persona_segundo_nombre ILIKE '%"+aguja+"%');";
-        
+                + "persona_identificacion ILIKE '%" + aguja + "%' OR "
+                + "persona_primer_apellido ILIKE '%" + aguja + "%' OR  "
+                + "persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
+                + "persona_primer_nombre ILIKE '%" + aguja + "%' OR "
+                + "persona_segundo_nombre ILIKE '%" + aguja + "%');";
+
         /*sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
