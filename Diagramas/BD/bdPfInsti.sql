@@ -190,7 +190,7 @@ CREATE TABLE "AlumnoCurso"(
 
 --Malla Estudiante en su carrera  
 CREATE TABLE "MallaEstudiante"(
-	"id_malla_alumno" character varying(10) NOT NULL, 
+	"id_malla_alumno" serial NOT NULL, 
 	"id_materia" integer NOT NULL, 
 	"id_alumno" integer NOT NULL, 
 	"malla_almn_ciclo" integer NOT NULL, 
