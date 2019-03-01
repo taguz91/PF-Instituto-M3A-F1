@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -18,10 +20,13 @@ public class VtnCursoCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCurso vtnCurso;
 
-    private CursoBD curso;
+    private final CursoBD curso;
     ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     DefaultTableModel mdTbl;
+    //Para cargar el combo periodos  
+    PeriodoLectivoBD per = new PeriodoLectivoBD();
+    ArrayList<PeriodoLectivoMD> periodos; 
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso) {
         this.vtnPrin = vtnPrin;
@@ -35,6 +40,7 @@ public class VtnCursoCTR {
     }
 
     public void iniciar() {
+        cargarCmbPrdLectio();
         //Iniciamos la tabla  
         String titulo[] = {"id", "Periodo", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
         String datos[][] = {};
@@ -98,6 +104,17 @@ public class VtnCursoCTR {
             vtnCurso.getLblResultados().setText(cursos.size() + " Resultados obtenidos.");
         } else {
             vtnCurso.getLblResultados().setText("0 Resultados obtenidos.");
+        }
+    }
+    
+    private void cargarCmbPrdLectio(){
+        periodos = per.cargarPeriodos();
+        if (periodos != null) {
+            vtnCurso.getCmbPeriodoLectivo().removeAllItems();
+            vtnCurso.getCmbPeriodoLectivo().addItem("Todos"); 
+            periodos.forEach((p) -> {
+                vtnCurso.getCmbPeriodoLectivo().addItem(p.getNombre_PerLectivo()); 
+            });
         }
     }
 
