@@ -36,12 +36,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD{
         }
     }
     
-    public boolean editarPeriodo(){
+    public boolean editarPeriodo(PeriodoLectivoMD p){
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " id_carrera = " + getId() + ", prd_lectivo_nombre = '" + getNombre_PerLectivo() + "',"
-                + " prd_lectivo_fecha_inicio = " + getFecha_Inicio() + ", prd_lectivo_fecha_fin = " + getFecha_Fin()
-                + " prd_lectivo_observacion = '" + getObservacion_PerLectivo() + "\n"
-                + " WHERE id_prd_lectivo = " + getId_PerioLectivo() +";";
+                + " id_carrera = " + p.getId() + ", prd_lectivo_nombre = '" + p.getNombre_PerLectivo() + "',"
+                + " prd_lectivo_fecha_inicio = " + p.getFecha_Inicio() + ", prd_lectivo_fecha_fin = " + p.getFecha_Fin()
+                + ", prd_lectivo_observacion = '" + p.getObservacion_PerLectivo()
+                + "' WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -50,11 +50,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD{
         }
     }
     
-    public boolean eliminarPeriodo(){
-        PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+    public boolean eliminarPeriodo(PeriodoLectivoMD p){
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + "prd_lectivo_activo = false" 
-                + "WHERE id_prd_lectivo = " + getId_PerioLectivo() + ";";
+                + " prd_lectivo_activo = false" 
+                + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -127,8 +126,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD{
                 m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 m.setId(rs.getInt("id_carrera"));
                 m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                //m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio"));
-                //m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin"));
+                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
                 lista.add(m);
             }
             rs.close();
@@ -141,19 +140,19 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD{
     
     public PeriodoLectivoMD capturarPeriodos(String aguja){
         String sql = "SELECT p.id_prd_lectivo, p.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin, p.prd_lectivo_observacion, c.carrera_nombre"
-                + " FROM public.\"PeriodoLectivo\" p, public.\"Carreras\" c WHERE p.id_carrera = c.id_carrera AND c.carrera_nombre LIKE '" 
-                + aguja + "%' OR prd_lectivo_nombre LIKE '" + aguja + "%' AND prd_lectivo_activo = true;";
+                + " FROM public.\"PeriodoLectivo\" p, public.\"Carreras\" c WHERE p.id_carrera = c.id_carrera AND UPPER(c.carrera_nombre) LIKE '" 
+                + aguja + "%' OR UPPER(p.prd_lectivo_nombre) LIKE '" + aguja + "%' AND p.prd_lectivo_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             PeriodoLectivoMD m = new PeriodoLectivoMD();
             while (rs.next()) {
-                m.setId_PerioLectivo(rs.getInt("p.id_prd_lectivo"));
-                m.setNombre_PerLectivo(rs.getString("p.prd_lectivo_nombre"));
-                m.setFecha_Inicio(rs.getDate("p.prd_lectivo_fecha_inicio").toLocalDate());
-                m.setFecha_Fin(rs.getDate("p.prd_lectivo_fecha_fin").toLocalDate());
-                m.setObservacion_PerLectivo(rs.getString("p.prd_lectivo_observacion"));
-                m.setId(rs.getInt("p.id_carrera"));
-                m.setNombre(rs.getString("c.carrera_nombre"));
+                m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                m.setObservacion_PerLectivo(rs.getString("prd_lectivo_observacion"));
+                m.setId(rs.getInt("id_carrera"));
+                m.setNombre(rs.getString("carrera_nombre"));
             }
             rs.close();
             return m;
@@ -165,20 +164,20 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD{
     
     public PeriodoLectivoMD capturarPerLectivo(int ID){
         String sql = "SELECT p.id_prd_lectivo, p.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin, p.prd_lectivo_observacion, c.carrera_nombre"
-                + " FROM public.\"PeriodoLectivo\" p, public.\"Carreras\" c"
-                +" WHERE p.id_carrera = c.id_carrera AND c.id_prd_lectivo = " 
+                + " FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c USING(id_carrera)"
+                +" WHERE p.id_prd_lectivo = " 
                 + ID + " AND prd_lectivo_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             PeriodoLectivoMD m = new PeriodoLectivoMD();
             while (rs.next()) {
-                m.setId_PerioLectivo(rs.getInt("p.id_prd_lectivo"));
-                m.setNombre_PerLectivo(rs.getString("p.prd_lectivo_nombre"));
-                m.setFecha_Inicio(rs.getDate("p.prd_lectivo_fecha_inicio").toLocalDate());
-                m.setFecha_Fin(rs.getDate("p.prd_lectivo_fecha_fin").toLocalDate());
-                m.setObservacion_PerLectivo(rs.getString("p.prd_lectivo_observacion"));
-                m.setId(rs.getInt("p.id_carrera"));
-                m.setNombre(rs.getString("c.carrera_nombre"));
+                m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                m.setObservacion_PerLectivo(rs.getString("prd_lectivo_observacion"));
+                m.setId(rs.getInt("id_carrera"));
+                m.setNombre(rs.getString("carrera_nombre"));
             }
             rs.close();
             return m;

@@ -114,14 +114,9 @@ public class FrmPrdLectivoCTR {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }
             } else {
-                PeriodoLectivoBD periodo = new PeriodoLectivoBD();
-                frmPrdLectivo.getCbx_Carreras().setSelectedItem(bdPerLectivo.capturarNomCarrera(bdPerLectivo.getId()).getNombre());
-                frmPrdLectivo.getTxt_Nombre().setText(bdPerLectivo.getNombre_PerLectivo());
-                //frmPrdLectivo.getDcr_FecInicio().setSelectedDate(bdPerLectivo.getFechaInicio());
-                //frmPrdLectivo.getDcr_FecConclusion().setSelectedDate();
-                frmPrdLectivo.getTxtObservacion().setText(bdPerLectivo.getObservacion_PerLectivo());
-                //periodo = pasarDatos(bdPerLectivo);
-                if (periodo.editarPeriodo() == true) {
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo = pasarDatos(bdPerLectivo);
+                if (bdPerLectivo.editarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     reiniciarComponentes(frmPrdLectivo);
                     editar = false;
@@ -139,11 +134,11 @@ public class FrmPrdLectivoCTR {
         String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
         String fec_Fin[] = date_Fin.split("/");
         LocalDate fecha_Inicio = fechaActual;
-        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
+        fecha_Inicio = LocalDate.of(Integer.parseInt(fec_Inicio[2]),
                 Integer.parseInt(fec_Inicio[1]),
                 Integer.parseInt(fec_Inicio[0]));
         LocalDate fecha_Fin = fechaActual;
-        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
+        fecha_Fin = LocalDate.of(Integer.parseInt(fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         periodo.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
@@ -159,9 +154,33 @@ public class FrmPrdLectivoCTR {
         vista.getTxtObservacion().setText("");
     }
 
-    public void editar(PeriodoLectivoBD bdPerLectivo) {
+    public void editar(PeriodoLectivoMD mdPerLectivo) {
         editar = true;
-        this.bdPerLectivo = bdPerLectivo;
+        String dia_Inicio, mes_Inicio, anio_Inicio;
+        String dia_Fin, mes_Fin, anio_Fin;
+        dia_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getDayOfMonth());
+        mes_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getMonthValue());
+        anio_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getYear());
+        dia_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getDayOfMonth());
+        mes_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getMonthValue());
+        anio_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getYear());
+//        LocalDate fechaActual = LocalDate.now();
+//        String date_Inicio = frmPrdLectivo.getDcr_FecInicio().getText();
+//        String fec_Inicio[] = date_Inicio.split("/");
+//        String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
+//        String fec_Fin[] = date_Fin.split("/");
+//        LocalDate fecha_Inicio = fechaActual;
+//        fecha_Inicio = LocalDate.of(Integer.parseInt(fec_Inicio[2]),
+//                Integer.parseInt(fec_Inicio[1]),
+//                Integer.parseInt(fec_Inicio[0]));
+//        LocalDate fecha_Fin = fechaActual;
+//        fecha_Fin = LocalDate.of(Integer.parseInt(fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
+        
+        frmPrdLectivo.getCbx_Carreras().setSelectedItem(mdPerLectivo.getNombre());
+        frmPrdLectivo.getTxt_Nombre().setText(mdPerLectivo.getNombre_PerLectivo());
+        frmPrdLectivo.getDcr_FecInicio().setText(dia_Inicio + "/" + mes_Inicio + "/" + anio_Inicio);
+        frmPrdLectivo.getDcr_FecConclusion().setText(dia_Fin + "/" + mes_Fin + "/" + anio_Fin);
+        frmPrdLectivo.getTxtObservacion().setText(mdPerLectivo.getObservacion_PerLectivo());
     }
 
 }
