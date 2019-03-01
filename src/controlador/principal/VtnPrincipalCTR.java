@@ -265,7 +265,6 @@ public class VtnPrincipalCTR {
         } else {
             errorNumVentanas();
         }
-
     }
 
     public void abrirFrmPrdLectivo() {

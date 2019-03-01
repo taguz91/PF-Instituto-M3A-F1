@@ -31,9 +31,17 @@ public class CarreraBD extends CarreraMD {
                 while (rs.next()) {
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     DocenteMD docen = new DocenteMD();
-                    docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    if (rs.wasNull()) {
+                        docen.setIdDocente(0);
+                    }else{
+                        docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                    } 
                     carrera.setCoordinador(docen);
-                    carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                    if (rs.wasNull()) {
+                        carrera.setFechaFin(null);
+                    } else {
+                        carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                    }
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
                     carrera.setId(rs.getInt("id_carrera"));
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
