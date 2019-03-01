@@ -124,12 +124,8 @@ public class PersonaBD extends PersonaMD {
             }
         }
     }
-//, persona_porcenta_discapacidad=?, persona_carnet_conadis=?,
-    //persona_calle_principal=?, persona_numero_casa=?, persona_calle_secundaria=?, 
-    //persona_referencia=?, persona_sector=?, persona_idioma=?, persona_tipo_residencia=?, 
-    //persona_fecha_nacimiento=?, persona_activa=?
-//	WHERE <condition>;
 
+    //Sentencia para editar una Persona
     public boolean editarPersona(int aguja) {
         String sql = "UPDATE public.\"Personass\" SET\n"
                 + " id_tipo_persona = " + getTipo() + ", id_lugar_natal = '" + getLugarNatal()
