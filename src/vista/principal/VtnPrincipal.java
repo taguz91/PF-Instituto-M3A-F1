@@ -171,6 +171,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnIngresar;
     }
 
+    public JMenuItem getMnCtMallaAlumno() {
+        return mnCtMallaAlumno;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -203,6 +207,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAlmnCurso = new javax.swing.JMenuItem();
         mnCtMateria = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
+        mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -351,6 +356,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula.setText("Matricula");
         mnConsultar.add(mnCtMatricula);
 
+        mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
+        mnCtMallaAlumno.setText("Malla alumnos");
+        mnConsultar.add(mnCtMallaAlumno);
+
         menuCrud.add(mnConsultar);
 
         mnIngresar.setText("Ingresar");
@@ -450,6 +459,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
+    private javax.swing.JMenuItem mnCtMallaAlumno;
     private javax.swing.JMenuItem mnCtMateria;
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtPersona;

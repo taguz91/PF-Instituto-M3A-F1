@@ -7,6 +7,7 @@ import controlador.carrera.VtnCarreraCTR;
 import controlador.curso.FrmCursoCTR;
 import controlador.curso.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
+import controlador.mallaalumno.VtnMallaAlumnoCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -33,6 +34,7 @@ import vista.carrera.VtnCarrera;
 import vista.curso.FrmCurso;
 import vista.curso.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
+import vista.mallaalumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -89,6 +91,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnMatricula());
+        vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos()); 
         
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -212,6 +215,13 @@ public class VtnPrincipalCTR {
     
     public void abrirVtnMatricula(){
         
+    }
+    
+    public void abrirVtnMallaAlumnos(){
+        VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno(); 
+        
+        VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm);
+        ctrMalla.iniciar();
     }
 
     //Para abrir todos los formularios

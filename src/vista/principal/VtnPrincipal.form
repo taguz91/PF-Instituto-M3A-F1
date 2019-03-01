@@ -83,6 +83,14 @@
                 <Property name="text" type="java.lang.String" value="Matricula"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Report_Card_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Malla alumnos"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">

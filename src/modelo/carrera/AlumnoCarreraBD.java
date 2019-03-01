@@ -19,12 +19,15 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     //Para consultar carreras  
     CarreraBD car = new CarreraBD();
 
-    public void guardar() {
+    public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
                 + "	id_alumno, id_carrera)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ");";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Guardamos correctamente el alumno en la carrera");
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -51,9 +54,20 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarrera() {
-        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
                 + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true';";
+        return consultarAlumnoCarrera(sql);
+    }
+
+    public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
+        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
+                + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true' "
+                + "AND id_carrera = " + idCarrera + ";";
+        return consultarAlumnoCarrera(sql);
+    }
+
+    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
+        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
