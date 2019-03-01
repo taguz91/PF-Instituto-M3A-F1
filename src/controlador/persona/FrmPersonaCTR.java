@@ -370,7 +370,6 @@ public class FrmPersonaCTR {
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
-            // PersonaBD persona = new PersonaBD(, tipo, lugarNatal, lugarResidencia, foto, identificacion, priApellido, segApellido, priNombre, segNombre, fechaActual, genero, 0, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaActual, discapcidad, tipoDiscapacidad, 0, carnetConadis, callePrin, numCasa, calleSec, referencia, sector, idiomaRaiz, zonaResidencia, discapcidad)
             per.setTipo(tiposPer.get(tipoPer - 1));
             per.setIdentificacion(identificacion);
             per.setPrimerNombre(priNombre);

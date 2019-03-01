@@ -26,10 +26,6 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         return btnEditar;
     }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
-    }
-
     public JButton getBtnIngresar() {
         return btnIngresar;
     }
@@ -51,7 +47,6 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCurso = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
@@ -59,6 +54,7 @@ public class VtnCurso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Cursos");
 
@@ -67,8 +63,6 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         btnIngresar.setText("Ingresar");
 
         btnEditar.setText("Editar");
-
-        btnEliminar.setText("Eliminar");
 
         tblCurso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,8 +96,6 @@ public class VtnCurso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -122,13 +114,12 @@ public class VtnCurso extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnIngresar)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar)))
+                        .addComponent(btnEditar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGap(9, 9, 9))
         );
 
         pack();
@@ -138,7 +129,6 @@ public class VtnCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

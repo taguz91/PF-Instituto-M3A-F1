@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.curso;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -69,14 +65,6 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         return cbxPeriodoLectivo;
     }
 
-    public void setCbxPeriodoLectivo(JComboBox<String> cbxPeriodoLectivo) {
-        this.cbxPeriodoLectivo = cbxPeriodoLectivo;
-    }
-
-    public JButton getBtnCancelar() {
-        return btnCancelar;
-    }
-
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
@@ -113,8 +101,14 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         return lblErrorPrdLectivo;
     }
 
+    public JCheckBox getCbxPermisoIng() {
+        return cbxPermisoIng;
+    }
 
-
+    public JButton getBtnGuardarContinuar() {
+        return btnGuardarContinuar;
+    }
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -137,8 +131,6 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         lblErrorParalelo = new javax.swing.JLabel();
         lblErrorCapacidad = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        lblError = new javax.swing.JLabel();
         pnlClase = new javax.swing.JPanel();
         lblDocete = new javax.swing.JLabel();
         cbxDocente = new javax.swing.JComboBox<>();
@@ -146,11 +138,14 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         lblMateria = new javax.swing.JLabel();
         lblErrorMateria = new javax.swing.JLabel();
         lblErrorDocente = new javax.swing.JLabel();
+        cbxPermisoIng = new javax.swing.JCheckBox();
+        lblError = new javax.swing.JLabel();
+        btnGuardarContinuar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
-        setMinimumSize(new java.awt.Dimension(454, 341));
-        setPreferredSize(new java.awt.Dimension(454, 341));
+        setMinimumSize(new java.awt.Dimension(454, 361));
+        setPreferredSize(new java.awt.Dimension(454, 361));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
@@ -207,20 +202,14 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 420, 160));
 
         btnGuardar.setText("Guardar");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, -1, -1));
-
-        btnCancelar.setText("Cancelar");
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
-
-        lblError.setForeground(new java.awt.Color(204, 0, 0));
-        lblError.setText("Ya registro estos datos.");
-        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 240, 20));
+        btnGuardar.setToolTipText("Guardar y salir.");
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
 
         pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clase", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
         pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDocete.setText("Docente:");
-        pnlClase.add(lblDocete, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, 50, -1));
+        pnlClase.add(lblDocete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, -1));
 
         cbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
         pnlClase.add(cbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 340, -1));
@@ -239,21 +228,34 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         lblErrorDocente.setText("Debe seleccionar un docente.");
         pnlClase.add(lblErrorDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 390, -1));
 
-        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 420, 100));
+        cbxPermisoIng.setText("Permiso ingreso de notas");
+        cbxPermisoIng.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pnlClase.add(cbxPermisoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 20));
+
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        lblError.setText("Ya registro estos datos.");
+        pnlClase.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 250, 20));
+
+        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 420, 130));
+
+        btnGuardarContinuar.setText("Guardar y continuar ingresando");
+        btnGuardarContinuar.setToolTipText("Guardar y continuar ingresando en el mismo curso.");
+        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarContinuar;
     private javax.swing.JComboBox cbxCiclo;
     private javax.swing.JComboBox<String> cbxDocente;
     private javax.swing.JComboBox<String> cbxJornada;
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox cbxParalelo;
     private javax.swing.JComboBox<String> cbxPeriodoLectivo;
+    private javax.swing.JCheckBox cbxPermisoIng;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblCiclo;
