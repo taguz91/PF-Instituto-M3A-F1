@@ -125,6 +125,38 @@ public class PersonaBD extends PersonaMD {
             }
         }
     }
+    
+    
+    
+   // Utilizamos la sentencia update para modificar el estado de una persona
+   // y no eliminarla por completo con parametro por identidicacion
+    public boolean eliminarPersona(String identificacion) {
+        String sql = "UPDATE public.\"Personas\"\n"
+                + "SET persona_activa='false'"
+                + "WHERE persona_identificacion = '" + identificacion + "';";
+
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
+    // Utilizamos la sentencia update para modificar el estado de una persona
+   // y no eliminarla por completo con parametro por id_persona
+    public boolean editarPersona(int idpersona) {
+        String sql = "UPDATE public.\"Personas\"\n"
+                + "SET persona_activa='false'"
+                + "WHERE id_persona = '" + idpersona + "';";
+
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     //Consultamos todos las personas en nuestro sistema 
     //que no esten eliminadas
