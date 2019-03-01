@@ -110,7 +110,7 @@ CREATE TABLE "Alumnos"(
 	"alumno_parentesco_contacto" character varying(20) NOT NULL,
 	"alumno_numero_contacto" character varying(20) NOT NULL,
 	"alumno_activo" boolean NOT NULL DEFAULT 'true', 
-	"alumno_observacion" character varying(20), 
+	"alumno_observacion" character varying(100), 
 	CONSTRAINT alumno_pk PRIMARY KEY ("id_alumno")
 ) WITH (OIDS = FALSE);
 

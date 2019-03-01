@@ -1,5 +1,6 @@
 package controlador.principal;
 
+import controlador.carrera.FrmAlumnoCarreraCTR;
 import vista.materia.FrmMateria;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
@@ -26,6 +27,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.persona.DocenteBD;
 import modelo.persona.UsuarioMD;
+import vista.carrera.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.curso.FrmCurso;
@@ -86,7 +88,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocente().addActionListener(e -> abrirVtnDocente());
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
-
+        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnMatricula());
+        
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
         //Para abrir los formularios 
@@ -98,7 +101,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCursoAlumno().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getBtnDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
-
+        vtnPrin.getBtnMatricula().addActionListener(e -> abrirFrmMatricula());
+ 
         //Para los menus  
         vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
         vtnPrin.getMnIgCarrera().addActionListener(e -> abrirFrmCarrera());
@@ -107,6 +111,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getMnIgPersona().addActionListener(e -> abrirFrmPersona());
         vtnPrin.getMnIgPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
+        vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
 
     }
 
@@ -204,6 +209,10 @@ public class VtnPrincipalCTR {
         }
 
     }
+    
+    public void abrirVtnMatricula(){
+        
+    }
 
     //Para abrir todos los formularios
     public void abrirFrmPersona() {
@@ -293,6 +302,15 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
 
+    }
+    
+    public void abrirFrmMatricula(){
+        FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera(); 
+        eventoInternal(frmMatricula); 
+        if (numVtns < 5) {
+            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(vtnPrin, frmMatricula); 
+            ctrFrmAlumn.iniciar();
+        }
     }
 
     public void estiloVtn() {

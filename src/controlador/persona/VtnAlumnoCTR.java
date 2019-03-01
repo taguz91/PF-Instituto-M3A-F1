@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.estilo.TblEstilo;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
@@ -63,6 +62,7 @@ public class VtnAlumnoCTR {
         ocultarAtributo();
         llenarTabla();
         vtnAlumno.getTxtBuscar().addKeyListener(kl);
+        vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
     }
@@ -117,6 +117,7 @@ public class VtnAlumnoCTR {
                     + " " + lista.get(i).getSegundoApellido(), i, 3);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
         }
+        vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
 
     public AlumnoMD capturarFila() {
@@ -145,16 +146,18 @@ public class VtnAlumnoCTR {
     }
 
     public void eliminarAlumno() {
-         AlumnoBD alumno = new AlumnoBD();
+         AlumnoMD alumno = new AlumnoMD();
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
         } else {
-            //alumno = capturarFila();
-            if(alumno.eliminarAlumno(alumno.getIdPersona()) == true){
+            alumno = capturarFila();
+            String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
+            alumno.setObservacion(observacion.toUpperCase());
+            if(bdAlumno.eliminarAlumno(alumno,alumno.getIdPersona()) == true){
                 JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                llenarTabla();
             } else{
-                String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
-                
+                JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
             }
         }
     }
