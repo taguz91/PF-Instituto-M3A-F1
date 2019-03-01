@@ -459,7 +459,7 @@ public class FrmPersonaCTR {
         frmPersona.getTxtTelefono().setText(per.getTelefono());
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
-        frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        //frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
         System.out.println(""+per.getSexo());
         frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
