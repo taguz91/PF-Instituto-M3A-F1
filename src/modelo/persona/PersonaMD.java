@@ -405,12 +405,45 @@ public class PersonaMD {
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
     }
-    
+       
     //Guardamos todos los datos de una persona 
     public void setPersona(PersonaMD per) {
+        this.idPersona = per.getIdPersona();
+        this.tipo = per.getTipo();
+        this.lugarNatal = per.getLugarNatal();
+        this.lugarResidencia = per.getLugarResidencia();
+        this.foto = per.getFoto();
+        this.identificacion = per.getIdentificacion();
         this.primerApellido = per.getPrimerApellido();
+        this.segundoApellido = per.getSegundoApellido();
         this.primerNombre = per.getPrimerNombre();
+        this.segundoNombre = per.getSegundoNombre();
+        this.fechaNacimiento = per.getFechaNacimiento();
+        this.genero = per.getGenero();
+        this.sexo = per.getSexo();
+        this.estadoCivil = per.getEstadoCivil();
+        this.etnia = per.getEtnia();
+        this.idiomaRaiz = per.getIdiomaRaiz();
+        this.tipoSangre = per.getTipoSangre();
+        this.telefono = per.getTelefono();
+        this.celular = per.getCelular();
+        this.correo = per.getCorreo();
+        this.fechaRegistro = per.getFechaRegistro();
+        this.discapacidad = per.isDiscapacidad();
+        this.tipoDiscapacidad = per.getTipoDiscapacidad();
+        this.porcentajeDiscapacidad = per.getPorcentajeDiscapacidad();
+        this.carnetConadis = per.getCarnetConadis();
         this.callePrincipal = per.getCallePrincipal();
+        this.numeroCasa = per.getNumeroCasa();
+        this.calleSecundaria = per.getCalleSecundaria();
+        this.referencia = per.getReferencia();
+        this.sector = per.getSector();
+        this.idioma = per.getIdioma();
+        this.tipoResidencia = per.getTipoResidencia();
+        this.personaActiva = per.isPersonaActiva();
+        
         
     }
+    
+  
 }
