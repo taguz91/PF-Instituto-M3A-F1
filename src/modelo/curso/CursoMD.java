@@ -1,7 +1,7 @@
-
 package modelo.curso;
 
 import java.util.Objects;
+import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteMD;
@@ -11,29 +11,20 @@ import modelo.persona.DocenteMD;
  * @author arman
  */
 public class CursoMD {
+
     private int id_curso;
-    private /*int*/MateriaMD id_materia;
-    private /*int*/PeriodoLectivoMD id_prd_lectivo;
-    private /*int*/DocenteMD id_docente;
+    private MateriaMD id_materia;
+    private PeriodoLectivoMD id_prd_lectivo;
+    private DocenteMD id_docente;
     private String curso_nombre;
-    private String curso_jornada;
+    private JornadaMD curso_jornada;
     private int curso_capacidad;
     private int curso_ciclo;
     private boolean permiso_ingreso_nt;
+    private String paralelo; 
 
-    public CursoMD(int id_curso, MateriaMD id_materia, PeriodoLectivoMD id_prd_lectivo, DocenteMD id_docente, String curso_nombre, String curso_jornada, int curso_capacidad, int curso_ciclo,boolean permiso_ingreso_nt) {
-        this.id_curso = id_curso;
-        this.id_materia = id_materia;
-        this.id_prd_lectivo = id_prd_lectivo;
-        this.id_docente = id_docente;
-        this.curso_nombre = curso_nombre;
-        this.curso_jornada = curso_jornada;
-        this.curso_capacidad = curso_capacidad;
-        this.curso_ciclo = curso_ciclo;
-        this.permiso_ingreso_nt = permiso_ingreso_nt;
-        
+    public CursoMD() {
     }
-    public CursoMD(){}
 
     public int getId_curso() {
         return id_curso;
@@ -46,7 +37,6 @@ public class CursoMD {
     public void setPermiso_ingreso_nt(boolean permiso_ingreso_nt) {
         this.permiso_ingreso_nt = permiso_ingreso_nt;
     }
-    
 
     public void setId_curso(int id_curso) {
         this.id_curso = id_curso;
@@ -84,11 +74,11 @@ public class CursoMD {
         this.curso_nombre = curso_nombre;
     }
 
-    public String getCurso_jornada() {
+    public JornadaMD getCurso_jornada() {
         return curso_jornada;
     }
 
-    public void setCurso_jornada(String curso_jornada) {
+    public void setCurso_jornada(JornadaMD curso_jornada) {
         this.curso_jornada = curso_jornada;
     }
 
@@ -106,6 +96,14 @@ public class CursoMD {
 
     public void setCurso_ciclo(int curso_ciclo) {
         this.curso_ciclo = curso_ciclo;
+    }
+
+    public String getParalelo() {
+        return paralelo;
+    }
+
+    public void setParalelo(String paralelo) {
+        this.paralelo = paralelo;
     }
 
     @Override
@@ -162,5 +160,5 @@ public class CursoMD {
     public String toString() {
         return "Curso{" + "id_curso=" + id_curso + ", id_materia=" + id_materia + ", id_prd_lectivo=" + id_prd_lectivo + ", id_docente=" + id_docente + ", curso_nombre=" + curso_nombre + ", curso_jornada=" + curso_jornada + ", curso_capacidad=" + curso_capacidad + ", curso_ciclo=" + curso_ciclo + '}';
     }
-      
+
 }

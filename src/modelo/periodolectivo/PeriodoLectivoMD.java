@@ -11,6 +11,8 @@ public class PeriodoLectivoMD extends CarreraMD{
     private String nombre_PerLectivo, observacion_PerLectivo;
     private boolean activo_PerLectivo;
     private LocalDate fecha_Inicio, fecha_Fin;
+    //Debemos arreglar esot 
+    private CarreraMD carrera; 
 
     public PeriodoLectivoMD() {
     }
@@ -73,7 +75,12 @@ public class PeriodoLectivoMD extends CarreraMD{
         this.fecha_Fin = fecha_Fin;
     }
 
-    
-    
+    public CarreraMD getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(CarreraMD carrera) {
+        this.carrera = carrera;
+    }
     
 }
