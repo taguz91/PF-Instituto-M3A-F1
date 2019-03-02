@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -18,10 +20,15 @@ public class VtnCursoCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCurso vtnCurso;
 
-    private CursoBD curso;
+    private final CursoBD curso;
     ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     DefaultTableModel mdTbl;
+    //Para cargar el combo periodos  
+    PeriodoLectivoBD per = new PeriodoLectivoBD();
+    ArrayList<PeriodoLectivoMD> periodos;
+    //Para guardanos los nombres de los cursos  
+    ArrayList<String> nombresC;
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso) {
         this.vtnPrin = vtnPrin;
@@ -35,6 +42,7 @@ public class VtnCursoCTR {
     }
 
     public void iniciar() {
+        cargarCmbPrdLectio();
         //Iniciamos la tabla  
         String titulo[] = {"id", "Periodo", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
         String datos[][] = {};
@@ -52,14 +60,16 @@ public class VtnCursoCTR {
 
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
+        //Le damos una accion al combo de periodos lectivos 
+        vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
+        //Le damos una accion al combo de cursos  
+        vtnCurso.getCmbCurso().addActionListener(e -> cargarCursosPorNombre());
     }
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
         FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
         ctrFrmCurso.iniciar();
-        
-        
     }
 
     private void editarCurso() {
@@ -69,14 +79,46 @@ public class VtnCursoCTR {
             FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
             ctrFrmCurso.iniciar();
             ctrFrmCurso.editar(cursos.get(fila));
-            vtnCurso.dispose(); 
+            vtnCurso.dispose();
         }
     }
 
     public void cargarCursos() {
+        //Cargamos el combo con los nombres de cursos 
+        nombresC = curso.cargarNombreCursos();
+        cargarCmbCursos(nombresC);
+        //Cargamos los cursos y llenamos la tabla
         cursos = curso.cargarCursos();
-
         llenarTbl(cursos);
+    }
+
+    private void cargarCursosPorPeriodo() {
+        int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
+        if (posPrd > 0) {
+            //Cargamos el combo de cursos por el periodo  
+            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            cargarCmbCursos(nombresC);
+            //Cargamos los cursos por periodo
+            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            llenarTbl(cursos);
+        } else {
+            cargarCursos();
+        }
+    }
+
+    private void cargarCursosPorNombre() {
+        int posNom = vtnCurso.getCmbCurso().getSelectedIndex();
+        int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
+        if (posNom == 0) {
+            cargarCursosPorPeriodo();
+        } else if (posNom > 0 && posPrd == 0) {
+            cursos = curso.cargarCursosPorNombre(vtnCurso.getCmbCurso().getSelectedItem().toString());
+            llenarTbl(cursos);
+        } else if (posNom > 0 && posPrd > 0) {
+            cursos = curso.cargarCursosPorNombreYPrdLectivo(vtnCurso.getCmbCurso().getSelectedItem().toString(),
+                    periodos.get(posPrd - 1).getId_PerioLectivo());
+            llenarTbl(cursos);
+        }
     }
 
     private void llenarTbl(ArrayList<CursoMD> cursos) {
@@ -101,4 +143,25 @@ public class VtnCursoCTR {
         }
     }
 
+    private void cargarCmbPrdLectio() {
+        periodos = per.cargarPeriodos();
+        if (periodos != null) {
+            vtnCurso.getCmbPeriodoLectivo().removeAllItems();
+            vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
+            periodos.forEach((p) -> {
+                vtnCurso.getCmbPeriodoLectivo().addItem(p.getNombre_PerLectivo());
+            });
+        }
+    }
+
+    private void cargarCmbCursos(ArrayList<String> nombresC) {
+        vtnCurso.getCmbCurso().removeAllItems();
+        if (nombresC != null) {
+            vtnCurso.getCmbCurso().addItem("Todos");
+            nombresC.forEach(n -> {
+                vtnCurso.getCmbCurso().addItem(n);
+            });
+            vtnCurso.getCmbCurso().addItem("--BUG--");
+        }
+    }
 }
