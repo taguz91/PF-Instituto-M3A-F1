@@ -52,14 +52,8 @@ public class VtnMallaAlumnoCTR {
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 7, 60);
         
         cargarCmbAlumno();
-        cargarDatos();
         
         vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
-    }
-    
-    public void cargarDatos() {
-        mallas = mallaAlm.cargarMallas();        
-        llenarTbl(mallas);
     }
     
     public void cargarPorAlumno() {
@@ -68,7 +62,8 @@ public class VtnMallaAlumnoCTR {
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getAlumno().getId_Alumno());            
             llenarTbl(mallas);
         } else {
-            cargarDatos();
+            //Borramos todos los datos de la tabla si no se selecciona ninguno 
+            mdlTbl.setRowCount(0); 
         }
     }
     
@@ -89,7 +84,7 @@ public class VtnMallaAlumnoCTR {
         alumnos = almCar.cargarAlumnoCarrera();        
         if (alumnos != null) {
             vtnMallaAlm.getCmbAlumnos().removeAllItems();
-            vtnMallaAlm.getCmbAlumnos().addItem("Todos");            
+            vtnMallaAlm.getCmbAlumnos().addItem("Seleccione un alumno");            
             alumnos.forEach((a) -> {
                 vtnMallaAlm.getCmbAlumnos().addItem(a.getAlumno().getPrimerNombre()
                         + " " + a.getAlumno().getPrimerApellido());                
