@@ -26,13 +26,6 @@ public class CursoBD extends CursoMD {
 
     ConectarDB conecta = new ConectarDB("Curso");
 
-    private String SELECT_ONE(String aguja) {
-        return "SELECT * FROM Cursos "
-                + "WHERE \"curso_nombre\" LIKE '%" + aguja + "%'"
-                + "OR \"curso_jornada\" LIKE '%" + aguja + "%'"
-                + "OR \"id_docente\" LIKE '%" + aguja + "%'";
-    }
-
     public void guardarCurso() {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
