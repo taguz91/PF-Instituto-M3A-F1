@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.carrera.AlumnoCarreraBD;
 import modelo.carrera.AlumnoCarreraMD;
+import modelo.carrera.CarreraBD;
+import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.mallaalumno.MallaAlumnoBD;
 import modelo.mallaalumno.MallaAlumnoMD;
@@ -18,13 +20,16 @@ public class VtnMallaAlumnoCTR {
     
     private final VtnPrincipal vtnPrin;
     private final VtnMallaAlumno vtnMallaAlm;
-    private final MallaAlumnoBD mallaAlm = new MallaAlumnoBD();    
+    private final MallaAlumnoBD mallaAlm = new MallaAlumnoBD();  
+    private final String [] cmbEstado = {"Seleccione", "Aprobado", "Cursando", "Pendiente", "Reprobado"};
     
     ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos 
     AlumnoCarreraBD almCar = new AlumnoCarreraBD();
     ArrayList<AlumnoCarreraMD> alumnos = new ArrayList();
-
+    
+    CarreraBD car = new CarreraBD(); 
+    ArrayList<CarreraMD> carreras = new ArrayList(); 
     //Modelo de la tabla  
     DefaultTableModel mdlTbl;    
     
@@ -38,26 +43,28 @@ public class VtnMallaAlumnoCTR {
     
     public void iniciar() {
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Alumno", "Materia", "Ciclo", "Matricula", "Nota 1", "Nota 2", "Nota 3"};
+        String titulo[] = {"id", "Alumno", "Materia", "Estado", "Ciclo", "Matricula", "Nota 1", "Nota 2", "Nota 3"};
         String datos[][] = {};
         mdlTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnMallaAlm.getTblMallaAlumno());
         vtnMallaAlm.getTblMallaAlumno().setModel(mdlTbl);
         TblEstilo.ocualtarID(vtnMallaAlm.getTblMallaAlumno());
         
-        TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 3, 60);
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 4, 60);
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 5, 60);
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 6, 60);
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 7, 60);
+        TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 8, 60);
         
-        cargarCmbAlumno();
+        cargarCmbCarrera();
         
+        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
         vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
+        vtnMallaAlm.getCmbEstado().addActionListener(e -> cargarPorEstado());
     }
     
     public void cargarPorAlumno() {
-        int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();        
+        int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex(); 
         if (posAlm > 0) {
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getAlumno().getId_Alumno());            
             llenarTbl(mallas);
@@ -67,12 +74,25 @@ public class VtnMallaAlumnoCTR {
         }
     }
     
+    public void cargarPorEstado(){ 
+        int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
+        int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex(); 
+        if (posAlm > 0 && posEst > 0) {
+            mallas = mallaAlm.cargarMallaAlumnoPorEstado(alumnos.get(posAlm - 1).getId(),
+                    cmbEstado[posEst]);
+            llenarTbl(mallas);
+        }else if(posAlm > 0){
+            cargarPorAlumno();
+        }
+    }
+    
     public void llenarTbl(ArrayList<MallaAlumnoMD> mallas) {
         mdlTbl.setRowCount(0);
         if (mallas != null) {
             mallas.forEach((m) -> {
                 Object valores[] = {m.getId(), m.getAlumno().getPrimerNombre()
                     + " " + m.getAlumno().getPrimerApellido(), m.getMateria().getNombre(),
+                    m.getEstado(),
                     m.getMallaCiclo(), m.getMallaNumMatricula(), m.getNota1(),
                     m.getNota2(), m.getNota3()};
                 mdlTbl.addRow(valores);                
@@ -80,11 +100,30 @@ public class VtnMallaAlumnoCTR {
         }
     }
     
-    private void cargarCmbAlumno() {
-        alumnos = almCar.cargarAlumnoCarrera();        
+    private void cargarCmbCarrera(){
+        carreras = car.cargarCarreras(); 
+        vtnMallaAlm.getCmbCarreras().removeAllItems();
+        if (carreras != null) {
+            vtnMallaAlm.getCmbCarreras().addItem("Seleccione"); 
+            carreras.forEach(c -> {
+                vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo()); 
+            });
+        }
+    }
+    
+    private void clickCmbCarrera(){
+        int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex(); 
+        if (posCar > 0) {
+            cargarCmbAlumno(carreras.get(posCar - 1).getId());
+            cargarCmbEstado();
+        }
+    }
+    
+    private void cargarCmbAlumno(int idCarrera) {
+        alumnos = almCar.cargarAlumnoCarreraPorCarrera(idCarrera);        
+        vtnMallaAlm.getCmbAlumnos().removeAllItems();
         if (alumnos != null) {
-            vtnMallaAlm.getCmbAlumnos().removeAllItems();
-            vtnMallaAlm.getCmbAlumnos().addItem("Seleccione un alumno");            
+            vtnMallaAlm.getCmbAlumnos().addItem("Seleccione");            
             alumnos.forEach((a) -> {
                 vtnMallaAlm.getCmbAlumnos().addItem(a.getAlumno().getPrimerNombre()
                         + " " + a.getAlumno().getPrimerApellido());                
@@ -92,4 +131,10 @@ public class VtnMallaAlumnoCTR {
         }
     }
     
+    private void cargarCmbEstado(){
+        vtnMallaAlm.getCmbEstado().removeAllItems();
+        for(String e: cmbEstado){
+            vtnMallaAlm.getCmbEstado().addItem(e); 
+        }
+    }
 }

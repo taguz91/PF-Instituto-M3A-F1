@@ -32,7 +32,7 @@ import modelo.persona.UsuarioMD;
 import vista.carrera.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
-import vista.curso.FrmAlumnoCurso;
+import vista.mallaalumno.FrmAlumnoCurso;
 import vista.curso.FrmCurso;
 import vista.curso.VtnAlumnoCurso;
 import vista.curso.VtnCurso;

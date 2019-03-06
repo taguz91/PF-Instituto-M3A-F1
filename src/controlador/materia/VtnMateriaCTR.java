@@ -99,7 +99,7 @@ public class VtnMateriaCTR {
         vtnMateria.getCmbCarreras().removeAllItems();
         vtnMateria.getCmbCarreras().addItem("Seleccione una carrera");
         carreras.forEach((car) -> {
-            vtnMateria.getCmbCarreras().addItem(car.getNombre());
+            vtnMateria.getCmbCarreras().addItem(car.getCodigo());
         });
     }
 

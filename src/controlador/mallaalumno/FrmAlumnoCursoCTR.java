@@ -10,7 +10,7 @@ import modelo.estilo.TblEstilo;
 import modelo.mallaalumno.AlumnoCursoBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import vista.curso.FrmAlumnoCurso;
+import vista.mallaalumno.FrmAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
 /**
