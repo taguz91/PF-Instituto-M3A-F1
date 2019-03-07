@@ -56,9 +56,9 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public boolean eliminarAlumno(AlumnoMD a,int aguja) {
+    public boolean eliminarAlumno(AlumnoMD a, int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + " alumno_activo = false, alumno_observacion = '" + a.getObservacion() 
+                + " alumno_activo = false, alumno_observacion = '" + a.getObservacion()
                 + "' WHERE id_persona = " + aguja + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -135,8 +135,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "a.alumno_pension, a.alumno_ocupacion, a.alumno_trabaja, a.alumno_nivel_formacion_padre, a.alumno_nivel_formacion_madre,\n"
                 + "a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto, a.alumno_numero_contacto\n"
                 + "FROM public.\"Personas\" p, public.\"Alumnos\" a\n"
-                + "WHERE p.id_persona = a.id_persona AND a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true" + 
-                  ";";
+                + "WHERE p.id_persona = a.id_persona AND a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true"
+                + ";";
         ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
@@ -198,9 +198,26 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     public ArrayList<AlumnoMD> cargarAlumnos() {
-        ArrayList<AlumnoMD> almns = new ArrayList();
         String sql = "SELECT id_alumno, id_persona\n"
                 + "	FROM public.\"Alumnos\" WHERE alumno_activo = 'true';";
+        return consultarAlumnos(sql);
+    }
+
+    public ArrayList<AlumnoMD> buscarAlumnos(String aguja) {
+        String sql = "SELECT id_alumno, \"Personas\".id_persona\n"
+                + "FROM public.\"Alumnos\", public.\"Personas\" \n"
+                + "WHERE alumno_activo = 'true'\n"
+                + "AND \"Personas\".id_persona = \"Alumnos\".id_persona\n"
+                + "AND (persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + "OR persona_primer_apellido ILIKE '%" + aguja + "%'\n"
+                + "OR persona_segundo_apellido ILIKE '%" + aguja + "%'\n"
+                + "OR persona_primer_nombre ILIKE '%" + aguja + "%'\n"
+                + "OR persona_segundo_nombre ILIKE '%" + aguja + "%');";
+        return consultarAlumnos(sql);
+    }
+
+    private ArrayList<AlumnoMD> consultarAlumnos(String sql) {
+        ArrayList<AlumnoMD> almns = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -209,8 +226,8 @@ public class AlumnoBD extends AlumnoMD {
                     al.setId_Alumno(rs.getInt("id_alumno"));
                     PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
                     al.setPersona(p);
-                    
-                    almns.add(al); 
+
+                    almns.add(al);
                 }
                 return almns;
             } else {
@@ -222,5 +239,5 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
 }

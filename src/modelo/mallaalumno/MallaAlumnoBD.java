@@ -54,7 +54,6 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "malla_almn_nota3, malla_almn_estado\n"
                 + "FROM public.\"MallaEstudiante\" "
                 + "WHERE id_alumno = "+idAlumno+" AND malla_almn_estado = '"+estado.charAt(0)+"';";
-        //System.out.println(sql);
         return consultaMallasPorAlumno(sql, idAlumno); 
     }
     

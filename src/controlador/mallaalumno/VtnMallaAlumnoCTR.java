@@ -26,7 +26,7 @@ public class VtnMallaAlumnoCTR {
     ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos 
     AlumnoCarreraBD almCar = new AlumnoCarreraBD();
-    ArrayList<AlumnoCarreraMD> alumnos = new ArrayList();
+    ArrayList<AlumnoCarreraMD> alumnos;
     
     CarreraBD car = new CarreraBD(); 
     ArrayList<CarreraMD> carreras = new ArrayList(); 
@@ -78,8 +78,8 @@ public class VtnMallaAlumnoCTR {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex(); 
         if (posAlm > 0 && posEst > 0) {
-            mallas = mallaAlm.cargarMallaAlumnoPorEstado(alumnos.get(posAlm - 1).getId(),
-                    cmbEstado[posEst]);
+            mallas = mallaAlm.cargarMallaAlumnoPorEstado(
+                    alumnos.get(posAlm - 1).getAlumno().getId_Alumno(), cmbEstado[posEst]);
             llenarTbl(mallas);
         }else if(posAlm > 0){
             cargarPorAlumno();
