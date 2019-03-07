@@ -41,14 +41,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
-    
+
+
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c){
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '" + p.getNombre_PerLectivo() + "',"
                 + " prd_lectivo_fecha_inicio = '" + p.getFecha_Inicio() + "', prd_lectivo_fecha_fin = '" + p.getFecha_Fin()
                 + "', prd_lectivo_observacion = '" + p.getObservacion_PerLectivo()
                 + "' WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
-
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -56,6 +56,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
+
 
     
     public boolean eliminarPeriodo(PeriodoLectivoMD p){
@@ -148,6 +149,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
+
 
     public List<PeriodoLectivoMD> capturarPeriodos(String aguja) {
         List<PeriodoLectivoMD> lista = new ArrayList();

@@ -1,11 +1,14 @@
 package controlador.principal;
 
+import controlador.carrera.FrmAlumnoCarreraCTR;
 import vista.materia.FrmMateria;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
 import controlador.curso.FrmCursoCTR;
-import controlador.curso.VtnAlumnoCursoCTR;
+import controlador.mallaalumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
+import controlador.mallaalumno.FrmAlumnoCursoCTR;
+import controlador.mallaalumno.VtnMallaAlumnoCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -26,11 +29,14 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.persona.DocenteBD;
 import modelo.persona.UsuarioMD;
+import vista.carrera.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
+import vista.mallaalumno.FrmAlumnoCurso;
 import vista.curso.FrmCurso;
 import vista.curso.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
+import vista.mallaalumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -48,7 +54,7 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnPrincipalCTR {
 
-    private VtnPrincipal vtnPrin;
+    private final VtnPrincipal vtnPrin;
     private final UsuarioMD usuario;
 
     private int numVtns = 0;
@@ -86,7 +92,9 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocente().addActionListener(e -> abrirVtnDocente());
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
-
+        vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnMatricula());
+        vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos()); 
+        
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
         //Para abrir los formularios 
@@ -98,7 +106,9 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCursoAlumno().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getBtnDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
-
+        vtnPrin.getBtnInscripcion().addActionListener(e -> abrirFrmInscripcion());
+        vtnPrin.getBtnMatricula().addActionListener(e -> abrirFrmMatricula());
+ 
         //Para los menus  
         vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
         vtnPrin.getMnIgCarrera().addActionListener(e -> abrirFrmCarrera());
@@ -107,6 +117,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getMnIgPersona().addActionListener(e -> abrirFrmPersona());
         vtnPrin.getMnIgPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
+        vtnPrin.getMnIgInscripcion().addActionListener(e -> abrirFrmInscripcion());
+        vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
 
     }
 
@@ -204,6 +216,17 @@ public class VtnPrincipalCTR {
         }
 
     }
+    
+    public void abrirVtnMatricula(){
+        
+    }
+    
+    public void abrirVtnMallaAlumnos(){
+        VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno(); 
+        
+        VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm);
+        ctrMalla.iniciar();
+    }
 
     //Para abrir todos los formularios
     public void abrirFrmPersona() {
@@ -293,6 +316,24 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
 
+    }
+    
+    public void abrirFrmInscripcion(){
+        FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera(); 
+        eventoInternal(frmMatricula); 
+        if (numVtns < 5) {
+            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(vtnPrin, frmMatricula); 
+            ctrFrmAlumn.iniciar();
+        }
+    }
+    
+    private void abrirFrmMatricula(){
+        FrmAlumnoCurso frmAlmCurso = new FrmAlumnoCurso();
+        eventoInternal(frmAlmCurso);
+        if (numVtns < 5) {
+            FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(vtnPrin, frmAlmCurso); 
+            ctrFrmMatri.iniciar();
+        }
     }
 
     public void estiloVtn() {

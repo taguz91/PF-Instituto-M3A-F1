@@ -16,7 +16,6 @@ public class MateriaBD extends MateriaMD {
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
-        ArrayList<MateriaMD> lista = new ArrayList();
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
                 + " materia_nombre, materia_ciclo, materia_creditos, "
                 + "materia_tipo, materia_categoria, materia_tipo_acreditacion, "
@@ -26,32 +25,11 @@ public class MateriaBD extends MateriaMD {
                 + "materia_descripcion,materia_objetivo_especifico,"
                 + "materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true';";
-        ResultSet rs = conecta.sql(sql);
-
-        try {
-            if (rs != null) {
-
-                while (rs.next()) {
-                    lista.add(obtenerMateria(rs));
-                }
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
-            return null;
-        }
+        return consultarMaterias(sql);
     }
 
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarrera(int idcarrera) {
-
-        ArrayList<MateriaMD> lista = new ArrayList();
-
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
                 + " materia_nombre, materia_ciclo, materia_creditos, "
                 + "materia_tipo, materia_categoria, materia_tipo_acreditacion, "
@@ -62,32 +40,11 @@ public class MateriaBD extends MateriaMD {
                 + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + ";";
-        ResultSet rs = conecta.sql(sql);
-
-        try {
-            if (rs != null) {
-
-                while (rs.next()) {
-                    lista.add(obtenerMateria(rs));
-                }
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
-            return null;
-        }
+        return consultarMaterias(sql);
     }
     
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
-
-        ArrayList<MateriaMD> lista = new ArrayList();
-
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
                 + " materia_nombre, materia_ciclo, materia_creditos, "
                 + "materia_tipo, materia_categoria, materia_tipo_acreditacion, "
@@ -99,21 +56,28 @@ public class MateriaBD extends MateriaMD {
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + " "
                 + "AND materia_ciclo = "+ciclo+";";
-        ResultSet rs = conecta.sql(sql);
+        return consultarMaterias(sql);
+    }
+    
+    //Cargar todos los ciclos de una carrera  
+    public ArrayList<Integer> cargarCiclosCarrera(int idCarrera){
+        ArrayList<Integer> ciclos = new ArrayList(); 
+        String sql = "SELECT DISTINCT materia_ciclo\n" +
+"	FROM public.\"Materias\" \n" +
+"	WHERE id_carrera = "+idCarrera+" ORDER BY materia_ciclo; "; 
+        ResultSet rs = conecta.sql(sql); 
         try {
             if (rs != null) {
-                while (rs.next()) {
-                    lista.add(obtenerMateria(rs));
+                while(rs.next()){
+                    ciclos.add(rs.getInt("materia_ciclo"));
                 }
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
+                return ciclos; 
+            }else{
+                return null; 
             }
-
-        } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
+        } catch (SQLException e) {
+            System.out.println("No pudimos cargar los ciclos de una carrera");
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -157,11 +121,14 @@ public class MateriaBD extends MateriaMD {
 
     //Metodo buscar por aguja
     public ArrayList<MateriaMD> cargarMaterias(String aguja) {
-        ArrayList<MateriaMD> lista = new ArrayList();
-
         String sql = "SELECT * FROM public.\"Materias\"\n"
                 + "WHERE \"materia_nombre\" ILIKE '%" + aguja + "%' "
                 + "OR \"materia_codigo\" ILIKE '%" + aguja + "%';";
+        return consultarMaterias(sql);
+    }
+    
+    private ArrayList<MateriaMD> consultarMaterias(String sql){
+        ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {

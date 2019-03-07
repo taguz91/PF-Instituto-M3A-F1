@@ -127,29 +127,54 @@ public class PersonaBD extends PersonaMD {
 
     //Sentencia para editar una Persona
     public boolean editarPersona(int aguja) {
-        String sql = "UPDATE public.\"Personass\" SET\n"
-                + " id_tipo_persona = " + getTipo() + ", id_lugar_natal = '" + getLugarNatal()
-                + "', id_lugar_residencia = '" + getLugarResidencia() + "', persona_foto = '" + getFoto()
-                + "', persona_identificacion = " + getIdentificacion() + ", persona_primer_apellido = '"
+        String sql = "UPDATE public.\"Personas\" SET\n"
+                + " id_tipo_persona = " + getTipo().getId() + ", id_lugar_natal = " + getLugarNatal().getId()
+                + ", id_lugar_residencia = " + getLugarResidencia().getId()
+                + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
                 + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                + "', persona_primer_nombre = " + getPrimerNombre() + ", persona_segundo_nombre = '"
-                + getSegundoNombre() + "', persona_genero = " + getGenero()
-                + ", persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
                 + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
                 + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
                 + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
-                + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
-                + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
-                + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
+                + "', persona_fecha_registro = '" + getFechaRegistro()
+                + "', persona_calle_principal = '"
                 + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
                 + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                 + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                 + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
                 + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
-                 +" WHERE id_persona = " + aguja + ";";
+                + " WHERE id_persona = " + aguja + ";";
+
+        if (isDiscapacidad()) {
+            sql = "UPDATE public.\"Personas\" SET\n"
+                    + " id_tipo_persona = " + getTipo().getId() + ", id_lugar_natal = " + getLugarNatal().getId()
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
+                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
+                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
+                    + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
+                    + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
+                    + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
+                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + " WHERE id_persona = " + aguja + ";";
+        }
         
+        System.out.println(sql);
+
         if (conecta.nosql(sql) == null) {
+            System.out.println("Se edito correctamente");
             return true;
         } else {
             System.out.println("Error");

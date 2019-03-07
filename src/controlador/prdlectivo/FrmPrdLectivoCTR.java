@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.AlumnoBD;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.principal.VtnPrincipal;
 
@@ -40,7 +39,7 @@ public class FrmPrdLectivoCTR {
         ActionListener Cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmPrdLectivo.setVisible(false);
+                frmPrdLectivo.dispose();
             }
         };
 
@@ -139,14 +138,17 @@ public class FrmPrdLectivoCTR {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(bdPerLectivo);
+
                 periodo.setId_PerioLectivo(id_PeriodoLectivo);
                 if (bdPerLectivo.editarPeriodo(periodo,carrera) == true) {
+
+                /*if (bdPerLectivo.editarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
-                }
+                }*/
             }
         }
     }
@@ -157,6 +159,7 @@ public class FrmPrdLectivoCTR {
         String fec_Inicio[] = date_Inicio.split("/");
         String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
         String fec_Fin[] = date_Fin.split("/");
+
         LocalDate fecha_Inicio = fechaActual;
         fecha_Inicio = LocalDate.of(Integer.parseInt(fec_Inicio[2]),
                 Integer.parseInt(fec_Inicio[1]),
@@ -164,6 +167,10 @@ public class FrmPrdLectivoCTR {
         LocalDate fecha_Fin = fechaActual;
         fecha_Fin = LocalDate.of(Integer.parseInt(fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
+
+
+
+        periodo.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
         periodo.setFecha_Inicio(fecha_Inicio);
         periodo.setFecha_Fin(fecha_Fin);

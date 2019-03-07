@@ -51,6 +51,7 @@ public class FrmPersonaCTR {
 
     //Para saber si se esta editando una persona  
     private boolean editar = false;
+    private int idPersona = 0; 
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
@@ -406,7 +407,9 @@ public class FrmPersonaCTR {
             per.setFechaRegistro(fechaActual);
 
             if (editar) {
-                //Se llama al metodo editar persona de persona BD 
+                if (idPersona > 0) {
+                    per.editarPersona(idPersona); 
+                }
             } else {
                 if (fis != null) {
                     per.insertarPersonaConFoto();
@@ -436,7 +439,10 @@ public class FrmPersonaCTR {
     public void editar(PersonaMD per) {
         //Seteamos los datos en el formulario  
         boolean discapacidad;
+        idPersona = per.getIdPersona();
         editar = true;
+        System.out.println("Id de la persona que editaremos "+idPersona);
+        
         frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
