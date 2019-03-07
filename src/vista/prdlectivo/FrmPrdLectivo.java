@@ -161,6 +161,14 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         this.Lbl_ErrFecInicio = Lbl_ErrFecInicio;
     }
 
+    public JLabel getLbl_ErrFecFin() {
+        return Lbl_ErrFecFin;
+    }
+
+    public void setLbl_ErrFecFin(JLabel Lbl_ErrFecFin) {
+        this.Lbl_ErrFecFin = Lbl_ErrFecFin;
+    }
+
     
     
     /**
@@ -189,6 +197,7 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         Lbl_ErrNombre = new javax.swing.JLabel();
         Lbl_ErrObservacion = new javax.swing.JLabel();
         Lbl_ErrFecInicio = new javax.swing.JLabel();
+        Lbl_ErrFecFin = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -196,15 +205,15 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("Observación:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
-        getContentPane().add(txtObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 370, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 498, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 252, -1, -1));
+        getContentPane().add(txtObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 252, 370, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 305, 498, -1));
 
         Btn_Guardar.setText("Guardar");
-        getContentPane().add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 104, -1));
+        getContentPane().add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 320, 104, -1));
 
         Btn_Cancelar.setText("Cancelar");
-        getContentPane().add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 104, -1));
+        getContentPane().add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 320, 104, -1));
 
         jLabel5.setText("Carrera:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 17, -1, -1));
@@ -248,11 +257,15 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
 
     Lbl_ErrObservacion.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrObservacion.setText("Ingrese una Observacion");
-    getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
+    getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 282, -1, -1));
 
     Lbl_ErrFecInicio.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrFecInicio.setText("Fecha Incorrecta");
     getContentPane().add(Lbl_ErrFecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, -1, -1));
+
+    Lbl_ErrFecFin.setForeground(new java.awt.Color(204, 0, 0));
+    Lbl_ErrFecFin.setText("Fecha Incorrecta");
+    getContentPane().add(Lbl_ErrFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 219, -1, -1));
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -265,6 +278,7 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo Dcr_FecConclusion;
     private datechooser.beans.DateChooserCombo Dcr_FecInicio;
     private javax.swing.JLabel Lbl_ErrCarrera;
+    private javax.swing.JLabel Lbl_ErrFecFin;
     private javax.swing.JLabel Lbl_ErrFecInicio;
     private javax.swing.JLabel Lbl_ErrNombre;
     private javax.swing.JLabel Lbl_ErrObservacion;

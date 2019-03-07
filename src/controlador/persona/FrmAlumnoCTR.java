@@ -83,57 +83,63 @@ public class FrmAlumnoCTR {
             String cedula;
             cedula = frmAlumno.getTxt_Cedula().getText();
 
-            if (modelo.validaciones.Validar.esNumeros(cedula) == false) {
-                error = true;
-                frmAlumno.getLbl_ErrCedula().setVisible(true);
-            }
+            if (!cedula.equals("")) {
 
-            if (error == false) {
-                System.out.println(cont);
-                if (frmAlumno.getTxt_Cedula().getText().length() >= 3) {
-                    List<PersonaMD> p = bdAlumno.capturarPersona(frmAlumno.getTxt_Cedula().getText());
-                    if (p.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Cedula Incorrecta");
-                        cont = 0;
-                    } else {
-                        AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
-                        if (alumno.getTipo_Colegio() == null) {
-                            frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
-                                    + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+                if (modelo.validaciones.Validar.esNumeros(cedula) == false) {
+                    error = true;
+                    frmAlumno.getLbl_ErrCedula().setVisible(true);
+                }
+
+                if (error == false) {
+                    System.out.println(cont);
+                    if (frmAlumno.getTxt_Cedula().getText().length() >= 3) {
+                        List<PersonaMD> p = bdAlumno.capturarPersona(frmAlumno.getTxt_Cedula().getText());
+                        if (p.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Cedula Incorrecta");
                             cont = 0;
-                            JOptionPane.showMessageDialog(null, "Esta persona no esta registrada como alumno");
                         } else {
-                            frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
-                                    + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
-                            frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
-                            frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
-                            frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(alumno.getAnio_graduacion()));
-                            frmAlumno.getCmBx_NvAcademico().setSelectedItem(alumno.getNivel_Academico());
-                            frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
-                            frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
-                            SectorEconomicoMD sector = sectorE.capturarSector(alumno.getId_SecEconomico());
-                            frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
-                            frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
-                            frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
-                            frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
-                            frmAlumno.getCmBx_Parentesco().setSelectedItem(alumno.getParentesco_Contacto());
-                            frmAlumno.getTxt_ConEmergency().setText(alumno.getContacto_Emergencia());
-                            frmAlumno.getChkBx_EdcSuperior().setSelected(alumno.isEducacion_Superior());
-                            frmAlumno.getChkBx_Pension().setSelected(alumno.isPension());
-                            frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
-                            cont = 0;
-                            editar_2 = true;
+                            AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
+                            if (alumno.getTipo_Colegio() == null) {
+                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
+                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+                                cont = 0;
+                                JOptionPane.showMessageDialog(null, "Esta persona no esta registrada como alumno");
+                            } else {
+                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
+                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+                                frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
+                                frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
+                                frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(alumno.getAnio_graduacion()));
+                                frmAlumno.getCmBx_NvAcademico().setSelectedItem(alumno.getNivel_Academico());
+                                frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
+                                frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
+                                SectorEconomicoMD sector = sectorE.capturarSector(alumno.getId_SecEconomico());
+                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
+                                frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
+                                frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
+                                frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
+                                frmAlumno.getCmBx_Parentesco().setSelectedItem(alumno.getParentesco_Contacto());
+                                frmAlumno.getTxt_ConEmergency().setText(alumno.getContacto_Emergencia());
+                                frmAlumno.getChkBx_EdcSuperior().setSelected(alumno.isEducacion_Superior());
+                                frmAlumno.getChkBx_Pension().setSelected(alumno.isPension());
+                                frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
+                                cont = 0;
+                                editar_2 = true;
+                            }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese una Cedúla para filtrar los datos");
+                        cont = 0;
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese una Cedúla para filtrar los datos");
+                    JOptionPane.showMessageDialog(null, "Advertencia!! Revise su Cédula");
                     cont = 0;
+                    frmAlumno.getLbl_ErrCedula().setVisible(false);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Advertencia!! Revise su Cédula");
+            } else{
                 cont = 0;
-                frmAlumno.getLbl_ErrCedula().setVisible(false);
             }
+
         }
     }
 
@@ -289,23 +295,24 @@ public class FrmAlumnoCTR {
         editar = true;
         //El alumno que nos pasamos lo llenamos en el formulario  
         frmAlumno.getTxt_Cedula().setText(persona.getIdentificacion());
-        frmAlumno.getTxt_Nombre().setText(bdAlumno.getPrimerNombre() + " " + bdAlumno.getSegundoNombre()
-                + " " + bdAlumno.getPrimerApellido() + " " + bdAlumno.getSegundoApellido());
-        frmAlumno.getCmBx_TipoColegio().setSelectedItem(bdAlumno.getTipo_Colegio());
-        frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(bdAlumno.getTipo_Bachillerato());
-        frmAlumno.getCmBx_NvAcademico().setSelectedItem(bdAlumno.getNivel_Academico());
-        frmAlumno.getTxt_TlSuperior().setText(bdAlumno.getTitulo_Superior());
-        frmAlumno.getChkBx_EdcSuperior().setSelected(bdAlumno.isEducacion_Superior());
-        frmAlumno.getTxt_Ocupacion().setText(bdAlumno.getOcupacion());
-        frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(bdAlumno.getAnio_graduacion()));
-        frmAlumno.getChkBx_Pension().setSelected(bdAlumno.isPension());
-        frmAlumno.getChkBx_Trabaja().setSelected(bdAlumno.isTrabaja());
-        frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(bdAlumno.getId_SecEconomico()).getDescrip_SecEconomico());
-        frmAlumno.getCmBx_ForPadre().setSelectedItem(bdAlumno.getFormacion_Padre());
-        frmAlumno.getCmBx_ForMadre().setSelectedItem(bdAlumno.getFormacion_Madre());
-        frmAlumno.getTxt_NomContacto().setText(bdAlumno.getNom_Contacto());
-        frmAlumno.getCmBx_Parentesco().setSelectedItem(bdAlumno.getParentesco_Contacto());
-        frmAlumno.getTxt_ConEmergency().setText(bdAlumno.getContacto_Emergencia());
+        frmAlumno.getTxt_Nombre().setText(persona.getPrimerNombre() + " " + persona.getSegundoNombre()
+                + " " + persona.getPrimerApellido() + " " + persona.getSegundoApellido());
+        frmAlumno.getCmBx_TipoColegio().setSelectedItem(persona.getTipo_Colegio());
+        frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(persona.getTipo_Bachillerato());
+        frmAlumno.getCmBx_NvAcademico().setSelectedItem(persona.getNivel_Academico());
+        frmAlumno.getTxt_TlSuperior().setText(persona.getTitulo_Superior());
+        frmAlumno.getChkBx_EdcSuperior().setSelected(persona.isEducacion_Superior());
+        frmAlumno.getTxt_Ocupacion().setText(persona.getOcupacion());
+        System.out.println();
+        frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(persona.getAnio_graduacion()));
+        frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
+        frmAlumno.getChkBx_Trabaja().setSelected(persona.isTrabaja());
+        frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(persona.getId_SecEconomico()).getDescrip_SecEconomico());
+        frmAlumno.getCmBx_ForPadre().setSelectedItem(persona.getFormacion_Padre());
+        frmAlumno.getCmBx_ForMadre().setSelectedItem(persona.getFormacion_Madre());
+        frmAlumno.getTxt_NomContacto().setText(persona.getNom_Contacto());
+        frmAlumno.getCmBx_Parentesco().setSelectedItem(persona.getParentesco_Contacto());
+        frmAlumno.getTxt_ConEmergency().setText(persona.getContacto_Emergencia());
 
     }
 

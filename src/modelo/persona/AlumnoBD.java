@@ -100,11 +100,11 @@ public class AlumnoBD extends AlumnoMD {
 
     public List<PersonaMD> capturarPersona(String aguja) {
         List<PersonaMD> lista = new ArrayList();
-        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido, persona_correo"
-                + " FROM public.\"Personas\"  WHERE persona_identificacion LIKE '%" + aguja + "%' OR  persona_primer_nombre LIKE '%"
-                + aguja + "%' OR persona_segundo_nombre LIKE '%" + aguja + "%' OR persona_primer_apellido LIKE '%"
-                + aguja + "%' OR persona_segundo_apellido LIKE '%" + aguja + "%' OR persona_correo LIKE '%"
-                + aguja + "%' AND persona_activa = true;";
+        String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo"
+                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) WHERE p.persona_identificacion LIKE '%" + aguja + "%' OR  p.persona_primer_nombre LIKE '%"
+                + aguja + "%' OR p.persona_segundo_nombre LIKE '%" + aguja + "%' OR p.persona_primer_apellido LIKE '%"
+                + aguja + "%' OR p.persona_segundo_apellido LIKE '%" + aguja + "%' OR p.persona_correo LIKE '%"
+                + aguja + "%' AND p.persona_activa = true AND a.alumno_activo = true";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -152,7 +152,7 @@ public class AlumnoBD extends AlumnoMD {
                 a.setTipo_Bachillerato(rs.getString("alumno_tipo_bachillerato"));
                 a.setAnio_graduacion(rs.getString("alumno_anio_graduacion"));
                 a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
-                a.setTitulo_Superior(rs.getString("alumno_educacion_superior"));
+                a.setTitulo_Superior(rs.getString("alumno_titulo_superior"));
                 a.setNivel_Academico(rs.getString("alumno_nivel_academico"));
                 a.setPension(rs.getBoolean("alumno_pension"));
                 a.setOcupacion(rs.getString("alumno_ocupacion"));
