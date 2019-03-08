@@ -17,11 +17,11 @@ public class FrmCarreraCTR {
     private final FrmCarrera frmCarrera;
 
     //Para cargar el combo de coordinador  
-    private DocenteBD docen = new DocenteBD();
+    private final DocenteBD docen = new DocenteBD();
     private ArrayList<DocenteMD> docentes;
     
     //Todas las modalidades que puede tener una carrera  
-    private final String [] MODALIDADES = {"PRESENCIAL", "SEMI PRESENCIAL", "DUAL"}; 
+    private final String [] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"}; 
 
     public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera) {
         this.vtnPrin = vtnPrin;

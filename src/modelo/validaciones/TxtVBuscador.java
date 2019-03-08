@@ -17,6 +17,11 @@ public class TxtVBuscador extends KeyAdapter {
     private final JLabel lbl;
     private String ingreso;
 
+    public TxtVBuscador(JTextField txt) {
+        this.txt = txt;
+        this.lbl = null;
+    }
+
     public TxtVBuscador(JTextField txt, JLabel lbl) {
         this.txt = txt;
         this.lbl = lbl;
@@ -45,10 +50,14 @@ public class TxtVBuscador extends KeyAdapter {
                         "Error", JOptionPane.WARNING_MESSAGE);*/
 
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
-                lbl.setVisible(true);
+                if (lbl != null) {
+                    lbl.setVisible(false);
+                }
             } else {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-                lbl.setVisible(false);
+                if (lbl != null) {
+                    lbl.setVisible(true);
+                }
             }
         }
     }
