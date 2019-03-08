@@ -140,13 +140,16 @@ public class FrmPrdLectivoCTR {
                 periodo = pasarDatos(bdPerLectivo);
                 periodo.setId_PerioLectivo(id_PeriodoLectivo);
                 if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
+
+                    /*if (bdPerLectivo.editarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
                 }
-                
+                }*/
+                }
             }
         }
     }
@@ -165,6 +168,7 @@ public class FrmPrdLectivoCTR {
         LocalDate fecha_Fin = fechaActual;
         fecha_Fin = LocalDate.of(Integer.parseInt(fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
+       // periodo.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
         periodo.setFecha_Inicio(fecha_Inicio);
         periodo.setFecha_Fin(fecha_Fin);

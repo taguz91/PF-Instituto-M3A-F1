@@ -1,9 +1,11 @@
-package modelo.carrera;
+package modelo.alumno;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
+import modelo.carrera.CarreraBD;
+import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
@@ -66,6 +68,20 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
     }
 
+    public ArrayList<AlumnoCarreraMD> buscarAlumnoCarrera(int idCarrera, String aguja) {
+        String sql = "SELECT id_almn_carrera, \"AlumnosCarrera\".id_alumno, id_carrera\n"
+                + "FROM public.\"AlumnosCarrera\", public.\"Alumnos\", public.\"Personas\" \n"
+                + "WHERE \"Alumnos\".id_alumno = \"AlumnosCarrera\".id_alumno \n"
+                + "AND \"Personas\".id_persona = \"Alumnos\".id_persona \n"
+                + "AND almn_carrera_activo = 'true' AND id_carrera = 2 \n"
+                + "AND (persona_identificacion ILIKE '%"+aguja+"%' OR\n"
+                + "	 persona_primer_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	 persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	 persona_primer_nombre ILIKE '%"+aguja+"%' OR \n"
+                + "	 persona_segundo_nombre ILIKE '%"+aguja+"%');";
+        return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
+    }
+
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         ResultSet rs = conecta.sql(sql);
@@ -87,7 +103,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             return null;
         }
     }
-    
+
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraPorCarrera(String sql, int idCarrera) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         ResultSet rs = conecta.sql(sql);
@@ -100,6 +116,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                         alms.add(ac);
                     }
                 }
+                rs.close();
                 return alms;
             } else {
                 return null;
@@ -110,7 +127,6 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             return null;
         }
     }
-
 
     private AlumnoCarreraMD obtenerAlumnoCarrera(ResultSet rs) {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();
@@ -126,7 +142,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             return null;
         }
     }
-    
+
     private AlumnoCarreraMD obtenerAlumnoCarreraPorCarrera(ResultSet rs, CarreraMD c) {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();
         try {

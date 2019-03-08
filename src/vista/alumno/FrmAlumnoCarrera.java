@@ -1,4 +1,4 @@
-package vista.carrera;
+package vista.alumno;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -66,7 +66,7 @@ public class FrmAlumnoCarrera extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
 
         setClosable(true);
-        setResizable(true);
+        setIconifiable(true);
         setTitle("Formulario Matricula");
 
         jLabel1.setText("Alumno:");
@@ -155,7 +155,7 @@ public class FrmAlumnoCarrera extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblError)
                     .addComponent(btnGuardar))
-                .addGap(10, 10, 10))
+                .addGap(5, 5, 5))
         );
 
         pack();

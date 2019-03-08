@@ -1,14 +1,14 @@
 package controlador.principal;
 
-import controlador.carrera.FrmAlumnoCarreraCTR;
+import controlador.alumno.FrmAlumnoCarreraCTR;
 import vista.materia.FrmMateria;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
 import controlador.curso.FrmCursoCTR;
-import controlador.mallaalumno.VtnAlumnoCursoCTR;
+import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
-import controlador.mallaalumno.FrmAlumnoCursoCTR;
-import controlador.mallaalumno.VtnMallaAlumnoCTR;
+import controlador.alumno.FrmAlumnoCursoCTR;
+import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -29,14 +29,14 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.persona.DocenteBD;
 import modelo.persona.UsuarioMD;
-import vista.carrera.FrmAlumnoCarrera;
+import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
-import vista.mallaalumno.FrmAlumnoCurso;
+import vista.alumno.FrmAlumnoCurso;
 import vista.curso.FrmCurso;
 import vista.curso.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
-import vista.mallaalumno.VtnMallaAlumno;
+import vista.alumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -85,7 +85,6 @@ public class VtnPrincipalCTR {
 
         //Para abrir las ventanas 
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
-        vtnPrin.getMnCtAlmnCurso().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
         vtnPrin.getMnCtCarrera().addActionListener(e -> abrirVtnCarrera());
         vtnPrin.getMnCtCurso().addActionListener(e -> abrirVtnCurso());
@@ -103,7 +102,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAlumno().addActionListener(e -> abrirFrmAlumno());
         vtnPrin.getBtnCarrera().addActionListener(e -> abrirFrmCarrera());
         vtnPrin.getBtnCurso().addActionListener(e -> abrirFrmCurso());
-        vtnPrin.getBtnCursoAlumno().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getBtnDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrin.getBtnInscripcion().addActionListener(e -> abrirFrmInscripcion());
@@ -113,7 +111,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
         vtnPrin.getMnIgCarrera().addActionListener(e -> abrirFrmCarrera());
         vtnPrin.getMnIgCurso().addActionListener(e -> abrirFrmCurso());
-        vtnPrin.getMnIgAlmnCurso().addActionListener(e -> abrirFrmCursoAlumno());
         vtnPrin.getMnIgDocente().addActionListener(e -> abrirFrmDocente());
         vtnPrin.getMnIgPersona().addActionListener(e -> abrirFrmPersona());
         vtnPrin.getMnIgPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
@@ -382,9 +379,6 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciarAtajosTeclado() {
-        vtnPrin.getMnCtAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_L, ActionEvent.CTRL_MASK));
-
         vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 
@@ -407,9 +401,6 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
-        vtnPrin.getMnIgAlmnCurso().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_L, ActionEvent.ALT_MASK));
-
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.ALT_MASK));
 
