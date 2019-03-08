@@ -29,6 +29,26 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
+    
+    private final String [] idiomas = {"Seleccione", "Árabe", "Árabe", "Árabe", 
+        "Croata", "Francés", "Español", "Maltés", "Español", "Chino", "Danés", 
+        "Español", "Vietnamita", "Inglés", "Serbio", "Sueco", "Español", 
+        "Inglés", "Árabe", "Árabe", "Árabe", "Hindi", "Inglés", "Finés", 
+        "Serbio", "Bosnia", "Ucraniano", "Francés", "Español", "Árabe", 
+        "Japonés", "Español", "Portugués", "Islandés", "Checo", "Polaco", 
+        "Catalán", "Serbio", "Malayo", "Español", "Español", "Búlgaro", 
+        "Serbio", "Español", "Español", "Español", "Árabe", "Rumano", 
+        "Inglés", "Árabe", "Serbio", "Español", "Coreano", 
+        "Griego", "Español", "Ruso", "Español", "Chino", "Noruego", "Nynorsk", 
+        "Húngaro", "Tailandés", "Árabe", "Español", "Árabe", "Irlandés", "Turco", 
+        "Estonio", "Árabe", "Portugués", "Francés", "Árabe", "Albanés", "Español", 
+        "Español", "Inglés", "Serbio", "Alemán", "Español", "Griego", "Hebreo", 
+        "Inglés", "Tailandés", "TH)", "Francés", "Alemán", "Noruego", "Inglés", 
+        "Neerlandés", "Francés", "Letón", "Alemán", "Español", "Árabe", "Árabe", 
+        "Italiano", "Alemán", "Árabe", "Eslovaco", "Lituano", "Italiano", "Inglés", 
+        "Chino", "Inglés", "Neerlandés", "Chino", "Japonés", "Alemán", "Serbio", 
+        "Inglés", "Árabe", "Español", "Macedonio", "Bielorruso", "Esloveno", 
+        "Español", "Indonesio", "Inglés",};
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -51,7 +71,7 @@ public class FrmPersonaCTR {
 
     //Para saber si se esta editando una persona  
     private boolean editar = false;
-    private int idPersona = 0; 
+    private int idPersona = 0;
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
         this.vtnPrin = vtnPrin;
@@ -87,6 +107,29 @@ public class FrmPersonaCTR {
 
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
+        //Cogemso todos los idiomas del combo  idioma  
+        //imprimiIdiomas();
+    }
+
+    public void imprimiIdiomas() {
+        System.out.println("Numero de idiomas: " + frmPersona.getCmbIdiomas().getModel().getSize());
+
+        String id;
+        String[] idioma;
+
+        for (int i = 0; i < frmPersona.getCmbIdiomas().getModel().getSize(); i++) {
+            id = frmPersona.getCmbIdiomas().getItemAt(i).toString();
+            idioma = id.split(" ");
+            System.out.print("\"" + iniciarMa(idioma[0]) + "\", ");
+        }
+    }
+    
+    public String iniciarMa(String cadena){
+        String c = cadena.charAt(0)+"";
+        c = c.toUpperCase();
+        String nc = cadena.substring(1, cadena.length()); 
+        //System.out.println("Letra mayus : "+c);
+        return c+nc; 
     }
 
     public void buscarFoto() {
@@ -408,7 +451,7 @@ public class FrmPersonaCTR {
 
             if (editar) {
                 if (idPersona > 0) {
-                    per.editarPersona(idPersona); 
+                    per.editarPersona(idPersona);
                 }
             } else {
                 if (fis != null) {
@@ -441,8 +484,8 @@ public class FrmPersonaCTR {
         boolean discapacidad;
         idPersona = per.getIdPersona();
         editar = true;
-        System.out.println("Id de la persona que editaremos "+idPersona);
-        
+        System.out.println("Id de la persona que editaremos " + idPersona);
+
         frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
@@ -459,8 +502,10 @@ public class FrmPersonaCTR {
         frmPersona.getTxtTelefono().setText(per.getTelefono());
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
+
         //frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
         System.out.println(""+per.getSexo());
+
         frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
@@ -470,12 +515,12 @@ public class FrmPersonaCTR {
         frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbCanton().setSelectedItem(per.getLugarNatal());
-        
+
         frmPersona.getCmbProvinciaReside().setSelectedItem(per.getLugarResidencia());
         frmPersona.getCmbParroquiaReside().setSelectedItem(per.getLugarResidencia());
         frmPersona.getCmbPaisReside().setSelectedItem(per.getLugarResidencia());
         frmPersona.getCmbCantonReside().setSelectedItem(per.getLugarResidencia());
-        
+
         //Discapacidad
         frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
         frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());

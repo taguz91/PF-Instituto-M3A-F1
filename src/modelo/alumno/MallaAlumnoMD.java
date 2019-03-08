@@ -1,4 +1,4 @@
-package modelo.mallaalumno;
+package modelo.alumno;
 
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;
@@ -14,6 +14,7 @@ public class MallaAlumnoMD {
     private int mallaCiclo; 
     private int mallaNumMatricula;  
     private double nota1, nota2, nota3;
+    private String estado;
 
     public MallaAlumnoMD() {
     }
@@ -81,6 +82,12 @@ public class MallaAlumnoMD {
     public void setNota3(double nota3) {
         this.nota3 = nota3;
     }
-    
-    
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

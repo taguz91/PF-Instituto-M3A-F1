@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import modelo.carrera.CarreraMD;
 import modelo.persona.DocenteMD;
 
-public class PeriodoLectivoMD extends CarreraMD{
+public class PeriodoLectivoMD {
     
     private int id_PerioLectivo;
     private String nombre_PerLectivo, observacion_PerLectivo;
@@ -18,7 +18,6 @@ public class PeriodoLectivoMD extends CarreraMD{
     }
 
     public PeriodoLectivoMD(int id_PerioLectivo, String nombre_PerLectivo, String observacion_PerLectivo, boolean activo_PerLectivo, LocalDate fecha_Inicio, LocalDate fecha_Fin, int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        super(id, codigo, nombre, fechaInicio, fechaFin, modalidad, coordinador);
         this.id_PerioLectivo = id_PerioLectivo;
         this.nombre_PerLectivo = nombre_PerLectivo;
         this.observacion_PerLectivo = observacion_PerLectivo;

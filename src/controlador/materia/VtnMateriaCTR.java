@@ -23,11 +23,13 @@ public class VtnMateriaCTR {
     private final MateriaBD materia;
 
     //El modelo de la tabla materias  
-    private  DefaultTableModel mdTblMat;
+    private DefaultTableModel mdTblMat;
     //Aqui guardamos todas las materias  
     private ArrayList<MateriaMD> materias;
     //Para el combo de filtrar por carrera
     private ArrayList<CarreraMD> carreras;
+    //Ciclos de una carrera  
+    private ArrayList<Integer> ciclos;
 
     public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria) {
         this.vtnPrin = vtnPrin;
@@ -57,11 +59,15 @@ public class VtnMateriaCTR {
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 70);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 70);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 40);
+        //Iniciamos el combo de ciclos
+        vtnMateria.getCmbCiclo().removeAllItems();
+        vtnMateria.getCmbCiclo().addItem("Todos");
 
         materias = materia.cargarMaterias();
         cargarTblMaterias();
         cargarCmbFiltrar();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
+        vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
 
         //Iniciamos el buscador  
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
@@ -93,33 +99,54 @@ public class VtnMateriaCTR {
         vtnMateria.getCmbCarreras().removeAllItems();
         vtnMateria.getCmbCarreras().addItem("Seleccione una carrera");
         carreras.forEach((car) -> {
-            vtnMateria.getCmbCarreras().addItem(car.getNombre());
+            vtnMateria.getCmbCarreras().addItem(car.getCodigo());
         });
     }
 
-    public void filtrarPorCarrera() {
+    private void filtrarPorCarrera() {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
         if (pos > 0) {
             materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
+            //Cargamos los ciclos de una carrera
+            ciclos = materia.cargarCiclosCarrera(carreras.get(pos - 1).getId());
+            vtnMateria.getCmbCiclo().removeAllItems();
+            vtnMateria.getCmbCiclo().addItem("Todos");
+            ciclos.forEach(c -> {
+                vtnMateria.getCmbCiclo().addItem(c+"");
+            });
         } else {
             materias = materia.cargarMaterias();
+            //Borramos todos los item del combo ciclos  
+            vtnMateria.getCmbCiclo().removeAllItems();
         }
 
         cargarTblMaterias();
     }
 
-    public void cargarTblMaterias() {
+    private void cargarTblMaterias() {
         mdTblMat.setRowCount(0);
         vtnMateria.getLblResultados().setText(materias.size() + " Resultados obtenidos.");
         if (!materias.isEmpty()) {
-            for (MateriaMD mt : materias) {
+            materias.forEach((mt) -> {
                 Object valores[] = {mt.getId(),
                     mt.getCodigo(), mt.getNombre(),
                     mt.getCiclo(), mt.getHorasDocencia(),
                     mt.getHorasPracticas(), mt.getHorasAutoEstudio(),
                     mt.getHorasPresenciales(), mt.getTotalHoras()};
                 mdTblMat.addRow(valores);
-            }
+            });
+        }
+    }
+
+    private void filtrarPorCarreraPorCiclo() {
+        int ciclo = vtnMateria.getCmbCiclo().getSelectedIndex();
+        int posCar = vtnMateria.getCmbCarreras().getSelectedIndex();
+        if (ciclo > 0) {
+            materias = materia.cargarMateriaPorCarreraCiclo(
+                    carreras.get(posCar - 1).getId(), ciclo);
+            cargarTblMaterias();
+        } else {
+            filtrarPorCarrera();
         }
     }
 

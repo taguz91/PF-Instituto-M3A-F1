@@ -1,15 +1,20 @@
-package controlador.carrera;
+package controlador.alumno;
 
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import modelo.carrera.AlumnoCarreraBD;
+import javax.swing.table.DefaultTableModel;
+import modelo.alumno.AlumnoCarreraBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.mallaalumno.MallaAlumnoBD;
+import modelo.estilo.TblEstilo;
+import modelo.alumno.MallaAlumnoBD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
-import vista.carrera.FrmAlumnoCarrera;
+import vista.alumno.FrmAlumnoCarrera;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -21,6 +26,9 @@ public class FrmAlumnoCarreraCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCarrera frmAlmCarrera;
     private final AlumnoCarreraBD almnCarrera;
+
+    //Modelo de la tabla  
+    DefaultTableModel mdTbl;
 
     //Para rellenar los combo box
     AlumnoBD almn = new AlumnoBD();
@@ -44,21 +52,40 @@ public class FrmAlumnoCarreraCTR {
     }
 
     public void iniciar() {
+        String[] titulo = {"Nombre"};
+        String[][] datos = {};
+
+        mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
+        frmAlmCarrera.getTblAlumnos().setModel(mdTbl);
+        TblEstilo.formatoTbl(frmAlmCarrera.getTblAlumnos());
+
         //Ocultamos el error  
         frmAlmCarrera.getLblError().setVisible(false);
 
-        cargarCmbAlumnos();
         cargarCmbCarreras();
 
         frmAlmCarrera.getBtnGuardar().addActionListener(e -> guardar());
+        frmAlmCarrera.getBtnBuscar().addActionListener(e -> buscarAlmns(
+                frmAlmCarrera.getTxtBuscar().getText().trim()));
+        frmAlmCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String aguja = frmAlmCarrera.getTxtBuscar().getText().trim();
+                if (aguja.length() > 2) {
+                    buscarAlmns(aguja);
+                }
+            }
+        });
+        //Para poder editarlo
+        frmAlmCarrera.getCmbCarreras().setEditable(true);
     }
 
     private void guardar() {
         boolean guardar = true;
-        int posAlm = frmAlmCarrera.getCmbAlumnos().getSelectedIndex();
+        int posAlm = frmAlmCarrera.getTblAlumnos().getSelectedRow();
         int posCar = frmAlmCarrera.getCmbCarreras().getSelectedIndex();
 
-        if (posAlm < 1 || posCar < 1) {
+        if (posAlm < 0 || posCar < 1) {
             guardar = false;
             frmAlmCarrera.getLblError().setVisible(true);
         } else {
@@ -66,7 +93,7 @@ public class FrmAlumnoCarreraCTR {
         }
 
         if (guardar) {
-            almnCarrera.setAlumno(alumnos.get(posAlm - 1));
+            almnCarrera.setAlumno(alumnos.get(posAlm));
             almnCarrera.setCarrera(carreras.get(posCar - 1));
             if (almnCarrera.guardar()) {
                 iniciarMallaAlumno(almnCarrera.getAlumno().getId_Alumno(), almnCarrera.getCarrera().getId());
@@ -83,14 +110,16 @@ public class FrmAlumnoCarreraCTR {
         });
     }
 
-    public void cargarCmbAlumnos() {
-        alumnos = almn.cargarAlumnos();
-        System.out.println("Num de alumnos " + alumnos.size());
+    public void buscarAlmns(String aguja) {
+        alumnos = almn.buscarAlumnos(aguja);
+        mdTbl.setRowCount(0);
         if (alumnos != null) {
-            frmAlmCarrera.getCmbAlumnos().removeAllItems();
-            frmAlmCarrera.getCmbAlumnos().addItem("Seleccione");
-            alumnos.forEach((a) -> {
-                frmAlmCarrera.getCmbAlumnos().addItem(a.getPrimerNombre() + " " + a.getPrimerApellido());
+            alumnos.forEach(a -> {
+                Object[] valores = {a.getPrimerApellido() + " "
+                    + a.getSegundoApellido() + " "
+                    + a.getPrimerNombre() + " "
+                    + a.getSegundoNombre()};
+                mdTbl.addRow(valores);
             });
         }
     }

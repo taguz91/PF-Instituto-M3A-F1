@@ -1,4 +1,4 @@
-package controlador.curso;
+package controlador.alumno;
 
 import vista.curso.VtnAlumnoCurso;
 import vista.principal.VtnPrincipal;

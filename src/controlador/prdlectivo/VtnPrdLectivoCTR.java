@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoBD;
@@ -84,7 +85,7 @@ public class VtnPrdLectivoCTR {
         for (int i = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        List<PeriodoLectivoMD> lista = bdPerLectivo.llenarTabla();
+        List<PeriodoLectivoMD> lista = bdPerLectivo.cargarPeriodos();
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
@@ -97,7 +98,7 @@ public class VtnPrdLectivoCTR {
             mes_Fin = String.valueOf(lista.get(i).getFecha_Fin().getMonthValue());
             anio_Fin = String.valueOf(lista.get(i).getFecha_Fin().getYear());
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getId_PerioLectivo(), i, 0);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(bdPerLectivo.capturarNomCarrera(lista.get(i).getId()).getNombre(), i, 1);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getCarrera().getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getNombre_PerLectivo(), i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
@@ -112,8 +113,7 @@ public class VtnPrdLectivoCTR {
         for (int i = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        List<PeriodoLectivoMD> lista = new ArrayList<PeriodoLectivoMD>();
-        lista.add(bdPerLectivo.capturarPeriodos(aguja));
+        List<PeriodoLectivoMD> lista = bdPerLectivo.capturarPeriodos(aguja);
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
@@ -126,7 +126,7 @@ public class VtnPrdLectivoCTR {
             mes_Fin = String.valueOf(lista.get(i).getFecha_Fin().getMonthValue());
             anio_Fin = String.valueOf(lista.get(i).getFecha_Fin().getYear());
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getId_PerioLectivo(), i, 0);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(bdPerLectivo.capturarNomCarrera(lista.get(i).getId()).getNombre(), i, 1);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(bdPerLectivo.capturarNomCarrera(lista.get(i).getCarrera().getId()).getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getNombre_PerLectivo(), i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
@@ -151,11 +151,13 @@ public class VtnPrdLectivoCTR {
     
     public void editarPeriodo() {
         PeriodoLectivoMD periodo = capturarFila();
+        CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
             FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo);
             ctrFrm.iniciar();
-            ctrFrm.editar(periodo);
+            carrera.setNombre(periodo.getCarrera().getNombre());
+            ctrFrm.editar(periodo,carrera);
             vtnPrdLectivo.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
