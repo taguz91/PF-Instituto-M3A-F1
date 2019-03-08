@@ -1,4 +1,4 @@
-package modelo.mallaalumno;
+package modelo.alumno;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

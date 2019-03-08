@@ -1,15 +1,15 @@
-package controlador.mallaalumno;
+package controlador.alumno;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.carrera.AlumnoCarreraBD;
-import modelo.carrera.AlumnoCarreraMD;
+import modelo.alumno.AlumnoCarreraBD;
+import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.mallaalumno.MallaAlumnoBD;
-import modelo.mallaalumno.MallaAlumnoMD;
-import vista.mallaalumno.VtnMallaAlumno;
+import modelo.alumno.MallaAlumnoBD;
+import modelo.alumno.MallaAlumnoMD;
+import vista.alumno.VtnMallaAlumno;
 import vista.principal.VtnPrincipal;
 
 /**

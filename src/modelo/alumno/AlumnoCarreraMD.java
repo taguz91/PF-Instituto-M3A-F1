@@ -1,5 +1,6 @@
-package modelo.carrera;
+package modelo.alumno;
 
+import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoMD;
 
 /**

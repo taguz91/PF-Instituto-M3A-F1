@@ -1,4 +1,4 @@
-package modelo.mallaalumno;
+package modelo.alumno;
 
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;

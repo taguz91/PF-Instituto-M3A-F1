@@ -59,14 +59,6 @@
                 <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnCurso">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Alumno por curso"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMateria">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -152,14 +144,6 @@
                   <Image iconType="3" name="/vista/img/icons8_Calendar_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnIgAlmnCurso">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Alumno en un curso"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgInscripcion">
@@ -287,14 +271,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnPrdLectivo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnCursoAlumno" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnInscripcion" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMatricula" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMateria" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="310" max="32767" attributes="0"/>
+                  <EmptySpace pref="361" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -308,7 +290,6 @@
                       <Component id="btnCurso" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPrdLectivo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnMateria" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCursoAlumno" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPersona" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnInscripcion" min="-2" max="-2" attributes="0"/>
                       <Component id="btnMatricula" min="-2" max="-2" attributes="0"/>
@@ -324,7 +305,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_School_Director_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo docente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar docente"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -333,7 +314,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_User_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo alumno"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar alumno"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -342,7 +323,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Graduation_Cap_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nueva carrera"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar carrera"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -351,7 +332,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Class_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo curso"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar curso"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -360,16 +341,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Calendar_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo periodo lectivo"/>
-            <Property name="focusPainted" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnCursoAlumno">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vista/img/icons8_Classroom_25px.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo alumno en un curso"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar periodo lectivo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -387,7 +359,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Team_25px_1.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Nuevo docente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar docente"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -396,7 +368,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Resume_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ver materias"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar inscripcion"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -405,7 +377,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Documents_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ver materias"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar matricula"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>

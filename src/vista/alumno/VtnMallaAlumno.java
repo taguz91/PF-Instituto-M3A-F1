@@ -1,4 +1,4 @@
-package vista.mallaalumno;
+package vista.alumno;
 
 import javax.swing.JComboBox;
 import javax.swing.JTable;

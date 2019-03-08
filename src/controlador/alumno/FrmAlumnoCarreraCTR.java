@@ -1,19 +1,20 @@
-package controlador.carrera;
+package controlador.alumno;
 
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.carrera.AlumnoCarreraBD;
+import modelo.alumno.AlumnoCarreraBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.mallaalumno.MallaAlumnoBD;
+import modelo.alumno.MallaAlumnoBD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
-import vista.carrera.FrmAlumnoCarrera;
+import vista.alumno.FrmAlumnoCarrera;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -75,6 +76,8 @@ public class FrmAlumnoCarreraCTR {
                 }
             }
         });
+        //Para poder editarlo
+        frmAlmCarrera.getCmbCarreras().setEditable(true);
     }
 
     private void guardar() {

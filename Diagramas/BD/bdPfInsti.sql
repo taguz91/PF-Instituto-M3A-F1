@@ -237,7 +237,9 @@ CREATE TABLE "AlumnosCarrera"(
 	"id_almn_carrera" serial NOT NULL, 
 	"id_alumno" integer NOT NULL,
 	"id_carrera" integer NOT NULL, 
-	"almn_carrera_activo" BOOLEAN NOT NULL DEFAULT 'true', 
+	"almn_carrera_activo" BOOLEAN NOT NULL DEFAULT 'true',
+	"almn_carrera_modalidad" character varying(20), 
+	"almn_carrera_fecha_registro" date,
 	CONSTRAINT alumno_carrera_pk PRIMARY KEY ("id_almn_carrera") 
 ) WITH (OIDS = FALSE); 
 
@@ -320,8 +322,7 @@ CREATE TABLE "AccesosDelRol"(
 INSERT INTO public."TipoPersona"(
 	tipo_persona)
 	VALUES ('DOCENTE'),
-	('ALUMNO'),
-	('ADMINISTRADOR');
+	('ALUMNO');
 
 INSERT INTO public."Jornadas"(
 	 nombre_jornada)
