@@ -10,6 +10,8 @@ import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
+import modelo.jornada.JornadaBD;
+import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
@@ -42,6 +44,8 @@ public class FrmAlumnoCarreraCTR {
     //Para guardar la malla
     MallaAlumnoBD malla = new MallaAlumnoBD();
 
+    private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
+
     public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
@@ -52,17 +56,16 @@ public class FrmAlumnoCarreraCTR {
     }
 
     public void iniciar() {
+        ocultarErrores();
+        cargarCmbModalidad(); 
+        cargarCmbCarreras();
+        
         String[] titulo = {"Nombre"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         frmAlmCarrera.getTblAlumnos().setModel(mdTbl);
         TblEstilo.formatoTbl(frmAlmCarrera.getTblAlumnos());
-
-        //Ocultamos el error  
-        frmAlmCarrera.getLblError().setVisible(false);
-
-        cargarCmbCarreras();
 
         frmAlmCarrera.getBtnGuardar().addActionListener(e -> guardar());
         frmAlmCarrera.getBtnBuscar().addActionListener(e -> buscarAlmns(
@@ -77,7 +80,12 @@ public class FrmAlumnoCarreraCTR {
             }
         });
         //Para poder editarlo
-        frmAlmCarrera.getCmbCarreras().setEditable(true);
+        //frmAlmCarrera.getCmbCarreras().setEditable(true);
+    }
+    
+    public void ocultarErrores(){        
+        //Ocultamos el error  
+        frmAlmCarrera.getLblError().setVisible(false);
     }
 
     private void guardar() {
@@ -124,7 +132,7 @@ public class FrmAlumnoCarreraCTR {
         }
     }
 
-    public void cargarCmbCarreras() {
+    private void cargarCmbCarreras() {
         carreras = carr.cargarCarreras();
         if (carreras != null) {
             frmAlmCarrera.getCmbCarreras().removeAllItems();
@@ -135,4 +143,11 @@ public class FrmAlumnoCarreraCTR {
         }
     }
 
+    private void cargarCmbModalidad() {
+        frmAlmCarrera.getCmbModalidad().removeAllItems();
+        frmAlmCarrera.getCmbModalidad().addItem("Seleccione");
+        for (String m : MODALIDADES) {
+            frmAlmCarrera.getCmbModalidad().addItem(m);
+        }
+    }
 }

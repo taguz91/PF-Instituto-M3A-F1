@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
 
 public class DocenteBD extends DocenteMD {
@@ -38,7 +39,48 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
+        public boolean ActualizarDocente(String cedula) {
+        String sql = "UPDATE public.\"Docentes\" SET\n"
+                + " docente_otro_trabajo = '" + this.isDocenteOtroTrabajo() + "', docente_categoria = '" + this.getDocenteCategoria()
+                + "', docente_fecha_contrato = " + this.getFechaInicioContratacion() + ", docente_fecha_fin = '" + this.getFechaFinContratacion() + "', docente_tipo_tiempo= '" + this.getDocenteTipoTiempo()
+                + "', docente_activo = " + "true" + ", docente_observacion = '" + this.getEstado() + "', docente_capacitador = " + this.isDocenteCapacitador()+ "'\n"
+                + " WHERE docente_codigo = " + cedula + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
+        public List<PersonaMD> llenarTabla() {
+        List<PersonaMD> lista = new ArrayList();
+        String sql = "SELECT p.id_persona, p.persona_identificacion, "
+                + " p.persona_primer_nombre, p.persona_segundo_nombre,"
+                + " p.persona_primer_apellido, p.persona_segundo_apellido"
+                + " FROM public.\"Personas\" p JOIN public.\"Docentes\" d USING(id_persona) WHERE d.docente_activo = true AND p.persona_activa = true;";
+        //Esto estaba mal WHERE alumno_activo = 'true'
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                PersonaMD m = new PersonaMD();
+                m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
+                m.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                m.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+
+                lista.add(m);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No hay docente dentro del instituto");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
     //metodo para buscar una persona 
     public ArrayList<String> existeDocente(String cedula) {
         ArrayList<String> datos = new ArrayList();
