@@ -24,14 +24,14 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5432/baseCompleta"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA 
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
-    private String url = "jdbc:postgresql://localhost:5432/prueba"; //BD PAO MEDINA 
+   private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA 
     private String user = "postgres";
 
     //private String pass = "linis4413"; //Clave Lina
     //private String pass = "Holapostgres"; //Clave Johnny
-    //private String pass = "PAOLA"; //Clave Paola
+    private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-    private String pass = "paola"; //Clave Paola-pc2
+   // private String pass = "paola"; //Clave Paola-pc2
 
     public ConectarDB() {
 

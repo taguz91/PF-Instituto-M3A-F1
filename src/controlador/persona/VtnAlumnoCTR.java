@@ -14,10 +14,6 @@ import vista.persona.FrmAlumno;
 import vista.persona.VtnAlumno;
 import vista.principal.VtnPrincipal;
 
-/**
- *
- * @author Johnny
- */
 public class VtnAlumnoCTR {
 
     private final VtnPrincipal vtnPrin;
