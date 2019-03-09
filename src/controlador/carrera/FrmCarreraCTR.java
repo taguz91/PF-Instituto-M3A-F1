@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import modelo.carrera.CarreraMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.validaciones.CmbValidar;
+import modelo.validaciones.TxtVLetras;
 import vista.carrera.FrmCarrera;
 import vista.principal.VtnPrincipal;
 
@@ -32,8 +34,25 @@ public class FrmCarreraCTR {
     }
 
     public void iniciar() {
+        ocultarErrores();
         cargarCmbModalidades();
         cargarCmbCoordinador(); 
+        validaciones();
+    }
+    
+    private void validaciones(){
+        frmCarrera.getCmbCoordinador().addActionListener(new CmbValidar(frmCarrera.getCmbCoordinador()));
+        frmCarrera.getCmbModalidad().addActionListener(new CmbValidar(frmCarrera.getCmbModalidad()));
+        frmCarrera.getTxtNombre().addKeyListener(new TxtVLetras(frmCarrera.getTxtNombre(), 
+        frmCarrera.getLblErrorNombre()));
+        frmCarrera.getTxtCodigo().addKeyListener(new TxtVLetras(frmCarrera.getTxtCodigo(), 
+        frmCarrera.getLblErrorCodigo()));
+    }
+    
+    private void ocultarErrores(){
+        frmCarrera.getLblErrorCodigo().setVisible(false);
+        frmCarrera.getLblErrorFecha().setVisible(false);
+        frmCarrera.getLblErrorNombre().setVisible(false);
     }
     
     private void guardar(){

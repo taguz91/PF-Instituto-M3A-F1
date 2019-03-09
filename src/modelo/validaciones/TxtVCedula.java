@@ -1,5 +1,6 @@
 package modelo.validaciones;
 
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
@@ -30,6 +31,8 @@ public class TxtVCedula extends KeyAdapter {
         ingreso = txt.getText().trim();
 
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
+            txt.setSize(txt.getWidth(), 20);
+            txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
             if (!Validar.esCedula(ingreso)) {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                 if (true) {

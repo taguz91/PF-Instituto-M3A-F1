@@ -1,5 +1,6 @@
 package modelo.validaciones;
 
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
@@ -45,6 +46,8 @@ public class TxtVBuscador extends KeyAdapter {
         //El 8 corresponde a borrar
         //127 es para suprimir
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
+            txt.setSize(txt.getWidth(), 20);
+            txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
             if (!Validar.esLetrasYNumeros(ingreso)) {
                 /*JOptionPane.showMessageDialog(null, "No se permiten ingresar caracteres especiales.",
                         "Error", JOptionPane.WARNING_MESSAGE);*/
