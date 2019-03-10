@@ -21,7 +21,6 @@ import vista.principal.VtnPrincipal;
  */
 public class FrmCursoCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmCurso frmCurso;
     private final CursoBD curso;
     //Para saber si estamos editando  
@@ -29,20 +28,19 @@ public class FrmCursoCTR {
     private int idCurso = 0;
 
     //Para cargar los datos en la tabla  
-    DocenteBD docen = new DocenteBD();
-    ArrayList<DocenteMD> docentes;
+    private final DocenteBD docen = new DocenteBD();
+    private ArrayList<DocenteMD> docentes;
     //Para carar periodos lectivos 
-    PeriodoLectivoBD prd = new PeriodoLectivoBD();
-    ArrayList<PeriodoLectivoMD> periodos;
+    private final PeriodoLectivoBD prd = new PeriodoLectivoBD();
+    private ArrayList<PeriodoLectivoMD> periodos;
     //Para cargar materias 
-    MateriaBD mt = new MateriaBD();
-    ArrayList<MateriaMD> materias;
+    private final MateriaBD mt = new MateriaBD();
+    private ArrayList<MateriaMD> materias;
     //Para cargar jornadas  
-    JornadaBD jd = new JornadaBD();
-    ArrayList<JornadaMD> jornadas;
+    private final JornadaBD jd = new JornadaBD();
+    private ArrayList<JornadaMD> jornadas;
 
     public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso) {
-        this.vtnPrin = vtnPrin;
         this.frmCurso = frmCurso;
         this.curso = new CursoBD();
 
@@ -250,7 +248,6 @@ public class FrmCursoCTR {
                     curso.editarCurso(idCurso);
                 }
             }
-
         }
     }
 

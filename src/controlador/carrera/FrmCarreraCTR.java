@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import modelo.carrera.CarreraMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.validaciones.CmbValidar;
+import modelo.validaciones.TxtVLetras;
 import vista.carrera.FrmCarrera;
 import vista.principal.VtnPrincipal;
 
@@ -17,11 +19,11 @@ public class FrmCarreraCTR {
     private final FrmCarrera frmCarrera;
 
     //Para cargar el combo de coordinador  
-    private DocenteBD docen = new DocenteBD();
+    private final DocenteBD docen = new DocenteBD();
     private ArrayList<DocenteMD> docentes;
     
     //Todas las modalidades que puede tener una carrera  
-    private final String [] MODALIDADES = {"PRESENCIAL", "SEMI PRESENCIAL", "DUAL"}; 
+    private final String [] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"}; 
 
     public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera) {
         this.vtnPrin = vtnPrin;
@@ -32,8 +34,25 @@ public class FrmCarreraCTR {
     }
 
     public void iniciar() {
+        ocultarErrores();
         cargarCmbModalidades();
         cargarCmbCoordinador(); 
+        validaciones();
+    }
+    
+    private void validaciones(){
+        frmCarrera.getCmbCoordinador().addActionListener(new CmbValidar(frmCarrera.getCmbCoordinador()));
+        frmCarrera.getCmbModalidad().addActionListener(new CmbValidar(frmCarrera.getCmbModalidad()));
+        frmCarrera.getTxtNombre().addKeyListener(new TxtVLetras(frmCarrera.getTxtNombre(), 
+        frmCarrera.getLblErrorNombre()));
+        frmCarrera.getTxtCodigo().addKeyListener(new TxtVLetras(frmCarrera.getTxtCodigo(), 
+        frmCarrera.getLblErrorCodigo()));
+    }
+    
+    private void ocultarErrores(){
+        frmCarrera.getLblErrorCodigo().setVisible(false);
+        frmCarrera.getLblErrorFecha().setVisible(false);
+        frmCarrera.getLblErrorNombre().setVisible(false);
     }
     
     private void guardar(){
