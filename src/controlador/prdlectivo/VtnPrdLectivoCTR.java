@@ -65,7 +65,7 @@ public class VtnPrdLectivoCTR {
         llenarTabla();
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(kl);
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
-        //vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
+        vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
     }
     
@@ -163,20 +163,25 @@ public class VtnPrdLectivoCTR {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
         }
     }
-    /*
+    
     public void eliminarPeriodo(){
         PeriodoLectivoMD periodo = new PeriodoLectivoMD();
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
         } else {
-            periodo = capturarFila();
-            if(bdPerLectivo.eliminarPeriodo(periodo) == true){
-                JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                llenarTabla();
-            } else{
-                JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? "," Elinimar Período Lectivo ",dialog);
+            if(result == 0)
+            {
+                periodo = capturarFila();
+                if(bdPerLectivo.eliminarPeriodo(periodo) == true){
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    llenarTabla();
+                } else{
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+                }
             }
         }
-    }*/
+    }
     
 }

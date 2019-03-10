@@ -31,8 +31,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo)"
-                + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo() + "', '" + p.getFecha_Inicio()
-                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo() + "', true);";
+                + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
+                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -264,6 +264,50 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+      
+      public String Meses(LocalDate fecha){
+        String nueva_Fecha = "";
+        String nuevo_Mes = "";
+        switch(fecha.getMonth().toString()){
+            case "JANUARY":
+                nuevo_Mes = "ENERO";
+            break;
+            case "FEBRUARY":
+                nuevo_Mes = "FEBRERO";
+                break;
+            case "MARCH":
+                nuevo_Mes = "MARZO";
+                break;
+            case "APRIL":
+                nuevo_Mes = "ABRIL";
+                break;
+            case "MAY":
+                nuevo_Mes = "MAYO"; 
+                break;
+            case "JUNE":
+                nuevo_Mes = "JUNIO";
+                break;
+            case "JULY":
+                nuevo_Mes = "JULIO";
+                break;
+            case "AUGUST":
+                nuevo_Mes = "AGOSTO";
+                break;
+            case "SEPTEMBER":
+                nuevo_Mes = "SEPTIEMBRE";
+                break;
+            case "OCTOBER":
+                nuevo_Mes = "OCTUBRE";
+                break;
+            case "NOVEMBER":
+                nuevo_Mes = "NOVIEMBRE";
+                break;
+            case "DECEMBER":
+                nuevo_Mes = "DICIEMBRE";
+                break;
+        }
+        return nueva_Fecha = fecha.getDayOfMonth() + "/" + nuevo_Mes + "/" + "20" + fecha.getYear();
     }
 
 }

@@ -144,7 +144,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jLabel15.setText("Sector Económico:");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, -1, -1));
 
-        jLabel6.setText("Año de Graduacion:");
+        jLabel6.setText("Año de Bachiller:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, -1, -1));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 922, -1));
 
@@ -153,7 +153,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Btn_Guardar.setText("Guardar");
         jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 560, 119, -1));
-        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 194, -1));
+        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 194, -1));
         jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 194, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR" }));
@@ -178,11 +178,11 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
         jLabel23.setText("Contacto Emergencia:");
-        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
-        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 204, -1, -1));
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, -1));
+        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
 
         jLabel7.setText("Educación Superior: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 204, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         jLabel9.setText("Nivel Académico:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 145, -1, -1));
@@ -225,7 +225,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Lbl_ErrSecEconomico.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrSecEconomico.setText("Seleccione un Sector");
-        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, -1, -1));
+        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, -1, -1));
 
         Lbl_ErrForPadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForPadre.setText("Seleccione la Formación del Padre");
@@ -244,7 +244,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(Lbl_ErrParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, -1, -1));
 
         Lbl_ErrConEmergencia.setForeground(new java.awt.Color(204, 0, 0));
-        Lbl_ErrConEmergencia.setText("Ingrese solo letras");
+        Lbl_ErrConEmergencia.setText("Ingrese solo números");
         jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -255,7 +255,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
         );
 
         pack();
