@@ -134,11 +134,19 @@ public class VtnAlumnoCTR {
     public void editarAlumno() {
         AlumnoMD al = capturarFila();
         if (al != null) {
-            frmAlumno = new FrmAlumno();
-            FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno);
-            ctrFrm.iniciar();
-            ctrFrm.editar(al);
-            vtnAlumno.dispose();
+            int seleccion = JOptionPane.showOptionDialog( null,"Seleccione una Opcion",
+            "Selector de Opciones",JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE,null,// null para icono por defecto.
+            new Object[] { "Editar Datos Personales", "Editar Datos de Alumno"},"Editar Datos de Alumno");
+            if(seleccion == 1){
+                frmAlumno = new FrmAlumno();
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+                ctrFrm.iniciar();
+                ctrFrm.editar(al);
+                vtnAlumno.dispose();
+            } else if(seleccion == 0){
+                
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
         }
@@ -150,14 +158,21 @@ public class VtnAlumnoCTR {
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
         } else {
-            alumno = capturarFila();
-            String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
-            alumno.setObservacion(observacion.toUpperCase());
-            if(bdAlumno.eliminarAlumno(alumno,alumno.getIdPersona()) == true){
-                JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                llenarTabla();
-            } else{
-                JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a este Estudiante? "," Eliminar Estudiante ",dialog);
+            if(result == 0)
+            {
+                alumno = capturarFila();
+                String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
+                if(observacion != null){
+                    alumno.setObservacion(observacion.toUpperCase());
+                    if(bdAlumno.eliminarAlumno(alumno,alumno.getIdPersona()) == true){
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    llenarTabla();
+                    } else{
+                        JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+                    }
+                }
             }
         }
     }
