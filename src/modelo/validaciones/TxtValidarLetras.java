@@ -43,8 +43,8 @@ public class TxtValidarLetras extends KeyAdapter {
         //127 es para suprimir
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
             if (!Validar.esLetrasYNumeros(ingreso)) {
-                /*JOptionPane.showMessageDialog(null, "No se permiten ingresar caracteres especiales.",
-                        "Error", JOptionPane.WARNING_MESSAGE);*/
+                JOptionPane.showMessageDialog(null, "No se permiten ingresar caracteres especiales.",
+                        "Error", JOptionPane.WARNING_MESSAGE);
 
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                 lbl.setVisible(true);
