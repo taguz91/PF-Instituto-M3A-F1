@@ -15,8 +15,6 @@ import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.persona.TipoPersonaBD;
-import modelo.persona.TipoPersonaMD;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
@@ -63,10 +61,6 @@ public class FrmPersonaCTR {
 
     //Para consultar lugares 
     private final LugarBD lug;
-    //Para consultar tipos de persona
-    private final TipoPersonaBD tip;
-    //Aqui se guardaran los tipos de persona  
-    private ArrayList<TipoPersonaMD> tiposPer;
     //Para guardar la foto  
     private FileInputStream fis = null;
     private int lonBytes = 0;
@@ -82,7 +76,6 @@ public class FrmPersonaCTR {
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);
-        this.tip = new TipoPersonaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
@@ -93,8 +86,6 @@ public class FrmPersonaCTR {
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
-        //Cargamos los tipos de persona  
-        cargarTiposPersona();
 
         //Cuando se realice una accion en alguno de esos combos 
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -419,7 +410,6 @@ public class FrmPersonaCTR {
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
-            per.setTipo(tiposPer.get(tipoPer - 1));
             per.setIdentificacion(identificacion);
             per.setPrimerNombre(priNombre);
             per.setSegundoNombre(segNombre);
@@ -491,7 +481,6 @@ public class FrmPersonaCTR {
         editar = true;
         System.out.println("Id de la persona que editaremos " + idPersona);
 
-        frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
@@ -641,17 +630,6 @@ public class FrmPersonaCTR {
         frmPersona.getLblErrorTipoResidencia().setVisible(false);
         frmPersona.getLblErrorTipoSangre().setVisible(false);
         frmPersona.getLblErrorPaisReside().setVisible(false);
-    }
-
-    public void cargarTiposPersona() {
-        tiposPer = tip.cargarTipoPersona();
-        if (tiposPer != null) {
-            frmPersona.getCmbTipoPersona().removeAllItems();
-            frmPersona.getCmbTipoPersona().addItem("Seleccione");
-            tiposPer.forEach((t) -> {
-                frmPersona.getCmbTipoPersona().addItem(t.getTipo());
-            });
-        }
     }
 
     //Metodos para los combos de residencia y ciudades natales

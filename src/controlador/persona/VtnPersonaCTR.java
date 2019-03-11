@@ -8,8 +8,6 @@ import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.persona.TipoPersonaBD;
-import modelo.persona.TipoPersonaMD;
 import vista.persona.FrmPersona;
 import vista.persona.VtnPersona;
 import vista.principal.VtnPrincipal;
@@ -27,16 +25,11 @@ public class VtnPersonaCTR {
     //Para trabajar en los datos de la tabla
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
-    //Para los tipos de persona  
-    private ArrayList<TipoPersonaMD> tipos;
-    //Para consultar los tipos de persona  
-    private final TipoPersonaBD tip;
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
         this.conecta = conecta; 
-        this.tip = new TipoPersonaBD(conecta);
         
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
@@ -81,6 +74,10 @@ public class VtnPersonaCTR {
             }
         });
     }
+    
+    private void cargarTipoPersona(){
+        
+    }
 
     //carge de la lista de modelo a la tabla
     //formatear la tabla de mi modelo
@@ -100,21 +97,12 @@ public class VtnPersonaCTR {
         vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
     }
 
-    //Cargamos los tipos de persona para filtrarlos 
-    public void cargarTipoPersona() {
-        tipos = tip.cargarTipoPersona();
-        vtnPersona.getCmbTipoPersona().removeAllItems();
-        vtnPersona.getCmbTipoPersona().addItem("Todos");
-        tipos.forEach((t) -> {
-            vtnPersona.getCmbTipoPersona().addItem(t.getTipo());
-        });
-    }
-
     //consultamos por tipo de persona 
     public void filtrarPorTipoPersona() {
         int posTip = vtnPersona.getCmbTipoPersona().getSelectedIndex();
         if (posTip > 0) {
-            personas = dbp.cargarPorTipo(tipos.get(posTip - 1).getId());
+            //Debemos arreglar la consulta
+            //personas = dbp.cargarPorTipo(tipos.get(posTip - 1).getId());
         } else {
             personas = dbp.cargarPersonas();
         }

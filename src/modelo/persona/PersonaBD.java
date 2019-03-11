@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -23,7 +22,6 @@ public class PersonaBD extends PersonaMD {
     private final ConectarDB conecta;
     //Se usaran estas clases para consultar
     private final LugarBD lugar;
-    private final TipoPersonaBD tipoPer;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
@@ -31,7 +29,6 @@ public class PersonaBD extends PersonaMD {
     public PersonaBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.lugar = new LugarBD(conecta);
-        this.tipoPer = new TipoPersonaBD(conecta);
     }
 
     public void insertarPersona() {
@@ -40,7 +37,7 @@ public class PersonaBD extends PersonaMD {
         //TipoPersona si porque necesitamos saber si es estudiante
         //docente u otro 
         String nsql = "INSERT INTO public.\"Personas\"(\n"
-                + "id_tipo_persona, id_lugar_natal, id_lugar_residencia,"
+                + "id_lugar_natal, id_lugar_residencia,"
                 + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
                 + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
@@ -49,7 +46,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
                 + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
-                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
                 + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
@@ -70,7 +67,7 @@ public class PersonaBD extends PersonaMD {
         //TipoPersona si porque necesitamos saber si es estudiante
         //docente u otro 
         String nsql = "INSERT INTO public.\"Personas\"(\n"
-                + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
+                + "id_lugar_natal, id_lugar_residencia, persona_foto,"
                 + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
                 + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
@@ -78,7 +75,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
                 + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
-                + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
                 + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
@@ -90,7 +87,7 @@ public class PersonaBD extends PersonaMD {
 
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
-                    + "id_tipo_persona, id_lugar_natal, id_lugar_residencia, persona_foto,"
+                    + "id_lugar_natal, id_lugar_residencia, persona_foto,"
                     + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
                     + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
                     + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
@@ -99,7 +96,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
                     + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
-                    + "VALUES (" + getTipo().getId() + ", " + getLugarNatal().getId() + ", "
+                    + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
                     + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
@@ -127,7 +124,7 @@ public class PersonaBD extends PersonaMD {
     //Sentencia para editar una Persona
     public boolean editarPersona(int aguja) {
         String sql = "UPDATE public.\"Personas\" SET\n"
-                + " id_tipo_persona = " + getTipo().getId() + ", id_lugar_natal = " + getLugarNatal().getId()
+                + " id_lugar_natal = " + getLugarNatal().getId()
                 + ", id_lugar_residencia = " + getLugarResidencia().getId()
                 + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
                 + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
@@ -148,7 +145,7 @@ public class PersonaBD extends PersonaMD {
 
         if (isDiscapacidad()) {
             sql = "UPDATE public.\"Personas\" SET\n"
-                    + " id_tipo_persona = " + getTipo().getId() + ", id_lugar_natal = " + getLugarNatal().getId()
+                    + " id_lugar_natal = " + getLugarNatal().getId()
                     + ", id_lugar_residencia = " + getLugarResidencia().getId()
                     + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
                     + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
@@ -214,7 +211,7 @@ public class PersonaBD extends PersonaMD {
     //Consultamos todos las personas en nuestro sistema 
     //que no esten eliminadas
     public ArrayList<PersonaMD> cargarPersonas() {
-        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+        String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
@@ -232,7 +229,7 @@ public class PersonaBD extends PersonaMD {
     }
 
     public ArrayList<PersonaMD> buscar(String aguja) {
-        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+        String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
@@ -251,32 +248,12 @@ public class PersonaBD extends PersonaMD {
                 + "persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
                 + "persona_primer_nombre ILIKE '%" + aguja + "%' OR "
                 + "persona_segundo_nombre ILIKE '%" + aguja + "%');";
-
-        /*sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
-                + " persona_sexo, persona_estado_civil, persona_etnia, "
-                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
-                + " persona_celular, persona_correo, persona_fecha_registro,"
-                + " persona_discapacidad, persona_tipo_discapacidad,"
-                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
-                + " persona_calle_principal, persona_numero_casa,"
-                + " persona_calle_secundaria, persona_referencia, "
-                + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
-                + "persona_identificacion ILIKE '%"+aguja+"%' OR "
-                + "( persona_primer_apellido || "
-                + " persona_segundo_apellido || "
-                + " persona_primer_nombre ||  "
-                + " persona_segundo_nombre) ILIKE '%"+aguja+"%');";*/
         return consultar(sql);
     }
 
     //Consultamos unicamente a las personas que son alumnos  
     public ArrayList<PersonaMD> cargarPorTipo(int idTipoPersona) {
-        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+        String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
@@ -296,7 +273,7 @@ public class PersonaBD extends PersonaMD {
 
     //Buscar Persona con aguja
     public PersonaMD buscarPersona(int idPersona) {
-        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+        String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
@@ -316,7 +293,7 @@ public class PersonaBD extends PersonaMD {
     }
 
     public PersonaMD buscarPersona(String identificacion) {
-        String sql = "SELECT id_persona, id_tipo_persona, id_lugar_natal, "
+        String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
@@ -387,8 +364,6 @@ public class PersonaBD extends PersonaMD {
         PersonaMD persona = new PersonaMD();
         try {
             persona.setIdPersona(rs.getInt("id_persona"));
-            //Aqui se crea un tipo persona  
-            persona.setTipo(tipoPer.buscar(rs.getInt("id_tipo_persona")));
             //Aqui igual se crear una clase lugar 
 
             //Buscamos el lugar que corresponde a cada cosa

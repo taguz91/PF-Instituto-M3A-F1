@@ -17,7 +17,7 @@ public class PersonaMD {
     private int logBytes;
     //Atributos de la clase Persona
     private int idPersona;
-    private TipoPersonaMD tipo;
+    //private TipoPersonaMD tipo;//Se elimino de la base de datos
     private LugarMD lugarNatal;
     private LugarMD lugarResidencia;
     private Image foto;
@@ -56,9 +56,8 @@ public class PersonaMD {
     }
 
     //Constructor con todos los atributos de la clase Persona
-    public PersonaMD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+    public PersonaMD(int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         this.idPersona = idPersona;
-        this.tipo = tipo;
         this.lugarNatal = lugarNatal;
         this.lugarResidencia = lugarResidencia;
         this.foto = foto;
@@ -92,8 +91,7 @@ public class PersonaMD {
         this.personaActiva = personaActiva;
     }
 
-    public PersonaMD(TipoPersonaMD tipo, LugarMD lugarNatal, LugarMD lugarResidencia, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        this.tipo = tipo;
+    public PersonaMD(LugarMD lugarNatal, LugarMD lugarResidencia, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         this.lugarNatal = lugarNatal;
         this.lugarResidencia = lugarResidencia;
         this.identificacion = identificacion;
@@ -148,14 +146,6 @@ public class PersonaMD {
 
     public void setIdPersona(int idPersona) {
         this.idPersona = idPersona;
-    }
-
-    public TipoPersonaMD getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoPersonaMD tipo) {
-        this.tipo = tipo;
     }
 
     public LugarMD getLugarNatal() {
@@ -409,7 +399,6 @@ public class PersonaMD {
     //Guardamos todos los datos de una persona 
     public void setPersona(PersonaMD per) {
         this.idPersona = per.getIdPersona();
-        this.tipo = per.getTipo();
         this.lugarNatal = per.getLugarNatal();
         this.lugarResidencia = per.getLugarResidencia();
         this.foto = per.getFoto();
