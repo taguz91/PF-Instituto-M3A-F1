@@ -20,19 +20,18 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    ConectarDB conecta = new ConectarDB("Persona");
+    private final ConectarDB conecta;
     //Se usaran estas clases para consultar
-    LugarBD lugar = new LugarBD();
-    TipoPersonaBD tipoPer = new TipoPersonaBD();
+    private final LugarBD lugar;
+    private final TipoPersonaBD tipoPer;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
 
-    public PersonaBD() {
-    }
-
-    public PersonaBD(int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        super(idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
+    public PersonaBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.lugar = new LugarBD(conecta);
+        this.tipoPer = new TipoPersonaBD(conecta);
     }
 
     public void insertarPersona() {

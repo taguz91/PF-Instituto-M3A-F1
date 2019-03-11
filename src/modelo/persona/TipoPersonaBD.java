@@ -11,9 +11,10 @@ import modelo.ConectarDB;
  */
 public class TipoPersonaBD extends TipoPersonaMD {
 
-    ConectarDB conecta = new ConectarDB("Tipo persona");
+    private final ConectarDB conecta;
 
-    public TipoPersonaBD() {
+    public TipoPersonaBD(ConectarDB conecta) {
+        this.conecta = conecta;
     }
 
     public ArrayList<TipoPersonaMD> cargarTipoPersona() {

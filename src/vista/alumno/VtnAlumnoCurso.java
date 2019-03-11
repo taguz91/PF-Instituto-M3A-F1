@@ -1,4 +1,4 @@
-package vista.curso;
+package vista.alumno;
 
 
 /**

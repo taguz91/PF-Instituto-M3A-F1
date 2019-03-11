@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
@@ -29,6 +30,7 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
+    private final ConectarDB conecta; 
     
     private final String [] idiomas = {"Seleccione", "Árabe", "Árabe", "Árabe", 
         "Croata", "Francés", "Español", "Maltés", "Español", "Chino", "Danés", 
@@ -60,9 +62,9 @@ public class FrmPersonaCTR {
     private ArrayList<LugarMD> parroquias;
 
     //Para consultar lugares 
-    LugarBD lug = new LugarBD();
+    private final LugarBD lug;
     //Para consultar tipos de persona
-    TipoPersonaBD tip = new TipoPersonaBD();
+    private final TipoPersonaBD tip;
     //Aqui se guardaran los tipos de persona  
     private ArrayList<TipoPersonaMD> tiposPer;
     //Para guardar la foto  
@@ -73,11 +75,14 @@ public class FrmPersonaCTR {
     private boolean editar = false;
     private int idPersona = 0;
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
+    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
+        this.conecta = conecta;
         //Inicializamos persona
-        this.persona = new PersonaBD();
+        this.persona = new PersonaBD(conecta);
+        this.lug = new LugarBD(conecta);
+        this.tip = new TipoPersonaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
@@ -410,7 +415,7 @@ public class FrmPersonaCTR {
 
         if (guardar) {
             //Llenar directo por el constructor
-            PersonaBD per = new PersonaBD();
+            PersonaBD per = new PersonaBD(conecta);
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);

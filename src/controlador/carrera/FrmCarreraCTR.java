@@ -1,6 +1,7 @@
 package controlador.carrera;
 
 import java.util.ArrayList;
+import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
@@ -17,18 +18,19 @@ public class FrmCarreraCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmCarrera frmCarrera;
-
+    private final ConectarDB conecta;
     //Para cargar el combo de coordinador  
-    private final DocenteBD docen = new DocenteBD();
+    private final DocenteBD docen;
     private ArrayList<DocenteMD> docentes;
     
     //Todas las modalidades que puede tener una carrera  
     private final String [] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"}; 
 
-    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera) {
+    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmCarrera = frmCarrera;
-
+        this.conecta = conecta;
+        this.docen = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmCarrera);
         frmCarrera.show();
     }

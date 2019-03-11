@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -20,15 +21,17 @@ public class FrmPrdLectivoCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmPrdLectivo frmPrdLectivo;
-    private PeriodoLectivoBD bdPerLectivo;
+    private final PeriodoLectivoBD bdPerLectivo;
+    private final ConectarDB conecta;
     private boolean editar = false;
     private int id_PeriodoLectivo;
 
-    public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo) {
+    public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmPrdLectivo = frmPrdLectivo;
+        this.conecta = conecta;
 
-        bdPerLectivo = new PeriodoLectivoBD();
+        this.bdPerLectivo = new PeriodoLectivoBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmPrdLectivo);
         frmPrdLectivo.show();

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import vista.persona.FrmDocente;
@@ -27,8 +28,10 @@ public class FrmDocenteCTR {
     private final FrmDocente frmDocente;
     private final DocenteBD docente;
     private boolean guardar = false;
+    private final ConectarDB conecta;
+    
     private ArrayList<String> info = new ArrayList();
-    private DocenteBD per = new DocenteBD();
+    private DocenteBD per;
 
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
@@ -39,26 +42,30 @@ public class FrmDocenteCTR {
     boolean docenteOtroTrabajo, docenteCapacitador;
     LocalDate fechaInicioContratacion, fechaFinContratacion;
 
-    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, DocenteBD docente) {
+    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, DocenteBD docente, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmDocente = frmDocente;
         this.docente = docente;
+        this.conecta = conecta;
+        this.per = new DocenteBD(conecta);
+        
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
     }
 
-    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente) {
+    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmDocente = frmDocente;
+        this.conecta = conecta;
         //Inicializamos persona
-        this.docente = new DocenteBD();
+        this.docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
     }
 
     private void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona);
+        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
         ctrFrmPersona.iniciar();
     }
 

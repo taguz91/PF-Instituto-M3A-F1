@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaMD;
@@ -24,13 +25,17 @@ public class VtnDocenteCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnDocente vtnDocente;
     private final DocenteBD docente;
+    private final ConectarDB conecta;
+    
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente) {
+    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
-        docente = new DocenteBD();
+        this.conecta = conecta;
+        
+        docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
         vtnDocente.show();
     }
@@ -83,9 +88,9 @@ public class VtnDocenteCTR {
     }
 
     public void abrirFrmDocente() {
-        DocenteBD docente = new DocenteBD();
+        DocenteBD docente = new DocenteBD(conecta);
         FrmDocente frmDocente = new FrmDocente();
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente);
+        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente, conecta);
         ctrFrmDocente.iniciar();
     }
 
@@ -116,7 +121,7 @@ public class VtnDocenteCTR {
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
             FrmDocente frmDoc = new FrmDocente();
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc);
+            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(docentesMD.get(posFila));

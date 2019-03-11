@@ -1,6 +1,7 @@
 package controlador;
 
 import controlador.principal.VtnPrincipalCTR;
+import modelo.ConectarDB;
 import modelo.persona.UsuarioMD;
 import vista.principal.VtnPrincipal;
 
@@ -15,7 +16,9 @@ public class run {
         
         UsuarioMD usuario = new UsuarioMD();
         VtnPrincipal vtn = new VtnPrincipal(); 
-        VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn, usuario); 
+        //Coneccion a la base de datos 
+        ConectarDB conecta = new ConectarDB("Run.");
+        VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn, usuario, conecta); 
         ctrVtnPrin.iniciar();
     }
     

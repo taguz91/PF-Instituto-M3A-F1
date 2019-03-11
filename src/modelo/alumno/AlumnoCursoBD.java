@@ -13,9 +13,15 @@ import modelo.persona.AlumnoBD;
  */
 public class AlumnoCursoBD extends AlumnoCursoMD {
 
-    ConectarDB conecta = new ConectarDB("Alumno curso");
-    private final AlumnoBD alm = new AlumnoBD();
-    private final CursoBD cur = new CursoBD();
+    private final ConectarDB conecta;
+    private final AlumnoBD alm;
+    private final CursoBD cur;
+
+    public AlumnoCursoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.alm = new AlumnoBD(conecta);
+        this.cur = new CursoBD(conecta);
+    }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
         String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"

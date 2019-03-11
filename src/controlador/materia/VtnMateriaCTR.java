@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -20,6 +21,7 @@ public class VtnMateriaCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnMateria vtnMateria;
+    private final ConectarDB conecta;
     private final MateriaBD materia;
 
     //El modelo de la tabla materias  
@@ -31,10 +33,12 @@ public class VtnMateriaCTR {
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
 
-    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria) {
+    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnMateria = vtnMateria;
-        this.materia = new MateriaBD();
+        this.conecta = conecta;
+        
+        this.materia = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
@@ -93,7 +97,7 @@ public class VtnMateriaCTR {
 
     public void cargarCmbFiltrar() {
         //Cargamos todas las carreras 
-        CarreraBD carrerBD = new CarreraBD();
+        CarreraBD carrerBD = new CarreraBD(conecta);
         carreras = carrerBD.cargarCarreras();
         //Cargamos el combo 
         vtnMateria.getCmbCarreras().removeAllItems();

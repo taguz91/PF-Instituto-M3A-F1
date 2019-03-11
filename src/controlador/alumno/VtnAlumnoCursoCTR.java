@@ -1,6 +1,7 @@
 package controlador.alumno;
 
-import vista.curso.VtnAlumnoCurso;
+import modelo.ConectarDB;
+import vista.alumno.VtnAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -10,11 +11,13 @@ import vista.principal.VtnPrincipal;
 public class VtnAlumnoCursoCTR {
     
     private final VtnPrincipal vtnPrin;
-    private final VtnAlumnoCurso vtnAlmnCurso; 
+    private final VtnAlumnoCurso vtnAlmnCurso;
+    private final ConectarDB conecta;
 
-    public VtnAlumnoCursoCTR(VtnPrincipal vtnPrin, VtnAlumnoCurso vtnAlmnCurso) {
+    public VtnAlumnoCursoCTR(VtnPrincipal vtnPrin, VtnAlumnoCurso vtnAlmnCurso, ConectarDB conecta) {
         this.vtnPrin = vtnPrin; 
         this.vtnAlmnCurso = vtnAlmnCurso;
+        this.conecta = conecta;
         
         vtnPrin.getDpnlPrincipal().add(vtnAlmnCurso);  
         vtnAlmnCurso.show(); 

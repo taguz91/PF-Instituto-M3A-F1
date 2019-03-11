@@ -11,9 +11,10 @@ import modelo.ConectarDB;
  */
 public class LugarBD extends LugarMD {
 
-    ConectarDB conecta = new ConectarDB("Lugar");
+    private final ConectarDB conecta;
 
-    public LugarBD() {
+    public LugarBD(ConectarDB conecta) {
+        this.conecta = conecta;
     }
 
     public LugarMD buscar(int idLugar) {

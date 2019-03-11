@@ -15,10 +15,17 @@ import modelo.persona.AlumnoMD;
  */
 public class MallaAlumnoBD extends MallaAlumnoMD {
 
-    ConectarDB conecta = new ConectarDB("Malla alumno");
+    private final ConectarDB conecta;
+    private final MateriaBD mat;
+    private final AlumnoBD alm;
 
-    MateriaBD mat = new MateriaBD();
-    AlumnoBD alm = new AlumnoBD();
+    public MallaAlumnoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.mat = new MateriaBD(conecta);
+        this.alm = new AlumnoBD(conecta);
+    }
+    
+    
 
     public void iniciarMalla(int idMateria, int idAlumno, int ciclo) {
         //Este inser deberia cambiar

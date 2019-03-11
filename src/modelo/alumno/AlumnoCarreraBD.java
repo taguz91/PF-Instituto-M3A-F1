@@ -15,11 +15,20 @@ import modelo.persona.AlumnoMD;
  */
 public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
-    ConectarDB conecta = new ConectarDB("Alumno carrera");
+    private final ConectarDB conecta; 
     //Para consulta alumno 
-    AlumnoBD alm = new AlumnoBD();
+    private final AlumnoBD alm;
     //Para consultar carreras  
-    CarreraBD car = new CarreraBD();
+    private final CarreraBD car;
+
+    public AlumnoCarreraBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        //Inicializamos la clases que usaremos
+        this.alm = new AlumnoBD(conecta);
+        this.car = new CarreraBD(conecta);
+    }
+    
+    
 
     public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"

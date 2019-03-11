@@ -10,17 +10,17 @@ import modelo.ConectarDB;
 
 public class DocenteBD extends DocenteMD {
 
-    public DocenteBD() {
-    }
-
-    public DocenteBD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador) {
-        super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador);
-    }
-
-    ConectarDB conecta = new ConectarDB("Docente BD");
-    PersonaMD p;
+    private final ConectarDB conecta;
+    private PersonaMD p;
     //Para consultar personas  
-    PersonaBD per = new PersonaBD();
+    private final PersonaBD per;
+
+    public DocenteBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.per = new PersonaBD(conecta);
+    }
+    
+    
 
     public void InsertarDocente() {
         // DocenteMD doc = new DocenteMD();
