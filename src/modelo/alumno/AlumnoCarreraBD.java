@@ -32,8 +32,9 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
-                + "	id_alumno, id_carrera)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ");";
+                + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
+                + "'"+getFechaRegistro()+"' );";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Guardamos correctamente el alumno en la carrera");
             return true;
@@ -44,7 +45,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     public AlumnoCarreraMD buscarAlumnoCarrera(int idAlmCarrera) {
         AlumnoCarreraMD ac = null;
-        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
+        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera, almn_carrera_fecha_registro\n"
                 + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true' "
                 + "AND id_almn_carrera = " + idAlmCarrera + ";";
         ResultSet rs = conecta.sql(sql);
@@ -65,20 +66,20 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarrera() {
-        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
+        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera, almn_carrera_fecha_registro\n"
                 + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true';";
         return consultarAlumnoCarrera(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
-        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
+        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera, almn_carrera_fecha_registro\n"
                 + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true' "
                 + "AND id_carrera = " + idCarrera + ";";
         return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
     }
 
     public ArrayList<AlumnoCarreraMD> buscarAlumnoCarrera(int idCarrera, String aguja) {
-        String sql = "SELECT id_almn_carrera, \"AlumnosCarrera\".id_alumno, id_carrera\n"
+        String sql = "SELECT id_almn_carrera, \"AlumnosCarrera\".id_alumno, id_carrera, almn_carrera_fecha_registro\n"
                 + "FROM public.\"AlumnosCarrera\", public.\"Alumnos\", public.\"Personas\" \n"
                 + "WHERE \"Alumnos\".id_alumno = \"AlumnosCarrera\".id_alumno \n"
                 + "AND \"Personas\".id_persona = \"Alumnos\".id_persona \n"
@@ -145,6 +146,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             ac.setAlumno(a);
             CarreraMD c = car.buscar(rs.getInt("id_carrera"));
             ac.setCarrera(c);
+            ac.setFechaRegistro(rs.getTimestamp("almn_carrera_fecha_registro").toLocalDateTime());
             return ac;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener un alumno");
@@ -159,6 +161,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             AlumnoMD a = alm.buscarAlumno(rs.getInt("id_alumno"));
             ac.setAlumno(a);
             ac.setCarrera(c);
+            ac.setFechaRegistro(rs.getTimestamp("almn_carrera_fecha_registro").toLocalDateTime());
             return ac;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener un alumno");

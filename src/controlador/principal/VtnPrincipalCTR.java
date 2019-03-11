@@ -7,6 +7,7 @@ import controlador.curso.FrmCursoCTR;
 import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
+import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -33,6 +34,7 @@ import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.alumno.FrmAlumnoCurso;
+import vista.alumno.VtnAlumnoCarrera;
 import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
@@ -86,7 +88,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocente().addActionListener(e -> abrirVtnDocente());
         vtnPrin.getMnCtMateria().addActionListener(e -> abrirVtnMateria());
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
-        vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnMatricula());
+        vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos()); 
         
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
@@ -209,8 +211,15 @@ public class VtnPrincipalCTR {
 
     }
     
-    private void abrirVtnMatricula(){
-        
+    private void abrirVtnAlumnoCarrera(){
+        VtnAlumnoCarrera vtnAlmnCarrera = new VtnAlumnoCarrera();
+        eventoInternal(vtnAlmnCarrera);
+        if (numVtns < 5) {
+            VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnPrin, vtnAlmnCarrera, conecta); 
+            ctrAlmn.iniciar();
+        }else{
+            errorNumVentanas();
+        }
     }
     
     private void abrirVtnMallaAlumnos(){

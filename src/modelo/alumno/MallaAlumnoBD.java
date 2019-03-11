@@ -29,7 +29,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     public void iniciarMalla(int idMateria, int idAlumno, int ciclo) {
         //Este inser deberia cambiar
-        String nsql = "INSERT INTO public.\"MallaEstudiante\"(\n"
+        String nsql = "INSERT INTO public.\"MallaAlumno\"(\n"
                 + "	id_malla_alumno, id_materia, id_alumno, malla_almn_ciclo)\n"
                 + "	VALUES ('" + idMateria + "-" + idAlumno + "' ," + idMateria + ", " + idAlumno + ", " + ciclo + ");";
 
@@ -42,7 +42,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         String sql = "SELECT id_malla_alumno, id_materia, id_alumno, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
                 + "malla_almn_nota3, malla_almn_estado\n"
-                + "	FROM public.\"MallaEstudiante\";";
+                + "	FROM public.\"MallaAlumno\";";
         return consultaMallas(sql);
     }
     
@@ -50,7 +50,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         String sql = "SELECT id_malla_alumno, id_materia, id_alumno, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
                 + "malla_almn_nota3, malla_almn_estado\n"
-                + "	FROM public.\"MallaEstudiante\" "
+                + "	FROM public.\"MallaAlumno\" "
                 + "WHERE id_alumno = "+idAlumno+";";
         return consultaMallasPorAlumno(sql, idAlumno);
     }
@@ -59,7 +59,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         String sql = "SELECT id_malla_alumno, id_materia, id_alumno, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
                 + "malla_almn_nota3, malla_almn_estado\n"
-                + "FROM public.\"MallaEstudiante\" "
+                + "FROM public.\"MallaAlumno\" "
                 + "WHERE id_alumno = "+idAlumno+" AND malla_almn_estado = '"+estado.charAt(0)+"';";
         return consultaMallasPorAlumno(sql, idAlumno); 
     }
