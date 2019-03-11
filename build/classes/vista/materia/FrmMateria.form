@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+    <Property name="iconifiable" type="boolean" value="true"/>
+    <Property name="title" type="java.lang.String" value="Formulario Materias"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblNombreMateria" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCiclo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCategoriaMateria" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtNombreMateria" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="chBActivo" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="cbCiclo" alignment="0" pref="146" max="32767" attributes="0"/>
+                                          <Component id="cbCategoria" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="138" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="btbBuscar" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" pref="80" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblTeoricas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPracticas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAutoEvaluacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="spTeoricas" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Component id="spAutoEvaluacion" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Component id="spPracticas" min="-2" pref="53" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="lblActivo" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblNombreMateria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNombreMateria" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cbCiclo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCiclo" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblCategoriaMateria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="chBActivo" max="32767" attributes="0"/>
+                  <Component id="lblActivo" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="spTeoricas" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTeoricas" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPracticas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="spPracticas" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblAutoEvaluacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="spAutoEvaluacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jSeparator2" min="-2" pref="5" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btbBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblNombreMateria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCiclo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ciclo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCategoriaMateria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Categor&#xed;a:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eje:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblActivo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Activo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtNombreMateria">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreMateriaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbCategoria">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="---SELECCIONE UNO---"/>
+            <StringItem index="1" value="B&#xc1;SICO"/>
+            <StringItem index="2" value="PROFESIONAL"/>
+            <StringItem index="3" value="TITULACI&#xd3;N"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="HORAS DE LA MATERIA"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbCiclo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="6">
+            <StringItem index="0" value="---SELECCIONE UNO---"/>
+            <StringItem index="1" value="1"/>
+            <StringItem index="2" value="2"/>
+            <StringItem index="3" value="3"/>
+            <StringItem index="4" value="4"/>
+            <StringItem index="5" value="5"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCicloActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTeoricas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Te&#xf3;ricas:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPracticas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pr&#xe1;cticas:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAutoEvaluacion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Auto-evaluaci&#xf3;n:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btbBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chBActivo">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGuardar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spTeoricas">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" maximum="100" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spAutoEvaluacion">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" maximum="100" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spPracticas">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" maximum="100" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator2">
+    </Component>
+  </SubComponents>
+</Form>

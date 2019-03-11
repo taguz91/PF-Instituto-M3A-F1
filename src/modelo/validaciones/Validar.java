@@ -12,6 +12,12 @@ public class Validar {
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñ\\s]+");
     }
     
+    //Para validar letras y caracteres como // 
+    public static boolean esDireccion(String cadena) {
+        //Es letras si continene uno de estos elementos puede contener espacios 
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñ/\\-\\s]+");
+    }
+    
     //Validamos un txt de un buscador 
     public static boolean esLetrasYNumeros(String cadena){
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
@@ -46,10 +52,6 @@ public class Validar {
         } else {
             return false;
         }
-    }
-
-    public static boolean esDinero(String cadena) {
-        return cadena.matches("[0-9\\.]+"); 
     }
 
     public static boolean esCedula(String cadena) {

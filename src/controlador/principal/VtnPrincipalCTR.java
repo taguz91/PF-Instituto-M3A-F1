@@ -56,9 +56,8 @@ public class VtnPrincipalCTR {
 
     private final VtnPrincipal vtnPrin;
     private final UsuarioMD usuario;
-
+    //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
-    private final String ERRORNUMVTNS = "No se pueden abrir mas de 5 ventanas";
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, UsuarioMD usuario) {
         this.vtnPrin = vtnPrin;
@@ -69,12 +68,6 @@ public class VtnPrincipalCTR {
 
     public void iniciar() {
         //Iniciamos los shotcuts 
-        /*Otra forma de poner atajos de teclado
-        vtnPrin.getMnCtAlmnCurso().setAccelerator(
-                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().
-                        getMenuShortcutKeyMask()));
-         */
-        
         iniciarAtajosTeclado();
         
         //Acciones de las ventanas de consulta
@@ -119,7 +112,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnPersona() {
+    private void abrirVtnPersona() {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
@@ -130,7 +123,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    public void abrirVtnDocente() {
+    private void abrirVtnDocente() {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
         if (numVtns < 5) {
@@ -142,7 +135,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnAlumno() {
+    private void abrirVtnAlumno() {
         VtnAlumno vtnAlumno = new VtnAlumno();
         eventoInternal(vtnAlumno);
         if (numVtns < 5) {
@@ -154,7 +147,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnCarrera() {
+    private void abrirVtnCarrera() {
         VtnCarrera vtnCarrera = new VtnCarrera();
         eventoInternal(vtnCarrera);
         if (numVtns < 5) {
@@ -166,7 +159,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnCurso() {
+    private void abrirVtnCurso() {
         VtnCurso vtnCurso = new VtnCurso();
         eventoInternal(vtnCurso);
         if (numVtns < 5) {
@@ -178,7 +171,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnPrdLectivo() {
+    private void abrirVtnPrdLectivo() {
         VtnPrdLectivo vtnPrdLectivo = new VtnPrdLectivo();
         eventoInternal(vtnPrdLectivo);
         if (numVtns < 5) {
@@ -190,7 +183,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirVtnAlumnoCurso() {
+    private void abrirVtnAlumnoCurso() {
         VtnAlumnoCurso vtnAlmnCurso = new VtnAlumnoCurso();
         eventoInternal(vtnAlmnCurso);
         if (numVtns < 5) {
@@ -202,7 +195,7 @@ public class VtnPrincipalCTR {
         errorNumVentanas();
     }
 
-    public void abrirVtnMateria() {
+    private void abrirVtnMateria() {
         VtnMateria vtnMateria = new VtnMateria();
         eventoInternal(vtnMateria);
         if (numVtns < 5) {
@@ -214,11 +207,11 @@ public class VtnPrincipalCTR {
 
     }
     
-    public void abrirVtnMatricula(){
+    private void abrirVtnMatricula(){
         
     }
     
-    public void abrirVtnMallaAlumnos(){
+    private void abrirVtnMallaAlumnos(){
         VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno(); 
         
         VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm);
@@ -226,7 +219,7 @@ public class VtnPrincipalCTR {
     }
 
     //Para abrir todos los formularios
-    public void abrirFrmPersona() {
+    private void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
@@ -238,7 +231,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirFrmDocente() {
+    private void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
         DocenteBD docente = new DocenteBD();
         eventoInternal(frmDocente);
@@ -252,7 +245,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirFrmAlumno() {
+    private void abrirFrmAlumno() {
         FrmAlumno frmAlumno = new FrmAlumno();
         eventoInternal(frmAlumno);
         if (numVtns < 5) {
@@ -264,7 +257,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirFrmCarrera() {
+    private void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
         eventoInternal(frmCarrera);
         if (numVtns < 5) {
@@ -276,7 +269,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirFrmCurso() {
+    private void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
         eventoInternal(frmCurso);
         if (numVtns < 5) {
@@ -287,7 +280,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    public void abrirFrmPrdLectivo() {
+    private void abrirFrmPrdLectivo() {
         FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
         eventoInternal(frmPrdLectivo);
         if (numVtns < 5) {
@@ -299,11 +292,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    public void abrirFrmCursoAlumno() {
-
-    }
-
-    public void abrirFrmMateria() {
+    private void abrirFrmMateria() {
         FrmMateria frmMate = new FrmMateria();
         eventoInternal(frmMate);
         if (numVtns < 5) {
@@ -315,7 +304,7 @@ public class VtnPrincipalCTR {
 
     }
     
-    public void abrirFrmInscripcion(){
+    private void abrirFrmInscripcion(){
         FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera(); 
         eventoInternal(frmMatricula); 
         if (numVtns < 5) {
@@ -333,7 +322,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    public void estiloVtn() {
+    private void estiloVtn() {
         String estilo = "Windows";
 
         if (vtnPrin.getMnRbtnMetal().isSelected()) {
@@ -363,6 +352,9 @@ public class VtnPrincipalCTR {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
                 numVtns++;
+                if (numVtns > 5) {
+                    errorNumVentanas();
+                }
             }
 
             @Override
@@ -373,12 +365,12 @@ public class VtnPrincipalCTR {
         });
     }
 
-    public void errorNumVentanas() {
+    private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void iniciarAtajosTeclado() {
+    private void iniciarAtajosTeclado() {
         vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 
@@ -418,6 +410,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.ALT_MASK));
+    }
 
+    public int getNumVtns() {
+        return numVtns;
     }
 }

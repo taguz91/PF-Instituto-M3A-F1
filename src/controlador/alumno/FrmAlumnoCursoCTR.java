@@ -13,7 +13,7 @@ import modelo.alumno.AlumnoCursoBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.CmbValidar;
-import modelo.validaciones.TxtValidarLetras;
+import modelo.validaciones.TxtVBuscador;
 import vista.alumno.FrmAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -103,7 +103,7 @@ public class FrmAlumnoCursoCTR {
             System.out.println("Click en btn buscar");
         });
         
-        frmAlmCurso.getTxtBuscar().addKeyListener(new TxtValidarLetras(frmAlmCurso.getTxtBuscar(),
+        frmAlmCurso.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCurso.getTxtBuscar(),
                 frmAlmCurso.getLblErrorBuscar()));
         
         frmAlmCurso.getCmbPrdLectivo().addActionListener(new CmbValidar(frmAlmCurso.getCmbPrdLectivo(),
