@@ -479,6 +479,7 @@ public class FrmAlumnoCTR {
     }
 
     public AlumnoBD pasarDatos(AlumnoBD persona) {
+        
         persona.setIdPersona(persona.filtrarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona());
         System.out.println("Id: " + persona.getIdPersona());
         persona.setId_SecEconomico(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico());

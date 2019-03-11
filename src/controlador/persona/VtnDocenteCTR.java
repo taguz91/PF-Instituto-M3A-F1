@@ -58,9 +58,10 @@ public class VtnDocenteCTR {
         };
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
-        //   vtnDocente.getBtnEditar().addActionListener(e -> editarAlumno());
         docentesMD = docente.cargarDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(kl);
+        
+         docentesMD = docente.cargarDocentes();
         llenarTabla();
 
     }
@@ -113,40 +114,14 @@ public class VtnDocenteCTR {
         }
         vtnDocente.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-
-   /* public DocenteMD capturarFila() {
-        int i = vtnDocente.getTblDocente().getSelectedRow();
-        System.out.println(i + " metodo capturarFila de vtnDocenteCTR");
-        if (i >= 0) {
-            DocenteMD docenteModelo;
-            docenteModelo = docente.buscarPersona(Integer.valueOf(vtnDocente.getTblDocente().getValueAt(i, 0).toString()));
-            System.out.println("cPTURAR FILA METODO VTNdOCENTE" +docenteModelo);
-            return docenteModelo;
-        } else {
-            return null;
-        }
-    }
-
-     public void editarDocente() {
-        DocenteMD al = capturarFila();
-        if (al != null) {
-            frmDocente = new FrmDocente();
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDocente);
-            ctrFrm.iniciar();
-            ctrFrm.editar(al);
-            vtnDocente.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
-        }
-
-    }*/
+  
    public void editar() { 
-       FrmDocente frmPersona = new FrmDocente();
+      
        int posFila = vtnDocente.getTblDocente().getSelectedRow();
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
-            
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmPersona);
+            FrmDocente frmDoc = new FrmDocente();
+            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(docentesMD.get(posFila));
