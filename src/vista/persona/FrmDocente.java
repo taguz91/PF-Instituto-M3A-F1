@@ -15,13 +15,19 @@ import javax.swing.JTextField;
  */
 public class FrmDocente extends javax.swing.JInternalFrame {
 
+    private JButton btnInsertar;
+
     /**
      * Creates new form Docente
      */
     public FrmDocente() {
-       
+
         initComponents();
-        
+
+    }
+
+    public JButton getBtnGuardar() {
+        return btnGuardar;
     }
 
     public JButton getBtnCancelar() {
@@ -32,14 +38,9 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.btnCancelar = btnCancelar;
     }
 
-    public JButton getBtnGuardar() {
-        return btnGuardar;
-    }
-
     public void setBtnGuardar(JButton btnGuardar) {
         this.btnGuardar = btnGuardar;
     }
-
 
     public JCheckBox getCbxDocenteCapacitador() {
         return cbxDocenteCapacitador;
@@ -56,8 +57,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     public void setCbxOtroTrabajo(JCheckBox cbxOtroTrabajo) {
         this.cbxOtroTrabajo = cbxOtroTrabajo;
     }
-
-
 
     public JComboBox<String> getCmbTipoTiempo() {
         return cmbTipoTiempo;
@@ -99,6 +98,14 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.jSeparator5 = jSeparator5;
     }
 
+    public JButton getBtnInsertar() {
+        return btnInsertar;
+    }
+
+    public void setBtnInsertar(JButton btnInsertar) {
+        this.btnInsertar = btnInsertar;
+    }
+
     public DateChooserCombo getJdcFechaFinContratacion() {
         return jdcFechaFinContratacion;
     }
@@ -106,6 +113,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     public void setJdcFechaFinContratacion(DateChooserCombo jdcFechaFinContratacion) {
         this.jdcFechaFinContratacion = jdcFechaFinContratacion;
     }
+
+
 
     public DateChooserCombo getJdcFechaInicioContratacion() {
         return jdcFechaInicioContratacion;
@@ -211,9 +220,9 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.btnRegistrarPersona = btnRegistrarPersona;
     }
 
-  
-    
-    
+    public JButton getBtnEditar() {
+        return btnInsertar;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -228,7 +237,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         txtIdentificacion = new javax.swing.JTextField();
         lblOtroTrabajo = new javax.swing.JLabel();
         cbxOtroTrabajo = new javax.swing.JCheckBox();
-        jdcFechaInicioContratacion = new datechooser.beans.DateChooserCombo();
         lblFechaInicioContratacion = new javax.swing.JLabel();
         lblDocenteCapacitador = new javax.swing.JLabel();
         cbxDocenteCapacitador = new javax.swing.JCheckBox();
@@ -242,11 +250,12 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
-        jdcFechaFinContratacion = new datechooser.beans.DateChooserCombo();
         jSeparator2 = new javax.swing.JSeparator();
         btnBuscarPersona = new javax.swing.JButton();
         lblDatosPersona = new javax.swing.JLabel();
         btnRegistrarPersona = new javax.swing.JButton();
+        jdcFechaInicioContratacion = new datechooser.beans.DateChooserCombo();
+        jdcFechaFinContratacion = new datechooser.beans.DateChooserCombo();
 
         setClosable(true);
         setIconifiable(true);
@@ -279,105 +288,66 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         cbxOtroTrabajo.setEnabled(false);
         getContentPane().add(cbxOtroTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, 20));
 
-        jdcFechaInicioContratacion.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
-            new datechooser.view.appearance.ViewAppearance("custom",
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    true,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(0, 0, 255),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(128, 128, 128),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.LabelPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.LabelPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(255, 0, 0),
-                    false,
-                    false,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                (datechooser.view.BackRenderer)null,
-                false,
-                true)));
-    jdcFechaInicioContratacion.setFormat(2);
-    jdcFechaInicioContratacion.setEnabled(false);
-    getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, 20));
+        lblFechaInicioContratacion.setText("Fecha de Contratacion");
+        getContentPane().add(lblFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 10));
 
-    lblFechaInicioContratacion.setText("Fecha de Contratacion");
-    getContentPane().add(lblFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 10));
+        lblDocenteCapacitador.setText("Docente Capacitador");
+        getContentPane().add(lblDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, 10));
 
-    lblDocenteCapacitador.setText("Docente Capacitador");
-    getContentPane().add(lblDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, 10));
+        cbxDocenteCapacitador.setEnabled(false);
+        getContentPane().add(cbxDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, 20));
 
-    cbxDocenteCapacitador.setEnabled(false);
-    getContentPane().add(cbxDocenteCapacitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, 20));
+        lblFechaFinContratacion.setText("Fecha fin contratacion");
+        getContentPane().add(lblFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, 10));
 
-    lblFechaFinContratacion.setText("Fecha fin contratacion");
-    getContentPane().add(lblFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, 10));
+        lblTipoTiempo.setText("Tipo Tiempo");
+        getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 10));
 
-    lblTipoTiempo.setText("Tipo Tiempo");
-    getContentPane().add(lblTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 10));
+        cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
+        cmbTipoTiempo.setEnabled(false);
+        getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 130, 20));
 
-    cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
-    cmbTipoTiempo.setEnabled(false);
-    getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 130, 20));
+        spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
+        spnCategoria.setAutoscrolls(true);
+        spnCategoria.setEnabled(false);
+        getContentPane().add(spnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 72, 20));
 
-    spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
-    spnCategoria.setAutoscrolls(true);
-    spnCategoria.setEnabled(false);
-    getContentPane().add(spnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 72, 20));
+        lblCategoria.setText("Categoria");
+        getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 10));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 470, 10));
 
-    lblCategoria.setText("Categoria");
-    getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 10));
-    getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 470, 10));
+        btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
-    btnGuardar.setText("Guardar");
-    btnGuardar.setEnabled(false);
-    getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
+        btnCancelar.setText("Cancelar");
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, -1));
 
-    btnCancelar.setText("Cancelar");
-    getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, -1));
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 10, 180));
+        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 470, 10));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 470, 10));
 
-    jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-    getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 10, 180));
-    getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 470, 10));
+        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+        getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 30, 20));
+        getContentPane().add(lblDatosPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 270, 20));
 
-    jdcFechaFinContratacion.setEnabled(false);
-    getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
-    getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 470, 10));
+        btnRegistrarPersona.setText("Registrar Persona");
+        getContentPane().add(btnRegistrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
 
-    btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-    getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 30, 20));
-    getContentPane().add(lblDatosPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 270, 20));
+        jdcFechaInicioContratacion.setFormat(2);
+        jdcFechaInicioContratacion.setEnabled(false);
+        jdcFechaInicioContratacion.setLocale(new java.util.Locale("es", "EC", ""));
+        getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 120, -1));
 
-    btnRegistrarPersona.setText("Registrar Persona");
-    getContentPane().add(btnRegistrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+        jdcFechaFinContratacion.setEnabled(false);
+        jdcFechaFinContratacion.setLocale(new java.util.Locale("es", "EC", ""));
+        getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 120, -1));
 
-    getAccessibleContext().setAccessibleDescription("");
-    getAccessibleContext().setAccessibleParent(this);
+        getAccessibleContext().setAccessibleDescription("");
+        getAccessibleContext().setAccessibleParent(this);
 
-    pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtIdentificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacionActionPerformed

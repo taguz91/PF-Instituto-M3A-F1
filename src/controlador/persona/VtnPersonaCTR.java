@@ -39,11 +39,13 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
-        //Inicializamos el error para que no se vea  
+     
+//Inicializamos el error para que no se vea  
         vtnPersona.getLblError().setVisible(false);
         //Le pasamos accion a los botones  
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
+        
         vtnPersona.getBtnEliminar().addActionListener(e -> eliminar());
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
