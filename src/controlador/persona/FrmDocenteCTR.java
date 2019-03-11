@@ -1,14 +1,13 @@
+//https://serprogramador.es/programando-mensajes-de-dialogo-en-java-parte-1/
+//http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
 import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.persona.AlumnoBD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.persona.PersonaBD;
-import modelo.persona.PersonaMD;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 
@@ -25,6 +24,7 @@ public class FrmDocenteCTR {
     private final DocenteBD docente;
     private boolean guardar = false;
     private ArrayList<String> info = new ArrayList();
+    private DocenteBD per = new DocenteBD();
 
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
@@ -54,13 +54,24 @@ public class FrmDocenteCTR {
     }
 
     public void iniciar() {
-        //  frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarPersona(frmDocente.getTxtIdentificacion().getText()));
+        frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         //Accion de buscar una persona  
-        frmDocente.getBtnBuscarPersona().addActionListener(e -> consular());
+        //frmDocente.getBtnBuscarPersona().addActionListener(e -> consular());
     }
 
     public void guardarDocente() {
+
+        if (existeDocente) {
+            per.setIdPersona(Integer.parseInt(info.get(0)));
+            //docente.setIdPersona(idPersona);
+            System.out.println(info + "soy info{0} de guardar Docente en FRMDOCNETE");
+        } else {
+           // DocenteMD per = docente.buscarDocente(frmDocente.getTxtIdentificacion().getText());
+            //editar(per);
+            guardar = false;
+        }
+        guardar = true;
         String codigo, docenteTipoTiempo, estado;
         int docenteCategoria, idDocente;
         boolean docenteOtroTrabajo, docenteCapacitador;
@@ -74,7 +85,6 @@ public class FrmDocenteCTR {
         } else {
             docenteCapacitador = false;
         }
-
         if (frmDocente.getCbxOtroTrabajo().isSelected()) {
             docenteOtroTrabajo = true;
         } else {
@@ -92,17 +102,11 @@ public class FrmDocenteCTR {
         fechaFinContratacion = fechaFin1;
         estado = null;
 
-        guardar = true;
-        if (existeDocente) {
-            docente.setIdPersona(Integer.parseInt(info.get(0)));
-            System.out.println(info.get(0) + "soy info{0} de guardar Docente en FRMDOCNETE");
-        } else {
-            guardar = false;
-        }
         if (guardar) {
             //Llenar directo por el constructor
-            DocenteBD per = new DocenteBD();
+            // DocenteBD per = new DocenteBD();
             //Pasamos la informacion de la foto 
+//            per.setIdPersona((Integer.parseInt(info.get(0))));
             per.setCodigo(codigo);
             per.setFechaInicioContratacion(fechaInicioContratacion);
             per.setFechaFinContratacion(fechaFinContratacion);
@@ -114,20 +118,22 @@ public class FrmDocenteCTR {
 
             if (editar) {
                 if (idPersona > 0) {
-                    docente.editarDocente(idPersona);
-                    editar = false;
+                    per.editarDocente(idPersona);
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                 }
             } else {
-                docente.InsertarDocente();
+                //  per.buscarPersona(frmDocente.getTxtIdentificacion().getText());
+                per.InsertarDocente();
                 JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
             }
         }
 
     }
 
-    public void buscarPersona(String identificacion) {
+    public void buscarPersona() {
+        String identificacion = frmDocente.getTxtIdentificacion().getText();
+        info = docente.buscarPersona(identificacion);
         try {
-            info = docente.buscarPersona(identificacion);
             if (info != null) {
                 //Llenamos los datos en el lbl 
                 frmDocente.getLblDatosPersona().setForeground(Color.black);
@@ -135,9 +141,8 @@ public class FrmDocenteCTR {
                 frmDocente.getBtnRegistrarPersona().setVisible(false);
                 System.out.println("Numero de datos: " + info.size());
             }
-
+            info = docente.buscarPersonaDocente(identificacion);
             try {
-                info = docente.buscarPersonaDocente(identificacion);
                 if (info != null) {
                     //Llenamos los datos en el lbl 
                     frmDocente.getLblDatosPersona().setText(info.get(0) + " " + info.get(1));
@@ -188,6 +193,7 @@ public class FrmDocenteCTR {
     }
 
     public void editar(DocenteMD doc) {
+       // existeDocente = true;
         editar = true;
         idPersona = doc.getIdPersona();
         System.out.println("Id de la persona que editaremos " + idPersona);
@@ -204,38 +210,9 @@ public class FrmDocenteCTR {
         frmDocente.getBtnRegistrarPersona().setVisible(false);
     }
 
-    public DocenteBD pasarDatos(DocenteBD persona) {
-
-        docente.setCodigo(frmDocente.getTxtIdentificacion().getText());
-        if (frmDocente.getCbxOtroTrabajo().isSelected()) {
-            docente.setDocenteOtroTrabajo(true);
-        } else {
-            docente.setDocenteOtroTrabajo(false);
-        }
-        docente.setDocenteCategoria(Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString()));
-        String fechaInicio = frmDocente.getJdcFechaInicioContratacion().getText().toUpperCase();
-        String fecIni[] = fechaInicio.split("/");
-        LocalDate fechaIni = LocalDate.of(Integer.parseInt(fecIni[2]),
-                Integer.parseInt(fecIni[1]), Integer.parseInt(fecIni[0]));
-        docente.setFechaInicioContratacion(fechaIni);
-        String fechaFin = frmDocente.getJdcFechaFinContratacion().getText();
-        String fecFinC[] = fechaFin.split("/");
-        LocalDate fechaFin1 = LocalDate.of(Integer.parseInt(fecFinC[2]),
-                Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[0]));
-        docente.setFechaFinContratacion(fechaFin1);
-        docente.setDocenteTipoTiempo(frmDocente.getCmbTipoTiempo().getSelectedItem().toString());
-        if (frmDocente.getCbxDocenteCapacitador().isSelected()) {
-            docente.setDocenteCapacitador(true);
-        } else {
-            docente.setDocenteCapacitador(false);
-        }
-        docente.setEstado(null);
-
-        return persona;
-    }
-
     private void consular() {
         String identificacion = frmDocente.getTxtIdentificacion().getText();
+        //  buscarPersona();
         DocenteMD per = docente.buscarDocente(identificacion);
         if (per != null) {
             editar(per);
