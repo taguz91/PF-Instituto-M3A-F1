@@ -2,9 +2,13 @@
 //http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
+import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
@@ -29,6 +33,11 @@ public class FrmDocenteCTR {
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
     FrmPersona persona = new FrmPersona();
+
+    String codigo, docenteTipoTiempo, estado;
+    int docenteCategoria, idDocente;
+    boolean docenteOtroTrabajo, docenteCapacitador;
+    LocalDate fechaInicioContratacion, fechaFinContratacion;
 
     public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, DocenteBD docente) {
         this.vtnPrin = vtnPrin;
@@ -67,15 +76,11 @@ public class FrmDocenteCTR {
             //docente.setIdPersona(idPersona);
             System.out.println(info + "soy info{0} de guardar Docente en FRMDOCNETE");
         } else {
-           // DocenteMD per = docente.buscarDocente(frmDocente.getTxtIdentificacion().getText());
+            // DocenteMD per = docente.buscarDocente(frmDocente.getTxtIdentificacion().getText());
             //editar(per);
             guardar = false;
         }
         guardar = true;
-        String codigo, docenteTipoTiempo, estado;
-        int docenteCategoria, idDocente;
-        boolean docenteOtroTrabajo, docenteCapacitador;
-        LocalDate fechaInicioContratacion, fechaFinContratacion;
 
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
@@ -193,13 +198,21 @@ public class FrmDocenteCTR {
     }
 
     public void editar(DocenteMD doc) {
-       // existeDocente = true;
         editar = true;
         idPersona = doc.getIdPersona();
         System.out.println("Id de la persona que editaremos " + idPersona);
-//        System.out.println(doc.getFechaInicioContratacion().format(DateTimeFormatter.ISO_DATE));
-//        System.out.println(doc.getFechaInicioContratacion().getDayOfMonth());
-        //  frmDocente.getJdcFechaFinContratacion().setText(doc.getFechaInicioContratacion().format(DateTimeFormatter.ISO_DATE));
+        //System.out.println(doc.getFechaInicioContratacion().format(DateTimeFormatter.ISO_DATE));
+        //System.out.println(doc.getFechaInicioContratacion().getDayOfMonth());
+//pendiente editar 
+        //Calendar cal = new GregorianCalendar();
+        Calendar cal = new GregorianCalendar();
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        cal.set(year, month, day);
+        cal.set(fechaInicioContratacion.getYear(), fechaInicioContratacion.getMonthValue()-1, fechaInicioContratacion.getDayOfMonth());
+        frmDocente.getJdcFechaInicioContratacion().setSelectedDate(cal);
+
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
