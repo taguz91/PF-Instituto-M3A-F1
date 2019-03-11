@@ -1,0 +1,16 @@
+--Recordemos que carrera con el codigo 11 se cambio a 10... actualizar en todos los datos
+
+1: Lugares
+2: Sector economico
+3: Carreras
+4: Ejes de formacion
+5: Materias
+6: Periodo lectivo
+7: Personas
+8: Profesores
+9: Alumnos
+10: Materias docentes
+11: Materias Requisitos
+12: Cursos
+13: Alumnos Carreras
+14: Alumnos Materias / Malla Alumno

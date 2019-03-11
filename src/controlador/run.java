@@ -1,6 +1,8 @@
 package controlador;
 
 import controlador.principal.VtnPrincipalCTR;
+import modelo.LlenarDocentesBD;
+import modelo.LlenarLugaresBD;
 import modelo.persona.UsuarioMD;
 import vista.principal.VtnPrincipal;
 
@@ -17,17 +19,17 @@ public class run {
         prueba.iniciar();*/
         
         //Esto lo use para llenar docentes
-        /*LlenarDocentesBD lld = new LlenarDocentesBD();
-        lld.iniciar();*/
+        LlenarDocentesBD lld = new LlenarDocentesBD();
+        lld.iniciar();
         
         //Esto lo use paa llenar alumnos  
         /*LlenarAlumnosBD lla = new LlenarAlumnosBD(); 
         lla.iniciar();*/
-        
+        /*
         UsuarioMD usuario = new UsuarioMD();
         VtnPrincipal vtn = new VtnPrincipal(); 
         VtnPrincipalCTR ctrVtnPrin = new VtnPrincipalCTR(vtn, usuario); 
-        ctrVtnPrin.iniciar();
+        ctrVtnPrin.iniciar();*/
     }
     
     public static void estiloWindows(){
