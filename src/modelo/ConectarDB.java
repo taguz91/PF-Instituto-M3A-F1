@@ -38,12 +38,16 @@ public class ConectarDB {
 
     //private String pass = "Holapostgres"; //Clave Johnny
 
+    //private String pass = "PAOLA"; //Clave Paola
+    private String pass = "NuEvOsErVeR1997"; // Clave Andres
+
    // private String pass = "linis4413"; //Clave Lina
-    private String pass = "Holapostgres"; //Clave Johnny
+    //private String pass = "Holapostgres"; //Clave Johnny
 
 
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
+
 
 
    // private String pass = "paola"; //Clave Paola-pc2
