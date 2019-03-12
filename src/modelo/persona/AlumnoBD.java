@@ -13,25 +13,24 @@ import modelo.lugar.LugarBD;
 
 public class AlumnoBD extends AlumnoMD {
 
-    ConectarDB conecta = new ConectarDB("Alumno");
-    private PersonaBD per = new PersonaBD();
+    private final ConectarDB conecta;
+    private final PersonaBD per;
 
-    public AlumnoBD() {
+    public AlumnoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.per = new PersonaBD(conecta);
     }
 
-    public AlumnoBD(int id_Alumno, String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String sector_Economico, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_SecEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        super(id_Alumno, nombre, tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, ocupacion, anio_graduacion, observacion, sector_Economico, formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia, id_SecEconomico, educacion_Superior, pension, trabaja, activo, idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
-    }
 
     public boolean guardarAlumno(SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"
                 + "	 id_persona, id_sec_economico, alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
                 + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
                 + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
-                + "	VALUES ( " + getIdPersona() + "', " + s.getId_SecEconomico() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', '" + getNivel_Academico() + "', " + isPension() + ", "
-                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getSector_Economico() + "', '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
-                + " '" + getContacto_Emergencia() + "', '" + getParentesco_Contacto() + "', '" + getNom_Contacto() + "', true);";
+                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
+                + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -117,6 +116,30 @@ public class AlumnoBD extends AlumnoMD {
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 m.setCorreo(rs.getString("persona_correo"));
+                lista.add(m);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<PersonaMD> filtrarPersona(String aguja){
+        List<PersonaMD> lista = new ArrayList();
+        String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
+                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                PersonaMD m = new PersonaMD();
+                m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
+                m.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                m.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 lista.add(m);
             }
             rs.close();

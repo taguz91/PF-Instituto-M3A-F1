@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
@@ -18,17 +19,20 @@ public class VtnAlumnoCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
+    private final ConectarDB conecta;
+    
     private FrmAlumno frmAlumno;
-    private AlumnoBD bdAlumno;
+    private final AlumnoBD bdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno) {
+    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnAlumno = vtnAlumno;
+        this.conecta = conecta;
 
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
         //Inicializamos la clase de alumno  
-        bdAlumno = new AlumnoBD();
+        bdAlumno = new AlumnoBD(conecta);
     }
 
     public void iniciar() {
@@ -65,7 +69,7 @@ public class VtnAlumnoCTR {
 
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
         ctrFrmAlumno.iniciar();
     }
 
@@ -130,11 +134,19 @@ public class VtnAlumnoCTR {
     public void editarAlumno() {
         AlumnoMD al = capturarFila();
         if (al != null) {
-            frmAlumno = new FrmAlumno();
-            FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno);
-            ctrFrm.iniciar();
-            ctrFrm.editar(al);
-            vtnAlumno.dispose();
+            int seleccion = JOptionPane.showOptionDialog( null,"Seleccione una Opcion",
+            "Selector de Opciones",JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE,null,// null para icono por defecto.
+            new Object[] { "Editar Datos Personales", "Editar Datos de Alumno"},"Editar Datos de Alumno");
+            if(seleccion == 1){
+                frmAlumno = new FrmAlumno();
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
+                ctrFrm.iniciar();
+                ctrFrm.editar(al);
+                vtnAlumno.dispose();
+            } else if(seleccion == 0){
+                
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
         }
@@ -146,14 +158,21 @@ public class VtnAlumnoCTR {
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
         } else {
-            alumno = capturarFila();
-            String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
-            alumno.setObservacion(observacion.toUpperCase());
-            if(bdAlumno.eliminarAlumno(alumno,alumno.getIdPersona()) == true){
-                JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                llenarTabla();
-            } else{
-                JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a este Estudiante? "," Eliminar Estudiante ",dialog);
+            if(result == 0)
+            {
+                alumno = capturarFila();
+                String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
+                if(observacion != null){
+                    alumno.setObservacion(observacion.toUpperCase());
+                    if(bdAlumno.eliminarAlumno(alumno,alumno.getIdPersona()) == true){
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    llenarTabla();
+                    } else{
+                        JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+                    }
+                }
             }
         }
     }

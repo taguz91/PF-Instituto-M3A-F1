@@ -10,12 +10,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.persona.TipoPersonaBD;
-import modelo.persona.TipoPersonaMD;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
@@ -29,6 +28,7 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
+    private final ConectarDB conecta; 
     
     private final String [] idiomas = {"Seleccione", "Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio", 
@@ -49,11 +49,7 @@ public class FrmPersonaCTR {
     private ArrayList<LugarMD> parroquias;
 
     //Para consultar lugares 
-    LugarBD lug = new LugarBD();
-    //Para consultar tipos de persona
-    TipoPersonaBD tip = new TipoPersonaBD();
-    //Aqui se guardaran los tipos de persona  
-    private ArrayList<TipoPersonaMD> tiposPer;
+    private final LugarBD lug;
     //Para guardar la foto  
     private FileInputStream fis = null;
     private int lonBytes = 0;
@@ -62,11 +58,13 @@ public class FrmPersonaCTR {
     private boolean editar = false;
     private int idPersona = 0;
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
+    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
+        this.conecta = conecta;
         //Inicializamos persona
-        this.persona = new PersonaBD();
+        this.persona = new PersonaBD(conecta);
+        this.lug = new LugarBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
@@ -77,8 +75,6 @@ public class FrmPersonaCTR {
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
-        //Cargamos los tipos de persona  
-        cargarTiposPersona();
 
         //Cuando se realice una accion en alguno de esos combos 
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -398,12 +394,15 @@ public class FrmPersonaCTR {
         }
 
         if (guardar) {
+
             
-            PersonaBD per = new PersonaBD();
+           // PersonaBD per = new PersonaBD();
+         //Llenar directo por el constructor
+            PersonaBD per = new PersonaBD(conecta);
+
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
-            per.setTipo(tiposPer.get(tipoPer - 1));
             per.setIdentificacion(identificacion);
             per.setPrimerNombre(priNombre);
             per.setSegundoNombre(segNombre);
@@ -480,7 +479,6 @@ public class FrmPersonaCTR {
         editar = true;
         System.out.println("Id de la persona que editaremos " + idPersona);
 
-        frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
@@ -632,17 +630,6 @@ public class FrmPersonaCTR {
         frmPersona.getLblErrorTipoResidencia().setVisible(false);
         frmPersona.getLblErrorTipoSangre().setVisible(false);
         frmPersona.getLblErrorPaisReside().setVisible(false);
-    }
-
-    public void cargarTiposPersona() {
-        tiposPer = tip.cargarTipoPersona();
-        if (tiposPer != null) {
-            frmPersona.getCmbTipoPersona().removeAllItems();
-            frmPersona.getCmbTipoPersona().addItem("Seleccione");
-            tiposPer.forEach((t) -> {
-                frmPersona.getCmbTipoPersona().addItem(t.getTipo());
-            });
-        }
     }
 
     //Metodos para los combos de residencia y ciudades natales

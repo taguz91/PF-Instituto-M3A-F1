@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -49,8 +50,8 @@ public class TxtVBuscador extends KeyAdapter {
             txt.setSize(txt.getWidth(), 20);
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
             if (!Validar.esLetrasYNumeros(ingreso)) {
-                /*JOptionPane.showMessageDialog(null, "No se permiten ingresar caracteres especiales.",
-                        "Error", JOptionPane.WARNING_MESSAGE);*/
+                JOptionPane.showMessageDialog(null, "No se permiten ingresar caracteres especiales.",
+                        "Error", JOptionPane.WARNING_MESSAGE);
 
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                 if (lbl != null) {

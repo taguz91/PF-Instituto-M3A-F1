@@ -15,24 +15,24 @@ import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
-    ConectarDB conecta = new ConectarDB("Periodo lectivo");
+    private final ConectarDB conecta;
     //Para guardar carrera en un periodo  
-    private CarreraBD car = new CarreraBD(); 
+    private final CarreraBD car;
     
     private CarreraMD carrera; 
 
-    public PeriodoLectivoBD() {
+    public PeriodoLectivoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.car = new CarreraBD(conecta);
     }
 
-    public PeriodoLectivoBD(int id_PerioLectivo, String nombre_PerLectivo, String observacion_PerLectivo, boolean activo_PerLectivo, LocalDate fecha_Inicio, LocalDate fecha_Fin, int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        super(id_PerioLectivo, nombre_PerLectivo, observacion_PerLectivo, activo_PerLectivo, fecha_Inicio, fecha_Fin, id, codigo, nombre, fechaInicio, fechaFin, modalidad, coordinador);
-    }
+    
 
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo)"
-                + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo() + "', '" + p.getFecha_Inicio()
-                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo() + "', true);";
+                + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
+                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -264,6 +264,50 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+      
+      public String Meses(LocalDate fecha){
+        String nueva_Fecha = "";
+        String nuevo_Mes = "";
+        switch(fecha.getMonth().toString()){
+            case "JANUARY":
+                nuevo_Mes = "ENERO";
+            break;
+            case "FEBRUARY":
+                nuevo_Mes = "FEBRERO";
+                break;
+            case "MARCH":
+                nuevo_Mes = "MARZO";
+                break;
+            case "APRIL":
+                nuevo_Mes = "ABRIL";
+                break;
+            case "MAY":
+                nuevo_Mes = "MAYO"; 
+                break;
+            case "JUNE":
+                nuevo_Mes = "JUNIO";
+                break;
+            case "JULY":
+                nuevo_Mes = "JULIO";
+                break;
+            case "AUGUST":
+                nuevo_Mes = "AGOSTO";
+                break;
+            case "SEPTEMBER":
+                nuevo_Mes = "SEPTIEMBRE";
+                break;
+            case "OCTOBER":
+                nuevo_Mes = "OCTUBRE";
+                break;
+            case "NOVEMBER":
+                nuevo_Mes = "NOVIEMBRE";
+                break;
+            case "DECEMBER":
+                nuevo_Mes = "DICIEMBRE";
+                break;
+        }
+        return nueva_Fecha = fecha.getDayOfMonth() + "/" + nuevo_Mes + "/" + "20" + fecha.getYear();
     }
 
 }

@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.curso.CursoBD;
@@ -26,27 +27,33 @@ public class FrmAlumnoCursoCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCurso frmAlmCurso;
     private final AlumnoCursoBD almnCurso;
+    private final ConectarDB conecta;
 
     //Modelos para las tablas que seleecionan el curso 
     DefaultTableModel mdMatPen, mdMatSelec, mdAlm;
 
     //Para cargar los combos de periodo 
-    private final PeriodoLectivoBD prd = new PeriodoLectivoBD();
+    private final PeriodoLectivoBD prd;
     private ArrayList<PeriodoLectivoMD> periodos;
     //Cargar los combos de alumnos  
-    private final AlumnoCarreraBD almCar = new AlumnoCarreraBD();
+    private final AlumnoCarreraBD almCar;
     private ArrayList<AlumnoCarreraMD> alumnos;
     //Cargar los cursos  
-    private final CursoBD cur = new CursoBD();
+    private final CursoBD cur;
     private ArrayList<CursoMD> cursosPen;
     private ArrayList<String> nombreCursos;
     //Para guardarlas materias que registraremos en base de datos  
     private ArrayList<CursoMD> cursosSelec = new ArrayList();
     
-    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso) {
+    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCurso = frmAlmCurso;
-        almnCurso = new AlumnoCursoBD();
+        this.conecta = conecta;
+        //Inicializamos todas la clases que usaremos
+        this.almnCurso = new AlumnoCursoBD(conecta);
+        this.almCar = new AlumnoCarreraBD(conecta);
+        this.prd = new PeriodoLectivoBD(conecta);
+        this.cur = new CursoBD(conecta);
         
         vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
         frmAlmCurso.show();

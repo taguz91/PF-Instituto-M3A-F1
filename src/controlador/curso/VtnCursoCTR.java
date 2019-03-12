@@ -2,6 +2,7 @@ package controlador.curso;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -19,26 +20,29 @@ public class VtnCursoCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnCurso vtnCurso;
-
+    private final ConectarDB conecta;
+    
     private final CursoBD curso;
     ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     DefaultTableModel mdTbl;
     //Para cargar el combo periodos  
-    PeriodoLectivoBD per = new PeriodoLectivoBD();
+    PeriodoLectivoBD per;
     ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     ArrayList<String> nombresC;
 
-    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso) {
+    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnCurso = vtnCurso;
+        this.conecta = conecta;
+        this.per = new PeriodoLectivoBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
         vtnCurso.show();
 
         //Inicializamos el curso  
-        curso = new CursoBD();
+        curso = new CursoBD(conecta);
     }
 
     public void iniciar() {
@@ -68,7 +72,7 @@ public class VtnCursoCTR {
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
         ctrFrmCurso.iniciar();
     }
 
@@ -76,7 +80,7 @@ public class VtnCursoCTR {
         int fila = vtnCurso.getTblCurso().getSelectedRow();
         if (fila >= 0) {
             FrmCurso frmCurso = new FrmCurso();
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
             ctrFrmCurso.iniciar();
             ctrFrmCurso.editar(cursos.get(fila));
             vtnCurso.dispose();

@@ -1,6 +1,7 @@
 package controlador.curso;
 
 import java.util.ArrayList;
+import modelo.ConectarDB;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.jornada.JornadaBD;
@@ -23,27 +24,33 @@ public class FrmCursoCTR {
 
     private final FrmCurso frmCurso;
     private final CursoBD curso;
+    private final ConectarDB conecta;
     //Para saber si estamos editando  
     private boolean editando = false;
     private int idCurso = 0;
 
     //Para cargar los datos en la tabla  
-    private final DocenteBD docen = new DocenteBD();
+    private final DocenteBD docen;
     private ArrayList<DocenteMD> docentes;
     //Para carar periodos lectivos 
-    private final PeriodoLectivoBD prd = new PeriodoLectivoBD();
+    private final PeriodoLectivoBD prd;
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para cargar materias 
-    private final MateriaBD mt = new MateriaBD();
+    private final MateriaBD mt;
     private ArrayList<MateriaMD> materias;
     //Para cargar jornadas  
-    private final JornadaBD jd = new JornadaBD();
+    private final JornadaBD jd;
     private ArrayList<JornadaMD> jornadas;
 
-    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso) {
+    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta) {
         this.frmCurso = frmCurso;
-        this.curso = new CursoBD();
-
+        this.curso = new CursoBD(conecta);
+        this.conecta = conecta;
+        this.docen = new DocenteBD(conecta);
+        this.prd = new PeriodoLectivoBD(conecta);
+        this.mt = new MateriaBD(conecta);
+        this.jd = new JornadaBD(conecta);
+        
         vtnPrin.getDpnlPrincipal().add(frmCurso);
         frmCurso.show();
     }
