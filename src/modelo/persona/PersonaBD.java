@@ -64,8 +64,6 @@ public class PersonaBD extends PersonaMD {
 
     public void insertarPersonaConFoto() {
         //Aqui id_persona ya no va porque es autoincrementable
-        //TipoPersona si porque necesitamos saber si es estudiante
-        //docente u otro 
         String nsql = "INSERT INTO public.\"Personas\"(\n"
                 + "id_lugar_natal, id_lugar_residencia, persona_foto,"
                 + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
@@ -166,7 +164,7 @@ public class PersonaBD extends PersonaMD {
                     + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
                     + " WHERE id_persona = " + aguja + ";";
         }
-        
+
         System.out.println(sql);
 
         if (conecta.nosql(sql) == null) {
@@ -252,22 +250,37 @@ public class PersonaBD extends PersonaMD {
     }
 
     //Consultamos unicamente a las personas que son alumnos  
-    public ArrayList<PersonaMD> cargarPorTipo(int idTipoPersona) {
-        String sql = "SELECT id_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
-                + " persona_sexo, persona_estado_civil, persona_etnia, "
-                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
-                + " persona_celular, persona_correo, persona_fecha_registro,"
-                + " persona_discapacidad, persona_tipo_discapacidad,"
-                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
-                + " persona_calle_principal, persona_numero_casa,"
-                + " persona_calle_secundaria, persona_referencia, "
-                + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' "
-                + "AND id_tipo_persona = " + idTipoPersona + ";";
+    public ArrayList<PersonaMD> cargarAlumnos() {
+        String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
+                + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_primer_nombre, \n"
+                + "persona_segundo_nombre, persona_genero, persona_sexo, \n"
+                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, \n"
+                + "persona_tipo_sangre, persona_telefono, persona_celular, \n"
+                + "persona_correo, persona_fecha_registro, persona_discapacidad, \n"
+                + "persona_tipo_discapacidad, persona_porcenta_discapacidad, \n"
+                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, \n"
+                + "persona_calle_secundaria, persona_referencia, persona_sector, \n"
+                + "persona_idioma, persona_tipo_residencia, persona_fecha_nacimiento, persona_activa\n"
+                + "	FROM public.\"Personas\", public.\"Alumnos\" \n"
+                + "	where \"Personas\".id_persona = \"Alumnos\".id_persona;";
+        return consultar(sql);
+    }
+
+    public ArrayList<PersonaMD> cargarDocentes() {
+        String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
+                + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_primer_nombre, \n"
+                + "persona_segundo_nombre, persona_genero, persona_sexo, \n"
+                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, \n"
+                + "persona_tipo_sangre, persona_telefono, persona_celular, \n"
+                + "persona_correo, persona_fecha_registro, persona_discapacidad, \n"
+                + "persona_tipo_discapacidad, persona_porcenta_discapacidad, \n"
+                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, \n"
+                + "persona_calle_secundaria, persona_referencia, persona_sector, \n"
+                + "persona_idioma, persona_tipo_residencia, persona_fecha_nacimiento, persona_activa\n"
+                + "	FROM public.\"Personas\", public.\"Docentes\" \n"
+                + "	where \"Personas\".id_persona = \"Docentes\".id_persona;";
         return consultar(sql);
     }
 

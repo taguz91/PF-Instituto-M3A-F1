@@ -149,17 +149,10 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         return cmbPaisReside;
     }
 
-    public JComboBox<String> getCmbTipoPersona() {
-        return cmbTipoPersona;
-    }
-
     public JLabel getLblErrorPaisReside() {
         return lblErrorPaisReside;
     }
 
-    public JLabel getLblErrorTipoPersona() {
-        return lblErrorTipoPersona;
-    }
     
 
     /**
@@ -171,7 +164,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblErrorTipoPersona = new javax.swing.JLabel();
         cmbTipoId = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtIdentificacion = new javax.swing.JTextField();
@@ -283,7 +275,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel36 = new javax.swing.JLabel();
         cmbPaisReside = new javax.swing.JComboBox<>();
         lblErrorPaisReside = new javax.swing.JLabel();
-        cmbTipoPersona = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -293,16 +284,13 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         setTitle("CREAR NUEVA PERSONA");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblErrorTipoPersona.setText("Tipo persona");
-        getContentPane().add(lblErrorTipoPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
-
         cmbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "CEDULA", "PASAPORTE" }));
         cmbTipoId.setBorder(null);
-        getContentPane().add(cmbTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 130, -1));
+        getContentPane().add(cmbTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 130, -1));
 
         jLabel2.setText("Identificacion *");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, 20));
-        getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 130, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, 20));
+        getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 130, -1));
 
         jLabel3.setText("Primer Apellido *");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 103, 20));
@@ -477,7 +465,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btnBuscarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, -1, -1));
 
         btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, 30, 20));
+        getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 30, 20));
         getContentPane().add(jdcFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 90, 130, -1));
 
         lblErrorCelular.setForeground(new java.awt.Color(204, 0, 0));
@@ -486,7 +474,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
 
         lblErrorIdentificacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorIdentificacion.setText("Solo debe ingresar letras.");
-        getContentPane().add(lblErrorIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 190, 20));
+        getContentPane().add(lblErrorIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 190, 20));
 
         lblErrorPorcentaje.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPorcentaje.setText("Solo debe ingresar letras.");
@@ -615,11 +603,8 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         lblErrorPaisReside.setText("Solo debe ingresar letras.");
         getContentPane().add(lblErrorPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 310, -1));
 
-        cmbTipoPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "SOLTERO/A", "CASADO/A", "DIVORCIADO/A", "UNION LIBRE", "VIUDO/A" }));
-        getContentPane().add(cmbTipoPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 133, -1));
-
         jLabel18.setText("Tipo id *");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, 20));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -774,14 +759,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
 
     public void setCmbTipoSangre(JComboBox<String> cmbTipoSangre) {
         this.cmbTipoSangre = cmbTipoSangre;
-    }
-
-    public JLabel getjLabel1() {
-        return lblErrorTipoPersona;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.lblErrorTipoPersona = jLabel1;
     }
 
     public JLabel getjLabel10() {
@@ -1217,7 +1194,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbSexo;
     private javax.swing.JComboBox<String> cmbTipoDiscapacidad;
     private javax.swing.JComboBox<String> cmbTipoId;
-    private javax.swing.JComboBox<String> cmbTipoPersona;
     private javax.swing.JComboBox<String> cmbTipoResidencia;
     private javax.swing.JComboBox<String> cmbTipoSangre;
     private javax.swing.JLabel jLabel10;
@@ -1292,7 +1268,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblErrorSexo;
     private javax.swing.JLabel lblErrorTelefono;
     private javax.swing.JLabel lblErrorTipoDiscapacidad;
-    private javax.swing.JLabel lblErrorTipoPersona;
     private javax.swing.JLabel lblErrorTipoResidencia;
     private javax.swing.JLabel lblErrorTipoSangre;
     private javax.swing.JLabel lblFoto;
