@@ -38,7 +38,7 @@ public class FrmAlumnoCTR {
     private boolean editar_2 = false;
     private static int validar = 0; //Variable para saber a que textFiel se valida
 
-    private SectorEconomicoBD sectorE = new SectorEconomicoBD(new ConectarDB());
+    private SectorEconomicoBD sectorE = new SectorEconomicoBD(new ConectarDB("Sector economico"));
 
     //Para cargar los sectores economico  
     

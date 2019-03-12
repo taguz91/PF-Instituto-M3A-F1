@@ -87,7 +87,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new UsuarioBD(), new ConectarDB());
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new UsuarioBD(), new ConectarDB("Desde login generico"));
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 
