@@ -4,14 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Method;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
+import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import vista.persona.FrmAlumno;
+import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
 import vista.principal.VtnPrincipal;
 
@@ -145,7 +148,14 @@ public class VtnAlumnoCTR {
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
             } else if(seleccion == 0){
-                
+                PersonaBD extraer = new PersonaBD();
+                FrmPersona frmPersona = new FrmPersona();
+                PersonaMD persona = new PersonaMD();
+                persona = extraer.buscarPersona(al.getIdPersona());
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona);
+                ctrPers.iniciar();
+                ctrPers.editar(persona);
+                vtnAlumno.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");

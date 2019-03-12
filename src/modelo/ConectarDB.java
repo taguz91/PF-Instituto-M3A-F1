@@ -17,34 +17,33 @@ public class ConectarDB {
     private Statement st;
     private ResultSet rs;
 
-    //Si se cambia el url no borrar solo comentar 
+    //Si se cambia el url no borrar solo comentar
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
       private String url = "jdbc:postgresql://localhost:5432/BDPFMallaEstudiante"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoCursosM3A"; //BD Johnny PCNOOB
 
-    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstituto"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
 
-    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA 
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
 
-   //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA 
+   //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     private String user = "postgres";
 
 
     //private String pass = "Holapostgres"; //Clave Johnny
 
+
     private String pass = "linis4413"; //Clave Lina
     //private String pass = "Holapostgres"; //Clave Johnny
 
-	
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-
 
    // private String pass = "paola"; //Clave Paola-pc2
 
@@ -52,14 +51,13 @@ public class ConectarDB {
 
     }
 
- 
 
     public ConectarDB(String mensaje) {
 
         try {
-            //Cargamos el driver  
+            //Cargamos el driver
             Class.forName("org.postgresql.Driver");
-            //Nos conectamos  
+            //Nos conectamos
             ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
 
@@ -80,11 +78,11 @@ public class ConectarDB {
 
     public SQLException nosql(String noSql) {
         try {
-            //Variable para las transacciones  
+            //Variable para las transacciones
             st = ct.createStatement();
-            //Ejecutamos la sentencia SQL  
+            //Ejecutamos la sentencia SQL
             st.execute(noSql);
-            //Cerramos la consulta  
+            //Cerramos la consulta
             st.close();
             //Si todo salio bienn retornamos nulo
             return null;
@@ -96,7 +94,7 @@ public class ConectarDB {
 
     public ResultSet sql(String sql) {
         try {
-            //Iniciamos la variable para las transacciones  
+            //Iniciamos la variable para las transacciones
             st = ct.createStatement();
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);

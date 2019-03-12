@@ -192,14 +192,6 @@ public class FrmPrdLectivoCTR {
         calendar_Fin.clear();
         calendar_Fin.set(mdPerLectivo.getFecha_Fin().getYear(), mdPerLectivo.getFecha_Fin().getMonthValue() - 1, mdPerLectivo.getFecha_Fin().getDayOfMonth());
 
-//        String dia_Inicio, mes_Inicio, anio_Inicio;
-//        String dia_Fin, mes_Fin, anio_Fin;
-//        dia_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getDayOfMonth());
-//        mes_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getMonthValue());
-//        anio_Inicio = String.valueOf(mdPerLectivo.getFecha_Inicio().getYear());
-//        dia_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getDayOfMonth());
-//        mes_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getMonthValue());
-//        anio_Fin = String.valueOf(mdPerLectivo.getFecha_Fin().getYear());
         frmPrdLectivo.getCbx_Carreras().setSelectedItem(mdCarrera.getNombre());
         frmPrdLectivo.getTxt_Nombre().setText(mdPerLectivo.getNombre_PerLectivo());
         frmPrdLectivo.getDcr_FecInicio().setSelectedDate(calendar_Inicio);
