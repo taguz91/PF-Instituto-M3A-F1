@@ -825,140 +825,6 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.toedter.components.JLocaleChooser" name="cmbIdiomas">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="121">
-            <StringItem index="0" value="Seleccione"/>
-            <StringItem index="1" value="&#xe1;rabe (Emiratos &#xc1;rabes Unidos)"/>
-            <StringItem index="2" value="&#xe1;rabe (Jordania)"/>
-            <StringItem index="3" value="&#xe1;rabe (Siria)"/>
-            <StringItem index="4" value="croata (Croacia)"/>
-            <StringItem index="5" value="franc&#xe9;s (B&#xe9;lgica)"/>
-            <StringItem index="6" value="espa&#xf1;ol (Panam&#xe1;)"/>
-            <StringItem index="7" value="malt&#xe9;s (Malta)"/>
-            <StringItem index="8" value="espa&#xf1;ol (Venezuela)"/>
-            <StringItem index="9" value="chino (Taiw&#xe1;n)"/>
-            <StringItem index="10" value="dan&#xe9;s (Dinamarca)"/>
-            <StringItem index="11" value="espa&#xf1;ol (Puerto Rico)"/>
-            <StringItem index="12" value="vietnamita (Vietnam)"/>
-            <StringItem index="13" value="ingl&#xe9;s (Estados Unidos)"/>
-            <StringItem index="14" value="serbio (Montenegro)"/>
-            <StringItem index="15" value="sueco (Suecia)"/>
-            <StringItem index="16" value="espa&#xf1;ol (Bolivia)"/>
-            <StringItem index="17" value="ingl&#xe9;s (Singapur)"/>
-            <StringItem index="18" value="&#xe1;rabe (Bahr&#xe1;in)"/>
-            <StringItem index="19" value="&#xe1;rabe (Arabia Saudita)"/>
-            <StringItem index="20" value="&#xe1;rabe (Yemen)"/>
-            <StringItem index="21" value="hindi (India)"/>
-            <StringItem index="22" value="ingl&#xe9;s (Malta)"/>
-            <StringItem index="23" value="fin&#xe9;s (Finlandia)"/>
-            <StringItem index="24" value="serbio (lat&#xed;n"/>
-            <StringItem index="25" value="Bosnia y Hercegovina)"/>
-            <StringItem index="26" value="ucraniano (Ucrania)"/>
-            <StringItem index="27" value="franc&#xe9;s (Suiza)"/>
-            <StringItem index="28" value="espa&#xf1;ol (Argentina)"/>
-            <StringItem index="29" value="&#xe1;rabe (Egipto)"/>
-            <StringItem index="30" value="japon&#xe9;s (Jap&#xf3;n"/>
-            <StringItem index="31" value="JP)"/>
-            <StringItem index="32" value="espa&#xf1;ol (El Salvador)"/>
-            <StringItem index="33" value="portugu&#xe9;s (Brasil)"/>
-            <StringItem index="34" value="island&#xe9;s (Islandia)"/>
-            <StringItem index="35" value="checo (Chequia)"/>
-            <StringItem index="36" value="polaco (Polonia)"/>
-            <StringItem index="37" value="catal&#xe1;n (Espa&#xf1;a)"/>
-            <StringItem index="38" value="serbio (Serbia y Montenegro)"/>
-            <StringItem index="39" value="malayo (Malasia)"/>
-            <StringItem index="40" value="espa&#xf1;ol (Espa&#xf1;a)"/>
-            <StringItem index="41" value="espa&#xf1;ol (Colombia)"/>
-            <StringItem index="42" value="b&#xfa;lgaro (Bulgaria)"/>
-            <StringItem index="43" value="serbio (Bosnia y Hercegovina)"/>
-            <StringItem index="44" value="espa&#xf1;ol (Paraguay)"/>
-            <StringItem index="45" value="espa&#xf1;ol (Ecuador)"/>
-            <StringItem index="46" value="espa&#xf1;ol (Estados Unidos)"/>
-            <StringItem index="47" value="&#xe1;rabe (Sud&#xe1;n)"/>
-            <StringItem index="48" value="rumano (Rumania)"/>
-            <StringItem index="49" value="ingl&#xe9;s (Filipinas)"/>
-            <StringItem index="50" value="&#xe1;rabe (T&#xfa;nez)"/>
-            <StringItem index="51" value="serbio (lat&#xed;n"/>
-            <StringItem index="52" value="Montenegro)"/>
-            <StringItem index="53" value="espa&#xf1;ol (Guatemala)"/>
-            <StringItem index="54" value="coreano (Corea del Sur)"/>
-            <StringItem index="55" value="griego (Chipre)"/>
-            <StringItem index="56" value="espa&#xf1;ol (M&#xe9;xico)"/>
-            <StringItem index="57" value="ruso (Rusia)"/>
-            <StringItem index="58" value="espa&#xf1;ol (Honduras)"/>
-            <StringItem index="59" value="chino (Hong Kong)"/>
-            <StringItem index="60" value="noruego (Noruega"/>
-            <StringItem index="61" value="Nynorsk)"/>
-            <StringItem index="62" value="h&#xfa;ngaro (Hungr&#xed;a)"/>
-            <StringItem index="63" value="tailand&#xe9;s (Tailandia)"/>
-            <StringItem index="64" value="&#xe1;rabe (Iraq)"/>
-            <StringItem index="65" value="espa&#xf1;ol (Chile)"/>
-            <StringItem index="66" value="&#xe1;rabe (Marruecos)"/>
-            <StringItem index="67" value="irland&#xe9;s (Irlanda)"/>
-            <StringItem index="68" value="turco (Turqu&#xed;a)"/>
-            <StringItem index="69" value="estonio (Estonia)"/>
-            <StringItem index="70" value="&#xe1;rabe (Qatar)"/>
-            <StringItem index="71" value="portugu&#xe9;s (Portugal)"/>
-            <StringItem index="72" value="franc&#xe9;s (Luxemburgo)"/>
-            <StringItem index="73" value="&#xe1;rabe (Om&#xe1;n)"/>
-            <StringItem index="74" value="alban&#xe9;s (Albania)"/>
-            <StringItem index="75" value="espa&#xf1;ol (Rep&#xfa;blica Dominicana)"/>
-            <StringItem index="76" value="espa&#xf1;ol (Cuba)"/>
-            <StringItem index="77" value="ingl&#xe9;s (Nueva Zelanda)"/>
-            <StringItem index="78" value="serbio (Serbia)"/>
-            <StringItem index="79" value="alem&#xe1;n (Suiza)"/>
-            <StringItem index="80" value="espa&#xf1;ol (Uruguay)"/>
-            <StringItem index="81" value="griego (Grecia)"/>
-            <StringItem index="82" value="hebreo (Israel)"/>
-            <StringItem index="83" value="ingl&#xe9;s (Sud&#xe1;frica)"/>
-            <StringItem index="84" value="tailand&#xe9;s (Tailandia"/>
-            <StringItem index="85" value="TH)"/>
-            <StringItem index="86" value="franc&#xe9;s (Francia)"/>
-            <StringItem index="87" value="alem&#xe1;n (Austria)"/>
-            <StringItem index="88" value="noruego (Noruega)"/>
-            <StringItem index="89" value="ingl&#xe9;s (Australia)"/>
-            <StringItem index="90" value="neerland&#xe9;s (Holanda)"/>
-            <StringItem index="91" value="franc&#xe9;s (Canad&#xe1;)"/>
-            <StringItem index="92" value="let&#xf3;n (Letonia)"/>
-            <StringItem index="93" value="alem&#xe1;n (Luxemburgo)"/>
-            <StringItem index="94" value="espa&#xf1;ol (Costa Rica)"/>
-            <StringItem index="95" value="&#xe1;rabe (Kuwait)"/>
-            <StringItem index="96" value="&#xe1;rabe (Libia)"/>
-            <StringItem index="97" value="italiano (Suiza)"/>
-            <StringItem index="98" value="alem&#xe1;n (Alemania)"/>
-            <StringItem index="99" value="&#xe1;rabe (Argelia)"/>
-            <StringItem index="100" value="eslovaco (Eslovaquia)"/>
-            <StringItem index="101" value="lituano (Lituania)"/>
-            <StringItem index="102" value="italiano (Italia)"/>
-            <StringItem index="103" value="ingl&#xe9;s (Irlanda)"/>
-            <StringItem index="104" value="chino (Singapur)"/>
-            <StringItem index="105" value="ingl&#xe9;s (Canad&#xe1;)"/>
-            <StringItem index="106" value="neerland&#xe9;s (B&#xe9;lgica)"/>
-            <StringItem index="107" value="chino (China)"/>
-            <StringItem index="108" value="japon&#xe9;s (Jap&#xf3;n)"/>
-            <StringItem index="109" value="alem&#xe1;n (Grecia)"/>
-            <StringItem index="110" value="serbio (lat&#xed;n"/>
-            <StringItem index="111" value="Serbia)"/>
-            <StringItem index="112" value="ingl&#xe9;s (India)"/>
-            <StringItem index="113" value="&#xe1;rabe (L&#xed;bano)"/>
-            <StringItem index="114" value="espa&#xf1;ol (Nicaragua)"/>
-            <StringItem index="115" value="macedonio (Macedonia)"/>
-            <StringItem index="116" value="bielorruso (Bielorrusia)"/>
-            <StringItem index="117" value="esloveno (Eslovenia)"/>
-            <StringItem index="118" value="espa&#xf1;ol (Per&#xfa;)"/>
-            <StringItem index="119" value="indonesio (Indonesia)"/>
-            <StringItem index="120" value="ingl&#xe9;s (Reino Unido)"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="650" y="130" width="133" height="-1"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblFoto">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1066,19 +932,6 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="10" y="230" width="240" height="-1"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblErrorPriNombre">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="cc" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Solo debe ingresar letras."/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="70" width="240" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -1473,7 +1326,37 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="10" width="-1" height="20"/>
+          <AbsoluteConstraints x="10" y="0" width="-1" height="20"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbIdiomas">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="Seleccione"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="650" y="130" width="130" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblErrorPriNombre">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="cc" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Solo debe ingresar letras."/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="70" width="240" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
