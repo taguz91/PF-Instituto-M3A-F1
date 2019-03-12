@@ -15,18 +15,18 @@ import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
-    ConectarDB conecta = new ConectarDB("Periodo lectivo");
+    private final ConectarDB conecta;
     //Para guardar carrera en un periodo  
-    private CarreraBD car = new CarreraBD(); 
+    private final CarreraBD car;
     
     private CarreraMD carrera; 
 
-    public PeriodoLectivoBD() {
+    public PeriodoLectivoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.car = new CarreraBD(conecta);
     }
 
-    public PeriodoLectivoBD(int id_PerioLectivo, String nombre_PerLectivo, String observacion_PerLectivo, boolean activo_PerLectivo, LocalDate fecha_Inicio, LocalDate fecha_Fin, int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        super(id_PerioLectivo, nombre_PerLectivo, observacion_PerLectivo, activo_PerLectivo, fecha_Inicio, fecha_Fin, id, codigo, nombre, fechaInicio, fechaFin, modalidad, coordinador);
-    }
+    
 
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"

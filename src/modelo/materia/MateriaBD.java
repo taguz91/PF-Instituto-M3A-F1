@@ -12,8 +12,12 @@ import modelo.carrera.CarreraMD;
  */
 public class MateriaBD extends MateriaMD {
 
-    ConectarDB conecta = new ConectarDB("Materia");
+    private final ConectarDB conecta;
 
+    public MateriaBD(ConectarDB conecta) {
+        this.conecta = conecta;
+    }
+   
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"

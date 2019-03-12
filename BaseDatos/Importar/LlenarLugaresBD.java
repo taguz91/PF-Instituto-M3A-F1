@@ -22,11 +22,11 @@ public class LlenarLugaresBD {
         if (lugares != null) {
             for (int i = 0; i < lugares.size(); i++) {
                 //Aqui guardamos lugares 
-                /*System.out.println(lugares.get(i));
+                System.out.println(lugares.get(i));
                 insertarDistritosDePais(lugares.get(i));
                 System.out.println("");
-                 */
-                System.out.println("Lugares ---- "+lugares.get(i)); 
+                 
+                /*System.out.println("Lugares ---- "+lugares.get(i)); 
                 distritos = cargarDistritosDePais(lugares.get(i));
                 for (int j = 0; j < distritos.size(); j++) {
                     if (!"-".equals(distritos.get(j))) {
@@ -34,7 +34,7 @@ public class LlenarLugaresBD {
                         insertarCiudadesDeDistritos(distritos.get(j)); 
                     }
                 }
-                System.out.println("");
+                System.out.println("");*/
             }
             System.out.println("Numero de paises " + lugares.size());
         }

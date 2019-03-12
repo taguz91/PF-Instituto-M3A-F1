@@ -13,15 +13,14 @@ import modelo.lugar.LugarBD;
 
 public class AlumnoBD extends AlumnoMD {
 
-    ConectarDB conecta = new ConectarDB("Alumno");
-    private PersonaBD per = new PersonaBD();
+    private final ConectarDB conecta;
+    private final PersonaBD per;
 
-    public AlumnoBD() {
+    public AlumnoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.per = new PersonaBD(conecta);
     }
 
-    public AlumnoBD(int id_Alumno, String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String sector_Economico, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_SecEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, TipoPersonaBD tipo, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        super(id_Alumno, nombre, tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, ocupacion, anio_graduacion, observacion, sector_Economico, formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia, id_SecEconomico, educacion_Superior, pension, trabaja, activo, idPersona, tipo, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
-    }
 
     public boolean guardarAlumno(SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"

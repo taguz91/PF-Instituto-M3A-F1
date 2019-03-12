@@ -10,12 +10,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.persona.TipoPersonaBD;
-import modelo.persona.TipoPersonaMD;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
@@ -29,26 +28,16 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
+    private final ConectarDB conecta; 
     
-    private final String [] idiomas = {"Seleccione", "Árabe", "Árabe", "Árabe", 
-        "Croata", "Francés", "Español", "Maltés", "Español", "Chino", "Danés", 
-        "Español", "Vietnamita", "Inglés", "Serbio", "Sueco", "Español", 
-        "Inglés", "Árabe", "Árabe", "Árabe", "Hindi", "Inglés", "Finés", 
-        "Serbio", "Bosnia", "Ucraniano", "Francés", "Español", "Árabe", 
-        "Japonés", "Español", "Portugués", "Islandés", "Checo", "Polaco", 
-        "Catalán", "Serbio", "Malayo", "Español", "Español", "Búlgaro", 
-        "Serbio", "Español", "Español", "Español", "Árabe", "Rumano", 
-        "Inglés", "Árabe", "Serbio", "Español", "Coreano", 
-        "Griego", "Español", "Ruso", "Español", "Chino", "Noruego", "Nynorsk", 
-        "Húngaro", "Tailandés", "Árabe", "Español", "Árabe", "Irlandés", "Turco", 
-        "Estonio", "Árabe", "Portugués", "Francés", "Árabe", "Albanés", "Español", 
-        "Español", "Inglés", "Serbio", "Alemán", "Español", "Griego", "Hebreo", 
-        "Inglés", "Tailandés", "TH)", "Francés", "Alemán", "Noruego", "Inglés", 
-        "Neerlandés", "Francés", "Letón", "Alemán", "Español", "Árabe", "Árabe", 
-        "Italiano", "Alemán", "Árabe", "Eslovaco", "Lituano", "Italiano", "Inglés", 
-        "Chino", "Inglés", "Neerlandés", "Chino", "Japonés", "Alemán", "Serbio", 
-        "Inglés", "Árabe", "Español", "Macedonio", "Bielorruso", "Esloveno", 
-        "Español", "Indonesio", "Inglés",};
+    private final String [] idiomas = {"Seleccione", "Árabe", "Croata", "Francés",
+        "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio", 
+        "Sueco", "Hindi", "Finés", "Bosnia", "Ucraniano", "Japonés", "Portugués", 
+        "Islandés", "Checo", "Polaco", "Catalán", "Malayo", "Búlgaro", "Rumano", 
+        "Coreano", "Griego", "Ruso", "Noruego", "Nynorsk", "Húngaro", "Tailandés",
+        "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH", 
+        "Neerlandés", "Letón", "Italiano", "Eslovaco", "Lituano", "Italiano",
+        "Macedonio", "Bielorruso", "Esloveno", "Indonesio",};
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -60,11 +49,7 @@ public class FrmPersonaCTR {
     private ArrayList<LugarMD> parroquias;
 
     //Para consultar lugares 
-    LugarBD lug = new LugarBD();
-    //Para consultar tipos de persona
-    TipoPersonaBD tip = new TipoPersonaBD();
-    //Aqui se guardaran los tipos de persona  
-    private ArrayList<TipoPersonaMD> tiposPer;
+    private final LugarBD lug;
     //Para guardar la foto  
     private FileInputStream fis = null;
     private int lonBytes = 0;
@@ -73,11 +58,13 @@ public class FrmPersonaCTR {
     private boolean editar = false;
     private int idPersona = 0;
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona) {
+    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
+        this.conecta = conecta;
         //Inicializamos persona
-        this.persona = new PersonaBD();
+        this.persona = new PersonaBD(conecta);
+        this.lug = new LugarBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmPersona);
         frmPersona.show();
@@ -88,8 +75,6 @@ public class FrmPersonaCTR {
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
-        //Cargamos los tipos de persona  
-        cargarTiposPersona();
 
         //Cuando se realice una accion en alguno de esos combos 
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -409,12 +394,15 @@ public class FrmPersonaCTR {
         }
 
         if (guardar) {
-            //Llenar directo por el constructor
-            PersonaBD per = new PersonaBD();
+
+            
+           // PersonaBD per = new PersonaBD();
+         //Llenar directo por el constructor
+            PersonaBD per = new PersonaBD(conecta);
+
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
-            per.setTipo(tiposPer.get(tipoPer - 1));
             per.setIdentificacion(identificacion);
             per.setPrimerNombre(priNombre);
             per.setSegundoNombre(segNombre);
@@ -465,6 +453,11 @@ public class FrmPersonaCTR {
             System.out.println("Existen errores en los formularios");
         }
 
+  ///////////////////////////////////////////////////////////////////////////
+       
+  
+  
+        
     }
 
     public void salirBoton() {
@@ -486,7 +479,6 @@ public class FrmPersonaCTR {
         editar = true;
         System.out.println("Id de la persona que editaremos " + idPersona);
 
-        frmPersona.getCmbTipoPersona().setSelectedItem(per.getTipo());
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
@@ -502,8 +494,10 @@ public class FrmPersonaCTR {
         frmPersona.getTxtTelefono().setText(per.getTelefono());
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
-        frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
-        System.out.println("" + per.getSexo());
+
+        //frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        System.out.println(""+per.getSexo());
+
         frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
@@ -636,17 +630,6 @@ public class FrmPersonaCTR {
         frmPersona.getLblErrorTipoResidencia().setVisible(false);
         frmPersona.getLblErrorTipoSangre().setVisible(false);
         frmPersona.getLblErrorPaisReside().setVisible(false);
-    }
-
-    public void cargarTiposPersona() {
-        tiposPer = tip.cargarTipoPersona();
-        if (tiposPer != null) {
-            frmPersona.getCmbTipoPersona().removeAllItems();
-            frmPersona.getCmbTipoPersona().addItem("Seleccione");
-            tiposPer.forEach((t) -> {
-                frmPersona.getCmbTipoPersona().addItem(t.getTipo());
-            });
-        }
     }
 
     //Metodos para los combos de residencia y ciudades natales

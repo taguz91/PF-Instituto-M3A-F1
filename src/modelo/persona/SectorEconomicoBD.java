@@ -14,7 +14,11 @@ import modelo.ConectarDB;
  */
 public class SectorEconomicoBD extends SectorEconomicoMD {
 
-    ConectarDB conecta = new ConectarDB("Sector economico");
+    private final ConectarDB conecta;
+
+    public SectorEconomicoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+    }
 
     public List<SectorEconomicoMD> capturarSectores() {
         List<SectorEconomicoMD> sectores = new ArrayList();

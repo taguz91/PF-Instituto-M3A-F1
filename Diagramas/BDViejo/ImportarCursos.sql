@@ -36,7 +36,7 @@ INSERT INTO public."PeriodoLectivo"(
 ) ||' '|| EXTRACT(MONTH from per_fechainicio) || '/' || EXTRACT(YEAR from per_fechainicio)
   ||' - '|| EXTRACT(MONTH from per_fechafin) || '/' || EXTRACT(YEAR from per_fechafin), 
   per_fechainicio, per_fechafin, 'true'
-	FROM public.periodolectivos ORDER BY per_fechafin DESC;
+FROM public.periodolectivos ORDER BY per_fechafin DESC;
 
 DROP TABLE public.periodolectivos
 
@@ -57,8 +57,7 @@ delimiters ';' with CSV HEADER;
 
 -- DROP TABLE public.materiaperiodos;
 
-CREATE TABLE public.materiaperiodos
-(
+CREATE TABLE public.materiaperiodos(
     matp_numero integer,
     matp_periodolectivo integer,
     matp_profesor integer,
@@ -66,10 +65,7 @@ CREATE TABLE public.materiaperiodos
     matp_jornada integer,
     matp_paralelo character(2),
     matp_capacidad integer 
-)
-WITH (
-    OIDS = FALSE
-)
+)WITH (OIDS = FALSE);
 
 Copy materiaperiodos ("matp_numero", "matp_periodolectivo", "matp_profesor", "matp_materia", 
 "matp_jornada", "matp_paralelo", "matp_capacidad")

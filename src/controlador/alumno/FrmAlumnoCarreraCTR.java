@@ -1,17 +1,15 @@
 package controlador.alumno;
 
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
-import modelo.jornada.JornadaBD;
-import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
@@ -27,30 +25,36 @@ public class FrmAlumnoCarreraCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCarrera frmAlmCarrera;
+    private final ConectarDB conecta;
     private final AlumnoCarreraBD almnCarrera;
 
     //Modelo de la tabla  
     DefaultTableModel mdTbl;
 
     //Para rellenar los combo box
-    AlumnoBD almn = new AlumnoBD();
+    AlumnoBD almn;
     ArrayList<AlumnoMD> alumnos;
 
-    CarreraBD carr = new CarreraBD();
+    CarreraBD carr;
     ArrayList<CarreraMD> carreras;
 
-    MateriaBD mat = new MateriaBD();
+    MateriaBD mat;
     ArrayList<MateriaMD> materias;
     //Para guardar la malla
-    MallaAlumnoBD malla = new MallaAlumnoBD();
+    MallaAlumnoBD malla;
 
     private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
 
-    public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera) {
+    public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
-        this.almnCarrera = new AlumnoCarreraBD();
-
+        this.conecta = conecta;
+        this.almnCarrera = new AlumnoCarreraBD(conecta);
+        this.mat = new MateriaBD(conecta);
+        this.malla = new MallaAlumnoBD(conecta);
+        this.almn = new AlumnoBD(conecta);
+        this.carr = new CarreraBD(conecta);
+        
         vtnPrin.getDpnlPrincipal().add(frmAlmCarrera);
         frmAlmCarrera.show();
     }

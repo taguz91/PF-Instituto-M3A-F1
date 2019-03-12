@@ -1,24 +1,14 @@
 package controlador.prdlectivo;
 
-import controlador.persona.FrmAlumnoCTR;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.AlumnoBD;
-import modelo.persona.PersonaMD;
-import vista.persona.FrmAlumno;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
@@ -31,14 +21,16 @@ public class VtnPrdLectivoCTR {
     
     private final VtnPrincipal vtnPrin;
     private final VtnPrdLectivo vtnPrdLectivo; 
-    private PeriodoLectivoBD bdPerLectivo;
+    private final PeriodoLectivoBD bdPerLectivo;
     private FrmPrdLectivo frmPerLectivo;
+    private final ConectarDB conecta;
 
-    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo) {
+    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnPrdLectivo = vtnPrdLectivo;
+        this.conecta = conecta;
         
-        bdPerLectivo = new PeriodoLectivoBD();
+        bdPerLectivo = new PeriodoLectivoBD(conecta);
         
         vtnPrin.getDpnlPrincipal().add(vtnPrdLectivo);   
         vtnPrdLectivo.show(); 
@@ -71,7 +63,7 @@ public class VtnPrdLectivoCTR {
     
     public void abrirFrmPrdLectivo(){
         FrmPrdLectivo vista = new FrmPrdLectivo();
-        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista);
+        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta);
         formulario.iniciar();
     }
     
@@ -154,7 +146,7 @@ public class VtnPrdLectivoCTR {
         CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
-            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo);
+            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta);
             ctrFrm.iniciar();
             carrera.setNombre(periodo.getCarrera().getNombre());
             ctrFrm.editar(periodo,carrera);
