@@ -1,19 +1,15 @@
 package controlador.persona;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.persona.AlumnoMD;
+import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaMD;
-import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
-import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
 
@@ -29,13 +25,17 @@ public class VtnDocenteCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnDocente vtnDocente;
     private final DocenteBD docente;
+    private final ConectarDB conecta;
+    
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente) {
+    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
-        docente = new DocenteBD();
+        this.conecta = conecta;
+        
+        docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
         vtnDocente.show();
     }
@@ -72,25 +72,25 @@ public class VtnDocenteCTR {
         for (int i = vtnDocente.getTblDocente().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        List<PersonaMD> lista = docente.llenarTabla();
+        docentesMD = docente.cargarDocentes();
         int columnas = modelo_Tabla.getColumnCount();
-        for (int i = 0; i < lista.size(); i++) {
+        for (int i = 0; i < docentesMD .size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            vtnDocente.getTblDocente().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
-            vtnDocente.getTblDocente().setValueAt(lista.get(i).getIdentificacion(), i, 1);
-            vtnDocente.getTblDocente().setValueAt(lista.get(i).getPrimerNombre()
-                    + " " + lista.get(i).getSegundoNombre() + lista.get(i).getPrimerApellido()
-                    + " " + lista.get(i).getSegundoApellido(), i, 2);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD .get(i).getIdPersona()), i, 0);
+            vtnDocente.getTblDocente().setValueAt(docentesMD .get(i).getIdentificacion(), i, 1);
+            vtnDocente.getTblDocente().setValueAt(docentesMD .get(i).getPrimerNombre()
+                    + " " + docentesMD .get(i).getSegundoNombre() + docentesMD .get(i).getPrimerApellido()
+                    + " " +docentesMD .get(i).getSegundoApellido(), i, 2);
 
         }
 
-        vtnDocente.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
+        vtnDocente.getLblResultados().setText(String.valueOf(docentesMD .size()) + " Resultados obtenidos.");
     }
 
     public void abrirFrmDocente() {
-        DocenteBD docente = new DocenteBD();
+        DocenteBD docente = new DocenteBD(conecta);
         FrmDocente frmDocente = new FrmDocente();
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente);
+        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente, conecta);
         ctrFrmDocente.iniciar();
     }
 
@@ -121,11 +121,11 @@ public class VtnDocenteCTR {
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
             FrmDocente frmDoc = new FrmDocente();
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc);
+            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(docentesMD.get(posFila));
-            //vtnDocente.getTblDocente().setVisible(false);
+            vtnDocente.getTblDocente().setVisible(false);
             vtnDocente.dispose();
 
         } else {

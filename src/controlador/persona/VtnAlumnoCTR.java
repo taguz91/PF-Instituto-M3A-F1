@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
@@ -18,17 +19,20 @@ public class VtnAlumnoCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
+    private final ConectarDB conecta;
+    
     private FrmAlumno frmAlumno;
-    private AlumnoBD bdAlumno;
+    private final AlumnoBD bdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno) {
+    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnAlumno = vtnAlumno;
+        this.conecta = conecta;
 
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
         //Inicializamos la clase de alumno  
-        bdAlumno = new AlumnoBD();
+        bdAlumno = new AlumnoBD(conecta);
     }
 
     public void iniciar() {
@@ -65,7 +69,7 @@ public class VtnAlumnoCTR {
 
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
         ctrFrmAlumno.iniciar();
     }
 
@@ -136,7 +140,7 @@ public class VtnAlumnoCTR {
             new Object[] { "Editar Datos Personales", "Editar Datos de Alumno"},"Editar Datos de Alumno");
             if(seleccion == 1){
                 frmAlumno = new FrmAlumno();
-                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno);
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();

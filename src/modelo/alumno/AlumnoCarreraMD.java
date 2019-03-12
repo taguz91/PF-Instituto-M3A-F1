@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.time.LocalDateTime;
 import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoMD;
 
@@ -11,6 +12,7 @@ public class AlumnoCarreraMD {
     private int id; 
     private AlumnoMD alumno;  
     private CarreraMD carrera; 
+    private LocalDateTime fechaRegistro;
 
     public AlumnoCarreraMD() {
     }
@@ -38,6 +40,13 @@ public class AlumnoCarreraMD {
     public void setCarrera(CarreraMD carrera) {
         this.carrera = carrera;
     }
-    
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
     
 }

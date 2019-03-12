@@ -12,10 +12,13 @@ import modelo.persona.DocenteMD;
  */
 public class CarreraBD extends CarreraMD {
 
-    public CarreraBD() {
-    }
+    private final ConectarDB conecta;
 
-    ConectarDB conecta = new ConectarDB("Carrera");
+    public CarreraBD(ConectarDB conecta) {
+        this.conecta = conecta;
+    }
+    
+    
 
     public CarreraMD buscar(int idCarrera) {
         CarreraMD carrera = new CarreraMD();

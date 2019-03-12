@@ -2,6 +2,7 @@ package controlador.alumno;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
@@ -20,23 +21,27 @@ public class VtnMallaAlumnoCTR {
     
     private final VtnPrincipal vtnPrin;
     private final VtnMallaAlumno vtnMallaAlm;
-    private final MallaAlumnoBD mallaAlm = new MallaAlumnoBD();  
+    private final ConectarDB conecta;
+    private final MallaAlumnoBD mallaAlm;
     private final String [] cmbEstado = {"Seleccione", "Aprobado", "Cursando", "Pendiente", "Reprobado"};
     
-    ArrayList<MallaAlumnoMD> mallas = new ArrayList();
+    private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos 
-    AlumnoCarreraBD almCar = new AlumnoCarreraBD();
-    ArrayList<AlumnoCarreraMD> alumnos;
+    private final AlumnoCarreraBD almCar;
+    private ArrayList<AlumnoCarreraMD> alumnos;
     
-    CarreraBD car = new CarreraBD(); 
-    ArrayList<CarreraMD> carreras = new ArrayList(); 
+    private final CarreraBD car;
+    private ArrayList<CarreraMD> carreras = new ArrayList(); 
     //Modelo de la tabla  
-    DefaultTableModel mdlTbl;    
+    private DefaultTableModel mdlTbl;    
     
-    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm) {
+    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, ConectarDB conecta) {
         this.vtnPrin = vtn;
         this.vtnMallaAlm = vtnMallaAlm;
-        
+        this.conecta = conecta;
+        this.almCar = new AlumnoCarreraBD(conecta);
+        this.mallaAlm = new MallaAlumnoBD(conecta);
+        this.car = new CarreraBD(conecta); 
         vtnPrin.getDpnlPrincipal().add(vtnMallaAlm);
         vtnMallaAlm.show();
     }

@@ -10,13 +10,13 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
+import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
 import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
 import modelo.validaciones.CmbValidar;
-import modelo.validaciones.Validar;
 import vista.persona.FrmAlumno;
 import vista.persona.VtnAlumno;
 import vista.principal.VtnPrincipal;
@@ -30,20 +30,23 @@ public class FrmAlumnoCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmAlumno frmAlumno;
     private AlumnoBD bdAlumno;
+    private final ConectarDB conecta;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false;
     private boolean editar_2 = false;
     private static int validar = 0; //Variable para saber a que textFiel se valida
     //Para cargar los sectores economico  
-    private SectorEconomicoBD sectorE = new SectorEconomicoBD();
+    private final SectorEconomicoBD sectorE;
 
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno) {
+    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
+        this.conecta = conecta;
+        this.sectorE = new SectorEconomicoBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmAlumno);
         frmAlumno.show();
-        bdAlumno = new AlumnoBD();
+        bdAlumno = new AlumnoBD(conecta);
     }
 
     public void iniciar() {
@@ -146,7 +149,7 @@ public class FrmAlumnoCTR {
 
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
-        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno);
+        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta);
         c.iniciar();
     }
 
@@ -401,7 +404,7 @@ public class FrmAlumnoCTR {
             iniciarComponentes();
         } else {
             if (editar == false && editar_2 == false) {
-                AlumnoBD persona = new AlumnoBD();
+                AlumnoBD persona = new AlumnoBD(conecta);
                 this.bdAlumno = pasarDatos(persona);
                 if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
@@ -410,7 +413,7 @@ public class FrmAlumnoCTR {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }
             } else if (editar == true) {
-                AlumnoBD persona = new AlumnoBD();
+                AlumnoBD persona = new AlumnoBD(conecta);
                 persona = pasarDatos(bdAlumno);
                 if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
@@ -420,7 +423,7 @@ public class FrmAlumnoCTR {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
                 }
             } else if (editar_2 == true) {
-                AlumnoBD persona = new AlumnoBD();
+                AlumnoBD persona = new AlumnoBD(conecta);
                 persona = pasarDatos(bdAlumno);
                 if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");

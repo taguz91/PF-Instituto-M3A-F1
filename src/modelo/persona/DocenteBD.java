@@ -10,17 +10,17 @@ import modelo.ConectarDB;
 
 public class DocenteBD extends DocenteMD {
 
-    public DocenteBD() {
-    }
-
-    public DocenteBD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador) {
-        super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador);
-    }
-
-    ConectarDB conecta = new ConectarDB("Docente BD");
-    PersonaMD p;
+    private final ConectarDB conecta;
+    private PersonaMD p;
     //Para consultar personas  
-    PersonaBD per = new PersonaBD();
+    private final PersonaBD per;
+
+    public DocenteBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.per = new PersonaBD(conecta);
+    }
+    
+    
 
     public void InsertarDocente() {
         // DocenteMD doc = new DocenteMD();
@@ -38,8 +38,8 @@ public class DocenteBD extends DocenteMD {
 
     }
 
-    public List<PersonaMD> llenarTabla() {
-        List<PersonaMD> lista = new ArrayList();
+    public List<DocenteMD> llenarTabla() {
+        List<DocenteMD> lista = new ArrayList();
         String sql = "SELECT p.id_persona, p.persona_identificacion, "
                 + " p.persona_primer_nombre, p.persona_segundo_nombre,"
                 + " p.persona_primer_apellido, p.persona_segundo_apellido"
@@ -49,7 +49,7 @@ public class DocenteBD extends DocenteMD {
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                PersonaMD m = new PersonaMD();
+                DocenteMD m = new DocenteMD();
                 m.setIdPersona(rs.getInt("id_persona"));
                 m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
@@ -470,7 +470,7 @@ public class DocenteBD extends DocenteMD {
     public DocenteMD buscarDocente(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, docente_categoria, docente_fecha_contrato, docente_fecha_fin, docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador\n"
                 + "	FROM public.\"Docentes\" where"
-                + " docente_codigo ='" + identificacion + "'";
+                + " docente_activo=true and docente_codigo ='" + identificacion + "'";
         System.out.println(sql);
         return consultarPor(sql);
     }

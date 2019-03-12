@@ -19,12 +19,19 @@ import modelo.persona.DocenteMD;
  */
 public class CursoBD extends CursoMD {
 
-    MateriaBD mat = new MateriaBD();
-    PeriodoLectivoBD prd = new PeriodoLectivoBD();
-    DocenteBD doc = new DocenteBD();
-    JornadaBD jrd = new JornadaBD();
+    private final MateriaBD mat;
+    private final PeriodoLectivoBD prd;
+    private final DocenteBD doc;
+    private final JornadaBD jrd;
+    private final ConectarDB conecta;
 
-    ConectarDB conecta = new ConectarDB("Curso");
+    public CursoBD(ConectarDB conecta) {
+        this.conecta = conecta;
+        this.mat = new MateriaBD(conecta);
+        this.prd = new PeriodoLectivoBD(conecta);
+        this.doc = new DocenteBD(conecta);
+        this.jrd = new JornadaBD(conecta);
+    }
 
     public void guardarCurso() {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
@@ -69,7 +76,7 @@ public class CursoBD extends CursoMD {
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + ";";
         return consultarCursos(sql);
     }
-    
+
     public ArrayList<CursoMD> cargarCursosPorNombre(String nombre) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
@@ -77,12 +84,12 @@ public class CursoBD extends CursoMD {
                 + "WHERE curso_nombre = '" + nombre + "';";
         return consultarCursos(sql);
     }
-    
+
     public ArrayList<CursoMD> cargarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
                 + "	FROM public.\"Cursos\" "
-                + "WHERE curso_nombre = '" + nombre + "' AND id_prd_lectivo = "+idPrdLectivo+";";
+                + "WHERE curso_nombre = '" + nombre + "' AND id_prd_lectivo = " + idPrdLectivo + ";";
         return consultarCursos(sql);
     }
 

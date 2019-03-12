@@ -2,6 +2,7 @@ package controlador.carrera;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -17,15 +18,19 @@ public class VtnCarreraCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnCarrera vtnCarrera;
-    private final CarreraBD car = new CarreraBD();
+    private final ConectarDB conecta;
+    
+    private final CarreraBD car;
     ArrayList<CarreraMD> carreras;
 
     DefaultTableModel mdTbl;
 
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera) {
+    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnCarrera = vtnCarrera;
-
+        this.conecta = conecta;
+        this.car = new CarreraBD(conecta);
+        
         vtnPrin.getDpnlPrincipal().add(vtnCarrera);
         vtnCarrera.show();
     }
@@ -51,7 +56,7 @@ public class VtnCarreraCTR {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
             FrmCarrera frmCarrera = new FrmCarrera();
-            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta);
             ctrFrmCarrera.iniciar();
             ctrFrmCarrera.editar(carreras.get(fila));
         }
@@ -59,7 +64,7 @@ public class VtnCarreraCTR {
 
     private void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
-        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera);
+        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta);
         ctrFrmCarrera.iniciar();
     }
 
