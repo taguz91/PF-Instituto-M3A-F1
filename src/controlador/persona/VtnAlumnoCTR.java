@@ -146,6 +146,7 @@ public class VtnAlumnoCTR {
                 vtnAlumno.dispose();
             } else if(seleccion == 0){
                 
+                
             }
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");

@@ -2,7 +2,6 @@ package modelo.persona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,7 +188,7 @@ public class DocenteBD extends DocenteMD {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "SELECT id_docente, id_persona, docente_codigo, "
                 + "docente_otro_trabajo, docente_categoria, "
-                + "docente_fecha_contrato,"
+                + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
                 + " docente_observacion, docente_capacitador\n"
                 + "FROM public.\"Docentes\" ;";
@@ -215,7 +214,7 @@ public class DocenteBD extends DocenteMD {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "	\n"
                 + "SELECT public.\"Docentes\".id_docente, id_persona, docente_codigo, docente_otro_trabajo, \n"
-                + "docente_categoria, docente_fecha_contrato,\n"
+                + "docente_categoria, docente_fecha_contrato,docente_fecha_fin, \n"
                 + "docente_tipo_tiempo, docente_activo, docente_observacion,\n"
                 + "docente_capacitador\n"
                 + "	FROM public.\"Docentes\", public.\"Materias\", public.\"DocentesMateria\"\n"
@@ -303,7 +302,7 @@ public class DocenteBD extends DocenteMD {
         DocenteMD d = null;
         String sql = "SELECT id_docente, id_persona, docente_codigo, "
                 + "docente_otro_trabajo, docente_categoria, "
-                + "docente_fecha_contrato,"
+                + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
                 + " docente_observacion, docente_capacitador\n"
                 + "FROM public.\"Docentes\" "
@@ -341,6 +340,7 @@ public class DocenteBD extends DocenteMD {
             }
             d.setDocenteCategoria(rs.getInt("docente_categoria"));
             d.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
+            d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
             d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
             if (rs.wasNull()) {
                 d.setDocenteCapacitador(false);
@@ -378,7 +378,8 @@ public class DocenteBD extends DocenteMD {
     public ArrayList<DocenteMD> buscar(String aguja) {
         String sql = "SELECT id_persona,id_docente, d.docente_codigo,\n"
                 + "       p.persona_primer_apellido, p.persona_segundo_apellido, \n"
-                + "       p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_activa\n"
+                + "       p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_activa, d.docente_fecha_contrato,"
+                + "       d.docente_fecha_fin, d.docente_tipo_tiempo\n"
                 + "       FROM public.\"Personas\" p inner join public.\"Docentes\" d using(id_persona)\n"
                 + "       WHERE d.docente_activo = true AND (\n"
                 + "       d.docente_codigo ILIKE '%" + aguja + "%'  or "

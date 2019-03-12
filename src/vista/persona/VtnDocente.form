@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
@@ -28,7 +28,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="664" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="728" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="lblResultados" min="-2" pref="170" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -107,10 +107,13 @@
         <Component class="javax.swing.JTable" name="tblDocente">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="4">
+              <Table columnCount="6" rowCount="4">
                 <Column editable="false" title="Id_Persona" type="java.lang.Object"/>
                 <Column editable="false" title="Cedula" type="java.lang.Object"/>
                 <Column editable="false" title="Profesor" type="java.lang.Object"/>
+                <Column editable="false" title="Inicio Contrato" type="java.lang.Object"/>
+                <Column editable="false" title="Fin Contrato" type="java.lang.Object"/>
+                <Column editable="true" title="Tempo Trabajo" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
