@@ -153,6 +153,14 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         return lblErrorPaisReside;
     }
 
+    public JComboBox<String> getCmbIdiomas() {
+        return cmbIdiomas;
+    }
+
+
+  
+
+
     
 
     /**
@@ -234,7 +242,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         btnGuardarPersona = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
-        cmbIdiomas = new com.toedter.components.JLocaleChooser();
         lblFoto = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         btnBuscarFoto = new javax.swing.JButton();
@@ -244,7 +251,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         lblErrorIdentificacion = new javax.swing.JLabel();
         lblErrorPorcentaje = new javax.swing.JLabel();
         lblErrorTipoSangre = new javax.swing.JLabel();
-        lblErrorPriNombre = new javax.swing.JLabel();
         lblErrorPriApellido = new javax.swing.JLabel();
         lblErrorSegNombre = new javax.swing.JLabel();
         lblErrorEtnia = new javax.swing.JLabel();
@@ -276,6 +282,8 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         cmbPaisReside = new javax.swing.JComboBox<>();
         lblErrorPaisReside = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        cmbIdiomas = new javax.swing.JComboBox<>();
+        lblErrorPriNombre = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -451,9 +459,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 530, -1, -1));
         getContentPane().add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 1030, 10));
 
-        cmbIdiomas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "árabe (Emiratos Árabes Unidos)", "árabe (Jordania)", "árabe (Siria)", "croata (Croacia)", "francés (Bélgica)", "español (Panamá)", "maltés (Malta)", "español (Venezuela)", "chino (Taiwán)", "danés (Dinamarca)", "español (Puerto Rico)", "vietnamita (Vietnam)", "inglés (Estados Unidos)", "serbio (Montenegro)", "sueco (Suecia)", "español (Bolivia)", "inglés (Singapur)", "árabe (Bahráin)", "árabe (Arabia Saudita)", "árabe (Yemen)", "hindi (India)", "inglés (Malta)", "finés (Finlandia)", "serbio (latín", "Bosnia y Hercegovina)", "ucraniano (Ucrania)", "francés (Suiza)", "español (Argentina)", "árabe (Egipto)", "japonés (Japón", "JP)", "español (El Salvador)", "portugués (Brasil)", "islandés (Islandia)", "checo (Chequia)", "polaco (Polonia)", "catalán (España)", "serbio (Serbia y Montenegro)", "malayo (Malasia)", "español (España)", "español (Colombia)", "búlgaro (Bulgaria)", "serbio (Bosnia y Hercegovina)", "español (Paraguay)", "español (Ecuador)", "español (Estados Unidos)", "árabe (Sudán)", "rumano (Rumania)", "inglés (Filipinas)", "árabe (Túnez)", "serbio (latín", "Montenegro)", "español (Guatemala)", "coreano (Corea del Sur)", "griego (Chipre)", "español (México)", "ruso (Rusia)", "español (Honduras)", "chino (Hong Kong)", "noruego (Noruega", "Nynorsk)", "húngaro (Hungría)", "tailandés (Tailandia)", "árabe (Iraq)", "español (Chile)", "árabe (Marruecos)", "irlandés (Irlanda)", "turco (Turquía)", "estonio (Estonia)", "árabe (Qatar)", "portugués (Portugal)", "francés (Luxemburgo)", "árabe (Omán)", "albanés (Albania)", "español (República Dominicana)", "español (Cuba)", "inglés (Nueva Zelanda)", "serbio (Serbia)", "alemán (Suiza)", "español (Uruguay)", "griego (Grecia)", "hebreo (Israel)", "inglés (Sudáfrica)", "tailandés (Tailandia", "TH)", "francés (Francia)", "alemán (Austria)", "noruego (Noruega)", "inglés (Australia)", "neerlandés (Holanda)", "francés (Canadá)", "letón (Letonia)", "alemán (Luxemburgo)", "español (Costa Rica)", "árabe (Kuwait)", "árabe (Libia)", "italiano (Suiza)", "alemán (Alemania)", "árabe (Argelia)", "eslovaco (Eslovaquia)", "lituano (Lituania)", "italiano (Italia)", "inglés (Irlanda)", "chino (Singapur)", "inglés (Canadá)", "neerlandés (Bélgica)", "chino (China)", "japonés (Japón)", "alemán (Grecia)", "serbio (latín", "Serbia)", "inglés (India)", "árabe (Líbano)", "español (Nicaragua)", "macedonio (Macedonia)", "bielorruso (Bielorrusia)", "esloveno (Eslovenia)", "español (Perú)", "indonesio (Indonesia)", "inglés (Reino Unido)" }));
-        getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 133, -1));
-
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 160, 180));
 
@@ -483,10 +488,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         lblErrorTipoSangre.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorTipoSangre.setText("Solo debe ingresar letras.");
         getContentPane().add(lblErrorTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 240, -1));
-
-        lblErrorPriNombre.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPriNombre.setText("Solo debe ingresar letras.");
-        getContentPane().add(lblErrorPriNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 240, -1));
 
         lblErrorPriApellido.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPriApellido.setText("Solo debe ingresar letras.");
@@ -604,7 +605,14 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 310, -1));
 
         jLabel18.setText("Tipo id *");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
+
+        cmbIdiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+        getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 130, -1));
+
+        lblErrorPriNombre.setForeground(new java.awt.Color(204, 0, 0));
+        lblErrorPriNombre.setText("Solo debe ingresar letras.");
+        getContentPane().add(lblErrorPriNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 240, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1025,10 +1033,6 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         this.jLabel9 = jLabel9;
     }
 
-    public JLocaleChooser getCmbIdiomas() {
-        return cmbIdiomas;
-    }
-
     public DateChooserCombo getJdcFechaNacimiento() {
         return jdcFechaNacimiento;
     }
@@ -1185,7 +1189,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbEstadoCivil;
     private javax.swing.JComboBox<String> cmbEtnia;
     private javax.swing.JComboBox<String> cmbGenero;
-    private com.toedter.components.JLocaleChooser cmbIdiomas;
+    private javax.swing.JComboBox<String> cmbIdiomas;
     private javax.swing.JComboBox<String> cmbNacionalidad;
     private javax.swing.JComboBox<String> cmbPaisReside;
     private javax.swing.JComboBox<String> cmbParroquiaReside;

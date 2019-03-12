@@ -19,9 +19,9 @@ public class ConectarDB {
 
     //Si se cambia el url no borrar solo comentar 
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
-     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
+      private String url = "jdbc:postgresql://localhost:5432/BDPFMallaEstudiante"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoCursosM3A"; //BD Johnny PCNOOB
 
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
@@ -38,8 +38,8 @@ public class ConectarDB {
 
     //private String pass = "Holapostgres"; //Clave Johnny
 
-   // private String pass = "linis4413"; //Clave Lina
-    private String pass = "Holapostgres"; //Clave Johnny
+    private String pass = "linis4413"; //Clave Lina
+    //private String pass = "Holapostgres"; //Clave Johnny
 
 	
     //private String pass = "PAOLA"; //Clave Paola
@@ -53,12 +53,6 @@ public class ConectarDB {
     }
 
  
-
-
-   
-  
-  
-  
 
     public ConectarDB(String mensaje) {
 

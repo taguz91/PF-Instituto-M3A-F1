@@ -1,10 +1,15 @@
 package controlador.persona;
 
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -13,8 +18,16 @@ import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
+import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.persona.SectorEconomicoMD;
+import modelo.validaciones.CmbValidar;
+import modelo.validaciones.TxtVCedula;
+import modelo.validaciones.TxtVDireccion;
+import modelo.validaciones.TxtVLetras;
+import modelo.validaciones.TxtVNumeros;
+import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
@@ -28,14 +41,14 @@ public class FrmPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
-    private final ConectarDB conecta; 
-    
-    private final String [] idiomas = {"Seleccione", "Árabe", "Croata", "Francés",
-        "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio", 
-        "Sueco", "Hindi", "Finés", "Bosnia", "Ucraniano", "Japonés", "Portugués", 
-        "Islandés", "Checo", "Polaco", "Catalán", "Malayo", "Búlgaro", "Rumano", 
+    private final ConectarDB conecta;
+
+    private final String[] idiomas = {"Árabe", "Croata", "Francés",
+        "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
+        "Sueco", "Hindi", "Finés", "Bosnia", "Ucraniano", "Japonés", "Portugués",
+        "Islandés", "Checo", "Polaco", "Catalán", "Malayo", "Búlgaro", "Rumano",
         "Coreano", "Griego", "Ruso", "Noruego", "Nynorsk", "Húngaro", "Tailandés",
-        "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH", 
+        "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH",
         "Neerlandés", "Letón", "Italiano", "Eslovaco", "Lituano", "Italiano",
         "Macedonio", "Bielorruso", "Esloveno", "Indonesio",};
 
@@ -75,8 +88,9 @@ public class FrmPersonaCTR {
     public void iniciar() {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
-
+        cargarIdiomas();
         //Cuando se realice una accion en alguno de esos combos 
+        iniciarValidaciones();
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
         frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito());
         frmPersona.getCmbPaisReside().addActionListener(e -> cargarProvinciasResidencia());
@@ -94,27 +108,119 @@ public class FrmPersonaCTR {
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
         //Cogemso todos los idiomas del combo  idioma  
         //imprimiIdiomas();
+
+        FocusListener Buscar = new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                System.out.println("Entramos en buscar");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                buscarIdentificacion();
+            }
+        };
+
+        frmPersona.getTxtIdentificacion().addFocusListener(Buscar);
     }
 
-    public void imprimiIdiomas() {
-        System.out.println("Numero de idiomas: " + frmPersona.getCmbIdiomas().getModel().getSize());
+    public void buscarIdentificacion() {
 
-        String id;
-        String[] idioma;
+        boolean error = false;
+        String cedula;
+        cedula = frmPersona.getTxtIdentificacion().getText();
 
-        for (int i = 0; i < frmPersona.getCmbIdiomas().getModel().getSize(); i++) {
-            id = frmPersona.getCmbIdiomas().getItemAt(i).toString();
-            idioma = id.split(" ");
-            System.out.print("\"" + iniciarMa(idioma[0]) + "\", ");
-        }
+        if (!cedula.equals("")) {
+
+            if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+                error = true;
+                frmPersona.getLblErrorIdentificacion().setVisible(true);
+            }
+            if (error == false) {
+
+                PersonaMD per = persona.buscarPersona(cedula);
+                editar = true;
+
+                if (per == null) {
+                    JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese persona");
+                    borrarCampos();
+                } else {
+                    editar(per);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una Cedúla para filtrar los datos");
+            }
+
+        } 
     }
-    
-    public String iniciarMa(String cadena){
-        String c = cadena.charAt(0)+"";
-        c = c.toUpperCase();
-        String nc = cadena.substring(1, cadena.length()); 
-        //System.out.println("Letra mayus : "+c);
-        return c+nc; 
+
+    private void iniciarValidaciones() {
+
+        //Validar los Combo box
+        frmPersona.getCmbIdiomas().addActionListener(new CmbValidar(
+                frmPersona.getCmbIdiomas(), frmPersona.getLblErrorIdioma()));
+        frmPersona.getCmbCanton().addActionListener(new CmbValidar(
+                frmPersona.getCmbCanton(), frmPersona.getLblErrorCanton()));
+        frmPersona.getCmbCantonReside().addActionListener(new CmbValidar(
+                frmPersona.getCmbCantonReside(), frmPersona.getLblErrorCantonReside()));
+        frmPersona.getCmbEstadoCivil().addActionListener(new CmbValidar(
+                frmPersona.getCmbEstadoCivil(), frmPersona.getLblErrorEstadoCivil()));
+        frmPersona.getCmbEtnia().addActionListener(new CmbValidar(
+                frmPersona.getCmbEtnia(), frmPersona.getLblErrorEtnia()));
+        frmPersona.getCmbGenero().addActionListener(new CmbValidar(
+                frmPersona.getCmbGenero(), frmPersona.getLblErrorGenero()));
+        frmPersona.getCmbNacionalidad().addActionListener(new CmbValidar(
+                frmPersona.getCmbNacionalidad(), frmPersona.getLblErrorNacionalidad()));
+        frmPersona.getCmbPaisReside().addActionListener(new CmbValidar(
+                frmPersona.getCmbPaisReside(), frmPersona.getLblErrorPaisReside()));
+        frmPersona.getCmbParroquiaReside().addActionListener(new CmbValidar(
+                frmPersona.getCmbParroquiaReside(), frmPersona.getLblErrorParroquiaReside()));
+        frmPersona.getCmbProvincia().addActionListener(new CmbValidar(
+                frmPersona.getCmbProvincia(), frmPersona.getLblErrorProvincia()));
+        frmPersona.getCmbProvinciaReside().addActionListener(new CmbValidar(
+                frmPersona.getCmbProvinciaReside(), frmPersona.getLblErrorProvinciaReside()));
+        frmPersona.getCmbSexo().addActionListener(new CmbValidar(
+                frmPersona.getCmbSexo(), frmPersona.getLblErrorSexo()));
+        frmPersona.getCmbTipoDiscapacidad().addActionListener(new CmbValidar(
+                frmPersona.getCmbTipoDiscapacidad(), frmPersona.getLblErrorTipoDiscapacidad()));
+        frmPersona.getCmbTipoId().addActionListener(new CmbValidar(
+                frmPersona.getCmbTipoId()));
+        frmPersona.getCmbTipoResidencia().addActionListener(new CmbValidar(
+                frmPersona.getCmbTipoResidencia(), frmPersona.getLblErrorTipoResidencia()));
+        frmPersona.getCmbTipoSangre().addActionListener(new CmbValidar(
+                frmPersona.getCmbTipoSangre(), frmPersona.getLblErrorTipoSangre()));
+
+        //Validar los txt
+        frmPersona.getTxtCallePrincipal().addKeyListener(new TxtVDireccion(
+                frmPersona.getTxtCallePrincipal(), frmPersona.getLblErrorCallePrin()));
+        frmPersona.getTxtCalleSecundaria().addKeyListener(new TxtVDireccion(
+                frmPersona.getTxtCalleSecundaria(), frmPersona.getLblErrorCalleSec()));
+        frmPersona.getTxtCelular().addKeyListener(new TxtVTelefono(
+                frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular()));
+        frmPersona.getTxtCodigoPostal().addKeyListener(new TxtVNumeros(
+                frmPersona.getTxtCodigoPostal(), frmPersona.getLblErrorCodigoPostal()));
+        frmPersona.getTxtIdentificacion().addKeyListener(new TxtVCedula(
+                frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion()));
+        frmPersona.getTxtPorcentaje().addKeyListener(new TxtVNumeros(
+                frmPersona.getTxtPorcentaje(), frmPersona.getLblErrorPorcentaje()));
+        frmPersona.getTxtPrimerApellido().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtPrimerApellido(), frmPersona.getLblErrorPriApellido()));
+        frmPersona.getTxtPrimerNombre().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtPrimerNombre(), frmPersona.getLblErrorPriNombre()));
+        frmPersona.getTxtReferencia().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtReferencia(), frmPersona.getLblErrorReferencia()));
+        frmPersona.getTxtSector().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtSector(), frmPersona.getLblErrorSector()));
+        frmPersona.getTxtSegundoApellido().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtSegundoApellido(), frmPersona.getLblErrorSegApellido()));
+        frmPersona.getTxtSegundoNombre().addKeyListener(new TxtVLetras(
+                frmPersona.getTxtSegundoNombre(), frmPersona.getLblErrorSegNombre()));
+        frmPersona.getTxtTelefono().addKeyListener(new TxtVTelefono(
+                frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
+
+        //pendiente carnet conadis      frmPersona.getTxtCarnetConadis().addKeyListener(new txt);
+        //pendiente correo              frmPersona.getTxtCorreo().addKeyListener(new txtCorreo);
+        //pendiente numero de casa      frmPersona.getTxtNumeroCasa().addKeyListener(new txt);
     }
 
     public void buscarFoto() {
@@ -385,19 +491,10 @@ public class FrmPersonaCTR {
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
         correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
 
-        int tipoPer = frmPersona.getCmbTipoPersona().getSelectedIndex();
-        if (tipoPer > 0) {
-            frmPersona.getLblErrorTipoPersona().setVisible(false);
-        } else {
-            guardar = false;
-            frmPersona.getLblErrorTipoPersona().setVisible(true);
-        }
-
         if (guardar) {
 
-            
-           // PersonaBD per = new PersonaBD();
-         //Llenar directo por el constructor
+            // PersonaBD per = new PersonaBD();
+            //Llenar directo por el constructor
             PersonaBD per = new PersonaBD(conecta);
 
             //Pasamos la informacion de la foto 
@@ -453,11 +550,6 @@ public class FrmPersonaCTR {
             System.out.println("Existen errores en los formularios");
         }
 
-  ///////////////////////////////////////////////////////////////////////////
-       
-  
-  
-        
     }
 
     public void salirBoton() {
@@ -496,7 +588,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
 
         //frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
-        System.out.println(""+per.getSexo());
+        System.out.println("" + per.getSexo());
 
         frmPersona.getCmbSexo().setSelectedItem(per.getSexo());
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
@@ -632,6 +724,15 @@ public class FrmPersonaCTR {
         frmPersona.getLblErrorPaisReside().setVisible(false);
     }
 
+    //Metodo para cargar idiomas en el combo box
+    private void cargarIdiomas() {
+        frmPersona.getCmbIdiomas().removeAllItems();
+        frmPersona.getCmbIdiomas().addItem("Seleccione");
+        for (String i : idiomas) {
+            frmPersona.getCmbIdiomas().addItem(i);
+        }
+    }
+
     //Metodos para los combos de residencia y ciudades natales
     private void cargarPaises() {
         paises = lug.buscarPaises();
@@ -736,4 +837,63 @@ public class FrmPersonaCTR {
             frmPersona.getTxtCodigoPostal().setText("");
         }
     }
+
+    private void borrarCampos() {
+
+        frmPersona.getCmbTipoId().setSelectedIndex(0);
+        frmPersona.getTxtCallePrincipal().setText("");
+        frmPersona.getTxtCalleSecundaria().setText("");
+        frmPersona.getTxtCelular().setText("");
+        frmPersona.getTxtCorreo().setText("");
+        frmPersona.getTxtNumeroCasa().setText("");
+        frmPersona.getTxtPrimerApellido().setText("");
+        frmPersona.getTxtPrimerNombre().setText("");
+        frmPersona.getTxtReferencia().setText("");
+        frmPersona.getTxtSector().setText("");
+        frmPersona.getTxtSegundoApellido().setText("");
+        frmPersona.getTxtSegundoNombre().setText("");
+        frmPersona.getTxtTelefono().setText("");
+        frmPersona.getCmbEstadoCivil().setSelectedIndex(0);
+        frmPersona.getCmbTipoResidencia().setSelectedIndex(0);
+
+        frmPersona.getCmbIdiomas().setSelectedIndex(0);
+
+        frmPersona.getCmbSexo().setSelectedIndex(0);
+        frmPersona.getCmbTipoSangre().setSelectedIndex(0);
+        frmPersona.getCmbGenero().setSelectedIndex(0);
+        frmPersona.getCmbEtnia().setSelectedIndex(0);
+
+        //Codigo postal
+        frmPersona.getCmbNacionalidad().setSelectedIndex(0);
+        frmPersona.getCmbProvincia().setSelectedIndex(0);
+        frmPersona.getCmbCanton().setSelectedIndex(0);
+
+        frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
+        frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
+        frmPersona.getCmbPaisReside().setSelectedIndex(0);
+        frmPersona.getCmbCantonReside().setSelectedIndex(0);
+
+        //Discapacidad
+        frmPersona.getCbxDiscapacidad().setSelected(false);
+        frmPersona.getCmbTipoDiscapacidad().setSelectedIndex(0);
+        frmPersona.getTxtCarnetConadis().setText("");
+        frmPersona.getTxtPorcentaje().setText("");
+        //Cargar foto
+        frmPersona.getLblFoto().setIcon(null);
+        frmPersona.getLblFoto().updateUI();
+
+        //Cargamos los combos de lugar  
+        frmPersona.getCmbNacionalidad().setSelectedIndex(0);
+
+        frmPersona.getCmbPaisReside().setSelectedIndex(0);
+        //Seteamos el nuevo lugar de una
+
+        frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
+
+        frmPersona.getCmbCantonReside().setSelectedIndex(0);
+
+        frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
+
+    }
+
 }
