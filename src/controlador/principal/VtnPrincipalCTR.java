@@ -29,7 +29,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
-import modelo.persona.UsuarioMD;
+import modelo.usuario.UsuarioMD;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;

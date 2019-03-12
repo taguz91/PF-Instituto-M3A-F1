@@ -18,7 +18,7 @@ public class ConectarDB {
     private ResultSet rs;
 
     private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-   private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+   //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
 
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
@@ -60,7 +60,7 @@ public class ConectarDB {
 
 
 
-    private String pass = "linis4413"; //Clave Lina
+    //private String pass = "linis4413"; //Clave Lina
     //private String pass = "Holapostgres"; //Clave Johnny
 
     //private String pass = "PAOLA"; //Clave Paola
