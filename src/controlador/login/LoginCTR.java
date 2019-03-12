@@ -74,7 +74,7 @@ public class LoginCTR {
 
             modelo.setIdPersona(Lista.get(0).getIdPersona());
 
-            VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB());
+            VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB("Desde login generico"));
             ventanaPrincipal.iniciar();
             vista.setVisible(false);
         } else {
