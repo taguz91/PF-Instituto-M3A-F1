@@ -68,16 +68,14 @@ public class LoginCTR {
         USERNAME = vista.getTxtUsername().getText();
         PASSWORD = vista.getTxtPassword().getText();
 
-        System.out.println("USERNAME: " + USERNAME + " PASSWORD:" + PASSWORD);
-
         List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
         if (!Lista.isEmpty()) {
 
             modelo.setIdPersona(Lista.get(0).getIdPersona());
 
-//            VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo);
-//            ventanaPrincipal.iniciar();
+            VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB());
+            ventanaPrincipal.iniciar();
             vista.setVisible(false);
         } else {
 
@@ -87,7 +85,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new UsuarioBD(), new ConectarDB());
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB());
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

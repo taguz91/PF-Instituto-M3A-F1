@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ResourceManager;
 
 /**
@@ -95,7 +93,12 @@ public class UsuarioBD extends UsuarioMD {
 
             rs.close();
         } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
+
+            if (ex instanceof SQLException) {
+                System.out.println(ex.getMessage());
+
+            }
+
         }
         return Lista;
     }

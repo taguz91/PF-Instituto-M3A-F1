@@ -82,7 +82,6 @@ public class VtnUsuarioCTR {
 
     public static void cargarTabla() {
         modelT.setRowCount(0);
-
         ListaUsuarios.stream()
                 .forEach(VtnUsuarioCTR::agregarFila);
 
