@@ -30,25 +30,14 @@ public class FrmPersonaCTR {
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
     
-    private final String [] idiomas = {"Seleccione", "Árabe", "Árabe", "Árabe", 
-        "Croata", "Francés", "Español", "Maltés", "Español", "Chino", "Danés", 
-        "Español", "Vietnamita", "Inglés", "Serbio", "Sueco", "Español", 
-        "Inglés", "Árabe", "Árabe", "Árabe", "Hindi", "Inglés", "Finés", 
-        "Serbio", "Bosnia", "Ucraniano", "Francés", "Español", "Árabe", 
-        "Japonés", "Español", "Portugués", "Islandés", "Checo", "Polaco", 
-        "Catalán", "Serbio", "Malayo", "Español", "Español", "Búlgaro", 
-        "Serbio", "Español", "Español", "Español", "Árabe", "Rumano", 
-        "Inglés", "Árabe", "Serbio", "Español", "Coreano", 
-        "Griego", "Español", "Ruso", "Español", "Chino", "Noruego", "Nynorsk", 
-        "Húngaro", "Tailandés", "Árabe", "Español", "Árabe", "Irlandés", "Turco", 
-        "Estonio", "Árabe", "Portugués", "Francés", "Árabe", "Albanés", "Español", 
-        "Español", "Inglés", "Serbio", "Alemán", "Español", "Griego", "Hebreo", 
-        "Inglés", "Tailandés", "TH)", "Francés", "Alemán", "Noruego", "Inglés", 
-        "Neerlandés", "Francés", "Letón", "Alemán", "Español", "Árabe", "Árabe", 
-        "Italiano", "Alemán", "Árabe", "Eslovaco", "Lituano", "Italiano", "Inglés", 
-        "Chino", "Inglés", "Neerlandés", "Chino", "Japonés", "Alemán", "Serbio", 
-        "Inglés", "Árabe", "Español", "Macedonio", "Bielorruso", "Esloveno", 
-        "Español", "Indonesio", "Inglés",};
+    private final String [] idiomas = {"Seleccione", "Árabe", "Croata", "Francés",
+        "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio", 
+        "Sueco", "Hindi", "Finés", "Bosnia", "Ucraniano", "Japonés", "Portugués", 
+        "Islandés", "Checo", "Polaco", "Catalán", "Malayo", "Búlgaro", "Rumano", 
+        "Coreano", "Griego", "Ruso", "Noruego", "Nynorsk", "Húngaro", "Tailandés",
+        "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH", 
+        "Neerlandés", "Letón", "Italiano", "Eslovaco", "Lituano", "Italiano",
+        "Macedonio", "Bielorruso", "Esloveno", "Indonesio",};
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -409,7 +398,7 @@ public class FrmPersonaCTR {
         }
 
         if (guardar) {
-            //Llenar directo por el constructor
+            
             PersonaBD per = new PersonaBD();
             //Pasamos la informacion de la foto 
             per.setFile(fis);
@@ -465,6 +454,11 @@ public class FrmPersonaCTR {
             System.out.println("Existen errores en los formularios");
         }
 
+  ///////////////////////////////////////////////////////////////////////////
+       
+  
+  
+        
     }
 
     public void salirBoton() {
