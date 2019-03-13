@@ -118,7 +118,7 @@ public class ResourceManager {
 
         listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
         listaUrls.add("jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
-        listaUrls.add("jdbc:postgresql://localhost:5433/BDPFInstitutoM3A");//JHONNY
+        listaUrls.add("jdbc:postgresql://localhost:5433/BDPFINSTITUTO");//JHONNY
         listaUrls.add("jdbc:postgresql://localhost:5432/BDPFMallaEstudiante");//LINA
         listaUrls.add("jdbc:postgresql://localhost:5432/ingreso");//PAO MEDINA
         listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto");//ANDRES NOVILLO
