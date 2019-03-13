@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.persona.PersonaMD;
 import vista.persona.FrmDocente;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
@@ -26,7 +25,7 @@ public class VtnDocenteCTR {
     private final VtnDocente vtnDocente;
     private final DocenteBD docente;
     private final ConectarDB conecta;
-    
+
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
@@ -34,7 +33,6 @@ public class VtnDocenteCTR {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
         this.conecta = conecta;
-        
         docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
         vtnDocente.show();
@@ -60,8 +58,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         docentesMD = docente.cargarDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(kl);
-        
-         docentesMD = docente.cargarDocentes();
+        docentesMD = docente.cargarDocentes();
         llenarTabla();
 
     }
@@ -74,17 +71,19 @@ public class VtnDocenteCTR {
         }
         docentesMD = docente.cargarDocentes();
         int columnas = modelo_Tabla.getColumnCount();
-        for (int i = 0; i < docentesMD .size(); i++) {
+        for (int i = 0; i < docentesMD.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD .get(i).getIdPersona()), i, 0);
-            vtnDocente.getTblDocente().setValueAt(docentesMD .get(i).getIdentificacion(), i, 1);
-            vtnDocente.getTblDocente().setValueAt(docentesMD .get(i).getPrimerNombre()
-                    + " " + docentesMD .get(i).getSegundoNombre() + docentesMD .get(i).getPrimerApellido()
-                    + " " +docentesMD .get(i).getSegundoApellido(), i, 2);
-
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD.get(i).getIdPersona()), i, 0);
+            vtnDocente.getTblDocente().setValueAt(docentesMD.get(i).getIdentificacion(), i, 1);
+            vtnDocente.getTblDocente().setValueAt(docentesMD.get(i).getPrimerNombre()
+                    + " " + docentesMD.get(i).getSegundoNombre() + " " + docentesMD.get(i).getPrimerApellido()
+                    + " " + docentesMD.get(i).getSegundoApellido(), i, 2);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD.get(i).getFechaInicioContratacion()), i, 3);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD.get(i).getFechaFinContratacion()), i, 4);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(docentesMD.get(i).getDocenteTipoTiempo()), i, 5);
         }
 
-        vtnDocente.getLblResultados().setText(String.valueOf(docentesMD .size()) + " Resultados obtenidos.");
+        vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
     }
 
     public void abrirFrmDocente() {
@@ -108,16 +107,17 @@ public class VtnDocenteCTR {
             vtnDocente.getTblDocente().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
             vtnDocente.getTblDocente().setValueAt(lista.get(i).getIdentificacion(), i, 1);
             vtnDocente.getTblDocente().setValueAt(lista.get(i).getPrimerNombre()
-                    + " " + lista.get(i).getSegundoNombre() + lista.get(i).getPrimerApellido()
+                    + " " + lista.get(i).getSegundoNombre() + " " + lista.get(i).getPrimerApellido()
                     + " " + lista.get(i).getSegundoApellido(), i, 2);
-
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(lista.get(i).getFechaInicioContratacion()), i, 3);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(lista.get(i).getFechaFinContratacion()), i, 4);
+            vtnDocente.getTblDocente().setValueAt(String.valueOf(lista.get(i).getDocenteTipoTiempo()), i, 5);
         }
         vtnDocente.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-  
-   public void editar() { 
-      
-       int posFila = vtnDocente.getTblDocente().getSelectedRow();
+
+    public void editar() {
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
             FrmDocente frmDoc = new FrmDocente();
@@ -129,7 +129,7 @@ public class VtnDocenteCTR {
             vtnDocente.dispose();
 
         } else {
-           
+
         }
     }
 

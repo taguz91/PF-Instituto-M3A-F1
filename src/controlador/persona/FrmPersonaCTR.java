@@ -1,5 +1,6 @@
 package controlador.persona;
 
+
 import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

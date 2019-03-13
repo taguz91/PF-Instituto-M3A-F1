@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Method;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -147,15 +146,16 @@ public class VtnAlumnoCTR {
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
-            } else if(seleccion == 0){
-                PersonaBD extraer = new PersonaBD();
+
+            /* PersonaBD extraer = new PersonaBD();
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
-                vtnAlumno.dispose();
+                vtnAlumno.dispose();*/
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione una fila");
