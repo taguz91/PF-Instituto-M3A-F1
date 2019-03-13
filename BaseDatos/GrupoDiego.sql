@@ -1,15 +1,13 @@
-DROP TABLE "Usuarios" CASCADE; 
+DROP TABLE "Usuarios" CASCADE;
 
 CREATE TABLE "Usuarios"(
 	"usu_username" VARCHAR(50) NOT NULL,
 	"usu_password" bytea NOT NULL,
 	"usu_estado" BOOLEAN DEFAULT TRUE,
-
-	
-	"id_persona" INTEGER NOT NULL,
+	"id_persona" INTEGER,
 	CONSTRAINT usuario_pk PRIMARY KEY("usu_username")
 
-)WITH (OIDS = FALSE); 
+)WITH (OIDS = FALSE);
 
 DROP TABLE "RolesUsuarios" CASCADE;
 CREATE TABLE "Roles"(
@@ -17,9 +15,9 @@ CREATE TABLE "Roles"(
 	"rol_nombre" VARCHAR(60) NOT NULL,
 	"rol_observaciones" VARCHAR(150),
 	"rol_estado" BOOLEAN DEFAULT TRUE,
-	
+
 	CONSTRAINT rol_usuario_pk PRIMARY KEY("id_rol")
-	
+
 ) WITH(OIDS = FALSE);
 
 /*
@@ -66,7 +64,7 @@ CREATE TABLE "Accesos"(
 	"id_acceso" INTEGER NOT NULL,
 	"acc_nombre" VARCHAR(100) NOT NULL,
 	"acc_descripcion" VARCHAR(150),
-	
+
 	CONSTRAINT Acceso_pk PRIMARY KEY("id_acceso")
 )WITH (OIDS = FALSE);
 
@@ -80,20 +78,21 @@ CREATE TABLE "AccesosDelRol"(
 	"id_acceso_del_rol" serial NOT NULL,
 	"id_rol" INTEGER NOT NULL,
 	"id_acceso" INTEGER NOT NULL,
-	
+
 	CONSTRAINT acceso_del_rol_pk PRIMARY KEY("id_acceso_del_rol")
 )WITH(OIDS = FALSE);
 
---Historial de usuarios  
+--Historial de usuarios
 DROP TABLE "HistorialUsuarios" CASCADE;
 CREATE TABLE "HistorialUsuarios"(
-	"id_historial_user" serial NOT NULL, 
-	"usu_username" VARCHAR(50) NOT NULL, 
-	"historial_fecha" TIMESTAMP NOT NULL, 
-	"historial_tipo_accion" character varying(30) NOT NULL, 
-	"historial_nombre_tabla" character varying(30) NOT NULL, 
-	"historial_pk_tabla" integer NOT NULL, 
-	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user") 
+	"id_historial_user" serial NOT NULL,
+	"usu_username" VARCHAR(50) NOT NULL,
+	"historial_fecha" TIMESTAMP NOT NULL,
+	"historial_tipo_accion" character varying(30) NOT NULL,
+	"historial_nombre_tabla" character varying(30) NOT NULL,
+	"historial_pk_tabla" integer NOT NULL,
+	"historial_observacion" character varying(200),
+	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user")
 ) WITH (OIDS = FALSE);
 
 --Foraneas
@@ -106,8 +105,8 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "Usuarios" ADD CONSTRAINT "persona_fk"
 	FOREIGN KEY("id_persona") REFERENCES "Personas"("id_persona")
 		ON UPDATE CASCADE ON DELETE CASCADE;
-		
-		
+
+
 ALTER TABLE "PeriodoIngresoNotas" ADD CONSTRAINT "periodo_lectivo_fk"
 	FOREIGN KEY("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 		ON UPDATE CASCADE ON DELETE CASCADE;
@@ -116,8 +115,8 @@ ALTER TABLE "PeriodoIngresoNotas" ADD CONSTRAINT "periodo_lectivo_fk"
 ALTER TABLE "PeriodoIngresoNotas" ADD CONSTRAINT "Tipo_de_nota_fk"
 	FOREIGN KEY("id_tipo_nota") REFERENCES "TipoDeNota"("id_tipo_nota")
 		ON UPDATE CASCADE ON DELETE CASCADE;
-	
-	
+
+
 ALTER TABLE "AccesosDelRol" ADD CONSTRAINT "accesos_fk"
 	FOREIGN KEY("id_acceso") REFERENCES "Accesos" ("id_acceso")
 		 ON UPDATE CASCADE ON DELETE CASCADE;

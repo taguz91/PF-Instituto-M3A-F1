@@ -99,7 +99,7 @@ INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 32);
 
 --Se crea el usuario por defecto de postgres
 --No se le pasa id de persona porque este usuario no esta registrado
-INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona")
+INSERT INTO "Usuarios"("usu_username","usu_password")
 VALUES('postgres', set_byte( MD5('Holapostgres')::bytea, 4,64));
 
 --SCRIPT USUARIO ROOT

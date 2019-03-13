@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
+import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 
 /**
@@ -13,9 +14,11 @@ import modelo.carrera.CarreraMD;
 public class MateriaBD extends MateriaMD {
 
     private final ConectarDB conecta;
+    private final CarreraBD car;
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
+        this.car = new CarreraBD(conecta);
     }
    
     //para mostrar datos de la materia
@@ -159,8 +162,7 @@ public class MateriaBD extends MateriaMD {
             m.setId(rs.getInt("id_materia"));
             //Aqui cargamos la carrera el id de la carrera
             //Deberiamos buscar carrera
-            CarreraMD carrera = new CarreraMD();
-            carrera.setId(rs.getInt("id_carrera"));
+            CarreraMD carrera = car.buscar(rs.getInt("id_carrera"));
             m.setCarrera(carrera);
 
             EjeFormacionMD eje = new EjeFormacionMD();
