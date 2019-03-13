@@ -128,8 +128,8 @@ public class AccesosDelRolBD extends AccesosDelRolMD {
         String DELETE = "DELETE \n"
                 + "FROM\n"
                 + "	\"AccesosDelRol\" \n"
-                + "WHERE id_rol = "+idRol+" \n"
-                + "	AND id_acceso = "+idAcceso;
+                + "WHERE id_rol = " + idRol + " \n"
+                + "	AND id_acceso = " + idAcceso;
 
         //System.out.println(DELETE);
         return ResourceManager.Statement(DELETE) == null;

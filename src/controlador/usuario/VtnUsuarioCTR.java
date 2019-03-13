@@ -9,6 +9,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
+import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
 import vista.principal.VtnPrincipal;
@@ -25,13 +28,13 @@ public class VtnUsuarioCTR {
     private final VtnUsuario vista; // QUE VOY A VISUALIZAR
     private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
 
-    private final UsuarioBD permisos;// LOS PERMISOS DEL USUARIO
+    private final RolMD permisos;// LOS PERMISOS DEL USUARIO
 
     private static List<UsuarioMD> ListaUsuarios;
 
     private static DefaultTableModel modelT;
 
-    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, UsuarioBD modelo, UsuarioBD permisos) {
+    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, UsuarioBD modelo, RolMD permisos) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
@@ -66,6 +69,7 @@ public class VtnUsuarioCTR {
     //METODOS DE APOYO
     private void InitEventos() {
 
+        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
@@ -74,9 +78,24 @@ public class VtnUsuarioCTR {
 
     private void InitPermisos() {
 
-        vista.getBtnEliminar().setEnabled(true);
-        vista.getBtnActualizar().setEnabled(true);
-        vista.getBtnEditar().setEnabled(true);
+        List<AccesosMD> listaPermisos = AccesosBD.SelectWhereACCESOROLidRol(permisos.getId());
+
+        for (AccesosMD obj : listaPermisos) {
+
+            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+                vista.getBtnIngresar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("USUARIOS-Editar")) {
+                vista.getBtnEditar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+                vista.getBtnEliminar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+                vista.getBtnAsignarRoles().setEnabled(true);
+            }
+
+        }
 
     }
 
@@ -161,6 +180,13 @@ public class VtnUsuarioCTR {
     private void btnActualizarActionPerformance(ActionEvent e) {
 
         cargarTabla();
+
+    }
+
+    private void btnIngresarActionPerformance(ActionEvent e) {
+
+        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar");
+        frm.Init();
 
     }
 

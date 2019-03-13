@@ -11,6 +11,8 @@ public class UsuarioMD {
     private String username;
     private String password;
     private int idPersona;
+    
+    
 
     public UsuarioMD(String username, String password, int idPersona) {
         this.username = username;

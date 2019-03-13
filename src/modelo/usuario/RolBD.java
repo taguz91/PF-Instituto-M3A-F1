@@ -47,15 +47,17 @@ public class RolBD extends RolMD {
 
     }
 
-    public List<RolMD> SelectWhereUSUARIOidUsuario(int idUsuario) {
+    public List<RolMD> SelectWhereUSUARIOusername(String username) {
         String SELECT = "SELECT\n"
-                + "	ROL.id_rol,\n"
-                + "	rol_nombre \n"
-                + "FROM\n"
-                + "	\"Roles\" ROL\n"
-                + "	INNER JOIN \"Usuarios\" USU ON ROL.id_rol = USU.id_rol \n"
-                + "WHERE\n"
-                + "	USU.id_usuario = " + idUsuario + "";
+                + "     \"Roles\".id_rol,\n"
+                + "     \"Roles\".rol_nombre,\n"
+                + "     \"Roles\".rol_observaciones,\n"
+                + "     \"Roles\".rol_estado\n"
+                + " FROM\n"
+                + "     \"Roles\"\n"
+                + " INNER JOIN \"RolesDelUsuario\" ON \"RolesDelUsuario\".id_rol = \"Roles\".id_rol\n"
+                + " WHERE\n"
+                + "     \"RolesDelUsuario\".usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 

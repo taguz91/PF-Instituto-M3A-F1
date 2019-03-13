@@ -1,5 +1,9 @@
 package modelo.usuario;
 
+import java.util.List;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
+
 /**
  *
  * @author MrRainx

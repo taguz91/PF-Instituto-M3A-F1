@@ -1,16 +1,19 @@
 package controlador.login;
 
 import controlador.principal.VtnPrincipalCTR;
+import controlador.usuario.VtnSelectRolCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.util.List;
 import modelo.ConectarDB;
+import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
 import vista.Login;
 import vista.principal.VtnPrincipal;
+import vista.usuario.VtnSelectRol;
 
 /**
  *
@@ -74,9 +77,11 @@ public class LoginCTR {
 
             modelo.setIdPersona(Lista.get(0).getIdPersona());
 
-            VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB("Desde login generico"));
-            ventanaPrincipal.iniciar();
-            vista.setVisible(false);
+            vista.dispose();
+
+            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), USERNAME);
+            vtn.Init();
+
         } else {
 
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
@@ -85,7 +90,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new UsuarioBD(), new ConectarDB("Desde login generico"));
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new ConectarDB("Desde login generico"));
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

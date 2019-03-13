@@ -116,12 +116,19 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Permisos otorgados"
+                "Roles Otorgados"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -138,12 +145,19 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Permiso"
+                "Roles Disponibles"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -154,7 +168,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblUsuario.setText("ROL SELECCIONADO");
+        lblUsuario.setText("Usuario SELECCIONADO");
 
         btnDarTodos.setText(">>");
         btnDarTodos.setEnabled(false);

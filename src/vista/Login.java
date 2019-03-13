@@ -53,6 +53,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblAvisos1 = new javax.swing.JLabel();
         btnIngSU = new javax.swing.JButton();
+        lblAvisos2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -77,9 +78,14 @@ public class Login extends javax.swing.JFrame {
         lblAvisos1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblAvisos1.setForeground(new java.awt.Color(255, 255, 255));
         lblAvisos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAvisos1.setText("<html> SOLO PULSAR EL BOTON INGRESAR <Br> PARA IR A LA VENTANA PRINCIPAL </html>");
+        lblAvisos1.setText("<html> PARA INGRESAR COMO USUARIO ROOT<Br> EJECUTAR LA SCRIPT \"ScriptPermisosG16\" <Br> Esta ubicada en la raiz del proyecto </html>");
 
         btnIngSU.setText("Ingresar Sin Usuario");
+
+        lblAvisos2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblAvisos2.setForeground(new java.awt.Color(255, 255, 255));
+        lblAvisos2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAvisos2.setText("IMPORTANTE !!!");
 
         javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
         container.setLayout(containerLayout);
@@ -103,7 +109,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(lblAvisos1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnIngSU)))
+                        .addComponent(btnIngSU))
+                    .addComponent(lblAvisos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         containerLayout.setVerticalGroup(
@@ -120,9 +127,11 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(btnIngresar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblAvisos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblAvisos1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblAvisos2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblAvisos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnIngSU)
                 .addContainerGap())
         );
@@ -150,6 +159,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblAvisos;
     private javax.swing.JLabel lblAvisos1;
+    private javax.swing.JLabel lblAvisos2;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

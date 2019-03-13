@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.usuario.RolBD;
-import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.FrmUsuario;
@@ -36,7 +34,6 @@ public class FrmUsuarioCTR {
     /*
         Listas
      */
-    private List<RolMD> listaRoles;
     private List<PersonaMD> listaPersonas;
 
     private String Pk;
@@ -53,7 +50,6 @@ public class FrmUsuarioCTR {
 
         InitEventos();
 
-        cargarComboRoles();
         cargarComoPersonas();
 
         if (Funcion.equals("Agregar")) {
@@ -103,15 +99,18 @@ public class FrmUsuarioCTR {
     }
 
     //METODOS DE APOYO
-    private void cargarComboRoles() {
-
-        RolBD rol = new RolBD();
-
-        listaRoles = rol.SelectAll();
-
-    }
-
     private void cargarComoPersonas() {
+
+        PersonaBD persona = new PersonaBD(new ConectarDB("PersonaBD"));
+
+        List<PersonaMD> listaDocentes = persona.cargarDocentes();
+
+        listaDocentes
+                .stream()
+                .forEach(obj -> {
+
+                    vista.getCmbPersona().addItem(obj.getIdentificacion() + " " + obj.getPrimerNombre());
+                });
 
     }
 

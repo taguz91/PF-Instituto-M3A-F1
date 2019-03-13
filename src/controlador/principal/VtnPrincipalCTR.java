@@ -19,7 +19,6 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
-import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -34,7 +33,6 @@ import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import modelo.usuario.UsuarioMD;
 import vista.Login;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
@@ -55,7 +53,6 @@ import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
-import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 
 /**
@@ -65,14 +62,14 @@ import vista.usuario.VtnUsuario;
 public class VtnPrincipalCTR {
 
     private final VtnPrincipal vtnPrin;
-    private final UsuarioBD usuario;
+    private final RolBD rolSeleccionado;
     private final ConectarDB conecta;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin, UsuarioBD usuario, ConectarDB conecta) {
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD usuario, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
-        this.usuario = usuario;
+        this.rolSeleccionado = usuario;
         this.conecta = conecta;
 
         vtnPrin.setVisible(true);
@@ -429,15 +426,14 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuariosActionPerformance(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), new UsuarioBD(), usuario);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), new UsuarioBD(), rolSeleccionado);
         vtn.Init();
     }
 
     private void mnCtRolesActionPerformance(ActionEvent e) {
 
-        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), usuario);
-        vtn.Init();
-
+//        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
+//        vtn.Init();
     }
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {
