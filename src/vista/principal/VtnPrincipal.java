@@ -173,6 +173,19 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnIgMatricula() {
         return mnIgMatricula;
     }
+
+    public JButton getBtnCerrarSesion() {
+        return btnCerrarSesion;
+    }
+
+    public JMenuItem getMnCtRoles() {
+        return mnCtRoles;
+    }
+
+    public JMenuItem getMnCtUsuarios() {
+        return mnCtUsuarios;
+    }
+    
     
     
 
@@ -196,6 +209,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnPersona = new javax.swing.JButton();
         btnInscripcion = new javax.swing.JButton();
         btnMatricula = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         menuCrud = new javax.swing.JMenuBar();
         mnConsultar = new javax.swing.JMenu();
@@ -209,6 +223,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtInscripcion = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
+        mnCtUsuarios = new javax.swing.JMenuItem();
+        mnCtRoles = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -265,6 +281,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnMatricula.setToolTipText("Ingresar matricula");
         btnMatricula.setFocusPainted(false);
 
+        btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.setToolTipText("Ver materias");
+        btnCerrarSesion.setFocusPainted(false);
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -288,21 +308,23 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(361, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
+                .addComponent(btnCerrarSesion))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAlumno)
-                    .addComponent(btnDocente)
-                    .addComponent(btnCarrera)
-                    .addComponent(btnCurso)
-                    .addComponent(btnPrdLectivo)
-                    .addComponent(btnMateria)
-                    .addComponent(btnPersona)
-                    .addComponent(btnInscripcion)
-                    .addComponent(btnMatricula))
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPrdLectivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -360,6 +382,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
         mnCtMallaAlumno.setText("Malla alumnos");
         mnConsultar.add(mnCtMallaAlumno);
+
+        mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
+        mnCtUsuarios.setText("Usuarios");
+        mnConsultar.add(mnCtUsuarios);
+
+        mnCtRoles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
+        mnCtRoles.setText("Roles Usuarios");
+        mnConsultar.add(mnCtRoles);
 
         menuCrud.add(mnConsultar);
 
@@ -444,6 +474,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnCarrera;
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnDocente;
     private javax.swing.JButton btnInscripcion;
@@ -465,6 +496,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPrdLectivo;
+    private javax.swing.JMenuItem mnCtRoles;
+    private javax.swing.JMenuItem mnCtUsuarios;
     private javax.swing.JMenu mnEstilo;
     private javax.swing.JMenuItem mnIgAlumno;
     private javax.swing.JMenuItem mnIgCarrera;

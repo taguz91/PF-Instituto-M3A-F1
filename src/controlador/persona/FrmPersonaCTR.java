@@ -1,6 +1,5 @@
 package controlador.persona;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
