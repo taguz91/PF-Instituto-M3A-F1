@@ -27,8 +27,8 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
     private String user = "postgres";
 
-    //private String pass = "Holapostgres"; //Clave Johnny
-    private String pass = ""; //Clave Diego
+    private String pass = "Holapostgres"; //Clave Johnny
+    //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
     // private String pass = "linis4413"; //Clave Lina
