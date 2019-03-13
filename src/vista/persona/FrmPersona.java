@@ -605,7 +605,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 310, -1));
 
         jLabel18.setText("Tipo id *");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
         cmbIdiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
         getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 130, -1));
