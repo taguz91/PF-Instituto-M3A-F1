@@ -1,7 +1,5 @@
 package controlador.persona;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -9,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -18,10 +15,8 @@ import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
-import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.persona.SectorEconomicoMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVCedula;
 import modelo.validaciones.TxtVDireccion;
