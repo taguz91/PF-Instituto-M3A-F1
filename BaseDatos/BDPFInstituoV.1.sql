@@ -329,6 +329,7 @@ CREATE TABLE "HistorialUsuarios"(
 	"historial_tipo_accion" character varying(30) NOT NULL,
 	"historial_nombre_tabla" character varying(30) NOT NULL,
 	"historial_pk_tabla" integer NOT NULL,
+  "historial_observacion" character varying(200),
 	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user")
 ) WITH (OIDS = FALSE);
 
