@@ -5,20 +5,20 @@ package modelo.materia;
  *
  * @author arman
  */
-public class PreCoRequisitosMD {
+public class MateriaRequisitoMD {
     private int id;
     private MateriaMD materia;
-    private char tipo;
+    private String tipo;
     private MateriaMD materiaRequisito;
 
-    public PreCoRequisitosMD(int id, MateriaMD materia, char tipo, MateriaMD materiaRequisito) {
+    public MateriaRequisitoMD(int id, MateriaMD materia, String tipo, MateriaMD materiaRequisito) {
         this.id = id;
         this.materia = materia;
         this.tipo = tipo;
         this.materiaRequisito = materiaRequisito;
     }
     
-    public PreCoRequisitosMD(){}
+    public MateriaRequisitoMD(){}
 
     public int getId() {
         return id;
@@ -36,11 +36,11 @@ public class PreCoRequisitosMD {
         this.materia = materia;
     }
 
-    public char getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(char tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 

@@ -71,7 +71,7 @@ public class VtnMallaAlumnoCTR {
     public void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex(); 
         if (posAlm > 0) {
-            mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getAlumno().getId_Alumno());            
+            mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());            
             llenarTbl(mallas);
         } else {
             //Borramos todos los datos de la tabla si no se selecciona ninguno 
@@ -95,8 +95,8 @@ public class VtnMallaAlumnoCTR {
         mdlTbl.setRowCount(0);
         if (mallas != null) {
             mallas.forEach((m) -> {
-                Object valores[] = {m.getId(), m.getAlumno().getPrimerNombre()
-                    + " " + m.getAlumno().getPrimerApellido(), m.getMateria().getNombre(),
+                Object valores[] = {m.getId(), m.getAlumnoCarrera().getAlumno().getPrimerNombre()
+                    + " " + m.getAlumnoCarrera().getAlumno().getPrimerApellido(), m.getMateria().getNombre(),
                     m.getEstado(),
                     m.getMallaCiclo(), m.getMallaNumMatricula(), m.getNota1(),
                     m.getNota2(), m.getNota3()};

@@ -1,7 +1,6 @@
 package modelo.alumno;
 
 import modelo.materia.MateriaMD;
-import modelo.persona.AlumnoMD;
 
 /**
  *
@@ -10,7 +9,7 @@ import modelo.persona.AlumnoMD;
 public class MallaAlumnoMD {
     private String id;  
     private MateriaMD materia;  
-    private AlumnoMD alumno;
+    private AlumnoCarreraMD alumnoCarrera;
     private int mallaCiclo; 
     private int mallaNumMatricula;  
     private double nota1, nota2, nota3;
@@ -35,13 +34,14 @@ public class MallaAlumnoMD {
         this.materia = materia;
     }
 
-    public AlumnoMD getAlumno() {
-        return alumno;
+    public AlumnoCarreraMD getAlumnoCarrera() {
+        return alumnoCarrera;
     }
 
-    public void setAlumno(AlumnoMD alumno) {
-        this.alumno = alumno;
+    public void setAlumnoCarrera(AlumnoCarreraMD alumnoCarrera) {
+        this.alumnoCarrera = alumnoCarrera;
     }
+
 
     public int getMallaCiclo() {
         return mallaCiclo;

@@ -81,6 +81,16 @@ public class VtnMateriaCTR {
                 buscar();
             }
         });
+        
+        vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
+    }
+    
+    private void infoMateria(){
+        int pos = vtnMateria.getTblMateria().getSelectedRow(); 
+        if (pos > 0) {
+            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, materias.get(pos));
+            info.iniciar();
+        }
     }
 
     public void buscar() {

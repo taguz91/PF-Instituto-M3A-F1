@@ -60,16 +60,8 @@ INSERT INTO "Accesos" VALUES(31,'PERIODO-INGRESO-NOTAS-Editar');
 INSERT INTO "Accesos" VALUES(32,'PERIODO-INGRESO-NOTAS-Eliminar');
 
 
-
---SCRIPT USUARIO ROOT
-
-
-
+--Rol predefinido en la base de datos
 INSERT INTO "Roles"("rol_nombre") VALUES('ROOT');
-INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona") 
-VALUES('GG', set_byte( MD5('HolaGG')::bytea, 4,64), 1);
-
-INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'GG');
 
 
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 1);
@@ -105,5 +97,13 @@ INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 30);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 31);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 32);
 
+--Se crea el usuario por defecto de postgres
+--No se le pasa id de persona porque este usuario no esta registrado
+INSERT INTO "Usuarios"("usu_username","usu_password")
+VALUES('postgres', set_byte( MD5('Holapostgres')::bytea, 4,64));
 
+--SCRIPT USUARIO ROOT
+INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona")
+VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64), /*Ingresar id de la persona con todos los accesos*/);
 
+INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'ROOT');
