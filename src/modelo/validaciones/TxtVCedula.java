@@ -35,13 +35,13 @@ public class TxtVCedula extends KeyAdapter {
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
             if (!Validar.esCedula(ingreso)) {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
-                if (true) {
+                if (lbl != null) {
                     lbl.setVisible(true);
                 }
                 
             } else {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-                if (true) {
+                if (lbl != null) {
                     lbl.setVisible(false);
                 }
             }
