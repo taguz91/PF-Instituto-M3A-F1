@@ -47,11 +47,10 @@ public class VtnUsuarioCTR {
 
         ListaUsuarios = modelo.SelectAll();
 
+        cargarTabla(ListaUsuarios);
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         vista.setTitle("Usuarios");
-
-        cargarTabla();
 
         InitPermisos();
         InitEventos();
@@ -99,9 +98,9 @@ public class VtnUsuarioCTR {
 
     }
 
-    public static void cargarTabla() {
+    public static void cargarTabla(List<UsuarioMD> lista) {
         modelT.setRowCount(0);
-        ListaUsuarios.stream()
+        lista.stream()
                 .forEach(VtnUsuarioCTR::agregarFila);
 
     }
@@ -179,7 +178,7 @@ public class VtnUsuarioCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
 
-        cargarTabla();
+        cargarTabla(modelo.SelectAll());
 
     }
 

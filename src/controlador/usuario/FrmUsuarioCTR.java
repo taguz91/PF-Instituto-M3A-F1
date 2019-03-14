@@ -7,10 +7,13 @@ package controlador.usuario;
 
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.persona.PersonaBD;
@@ -49,6 +52,10 @@ public class FrmUsuarioCTR {
     public void Init() {
 
         InitEventos();
+
+        PersonaBD persona = new PersonaBD(new ConectarDB("PersonaBD"));
+
+        listaPersonas = persona.cargarPersonas();
 
         cargarComoPersonas();
 
@@ -96,20 +103,45 @@ public class FrmUsuarioCTR {
 
         vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
         vista.getBtnResetear().addActionListener(e -> btnResetarActionPerformance(e));
+
+        vista.getBtnBuscarPer().addActionListener(e -> btnBuscarAtionPerformance(e));
+
+        vista.getTxtBuscarPer().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscarPerOnKeyReleased(e);
+            }
+        });
+
     }
 
     //METODOS DE APOYO
     private void cargarComoPersonas() {
 
-        PersonaBD persona = new PersonaBD(new ConectarDB("PersonaBD"));
-
-        List<PersonaMD> listaDocentes = persona.cargarDocentes();
-
-        listaDocentes
+        listaPersonas
                 .stream()
                 .forEach(obj -> {
+                    vista.getCmbPersona().addItem(obj.getIdentificacion() + " " + obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
 
-                    vista.getCmbPersona().addItem(obj.getIdentificacion() + " " + obj.getPrimerNombre());
+                });
+
+    }
+
+    private void buscarPersona() {
+
+        String buscar = vista.getTxtBuscarPer().getText();
+
+//        int posInicial = persona.indexOf(" ");
+//
+//        String identificacion = persona.substring(0, posInicial);
+        listaPersonas
+                .stream()
+                .filter(item -> item.getIdentificacion().contains(buscar))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+
+                    vista.getCmbPersona().setSelectedItem(obj.getIdentificacion() + " " + obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
+
                 });
 
     }
@@ -118,7 +150,10 @@ public class FrmUsuarioCTR {
 
         if (!vista.getTxtUsername().getText().isEmpty()) {
             if (!vista.getTxtPassword().getText().isEmpty()) {
-                return true;
+                if (vista.getCmbPersona().getSelectedIndex() != 0) {
+                    return true;
+                }
+
             }
         }
 
@@ -128,6 +163,26 @@ public class FrmUsuarioCTR {
     private void setModelo() {
         modelo.setUsername(vista.getTxtUsername().getText());
         modelo.setPassword(vista.getTxtPassword().getText());
+
+        String persona = (String) vista.getCmbPersona().getSelectedItem();
+
+        int posInicial = persona.indexOf(" ");
+
+        String identificacion = persona.substring(0, posInicial);
+
+        List<PersonaMD> listaTemporal = listaPersonas
+                .stream()
+                .filter(item -> item.getIdentificacion().contains(identificacion))
+                .collect(Collectors.toList());
+
+        if (listaTemporal.isEmpty()) {
+
+        } else {
+            listaTemporal.forEach(obj -> {
+
+                modelo.setIdPersona(obj.getIdPersona());
+            });
+        }
 
     }
 
@@ -140,12 +195,14 @@ public class FrmUsuarioCTR {
 
             if (modelo.insertar()) {
                 JOptionPane.showMessageDialog(desktop, "SE HA AGREGADO AL USUARIO CORRECTAMENTE");
+
+                VtnUsuarioCTR.cargarTabla(new UsuarioBD().SelectAll());
+
                 vista.dispose();
             } else {
                 JOptionPane.showMessageDialog(desktop, "YA HAY UN USUARIO O PERSONA \n"
                         + "CON ESE NOMBRE DE USUARIO");
             }
-
         } else {
             JOptionPane.showMessageDialog(desktop, "RELLENE CORRECTAMENTE EL FORMULARIO");
         }
@@ -185,6 +242,20 @@ public class FrmUsuarioCTR {
         vista.getTxtPassword().setText("");
         vista.getTxtBuscarPer().setText("");
         vista.getCmbPersona().setSelectedIndex(0);
+
+    }
+
+    private void btnBuscarAtionPerformance(ActionEvent e) {
+
+        buscarPersona();
+
+    }
+
+    private void txtBuscarPerOnKeyReleased(KeyEvent e) {
+
+        if (e.getKeyCode() == 10) {
+            buscarPersona();
+        }
 
     }
 

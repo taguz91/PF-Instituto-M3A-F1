@@ -30,7 +30,7 @@ public class UsuarioBD extends UsuarioMD {
                 + " VALUES ("
                 + " '" + getUsername() + "',"
                 + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + null + ""
+                + " " + getIdPersona() + ""
                 + " )"
                 + " ";
 
@@ -107,7 +107,7 @@ public class UsuarioBD extends UsuarioMD {
         String UPDATE = "UPDATE \"Usuarios\" SET "
                 + " usu_username = '" + getUsername() + "', "
                 + " usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),"
-                + " id_persona = " + null + ""
+                + " id_persona = " + getIdPersona() + ""
                 + " WHERE "
                 + " id_usuario = '" + Pk + "'";
         return ResourceManager.Statement(UPDATE) == null;
