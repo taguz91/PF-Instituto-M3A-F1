@@ -449,7 +449,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 400, 100, 20));
         getContentPane().add(txtCalleSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 310, -1));
 
-        cmbTipoResidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Zona Urbana", "Zona Rural" }));
+        cmbTipoResidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ZONA URBANA", "ZONA RURAL" }));
         getContentPane().add(cmbTipoResidencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 400, 90, -1));
 
         btnGuardarPersona.setText("Guardar");
