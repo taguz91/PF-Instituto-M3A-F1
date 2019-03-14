@@ -385,13 +385,7 @@ public class FrmPersonaCTR {
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
         correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
 
-        int tipoPer = frmPersona.getCmbTipoPersona().getSelectedIndex();
-        if (tipoPer > 0) {
-            frmPersona.getLblErrorTipoPersona().setVisible(false);
-        } else {
-            guardar = false;
-            frmPersona.getLblErrorTipoPersona().setVisible(true);
-        }
+        
 
         if (guardar) {
 
