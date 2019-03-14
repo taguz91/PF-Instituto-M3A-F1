@@ -46,9 +46,7 @@ public class FrmUsuarioCTR {
         this.vista = vista;
         this.modelo = modelo;
         this.Funcion = Funcion;
-
-        System.out.println(modelo + "------------------>");
-
+        
     }
 
     //INICIADORES

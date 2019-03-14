@@ -161,9 +161,9 @@ public class FrmAccesosDeRolCTR {
     }
 
     private void cargarTablaFilter(List<AccesosMD> lista, DefaultTableModel tabla, String Aguja) {
-        
+
         tabla.setRowCount(0);
-        
+
         lista.stream()
                 .filter(item -> item.getNombre().contains(Aguja))
                 .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))
@@ -232,8 +232,6 @@ public class FrmAccesosDeRolCTR {
 
     private void btnDarUnoActionPerformnce(ActionEvent e) {
 
-        int fila = vista.getTabPermisos().getSelectedRow();
-
         int filas[] = vista.getTabPermisos().getSelectedRows();
 
         if (filas.length > 0) {
@@ -249,13 +247,7 @@ public class FrmAccesosDeRolCTR {
             cargarTabla(listaPermisos, tablaPermisos);
             cargarTabla(listaPermDados, tablaPermDados);
 
-        } else if (fila != -1) {
-
-            String permiso = (String) vista.getTabPermisos().getValueAt(fila, 0);
-
-            moverUno(permiso, listaPermDados, listaPermisos, tablaPermDados, tablaPermisos, false);
-
-        } else if (fila == -1 && tablaPermisos.getDataVector().size() > 0) {
+        } else if (filas.length == 0 && tablaPermisos.getDataVector().size() > 0) {
 
             String permiso = (String) vista.getTabPermisos().getValueAt(0, 0);
 
@@ -265,8 +257,6 @@ public class FrmAccesosDeRolCTR {
     }
 
     private void btnQuitarUnoActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabPermDados().getSelectedRow();
 
         int filas[] = vista.getTabPermDados().getSelectedRows();
 
@@ -282,13 +272,7 @@ public class FrmAccesosDeRolCTR {
             cargarTabla(listaPermisos, tablaPermisos);
             cargarTabla(listaPermDados, tablaPermDados);
 
-        } else if (fila != -1) {
-
-            String permiso = (String) vista.getTabPermDados().getValueAt(fila, 0);
-
-            moverUno(permiso, listaPermisos, listaPermDados, tablaPermisos, tablaPermDados, false);
-
-        } else if (fila == -1 && tablaPermDados.getDataVector().size() > 0) {
+        } else if (filas.length == 0 && tablaPermDados.getDataVector().size() > 0) {
 
             String permiso = (String) vista.getTabPermDados().getValueAt(0, 0);
 

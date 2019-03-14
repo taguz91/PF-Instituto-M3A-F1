@@ -30,7 +30,7 @@ public class VtnSelectRolCTR {
 
     //Inits
     public void Init() {
-        rolesDelUsuario = modelo.SelectWhereUSUARIOusername(username);
+        rolesDelUsuario = RolBD.SelectWhereUSUARIOusername(username);
 
         rellenarCombo();
         InitEventos();
@@ -74,10 +74,9 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, new ConectarDB(""));
         vtn.iniciar();
-        
+
         vista.dispose();
     }
 

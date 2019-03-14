@@ -47,7 +47,7 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public List<UsuarioMD> SelectAll() {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado = true";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS TRUE";
 
         return SelectSimple(SELECT);
 
@@ -59,7 +59,7 @@ public class UsuarioBD extends UsuarioMD {
                 + " WHERE "
                 + PRIMARY_KEY + " LIKE '%" + Aguja + "%' "
                 + " AND"
-                + " usu_estado = true";
+                + " usu_estado IS TRUE";
         return SelectSimple(SELECT);
     }
 
@@ -71,8 +71,20 @@ public class UsuarioBD extends UsuarioMD {
                 + " AND "
                 + " usu_password = set_byte( MD5('" + getPassword() + "')::bytea, 4,64) "
                 + " AND "
-                + " usu_estado = true"
+                + " usu_estado IS TRUE"
                 + "";
+
+        return SelectSimple(SELECT);
+    }
+
+    public List<UsuarioMD> SelectWhereEstadoIsFalse() {
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS FALSE";
+
+        return SelectSimple(SELECT);
+    }
+
+    public List<UsuarioMD> SelectWhereEstadoIsFalseAndUsername(String username) {
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS FALSE AND usu_username = '" + username + "'";
 
         return SelectSimple(SELECT);
     }
@@ -130,6 +142,17 @@ public class UsuarioBD extends UsuarioMD {
                 + " " + PRIMARY_KEY + " = '" + Pk + "'";
 
         return ResourceManager.Statement(DELETE) == null;
+    }
+
+    public boolean reactivar(String Pk) {
+
+        String REACTIVAR = "UPDATE " + TABLA
+                + " SET "
+                + " usu_estado = " + true
+                + " WHERE "
+                + " " + PRIMARY_KEY + " = '" + Pk + "'";
+
+        return ResourceManager.Statement(REACTIVAR) == null;
     }
 
 }

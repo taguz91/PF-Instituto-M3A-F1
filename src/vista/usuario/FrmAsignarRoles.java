@@ -24,8 +24,8 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
-    public JButton getBtnDarPermisos() {
-        return btnDarPermisos;
+    public JButton getBtnGuardar() {
+        return btnGuardar;
     }
 
     public JButton getBtnDarTodos() {
@@ -75,7 +75,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
         btnDarUno = new javax.swing.JButton();
         btnQuitarUno = new javax.swing.JButton();
         btnQuitarTodos = new javax.swing.JButton();
-        btnDarPermisos = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnReset = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
@@ -90,6 +90,10 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
         lblUsuario = new javax.swing.JLabel();
         btnDarTodos = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Asignar Roles a un Usuario");
+
         btnDarUno.setText(">");
         btnDarUno.setEnabled(false);
 
@@ -99,8 +103,8 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
         btnQuitarTodos.setText("<<");
         btnQuitarTodos.setEnabled(false);
 
-        btnDarPermisos.setText("Dar Permisos");
-        btnDarPermisos.setEnabled(false);
+        btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
 
         jLabel1.setText("Buscar:");
 
@@ -206,10 +210,10 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnReset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(155, 155, 155)
                         .addComponent(btnCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDarPermisos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
                         .addGap(3, 3, 3)))
                 .addContainerGap())
         );
@@ -245,7 +249,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDarPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -255,9 +259,9 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDarPermisos;
     private javax.swing.JButton btnDarTodos;
     private javax.swing.JButton btnDarUno;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitarTodos;
     private javax.swing.JButton btnQuitarUno;
     private javax.swing.JButton btnReset;
