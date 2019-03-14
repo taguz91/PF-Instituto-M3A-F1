@@ -17,20 +17,24 @@ import modelo.ResourceManager;
  */
 public class UsuarioBD extends UsuarioMD {
 
-    public UsuarioBD(String username, String password, int idPersona) {
-        super(username, password, idPersona);
+    public UsuarioBD(String username, String password, boolean estado, int idPersona) {
+        super(username, password, estado, idPersona);
     }
 
     public UsuarioBD() {
     }
 
+    private final String TABLA = " \"Usuarios\" ";
+    private final String ATRIBUTOS = " usu_username, usu_password, usu_estado, id_persona ";
+    private final String PRIMARY_KEY = " usu_username ";
+
     public boolean insertar() {
-        String INSERT = "INSERT INTO \"Usuarios\"   "
+        String INSERT = "INSERT INTO " + TABLA
                 + " (usu_username, usu_password, id_persona)"
                 + " VALUES ("
                 + " '" + getUsername() + "',"
                 + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + null + ""
+                + " " + getIdPersona() + ""
                 + " )"
                 + " ";
 
@@ -43,31 +47,31 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public List<UsuarioMD> SelectAll() {
-        String SELECT = "SELECT\n"
-                + "	usu_username,\n"
-                + "	usu_password,\n"
-                + "	id_persona\n"
-                + "FROM\n"
-                + "	\"Usuarios\"";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado = true";
 
         return SelectSimple(SELECT);
 
     }
 
     public List<UsuarioMD> SelectWhereUsernameLIKE(String Aguja) {
-        String SELECT = "SELECT  usu_username, usu_password, id_persona"
-                + " FROM \"Usuarios\" "
-                + " WHERE usu_username LIKE '%" + Aguja + "%' ";
+        String SELECT = "SELECT  " + ATRIBUTOS
+                + " FROM " + TABLA
+                + " WHERE "
+                + PRIMARY_KEY + " LIKE '%" + Aguja + "%' "
+                + " AND"
+                + " usu_estado = true";
         return SelectSimple(SELECT);
     }
 
     public List<UsuarioMD> SelectWhereUsernamePassword() {
-        String SELECT = "SELECT  usu_username, usu_password, id_persona "
-                + " FROM \"Usuarios\" "
+        String SELECT = "SELECT " + ATRIBUTOS
+                + " FROM " + TABLA
                 + " WHERE "
                 + " usu_username = '" + getUsername() + "' "
                 + " AND "
                 + " usu_password = set_byte( MD5('" + getPassword() + "')::bytea, 4,64) "
+                + " AND "
+                + " usu_estado = true"
                 + "";
 
         return SelectSimple(SELECT);
@@ -85,6 +89,8 @@ public class UsuarioBD extends UsuarioMD {
                 usuario.setUsername(rs.getString("usu_username"));
 
                 usuario.setPassword(rs.getString("usu_password"));
+
+                usuario.setEstado(rs.getBoolean("usu_estado"));
 
                 usuario.setIdPersona(rs.getInt("id_persona"));
 
@@ -104,18 +110,24 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public boolean editar(String Pk) {
-        String UPDATE = "UPDATE \"Usuarios\" SET "
+        String UPDATE = "UPDATE  " + TABLA
+                + " SET "
                 + " usu_username = '" + getUsername() + "', "
                 + " usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),"
-                + " id_persona = " + null + ""
+                + " id_persona = " + getIdPersona() + ""
                 + " WHERE "
-                + " id_usuario = '" + Pk + "'";
+                + " " + PRIMARY_KEY + " = '" + Pk + "'";
         return ResourceManager.Statement(UPDATE) == null;
 
     }
 
     public boolean eliminar(String Pk) {
-        String DELETE = "DELETE FROM \"Usuarios\" WHERE id_usuario = " + Pk;
+
+        String DELETE = "UPDATE " + TABLA
+                + " SET "
+                + " usu_estado = " + false + ""
+                + " WHERE "
+                + " " + PRIMARY_KEY + " = '" + Pk + "'";
 
         return ResourceManager.Statement(DELETE) == null;
     }

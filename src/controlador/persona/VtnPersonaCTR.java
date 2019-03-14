@@ -25,12 +25,13 @@ public class VtnPersonaCTR {
     //Para trabajar en los datos de la tabla
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
+    private String tipoPersonas[] = {"Docente", "Alumno"};
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
-        this.conecta = conecta; 
-        
+        this.conecta = conecta;
+
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
         //Iniciamos la clase persona
@@ -38,13 +39,13 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
-     
+        cargarCmbTipoPersonas();
 //Inicializamos el error para que no se vea  
         vtnPersona.getLblError().setVisible(false);
         //Le pasamos accion a los botones  
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
-        
+
         vtnPersona.getBtnEliminar().addActionListener(e -> eliminar());
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
@@ -59,8 +60,6 @@ public class VtnPersonaCTR {
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 1, 100);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 3, 120);
 
-        personas = dbp.cargarPersonas();
-        cargarLista();
         //Llenamos el combo de tipos de persona
         cargarTipoPersona();
         //Le asignamos la accion al combo de tipos de persona  
@@ -73,10 +72,42 @@ public class VtnPersonaCTR {
                 buscar();
             }
         });
+
+        vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
     }
-    
-    private void cargarTipoPersona(){
-        
+
+    private void cargarCmbTipoPersonas() {
+
+        vtnPersona.getCmbTipoPersona().removeAllItems();
+        vtnPersona.getCmbTipoPersona().addItem("Todos");
+        for (String t : tipoPersonas) {
+            vtnPersona.getCmbTipoPersona().addItem(t);
+        }
+
+    }
+
+    private void cargarTipoPersona() {
+
+        String tipo = vtnPersona.getCmbTipoPersona().getSelectedItem().toString();
+
+        switch (tipo) {
+
+            case "Docente":
+                personas = dbp.cargarDocentes();
+                cargarLista();
+                break;
+
+            case "Alumno":
+                personas = dbp.cargarAlumnos();
+                cargarLista();
+                break;
+
+            default:
+                personas = dbp.cargarPersonas();
+                cargarLista();
+                break;
+        }
+
     }
 
     //carge de la lista de modelo a la tabla
@@ -144,7 +175,6 @@ public class VtnPersonaCTR {
     }
 
     private void eliminar() {
-
 
     }
 

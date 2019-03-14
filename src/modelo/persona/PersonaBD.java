@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 
@@ -56,6 +57,29 @@ public class PersonaBD extends PersonaMD {
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
                 + getFechaNacimiento() + "');";
+
+        if (isDiscapacidad()) {
+            nsql = "INSERT INTO public.\"Personas\"(\n"
+                    + "id_lugar_natal, id_lugar_residencia,"
+                    + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
+                    + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
+                    + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
+                    + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
+                    + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
+                    + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
+                    + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
+                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "VALUES (" + getLugarNatal().getId() + ", "
+                    + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
+                    + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
+                    + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
+                    + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
+                    + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
+                    + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
+                    + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
+                    + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
+                    + getFechaNacimiento() + "');";
+        }
 
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se guardo correctamente");
@@ -173,6 +197,66 @@ public class PersonaBD extends PersonaMD {
         } else {
             System.out.println("Error");
             return false;
+        }
+    }
+
+    public void editarPersonaConFoto(int aguja) {
+        String nsql = "UPDATE public.\"Personas\" SET\n"
+                + " id_lugar_natal = " + getLugarNatal().getId()
+                + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ?"
+                + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
+                + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                + "', persona_fecha_registro = '" + getFechaRegistro()
+                + "', persona_calle_principal = '"
+                + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                + " WHERE id_persona = " + aguja + ";";
+
+        if (isDiscapacidad()) {
+            nsql = "UPDATE public.\"Personas\" SET\n"
+                    + " id_lugar_natal = " + getLugarNatal().getId()
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ?"
+                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
+                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
+                    + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
+                    + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
+                    + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
+                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + " WHERE id_persona = " + aguja + ";";
+        }
+
+        PreparedStatement ps = conecta.sqlPS(nsql);
+        if (ps != null) {
+            try {
+                ps.setBinaryStream(1, getFile(), getLogBytes());
+                ps.execute();
+                ps.close();
+                JOptionPane.showMessageDialog(null, "Persona editada correctamente");
+            } catch (SQLException e) {
+                System.out.println("No se pudo editar persona con foto");
+                System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, "No se pudo editar persona con foto");
+            }
         }
     }
 
@@ -335,7 +419,7 @@ public class PersonaBD extends PersonaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerPersona(rs);
+                    p = obtenerPersonaSinValidar(rs);
                     if (p != null) {
                         pers.add(p);
                     }
@@ -354,7 +438,7 @@ public class PersonaBD extends PersonaMD {
 
     //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
     private PersonaMD consultarPor(String sql) {
-        PersonaMD p = new PersonaMD();
+        PersonaMD p = null;
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -453,12 +537,13 @@ public class PersonaBD extends PersonaMD {
             } else {
                 persona.setCarnetConadis(rs.getString("persona_carnet_conadis"));
             }
-
+            /*
             if (rs.wasNull()) {
                 persona.setCallePrincipal(null);
             } else {
                 persona.setCallePrincipal(rs.getString("persona_calle_principal"));
-            }
+            }*/
+            persona.setCallePrincipal(rs.getString("persona_calle_principal"));
 
             if (rs.wasNull()) {
                 persona.setNumeroCasa(null);
@@ -491,6 +576,78 @@ public class PersonaBD extends PersonaMD {
             } else {
                 persona.setTipoResidencia(rs.getString("persona_tipo_residencia"));
             }
+
+            //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
+            persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+            persona.setPersonaActiva(rs.getBoolean("persona_activa"));
+
+            return persona;
+        } catch (SQLException e) {
+            System.out.println("No pudimos obtener persona");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private PersonaMD obtenerPersonaSinValidar(ResultSet rs) {
+        PersonaMD persona = new PersonaMD();
+        try {
+            persona.setIdPersona(rs.getInt("id_persona"));
+            //Aqui igual se crear una clase lugar 
+
+            //Buscamos el lugar que corresponde a cada cosa
+            persona.setLugarNatal(lugar.buscar(rs.getInt("id_lugar_natal")));
+            persona.setLugarResidencia(lugar.buscar(rs.getInt("id_lugar_residencia")));
+
+            is = rs.getBinaryStream("persona_foto");
+            //Pasamos la imagen
+            if (is != null) {
+                try {
+                    BufferedImage bi = ImageIO.read(is);
+                    ImageIcon foto = new ImageIcon(bi);
+                    Image img = foto.getImage();
+                    persona.setFoto(img);
+                } catch (IOException ex) {
+                    System.out.println("Error al pasar la foto: " + ex.getMessage());
+                }
+            }
+
+            persona.setIdentificacion(rs.getString("persona_identificacion"));
+            persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+            persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+            persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+            persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+            persona.setGenero(rs.getString("persona_genero"));
+
+            //Aqui solo cojemos la letra de la posicion 0 porque solo recibe un char
+            persona.setSexo(rs.getString("persona_sexo").charAt(0));
+            persona.setEstadoCivil(rs.getString("persona_estado_civil"));
+            persona.setEtnia(rs.getString("persona_etnia"));
+            persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
+            persona.setTipoSangre(rs.getString("persona_tipo_sangre"));
+
+            persona.setTelefono(rs.getString("persona_telefono"));
+
+            persona.setCelular(rs.getString("persona_celular"));
+
+            persona.setCorreo(rs.getString("persona_correo"));
+            persona.setFechaRegistro(rs.getDate("persona_fecha_registro").toLocalDate());
+            persona.setDiscapacidad(rs.getBoolean("persona_discapacidad"));
+
+            persona.setTipoDiscapacidad(rs.getString("persona_tipo_discapacidad"));
+
+            persona.setPorcentajeDiscapacidad(rs.getInt("persona_porcenta_discapacidad"));
+            persona.setCarnetConadis(rs.getString("persona_carnet_conadis"));
+            persona.setCallePrincipal(rs.getString("persona_calle_principal"));
+
+            persona.setNumeroCasa(rs.getString("persona_numero_casa"));
+            persona.setCalleSecundaria(rs.getString("persona_calle_secundaria"));
+            persona.setReferencia(rs.getString("persona_referencia"));
+            persona.setSector(rs.getString("persona_sector"));
+            persona.setIdioma(rs.getString("persona_idioma"));
+            persona.setIdiomaRaiz(rs.getString("persona_idioma"));
+            persona.setTipoResidencia(rs.getString("persona_tipo_residencia"));
 
             //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
