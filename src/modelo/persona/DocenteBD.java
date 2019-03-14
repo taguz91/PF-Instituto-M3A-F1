@@ -2,7 +2,6 @@ package modelo.persona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,6 @@ public class DocenteBD extends DocenteMD {
         this.conecta = conecta;
         this.per = new PersonaBD(conecta);
     }
-    
-    
 
     public void InsertarDocente() {
         // DocenteMD doc = new DocenteMD();
@@ -43,7 +40,8 @@ public class DocenteBD extends DocenteMD {
         String sql = "SELECT p.id_persona, p.persona_identificacion, "
                 + " p.persona_primer_nombre, p.persona_segundo_nombre,"
                 + " p.persona_primer_apellido, p.persona_segundo_apellido"
-                + " FROM public.\"Personas\" p JOIN public.\"Docentes\" d USING(id_persona) WHERE d.docente_activo = true AND p.persona_activa = true;";
+                + " FROM public.\"Personas\" p JOIN public.\"Docentes\" d USING(id_persona) "
+                + "WHERE d.docente_activo = true AND p.persona_activa = true;";
         //Esto estaba mal WHERE alumno_activo = 'true'
         System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
@@ -97,9 +95,10 @@ public class DocenteBD extends DocenteMD {
     //metodo para buscar una persona 
     public ArrayList<String> buscarPersonaDocente(String cedula) {
         ArrayList<String> datos = new ArrayList();
-        String sql = "SELECT id_persona, persona_primer_nombre FROM public.\"Personas\" "
-                + "WHERE persona_identificacion = '" + cedula + "' "
-                + "and id_tipo_persona = 1 ;";
+        String sql = "SELECT \"Personas\".id_persona, persona_primer_nombre \n"
+                + "FROM public.\"Personas\", public.\"Docentes\"\n"
+                + "WHERE persona_identificacion = '" + cedula + "'\n"
+                + "and \"Personas\".id_persona = \"Docentes\".id_persona;";
         System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
@@ -189,7 +188,7 @@ public class DocenteBD extends DocenteMD {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "SELECT id_docente, id_persona, docente_codigo, "
                 + "docente_otro_trabajo, docente_categoria, "
-                + "docente_fecha_contrato,"
+                + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
                 + " docente_observacion, docente_capacitador\n"
                 + "FROM public.\"Docentes\" ;";
@@ -215,7 +214,7 @@ public class DocenteBD extends DocenteMD {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "	\n"
                 + "SELECT public.\"Docentes\".id_docente, id_persona, docente_codigo, docente_otro_trabajo, \n"
-                + "docente_categoria, docente_fecha_contrato,\n"
+                + "docente_categoria, docente_fecha_contrato,docente_fecha_fin, \n"
                 + "docente_tipo_tiempo, docente_activo, docente_observacion,\n"
                 + "docente_capacitador\n"
                 + "	FROM public.\"Docentes\", public.\"Materias\", public.\"DocentesMateria\"\n"
@@ -303,12 +302,12 @@ public class DocenteBD extends DocenteMD {
         DocenteMD d = null;
         String sql = "SELECT id_docente, id_persona, docente_codigo, "
                 + "docente_otro_trabajo, docente_categoria, "
-                + "docente_fecha_contrato,"
+                + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
                 + " docente_observacion, docente_capacitador\n"
                 + "FROM public.\"Docentes\" "
                 + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -341,6 +340,12 @@ public class DocenteBD extends DocenteMD {
             }
             d.setDocenteCategoria(rs.getInt("docente_categoria"));
             d.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
+            if (rs.wasNull()) {
+                d.setFechaFinContratacion(null);
+            }else{
+                //Toca solucionarlo porque no tienen fecha de contracion y salta error
+                //d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
+            }
             d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
             if (rs.wasNull()) {
                 d.setDocenteCapacitador(false);
@@ -378,7 +383,8 @@ public class DocenteBD extends DocenteMD {
     public ArrayList<DocenteMD> buscar(String aguja) {
         String sql = "SELECT id_persona,id_docente, d.docente_codigo,\n"
                 + "       p.persona_primer_apellido, p.persona_segundo_apellido, \n"
-                + "       p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_activa\n"
+                + "       p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_activa, d.docente_fecha_contrato,"
+                + "       d.docente_fecha_fin, d.docente_tipo_tiempo\n"
                 + "       FROM public.\"Personas\" p inner join public.\"Docentes\" d using(id_persona)\n"
                 + "       WHERE d.docente_activo = true AND (\n"
                 + "       d.docente_codigo ILIKE '%" + aguja + "%'  or "
@@ -399,8 +405,8 @@ public class DocenteBD extends DocenteMD {
                 while (rs.next()) {
                     DocenteMD al = new DocenteMD();
                     al.setIdDocente(rs.getInt("id_docente"));
-                    PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
-                    al.setPersona(p);
+                    PersonaMD pe = per.buscarPersona(rs.getInt("id_persona"));
+                    al.setPersona(pe);
 
                     almns.add(al);
                 }
@@ -477,15 +483,15 @@ public class DocenteBD extends DocenteMD {
     //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
 
     private DocenteMD consultarPor(String sql) {
-        DocenteMD p = new DocenteMD();
+        DocenteMD d = new DocenteMD();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerDocente(rs);
+                    d = obtenerDocente(rs);
                 }
                 rs.close();
-                return p;
+                return d;
             } else {
                 return null;
             }

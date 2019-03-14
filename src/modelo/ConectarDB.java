@@ -16,10 +16,14 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
-
-    //Si se cambia el url no borrar solo comentar 
+    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
+    /*private String url = "jdbc:postgresql://35.202.243.245:5432/BDinsta";
+    private String user = "ROOT";
+    private String pass = "ROOT";*/
+    
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
      // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoCursosM3A"; //BD Johnny PCNOOB
@@ -34,18 +38,18 @@ public class ConectarDB {
     private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
 
    //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA 
+
+    //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
+    private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
+    //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
+
     private String user = "postgres";
 
-
     //private String pass = "Holapostgres"; //Clave Johnny
-
-    //private String pass = "PAOLA"; //Clave Paola
-    private String pass = "NuEvOsErVeR1997"; // Clave Andres
-
-   // private String pass = "linis4413"; //Clave Lina
-    //private String pass = "Holapostgres"; //Clave Johnny
-
-	
+    //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
 
@@ -58,12 +62,14 @@ public class ConectarDB {
     }
 
 
-    public ConectarDB(String mensaje) {
+    private String pass = "linis4413"; //Clave Lina
 
+
+    public ConectarDB(String mensaje) {
         try {
-            //Cargamos el driver  
+            //Cargamos el driver
             Class.forName("org.postgresql.Driver");
-            //Nos conectamos  
+            //Nos conectamos
             ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
 
@@ -84,11 +90,11 @@ public class ConectarDB {
 
     public SQLException nosql(String noSql) {
         try {
-            //Variable para las transacciones  
+            //Variable para las transacciones
             st = ct.createStatement();
-            //Ejecutamos la sentencia SQL  
+            //Ejecutamos la sentencia SQL
             st.execute(noSql);
-            //Cerramos la consulta  
+            //Cerramos la consulta
             st.close();
             //Si todo salio bienn retornamos nulo
             return null;
@@ -100,7 +106,7 @@ public class ConectarDB {
 
     public ResultSet sql(String sql) {
         try {
-            //Iniciamos la variable para las transacciones  
+            //Iniciamos la variable para las transacciones
             st = ct.createStatement();
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);
