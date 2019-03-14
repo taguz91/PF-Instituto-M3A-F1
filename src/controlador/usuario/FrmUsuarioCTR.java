@@ -46,6 +46,9 @@ public class FrmUsuarioCTR {
         this.vista = vista;
         this.modelo = modelo;
         this.Funcion = Funcion;
+
+        System.out.println(modelo + "------------------>");
+
     }
 
     //INICIADORES
@@ -55,7 +58,7 @@ public class FrmUsuarioCTR {
 
         PersonaBD persona = new PersonaBD(new ConectarDB("PersonaBD"));
 
-        listaPersonas = persona.cargarPersonas();
+        listaPersonas = persona.cargarDocentes();
 
         cargarComoPersonas();
 
@@ -113,6 +116,13 @@ public class FrmUsuarioCTR {
             }
         });
 
+        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                txtUsernameOnKeyTyped(e);
+            }
+        });
+
     }
 
     //METODOS DE APOYO
@@ -131,9 +141,6 @@ public class FrmUsuarioCTR {
 
         String buscar = vista.getTxtBuscarPer().getText();
 
-//        int posInicial = persona.indexOf(" ");
-//
-//        String identificacion = persona.substring(0, posInicial);
         listaPersonas
                 .stream()
                 .filter(item -> item.getIdentificacion().contains(buscar))
@@ -194,11 +201,11 @@ public class FrmUsuarioCTR {
             setModelo();
 
             if (modelo.insertar()) {
+
                 JOptionPane.showMessageDialog(desktop, "SE HA AGREGADO AL USUARIO CORRECTAMENTE");
 
-                VtnUsuarioCTR.cargarTabla(new UsuarioBD().SelectAll());
-
                 vista.dispose();
+
             } else {
                 JOptionPane.showMessageDialog(desktop, "YA HAY UN USUARIO O PERSONA \n"
                         + "CON ESE NOMBRE DE USUARIO");
@@ -259,4 +266,23 @@ public class FrmUsuarioCTR {
 
     }
 
+    private void txtUsernameOnKeyTyped(KeyEvent e) {
+
+        if (vista.getTxtUsername().getText().length() < 10) {
+
+            char caracter = e.getKeyChar();
+            if (Character.isLowerCase(caracter)) {
+                String texto = ("" + caracter).toUpperCase();
+                caracter = texto.charAt(0);
+                e.setKeyChar(caracter);
+            }
+        } else {
+            char caracter = e.getKeyChar();
+            if (Character.isLetter(caracter)) {
+                vista.getToolkit().beep();
+                e.consume();
+            }
+        }
+
+    }
 }

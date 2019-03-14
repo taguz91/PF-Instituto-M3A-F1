@@ -98,7 +98,7 @@ public class VtnUsuarioCTR {
 
     }
 
-    public static void cargarTabla(List<UsuarioMD> lista) {
+    public void cargarTabla(List<UsuarioMD> lista) {
         modelT.setRowCount(0);
         lista.stream()
                 .forEach(VtnUsuarioCTR::agregarFila);
@@ -107,13 +107,17 @@ public class VtnUsuarioCTR {
 
     private static void agregarFila(UsuarioMD obj) {
 
-        modelT.addRow(new Object[]{
-            obj.getUsername()
-        });
+        if (obj.isEstado()) {
+            modelT.addRow(new Object[]{
+                obj.getUsername()
+            });
+        }
 
     }
 
     private void setObjFromTable(int fila) {
+
+        ListaUsuarios = modelo.SelectAll();
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
@@ -124,6 +128,8 @@ public class VtnUsuarioCTR {
                 .collect(Collectors.toList())
                 .forEach(obj -> {
                     modelo.setUsername(obj.getUsername());
+                    modelo.setIdPersona(obj.getIdPersona());
+                    System.out.println(obj);
                 });
 
     }
@@ -135,16 +141,19 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            setObjFromTable(fila);
+            String Username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
-            if (modelo.getUsername().equals("ROOT")) {
+            if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");
             } else {
-                int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + modelo.getUsername());
+
+                int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + Username);
 
                 if (opcion == 0) {
 
-                    modelo.eliminar(modelo.getUsername());
+                    modelo.eliminar(Username);
+
+                    cargarTabla(modelo.SelectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
