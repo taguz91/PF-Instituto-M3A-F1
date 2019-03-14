@@ -62,6 +62,15 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         return consultaMallasPorAlumno(sql, idAlumno); 
     }
     
+    public ArrayList<MallaAlumnoMD> cargarMallaAlumnoCursadoYMatriculado(int idAlumno, String estado){
+        String sql = "SELECT id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
+                + "malla_almn_nota3, malla_almn_estado\n"
+                + "FROM public.\"MallaAlumno\" "
+                + "WHERE id_almn_carrera = "+idAlumno+" AND malla_almn_estado = '"+estado.charAt(0)+"';";
+        return consultaMallasPorAlumno(sql, idAlumno); 
+    }
+    
     public MallaAlumnoMD buscarMallaAlumno(int idMallaAlmn){
         MallaAlumnoMD m = new MallaAlumnoMD(); 
         String sql = ""; 

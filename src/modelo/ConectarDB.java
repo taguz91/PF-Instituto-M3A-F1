@@ -16,22 +16,54 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
-
+    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
+    /*private String url = "jdbc:postgresql://35.202.243.245:5432/BDinsta";
+    private String user = "ROOT";
+    private String pass = "ROOT";*/
+    
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
+     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoCursosM3A"; //BD Johnny PCNOOB
+
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M 
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFInstituto"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCNOOB
+    //private String url = "jdbc:postgresql://localhost:5432/PFInstituto"; //BD Johnny PCPRO
+
+    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA 
+
+    private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
+
+   //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA 
+
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
     private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
+
     private String user = "postgres";
 
     //private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
+
+
+
+   // private String pass = "paola"; //Clave Paola-pc2
+
+    public ConectarDB() {
+
+    }
+
+
     private String pass = "linis4413"; //Clave Lina
+
 
     public ConectarDB(String mensaje) {
         try {

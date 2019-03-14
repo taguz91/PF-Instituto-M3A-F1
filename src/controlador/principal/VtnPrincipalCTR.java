@@ -22,6 +22,9 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -373,7 +376,7 @@ public class VtnPrincipalCTR {
 
         });
     }
-
+    
     private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
