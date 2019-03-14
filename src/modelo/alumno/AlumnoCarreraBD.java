@@ -83,7 +83,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "FROM public.\"AlumnosCarrera\", public.\"Alumnos\", public.\"Personas\" \n"
                 + "WHERE \"Alumnos\".id_alumno = \"AlumnosCarrera\".id_alumno \n"
                 + "AND \"Personas\".id_persona = \"Alumnos\".id_persona \n"
-                + "AND almn_carrera_activo = 'true' AND id_carrera = 2 \n"
+                + "AND almn_carrera_activo = 'true' AND id_carrera = "+idCarrera+" \n"
                 + "AND (persona_identificacion ILIKE '%"+aguja+"%' OR\n"
                 + "	 persona_primer_apellido ILIKE '%"+aguja+"%' OR\n"
                 + "	 persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"

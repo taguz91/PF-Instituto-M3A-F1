@@ -16,7 +16,11 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
-
+    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
+    /*private String url = "jdbc:postgresql://35.202.243.245:5432/BDinsta";
+    private String user = "ROOT";
+    private String pass = "ROOT";*/
+    
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
