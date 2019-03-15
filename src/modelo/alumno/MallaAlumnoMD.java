@@ -7,7 +7,7 @@ import modelo.materia.MateriaMD;
  * @author Johnny
  */
 public class MallaAlumnoMD {
-    private String id;  
+    private int id;  
     private MateriaMD materia;  
     private AlumnoCarreraMD alumnoCarrera;
     private int mallaCiclo; 
@@ -18,11 +18,11 @@ public class MallaAlumnoMD {
     public MallaAlumnoMD() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

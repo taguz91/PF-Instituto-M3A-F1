@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -133,6 +134,41 @@ public class FrmAlumnoCursoCTR {
         });
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
+        
+        frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
+    }
+    
+    private void guardar(){
+        boolean guardar = true;
+        if (cursosSelec.isEmpty()) {
+            guardar = false;
+        }
+        
+        int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow(); 
+        
+        if (posAlm < 0) {
+            guardar = false;
+        }
+        
+        int posCar = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
+        if (posCar < 1) {
+            guardar = false;
+        }
+        
+        if (guardar) {
+            System.out.println("Ingresaremos "+cursosSelec.size() + " cursos.");
+            
+            cursosSelec.forEach(c -> {
+                //Guardamos el alumno en su curso 
+                almnCurso.ingresarAlmnCurso(alumnos.get(posAlm).getId(), c.getId_curso());
+                //Actualizamos el numero de matricula
+                mallaAlm.actualizarNumMatricula(alumnos.get(posAlm).getId(), 
+                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
+                
+                mallaAlm.actualizarEstadoMallaAlmn(alumnos.get(posAlm).getId(), 
+                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
+            });
+        }
     }
 
     private void ocultarErrores() {
@@ -183,32 +219,37 @@ public class FrmAlumnoCursoCTR {
         if (posAl >= 0) {
             //Vemos si el alumno esta matriculado en una materia
             materiasAlmn = mallaAlm.cargarMallaAlumnoPorEstado(alumnos.get(posAl).getId(), "M");
-            if (materiasAlmn != null) {
-                /*int r = JOptionPane.showConfirmDialog(vtnPrin,
-                        "Alumno matriculado en " + materiasAlmn.get(posAl).getMallaCiclo() + " ciclo. \n"
-                        + "¿Ver materias?");
-                if (JOptionPane.OK_OPTION == r) {
-                    //Se muestran las materias en las que esta reciclado
-                    mostrarInformacion("M");
-                }*/
-                int s = JOptionPane.showOptionDialog(vtnPrin,
-                        "Alumno matriculado en " + materiasAlmn.get(posAl).getMallaCiclo() + " ciclo. \n"
-                        + "¿Ver materias en las que se encuentra matriculado?", "Alumno matriculado",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        new Object[]{"Ingresar otro alumno","Ver materias", "Cancelar"}, "Ver materias");
-                if (s == 0) {
-                    frmAlmCurso.getTxtBuscar().setText(""); 
-                    mdAlm.setRowCount(0);
-                }else if(s == 1){
-                    mostrarInformacion("M");
+            if (!materiasAlmn.isEmpty()) {
+                try {
+                    int s = JOptionPane.showOptionDialog(vtnPrin,
+                            "Alumno matriculado en " + materiasAlmn.get(posAl).getMallaCiclo() + " ciclo. \n"
+                            + "¿Ver materias en las que se encuentra matriculado?", "Alumno matriculado",
+                            JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null,
+                            new Object[]{"Ingresar otro alumno", "Ver materias", "Cancelar"}, "Ver materias");
+                    if (s == 0) {
+                        frmAlmCurso.getTxtBuscar().setText("");
+                        mdAlm.setRowCount(0);
+                    } else if (s == 1) {
+                        mostrarInformacion("M");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error en alumno matriculado");
                 }
-            }else{
+
+            } else {
                 //Si no esta matriculado miramos la materias que a cursado 
-                materiasAlmn = mallaAlm.cargarMallaAlumnoCursadoYMatriculado(alumnos.get(posAl).getId(), "C");
+                materiasAlmn = mallaAlm.cargarMallaAlumnoPorEstado(alumnos.get(posAl).getId(), "C");
                 if (mallaAlm != null) {
-                    
+                    int ciclo = 0;
+                    for (int i = 0; i < materiasAlmn.size(); i++) {
+                        if (materiasAlmn.get(i).getMallaCiclo() > ciclo) {
+                            ciclo = materiasAlmn.get(i).getMallaCiclo();
+                        }
+                    }
+                    int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
+                    cargarCmbCursos(posPrd, ciclo);
                 }
             }
         }
@@ -239,9 +280,9 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
-    private void cargarCmbCursos(int posPrd) {
+    private void cargarCmbCursos(int posPrd, int ciclo) {
         frmAlmCurso.getCmbCurso().removeAllItems();
-        nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+        nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), ciclo);
         if (nombreCursos != null) {
             frmAlmCurso.getCmbCurso().addItem("Seleccione");
             nombreCursos.forEach(c -> {
