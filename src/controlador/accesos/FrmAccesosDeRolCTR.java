@@ -79,13 +79,11 @@ public class FrmAccesosDeRolCTR {
 
         if (Funcion.equals("Editar")) {
 
-            vista.getBtnDarPermisos().setEnabled(true);
+            vista.getBtnGuardar().setEnabled(true);
             vista.getBtnDarTodos().setEnabled(true);
             vista.getBtnQuitarTodos().setEnabled(true);
             vista.getBtnDarUno().setEnabled(true);
             vista.getBtnQuitarUno().setEnabled(true);
-
-            vista.getBtnDarPermisos().addActionListener(e -> btnEditarActionPerformance(e));
 
             listaBorrar = new ArrayList<>();
 
@@ -94,6 +92,7 @@ public class FrmAccesosDeRolCTR {
             });
 
         }
+        vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
         vista.getBtnDarTodos().addActionListener(e -> btnDarTodosActionPerformance(e));
         vista.getBtnQuitarTodos().addActionListener(e -> btnQuitarTodosActionPerformance(e));
@@ -315,7 +314,7 @@ public class FrmAccesosDeRolCTR {
         vista.dispose();
     }
 
-    private void btnEditarActionPerformance(ActionEvent e) {
+    private void btnGuardar(ActionEvent e) {
 
         listaBorrar.stream().forEach(obj -> {
             modelo.eliminarWhere(rol.getId(), obj.getIdAcceso());

@@ -35,18 +35,18 @@ public class ConectarDB {
 
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA 
 
-    private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
+    private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; // BD Andres Novillo
 
    //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA 
 
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
-    private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
 
-    private String user = "postgres";
+    private String user = "ROOT";
 
     //private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = ""; //Clave Diego
@@ -62,7 +62,7 @@ public class ConectarDB {
     }
 
 
-    private String pass = "linis4413"; //Clave Lina
+    private String pass = "ROOT"; //Clave Lina
 
 
     public ConectarDB(String mensaje) {
