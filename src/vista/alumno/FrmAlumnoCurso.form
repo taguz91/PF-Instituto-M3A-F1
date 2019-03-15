@@ -339,6 +339,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Seleccione las materias que tomara el estudiante en este ciclo."/>
           </Properties>
         </Component>

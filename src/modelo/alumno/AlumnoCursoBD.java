@@ -23,6 +23,15 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         this.cur = new CursoBD(conecta);
     }
 
+    public void ingresarAlmnCurso(int idAlmn, int idCurso) {
+        String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
+                + "id_alumno, id_curso)\n"
+                + "VALUES ("+idAlmn+", "+idCurso+");";
+        if (conecta.nosql(nsql) == null) {
+            System.out.println("Se ingresao correctamente el alumno en el curso");
+        }
+    }
+
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
         String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
                 + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
@@ -43,7 +52,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE id_alumno = " + idAlumno + ";";
         return consultarAlmnCursos(sql);
     }
-    
+
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCurso(int idCurso) {
         String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
                 + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
@@ -54,9 +63,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE id_curso = " + idCurso + ";";
         return consultarAlmnCursos(sql);
     }
-    
-    public AlumnoCursoMD buscarAlumnoCurso(int idAlmnCurso){
-        AlumnoCursoMD almn = new AlumnoCursoMD(); 
+
+    public AlumnoCursoMD buscarAlumnoCurso(int idAlmnCurso) {
+        AlumnoCursoMD almn = new AlumnoCursoMD();
         String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
                 + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
                 + "almn_curso_nt_examen_final, almn_curso_nt_examen_supletorio,\n"
@@ -64,14 +73,14 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "almn_curso_num_faltas\n"
                 + "FROM public.\"AlumnoCurso\" "
                 + "WHERE id_almn_curso = " + idAlmnCurso + ";";
-        ResultSet rs = conecta.sql(sql); 
+        ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
-                while(rs.next()){
+                while (rs.next()) {
                     almn = obtenerAlmCurso(rs);
                 }
-                return almn; 
-            }else{
+                return almn;
+            } else {
                 return null;
             }
         } catch (SQLException e) {
@@ -80,8 +89,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             return null;
         }
     }
-    
-    
 
     private ArrayList<AlumnoCursoMD> consultarAlmnCursos(String sql) {
         ArrayList<AlumnoCursoMD> almns = new ArrayList();
