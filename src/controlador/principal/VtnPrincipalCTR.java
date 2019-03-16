@@ -11,6 +11,7 @@ import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
+import controlador.notas_Grupo_16.VtnNotasAlumnoCursoCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -47,6 +48,7 @@ import vista.alumno.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
+import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
@@ -126,6 +128,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
+        vtnPrin.getMnCtNotas().addActionListener(e-> abrirVtnNotasAlumnoCurso());
 
     }
 
@@ -333,6 +336,12 @@ public class VtnPrincipalCTR {
             ctrFrmMatri.iniciar();
         }
     }
+    
+    private void abrirVtnNotasAlumnoCurso(){
+        VtnNotasAlumnoCurso VtnNotas = new VtnNotasAlumnoCurso();
+            VtnNotasAlumnoCursoCTR ctrVtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, VtnNotas , conecta);
+            ctrVtnNotas.Init();
+    }
 
     private void estiloVtn() {
         String estilo = "Windows";
@@ -438,6 +447,7 @@ public class VtnPrincipalCTR {
 //        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
 //        vtn.Init();
     }
+    
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {
 
@@ -448,4 +458,6 @@ public class VtnPrincipalCTR {
         login.Init();
 
     }
+    
+    
 }

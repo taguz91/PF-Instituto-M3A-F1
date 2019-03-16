@@ -111,6 +111,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         tbl_notas = new javax.swing.JTable();
         btn_imprimir = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+
         lbl_periodolectivo.setText("Periodo Lectivo:");
 
         lbl_carrera.setText("Carrera:");
@@ -125,19 +128,19 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         lbl_jornada.setText("Jornada:");
 
-        cmb_periodolectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", " " }));
+        cmb_periodolectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_carrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
+        cmb_carrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cmb_ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_paralelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cmb_paralelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_jornada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cmb_jornada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_asignatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cmb_asignatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cmb_docente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cmb_docente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tbl_notas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,7 +185,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cmb_carrera, 0, 259, Short.MAX_VALUE)
                                     .addComponent(cmb_periodolectivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
@@ -198,7 +201,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addGap(126, 126, 126))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmb_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                                 .addComponent(btn_imprimir)
                                 .addGap(75, 75, 75))))))
         );
