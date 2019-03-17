@@ -80,78 +80,75 @@ CREATE ROLE "ROOT" SUPERUSER CREATEDB CREATEROLE LOGIN REPLICATION BYPASSRLS PAS
 
     SCRIPT PARA UN USUARIO NORMAL
 
+CREATE ROLE "DIEGO" NOINHERIT LOGIN ENCRYPTED PASSWORD '3113';
 
+GRANT Connect ON DATABASE "Proyecto-Academico-Insta" TO "DIEGO";
 
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Accesos" TO "DIEGO";
 
-    CREATE ROLE "ROOT" LOGIN PASSWORD 'ROOT';
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AccesosDelRol" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Accesos" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AlumnoCurso" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."AccesosDelRol" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Alumnos" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."AlumnoCurso" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AlumnosCarrera" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Alumnos" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Carreras" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."AlumnosCarrera" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Cursos" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Carreras" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."DetalleJornada" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Cursos" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Docentes" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."DetalleJornada" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."DocentesMateria" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Docentes" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."EjesFormacion" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."DocentesMateria" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."EvaluacionSilabo" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."EjesFormacion" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."HistorialUsuarios" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."EvaluacionSilabo" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."JornadaDocente" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."HistorialUsuarios" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Jornadas" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."JornadaDocente" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Lugares" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Jornadas" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."MallaAlumno" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Lugares" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."MateriaRequisitos" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."MallaEstudiante" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Materias" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Materias" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."PeriodoIngresoNotas" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."PeriodoIngresoNotas" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."PeriodoLectivo" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."PeriodoLectivo" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Personas" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Personas" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Referencias" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Referencias" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."ReferenciaSilabo" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."ReferenciaSilabo" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Roles" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Requisitos" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."RolesDelUsuario" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Roles" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."SectorEconomico" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."RolesDelUsuario" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."SesionClase" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."SectorEconomico" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Silabo" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."SesionClase" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."TipoActividad" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."Silabo" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."TipoDeNota" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."TipoActividad" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."UnidadSilabo" TO "DIEGO";
 
-    GRANT Insert, Select, Update ON TABLE "public"."TipoDeNota" TO "ROOT";
-
-    GRANT Insert, Select, Update ON TABLE "public"."TipoPersona" TO "ROOT";
-
-    GRANT Insert, Select, Update ON TABLE "public"."UnidadSilabo" TO "ROOT";
-
-    GRANT Insert, Select, Update ON TABLE "public"."Usuarios" TO "ROOT";
+GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Usuarios" TO "DIEGO";
 */
 
 

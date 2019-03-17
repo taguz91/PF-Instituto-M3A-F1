@@ -199,7 +199,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rol para el Usuario:"/>
+        <Property name="text" type="java.lang.String" value="Roles para el Usuario:"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">

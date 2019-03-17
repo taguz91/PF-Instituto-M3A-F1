@@ -142,7 +142,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
         tabRolesDad.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabRolesDad);
 
-        jLabel3.setText("Rol para el Usuario:");
+        jLabel3.setText("Roles para el Usuario:");
 
         tabRolesDisp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

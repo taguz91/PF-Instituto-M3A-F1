@@ -1,11 +1,8 @@
-
 package controlador.notas_Grupo_16;
 
-import java.util.ArrayList;
 import modelo.ConectarDB;
-import modelo.notas_Grupo_16.VtnNotasAlumnoCursoBD;
-import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.alumno.AlumnoCursoBD;
+import modelo.usuario.UsuarioBD;
 import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -15,32 +12,26 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnNotasAlumnoCursoCTR {
 
-    private final ConectarDB conecta;
-    private VtnNotasAlumnoCurso vtnAc;
-    private final VtnPrincipal vtnPrin;
-    ArrayList<PeriodoLectivoMD> periodos;
-    PeriodoLectivoBD per;
+    private VtnPrincipal desktop;
+    private VtnNotasAlumnoCurso vista;
+    private AlumnoCursoBD modelo;
+    private UsuarioBD usuario;
+    //Conexion
+    private ConectarDB conexion;
 
-    public VtnNotasAlumnoCursoCTR(VtnPrincipal vtnPrin, VtnNotasAlumnoCurso VtnAc, ConectarDB conecta) {
-        this.conecta = conecta;
-        this.vtnAc = VtnAc;
-        this.vtnPrin = vtnPrin;
+    public VtnNotasAlumnoCursoCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, ConectarDB conexion) {
+        this.desktop = desktop;
+        this.vista = vista;
+        this.modelo = modelo;
+        this.usuario = usuario;
+        this.conexion = conexion;
     }
 
-    public void Init(){
-        vtnPrin.getDpnlPrincipal().add(vtnAc);
-        vtnAc.show();
-        cargarCmbPrdLectio();
+    public void Init() {
+
     }
-    
-     private void cargarCmbPrdLectio() {
-        periodos = per.cargarPeriodos();
-        if (periodos != null) {
-            vtnAc.getCmb_periodolectivo().removeAllItems();
-            vtnAc.getCmb_periodolectivo().addItem("Todos");
-            periodos.forEach((p) -> {
-                vtnAc.getCmb_periodolectivo().addItem(p.getNombre_PerLectivo());
-            });
-        }
+
+    private void cargarCmbPrdLectio() {
+
     }
 }

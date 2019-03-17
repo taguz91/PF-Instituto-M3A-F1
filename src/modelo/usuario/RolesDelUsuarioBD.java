@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.usuario;
 
 import java.sql.ResultSet;
@@ -85,6 +80,17 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
 
         return ResourceManager.Statement(ELIMINAR) == null;
 
+    }
+
+    public boolean eliminarWhere(int idRol, String username) {
+        String ELIMINAR = "DELETE FROM " + TABLA + ""
+                + " WHERE "
+                + " id_rol = " + idRol
+                + " AND "
+                + " usu_username = '" + username + "'"
+                + "";
+
+        return ResourceManager.Statement(ELIMINAR) == null;
     }
 
 }

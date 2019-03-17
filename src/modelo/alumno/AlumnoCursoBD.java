@@ -13,9 +13,9 @@ import modelo.persona.AlumnoBD;
  */
 public class AlumnoCursoBD extends AlumnoCursoMD {
 
-    private final ConectarDB conecta;
-    private final AlumnoBD alm;
-    private final CursoBD cur;
+    private ConectarDB conecta;
+    private AlumnoBD alm;
+    private CursoBD cur;
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -23,10 +23,13 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         this.cur = new CursoBD(conecta);
     }
 
+    public AlumnoCursoBD() {
+    }
+
     public void ingresarAlmnCurso(int idAlmn, int idCurso) {
         String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
                 + "id_alumno, id_curso)\n"
-                + "VALUES ("+idAlmn+", "+idCurso+");";
+                + "VALUES (" + idAlmn + ", " + idCurso + ");";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se ingresao correctamente el alumno en el curso");
         }
