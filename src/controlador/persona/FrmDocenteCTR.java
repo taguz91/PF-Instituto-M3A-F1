@@ -45,7 +45,7 @@ public class FrmDocenteCTR {
         this.frmDocente = frmDocente;
         this.docente = docente;
         this.conecta = conecta;
-      this.per = new DocenteBD(conecta);
+        this.per = new DocenteBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
@@ -115,7 +115,7 @@ public class FrmDocenteCTR {
 
         if (guardar) {
             //Llenar directo por el constructor
-             //DocenteBD per = new DocenteBD();
+            //DocenteBD per = new DocenteBD();
             //Pasamos la informacion de la foto 
 //           per.setIdPersona((Integer.parseInt(info.get(0))));
             per.setCodigo(codigo);
@@ -131,20 +131,28 @@ public class FrmDocenteCTR {
                 if (idPersona > 0) {
                     per.editarDocente(idPersona);
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
-                }else{
-                     //  per.buscarPersona(frmDocente.getTxtIdentificacion().getText());
-                per.InsertarDocente();
-                JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
+                } else {
+                    //  per.buscarPersona(frmDocente.getTxtIdentificacion().getText());
+                    per.InsertarDocente();
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                 }
             } else {
-               
+
             }
         }
 
     }
 
     public void buscarPersona() {
-
+        info = docente.buscarPersonaDocente(frmDocente.getTxtIdentificacion().getText());
+       
+        if(info!=null){
+            existeDocente=true;
+            System.out.println("existe docente");
+        }else{
+            existeDocente=false;
+            System.out.println("no existe docente");
+        }
     }
 
     public void habilitarComponentesDocente() {
@@ -173,7 +181,7 @@ public class FrmDocenteCTR {
         idPersona = doc.getIdPersona();
         System.out.println("Id de la persona que editaremos " + idPersona);
 
-       /* Calendar calendar_Ini = Calendar.getInstance();
+        /* Calendar calendar_Ini = Calendar.getInstance();
         calendar_Ini.clear();
         calendar_Ini.set(doc.getFechaInicioContratacion().getYear(), doc.getFechaInicioContratacion().getMonthValue() , doc.getFechaInicioContratacion().getDayOfMonth());
        
@@ -188,7 +196,6 @@ public class FrmDocenteCTR {
         frmDocente.getJdcFechaInicioContratacion().setSelectedDate(calendar_Ini);
        
         frmDocente.getJdcFechaFinContratacion().setSelectedDate(calendar_FinC);*/
-
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
@@ -198,7 +205,5 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().setEnabled(false);
         frmDocente.getBtnRegistrarPersona().setVisible(false);
     }
-    
-    
-    
+
 }

@@ -1,5 +1,6 @@
 package vista.alumno;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -37,6 +38,10 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         return cmbEstado;
     }
 
+    public JButton getBtnIngNota() {
+        return btnIngNota;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +61,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         cmbEstado = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cmbCarreras = new javax.swing.JComboBox<>();
+        btnIngNota = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -63,6 +69,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         setResizable(true);
 
         jLabel1.setText("Buscar");
+
+        txtBuscar.setEditable(false);
 
         tblMallaAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,6 +90,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         jLabel3.setText("Estado:");
 
         jLabel4.setText("Carrera:");
+
+        btnIngNota.setText("Ingresar nota");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,9 +117,12 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIngNota, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -118,7 +131,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngNota))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,7 +142,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -137,6 +151,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIngNota;
     private javax.swing.JComboBox<String> cmbAlumnos;
     private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbEstado;

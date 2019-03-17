@@ -41,7 +41,7 @@ public class AlumnoBD extends AlumnoMD {
 
     public boolean editarAlumno(int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + " id_sec_economico = " + getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
+                + " id_sec_economico = " + getSectorEconomico().getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
                 + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = '" + getNivel_Academico()
                 + "', alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja()
                 + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
@@ -164,6 +164,7 @@ public class AlumnoBD extends AlumnoMD {
         try {
             AlumnoMD a = new AlumnoMD();
             while (rs.next()) {
+                SectorEconomicoMD sector = new SectorEconomicoMD();
                 a.setIdPersona(rs.getInt("id_persona"));
                 a.setIdentificacion(rs.getString("persona_identificacion"));
                 a.setPrimerNombre(rs.getString("persona_primer_nombre"));
@@ -172,9 +173,11 @@ public class AlumnoBD extends AlumnoMD {
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 a.setId_Alumno(rs.getInt("id_alumno"));
                 if (rs.wasNull()) {
-                    a.setId_SecEconomico(0);
+                    sector.setId_SecEconomico(0);
+                    a.setSectorEconomico(sector);
                 } else {
-                    a.setId_SecEconomico(rs.getInt("id_sec_economico"));
+                    sector.setId_SecEconomico(rs.getInt("id_sec_economico"));
+                    a.setSectorEconomico(sector);
                 }
                 if (rs.wasNull()) {
                     a.setTipo_Colegio("|SELECCIONE|");

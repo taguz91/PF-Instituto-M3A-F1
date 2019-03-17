@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.usuario;
 
 import java.sql.ResultSet;
@@ -24,9 +19,13 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
     public RolesDelUsuarioBD() {
     }
 
+    private static String TABLA = " \"RolesDelUsuario\" ";
+    private static String ATRIBUTOS = " id_roles_usuarios, id_rol, usu_username ";
+    private static String PRIMARY_KEY = " id_roles_usuarios ";
+
     public boolean insertar() {
 
-        String INSERTAR = "INSERT INTO \"RolesDelUsuario\""
+        String INSERTAR = "INSERT INTO " + TABLA
                 + " (id_rol, usu_username)"
                 + " VALUES"
                 + "("
@@ -39,13 +38,13 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
     }
 
     public static List<RolesDelUsuarioMD> SelectAll() {
-        String QUERY = "SELECT id_roles_usuarios, id_rol, usu_username FROM \"RolesDelUsuario\"";
+        String QUERY = "SELECT " + ATRIBUTOS + " FROM " + TABLA;
 
         return SelectSimple(QUERY);
     }
 
     public static List<RolesDelUsuarioMD> SelectWhereUsername(String Aguja) {
-        String QUERY = "SELECT id_roles_usuarios, id_rol, usu_username FROM \"RolesDelUsuario\" WHERE usu_username = '" + Aguja + "'";
+        String QUERY = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_username = '" + Aguja + "'";
         return SelectSimple(QUERY);
     }
 
@@ -73,6 +72,25 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
         }
 
         return lista;
+    }
+
+    public boolean eliminar(int primaryKey) {
+
+        String ELIMINAR = "DELETE FROM " + TABLA + " WHERE " + PRIMARY_KEY + " = " + primaryKey;
+
+        return ResourceManager.Statement(ELIMINAR) == null;
+
+    }
+
+    public boolean eliminarWhere(int idRol, String username) {
+        String ELIMINAR = "DELETE FROM " + TABLA + ""
+                + " WHERE "
+                + " id_rol = " + idRol
+                + " AND "
+                + " usu_username = '" + username + "'"
+                + "";
+
+        return ResourceManager.Statement(ELIMINAR) == null;
     }
 
 }

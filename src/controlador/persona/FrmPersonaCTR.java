@@ -515,6 +515,7 @@ public class FrmPersonaCTR {
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
         correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
 
+
         if (guardar) {
 
             // PersonaBD per = new PersonaBD();

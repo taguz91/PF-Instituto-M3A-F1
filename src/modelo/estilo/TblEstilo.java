@@ -1,5 +1,7 @@
 package modelo.estilo;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -15,9 +17,8 @@ public class TblEstilo {
 
     public TblEstilo() {
     }
-    
-    
-    public static void columnaMedida(JTable tbl, int columna, int medida){
+
+    public static void columnaMedida(JTable tbl, int columna, int medida) {
         TableColumnModel mdColum = tbl.getColumnModel();
         //Pasamos el tamaño a la columna indicada
         mdColum.getColumn(columna).setPreferredWidth(medida);
@@ -25,7 +26,7 @@ public class TblEstilo {
         mdColum.getColumn(columna).setMinWidth(medida);
         mdColum.getColumn(columna).setMaxWidth(medida);
     }
-    
+
     //Con este metodo ocultamos la primera columna de la tabla
     public static void ocualtarID(JTable tbl) {
         TableColumnModel mdColum = tbl.getColumnModel();
@@ -50,6 +51,30 @@ public class TblEstilo {
         hedRender.setHorizontalAlignment(JLabel.CENTER);
         //Le pasamos el render a nuestro table head
         tblHead.setDefaultRenderer(hedRender);
+    }
+
+    public static void fomatoTblConColor(JTable tbl) {
+        JTableHeader tblHead = tbl.getTableHeader();
+
+        tblHead.setBackground(new Color(49, 79, 117));
+        tblHead.setForeground(new Color(255, 255, 255));
+        tblHead.setOpaque(false);
+        tblHead.setFont(new Font("Arial", Font.PLAIN, 16));
+        //Para que no se pueda reordenar las columnas 
+        tblHead.setReorderingAllowed(false);
+        //Para que no se pueda cambiar su longitud  
+        tblHead.setResizingAllowed(false);
+        //Centramos los titulos de las tablas 
+        DefaultTableCellRenderer hedRender = (DefaultTableCellRenderer) tblHead.getDefaultRenderer();
+        //Centramos los textos
+        hedRender.setHorizontalAlignment(JLabel.CENTER);
+        //Le pasamos el render a nuestro table head
+        tblHead.setDefaultRenderer(hedRender);
+        //Letra y anchura de las tablas
+        tbl.setFont(new Font("Arial", Font.PLAIN, 14));
+        tbl.setRowHeight(30);
+        //Con esto solo selecionaremos un fila
+        tbl.setSelectionMode(0);
     }
 
     public static DefaultTableModel modelTblSinEditar(String datos[][], String titulo[]) {

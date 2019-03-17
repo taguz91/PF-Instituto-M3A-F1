@@ -41,9 +41,6 @@ public class ResourceManager {
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver(driver);
 
-                /*
-                    ITERA LAS LISTAS DE LAS Urls 
-                 */
                 USERNAME = LoginCTR.USERNAME;
                 PASSWORD = LoginCTR.PASSWORD;
 
@@ -54,6 +51,9 @@ public class ResourceManager {
 
         }
 
+        /*
+                ITERA LAS LISTAS DE LAS Urls 
+         */
         for (String url : urls()) {
             try {
                 conex = DriverManager.getConnection(url, USERNAME, PASSWORD);
@@ -116,13 +116,14 @@ public class ResourceManager {
     private static List<String> urls() {
         List<String> listaUrls = new ArrayList<>();
 
-        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
+        //listaUrls.add("jdbc:postgresql://35.202.243.245:5432/BDinsta");//BASE DE DATOS EN LA NUBE
+//        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
         listaUrls.add("jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
-        listaUrls.add("jdbc:postgresql://localhost:5433/BDPFINSTITUTO");//JHONNY
-        listaUrls.add("jdbc:postgresql://localhost:5432/BDPFMallaEstudiante");//LINA
-        listaUrls.add("jdbc:postgresql://localhost:5432/ingreso");//PAO MEDINA
-        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto");//ANDRES NOVILLO
-        listaUrls.add("jdbc:postgresql://localhost:5432/Pruebas");//PAO MEDINA
+//        listaUrls.add("jdbc:postgresql://localhost:5433/BDPFINSTITUTO");//JHONNY
+//        listaUrls.add("jdbc:postgresql://localhost:5432/BDPFMallaEstudiante");//LINA
+//        listaUrls.add("jdbc:postgresql://localhost:5432/ingreso");//PAO MEDINA
+//        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto");//ANDRES NOVILLO
+//        listaUrls.add("jdbc:postgresql://localhost:5432/Pruebas");//PAO MEDINA
 
         return listaUrls;
     }

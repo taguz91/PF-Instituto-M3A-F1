@@ -1,9 +1,5 @@
 package modelo.usuario;
 
-import java.util.List;
-import modelo.accesos.AccesosBD;
-import modelo.accesos.AccesosMD;
-
 /**
  *
  * @author MrRainx
@@ -12,10 +8,14 @@ public class RolMD {
 
     private int id;
     private String nombre;
+    private String observaciones;
+    private boolean estado;
 
-    public RolMD(int idRol, String nombre) {
-        this.id = idRol;
+    public RolMD(int id, String nombre, String observaciones, boolean estado) {
+        this.id = id;
         this.nombre = nombre;
+        this.observaciones = observaciones;
+        this.estado = estado;
     }
 
     public RolMD() {
@@ -37,9 +37,25 @@ public class RolMD {
         this.nombre = nombre;
     }
 
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "RolUsuario{" + "idRol=" + id + ", nombre=" + nombre + '}';
+        return "RolMD{" + "id=" + id + ", nombre=" + nombre + ", observaciones=" + observaciones + ", estado=" + estado + '}';
     }
 
 }

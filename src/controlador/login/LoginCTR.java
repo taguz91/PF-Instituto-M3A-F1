@@ -79,7 +79,7 @@ public class LoginCTR {
 
             vista.dispose();
 
-            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), USERNAME);
+            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo);
             vtn.Init();
 
         } else {
@@ -90,7 +90,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new ConectarDB("Desde login generico"));
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("Desde login generico"));
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

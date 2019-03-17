@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.usuario;
 
 import javax.swing.JButton;
@@ -79,11 +74,13 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
 
         lblUsername.setText("Username");
 
+        txtUsername.setEditable(false);
+
         lblPassword.setText("Password");
 
         lblBuscarPer.setText("Buscar Persona");
 
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("Continuar");
 
         btnCancelar.setText("Cancelar");
 
@@ -93,7 +90,7 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
 
         lblBuscarPer1.setText("Filtrar Persona");
 
-        btnResetear.setText("Resetear");
+        btnResetear.setText("Reset");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,11 +102,11 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnResetear)
+                        .addComponent(btnResetear, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(181, 181, 181)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()

@@ -105,6 +105,14 @@ public class CursoBD extends CursoMD {
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + ";";
         return consultarNombreCursos(sql);
     }
+    
+    public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int ciclo) {
+        String sql = "SELECT DISTINCT curso_nombre\n"
+                + "FROM public.\"Cursos\" "
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "AND curso_ciclo > "+ciclo+";";
+        return consultarNombreCursos(sql);
+    }
 
     public CursoMD buscarCurso(int idCurso) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
