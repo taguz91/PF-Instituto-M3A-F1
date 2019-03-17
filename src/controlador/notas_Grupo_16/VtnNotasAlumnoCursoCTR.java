@@ -3,7 +3,6 @@ package controlador.notas_Grupo_16;
 
 import java.util.ArrayList;
 import modelo.ConectarDB;
-import modelo.notas_Grupo_16.VtnNotasAlumnoCursoBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
@@ -25,15 +24,16 @@ public class VtnNotasAlumnoCursoCTR {
         this.conecta = conecta;
         this.vtnAc = VtnAc;
         this.vtnPrin = vtnPrin;
+        this.per = new PeriodoLectivoBD(conecta);
     }
 
     public void Init(){
         vtnPrin.getDpnlPrincipal().add(vtnAc);
         vtnAc.show();
-        cargarCmbPrdLectio();
+        cargarCmbPrdLectivo();
     }
     
-     private void cargarCmbPrdLectio() {
+     private void cargarCmbPrdLectivo() {
         periodos = per.cargarPeriodos();
         if (periodos != null) {
             vtnAc.getCmb_periodolectivo().removeAllItems();
