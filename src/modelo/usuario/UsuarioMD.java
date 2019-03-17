@@ -1,7 +1,5 @@
 package modelo.usuario;
 
-import modelo.accesos.AccesosMD;
-
 /**
  *
  * @author MrRainx
@@ -10,19 +8,21 @@ public class UsuarioMD {
 
     private String username;
     private String password;
+    private boolean estado;
     private int idPersona;
-    
-    
 
-    public UsuarioMD(String username, String password, int idPersona) {
+    public UsuarioMD(String username, String password, boolean estado, int idPersona) {
         this.username = username;
         this.password = password;
+        this.estado = estado;
         this.idPersona = idPersona;
     }
 
     public UsuarioMD() {
     }
 
+    
+    
     public String getUsername() {
         return username;
     }
@@ -39,6 +39,14 @@ public class UsuarioMD {
         this.password = password;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     public int getIdPersona() {
         return idPersona;
     }
@@ -49,11 +57,7 @@ public class UsuarioMD {
 
     @Override
     public String toString() {
-        return "UsuarioMD{" + "username=" + username + ", password=" + password + ", idPersona=" + idPersona + '}';
-    }
-
-    public Iterable<AccesosMD> getPermisos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "UsuarioMD{" + "username=" + username + ", password=" + password + ", estado=" + estado + ", idPersona=" + idPersona + '}';
     }
 
 }

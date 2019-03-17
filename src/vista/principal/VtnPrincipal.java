@@ -185,6 +185,15 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnCtUsuarios() {
         return mnCtUsuarios;
     }
+
+    public JMenuItem getMnCtNotas() {
+        return mnCtNotas;
+    }
+
+    public void setMnCtNotas(JMenuItem mnCtNotas) {
+        this.mnCtNotas = mnCtNotas;
+    }
+    
     
     
     
@@ -225,6 +234,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
+        mnCtNotas = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -391,6 +401,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRoles.setText("Roles Usuarios");
         mnConsultar.add(mnCtRoles);
 
+        mnCtNotas.setText("Notas");
+        mnConsultar.add(mnCtNotas);
+
         menuCrud.add(mnConsultar);
 
         mnIngresar.setText("Ingresar");
@@ -494,6 +507,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMallaAlumno;
     private javax.swing.JMenuItem mnCtMateria;
     private javax.swing.JMenuItem mnCtMatricula;
+    private javax.swing.JMenuItem mnCtNotas;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRoles;

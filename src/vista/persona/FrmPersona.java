@@ -449,7 +449,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 400, 100, 20));
         getContentPane().add(txtCalleSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 310, -1));
 
-        cmbTipoResidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Zona Urbana", "Zona Rural" }));
+        cmbTipoResidencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ZONA URBANA", "ZONA RURAL" }));
         getContentPane().add(cmbTipoResidencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 400, 90, -1));
 
         btnGuardarPersona.setText("Guardar");
@@ -605,7 +605,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 310, -1));
 
         jLabel18.setText("Tipo id *");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
         cmbIdiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
         getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 130, -1));

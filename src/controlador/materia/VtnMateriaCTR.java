@@ -87,7 +87,7 @@ public class VtnMateriaCTR {
     
     private void infoMateria(){
         int pos = vtnMateria.getTblMateria().getSelectedRow(); 
-        if (pos > 0) {
+        if (pos >= 0) {
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, materias.get(pos));
             info.iniciar();
         }

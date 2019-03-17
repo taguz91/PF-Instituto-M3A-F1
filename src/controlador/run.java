@@ -14,8 +14,12 @@ public class run {
     public static void main(String[] args) {
         estiloWindows();
 
+
+        
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();
+        
+        
 
     }
 

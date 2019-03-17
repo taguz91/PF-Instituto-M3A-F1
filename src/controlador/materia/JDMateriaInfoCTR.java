@@ -32,6 +32,7 @@ public class JDMateriaInfoCTR {
 
         this.vtnInfo = new JDMateriaInfo(vtnPrin, false);
         this.matRe = new MateriaRequisitoBD(conecta);
+        vtnInfo.setLocationRelativeTo(vtnPrin);
 
         this.vtnInfo.setVisible(true);
     }
@@ -41,12 +42,16 @@ public class JDMateriaInfoCTR {
         vtnInfo.getLblCarrera().setText(m.getCarrera().getNombre());
 
         //Inciiamos las tablas 
-        String titulo1[] = {"Materia"};
+        String titulo1[] = {"Co-Requisitos"};
+        String titulo2[] = {"Pre-Requisitos"};
         String[][] datos1 = {};
 
         mdTblCo = TblEstilo.modelTblSinEditar(datos1, titulo1);
-        mdTblPre = TblEstilo.modelTblSinEditar(datos1, titulo1);
-
+        mdTblPre = TblEstilo.modelTblSinEditar(datos1, titulo2);
+        
+        TblEstilo.fomatoTblConColor(vtnInfo.getTblCoRequisitos());
+        TblEstilo.fomatoTblConColor(vtnInfo.getTblPreRequisitos());
+        
         vtnInfo.getTblCoRequisitos().setModel(mdTblCo);
         vtnInfo.getTblPreRequisitos().setModel(mdTblPre);
         

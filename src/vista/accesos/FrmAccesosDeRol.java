@@ -23,8 +23,8 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
-    public JButton getBtnDarPermisos() {
-        return btnDarPermisos;
+    public JButton getBtnGuardar() {
+        return btnGuardar;
     }
 
     public JButton getBtnDarTodos() {
@@ -74,7 +74,7 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDarPermisos = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -98,8 +98,8 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(575, 551));
         setPreferredSize(new java.awt.Dimension(575, 551));
 
-        btnDarPermisos.setText("Dar Permisos");
-        btnDarPermisos.setEnabled(false);
+        btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
 
         btnReset.setText("Resetear");
         btnReset.setEnabled(false);
@@ -203,7 +203,7 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDarPermisos)
+                        .addComponent(btnGuardar)
                         .addGap(3, 3, 3)))
                 .addContainerGap())
         );
@@ -239,7 +239,7 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDarPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -249,9 +249,9 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDarPermisos;
     private javax.swing.JButton btnDarTodos;
     private javax.swing.JButton btnDarUno;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitarTodos;
     private javax.swing.JButton btnQuitarUno;
     private javax.swing.JButton btnReset;

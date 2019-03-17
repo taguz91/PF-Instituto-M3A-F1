@@ -10,16 +10,16 @@ public class AlumnoMD extends PersonaMD{
     
     private String nombre;
     private String tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, ocupacion, anio_graduacion, observacion;
-    private String sector_Economico, formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia;
-    private int id_Alumno,id_SecEconomico;
+    private String formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia;
+    private int id_Alumno;
+    private SectorEconomicoMD sectorEconomico;
     private boolean educacion_Superior, pension, trabaja, activo;
 
     public AlumnoMD() {
     }
 
-    public AlumnoMD(int id_Alumno, String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String sector_Economico, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_SecEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+    public AlumnoMD(String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_Alumno, SectorEconomicoMD sectorEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
         super(idPersona, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
-        this.id_Alumno = id_Alumno;
         this.nombre = nombre;
         this.tipo_Colegio = tipo_Colegio;
         this.tipo_Bachillerato = tipo_Bachillerato;
@@ -28,13 +28,13 @@ public class AlumnoMD extends PersonaMD{
         this.ocupacion = ocupacion;
         this.anio_graduacion = anio_graduacion;
         this.observacion = observacion;
-        this.sector_Economico = sector_Economico;
         this.formacion_Padre = formacion_Padre;
         this.formacion_Madre = formacion_Madre;
         this.nom_Contacto = nom_Contacto;
         this.parentesco_Contacto = parentesco_Contacto;
         this.contacto_Emergencia = contacto_Emergencia;
-        this.id_SecEconomico = id_SecEconomico;
+        this.id_Alumno = id_Alumno;
+        this.sectorEconomico = sectorEconomico;
         this.educacion_Superior = educacion_Superior;
         this.pension = pension;
         this.trabaja = trabaja;
@@ -79,14 +79,6 @@ public class AlumnoMD extends PersonaMD{
 
     public void setOcupacion(String ocupacion) {
         this.ocupacion = ocupacion;
-    }
-
-    public String getSector_Economico() {
-        return sector_Economico;
-    }
-
-    public void setSector_Economico(String sector_Economico) {
-        this.sector_Economico = sector_Economico;
     }
 
     public String getFormacion_Padre() {
@@ -169,14 +161,6 @@ public class AlumnoMD extends PersonaMD{
         this.id_Alumno = id_Alumno;
     }
 
-    public int getId_SecEconomico() {
-        return id_SecEconomico;
-    }
-
-    public void setId_SecEconomico(int id_SecEconomico) {
-        this.id_SecEconomico = id_SecEconomico;
-    }
-
     public String getAnio_graduacion() {
         return anio_graduacion;
     }
@@ -200,5 +184,14 @@ public class AlumnoMD extends PersonaMD{
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    public SectorEconomicoMD getSectorEconomico() {
+        return sectorEconomico;
+    }
+
+    public void setSectorEconomico(SectorEconomicoMD sectorEconomico) {
+        this.sectorEconomico = sectorEconomico;
+    }
+
     
 }

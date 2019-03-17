@@ -12,9 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.usuario.RolMD;
+import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
 import vista.principal.VtnPrincipal;
+import vista.usuario.FrmAsignarRoles;
 import vista.usuario.FrmUsuario;
 import vista.usuario.VtnUsuario;
 
@@ -47,11 +49,10 @@ public class VtnUsuarioCTR {
 
         ListaUsuarios = modelo.SelectAll();
 
+        cargarTabla(ListaUsuarios);
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         vista.setTitle("Usuarios");
-
-        cargarTabla();
 
         InitPermisos();
         InitEventos();
@@ -73,6 +74,7 @@ public class VtnUsuarioCTR {
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
+        vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRolesActionPerformance(e));
 
     }
 
@@ -99,22 +101,26 @@ public class VtnUsuarioCTR {
 
     }
 
-    public static void cargarTabla() {
+    public void cargarTabla(List<UsuarioMD> lista) {
         modelT.setRowCount(0);
-        ListaUsuarios.stream()
+        lista.stream()
                 .forEach(VtnUsuarioCTR::agregarFila);
 
     }
 
     private static void agregarFila(UsuarioMD obj) {
 
-        modelT.addRow(new Object[]{
-            obj.getUsername()
-        });
+        if (obj.isEstado()) {
+            modelT.addRow(new Object[]{
+                obj.getUsername()
+            });
+        }
 
     }
 
     private void setObjFromTable(int fila) {
+
+        ListaUsuarios = modelo.SelectAll();
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
@@ -125,6 +131,8 @@ public class VtnUsuarioCTR {
                 .collect(Collectors.toList())
                 .forEach(obj -> {
                     modelo.setUsername(obj.getUsername());
+                    modelo.setIdPersona(obj.getIdPersona());
+                    System.out.println(obj);
                 });
 
     }
@@ -136,16 +144,19 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            setObjFromTable(fila);
+            String Username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
-            if (modelo.getUsername().equals("ROOT")) {
+            if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");
             } else {
-                int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + modelo.getUsername());
+
+                int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + Username);
 
                 if (opcion == 0) {
 
-                    modelo.eliminar(modelo.getUsername());
+                    modelo.eliminar(Username);
+
+                    cargarTabla(modelo.SelectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
@@ -179,7 +190,7 @@ public class VtnUsuarioCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
 
-        cargarTabla();
+        cargarTabla(modelo.SelectAll());
 
     }
 
@@ -187,6 +198,27 @@ public class VtnUsuarioCTR {
 
         FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar");
         frm.Init();
+
+    }
+
+    private void btnAsignarRolesActionPerformance(ActionEvent e) {
+
+        int fila = vista.getTblUsuario().getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
+        } else {
+
+            setObjFromTable(fila);
+
+            if (modelo.getUsername().equals("ROOT")) {
+                JOptionPane.showMessageDialog(vista, "NO SE PUEDE EDITAR LOS PERMISOS DEL USUARIO ROOT!");
+            } else {
+                FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar");
+                form.Init();
+            }
+
+        }
 
     }
 
