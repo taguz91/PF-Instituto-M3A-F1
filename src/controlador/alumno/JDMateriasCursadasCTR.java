@@ -35,6 +35,7 @@ public class JDMateriasCursadasCTR {
         this.mallaAlm = mallaAlm;
         this.estado = estado;
         this.jd = new JDMateriasCursadas(vtnPrin, false);
+        jd.setLocationRelativeTo(vtnPrin);
 
         jd.setVisible(true);
     }
@@ -44,7 +45,7 @@ public class JDMateriasCursadasCTR {
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         jd.getTblMaterias().setModel(mdTbl);
-        TblEstilo.formatoTbl(jd.getTblMaterias());
+        TblEstilo.fomatoTblConColor(jd.getTblMaterias());
 
         jd.getLblAlumno().setText(alumno.getAlumno().getPrimerNombre() + " "
                 + alumno.getAlumno().getPrimerApellido());
