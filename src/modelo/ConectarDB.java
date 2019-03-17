@@ -17,19 +17,19 @@ public class ConectarDB {
     private Statement st;
     private ResultSet rs;
 
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+    private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
     //private String url = "jdbc:postgresql://localhost:5432/BDPFInstitutoM3A"; //BD Johnny PCNOOB
     // private String url = "jdbc:postgresql://localhost:5432/BDPFMallaEstudiante"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
-    //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
+  //  private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     private String user = "postgres";
 
     private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = ""; //Clave Diego
-    //private String pass = "PAOLA"; //Clave Paola
+   // private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
     // private String pass = "linis4413"; //Clave Lina
 
