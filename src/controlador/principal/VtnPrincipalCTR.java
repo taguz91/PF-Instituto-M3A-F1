@@ -11,6 +11,7 @@ import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
+import controlador.notas_Grupo_16.VtnNotasAlumnoCursoCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -33,6 +34,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
+import modelo.alumno.AlumnoCursoBD;
 import modelo.persona.DocenteBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -47,6 +49,7 @@ import vista.alumno.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
+import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
@@ -66,15 +69,16 @@ public class VtnPrincipalCTR {
 
     private final VtnPrincipal vtnPrin;
     private final RolBD rolSeleccionado;
+    private final UsuarioBD usuario;
     private final ConectarDB conecta;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD usuario, ConectarDB conecta) {
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado, UsuarioBD usuario, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
-        this.rolSeleccionado = usuario;
+        this.rolSeleccionado = rolSeleccionado;
+        this.usuario = usuario;
         this.conecta = conecta;
-
         vtnPrin.setVisible(true);
     }
 
@@ -126,6 +130,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
+        vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso());
 
     }
 
@@ -334,6 +339,12 @@ public class VtnPrincipalCTR {
         }
     }
 
+    private void abrirVtnNotasAlumnoCurso() {
+
+        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(), usuario, conecta);
+        vtnNotas.Init();
+    }
+
     private void estiloVtn() {
         String estilo = "Windows";
 
@@ -376,7 +387,7 @@ public class VtnPrincipalCTR {
 
         });
     }
-    
+
     private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
@@ -448,4 +459,5 @@ public class VtnPrincipalCTR {
         login.Init();
 
     }
+
 }

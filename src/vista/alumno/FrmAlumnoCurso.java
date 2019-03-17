@@ -224,6 +224,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(tblMateriasPen);
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Seleccione las materias que tomara el estudiante en este ciclo.");
 
         jLabel4.setText("Seleccione un curso:");
