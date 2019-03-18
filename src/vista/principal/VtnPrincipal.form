@@ -107,16 +107,23 @@
                 <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
+            <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Notas"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
-              </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">

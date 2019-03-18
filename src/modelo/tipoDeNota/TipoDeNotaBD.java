@@ -7,6 +7,7 @@ package modelo.tipoDeNota;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,17 +20,26 @@ import modelo.ResourceManager;
  */
 public class TipoDeNotaBD extends TipoDeNotaMD {
 
-    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo) {
-        super(idTipoNota, nombre, valorMinimo, valorMaximo);
+    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado) {
+        super(idTipoNota, nombre, valorMinimo, valorMaximo, fechaCreacion, estado);
     }
 
     public TipoDeNotaBD() {
     }
 
-    private final String TABLA = "SELECT id_tipo_nota, tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo FROM \"TipoDeNota\" ";
+    private final String TABLA = " \"TipoDeNota\" ";
+
+    private final String ATRIBUTOS = "\"TipoDeNota\".id_tipo_nota,\n"
+            + "\"TipoDeNota\".tipo_nota_nombre,\n"
+            + "\"TipoDeNota\".tipo_nota_valor_minimo,\n"
+            + "\"TipoDeNota\".tipo_nota_valor_maximo,\n"
+            + "\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
+            + "\"TipoDeNota\".tipo_nota_estado";
+
+    private final String PRIMARY_KEY = " \"TipoDeNota\".id_tipo_nota ";
 
     public boolean insertar() {
-        String INSERT = "INSERT INTO \"TipoDeNota\" \n"
+        String INSERT = "INSERT INTO " + TABLA + " \n"
                 + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo )\n"
                 + "VALUES\n"
                 + "( "
@@ -43,13 +53,15 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaMD> SelectAll() {
 
-        return SelectSimple(TABLA);
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA;
+
+        return SelectSimple(SELECT);
 
     }
 
     public List<TipoDeNotaMD> SelectOneWhereNombre(String Aguja) {
 
-        String SELECT = TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
 
     }
@@ -68,6 +80,8 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
                 tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
+                tipoNota.setFechaCreacion(rs.getDate("tipo_nota_fecha_creacion").toLocalDate());
+                tipoNota.setEstado(rs.getBoolean("tipo_nota_estado"));
 
                 Lista.add(tipoNota);
             }
@@ -94,7 +108,23 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     }
 
     public boolean eliminar(int Pk) {
-        String DELETE = "DELETE FROM \"TipoDeNota\" WHERE id_tipo_nota = " + Pk;
+        String DELETE = "UPDATE\n"
+                + "	" + TABLA + " \n"
+                + "SET \n"
+                + "     tipo_nota_estado = " + false
+                + "WHERE\n"
+                + "	" + PRIMARY_KEY + " = " + Pk;
+
+        return ResourceManager.Statement(DELETE) == null;
+    }
+
+    public boolean reactivar(int Pk) {
+        String DELETE = "UPDATE\n"
+                + "	" + TABLA + " \n"
+                + "SET \n"
+                + "     tipo_nota_estado = " + true
+                + "WHERE\n"
+                + "	" + PRIMARY_KEY + " = " + Pk;
 
         return ResourceManager.Statement(DELETE) == null;
     }

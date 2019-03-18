@@ -12,6 +12,7 @@ import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas_Grupo_16.VtnNotasAlumnoCursoCTR;
+import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -37,6 +38,7 @@ import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.persona.DocenteBD;
+import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
@@ -51,6 +53,7 @@ import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.materia.VtnMateria;
 import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
+import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
@@ -133,6 +136,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso());
+        vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
 
     }
 
@@ -459,6 +463,13 @@ public class VtnPrincipalCTR {
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
 
         login.Init();
+
+    }
+
+    private void btnTipoNotas(ActionEvent e) {
+
+        VtnTipoNotasCTR vtn = new VtnTipoNotasCTR(vtnPrin, new VtnTipoNotas(), new TipoDeNotaBD(), rolSeleccionado);
+        vtn.Init();
 
     }
 

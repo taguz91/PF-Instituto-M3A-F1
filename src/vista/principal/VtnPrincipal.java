@@ -193,10 +193,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setMnCtNotas(JMenuItem mnCtNotas) {
         this.mnCtNotas = mnCtNotas;
     }
-    
-    
-    
-    
+
+    public JMenuItem getMnCtTipoNotas() {
+        return mnCtTipoNotas;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -234,8 +234,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
-        mnCtNotas1 = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -402,11 +403,15 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRoles.setText("Roles Usuarios");
         mnTipoNotas.add(mnCtRoles);
 
-        mnCtNotas.setText("Notas");
-        mnTipoNotas.add(mnCtNotas);
+        jMenu1.setText("Notas");
 
-        mnCtNotas1.setText("Tipos de Notas");
-        mnTipoNotas.add(mnCtNotas1);
+        mnCtTipoNotas.setText("Tipos de Notas");
+        jMenu1.add(mnCtTipoNotas);
+
+        mnCtNotas.setText("Ingreso Notas");
+        jMenu1.add(mnCtNotas);
+
+        mnTipoNotas.add(jMenu1);
 
         menuCrud.add(mnTipoNotas);
 
@@ -501,6 +506,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;
@@ -511,10 +517,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMateria;
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtNotas;
-    private javax.swing.JMenuItem mnCtNotas1;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRoles;
+    private javax.swing.JMenuItem mnCtTipoNotas;
     private javax.swing.JMenuItem mnCtUsuarios;
     private javax.swing.JMenu mnEstilo;
     private javax.swing.JMenuItem mnIgAlumno;
