@@ -69,7 +69,6 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "		FROM public.\"AlumnosCarrera\"\n"
                 + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
                 + "	AND id_materia = " + idMateria + ");";
-        System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se actualizo la malla");
         }
@@ -85,7 +84,6 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "		FROM public.\"AlumnosCarrera\"\n"
                 + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
                 + "	AND id_materia = " + idMateria + ");";
-        System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se actualizo la malla");
         }
