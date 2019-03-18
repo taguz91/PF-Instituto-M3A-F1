@@ -151,16 +151,13 @@ public class VtnAlumnoCTR {
                 ConectarDB conectar = new ConectarDB("Persona");
                 PersonaBD extraer = new PersonaBD(conectar);
 
-
-            /* PersonaBD extraer = new PersonaBD();
-
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
-                vtnAlumno.dispose();*/
+                vtnAlumno.dispose();
 
             }
         } else {

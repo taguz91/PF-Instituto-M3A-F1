@@ -164,10 +164,12 @@ public class VtnMallaAlumnoCTR {
 
     private void cargarPorEstado() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
+        System.out.println("Posicion "+posAlm);
+        System.out.println("Tamanio: "+alumnos.size());
         int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
         if (posAlm > 0 && posEst > 0) {
             mallas = mallaAlm.cargarMallaAlumnoPorEstado(
-                    alumnos.get(posAlm - 1).getAlumno().getId_Alumno(), cmbEstado[posEst]);
+                    alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
             llenarTbl(mallas);
         } else if (posAlm > 0) {
             cargarPorAlumno();

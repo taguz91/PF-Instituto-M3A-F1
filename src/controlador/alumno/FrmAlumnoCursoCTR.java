@@ -170,6 +170,7 @@ public class FrmAlumnoCursoCTR {
                 mallaAlm.actualizarEstadoMallaAlmn(alumnos.get(posAlm).getId(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
+            JOptionPane.showMessageDialog(null, "Se guardo el alumno en el curso, correctamente");
         }
     }
 

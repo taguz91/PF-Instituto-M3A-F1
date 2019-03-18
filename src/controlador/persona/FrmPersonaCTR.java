@@ -89,7 +89,7 @@ public class FrmPersonaCTR {
         //Ocultamos todos los erores del formulario 
         ocultarErrores();
         cargarIdiomas();
-        desactivarDiscapacidad();
+        desactivarDiscapacidad(false);
         //Cuando se realice una accion en alguno de esos combos 
         iniciarValidaciones();
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -181,27 +181,18 @@ public class FrmPersonaCTR {
         }
     }
 
-    private void desactivarDiscapacidad() {
-
-        frmPersona.getLblTipoDiscapacidad().setVisible(false);
-        frmPersona.getCmbTipoDiscapacidad().setVisible(false);
-        frmPersona.getLblCarnetConadis().setVisible(false);
-        frmPersona.getTxtCarnetConadis().setVisible(false);
-        frmPersona.getLblPorcentaje().setVisible(false);
-        frmPersona.getTxtPorcentaje().setVisible(false);
-
+    private void desactivarDiscapacidad(boolean estado) {
+        frmPersona.getLblTipoDiscapacidad().setVisible(estado);
+        frmPersona.getCmbTipoDiscapacidad().setVisible(estado);
+        frmPersona.getLblCarnetConadis().setVisible(estado);
+        frmPersona.getTxtCarnetConadis().setVisible(estado);
+        frmPersona.getLblPorcentaje().setVisible(estado);
+        frmPersona.getTxtPorcentaje().setVisible(estado);
     }
 
     private void activarDiscapacidad() {
         boolean discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-        if (discapacidad) {
-            frmPersona.getLblTipoDiscapacidad().setVisible(true);
-            frmPersona.getCmbTipoDiscapacidad().setVisible(true);
-            frmPersona.getLblCarnetConadis().setVisible(true);
-            frmPersona.getTxtCarnetConadis().setVisible(true);
-            frmPersona.getLblPorcentaje().setVisible(true);
-            frmPersona.getTxtPorcentaje().setVisible(true);
-        }
+        desactivarDiscapacidad(discapacidad);
 
     }
 
