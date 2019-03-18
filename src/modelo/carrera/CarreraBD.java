@@ -3,7 +3,9 @@ package modelo.carrera;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.persona.DocenteMD;
 
 /**
@@ -17,8 +19,6 @@ public class CarreraBD extends CarreraMD {
     public CarreraBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
-    
-    
 
     public CarreraMD buscar(int idCarrera) {
         CarreraMD carrera = new CarreraMD();
@@ -36,9 +36,9 @@ public class CarreraBD extends CarreraMD {
                     DocenteMD docen = new DocenteMD();
                     if (rs.wasNull()) {
                         docen.setIdDocente(0);
-                    }else{
+                    } else {
                         docen.setIdDocente(rs.getInt("id_docente_coordinador"));
-                    } 
+                    }
                     carrera.setCoordinador(docen);
                     if (rs.wasNull()) {
                         carrera.setFechaFin(null);
@@ -79,9 +79,9 @@ public class CarreraBD extends CarreraMD {
                     DocenteMD docen = new DocenteMD();
                     if (rs.wasNull()) {
                         docen.setIdDocente(0);
-                    }else{
+                    } else {
                         docen.setIdDocente(rs.getInt("id_docente_coordinador"));
-                    } 
+                    }
                     carrera.setCoordinador(docen);
                     if (rs.wasNull()) {
                         carrera.setFechaFin(null);
@@ -106,4 +106,59 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
+
+    public List<CarreraMD> selectWhereIdMateria(int idMateria) {
+        String SELECT = "SELECT\n"
+                + "\"Carreras\".id_carrera,\n"
+                + "\"Carreras\".id_docente_coordinador,\n"
+                + "\"Carreras\".carrera_nombre,\n"
+                + "\"Carreras\".carrera_codigo,\n"
+                + "\"Carreras\".carrera_fecha_inicio,\n"
+                + "\"Carreras\".carrera_fecha_fin,\n"
+                + "\"Carreras\".carrera_modalidad,\n"
+                + "\"Carreras\".carrera_activo\n"
+                + "FROM\n"
+                + "\"Materias\"\n"
+                + "INNER JOIN \"Carreras\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera\n"
+                + "WHERE \"Materias\".id_materia = " + idMateria;
+
+        return selectSimple(SELECT);
+    }
+
+    private List<CarreraMD> selectSimple(String QUERY) {
+
+        List<CarreraMD> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(QUERY);
+
+        try {
+            while (rs.next()) {
+                CarreraMD carrera = new CarreraMD();
+                carrera.setCodigo(rs.getString("carrera_codigo"));
+                DocenteMD docen = new DocenteMD();
+                if (rs.wasNull()) {
+                    docen.setIdDocente(0);
+                } else {
+                    docen.setIdDocente(rs.getInt("id_docente_coordinador"));
+                }
+                carrera.setCoordinador(docen);
+                if (rs.wasNull()) {
+                    carrera.setFechaFin(null);
+                } else {
+                    carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                }
+                carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+
+                lista.add(carrera);
+            }
+        } catch (SQLException e) {
+        }
+
+        return lista;
+
+    }
+
 }

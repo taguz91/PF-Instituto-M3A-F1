@@ -8,10 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.lugar.LugarBD;
 
 /**
@@ -20,9 +22,9 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     //Se usaran estas clases para consultar
-    private final LugarBD lugar;
+    private LugarBD lugar;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
@@ -659,6 +661,74 @@ public class PersonaBD extends PersonaMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    private final String TABLA = " \"Personas\" ";
+    private final String ATRIBUTOS = ""
+            + "\"Personas\".id_persona,\n"
+            + "\"Personas\".id_lugar_natal,\n"
+            + "\"Personas\".id_lugar_residencia,\n"
+            + "\"Personas\".persona_foto,\n"
+            + "\"Personas\".persona_identificacion,\n"
+            + "\"Personas\".persona_primer_apellido,\n"
+            + "\"Personas\".persona_segundo_apellido,\n"
+            + "\"Personas\".persona_primer_nombre,\n"
+            + "\"Personas\".persona_segundo_nombre,\n"
+            + "\"Personas\".persona_genero,\n"
+            + "\"Personas\".persona_sexo,\n"
+            + "\"Personas\".persona_estado_civil,\n"
+            + "\"Personas\".persona_etnia,\n"
+            + "\"Personas\".persona_idioma_raiz,\n"
+            + "\"Personas\".persona_tipo_sangre,\n"
+            + "\"Personas\".persona_telefono,\n"
+            + "\"Personas\".persona_celular,\n"
+            + "\"Personas\".persona_correo,\n"
+            + "\"Personas\".persona_fecha_registro,\n"
+            + "\"Personas\".persona_discapacidad,\n"
+            + "\"Personas\".persona_tipo_discapacidad,\n"
+            + "\"Personas\".persona_porcenta_discapacidad,\n"
+            + "\"Personas\".persona_carnet_conadis,\n"
+            + "\"Personas\".persona_calle_principal,\n"
+            + "\"Personas\".persona_numero_casa,\n"
+            + "\"Personas\".persona_calle_secundaria,\n"
+            + "\"Personas\".persona_referencia,\n"
+            + "\"Personas\".persona_sector,\n"
+            + "\"Personas\".persona_idioma,\n"
+            + "\"Personas\".persona_tipo_residencia,\n"
+            + "\"Personas\".persona_fecha_nacimiento,\n"
+            + "\"Personas\".persona_activa  ";
+
+    private final String PRIMARY_KEY = " \"Personas\".id_persona ";
+
+    private List<PersonaMD> selectSimple(String QUERY) {
+
+        List<PersonaMD> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(QUERY);
+
+        try {
+
+            while (rs.next()) {
+
+                lista.add(obtenerPersonaSinValidar(rs));
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return lista;
+    }
+
+    public List<PersonaMD> selectWhereUsername(String username) {
+
+        String SELECT = "SELECT " + ATRIBUTOS + "FROM \"Usuarios\" \n"
+                + "INNER JOIN " + TABLA + " ON \"Usuarios\".id_persona = " + PRIMARY_KEY + ""
+                + "WHERE usu_username = '" + username + "'";
+
+        return selectSimple(SELECT);
     }
 
 }

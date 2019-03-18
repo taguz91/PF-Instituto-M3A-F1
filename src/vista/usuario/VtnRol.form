@@ -173,11 +173,13 @@
     <Component class="javax.swing.JButton" name="btnVerPermisos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Permisos "/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnEditarPermisos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar Permisos "/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

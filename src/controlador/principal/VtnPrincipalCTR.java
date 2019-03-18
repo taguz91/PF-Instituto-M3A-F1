@@ -20,6 +20,7 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -59,6 +60,7 @@ import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
+import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 
 /**
@@ -341,7 +343,7 @@ public class VtnPrincipalCTR {
 
     private void abrirVtnNotasAlumnoCurso() {
 
-        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(), usuario, conecta);
+        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
         vtnNotas.Init();
     }
 
@@ -446,8 +448,8 @@ public class VtnPrincipalCTR {
 
     private void mnCtRolesActionPerformance(ActionEvent e) {
 
-//        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
-//        vtn.Init();
+        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
+        vtn.Init();
     }
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {

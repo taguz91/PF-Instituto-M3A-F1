@@ -342,7 +342,7 @@ public class DocenteBD extends DocenteMD {
             d.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
             if (rs.wasNull()) {
                 d.setFechaFinContratacion(null);
-            }else{
+            } else {
                 //Toca solucionarlo porque no tienen fecha de contracion y salta error
                 //d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
             }
@@ -501,4 +501,29 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
+
+    public List<DocenteMD> selectWhereUsername(String username) {
+
+        String SELECT = "SELECT\n"
+                + "\"Docentes\".id_docente,\n"
+                + "\"Docentes\".id_persona,\n"
+                + "\"Docentes\".docente_codigo,\n"
+                + "\"Docentes\".docente_otro_trabajo,\n"
+                + "\"Docentes\".docente_categoria,\n"
+                + "\"Docentes\".docente_fecha_contrato,\n"
+                + "\"Docentes\".docente_fecha_fin,\n"
+                + "\"Docentes\".docente_tipo_tiempo,\n"
+                + "\"Docentes\".docente_activo,\n"
+                + "\"Docentes\".docente_observacion,\n"
+                + "\"Docentes\".docente_capacitador\n"
+                + "FROM\n"
+                + "\"Docentes\"\n"
+                + "INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Usuarios\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"Usuarios\".usu_username = '" + username + "'";
+
+        return consultarDocente(SELECT);
+    }
+
 }

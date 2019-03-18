@@ -65,6 +65,8 @@ public class FrmAccesosDeRolCTR {
 
         InitEventos();
 
+        validacion();
+
         vista.show();
         desktop.getDpnlPrincipal().add(vista);
         try {
@@ -79,7 +81,6 @@ public class FrmAccesosDeRolCTR {
 
         if (Funcion.equals("Editar")) {
 
-            vista.getBtnGuardar().setEnabled(true);
             vista.getBtnDarTodos().setEnabled(true);
             vista.getBtnQuitarTodos().setEnabled(true);
             vista.getBtnDarUno().setEnabled(true);
@@ -219,14 +220,25 @@ public class FrmAccesosDeRolCTR {
         vista.getTxtBuscarDados().setText("");
     }
 
+    private void validacion() {
+
+        if (listaPermDados.size() > 0) {
+            vista.getBtnGuardar().setEnabled(true);
+        } else {
+            vista.getBtnGuardar().setEnabled(false);
+        }
+
+    }
+
     //Procesadores de Eventos
     private void btnDarTodosActionPerformance(ActionEvent e) {
         moverTodos(listaPermDados, listaPermisos, tablaPermDados, tablaPermisos);
+        validacion();
     }
 
     private void btnQuitarTodosActionPerformance(ActionEvent e) {
         moverTodos(listaPermisos, listaPermDados, tablaPermisos, tablaPermDados);
-
+        validacion();
     }
 
     private void btnDarUnoActionPerformnce(ActionEvent e) {
@@ -252,6 +264,7 @@ public class FrmAccesosDeRolCTR {
 
             moverUno(permiso, listaPermDados, listaPermisos, tablaPermDados, tablaPermisos, false);
         }
+        validacion();
 
     }
 
@@ -277,6 +290,7 @@ public class FrmAccesosDeRolCTR {
 
             moverUno(permiso, listaPermisos, listaPermDados, tablaPermisos, tablaPermDados, false);
         }
+        validacion();
     }
 
     private void txtBuscarOnKeyReleased(KeyEvent e) {

@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
@@ -35,14 +37,17 @@ public class VtnRolCTR {
 
     private final RolBD modelo;
 
+    private final RolBD rol;
+
     private List<RolMD> listaRoles;
 
     private static DefaultTableModel modelT;
 
-    public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo) {
+    public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo, RolBD rol) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
+        this.rol = rol;
     }
 
     //Inits
@@ -80,12 +85,31 @@ public class VtnRolCTR {
         vista.getBtnBuscar().addActionListener(e -> btnBuscarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
 
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(rol.getId())) {
+
+            if (obj.getNombre().equals("ROLES-Agregar")) {
+                vista.getBtnIngresar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("ROLES-Editar")) {
+                vista.getBtnEditar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("ROLES-Eliminar")) {
+                vista.getBtnEliminar().setEnabled(true);
+            }
+            if (obj.getNombre().equals("ROLES-Ver-Permisos")) {
+                vista.getBtnVerPermisos().setEnabled(true);
+            }
+            if (obj.getNombre().equals("ROLES-Editar-Permisos")) {
+                vista.getBtnEditarPermisos().setEnabled(true);
+            }
+        }
+
     }
 
     //Metodos de Apoyo
     private void cargarTabla() {
 
-        listaRoles = modelo.SelectAll();
+        listaRoles = RolBD.SelectAll();
 
         listaRoles.stream().forEach(VtnRolCTR::insertarFila);
 
@@ -104,7 +128,7 @@ public class VtnRolCTR {
 
     private void cargarTablaFilter(String Aguja) {
 
-        listaRoles = modelo.SelectWhereNombreLike(Aguja);
+        listaRoles = RolBD.SelectWhereNombreLike(Aguja);
 
         listaRoles.stream().forEach(VtnRolCTR::insertarFila);
 

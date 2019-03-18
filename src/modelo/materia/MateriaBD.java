@@ -3,6 +3,7 @@ package modelo.materia;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -20,7 +21,7 @@ public class MateriaBD extends MateriaMD {
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
     }
-   
+
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
@@ -49,7 +50,7 @@ public class MateriaBD extends MateriaMD {
                 + "AND id_carrera= " + idcarrera + ";";
         return consultarMaterias(sql);
     }
-    
+
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
@@ -62,25 +63,25 @@ public class MateriaBD extends MateriaMD {
                 + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + " "
-                + "AND materia_ciclo = "+ciclo+";";
+                + "AND materia_ciclo = " + ciclo + ";";
         return consultarMaterias(sql);
     }
-    
+
     //Cargar todos los ciclos de una carrera  
-    public ArrayList<Integer> cargarCiclosCarrera(int idCarrera){
-        ArrayList<Integer> ciclos = new ArrayList(); 
-        String sql = "SELECT DISTINCT materia_ciclo\n" +
-"	FROM public.\"Materias\" \n" +
-"	WHERE id_carrera = "+idCarrera+" ORDER BY materia_ciclo; "; 
-        ResultSet rs = conecta.sql(sql); 
+    public ArrayList<Integer> cargarCiclosCarrera(int idCarrera) {
+        ArrayList<Integer> ciclos = new ArrayList();
+        String sql = "SELECT DISTINCT materia_ciclo\n"
+                + "	FROM public.\"Materias\" \n"
+                + "	WHERE id_carrera = " + idCarrera + " ORDER BY materia_ciclo; ";
+        ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
-                while(rs.next()){
+                while (rs.next()) {
                     ciclos.add(rs.getInt("materia_ciclo"));
                 }
-                return ciclos; 
-            }else{
-                return null; 
+                return ciclos;
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             System.out.println("No pudimos cargar los ciclos de una carrera");
@@ -133,8 +134,8 @@ public class MateriaBD extends MateriaMD {
                 + "OR \"materia_codigo\" ILIKE '%" + aguja + "%';";
         return consultarMaterias(sql);
     }
-    
-    private ArrayList<MateriaMD> consultarMaterias(String sql){
+
+    private ArrayList<MateriaMD> consultarMaterias(String sql) {
         ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -218,6 +219,40 @@ public class MateriaBD extends MateriaMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public List<MateriaMD> selectWhereDocenteID(int idDocente) {
+
+        String SELECT = "SELECT\n"
+                + "\"Materias\".id_materia,\n"
+                + "\"Materias\".id_carrera,\n"
+                + "\"Materias\".id_eje,\n"
+                + "\"Materias\".materia_codigo,\n"
+                + "\"Materias\".materia_nombre,\n"
+                + "\"Materias\".materia_ciclo,\n"
+                + "\"Materias\".materia_creditos,\n"
+                + "\"Materias\".materia_tipo,\n"
+                + "\"Materias\".materia_categoria,\n"
+                + "\"Materias\".materia_tipo_acreditacion,\n"
+                + "\"Materias\".materia_horas_docencia,\n"
+                + "\"Materias\".materia_horas_practicas,\n"
+                + "\"Materias\".materia_horas_auto_estudio,\n"
+                + "\"Materias\".materia_horas_presencial,\n"
+                + "\"Materias\".materia_total_horas,\n"
+                + "\"Materias\".materia_activa,\n"
+                + "\"Materias\".materia_objetivo,\n"
+                + "\"Materias\".materia_descripcion,\n"
+                + "\"Materias\".materia_objetivo_especifico,\n"
+                + "\"Materias\".materia_organizacion_curricular,\n"
+                + "\"Materias\".materia_campo_formacion\n"
+                + "FROM\n"
+                + "\"Materias\"\n"
+                + "INNER JOIN \"DocentesMateria\" ON \"DocentesMateria\".id_materia = \"Materias\".id_materia\n"
+                + "INNER JOIN \"Docentes\" ON \"DocentesMateria\".id_docente = \"Docentes\".id_docente\n"
+                + "\n"
+                + "WHERE \"Docentes\".id_docente = " + idDocente;
+
+        return consultarMaterias(SELECT);
     }
 
 }
