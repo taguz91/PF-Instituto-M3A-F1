@@ -3,7 +3,9 @@ package modelo.jornada;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 
 /**
  *
@@ -16,7 +18,7 @@ public class JornadaBD extends JornadaMD {
     public JornadaBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
-    
+
     public ArrayList<JornadaMD> cargarJornadas() {
         ArrayList<JornadaMD> jornadas = new ArrayList();
         String sql = "SELECT id_jornada, nombre_jornada\n"
@@ -78,4 +80,37 @@ public class JornadaBD extends JornadaMD {
             return null;
         }
     }
+
+    public List<String> selectJornadasWhereUsername(String username) {
+
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"Jornadas\".nombre_jornada\n"
+                + "FROM\n"
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                + "WHERE\n"
+                + "\"Usuarios\".usu_username = '" + username + "'";
+
+        List<String> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                String paralelo = rs.getString("nombre_jornada");
+
+                lista.add(paralelo);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+
 }

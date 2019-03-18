@@ -130,8 +130,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         lbl_jornada.setText("Jornada:");
 
-        cmb_ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         cmb_docente.setEnabled(false);
 
         tbl_notas.setModel(new javax.swing.table.DefaultTableModel(
@@ -145,8 +143,10 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 "N°", "Cedula", "Apellidos", "Nombres", "APORTE 1   /30", "EXAMEN INTERCICLO", "TOTAL INTERCICLO", "APORTE 2  /30", "EXAMEN FINAL  /25", "/25 SUSP.", "NOTA FINAL", "ESTADO", "Nro. Faltas", "% Faltas"
             }
         ));
+        tbl_notas.setColumnSelectionAllowed(true);
         tbl_notas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_notas);
+        tbl_notas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_notas.getColumnModel().getColumnCount() > 0) {
             tbl_notas.getColumnModel().getColumn(0).setPreferredWidth(30);
         }

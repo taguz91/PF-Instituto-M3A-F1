@@ -1,5 +1,8 @@
 package controlador.notas_Grupo_16;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,13 +15,10 @@ import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.carrera.CarreraBD;
-import modelo.carrera.CarreraMD;
+import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
-import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaBD;
-import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaBD;
@@ -33,34 +33,42 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnNotasAlumnoCursoCTR {
 
-    private VtnPrincipal desktop;
-    private VtnNotasAlumnoCurso vista;
-    private AlumnoCursoBD modelo;
-    private UsuarioBD usuario;
+    private final VtnPrincipal desktop;
+    private final VtnNotasAlumnoCurso vista;
+    private final AlumnoCursoBD modelo;
+    private final UsuarioBD usuario;
     //Conexion
-    private ConectarDB conexion;
+    private final ConectarDB conexion;
 
     //MODELOS
-    private PersonaBD persona;
-    private JornadaBD jornada;
-    private PeriodoLectivoBD periodoLectivo;
     private MateriaBD materia;
-    private DocenteBD docente;
+    private JornadaBD jornada;
+    private CursoBD curso;
     private CarreraBD carrera;
-    private PersonaBD alumnoPersona;
+    private PeriodoLectivoBD periodoLectivo;
+    private PersonaBD persona;
+    private DocenteBD docente;
+
+    private PersonaBD alumno;
 
     //LISTAS
+    private List<String> listaParalelos;
+    private List<String> listaCiclos;
+    private List<String> listaMaterias;
+    private List<String> listaJornadas;
+    private List<String> listaCarreras;
+    private List<String> listaPeriodosLectivos;
     private List<PersonaMD> listaPersona;
-    private List<JornadaMD> listaJornadas;
-    private List<PeriodoLectivoMD> listaPeriodoLectivo;
-    private List<MateriaMD> listaMaterias;
     private List<DocenteMD> listaDocente;
-    private List<CarreraMD> listaCarreras;
+
     private List<AlumnoCursoMD> listaNotas;
     private List<PersonaMD> listaAlumnosPersonas;
 
     //TABLA
     private DefaultTableModel tablaNotas;
+
+    //Variable para busqueda
+    int idDocente = 0;
 
     public VtnNotasAlumnoCursoCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, ConectarDB conexion) {
         this.desktop = desktop;
@@ -74,39 +82,37 @@ public class VtnNotasAlumnoCursoCTR {
         INITS
      */
     public void Init() {
+        tablaNotas = (DefaultTableModel) vista.getTbl_notas().getModel();
+
         //INICIALIZANDO MODELOS
-        persona = new PersonaBD(conexion);
-        jornada = new JornadaBD(conexion);
-        periodoLectivo = new PeriodoLectivoBD(conexion);
+        curso = new CursoBD(conexion);
         materia = new MateriaBD(conexion);
-        docente = new DocenteBD(conexion);
+        jornada = new JornadaBD(conexion);
         carrera = new CarreraBD(conexion);
-        alumnoPersona = new PersonaBD(conexion);
+        periodoLectivo = new PeriodoLectivoBD(conexion);
+        persona = new PersonaBD(conexion);
+        docente = new DocenteBD(conexion);
+        alumno = new PersonaBD(conexion);
 
         //CONSULTAS
+        listaParalelos = curso.selectParaleloWhereUsername(usuario.getUsername());
+        listaCiclos = curso.selectCicloWhereUsername(usuario.getUsername());
+        listaMaterias = materia.selectMateriaWhereUsername(usuario.getUsername());
+        listaJornadas = jornada.selectJornadasWhereUsername(usuario.getUsername());
+        listaCarreras = carrera.selectCarreraWhereUsername(usuario.getUsername());
+        listaPeriodosLectivos = periodoLectivo.selectPeriodoWhereUsername(usuario.getUsername());
         listaPersona = persona.selectWhereUsername(usuario.getUsername());
-        listaJornadas = jornada.cargarJornadas();
-        listaPeriodoLectivo = periodoLectivo.cargarPeriodos();
         listaDocente = docente.selectWhereUsername(usuario.getUsername());
+        listaAlumnosPersonas = alumno.cargarAlumnos();
 
-        listaMaterias = materia.selectWhereDocenteID(listaDocente.get(0).getIdDocente());
-
-        listaAlumnosPersonas = alumnoPersona.cargarAlumnos();
-
-        listaNotas = modelo.cargarAlumnosCursos();
+        //CONSULTA DEL DETALLE
+        //SE GUARDA EL ID DE DOCENTE
+        idDocente = listaDocente.get(0).getIdDocente();
 
         //CARGA DE COMBO BOXES
-        cargarCmbDocente();
-        cargarCmbJornadas();
-        cargarCmbPeriodo();
-        cargarMaterias();
-        cargarCmbCarreras();
+        cargarCombos();
 
-        //INICIALIZANDO LA TABLA
-        tablaNotas = (DefaultTableModel) vista.getTbl_notas().getModel();
-        //CARGAR TABLA
         cargarTabla();
-
         InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -119,6 +125,20 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void InitEventos() {
+
+        vista.getBtn_imprimir().addActionListener(e -> btnImprimir(e));
+        vista.getCmb_ciclo().addItemListener((ItemEvent e) -> {
+            cargarTabla();
+        });
+        vista.getCmb_paralelo().addItemListener((ItemEvent e) -> {
+            cargarTabla();
+        });
+        vista.getCmb_jornada().addItemListener((ItemEvent e) -> {
+            cargarTabla();
+        });
+        vista.getCmb_asignatura().addItemListener((ItemEvent e) -> {
+            cargarTabla();
+        });
 
         tablaNotas.addTableModelListener(new TableModelListener() {
 
@@ -151,14 +171,12 @@ public class VtnNotasAlumnoCursoCTR {
 
         String valor = null;
 
-        double notaInterCicloSuma = 0;
-        double notaInterCiclo = 0;
-
         try {
 
             valor = String.valueOf((Double.valueOf((String) datos.getValueAt(fila, 4))) + (Double.valueOf((String) datos.getValueAt(fila, 5))));
 
         } catch (Exception e) {
+            datos.setValueAt((Double.valueOf((String) datos.getValueAt(fila, 4))), fila, 6);
             System.out.println(e.getMessage());
         }
 
@@ -178,59 +196,33 @@ public class VtnNotasAlumnoCursoCTR {
 
     }
 
-    private void cargarCmbDocente() {
+    private void cargarCombos() {
+        listaParalelos.forEach(vista.getCmb_paralelo()::addItem);
 
-        listaPersona.stream()
-                .forEach(obj -> {
-                    vista.getCmb_docente().addItem(obj.getPrimerNombre());
-                });
-    }
+        listaCiclos.forEach(vista.getCmb_ciclo()::addItem);
 
-    private void cargarCmbJornadas() {
+        listaMaterias.forEach(vista.getCmb_asignatura()::addItem);
 
-        listaJornadas.stream()
-                .forEach(obj -> {
-                    vista.getCmb_jornada().addItem(obj.getNombre());
-                });
+        listaJornadas.forEach(vista.getCmb_jornada()::addItem);
 
-    }
+        listaCarreras.forEach(vista.getCmb_carrera()::addItem);
 
-    private void cargarCmbPeriodo() {
-        listaPeriodoLectivo.stream()
-                .forEach(obj -> {
+        listaPeriodosLectivos.forEach(vista.getCmb_periodolectivo()::addItem);
 
-                    vista.getCmb_periodolectivo().addItem(obj.getNombre_PerLectivo());
-
-                });
-    }
-
-    private void cargarMaterias() {
-
-        listaMaterias.stream()
-                .forEach(obj -> {
-
-                    vista.getCmb_asignatura().addItem(obj.getNombre());
-
-                });
-
-    }
-
-    private void cargarCmbCarreras() {
-
-        listaMaterias.stream()
-                .forEach(objMateria -> {
-
-                    listaCarreras = carrera.selectWhereIdMateria(objMateria.getId());
-
-                    listaCarreras.stream()
-                            .forEach(objCarrera -> {
-                                vista.getCmb_carrera().addItem(objCarrera.getNombre());
-                            });
-                });
+        listaPersona.forEach(obj -> {
+            vista.getCmb_docente().addItem(obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
+        });
 
     }
 
     private void cargarTabla() {
+
+        listaNotas = modelo.selectWhere(
+                (String) vista.getCmb_paralelo().getSelectedItem(),
+                Integer.parseInt(vista.getCmb_ciclo().getSelectedItem().toString()),
+                (String) vista.getCmb_jornada().getSelectedItem(),
+                (String) vista.getCmb_asignatura().getSelectedItem(),
+                idDocente);
 
         tablaNotas.setRowCount(0);
 
@@ -262,11 +254,13 @@ public class VtnNotasAlumnoCursoCTR {
 
                             });
                 });
-
     }
 
 
     /*
         PROCESADORES DE EVENTOS
      */
+    private void btnImprimir(ActionEvent e) {
+
+    }
 }

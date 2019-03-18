@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 
@@ -221,38 +222,37 @@ public class MateriaBD extends MateriaMD {
         }
     }
 
-    public List<MateriaMD> selectWhereDocenteID(int idDocente) {
+    public List<String> selectMateriaWhereUsername(String username) {
 
-        String SELECT = "SELECT\n"
-                + "\"Materias\".id_materia,\n"
-                + "\"Materias\".id_carrera,\n"
-                + "\"Materias\".id_eje,\n"
-                + "\"Materias\".materia_codigo,\n"
-                + "\"Materias\".materia_nombre,\n"
-                + "\"Materias\".materia_ciclo,\n"
-                + "\"Materias\".materia_creditos,\n"
-                + "\"Materias\".materia_tipo,\n"
-                + "\"Materias\".materia_categoria,\n"
-                + "\"Materias\".materia_tipo_acreditacion,\n"
-                + "\"Materias\".materia_horas_docencia,\n"
-                + "\"Materias\".materia_horas_practicas,\n"
-                + "\"Materias\".materia_horas_auto_estudio,\n"
-                + "\"Materias\".materia_horas_presencial,\n"
-                + "\"Materias\".materia_total_horas,\n"
-                + "\"Materias\".materia_activa,\n"
-                + "\"Materias\".materia_objetivo,\n"
-                + "\"Materias\".materia_descripcion,\n"
-                + "\"Materias\".materia_objetivo_especifico,\n"
-                + "\"Materias\".materia_organizacion_curricular,\n"
-                + "\"Materias\".materia_campo_formacion\n"
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"Materias\".materia_nombre\n"
                 + "FROM\n"
-                + "\"Materias\"\n"
-                + "INNER JOIN \"DocentesMateria\" ON \"DocentesMateria\".id_materia = \"Materias\".id_materia\n"
-                + "INNER JOIN \"Docentes\" ON \"DocentesMateria\".id_docente = \"Docentes\".id_docente\n"
-                + "\n"
-                + "WHERE \"Docentes\".id_docente = " + idDocente;
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "WHERE\n"
+                + "\"Usuarios\".usu_username = '" + username + "'";
 
-        return consultarMaterias(SELECT);
+        List<String> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                String paralelo = rs.getString("materia_nombre");
+
+                lista.add(paralelo);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+
     }
 
 }

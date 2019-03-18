@@ -6,7 +6,7 @@
     </Component>
     <Menu class="javax.swing.JMenuBar" name="menuCrud">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="mnConsultar">
+        <Menu class="javax.swing.JMenu" name="mnTipoNotas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Consultar"/>
           </Properties>
@@ -110,6 +110,11 @@
             <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Notas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
               </Properties>
             </MenuItem>
           </SubComponents>
