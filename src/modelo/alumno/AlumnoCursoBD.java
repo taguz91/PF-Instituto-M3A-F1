@@ -14,9 +14,9 @@ import modelo.persona.AlumnoBD;
  */
 public class AlumnoCursoBD extends AlumnoCursoMD {
 
-    private ConectarDB conecta;
-    private AlumnoBD alm;
-    private CursoBD cur;
+    private final ConectarDB conecta;
+    private final AlumnoBD alm;
+    private final CursoBD cur;
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;

@@ -164,10 +164,10 @@ public class FrmAlumnoCursoCTR {
                 //Guardamos el alumno en su curso 
                 almnCurso.ingresarAlmnCurso(alumnos.get(posAlm).getId(), c.getId_curso());
                 //Actualizamos el numero de matricula
-                mallaAlm.actualizarNumMatricula(alumnos.get(posAlm).getId(),
+                mallaAlm.actualizarNumMatricula(alumnos.get(posAlm).getAlumno().getId_Alumno(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
 
-                mallaAlm.actualizarEstadoMallaAlmn(alumnos.get(posAlm).getId(),
+                mallaAlm.actualizarEstadoMallaAlmn(alumnos.get(posAlm).getAlumno().getId_Alumno(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
             JOptionPane.showMessageDialog(null, "Se guardo el alumno en el curso, correctamente");
