@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
+import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
 /**
