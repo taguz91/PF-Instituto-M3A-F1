@@ -3,9 +3,11 @@ package controlador.persona;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
+import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import vista.persona.FrmPersona;
@@ -175,7 +177,26 @@ public class VtnPersonaCTR {
     }
 
     private void eliminar() {
-
+        int posFila = vtnPersona.getTblPersona().getSelectedRow();
+        if (posFila >= 0) {
+            PersonaMD persona = new PersonaMD();
+            System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona "," Elinimar Persona",dialog);
+            if(result == 0)
+            {
+                if(dbp.eliminarPersonaId(persona.getIdPersona()) == true){
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                   //cargarLista();
+                   cargarTipoPersona();
+                } else{
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA PERSONA");
+                }
+            }
+        } else{
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA PERSONA");
+        }
     }
 
 }
