@@ -1,19 +1,21 @@
 
-package controlador.prdlectivoNotas;
+package controlador.periodoLectivoNotas;
 
 import java.awt.event.ActionEvent;
-import vista.periodoLectivoNotas.FrmTipoNota;
+import vista.periodoLectivoNotas.FrmIngresoNotas;
 import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author USUARIO
  */
-public class FrmTipoNotaCTR {
+public class FrmIngresoNotasCTR {
     private VtnPrincipal desktop;
-    private FrmTipoNota vista;
+    private FrmIngresoNotas vista;
+    
     
     //INICIADORES
+    
     public void Init(){
         desktop.getDpnlPrincipal().add(vista);   
         vista.show(); 
@@ -28,6 +30,7 @@ public class FrmTipoNotaCTR {
     
     
     //EVENTOS
+    
     private void btnGuardarActionPerformance(ActionEvent e){
          
     }
@@ -35,5 +38,4 @@ public class FrmTipoNotaCTR {
     private void btnCancelarActionPerformance(ActionEvent e){
          
     }
-    
 }

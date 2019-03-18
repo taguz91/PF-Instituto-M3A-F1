@@ -227,20 +227,20 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="14" rowCount="4">
-                <Column editable="true" title="N&#xb0;" type="java.lang.Object"/>
-                <Column editable="true" title="Cedula" type="java.lang.Object"/>
-                <Column editable="true" title="Apellidos" type="java.lang.Object"/>
-                <Column editable="true" title="Nombres" type="java.lang.Object"/>
+                <Column editable="false" title="N&#xb0;" type="java.lang.Object"/>
+                <Column editable="false" title="Cedula" type="java.lang.Object"/>
+                <Column editable="false" title="Apellidos" type="java.lang.Object"/>
+                <Column editable="false" title="Nombres" type="java.lang.Object"/>
                 <Column editable="true" title="APORTE 1   /30" type="java.lang.Object"/>
                 <Column editable="true" title="EXAMEN INTERCICLO" type="java.lang.Object"/>
                 <Column editable="true" title="TOTAL INTERCICLO" type="java.lang.Object"/>
-                <Column editable="true" title="APORTE 2  /30" type="java.lang.Object"/>
-                <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Object"/>
-                <Column editable="true" title="/25 SUSP." type="java.lang.Object"/>
-                <Column editable="true" title="NOTA FINAL" type="java.lang.Object"/>
+                <Column editable="true" title="APORTE 2  /30" type="java.lang.Double"/>
+                <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Double"/>
+                <Column editable="true" title="/25 SUSP." type="java.lang.Double"/>
+                <Column editable="true" title="NOTA FINAL" type="java.lang.Double"/>
                 <Column editable="true" title="ESTADO" type="java.lang.Object"/>
-                <Column editable="true" title="Nro. Faltas" type="java.lang.Object"/>
-                <Column editable="true" title="% Faltas" type="java.lang.Object"/>
+                <Column editable="true" title="Nro. Faltas" type="java.lang.Integer"/>
+                <Column editable="false" title="% Faltas" type="java.lang.Double"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
