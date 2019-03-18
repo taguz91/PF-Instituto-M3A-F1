@@ -443,7 +443,7 @@ public class PersonaBD extends PersonaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerPersona(rs);
+                    p = obtenerPersonaSinValidar(rs);
                 }
                 rs.close();
                 return p;

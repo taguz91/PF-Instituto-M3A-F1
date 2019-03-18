@@ -28,8 +28,6 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         this.car = new CarreraBD(conecta);
     }
     
-    
-
     public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"

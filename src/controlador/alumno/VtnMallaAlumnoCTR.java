@@ -1,5 +1,7 @@
 package controlador.alumno;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -11,6 +13,8 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import vista.alumno.VtnMallaAlumno;
 import vista.principal.VtnPrincipal;
 
@@ -64,21 +68,81 @@ public class VtnMallaAlumnoCTR {
 
         cargarCmbCarrera();
 
+        //Inciiamos los combos en falso 
+        vtnMallaAlm.getCmbAlumnos().setEnabled(false);
+        vtnMallaAlm.getCmbEstado().setEnabled(false);
+
         vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
         vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
         vtnMallaAlm.getCmbEstado().addActionListener(e -> cargarPorEstado());
-
         vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
+        vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
+                vtnMallaAlm.getTxtBuscar().getText().trim()));
+        //Agregamos la validacion de buscador 
+        vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar()));
+        //Buscador
+        vtnMallaAlm.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String a = vtnMallaAlm.getTxtBuscar().getText().trim();
+                if (a.length() > 9) {
+                    buscarMalla(a);
+                }
+            }
+        });
+        //Modificamos el cmb para que sea editable  
+        vtnMallaAlm.getCmbAlumnos().setEditable(true);
+        //Buscar en el combo
+
+        vtnMallaAlm.getCmbAlumnos().getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int l = 3;
+                String a = vtnMallaAlm.getCmbAlumnos().getEditor().getItem().toString().trim();
+                if (Validar.esNumeros(a)) {
+                    l = 9;
+                }
+                if (e.getKeyCode() != 38 && e.getKeyCode() != 40 
+                        && e.getKeyCode() != 37 && e.getKeyCode() != 39 
+                        && a.length() >= l && e.getKeyCode() != 13) {
+                    buscarAlumno(a);
+                }
+            }
+        });
+    }
+
+    private void buscarAlumno(String aguja) {
+        System.out.println(aguja);
+        int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
+        if (Validar.esLetrasYNumeros(aguja)) {
+            alumnos = almCar.buscarAlumnoCarrera(carreras.get(posCar - 1).getId(), 
+                    aguja);
+            llenarCmbAlumno(alumnos);
+            vtnMallaAlm.getCmbAlumnos().showPopup();
+            vtnMallaAlm.getCmbAlumnos().getEditor().setItem(aguja);
+            
+        }
+    }
+
+    private void buscarMalla(String aguja) {
+        if (Validar.esLetrasYNumeros(aguja)) {
+            mallas = mallaAlm.buscarMallaAlumno(aguja);
+            llenarTbl(mallas);
+        }
     }
 
     private void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         if (posAlm > 0) {
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
+            vtnMallaAlm.getCmbEstado().setEnabled(true);
             llenarTbl(mallas);
+            cargarCmbEstado();
         } else {
             //Borramos todos los datos de la tabla si no se selecciona ninguno 
             mdlTbl.setRowCount(0);
+            vtnMallaAlm.getCmbEstado().removeAllItems();
         }
     }
 
@@ -139,18 +203,29 @@ public class VtnMallaAlumnoCTR {
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
         if (posCar > 0) {
             cargarCmbAlumno(carreras.get(posCar - 1).getId());
+            vtnMallaAlm.getCmbAlumnos().setEnabled(true);
             cargarCmbEstado();
+        } else {
+            vtnMallaAlm.getCmbAlumnos().removeAllItems();
+            vtnMallaAlm.getCmbAlumnos().setEnabled(false);
+            vtnMallaAlm.getCmbEstado().removeAllItems();
         }
     }
 
     private void cargarCmbAlumno(int idCarrera) {
         alumnos = almCar.cargarAlumnoCarreraPorCarrera(idCarrera);
+        llenarCmbAlumno(alumnos);
+    }
+
+    private void llenarCmbAlumno(ArrayList<AlumnoCarreraMD> alumnos) {
         vtnMallaAlm.getCmbAlumnos().removeAllItems();
         if (alumnos != null) {
-            vtnMallaAlm.getCmbAlumnos().addItem("Seleccione");
+            vtnMallaAlm.getCmbAlumnos().addItem("");
             alumnos.forEach((a) -> {
-                vtnMallaAlm.getCmbAlumnos().addItem(a.getAlumno().getPrimerNombre()
-                        + " " + a.getAlumno().getPrimerApellido());
+                vtnMallaAlm.getCmbAlumnos().addItem(a.getAlumno().getPrimerApellido() + " "
+                        + a.getAlumno().getSegundoApellido() + " "
+                        + a.getAlumno().getPrimerNombre() + " "
+                        + a.getAlumno().getSegundoNombre());
             });
         }
     }
