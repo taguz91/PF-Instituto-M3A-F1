@@ -9,6 +9,8 @@ import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
+import controlador.docente.FrmDocenteMateriaCTR;
+import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas_Grupo_16.VtnNotasAlumnoCursoCTR;
@@ -24,9 +26,6 @@ import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -49,6 +48,8 @@ import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
+import vista.docente.FrmDocenteMateria;
+import vista.docente.VtnDocenteMateria;
 import vista.materia.VtnMateria;
 import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
 import vista.persona.FrmAlumno;
@@ -85,7 +86,7 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciar() {
-        //Iniciamos los shotcuts 
+        //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
 
         //Acciones de las ventanas de consulta
@@ -104,6 +105,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPrdLectivo().addActionListener(e -> abrirVtnPrdLectivo());
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
+        vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -117,6 +119,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrin.getBtnInscripcion().addActionListener(e -> abrirFrmInscripcion());
         vtnPrin.getBtnMatricula().addActionListener(e -> abrirFrmMatricula());
+        vtnPrin.getBtnDocenteMateria().addActionListener(e -> abrirFrmDocenteMateria());
 
         //Para los menus  
         vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
@@ -127,6 +130,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgPrdLectivo().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrin.getMnIgInscripcion().addActionListener(e -> abrirFrmInscripcion());
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
+        vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
@@ -248,6 +252,15 @@ public class VtnPrincipalCTR {
         VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta);
         ctrMalla.iniciar();
     }
+    
+    private void abrirVtnDocenteMateria(){
+        VtnDocenteMateria vtn = new VtnDocenteMateria(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtnPrin, vtn, conecta); 
+            ctrVtn.iniciar();
+        }
+    }
 
     //Para abrir todos los formularios
     private void abrirFrmPersona() {
@@ -338,6 +351,15 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(vtnPrin, frmAlmCurso, conecta);
             ctrFrmMatri.iniciar();
+        }
+    }
+    
+    private void abrirFrmDocenteMateria(){
+        FrmDocenteMateria frm = new FrmDocenteMateria(); 
+        eventoInternal(frm);
+        if (numVtns < 5) {
+            FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta); 
+            ctrFrm.iniciar();
         }
     }
 

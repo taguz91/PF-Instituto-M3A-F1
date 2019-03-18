@@ -23,7 +23,7 @@ public class ConectarDB {
 
 
     // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+    private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     // private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
@@ -33,7 +33,7 @@ public class ConectarDB {
 
     //private String url = "jdbc:postgresql://localhost:5433/bdinsta"; //BD Alejandro
     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
-    private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
+    //private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA

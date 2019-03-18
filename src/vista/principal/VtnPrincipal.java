@@ -193,10 +193,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setMnCtNotas(JMenuItem mnCtNotas) {
         this.mnCtNotas = mnCtNotas;
     }
-    
-    
-    
-    
+
+    public JButton getBtnDocenteMateria() {
+        return btnDocenteMateria;
+    }
+
+    public JMenuItem getMnCtDocenteMateria() {
+        return mnCtDocenteMateria;
+    }
+
+    public JMenuItem getMnIgDocenteMt() {
+        return mnIgDocenteMt;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,6 +227,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnInscripcion = new javax.swing.JButton();
         btnMatricula = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnDocenteMateria = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         menuCrud = new javax.swing.JMenuBar();
         mnTipoNotas = new javax.swing.JMenu();
@@ -232,6 +241,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtInscripcion = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
+        mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
@@ -245,6 +255,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgPrdLectivo = new javax.swing.JMenuItem();
         mnIgInscripcion = new javax.swing.JMenuItem();
         mnIgMatricula = new javax.swing.JMenuItem();
+        mnIgDocenteMt = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
         mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
@@ -296,6 +307,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnCerrarSesion.setToolTipText("Ver materias");
         btnCerrarSesion.setFocusPainted(false);
 
+        btnDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_25px.png"))); // NOI18N
+        btnDocenteMateria.setToolTipText("Asignar materia a docente.");
+        btnDocenteMateria.setFocusPainted(false);
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -318,8 +333,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDocenteMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -335,7 +352,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
                     .addComponent(btnPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDocenteMateria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -394,6 +412,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno.setText("Malla alumnos");
         mnTipoNotas.add(mnCtMallaAlumno);
 
+        mnCtDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_20px.png"))); // NOI18N
+        mnCtDocenteMateria.setText("Materia Docentes");
+        mnTipoNotas.add(mnCtDocenteMateria);
+
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
         mnCtUsuarios.setText("Usuarios");
         mnTipoNotas.add(mnCtUsuarios);
@@ -443,6 +465,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Documents_20px.png"))); // NOI18N
         mnIgMatricula.setText("Matricula");
         mnIngresar.add(mnIgMatricula);
+
+        mnIgDocenteMt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_20px.png"))); // NOI18N
+        mnIgDocenteMt.setText("Materia Docente");
+        mnIngresar.add(mnIgDocenteMt);
 
         menuCrud.add(mnIngresar);
 
@@ -494,6 +520,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnDocente;
+    private javax.swing.JButton btnDocenteMateria;
     private javax.swing.JButton btnInscripcion;
     private javax.swing.JButton btnMateria;
     private javax.swing.JButton btnMatricula;
@@ -506,6 +533,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
+    private javax.swing.JMenuItem mnCtDocenteMateria;
     private javax.swing.JMenuItem mnCtInscripcion;
     private javax.swing.JMenuItem mnCtMallaAlumno;
     private javax.swing.JMenuItem mnCtMateria;
@@ -521,6 +549,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgCarrera;
     private javax.swing.JMenuItem mnIgCurso;
     private javax.swing.JMenuItem mnIgDocente;
+    private javax.swing.JMenuItem mnIgDocenteMt;
     private javax.swing.JMenuItem mnIgInscripcion;
     private javax.swing.JMenuItem mnIgMatricula;
     private javax.swing.JMenuItem mnIgPersona;
