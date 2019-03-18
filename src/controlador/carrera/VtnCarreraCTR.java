@@ -78,11 +78,12 @@ public class VtnCarreraCTR {
         if (carreras != null) {
             carreras.forEach((c) -> {
                 Object valores[] = {};
-                if (c.getCoordinador().getPrimerApellido() == null) {
+                if (c.getCoordinador() == null) {
                     Object valoresSD[] = {c.getId(), c.getCodigo(), c.getNombre(),
                         c.getFechaInicio(), c.getModalidad(), "SIN COORDINADOR "};
                     mdTbl.addRow(valoresSD);
                 } else {
+                    System.out.println(c.getCoordinador().getPrimerApellido());
                     Object valoresCD[] = {c.getId(), c.getCodigo(), c.getNombre(),
                         c.getFechaInicio(), c.getModalidad(), c.getCoordinador().getPrimerApellido()
                         + " " + c.getCoordinador().getSegundoApellido() + " "

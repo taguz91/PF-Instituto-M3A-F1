@@ -392,7 +392,7 @@ public class DocenteBD extends DocenteMD {
                 + "p.persona_segundo_apellido ILIKE '%" + aguja + "%'  OR "
                 + "p.persona_primer_nombre ILIKE '%" + aguja + "%'  OR "
                 + "p.persona_segundo_nombre ILIKE '%" + aguja + "%' );";
-        System.out.println(sql);
+        //System.out.println(sql);
         return consultarDocente(sql);
 
     }

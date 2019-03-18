@@ -64,7 +64,7 @@ public class FrmAlumnoCarreraCTR {
         cargarCmbModalidad(); 
         cargarCmbCarreras();
         
-        String[] titulo = {"Nombre"};
+        String[] titulo = {"Cedula","Nombre"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -127,7 +127,8 @@ public class FrmAlumnoCarreraCTR {
         mdTbl.setRowCount(0);
         if (alumnos != null) {
             alumnos.forEach(a -> {
-                Object[] valores = {a.getPrimerApellido() + " "
+                Object[] valores = {a.getIdentificacion(), 
+                    a.getPrimerApellido() + " "
                     + a.getSegundoApellido() + " "
                     + a.getPrimerNombre() + " "
                     + a.getSegundoNombre()};
