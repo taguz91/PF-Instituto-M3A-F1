@@ -17,26 +17,26 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
-import modelo.usuario.UsuarioBD;
+import modelo.usuario.RolBD;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.principal.VtnPrincipal;
 
 /**
  *
- * @author USUARIO
+ * @author MrRainx
  */
 public class VtnTipoNotasCTR {
 
     private final VtnPrincipal desktop;
     private final VtnTipoNotas vista;
     private final TipoDeNotaBD modelo;
-    private final UsuarioBD permisos;
+    private final RolBD permisos;
 
     private static List<TipoDeNotaMD> listaTiposNotas;
 
-    private static DefaultTableModel modelT;
+    private static DefaultTableModel tablaTiposNotas;
 
-    public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, UsuarioBD permisos) {
+    public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
@@ -47,7 +47,7 @@ public class VtnTipoNotasCTR {
     public void Init() {
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-        modelT = (DefaultTableModel) vista.getTblTipoNotas().getModel();
+        tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         listaTiposNotas = modelo.SelectAll();
 
@@ -81,7 +81,7 @@ public class VtnTipoNotasCTR {
 
     //Metodos de Apoyo
     private void cargarTabla() {
-
+        tablaTiposNotas.setRowCount(0);
         listaTiposNotas
                 .stream()
                 .forEach(VtnTipoNotasCTR::agregarFila);
@@ -90,10 +90,12 @@ public class VtnTipoNotasCTR {
 
     private static void agregarFila(TipoDeNotaMD obj) {
 
-        modelT.addRow(new Object[]{
+        tablaTiposNotas.addRow(new Object[]{
             obj.getNombre(),
             obj.getValorMinimo(),
-            obj.getValorMaximo()
+            obj.getValorMaximo(),
+            obj.getFechaCreacion()
+                
         });
 
     }
@@ -122,7 +124,7 @@ public class VtnTipoNotasCTR {
     private void txtBuscarOnKeyReleased(KeyEvent e) {
 
         String Aguja = vista.getTxtBuscar().getText().toLowerCase();
-        modelT.setRowCount(0);
+        tablaTiposNotas.setRowCount(0);
         if (Aguja.length() >= 3) {
             listaTiposNotas = modelo.SelectOneWhereNombre(Aguja);
             cargarTabla();
@@ -134,7 +136,7 @@ public class VtnTipoNotasCTR {
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {
-        modelT.setRowCount(0);
+        tablaTiposNotas.setRowCount(0);
         cargarTabla();
     }
 }

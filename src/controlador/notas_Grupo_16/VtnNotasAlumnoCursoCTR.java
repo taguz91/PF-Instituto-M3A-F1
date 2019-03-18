@@ -1,8 +1,10 @@
 package controlador.notas_Grupo_16;
 
+import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -69,6 +71,8 @@ public class VtnNotasAlumnoCursoCTR {
 
     //Variable para busqueda
     int idDocente = 0;
+
+    private int contadorLetras = 0;
 
     public VtnNotasAlumnoCursoCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, ConectarDB conexion) {
         this.desktop = desktop;
@@ -140,6 +144,27 @@ public class VtnNotasAlumnoCursoCTR {
             cargarTabla();
         });
 
+//        vista.getTbl_notas().addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                int columna = vista.getTbl_notas().getSelectedColumn();
+//                int fila = vista.getTbl_notas().getSelectedRow();
+//                if (contadorLetras == 0) {
+//                    vista.getTbl_notas().setValueAt("0", fila, columna);
+//                    contadorLetras++;
+//                }
+//                if (columna == 4) {
+//                    if (Character.isDigit(e.getKeyChar())) {
+//                        vista.getToolkit().beep();
+//                        e.consume();
+//                        contadorLetras++;
+//                    }
+//
+//                }
+//
+//            }
+//
+//        });
         tablaNotas.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -151,6 +176,8 @@ public class VtnNotasAlumnoCursoCTR {
                     active = true;
 
                     TableModel modelo = vista.getTbl_notas().getModel();
+
+                    setNumero();
 
                     vista.getTbl_notas().setModel(calcularNotaFinal(modelo));
 
@@ -165,33 +192,61 @@ public class VtnNotasAlumnoCursoCTR {
     /*
         METODOS DE APOYO
      */
+    private void setNumero() {
+        int columna = vista.getTbl_notas().getSelectedColumn();
+        int fila = vista.getTbl_notas().getSelectedRow();
+        String valor = vista.getTbl_notas().getValueAt(fila, columna).toString();
+
+        if (Validaciones.isDecimal(valor)) {
+            vista.getTbl_notas().setValueAt(valor, fila, columna);
+        } else {
+            if (Validaciones.isInt(valor)) {
+                vista.getTbl_notas().setValueAt(valor, fila, columna);
+            } else {
+                vista.getTbl_notas().setValueAt("0.0", fila, columna);
+            }
+        }
+
+    }
+
     private TableModel calcularNotaFinal(TableModel datos) {
 
         int fila = vista.getTbl_notas().getSelectedRow();
 
-        String valor = null;
+        double notaInterCiclo = 0;
+        double examenInterCiclo = 0;
+
+        String valor = "";
 
         try {
 
-            valor = String.valueOf((Double.valueOf((String) datos.getValueAt(fila, 4))) + (Double.valueOf((String) datos.getValueAt(fila, 5))));
+            notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
 
+            if (notaInterCiclo > 30) {
+                notaInterCiclo = 30;
+                datos.setValueAt(30, fila, 4);
+            }
+
+            examenInterCiclo = validarNumero(datos.getValueAt(fila, 5).toString());
+
+            valor = notaInterCiclo + examenInterCiclo + "";
+
+            datos.setValueAt(valor, fila, 6);
         } catch (Exception e) {
-            datos.setValueAt((Double.valueOf((String) datos.getValueAt(fila, 4))), fila, 6);
             System.out.println(e.getMessage());
         }
-
-        datos.setValueAt(valor, fila, 6);
 
         return datos;
     }
 
-    private static double validarString(String numero) {
+    private double validarNumero(String texto) {
 
-        if (numero.equals("0.0")) {
-            System.out.println(numero + "<----------------------------");
+        if (texto.equals("0.0")) {
+
             return 0;
+
         } else {
-            return Double.parseDouble(numero);
+            return Double.parseDouble(texto);
         }
 
     }

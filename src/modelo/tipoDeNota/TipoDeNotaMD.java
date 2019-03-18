@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.tipoDeNota;
+
+import java.time.LocalDate;
 
 /**
  *
@@ -15,12 +12,16 @@ public class TipoDeNotaMD {
     private String nombre;
     private double valorMinimo;
     private double valorMaximo;
+    private LocalDate fechaCreacion;
+    private boolean estado;
 
-    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo) {
+    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado) {
         this.idTipoNota = idTipoNota;
         this.nombre = nombre;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
+        this.fechaCreacion = fechaCreacion;
+        this.estado = estado;
     }
 
     public TipoDeNotaMD() {
@@ -58,9 +59,25 @@ public class TipoDeNotaMD {
         this.valorMaximo = valorMaximo;
     }
 
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "TipoDeNota{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + '}';
+        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + '}';
     }
 
 }
