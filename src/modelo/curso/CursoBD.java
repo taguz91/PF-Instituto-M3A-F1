@@ -3,7 +3,9 @@ package modelo.curso;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaBD;
@@ -105,12 +107,12 @@ public class CursoBD extends CursoMD {
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + ";";
         return consultarNombreCursos(sql);
     }
-    
+
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int ciclo) {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
-                + "AND curso_ciclo > "+ciclo+";";
+                + "AND curso_ciclo > " + ciclo + ";";
         return consultarNombreCursos(sql);
     }
 
@@ -224,6 +226,67 @@ public class CursoBD extends CursoMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public List<String> selectParaleloWhereUsername(String username) {
+
+        String SELECT = "SELECT\n"
+                + "DISTINCT \"Cursos\".curso_paralelo\n"
+                + "FROM\n"
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "WHERE \"Usuarios\".usu_username = '" + username + "'";
+
+        List<String> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                String paralelo = rs.getString("curso_paralelo");
+
+                lista.add(paralelo);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+
+    public List<String> selectCicloWhereUsername(String username) {
+
+        String SELECT = "SELECT \n"
+                + "DISTINCT \"Cursos\".curso_ciclo\n"
+                + "FROM\n"
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
+
+        List<String> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                String paralelo = rs.getString("curso_ciclo");
+
+                lista.add(paralelo);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
     }
 
 }

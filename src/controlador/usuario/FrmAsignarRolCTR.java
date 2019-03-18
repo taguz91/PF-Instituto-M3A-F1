@@ -94,23 +94,7 @@ public class FrmAsignarRolCTR {
             case "Asignar":
                 activarBtns(true);
 
-                rolesDados = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
-                validacion();
-
-                for (RolMD objDado : rolesDados) {
-
-                    for (RolMD objDisponible : rolesDisponibles) {
-                        if (objDado.getId() == objDisponible.getId()) {
-
-                            System.out.println("--------------");
-
-                            rolesDisponibles.remove(objDisponible);
-                        }
-                    }
-
-                }
-
-                System.out.println("--->" + rolesDisponibles.size());
+                setRolesEnListas();
 
                 cargarTabla(rolesDados, tablaDados);
                 cargarTabla(rolesDisponibles, tablaDisponibles);
@@ -120,8 +104,12 @@ public class FrmAsignarRolCTR {
                 activarBtns(true);
                 break;
             case "Consultar":
-                activarBtns(false);
 
+                setRolesEnListas();
+                cargarTabla(rolesDados, tablaDados);
+                cargarTabla(rolesDisponibles, tablaDisponibles);
+
+                activarBtns(false);
                 break;
             default:
                 break;
@@ -132,6 +120,21 @@ public class FrmAsignarRolCTR {
     /*
         METODOS DE APOYO
      */
+    private void setRolesEnListas() {
+        rolesDados = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
+        validacion();
+
+        List<RolMD> listaTemporal = new ArrayList<>(rolesDisponibles);
+
+        listaTemporal.forEach((rolMD) -> {
+            rolesDados.stream()
+                    .filter((rolesDado) -> (rolMD.getNombre().equals(rolesDado.getNombre())))
+                    .forEachOrdered((_item) -> {
+                        rolesDisponibles.remove(rolMD);
+                    });
+        });
+    }
+
     private void activarBtns(boolean estado) {
         vista.getBtnDarTodos().setEnabled(estado);
         vista.getBtnDarUno().setEnabled(estado);
@@ -213,13 +216,18 @@ public class FrmAsignarRolCTR {
 
     private void EditarRoles() {
         listaBorrar = new ArrayList<>();
-        rolesDisponibles.stream()
+        List<RolMD> listaTemporal = new ArrayList<>(RolBD.SelectAll());
+
+        listaTemporal.stream()
                 .forEach(obj -> {
+
+                    System.out.println(obj.getId());
+
                     listaBorrar.add(new RolesDelUsuarioBD(0, obj.getId(), usuario.getUsername()));
                 });
 
         listaBorrar.stream().forEach(obj -> {
-            modelo.eliminarWhere(modelo.getId(), usuario.getUsername());
+            obj.eliminarWhere(obj.getIdRol(), usuario.getUsername());
         });
 
         rolesDados
@@ -303,7 +311,9 @@ public class FrmAsignarRolCTR {
         if (Funcion.equals("Asignar-Roles-Usuario")) {
             guardarUsuario();
             EditarRoles();
-        } else {
+        } else if (Funcion.equals("Asignar")) {
+            EditarRoles();
+
         }
 
     }

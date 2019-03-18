@@ -90,6 +90,8 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
                 + " usu_username = '" + username + "'"
                 + "";
 
+        System.out.println(ELIMINAR);
+
         return ResourceManager.Statement(ELIMINAR) == null;
     }
 

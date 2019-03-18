@@ -75,14 +75,13 @@ public class VtnUsuarioCTR {
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRolesActionPerformance(e));
+        vista.getBtnVerRoles().addActionListener(e -> btnVerRolesActionPerformance(e));
 
     }
 
     private void InitPermisos() {
 
-        List<AccesosMD> listaPermisos = AccesosBD.SelectWhereACCESOROLidRol(permisos.getId());
-
-        for (AccesosMD obj : listaPermisos) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
             if (obj.getNombre().equals("USUARIOS-Agregar")) {
                 vista.getBtnIngresar().setEnabled(true);
@@ -95,6 +94,9 @@ public class VtnUsuarioCTR {
             }
             if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
                 vista.getBtnAsignarRoles().setEnabled(true);
+            }
+            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+                vista.getBtnVerRoles().setEnabled(true);
             }
 
         }
@@ -217,6 +219,23 @@ public class VtnUsuarioCTR {
                 FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar");
                 form.Init();
             }
+
+        }
+
+    }
+
+    private void btnVerRolesActionPerformance(ActionEvent e) {
+
+        int fila = vista.getTblUsuario().getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
+        } else {
+
+            setObjFromTable(fila);
+
+            FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Consultar");
+            form.Init();
 
         }
 

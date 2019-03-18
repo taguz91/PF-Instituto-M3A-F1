@@ -3,7 +3,9 @@ package modelo.materia;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 
@@ -20,7 +22,7 @@ public class MateriaBD extends MateriaMD {
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
     }
-   
+
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
@@ -49,7 +51,7 @@ public class MateriaBD extends MateriaMD {
                 + "AND id_carrera= " + idcarrera + ";";
         return consultarMaterias(sql);
     }
-    
+
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
@@ -62,25 +64,25 @@ public class MateriaBD extends MateriaMD {
                 + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + " "
-                + "AND materia_ciclo = "+ciclo+";";
+                + "AND materia_ciclo = " + ciclo + ";";
         return consultarMaterias(sql);
     }
-    
+
     //Cargar todos los ciclos de una carrera  
-    public ArrayList<Integer> cargarCiclosCarrera(int idCarrera){
-        ArrayList<Integer> ciclos = new ArrayList(); 
-        String sql = "SELECT DISTINCT materia_ciclo\n" +
-"	FROM public.\"Materias\" \n" +
-"	WHERE id_carrera = "+idCarrera+" ORDER BY materia_ciclo; "; 
-        ResultSet rs = conecta.sql(sql); 
+    public ArrayList<Integer> cargarCiclosCarrera(int idCarrera) {
+        ArrayList<Integer> ciclos = new ArrayList();
+        String sql = "SELECT DISTINCT materia_ciclo\n"
+                + "	FROM public.\"Materias\" \n"
+                + "	WHERE id_carrera = " + idCarrera + " ORDER BY materia_ciclo; ";
+        ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
-                while(rs.next()){
+                while (rs.next()) {
                     ciclos.add(rs.getInt("materia_ciclo"));
                 }
-                return ciclos; 
-            }else{
-                return null; 
+                return ciclos;
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             System.out.println("No pudimos cargar los ciclos de una carrera");
@@ -133,8 +135,8 @@ public class MateriaBD extends MateriaMD {
                 + "OR \"materia_codigo\" ILIKE '%" + aguja + "%';";
         return consultarMaterias(sql);
     }
-    
-    private ArrayList<MateriaMD> consultarMaterias(String sql){
+
+    private ArrayList<MateriaMD> consultarMaterias(String sql) {
         ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -218,6 +220,39 @@ public class MateriaBD extends MateriaMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public List<String> selectMateriaWhereUsername(String username) {
+
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"Materias\".materia_nombre\n"
+                + "FROM\n"
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "WHERE\n"
+                + "\"Usuarios\".usu_username = '" + username + "'";
+
+        List<String> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                String paralelo = rs.getString("materia_nombre");
+
+                lista.add(paralelo);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+
     }
 
 }

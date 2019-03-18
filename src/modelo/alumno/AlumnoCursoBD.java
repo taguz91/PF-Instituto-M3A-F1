@@ -3,6 +3,7 @@ package modelo.alumno;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.ConectarDB;
 import modelo.curso.CursoBD;
 import modelo.persona.AlumnoBD;
@@ -23,9 +24,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         this.cur = new CursoBD(conecta);
     }
 
-    public AlumnoCursoBD() {
-    }
-
     public void ingresarAlmnCurso(int idAlmn, int idCurso) {
         String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
                 + "id_alumno, id_curso)\n"
@@ -36,12 +34,21 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
-        String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
-                + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
-                + "almn_curso_nt_examen_final, almn_curso_nt_examen_supletorio,\n"
-                + "almn_curso_asistencia, almn_curso_nota_final, almn_curso_estado,\n"
+        String sql = "SELECT "
+                + "id_almn_curso,\n"
+                + "id_alumno, \n"
+                + "id_curso,\n"
+                + "almn_curso_nt_1_parcial,\n"
+                + "almn_curso_nt_examen_interciclo,\n"
+                + "almn_curso_nt_2_parcial,\n"
+                + "almn_curso_nt_examen_final,\n"
+                + "almn_curso_nt_examen_supletorio,\n"
+                + "almn_curso_asistencia,\n"
+                + "almn_curso_nota_final,\n"
+                + "almn_curso_estado,\n"
                 + "almn_curso_num_faltas\n"
-                + "FROM public.\"AlumnoCurso\";";
+                + "FROM "
+                + "public.\"AlumnoCurso\";";
         return consultarAlmnCursos(sql);
     }
 
@@ -132,6 +139,43 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public List<AlumnoCursoMD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente) {
+
+        String SELECT = "SELECT\n"
+                + "\"AlumnoCurso\".id_almn_curso,\n"
+                + "\"AlumnoCurso\".id_alumno,\n"
+                + "\"AlumnoCurso\".id_curso,\n"
+                + "\"AlumnoCurso\".almn_curso_nt_1_parcial,\n"
+                + "\"AlumnoCurso\".almn_curso_nt_examen_interciclo,\n"
+                + "\"AlumnoCurso\".almn_curso_nt_2_parcial,\n"
+                + "\"AlumnoCurso\".almn_curso_nt_examen_final,\n"
+                + "\"AlumnoCurso\".almn_curso_nt_examen_supletorio,\n"
+                + "\"AlumnoCurso\".almn_curso_asistencia,\n"
+                + "\"AlumnoCurso\".almn_curso_nota_final,\n"
+                + "\"AlumnoCurso\".almn_curso_estado,\n"
+                + "\"AlumnoCurso\".almn_curso_num_faltas\n"
+                + "FROM\n"
+                + "\"AlumnoCurso\"\n"
+                + "INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "WHERE\n"
+                + "\"Cursos\".curso_paralelo = '" + paralelo + "'\n"
+                + "AND \n"
+                + "\"Cursos\".curso_ciclo = " + ciclo + "\n"
+                + "AND \n"
+                + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
+                + "AND \n"
+                + "\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
+                + "AND\n"
+                + "\"Docentes\".id_docente = " + idDocente;
+
+        return consultarAlmnCursos(SELECT);
+
     }
 
 }

@@ -58,7 +58,14 @@ INSERT INTO "Accesos" VALUES(31,'PERIODO-INGRESO-NOTAS-Agregar');
 INSERT INTO "Accesos" VALUES(32,'PERIODO-INGRESO-NOTAS-Editar');
 INSERT INTO "Accesos" VALUES(33,'PERIODO-INGRESO-NOTAS-Eliminar');
 
-0105112890
+
+
+
+
+INSERT INTO "Accesos" VALUES(34,'USUARIOS-VerRoles');
+INSERT INTO "Accesos" VALUES(35,'ROLES-Ver-Permisos');
+INSERT INTO "Accesos" VALUES(36,'ROLES-Editar-Permisos');
+
 
 --SCRIPT USUARIO ROOT
 
@@ -187,6 +194,52 @@ INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 30);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 31);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 32);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 33);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 34);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 35);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 36);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"Docentes".id_docente,
+"Docentes".id_persona,
+"Docentes".docente_codigo,
+"Docentes".docente_otro_trabajo,
+"Docentes".docente_categoria,
+"Docentes".docente_fecha_contrato,
+"Docentes".docente_fecha_fin,
+"Docentes".docente_tipo_tiempo,
+"Docentes".docente_activo,
+"Docentes".docente_observacion,
+"Docentes".docente_capacitador
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
