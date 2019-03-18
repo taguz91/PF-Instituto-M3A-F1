@@ -253,7 +253,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
 
-        pnlMenu.setBackground(new java.awt.Color(204, 204, 204));
+        pnlMenu.setBackground(new java.awt.Color(47, 76, 113));
 
         btnDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_25px.png"))); // NOI18N
         btnDocente.setToolTipText("Ingresar docente");

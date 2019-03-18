@@ -14,7 +14,6 @@ import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaBD;
