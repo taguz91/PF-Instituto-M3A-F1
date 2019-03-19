@@ -496,6 +496,8 @@ CREATE TABLE "ReferenciaSilabo" (
 CREATE TABLE "UnidadSilabo" (
 
 	id_unidad serial NOT NULL,
+	--Aumentar en la base de datos
+	id_silabo integer NOT NULL,
 	numero_unidad integer NOT NULL,
 	objetivo_especifico_unidad text NOT NULL,
 	resultados_aprendizaje_unidad text NOT NULL,
@@ -508,6 +510,11 @@ CREATE TABLE "UnidadSilabo" (
 	estrategias_unidad text NOT NULL,
 
 	PRIMARY KEY(id_unidad)
+	--Aumentar en la base
+	FOREIGN KEY (id_silabo)
+        REFERENCES "Silabo" (id_silabo)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE*/
 
 
 );
@@ -515,7 +522,7 @@ CREATE TABLE "UnidadSilabo" (
 CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
-	id_silabo integer NOT NULL,
+--	id_silabo integer NOT NULL,
 	id_unidad integer NOT NULL,
 	actividad character varying (50) NOT NULL,
 	id_tipo_actividad integer NOT NULL,
@@ -536,11 +543,11 @@ CREATE TABLE "EvaluacionSilabo" (
         REFERENCES "TipoActividad" (id_tipo_actividad)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-
+/*
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
         ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON DELETE CASCADE*/
 );
 
 
