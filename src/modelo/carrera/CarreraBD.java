@@ -86,7 +86,7 @@ public class CarreraBD extends CarreraMD {
                 + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
                 + " carrera_modalidad\n"
                 + "FROM public.\"Carreras\""
-                + "WHERE carrera_activo = 'true';";
+                + "WHERE carrera_activo = 'true' order by id_carrera;";
 
         ResultSet rs = conecta.sql(sql);
 

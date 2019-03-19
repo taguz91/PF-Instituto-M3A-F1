@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b64ffa69-4fc2-4ba7-9f11-89a295029c24">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="carreras" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT id_materia, materia_nombre, materia_ciclo, materia_total_horas,carrera_nombre
+	FROM public."Materias" join public."Carreras" using(id_carrera) where id_carrera=$P{carreras};]]>
+	</queryString>
+	<field name="id_materia" class="java.lang.Integer"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="materia_ciclo" class="java.lang.Integer"/>
+	<field name="materia_total_horas" class="java.lang.Integer"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="176" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="166" uuid="fa567671-e788-4df7-845b-8bacf8ab8f42"/>
+				<imageExpression><![CDATA["C:\\Users\\arman\\Desktop\\ejemploReportes\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="77" width="550" height="20" uuid="d9bd7e99-aede-4a2c-bb83-39fc0a75ffd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="107" width="536" height="20" uuid="f17bba55-cb55-43a4-a29f-b8837864ad6e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Materias]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="14" y="146" width="531" height="20" uuid="ee010ad9-8042-4af1-ae2c-d4a5de1c22df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="253" y="34" width="297" height="20" uuid="bf9c524c-ce26-469e-b59d-96d3429e983f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="21" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="7a527a90-323a-4d46-9b7c-1790e93be6e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="21" y="0" width="472" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="95c08aad-9f04-4e27-9bb1-75ef6632ab44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="519" y="0" width="36" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="d65dec5e-9ee4-4aa2-8770-20e690f7ffc6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="493" y="0" width="26" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="368c013c-66e9-4642-bbd8-65ad29f676eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciclo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="f3260056-8709-4194-a17c-fa2bc3bc50a6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="472" height="20" uuid="eb1a3eba-deec-4b77-b192-3c4e0c4ec135"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="519" y="0" width="36" height="20" uuid="330493e8-de05-4c38-8d9e-af41851b9310"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{materia_total_horas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="26" height="20" uuid="1f9f2883-2bd6-4ae2-b124-d9746bd4bfa7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="21" height="20" uuid="c0ec7478-53a5-4932-9676-534279d3d285"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id_materia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="519d183e-761a-4064-9415-d74a3e9a303b"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="34" width="100" height="20" uuid="49439520-6de3-4c67-8b88-f0f059b04799"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
