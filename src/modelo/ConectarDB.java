@@ -21,14 +21,12 @@ public class ConectarDB {
     private String user = "ROOT";
     private String pass = "ROOT";*/
 
-     //private String url = "jdbc:postgresql://localhost:5432/Proyecto-Academico-Insta"; //BD Johnny PCPRO
     // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    private String url = "jdbc:postgresql://localhost:5432/proyecto1"; //BD ARMANDO
+    //private String url = "jdbc:postgresql://localhost:5432/proyecto1"; //BD ARMANDO
     //private String url = "jdbc:postgresql://localhost:5432/proyecto1"; //BD Johnny PCPRO
 
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
+    private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
 
-    // private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://190.11.21.244:5432/BDinsta"; //BD Diego
     //private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
@@ -52,10 +50,9 @@ public class ConectarDB {
     //private String user = "ROOT";
     private String user = "postgres";
 
-    //private String pass = "2197"; //Clave Johnny
     //private String pass = "ROOT"; //Clave Diego
-    private String pass = "2197";// CLAVE ARMANDO
-    //private String pass = "Holapostgres"; //Clave Johnny
+    //private String pass = "2197";// CLAVE ARMANDO
+    private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = "ROOT"; //Clave Diego
 
 
@@ -115,6 +112,9 @@ public class ConectarDB {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
             return null;
         }
-
+    }
+    
+    public Connection getConnection(){
+        return ct;
     }
 }

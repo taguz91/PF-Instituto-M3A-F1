@@ -124,10 +124,10 @@ public class MateriaBD extends MateriaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    
-            m.setId(rs.getInt("id_materia"));
-            m.setNombre(rs.getString("materia_nombre"));
-            m.setCiclo(rs.getInt("materia_ciclo"));
+
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    m.setCiclo(rs.getInt("materia_ciclo"));
                 }
                 return m;
             } else {
@@ -175,7 +175,7 @@ public class MateriaBD extends MateriaMD {
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
-                MateriaMD m; 
+                MateriaMD m;
                 while (rs.next()) {
                     m = new MateriaMD();
                     m.setId(rs.getInt("id_materia"));
