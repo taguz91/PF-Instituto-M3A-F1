@@ -1,5 +1,7 @@
 package controlador.Libraries;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author MrRainx
@@ -15,6 +17,18 @@ public class Validaciones {
     private static String WORDS = "^[A-Za-z]*+[ ]{1}";
     private static final String NUMBER = "^[0-9]*+[ ]*";
     private static final String EMAIL = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+
+    public static final int IS_INT = 0;
+    public static final int IS_INT_MAX = 1;
+    public static final int IS_INT_MIN_MAX = 2;
+    public static final int IS_DECIMAL = 3;
+    public static final int IS_DECIMAL_MAX = 4;
+    public static final int IS_DECIMAL_MIN_MAX = 5;
+    public static final int IS_WORD = 6;
+    public static final int IS_WORD_MAX = 7;
+    public static final int IS_WORD_MIN_MAX = 8;
+    public static final int IS_NUMBER = 9;
+    public static final int IS_NUMBER_MAX = 10;
 
     /**
      * @param Number
@@ -203,5 +217,11 @@ public class Validaciones {
         System.out.println("Is Not RUC");
         return false;
     }
-    
+
+    public static void validarDoubleTxt(JTextField text) {
+        
+        
+        
+    }
+
 }
