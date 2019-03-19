@@ -29,34 +29,33 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblFechaCierre" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaCierre" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="lblFechaInicio" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jdcFechaInicio" min="-2" pref="130" max="-2" attributes="0"/>
-                          <Component id="jdcFechaCierre" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="jdcFechaInicio" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="jdcFechaCierre" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="143" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblPeriodoLectivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTipoNota" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPeriodoLectivo" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="lblTipoNota" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="cmbTipoNota" max="32767" attributes="0"/>
-                                  <Component id="cmbPeriodoLec" max="32767" attributes="0"/>
+                                  <Component id="cmbPeriodoLec" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnGuardar" min="-2" pref="75" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -76,25 +75,25 @@
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jdcFechaInicio" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFechaInicio" min="-2" max="-2" attributes="0"/>
+                  <Component id="jdcFechaInicio" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblFechaInicio" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jdcFechaCierre" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFechaCierre" min="-2" max="-2" attributes="0"/>
+                  <Component id="jdcFechaCierre" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblFechaCierre" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPeriodoLectivo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmbPeriodoLec" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPeriodoLectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbPeriodoLec" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTipoNota" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmbTipoNota" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTipoNota" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbTipoNota" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
@@ -156,9 +155,7 @@
     <Component class="javax.swing.JComboBox" name="cmbPeriodoLec">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="NOV2018"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -168,12 +165,7 @@
     <Component class="javax.swing.JComboBox" name="cmbTipoNota">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Aporte1"/>
-            <StringItem index="1" value="Examen Interciclo"/>
-            <StringItem index="2" value="Aporte2"/>
-            <StringItem index="3" value="Examen Final"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>

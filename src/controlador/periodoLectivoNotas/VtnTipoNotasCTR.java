@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
+import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.principal.VtnPrincipal;
 
@@ -48,8 +49,6 @@ public class VtnTipoNotasCTR {
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
-
-        listaTiposNotas = modelo.SelectAll();
 
         InitEventos();
         cargarTabla();
@@ -82,6 +81,7 @@ public class VtnTipoNotasCTR {
     //Metodos de Apoyo
     private void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
+        listaTiposNotas = modelo.SelectAll();
         listaTiposNotas
                 .stream()
                 .forEach(VtnTipoNotasCTR::agregarFila);
@@ -95,7 +95,7 @@ public class VtnTipoNotasCTR {
             obj.getValorMinimo(),
             obj.getValorMaximo(),
             obj.getFechaCreacion()
-                
+
         });
 
     }
@@ -118,6 +118,9 @@ public class VtnTipoNotasCTR {
     }
 
     private void btnIngresarActionPerformance(ActionEvent e) {
+
+        FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), new TipoDeNotaBD());
+        form.Init();
 
     }
 
