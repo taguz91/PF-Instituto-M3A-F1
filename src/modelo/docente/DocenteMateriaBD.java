@@ -124,7 +124,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         ResultSet rs = conecta.sql(sql);
         if (rs != null) {
             try {
-                MateriaMD m = mat.buscarMateriaPorReferencia(idMateria);
+                MateriaMD m = mat.buscarMateria(idMateria);
                 while (rs.next()) {
                     DocenteMateriaMD dm = obtenerDocenteMateria(rs, null, m);
                     if (dm != null) {
