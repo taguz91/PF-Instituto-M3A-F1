@@ -86,7 +86,7 @@ public class VtnNotasAlumnoCursoCTR {
         INITS
      */
     public void Init() {
-        tablaNotas = (DefaultTableModel) vista.getTbl_notas().getModel();
+        tablaNotas = (DefaultTableModel) vista.getTblNotas().getModel();
 
         //INICIALIZANDO MODELOS
         curso = new CursoBD(conexion);
@@ -130,41 +130,23 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void InitEventos() {
 
-        vista.getBtn_imprimir().addActionListener(e -> btnImprimir(e));
-        vista.getCmb_ciclo().addItemListener((ItemEvent e) -> {
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
+        vista.getCmbCiclo().addItemListener((ItemEvent e) -> {
             cargarTabla();
         });
-        vista.getCmb_paralelo().addItemListener((ItemEvent e) -> {
+        vista.getCmbParalelo().addItemListener((ItemEvent e) -> {
             cargarTabla();
         });
-        vista.getCmb_jornada().addItemListener((ItemEvent e) -> {
+        vista.getCmbJornada().addItemListener((ItemEvent e) -> {
             cargarTabla();
         });
-        vista.getCmb_asignatura().addItemListener((ItemEvent e) -> {
+        vista.getCmbAsignatura().addItemListener((ItemEvent e) -> {
             cargarTabla();
         });
 
-//        vista.getTbl_notas().addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                int columna = vista.getTbl_notas().getSelectedColumn();
-//                int fila = vista.getTbl_notas().getSelectedRow();
-//                if (contadorLetras == 0) {
-//                    vista.getTbl_notas().setValueAt("0", fila, columna);
-//                    contadorLetras++;
-//                }
-//                if (columna == 4) {
-//                    if (Character.isDigit(e.getKeyChar())) {
-//                        vista.getToolkit().beep();
-//                        e.consume();
-//                        contadorLetras++;
-//                    }
-//
-//                }
-//
-//            }
-//
-//        });
+        Validaciones.validarDoubleJTable(vista.getLblMensajes(), vista.getTblNotas(), 15, 30, "Error", 4);
+        Validaciones.validarDoubleJTable(vista.getLblMensajes(), vista.getTblNotas(), 15, 30, "Error", 5);
+
         tablaNotas.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -175,11 +157,11 @@ public class VtnNotasAlumnoCursoCTR {
 
                     active = true;
 
-                    TableModel modelo = vista.getTbl_notas().getModel();
+                    TableModel modelo = vista.getTblNotas().getModel();
 
                     setNumero();
 
-                    vista.getTbl_notas().setModel(calcularNotaFinal(modelo));
+                    vista.getTblNotas().setModel(calcularNotaFinal(modelo));
 
                     active = false;
                 }
@@ -193,17 +175,17 @@ public class VtnNotasAlumnoCursoCTR {
         METODOS DE APOYO
      */
     private void setNumero() {
-        int columna = vista.getTbl_notas().getSelectedColumn();
-        int fila = vista.getTbl_notas().getSelectedRow();
-        String valor = vista.getTbl_notas().getValueAt(fila, columna).toString();
+        int columna = vista.getTblNotas().getSelectedColumn();
+        int fila = vista.getTblNotas().getSelectedRow();
+        String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
 
         if (Validaciones.isDecimal(valor)) {
-            vista.getTbl_notas().setValueAt(valor, fila, columna);
+            vista.getTblNotas().setValueAt(valor, fila, columna);
         } else {
             if (Validaciones.isInt(valor)) {
-                vista.getTbl_notas().setValueAt(valor, fila, columna);
+                vista.getTblNotas().setValueAt(valor, fila, columna);
             } else {
-                vista.getTbl_notas().setValueAt("0.0", fila, columna);
+                vista.getTblNotas().setValueAt("0.0", fila, columna);
             }
         }
 
@@ -211,7 +193,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
 
-        int fila = vista.getTbl_notas().getSelectedRow();
+        int fila = vista.getTblNotas().getSelectedRow();
 
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
@@ -252,20 +234,20 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarCombos() {
-        listaParalelos.forEach(vista.getCmb_paralelo()::addItem);
+        listaParalelos.forEach(vista.getCmbParalelo()::addItem);
 
-        listaCiclos.forEach(vista.getCmb_ciclo()::addItem);
+        listaCiclos.forEach(vista.getCmbCiclo()::addItem);
 
-        listaMaterias.forEach(vista.getCmb_asignatura()::addItem);
+        listaMaterias.forEach(vista.getCmbAsignatura()::addItem);
 
-        listaJornadas.forEach(vista.getCmb_jornada()::addItem);
+        listaJornadas.forEach(vista.getCmbJornada()::addItem);
 
-        listaCarreras.forEach(vista.getCmb_carrera()::addItem);
+        listaCarreras.forEach(vista.getCmbCarrera()::addItem);
 
         listaPeriodosLectivos.forEach(vista.getCmb_periodolectivo()::addItem);
 
         listaPersona.forEach(obj -> {
-            vista.getCmb_docente().addItem(obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
+            vista.getCmbDocente().addItem(obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
         });
 
     }
@@ -273,10 +255,10 @@ public class VtnNotasAlumnoCursoCTR {
     private void cargarTabla() {
 
         listaNotas = modelo.selectWhere(
-                (String) vista.getCmb_paralelo().getSelectedItem(),
-                Integer.parseInt(vista.getCmb_ciclo().getSelectedItem().toString()),
-                (String) vista.getCmb_jornada().getSelectedItem(),
-                (String) vista.getCmb_asignatura().getSelectedItem(),
+                (String) vista.getCmbParalelo().getSelectedItem(),
+                Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString()),
+                (String) vista.getCmbJornada().getSelectedItem(),
+                (String) vista.getCmbAsignatura().getSelectedItem(),
                 idDocente);
 
         tablaNotas.setRowCount(0);

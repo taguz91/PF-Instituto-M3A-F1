@@ -1,8 +1,8 @@
-
 package vista.notas_Grupo_16;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 /**
@@ -15,79 +15,45 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public JButton getBtn_imprimir() {
-        return btn_imprimir;
+    public JButton getBtnImprimir() {
+        return btnImprimir;
     }
 
-    public void setBtn_imprimir(JButton btn_imprimir) {
-        this.btn_imprimir = btn_imprimir;
+    public JComboBox<String> getCmbAsignatura() {
+        return cmbAsignatura;
     }
 
-    public JComboBox<String> getCmb_asignatura() {
-        return cmb_asignatura;
+    public JComboBox<String> getCmbCarrera() {
+        return cmbCarrera;
     }
 
-    public void setCmb_asignatura(JComboBox<String> cmb_asignatura) {
-        this.cmb_asignatura = cmb_asignatura;
+    public JComboBox<String> getCmbCiclo() {
+        return cmbCiclo;
     }
 
-    public JComboBox<String> getCmb_carrera() {
-        return cmb_carrera;
+    public JComboBox<String> getCmbDocente() {
+        return cmbDocente;
     }
 
-    public void setCmb_carrera(JComboBox<String> cmb_carrera) {
-        this.cmb_carrera = cmb_carrera;
+    public JComboBox<String> getCmbJornada() {
+        return cmbJornada;
     }
 
-    public JComboBox<String> getCmb_ciclo() {
-        return cmb_ciclo;
-    }
-
-    public void setCmb_ciclo(JComboBox<String> cmb_ciclo) {
-        this.cmb_ciclo = cmb_ciclo;
-    }
-
-    public JComboBox<String> getCmb_docente() {
-        return cmb_docente;
-    }
-
-    public void setCmb_docente(JComboBox<String> cmb_docente) {
-        this.cmb_docente = cmb_docente;
-    }
-
-    public JComboBox<String> getCmb_jornada() {
-        return cmb_jornada;
-    }
-
-    public void setCmb_jornada(JComboBox<String> cmb_jornada) {
-        this.cmb_jornada = cmb_jornada;
-    }
-
-    public JComboBox<String> getCmb_paralelo() {
-        return cmb_paralelo;
-    }
-
-    public void setCmb_paralelo(JComboBox<String> cmb_paralelo) {
-        this.cmb_paralelo = cmb_paralelo;
+    public JComboBox<String> getCmbParalelo() {
+        return cmbParalelo;
     }
 
     public JComboBox<String> getCmb_periodolectivo() {
-        return cmb_periodolectivo;
+        return cmbPeriodolectivo;
     }
 
-    public void setCmb_periodolectivo(JComboBox<String> cmb_periodolectivo) {
-        this.cmb_periodolectivo = cmb_periodolectivo;
+    public JLabel getLblMensajes() {
+        return lblMensajes;
     }
 
-    public JTable getTbl_notas() {
-        return tbl_notas;
+    public JTable getTblNotas() {
+        return tblNotas;
     }
-
-    public void setTbl_notas(JTable tbl_notas) {
-        this.tbl_notas = tbl_notas;
-    }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -100,16 +66,17 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lbl_docente = new javax.swing.JLabel();
         lbl_asignatura = new javax.swing.JLabel();
         lbl_jornada = new javax.swing.JLabel();
-        cmb_periodolectivo = new javax.swing.JComboBox<>();
-        cmb_carrera = new javax.swing.JComboBox<>();
-        cmb_ciclo = new javax.swing.JComboBox<>();
-        cmb_paralelo = new javax.swing.JComboBox<>();
-        cmb_jornada = new javax.swing.JComboBox<>();
-        cmb_asignatura = new javax.swing.JComboBox<>();
-        cmb_docente = new javax.swing.JComboBox<>();
+        cmbPeriodolectivo = new javax.swing.JComboBox<>();
+        cmbCarrera = new javax.swing.JComboBox<>();
+        cmbCiclo = new javax.swing.JComboBox<>();
+        cmbParalelo = new javax.swing.JComboBox<>();
+        cmbJornada = new javax.swing.JComboBox<>();
+        cmbAsignatura = new javax.swing.JComboBox<>();
+        cmbDocente = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_notas = new javax.swing.JTable();
-        btn_imprimir = new javax.swing.JButton();
+        tblNotas = new javax.swing.JTable();
+        btnImprimir = new javax.swing.JButton();
+        lblMensajes = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -130,9 +97,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         lbl_jornada.setText("Jornada:");
 
-        cmb_docente.setEnabled(false);
+        cmbDocente.setEnabled(false);
 
-        tbl_notas.setModel(new javax.swing.table.DefaultTableModel(
+        tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -158,15 +125,21 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbl_notas.setColumnSelectionAllowed(true);
-        tbl_notas.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tbl_notas);
-        tbl_notas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (tbl_notas.getColumnModel().getColumnCount() > 0) {
-            tbl_notas.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblNotas.setColumnSelectionAllowed(true);
+        tblNotas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblNotas);
+        tblNotas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblNotas.getColumnModel().getColumnCount() > 0) {
+            tblNotas.getColumnModel().getColumn(0).setPreferredWidth(30);
         }
 
-        btn_imprimir.setText("Impromir");
+        btnImprimir.setText("Impromir");
+
+        lblMensajes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblMensajes.setForeground(new java.awt.Color(177, 65, 48));
+        lblMensajes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMensajes.setText("MENSAJES DE ERROR");
+        lblMensajes.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(153, 153, 153)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,13 +156,13 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmb_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbl_paralelo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmb_paralelo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmb_carrera, 0, 300, Short.MAX_VALUE)
-                            .addComponent(cmb_periodolectivo, 0, 300, Short.MAX_VALUE))
+                                .addComponent(cmbParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbCarrera, 0, 300, Short.MAX_VALUE)
+                            .addComponent(cmbPeriodolectivo, 0, 300, Short.MAX_VALUE))
                         .addGap(128, 128, 128)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -198,17 +171,19 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                             .addComponent(lbl_asignatura, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbl_docente, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmb_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                                .addComponent(btn_imprimir))
-                            .addComponent(cmb_docente, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1))
+                                .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnImprimir))
+                            .addComponent(cmbDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 138, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addComponent(lblMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,26 +192,27 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_periodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_docente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_periodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_docente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPeriodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_paralelo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_paralelo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -244,15 +220,16 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_imprimir;
-    private javax.swing.JComboBox<String> cmb_asignatura;
-    private javax.swing.JComboBox<String> cmb_carrera;
-    private javax.swing.JComboBox<String> cmb_ciclo;
-    private javax.swing.JComboBox<String> cmb_docente;
-    private javax.swing.JComboBox<String> cmb_jornada;
-    private javax.swing.JComboBox<String> cmb_paralelo;
-    private javax.swing.JComboBox<String> cmb_periodolectivo;
+    private javax.swing.JButton btnImprimir;
+    private javax.swing.JComboBox<String> cmbAsignatura;
+    private javax.swing.JComboBox<String> cmbCarrera;
+    private javax.swing.JComboBox<String> cmbCiclo;
+    private javax.swing.JComboBox<String> cmbDocente;
+    private javax.swing.JComboBox<String> cmbJornada;
+    private javax.swing.JComboBox<String> cmbParalelo;
+    private javax.swing.JComboBox<String> cmbPeriodolectivo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMensajes;
     private javax.swing.JLabel lbl_asignatura;
     private javax.swing.JLabel lbl_carrera;
     private javax.swing.JLabel lbl_ciclo;
@@ -260,6 +237,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbl_jornada;
     private javax.swing.JLabel lbl_paralelo;
     private javax.swing.JLabel lbl_periodolectivo;
-    private javax.swing.JTable tbl_notas;
+    private javax.swing.JTable tblNotas;
     // End of variables declaration//GEN-END:variables
 }

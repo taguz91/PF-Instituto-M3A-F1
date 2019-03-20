@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoBD;
@@ -15,7 +16,7 @@ import modelo.persona.AlumnoMD;
  */
 public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
-    private final ConectarDB conecta; 
+    private final ConectarDB conecta;
     //Para consulta alumno 
     private final AlumnoBD alm;
     //Para consultar carreras  
@@ -27,12 +28,12 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         this.alm = new AlumnoBD(conecta);
         this.car = new CarreraBD(conecta);
     }
-    
+
     public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
-                + "'"+getFechaRegistro()+"' );";
+                + "'" + getFechaRegistro() + "' );";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Guardamos correctamente el alumno en la carrera");
             return true;
@@ -81,12 +82,12 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "FROM public.\"AlumnosCarrera\", public.\"Alumnos\", public.\"Personas\" \n"
                 + "WHERE \"Alumnos\".id_alumno = \"AlumnosCarrera\".id_alumno \n"
                 + "AND \"Personas\".id_persona = \"Alumnos\".id_persona \n"
-                + "AND almn_carrera_activo = 'true' AND id_carrera = "+idCarrera+" \n"
-                + "AND (persona_identificacion ILIKE '%"+aguja+"%' OR\n"
-                + "	 persona_primer_apellido ILIKE '%"+aguja+"%' OR\n"
-                + "	 persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
-                + "	 persona_primer_nombre ILIKE '%"+aguja+"%' OR \n"
-                + "	 persona_segundo_nombre ILIKE '%"+aguja+"%');";
+                + "AND almn_carrera_activo = 'true' AND id_carrera = " + idCarrera + " \n"
+                + "AND (persona_identificacion ILIKE '%" + aguja + "%' OR\n"
+                + "	 persona_primer_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	 persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	 persona_primer_nombre ILIKE '%" + aguja + "%' OR \n"
+                + "	 persona_segundo_nombre ILIKE '%" + aguja + "%');";
         return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
     }
 

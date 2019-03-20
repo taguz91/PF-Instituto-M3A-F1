@@ -1,6 +1,7 @@
 package controlador.periodoLectivoNotas;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyVetoException;
@@ -42,9 +43,8 @@ public class FrmTipoNotaCTR {
     }
 
     private void InitEventos() {
-        vista.getTxtNotaMax().addKeyListener(new KeyAdapter() {
 
-        });
+        Validaciones.validarDoubleTxt(vista, vista.getTxtNotaMin(), 1, 100, "Ingrese Numeros entre 1 y 100 \nEn este formato (55.65 o 55)");
 
         vista.getBtnGuardar().addActionListener(e -> btnGuadar(e));
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));

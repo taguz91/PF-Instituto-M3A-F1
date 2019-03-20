@@ -1,6 +1,12 @@
 package controlador.Libraries;
 
-import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -12,12 +18,15 @@ public class Validaciones {
      * REGULAR EXPRESSIONS
      */
     private static final String INT = "^[-|+]{0,1}[0-9]+[ ]*";
-    private static final String DECIMAL = "^[+]{0,1}[0-9]*+[.]{0,1}+[0-9]{1,2}+[ ]*";
+    private static final String DECIMAL = "^[0-9]*+[.]{0,1}+[0-9]{0,2}";
     private static final String WORD = "^[A-Za-z]*+[ ]*";
     private static String WORDS = "^[A-Za-z]*+[ ]{1}";
     private static final String NUMBER = "^[0-9]*+[ ]*";
     private static final String EMAIL = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
 
+    /*
+     *  OPTIONS
+     */
     public static final int IS_INT = 0;
     public static final int IS_INT_MAX = 1;
     public static final int IS_INT_MIN_MAX = 2;
@@ -45,7 +54,7 @@ public class Validaciones {
      * @param Max
      * @return
      */
-    public static boolean isInt(String Number, long Max) {
+    public static boolean isInt(String Number, double Max) {
 
         if (isInt(Number)) {
             long number = Long.parseLong(Number);
@@ -63,13 +72,11 @@ public class Validaciones {
      * @param Max
      * @return
      */
-    public static boolean isInt(String Number, long Min, long Max) {
+    public static boolean isInt(String Number, double Min, double Max) {
         if (isInt(Number)) {
             long number = Long.parseLong(Number);
             return number >= Min && number <= Max;
         }
-
-        System.out.println("is Not a Number");
         return false;
     }
 
@@ -78,7 +85,9 @@ public class Validaciones {
      * @return
      */
     public static boolean isDecimal(String Number) {
+
         return Number.matches(DECIMAL);
+
     }
 
     /**
@@ -107,8 +116,7 @@ public class Validaciones {
             double number = Double.parseDouble(Number);
             return number >= Min && number <= Max;
         }
-
-        System.out.println("is Not a Number");
+        System.out.println("Is not a Number");
         return false;
     }
 
@@ -218,10 +226,74 @@ public class Validaciones {
         return false;
     }
 
-    public static void validarDoubleTxt(JTextField text) {
-        
-        
-        
+    /**
+     *
+     * @param vista
+     * @param text
+     * @param min
+     * @param max
+     * @param mensaje
+     */
+    public static void validarDoubleTxt(JComponent vista, JTextComponent text, double min, double max, String mensaje) {
+
+        text.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+                if (e.getKeyCode() != 8) {
+                    if (!isDecimal(text.getText().trim(), min, max)) {
+                        text.setText("");
+                        JOptionPane.showMessageDialog(vista, mensaje);
+                        vista.getToolkit().beep();
+                        e.consume();
+                    }
+                } else {
+                    vista.getToolkit().beep();
+                    e.consume();
+                }
+            }
+
+        });
+
+    }
+
+    /**
+     *
+     * @param label messages label
+     * @param text JTable
+     * @param min maximum value
+     * @param max minimum value
+     * @param mensaje error message
+     * @param colum target colum
+     */
+    public static void validarDoubleJTable(JLabel label, JTable text, double min, double max, String mensaje, int colum) {
+        text.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int row = text.getSelectedRow();
+
+                String value = text.getValueAt(row, colum).toString().trim();
+
+                if ((e.getKeyCode() > 47 && e.getKeyCode() < 58) || e.getKeyCode() == 46) {
+
+                    if (!isDecimal(value, min, max)) {
+
+                        text.setValueAt("0.0", row, colum);
+                        label.setText(mensaje);
+
+                        label.getToolkit().beep();
+                    }
+
+                }
+                if (value.equals("")) {
+                    text.setValueAt("0.0", row, colum);
+                }
+            }
+
+        });
+
     }
 
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.curso.CursoBD;
 import modelo.persona.AlumnoBD;
 
@@ -176,6 +177,23 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
         return consultarAlmnCursos(SELECT);
 
+    }
+
+    public boolean editar(int pk) {
+        String DELETE = "UPDATE \"AlumnoCurso\" \n"
+                + "SET \n"
+                + "almn_curso_nt_1_parcial = " + getNota1Parcial() + ",\n"
+                + "almn_curso_nt_examen_interciclo = " + getNotaExamenInter() + ",\n"
+                + "almn_curso_nt_2_parcial = " + getNota2Parcial() + ",\n"
+                + "almn_curso_nt_examen_supletorio = " + getNotaExamenSupletorio() + ",\n"
+                + "almn_curso_asistencia = '" + getAsistencia() + "',\n"
+                + "almn_curso_nota_final = " + getNotaFinal() + ",\n"
+                + "almn_curso_estado = '" + getEstado() + "',\n"
+                + "almn_curso_num_faltas = " + getNumFalta() + "\n"
+                + "WHERE \n"
+                + "id_almn_curso  = " + pk;
+
+        return ResourceManager.Statement(DELETE) == null;
     }
 
 }
