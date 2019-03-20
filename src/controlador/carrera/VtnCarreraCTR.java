@@ -1,11 +1,27 @@
 package controlador.carrera;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.ConexionReportes;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.principal.VtnPrincipal;
@@ -45,11 +61,12 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 1, 50);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 3, 90);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
-
+        
         cargarCarreras();
         //Le damos accion al btn editar  
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
+        vtnCarrera.getBtnReporteCarreras().addActionListener(e -> llamaReporte());
     }
 
     private void editarCarrera() {
@@ -94,5 +111,25 @@ public class VtnCarreraCTR {
             });
         }
     }
+public void llamaReporte(){
+    ConexionReportes con = new ConexionReportes();
+        Connection conexion = con.getConexion();
+    
+    String path = "C:\\Users\\arman\\Desktop\\githubtest1\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\repCarreras.jasper";
+        JasperReport jr = null;
+        try {
+            Map parametro = new HashMap();
+            parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conexion);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle(path);
 
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }
+}
+
