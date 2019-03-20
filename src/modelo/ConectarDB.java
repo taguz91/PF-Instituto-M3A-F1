@@ -105,6 +105,9 @@ public class ConectarDB {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
             return null;
         }
-
+    }
+    
+    public Connection getConnection(){
+        return ct;
     }
 }

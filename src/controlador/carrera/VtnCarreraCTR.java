@@ -1,18 +1,11 @@
 package controlador.carrera;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.Connection;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
-import modelo.ConexionReportes;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -35,7 +28,7 @@ public class VtnCarreraCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCarrera vtnCarrera;
     private final ConectarDB conecta;
-    
+
     private final CarreraBD car;
     ArrayList<CarreraMD> carreras;
 
@@ -46,7 +39,7 @@ public class VtnCarreraCTR {
         this.vtnCarrera = vtnCarrera;
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
-        
+
         vtnPrin.getDpnlPrincipal().add(vtnCarrera);
         vtnCarrera.show();
     }
@@ -61,7 +54,7 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 1, 50);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 3, 90);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
-        
+
         cargarCarreras();
         //Le damos accion al btn editar  
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
@@ -111,25 +104,30 @@ public class VtnCarreraCTR {
             });
         }
     }
-public void llamaReporte(){
-    ConexionReportes con = new ConexionReportes();
+
+    public void llamaReporte() {
+        /*      ConexionReportes con = new ConexionReportes();
         Connection conexion = con.getConexion();
-    
-    String path = "C:\\Users\\arman\\Desktop\\githubtest1\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\repCarreras.jasper";
-        JasperReport jr = null;
+         */
+        String path = "./src/vista/reportes/repCarreras.jasper";
+        //String path = "C:\\Users\\Johnny\\Desktop\\PF-Instituto-M3A\\src\\vista\\reportes\\repCarreras.jasper";
+        //Veremos nuestra ruta  
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        JasperReport jr;
         try {
             Map parametro = new HashMap();
             parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conexion);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConnection());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle(path);
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos crear el reporte.");
+            System.out.println(ex.getMessage());
         }
+    }
 }
-}
-

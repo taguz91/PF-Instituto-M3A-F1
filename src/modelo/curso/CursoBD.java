@@ -207,7 +207,7 @@ public class CursoBD extends CursoMD {
         CursoMD c = new CursoMD();
         try {
             c.setId_curso(rs.getInt("id_curso"));
-            MateriaMD m = mat.buscarMateria(rs.getInt("id_materia"));
+            MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
             c.setId_materia(m);
             PeriodoLectivoMD p = prd.buscarPerido(rs.getInt("id_prd_lectivo"));
             c.setId_prd_lectivo(p);
