@@ -221,7 +221,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         MallaAlumnoMD mll = new MallaAlumnoMD();
         try {
             mll.setId(rs.getInt("id_malla_alumno"));
-            MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+            MateriaMD m = mat.buscarMateria(rs.getInt("id_materia"));
             mll.setMateria(m);
             AlumnoCarreraMD a = alm.buscarAlumnoCarrera(rs.getInt("id_almn_carrera"));
             mll.setAlumnoCarrera(a);
@@ -243,7 +243,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         MallaAlumnoMD mll = new MallaAlumnoMD();
         try {
             mll.setId(rs.getInt("id_malla_alumno"));
-            MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+            MateriaMD m = mat.buscarMateria(rs.getInt("id_materia"));
             mll.setMateria(m);
             mll.setAlumnoCarrera(almn);
             mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
