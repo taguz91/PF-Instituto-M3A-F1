@@ -3,10 +3,12 @@ package vista.principal;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -210,6 +212,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtTipoNotas;
     }
 
+    public JButton getBtnAyuda() {
+        return btnAyuda;
+    }
+
+    public JLabel getBtnEstado() {
+        return btnEstado;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -233,6 +243,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         btnDocenteMateria = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        btnEstado = new javax.swing.JLabel();
+        btnAyuda = new javax.swing.JButton();
         menuCrud = new javax.swing.JMenuBar();
         mnTipoNotas = new javax.swing.JMenu();
         mnCtPersona = new javax.swing.JMenuItem();
@@ -372,7 +385,41 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         dpnlPrincipalLayout.setVerticalGroup(
             dpnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 408, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBackground(new java.awt.Color(47, 76, 113));
+
+        btnEstado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnEstado.setForeground(new java.awt.Color(255, 255, 255));
+        btnEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnEstado.setText("E");
+
+        btnAyuda.setBackground(new java.awt.Color(51, 51, 51));
+        btnAyuda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAyuda.setForeground(new java.awt.Color(255, 255, 255));
+        btnAyuda.setText("H");
+        btnAyuda.setBorder(null);
+        btnAyuda.setBorderPainted(false);
+        btnAyuda.setContentAreaFilled(false);
+        btnAyuda.setOpaque(true);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         mnTipoNotas.setText("Consultar");
@@ -510,13 +557,17 @@ public class VtnPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dpnlPrincipal)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dpnlPrincipal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dpnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -525,11 +576,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlumno;
+    private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCarrera;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnDocente;
     private javax.swing.JButton btnDocenteMateria;
+    private javax.swing.JLabel btnEstado;
     private javax.swing.JButton btnInscripcion;
     private javax.swing.JButton btnMateria;
     private javax.swing.JButton btnMatricula;
@@ -538,6 +591,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;

@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
-import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import vista.persona.FrmPersona;
@@ -27,7 +27,7 @@ public class VtnPersonaCTR {
     //Para trabajar en los datos de la tabla
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
-    private String tipoPersonas[] = {"Docente", "Alumno"};
+    private final String tipoPersonas[] = {"Docente", "Alumno"};
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
@@ -38,6 +38,8 @@ public class VtnPersonaCTR {
         vtnPersona.show();
         //Iniciamos la clase persona
         dbp = new PersonaBD(conecta);
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
     }
 
     public void iniciar() {
@@ -76,6 +78,8 @@ public class VtnPersonaCTR {
         });
 
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
+        
+        vtnPrin.setCursor(new Cursor(0));
     }
 
     private void cargarCmbTipoPersonas() {
@@ -89,7 +93,6 @@ public class VtnPersonaCTR {
     }
 
     private void cargarTipoPersona() {
-
         String tipo = vtnPersona.getCmbTipoPersona().getSelectedItem().toString();
 
         switch (tipo) {
@@ -117,17 +120,18 @@ public class VtnPersonaCTR {
     //obtenemos el modelo de la tabla de la vista y la pones en el modelo por defaulta con un castingt
     public void cargarLista() {
         mdTbl.setRowCount(0);
+        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(3));
         if (personas != null) {
             personas.forEach((p) -> {
                 Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
                     p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                     + p.getPrimerApellido() + " " + p.getSegundoApellido(),
                     p.getFechaNacimiento()};
-
                 mdTbl.addRow(valores);
             });
         }
         vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
     //consultamos por tipo de persona 
@@ -179,7 +183,7 @@ public class VtnPersonaCTR {
     private void eliminar() {
         int posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
-            PersonaMD persona = new PersonaMD();
+            PersonaMD persona;
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
