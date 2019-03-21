@@ -1,5 +1,7 @@
 package controlador.persona;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -38,6 +40,7 @@ public class FrmPersonaCTR {
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
     private int numAccion = 0;
 
@@ -69,10 +72,14 @@ public class FrmPersonaCTR {
     private boolean editar = false;
     private int idPersona = 0;
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta) {
+    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Persona");
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);
@@ -128,6 +135,9 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
 
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Persona");
     }
 
     public void buscarIdentificacion() {

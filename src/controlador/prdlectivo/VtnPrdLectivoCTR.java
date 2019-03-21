@@ -74,7 +74,7 @@ public class VtnPrdLectivoCTR {
     
     public void abrirFrmPrdLectivo(){
         FrmPrdLectivo vista = new FrmPrdLectivo();
-        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta);
+        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta, ctrPrin);
         formulario.iniciar();
     }
     
@@ -157,7 +157,7 @@ public class VtnPrdLectivoCTR {
         CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
-            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta);
+            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta, ctrPrin);
             ctrFrm.iniciar();
             carrera.setNombre(periodo.getCarrera().getNombre());
             ctrFrm.editar(periodo,carrera);

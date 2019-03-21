@@ -1,5 +1,7 @@
 package controlador.docente;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class FrmDocenteMateriaCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmDocenteMateria frmDM;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
     private final DocenteMateriaBD dm;
     private final DocenteBD doc;
@@ -41,10 +44,14 @@ public class FrmDocenteMateriaCTR {
 
     DefaultTableModel mdTbl;
 
-    public FrmDocenteMateriaCTR(VtnPrincipal vtnPrin, FrmDocenteMateria frmDM, ConectarDB conecta) {
+    public FrmDocenteMateriaCTR(VtnPrincipal vtnPrin, FrmDocenteMateria frmDM, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmDM = frmDM;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Docente materia");
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(frmDM);
         frmDM.show();
@@ -82,6 +89,10 @@ public class FrmDocenteMateriaCTR {
         //Acciones de los botones
         frmDM.getBtnBuscar().addActionListener(e -> buscarDocente(frmDM.getTxtBuscar().getText().trim()));
         frmDM.getBtnGuardar().addActionListener(e -> guardar());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Docente materia");
+        
     }
 
     private void iniciarValidaciones() {

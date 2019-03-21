@@ -116,7 +116,7 @@ public class MateriaBD extends MateriaMD {
     //Metodo buscar por id de la materia
     public MateriaMD buscarMateriaPorReferencia(int idmateria) {
         MateriaMD m = new MateriaMD();
-        String sql = "SELECT id_materia, id_carrera"
+        String sql = "SELECT id_materia, id_carrera, "
                 + " materia_nombre, materia_ciclo\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";

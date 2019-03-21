@@ -26,14 +26,14 @@ public class VtnCursoCTR {
     private final VtnPrincipalCTR ctrPrin;
     
     private final CursoBD curso;
-    ArrayList<CursoMD> cursos;
+    private ArrayList<CursoMD> cursos;
     //modelo de la tabla 
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
     //Para cargar el combo periodos  
-    PeriodoLectivoBD per;
-    ArrayList<PeriodoLectivoMD> periodos;
+    private final PeriodoLectivoBD prd;
+    private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
-    ArrayList<String> nombresC;
+    private ArrayList<String> nombresC;
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -43,7 +43,7 @@ public class VtnCursoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Cursos");
-        this.per = new PeriodoLectivoBD(conecta);
+        this.prd = new PeriodoLectivoBD(conecta);
         
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
         vtnCurso.show();
@@ -82,7 +82,7 @@ public class VtnCursoCTR {
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
         ctrFrmCurso.iniciar();
     }
 
@@ -90,7 +90,7 @@ public class VtnCursoCTR {
         int fila = vtnCurso.getTblCurso().getSelectedRow();
         if (fila >= 0) {
             FrmCurso frmCurso = new FrmCurso();
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
             ctrFrmCurso.iniciar();
             ctrFrmCurso.editar(cursos.get(fila));
             vtnCurso.dispose();
@@ -158,7 +158,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCmbPrdLectio() {
-        periodos = per.cargarPeriodos();
+        periodos = prd.cargarPeriodos();
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().removeAllItems();
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");

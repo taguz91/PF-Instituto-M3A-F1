@@ -2,11 +2,10 @@
 //http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
-import java.awt.Color;
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
@@ -27,6 +26,7 @@ public class FrmDocenteCTR {
     private final DocenteBD docente;
     private boolean guardar = false;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<String> info = new ArrayList();
     private DocenteBD per;
@@ -40,30 +40,24 @@ public class FrmDocenteCTR {
     boolean docenteOtroTrabajo, docenteCapacitador;
     LocalDate fechaInicioContratacion, fechaFinContratacion;
 
-    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, DocenteBD docente, ConectarDB conecta) {
+    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmDocente = frmDocente;
-        this.docente = docente;
-        this.conecta = conecta;
-        this.per = new DocenteBD(conecta);
-
-        vtnPrin.getDpnlPrincipal().add(frmDocente);
-        frmDocente.show();
-    }
-
-    public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, ConectarDB conecta) {
-        this.vtnPrin = vtnPrin;
-        this.frmDocente = frmDocente;
-        this.conecta = conecta;
-        //Inicializamos persona
         this.docente = new DocenteBD(conecta);
+        this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Docente");
+        
+        this.per = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
     }
 
     private void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+        FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
         ctrFrmPersona.iniciar();
     }
 
@@ -72,6 +66,9 @@ public class FrmDocenteCTR {
         frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         //Accion de buscar una persona  
         //frmDocente.getBtnBuscarPersona().addActionListener(e -> consular());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Alumno por carrera");
     }
 
     public void guardarDocente() {

@@ -42,7 +42,7 @@ public class FrmAlumnoCTR {
     private static int validar = 0; //Variable para saber a que textFiel se valida
 
 
-    private SectorEconomicoBD sectorE;
+    private final SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
     public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
@@ -51,7 +51,6 @@ public class FrmAlumnoCTR {
         this.conecta = conecta;
         this.sectorE = new SectorEconomicoBD(conecta);
         this.ctrPrin = ctrPrin;
-        
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno");

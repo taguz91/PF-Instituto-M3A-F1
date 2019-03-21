@@ -166,7 +166,7 @@ public class VtnPersonaCTR {
     //Damos accion al boton de guardar 
     public void ingresar() {
         FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
         ctrFrm.iniciar();
     }
 
@@ -176,7 +176,7 @@ public class VtnPersonaCTR {
         if (posFila >= 0) {
             vtnPersona.getLblError().setVisible(false);
             FrmPersona frmPersona = new FrmPersona();
-            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(personas.get(posFila));

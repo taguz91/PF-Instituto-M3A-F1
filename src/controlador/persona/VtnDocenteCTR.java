@@ -98,9 +98,8 @@ public class VtnDocenteCTR {
     }
 
     public void abrirFrmDocente() {
-        DocenteBD docente = new DocenteBD(conecta);
-        FrmDocente frmDocente = new FrmDocente();
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente, conecta);
+        frmDocente = new FrmDocente();
+        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, conecta, ctrPrin);
         ctrFrmDocente.iniciar();
     }
 
@@ -132,7 +131,7 @@ public class VtnDocenteCTR {
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
             FrmDocente frmDoc = new FrmDocente();
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta);
+            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(docentesMD.get(posFila));
