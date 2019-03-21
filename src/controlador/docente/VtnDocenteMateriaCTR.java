@@ -101,7 +101,7 @@ public class VtnDocenteMateriaCTR {
     
     private void ingresar(){
         FrmDocenteMateria frm = new FrmDocenteMateria(); 
-        FrmDocenteMateriaCTR ctr = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta); 
+        FrmDocenteMateriaCTR ctr = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, ctrPrin); 
         ctr.iniciar();
     }
     

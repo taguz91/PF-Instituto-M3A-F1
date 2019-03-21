@@ -274,12 +274,11 @@ public class VtnPrincipalCTR {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
-            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, this);
             ctrFrmPersona.iniciar();
         } else {
             errorNumVentanas();
         }
-
     }
 
     private void abrirFrmDocente() {
@@ -288,7 +287,7 @@ public class VtnPrincipalCTR {
         eventoInternal(frmDocente);
         if (numVtns < 5) {
             frmDocente.getBtnRegistrarPersona().setVisible(false);
-            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, docente, conecta);
+            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, conecta, this);
             ctrFrmDocente.iniciar();
         } else {
             errorNumVentanas();
@@ -312,7 +311,7 @@ public class VtnPrincipalCTR {
         FrmCarrera frmCarrera = new FrmCarrera();
         eventoInternal(frmCarrera);
         if (numVtns < 5) {
-            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta);
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, this);
             ctrFrmCarrera.iniciar();
         } else {
             errorNumVentanas();
@@ -324,7 +323,7 @@ public class VtnPrincipalCTR {
         FrmCurso frmCurso = new FrmCurso();
         eventoInternal(frmCurso);
         if (numVtns < 5) {
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, this);
             ctrFrmCurso.iniciar();
         } else {
             errorNumVentanas();
@@ -335,7 +334,7 @@ public class VtnPrincipalCTR {
         FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
         eventoInternal(frmPrdLectivo);
         if (numVtns < 5) {
-            FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo, conecta);
+            FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo, conecta, this);
             ctrFrmPrdLectivo.iniciar();
         } else {
             errorNumVentanas();
@@ -347,7 +346,7 @@ public class VtnPrincipalCTR {
         FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera();
         eventoInternal(frmMatricula);
         if (numVtns < 5) {
-            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(vtnPrin, frmMatricula, conecta);
+            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(vtnPrin, frmMatricula, conecta, this);
             ctrFrmAlumn.iniciar();
         }
     }
@@ -356,7 +355,7 @@ public class VtnPrincipalCTR {
         FrmAlumnoCurso frmAlmCurso = new FrmAlumnoCurso();
         eventoInternal(frmAlmCurso);
         if (numVtns < 5) {
-            FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(vtnPrin, frmAlmCurso, conecta);
+            FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(vtnPrin, frmAlmCurso, conecta, this);
             ctrFrmMatri.iniciar();
         }
     }
@@ -365,7 +364,7 @@ public class VtnPrincipalCTR {
         FrmDocenteMateria frm = new FrmDocenteMateria();
         eventoInternal(frm);
         if (numVtns < 5) {
-            FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta);
+            FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, this);
             ctrFrm.iniciar();
         }
     }

@@ -1,5 +1,7 @@
 package controlador.prdlectivo;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -23,16 +25,20 @@ public class FrmPrdLectivoCTR {
     private final FrmPrdLectivo frmPrdLectivo;
     private final PeriodoLectivoBD bdPerLectivo;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     private boolean editar = false;
     private int id_PeriodoLectivo;
 
-    public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo, ConectarDB conecta) {
+    public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmPrdLectivo = frmPrdLectivo;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Periodo lectivo");
 
         this.bdPerLectivo = new PeriodoLectivoBD(conecta);
-
         vtnPrin.getDpnlPrincipal().add(frmPrdLectivo);
         frmPrdLectivo.show();
     }
@@ -51,6 +57,9 @@ public class FrmPrdLectivoCTR {
         iniciarFechas();
         frmPrdLectivo.getBtn_Guardar().addActionListener(e -> guardarPeriodo());
         frmPrdLectivo.getBtn_Cancelar().addActionListener(Cancelar);
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Periodo lectivo");
     }
 
     public void iniciarCarreras() {

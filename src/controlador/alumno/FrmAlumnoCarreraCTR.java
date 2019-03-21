@@ -1,5 +1,7 @@
 package controlador.alumno;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -27,28 +29,34 @@ public class FrmAlumnoCarreraCTR {
     private final FrmAlumnoCarrera frmAlmCarrera;
     private final ConectarDB conecta;
     private final AlumnoCarreraBD almnCarrera;
+    private final VtnPrincipalCTR ctrPrin;
 
     //Modelo de la tabla  
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
 
     //Para rellenar los combo box
-    AlumnoBD almn;
-    ArrayList<AlumnoMD> alumnos;
+    private final AlumnoBD almn;
+    private ArrayList<AlumnoMD> alumnos;
 
-    CarreraBD carr;
-    ArrayList<CarreraMD> carreras;
+    private final CarreraBD carr;
+    private ArrayList<CarreraMD> carreras;
 
-    MateriaBD mat;
-    ArrayList<MateriaMD> materias;
+    private final MateriaBD mat;
+    private ArrayList<MateriaMD> materias;
     //Para guardar la malla
-    MallaAlumnoBD malla;
+    private final MallaAlumnoBD malla;
 
     private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
 
-    public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta) {
+    public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Alumno por carrera");
+
         this.almnCarrera = new AlumnoCarreraBD(conecta);
         this.mat = new MateriaBD(conecta);
         this.malla = new MallaAlumnoBD(conecta);
@@ -85,6 +93,9 @@ public class FrmAlumnoCarreraCTR {
         });
         //Para poder editarlo
         //frmAlmCarrera.getCmbCarreras().setEditable(true);
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Alumno por carrera");
     }
     
     public void ocultarErrores(){        

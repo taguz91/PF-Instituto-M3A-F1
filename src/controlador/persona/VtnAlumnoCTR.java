@@ -164,7 +164,7 @@ public class VtnAlumnoCTR {
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
-                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar);
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();

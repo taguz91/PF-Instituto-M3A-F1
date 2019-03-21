@@ -81,7 +81,7 @@ public class VtnCarreraCTR {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
             FrmCarrera frmCarrera = new FrmCarrera();
-            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta);
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, ctrPrin);
             ctrFrmCarrera.iniciar();
             ctrFrmCarrera.editar(carreras.get(fila));
         }
@@ -89,7 +89,7 @@ public class VtnCarreraCTR {
 
     private void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
-        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta);
+        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, ctrPrin);
         ctrFrmCarrera.iniciar();
     }
 
