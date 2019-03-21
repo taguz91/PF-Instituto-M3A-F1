@@ -12,7 +12,7 @@ import modelo.carrera.CarreraMD;
  */
 public class EjeFormacionBD extends EjeFormacionMD {
 
-    ConectarDB conecta = new ConectarDB("Eje Formacion");
+    ConectarDB conecta = new ConectarDB("ROOT","ROOT","Eje Formacion");
 
     public EjeFormacionBD() {
     }

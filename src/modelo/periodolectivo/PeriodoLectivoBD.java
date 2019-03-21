@@ -303,7 +303,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return nueva_Fecha = fecha.getDayOfMonth() + "/" + nuevo_Mes + "/" + "20" + fecha.getYear();
     }
 
-    public List<String> selectPeriodoWhereUsername(String username) {
+    public static List<String> selectPeriodoWhereUsername(String username) {
         String SELECT = "SELECT\n"
                 + "DISTINCT \"PeriodoLectivo\".prd_lectivo_nombre\n"
                 + "FROM\n"

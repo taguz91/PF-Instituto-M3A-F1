@@ -34,6 +34,7 @@ public class FrmUsuarioCTR {
     private final FrmUsuario vista;
     private final UsuarioBD modelo;
     private final String Funcion;
+    private final ConectarDB conexion;
 
 
     /*
@@ -42,21 +43,25 @@ public class FrmUsuarioCTR {
     private List<PersonaMD> listaPersonas;
     
     private String Pk;
-    
-    public FrmUsuarioCTR(VtnPrincipal desktop, FrmUsuario vista, UsuarioBD modelo, String Funcion) {
+
+    public FrmUsuarioCTR(VtnPrincipal desktop, FrmUsuario vista, UsuarioBD modelo, String Funcion, ConectarDB conexion) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.Funcion = Funcion;
-        
+        this.conexion = conexion;
     }
+    
+    
+    
+    
 
     //INICIADORES
     public void Init() {
         
         InitEventos();
         
-        PersonaBD persona = new PersonaBD(new ConectarDB("PersonaBD"));
+        PersonaBD persona = new PersonaBD(conexion);
         
         listaPersonas = persona.cargarDocentes();
         

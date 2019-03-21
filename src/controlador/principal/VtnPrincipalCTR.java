@@ -35,6 +35,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.persona.DocenteBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -86,6 +88,7 @@ public class VtnPrincipalCTR {
         this.usuario = usuario;
         this.conecta = conecta;
         vtnPrin.setVisible(true);
+        InitPermisos();
     }
 
     public void iniciar() {
@@ -484,7 +487,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuariosActionPerformance(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), new UsuarioBD(), rolSeleccionado);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
         vtn.Init();
     }
 
@@ -504,4 +507,11 @@ public class VtnPrincipalCTR {
         vtn.Init();
     }
 
+    private void InitPermisos() {
+        for (AccesosMD object : AccesosBD.SelectWhereACCESOROLidRol(rolSeleccionado.getId())) {
+            if (object.getNombre().equals("SILABO")) {
+                vtnPrin.getMnCtUsuarios().setEnabled(true);
+            }
+        }
+    }
 }

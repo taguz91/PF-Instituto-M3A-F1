@@ -7,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -17,7 +15,7 @@ import java.util.List;
 public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-
+    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
     private static String USERNAME = "";
     private static String PASSWORD = "";
 
@@ -54,14 +52,7 @@ public class ResourceManager {
         /*
                 ITERA LAS LISTAS DE LAS Urls 
          */
-        for (String url : urls()) {
-            try {
-                conex = DriverManager.getConnection(url, USERNAME, PASSWORD);
-                break;
-            } catch (SQLException e) {
-                System.out.println("");
-            }
-        }
+        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;
 
@@ -110,14 +101,6 @@ public class ResourceManager {
             }
             return null;
         }
-    }
-
-    private static List<String> urls() {
-        List<String> listaUrls = new ArrayList<>();
-
-        listaUrls.add("jdbc:postgresql://35.193.226.187:5432/BDinsta");//SERVER CLOUD
-
-        return listaUrls;
     }
 
 }
