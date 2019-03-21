@@ -28,6 +28,7 @@ import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
+import vista.persona.webCam;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -107,6 +108,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbParroquiaReside().addActionListener(e -> cargarCodigoPostal());
         frmPersona.getCbxDiscapacidad().addActionListener(e -> activarDiscapacidad());
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
+        frmPersona.getBtnCapturarFoto().addActionListener(e-> capturarFotoWebCam());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> guardarPersona());
         //frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmPersona.getBtnCancelar().addActionListener(e -> salirBoton());
@@ -303,6 +305,14 @@ public class FrmPersonaCTR {
                 System.out.println("Nose puedo cargar la imagen" + e.getMessage());
             }
         }
+    }
+    
+    //Metodo para capturar una foto desde WebCam
+     private void capturarFotoWebCam() {
+         webCam vtnWebCam = new webCam();
+         vtnWebCam.show();
+         
+        // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
     }
 
     public void guardarPersona() {
@@ -978,5 +988,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
 
     }
+
+   
 
 }
