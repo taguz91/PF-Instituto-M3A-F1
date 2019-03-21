@@ -110,7 +110,6 @@ public class ResourceManager {
             }
             return null;
         }
-
     }
 
     private static List<String> urls() {
