@@ -243,7 +243,7 @@ public class VtnPrincipalCTR {
         VtnAlumnoCarrera vtnAlmnCarrera = new VtnAlumnoCarrera();
         eventoInternal(vtnAlmnCarrera);
         if (numVtns < 5) {
-            VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnPrin, vtnAlmnCarrera, conecta);
+            VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnPrin, vtnAlmnCarrera, conecta, rolSeleccionado);
             ctrAlmn.iniciar();
         } else {
             errorNumVentanas();

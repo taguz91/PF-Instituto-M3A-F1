@@ -8,6 +8,7 @@ import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
+import modelo.usuario.RolMD;
 import vista.alumno.VtnAlumnoCarrera;
 import vista.principal.VtnPrincipal;
 
@@ -21,6 +22,7 @@ public class VtnAlumnoCarreraCTR {
     private final VtnAlumnoCarrera vtnAlmCar;
     private final AlumnoCarreraBD almnCar;
     private final ConectarDB conecta;
+    private final RolMD permisos;
     
     private ArrayList<AlumnoCarreraMD> almnsCarr;
 
@@ -30,12 +32,13 @@ public class VtnAlumnoCarreraCTR {
     private final CarreraBD carr;
     private ArrayList<CarreraMD> carreras;
     
-    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar, ConectarDB conecta) {
+    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar, ConectarDB conecta, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnAlmCar = vtnAlmCar;
         this.almnCar = new AlumnoCarreraBD(conecta);
         this.conecta = conecta;
         this.carr = new CarreraBD(conecta);
+        this.permisos = permisos;
         
         vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
         vtnAlmCar.show();
