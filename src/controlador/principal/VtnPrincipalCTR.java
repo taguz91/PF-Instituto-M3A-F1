@@ -473,26 +473,19 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtRolesActionPerformance(ActionEvent e) {
-
         VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
         vtn.Init();
     }
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {
-
         vtnPrin.dispose();
-
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
-
         login.Init();
-
     }
 
     private void btnTipoNotas(ActionEvent e) {
-
         VtnTipoNotasCTR vtn = new VtnTipoNotasCTR(vtnPrin, new VtnTipoNotas(), new TipoDeNotaBD(), rolSeleccionado);
         vtn.Init();
-
     }
 
 }
