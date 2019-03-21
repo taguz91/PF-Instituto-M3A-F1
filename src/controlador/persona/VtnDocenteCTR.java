@@ -37,13 +37,13 @@ public class VtnDocenteCTR {
         this.vtnDocente = vtnDocente;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        
-        docente = new DocenteBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnDocente);
-        vtnDocente.show();
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
+
+        docente = new DocenteBD(conecta);
+        vtnPrin.getDpnlPrincipal().add(vtnDocente);
+        vtnDocente.show();
     }
 
     public void iniciar() {

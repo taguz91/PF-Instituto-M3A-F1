@@ -36,14 +36,14 @@ public class VtnPersonaCTR {
         this.vtnPersona = vtnPersona;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Personas");
 
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
         //Iniciamos la clase persona
         dbp = new PersonaBD(conecta);
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Personas");
     }
 
     public void iniciar() {
