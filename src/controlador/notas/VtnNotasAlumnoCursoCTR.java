@@ -1,4 +1,4 @@
-package controlador.notas_Grupo_16;
+package controlador.notas;
 
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import vista.notas_Grupo_16.VtnNotasAlumnoCurso;
+import vista.notas.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
 /**
