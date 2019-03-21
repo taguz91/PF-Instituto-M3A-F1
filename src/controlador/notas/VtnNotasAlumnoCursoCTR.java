@@ -58,7 +58,6 @@ public class VtnNotasAlumnoCursoCTR {
     private CursoBD curso;
     private CarreraBD carrera;
     private PeriodoLectivoBD periodoLectivo;
-    private PersonaBD persona;
     private DocenteBD docente;
 
     private PersonaBD alumno;
@@ -104,7 +103,6 @@ public class VtnNotasAlumnoCursoCTR {
         jornada = new JornadaBD(conexion);
         carrera = new CarreraBD(conexion);
         periodoLectivo = new PeriodoLectivoBD(conexion);
-        persona = new PersonaBD(conexion);
         docente = new DocenteBD(conexion);
         alumno = new PersonaBD(conexion);
 
@@ -115,7 +113,7 @@ public class VtnNotasAlumnoCursoCTR {
         listaJornadas = jornada.selectJornadasWhereUsername(usuario.getUsername());
         listaCarreras = carrera.selectCarreraWhereUsername(usuario.getUsername());
         listaPeriodosLectivos = periodoLectivo.selectPeriodoWhereUsername(usuario.getUsername());
-        listaPersona = persona.selectWhereUsername(usuario.getUsername());
+        listaPersona = PersonaBD.selectWhereUsername(usuario.getUsername());
         listaDocente = docente.selectWhereUsername(usuario.getUsername());
         listaAlumnosPersonas = alumno.cargarAlumnos();
 
@@ -320,91 +318,61 @@ public class VtnNotasAlumnoCursoCTR {
                             });
                 });
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
     /*
         PROCESADORES DE EVENTOS
      */
     private void btnImprimir(ActionEvent e) {
-        
-     conector con = new conector();
-     Connection conexion=con.getConexion();
-     
-     try {
 
-           String path = "C:\\Users\\CESAR\\Desktop\\PF-Instituto-M3A-F1-master\\src\\vista\\notas_Grupo_16\\Reportes\\reportecompuces.jrxml";
-                   
-                      String sql = "SELECT\n" +
-                                        "\"Alumnos\".id_alumno, \n" +
-                                        "\"Personas\".persona_identificacion,\n" +
-                                        "\"Personas\".persona_primer_apellido,\n" +
-                                        "\"Personas\".persona_segundo_apellido,\n" +
-                                        "\"Personas\".persona_primer_nombre,\n" +
-                                        "\"Personas\".persona_segundo_nombre,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nt_1_parcial,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nt_examen_interciclo,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nt_2_parcial,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nt_examen_final,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nt_examen_supletorio,\n" +
-                                        "\"AlumnoCurso\".almn_curso_asistencia,\n" +
-                                        "\"AlumnoCurso\".almn_curso_nota_final,\n" +
-                                        "\"AlumnoCurso\".almn_curso_estado,\n" +
-                                        "\"AlumnoCurso\".almn_curso_num_faltas\n" +
-                                        "FROM\n" +
-                                        "\"Personas\"\n" +
-                                        "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n" +
-                                        "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno;"
-                              + ""
-                              + "WHERE";
-           
-           System.out.println("-------------->1");
-           JasperDesign jd = JRXmlLoader.load(path);
-           System.out.println("-------------->2");
+        conector con = new conector();
+        Connection conexion = con.getConexion();
+
+        try {
+
+            String path = "C:\\Users\\CESAR\\Desktop\\PF-Instituto-M3A-F1-master\\src\\vista\\notas_Grupo_16\\Reportes\\reportecompuces.jrxml";
+
+            String sql = "SELECT\n"
+                    + "\"Alumnos\".id_alumno, \n"
+                    + "\"Personas\".persona_identificacion,\n"
+                    + "\"Personas\".persona_primer_apellido,\n"
+                    + "\"Personas\".persona_segundo_apellido,\n"
+                    + "\"Personas\".persona_primer_nombre,\n"
+                    + "\"Personas\".persona_segundo_nombre,\n"
+                    + "\"AlumnoCurso\".almn_curso_nt_1_parcial,\n"
+                    + "\"AlumnoCurso\".almn_curso_nt_examen_interciclo,\n"
+                    + "\"AlumnoCurso\".almn_curso_nt_2_parcial,\n"
+                    + "\"AlumnoCurso\".almn_curso_nt_examen_final,\n"
+                    + "\"AlumnoCurso\".almn_curso_nt_examen_supletorio,\n"
+                    + "\"AlumnoCurso\".almn_curso_asistencia,\n"
+                    + "\"AlumnoCurso\".almn_curso_nota_final,\n"
+                    + "\"AlumnoCurso\".almn_curso_estado,\n"
+                    + "\"AlumnoCurso\".almn_curso_num_faltas\n"
+                    + "FROM\n"
+                    + "\"Personas\"\n"
+                    + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                    + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno;"
+                    + ""
+                    + "WHERE";
+
+            System.out.println("-------------->1");
+            JasperDesign jd = JRXmlLoader.load(path);
+            System.out.println("-------------->2");
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(sql);
-           System.out.println("-------------->3");
-                    jd.setQuery(newQuery);
-           System.out.println("-------------->4");
-                    JasperReport jr = JasperCompileManager.compileReport(jd);
-           System.out.println("-------------->5");
-                    JasperPrint jp = JasperFillManager.fillReport(jr,null, new conector().getConexion());
-           System.out.println("-------------->6");
-                    JasperViewer.viewReport(jp);
-           System.out.println("-------------->7");
+            System.out.println("-------------->3");
+            jd.setQuery(newQuery);
+            System.out.println("-------------->4");
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            System.out.println("-------------->5");
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, new conector().getConexion());
+            System.out.println("-------------->6");
+            JasperViewer.viewReport(jp);
+            System.out.println("-------------->7");
 
-                } catch (JRException q) {
+        } catch (JRException q) {
 
-                    Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-                }
+            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
+        }
 
     }
 }
