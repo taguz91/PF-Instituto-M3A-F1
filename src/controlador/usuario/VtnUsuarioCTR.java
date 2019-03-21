@@ -2,6 +2,8 @@ package controlador.usuario;
 
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +36,7 @@ public class VtnUsuarioCTR {
 
     private static List<UsuarioMD> ListaUsuarios;
 
-    private static DefaultTableModel modelT;
+    private static DefaultTableModel tablaUsuarios;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, UsuarioBD modelo, RolMD permisos) {
         this.desktop = desktop;
@@ -45,7 +47,7 @@ public class VtnUsuarioCTR {
 
     //Inits
     public void Init() {
-        modelT = (DefaultTableModel) vista.getTblUsuario().getModel();
+        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
 
         ListaUsuarios = modelo.SelectAll();
 
@@ -76,6 +78,12 @@ public class VtnUsuarioCTR {
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRolesActionPerformance(e));
         vista.getBtnVerRoles().addActionListener(e -> btnVerRolesActionPerformance(e));
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscarKeyReleased(e);
+            }
+        });
 
     }
 
@@ -104,16 +112,25 @@ public class VtnUsuarioCTR {
     }
 
     public void cargarTabla(List<UsuarioMD> lista) {
-        modelT.setRowCount(0);
+        tablaUsuarios.setRowCount(0);
         lista.stream()
                 .forEach(VtnUsuarioCTR::agregarFila);
 
     }
 
+    private void cargarTablaFilter(String Aguja) {
+        tablaUsuarios.setRowCount(0);
+        ListaUsuarios
+                .stream()
+                .filter(item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase()))
+                .collect(Collectors.toList())
+                .forEach(VtnUsuarioCTR::agregarFila);
+    }
+
     private static void agregarFila(UsuarioMD obj) {
 
         if (obj.isEstado()) {
-            modelT.addRow(new Object[]{
+            tablaUsuarios.addRow(new Object[]{
                 obj.getUsername()
             });
         }
@@ -241,4 +258,7 @@ public class VtnUsuarioCTR {
 
     }
 
+    private void txtBuscarKeyReleased(KeyEvent e) {
+        cargarTablaFilter(vista.getTxtBuscar().getText());
+    }
 }

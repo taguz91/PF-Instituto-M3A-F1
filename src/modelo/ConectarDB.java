@@ -32,11 +32,10 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:543/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego
-    private String url = "jdbc:postgresql://localhost:5433/proyecto"; //BD cesar 
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta"; //BD cesar 
 
     //private String url = "jdbc:postgresql://localhost:5433/bdinsta"; //BD Alejandro
     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
-    private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
@@ -49,12 +48,12 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //  private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     //private String user = "ROOT";
-    private String user = "postgres";
+    private String user = "ROOT";
 
     //private String pass = "ROOT"; //Clave Diego
     //private String pass = "2197";// CLAVE ARMANDO
     //private String pass = "Holapostgres"; //Clave Johnny
-    private String pass = "postgres"; //Clave cesar
+    private String pass = "ROOT"; //Clave cesar
     //private String pass = "ROOT"; //Clave Diego
 
 

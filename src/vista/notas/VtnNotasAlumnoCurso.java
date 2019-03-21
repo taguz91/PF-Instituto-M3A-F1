@@ -1,5 +1,5 @@
 
-package vista.notas_Grupo_16;
+package vista.notas;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;

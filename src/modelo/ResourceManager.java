@@ -116,14 +116,7 @@ public class ResourceManager {
     private static List<String> urls() {
         List<String> listaUrls = new ArrayList<>();
 
-        //listaUrls.add("jdbc:postgresql://35.202.243.245:5432/BDinsta");//BASE DE DATOS EN LA NUBE
-        //listaUrls.add("jdbc:postgresql://190.11.21.244:5432/BDinsta");//DIEGO LAPTOP
-        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto-Academico-Insta");//DIEGO LAPTOP
-//        listaUrls.add("jdbc:postgresql://localhost:5433/BDPFINSTITUTO");//JHONNY
-//        listaUrls.add("jdbc:postgresql://localhost:5432/BDPFMallaEstudiante");//LINA
-//        listaUrls.add("jdbc:postgresql://localhost:5432/ingreso");//PAO MEDINA
-//        listaUrls.add("jdbc:postgresql://localhost:5432/Proyecto");//ANDRES NOVILLO
-//        listaUrls.add("jdbc:postgresql://localhost:5432/Pruebas");//PAO MEDINA
+        listaUrls.add("jdbc:postgresql://35.193.226.187:5432/BDinsta");//DIEGO LAPTOP
 
         return listaUrls;
     }
