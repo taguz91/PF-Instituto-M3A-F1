@@ -12,7 +12,6 @@ import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoBD;
-import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 

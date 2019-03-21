@@ -1,15 +1,12 @@
 package modelo.persona;
 
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConectarDB;
-import modelo.lugar.LugarBD;
 
 public class AlumnoBD extends AlumnoMD {
 
@@ -258,7 +255,7 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public AlumnoMD buscarAlumno(int idAlumno) {
+    public AlumnoMD buscarAlumnoParaReferencia(int idAlumno) {
         AlumnoMD al = new AlumnoMD();
         String sql = "SELECT id_alumno, id_persona\n"
                 + "	FROM public.\"Alumnos\" WHERE alumno_activo = 'true' AND "
@@ -269,7 +266,7 @@ public class AlumnoBD extends AlumnoMD {
                 while (rs.next()) {
 
                     al.setId_Alumno(rs.getInt("id_alumno"));
-                    PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
+                    PersonaMD p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
                     al.setPersona(p);
                 }
                 return al;
@@ -310,7 +307,7 @@ public class AlumnoBD extends AlumnoMD {
                 while (rs.next()) {
                     AlumnoMD al = new AlumnoMD();
                     al.setId_Alumno(rs.getInt("id_alumno"));
-                    PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
+                    PersonaMD p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
                     al.setPersona(p);
 
                     almns.add(al);

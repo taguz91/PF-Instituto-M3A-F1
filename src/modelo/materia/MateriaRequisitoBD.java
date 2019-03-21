@@ -57,7 +57,7 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
         try {
             materia.setId(rs.getInt("id_requisito"));
             materia.setMateria(m);
-            MateriaMD mr = mat.buscarMateria(rs.getInt("id_materia_requisito"));            
+            MateriaMD mr = mat.buscarMateriaPorReferencia(rs.getInt("id_materia_requisito"));            
             materia.setMateriaRequisito(mr);
             materia.setTipo(rs.getString("tipo_requisito"));
             return materia;
