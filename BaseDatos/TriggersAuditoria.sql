@@ -510,7 +510,7 @@ BEFORE INSERT OR UPDATE
 ON public."Accesos" FOR EACH ROW
 EXECUTE PROCEDURE historial_accesos();
 
---Tabla Materias
+--Tabla Materias 31
 CREATE OR REPLACE FUNCTION historial_materias()
 RETURNS TRIGGER AS $historial_materias$
 BEGIN
@@ -526,3 +526,20 @@ CREATE TRIGGER auditoria_materias
 BEFORE INSERT OR UPDATE
 ON public."Materias" FOR EACH ROW
 EXECUTE PROCEDURE historial_materias();
+
+-- Tabla Usuarios
+CREATE OR REPLACE FUNCTION historial_usuarios()
+RETURNS TRIGGER AS $historial_usuarios$
+BEGIN
+	INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+	  historial_nombre_tabla, historial_pk_tabla)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_usuario);
+	RETURN NEW;
+END;
+$historial_usuarios$ LANGUAGE plpgsql;
+
+CREATE TRIGGER auditoria_usuarios
+BEFORE INSERT OR UPDATE
+ON public."Usuarios" FOR EACH ROW
+EXECUTE PROCEDURE historial_usuarios();

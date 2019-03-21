@@ -1,6 +1,7 @@
 DROP TABLE "Usuarios" CASCADE;
 
 CREATE TABLE "Usuarios"(
+	"id_usuario" serial NOT NULL,
 	"usu_username" VARCHAR(50) NOT NULL,
 	"usu_password" bytea NOT NULL,
 	"usu_estado" BOOLEAN DEFAULT TRUE,

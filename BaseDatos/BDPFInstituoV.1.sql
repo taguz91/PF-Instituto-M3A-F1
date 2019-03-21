@@ -514,9 +514,7 @@ CREATE TABLE "UnidadSilabo" (
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
         ON UPDATE CASCADE
-        ON DELETE CASCADE*/
-
-
+        ON DELETE CASCADE
 );
 
 CREATE TABLE "EvaluacionSilabo" (
@@ -537,7 +535,6 @@ CREATE TABLE "EvaluacionSilabo" (
         REFERENCES "UnidadSilabo" (id_unidad)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-
 
 	FOREIGN KEY (id_tipo_actividad)
         REFERENCES "TipoActividad" (id_tipo_actividad)

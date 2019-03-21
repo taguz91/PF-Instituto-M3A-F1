@@ -17,11 +17,15 @@ public class ConexionReportes {
     }
     public Connection getConexion(){
         Connection con=null;
+        //String pass="2197"; //Contraseña Armando
+        String pass="davicho"; //Contraseña David
+        //String sUrl="jdbc:postgresql://localhost:5432/proyecto1"; //BD Armando
+        String sUrl="jdbc:postgresql://localhost:5432/proyecto"; //BD David
+
         String sDriver="org.postgresql.Driver";
-        String sUrl="jdbc:postgresql://localhost:5432/proyecto1";
         try {
             Class.forName(sDriver).newInstance();
-            con= DriverManager.getConnection(sUrl,"postgres","2197");
+            con= DriverManager.getConnection(sUrl,"postgres",pass);
             System.out.println("conexion Exitosa");
         } catch (Exception e) {
             System.err.println("Error al conectar con la base de datos");
