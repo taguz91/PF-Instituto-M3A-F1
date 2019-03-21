@@ -115,7 +115,7 @@ public class ResourceManager {
     private static List<String> urls() {
         List<String> listaUrls = new ArrayList<>();
 
-        listaUrls.add("jdbc:postgresql://35.193.226.187:5432/BDinsta");//DIEGO LAPTOP
+        listaUrls.add("jdbc:postgresql://35.193.226.187:5432/BDinsta");//SERVER CLOUD
 
         return listaUrls;
     }
