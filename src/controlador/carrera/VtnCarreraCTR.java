@@ -1,9 +1,6 @@
 package controlador.carrera;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,8 +112,11 @@ public void llamaReporte(){
     ConexionReportes con = new ConexionReportes();
         Connection conexion = con.getConexion();
     
-    String path = "C:\\Users\\arman\\Desktop\\githubtest1\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\repCarreras.jasper";
+    //String path = "C:\\Users\\arman\\Desktop\\githubtest1\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\repCarreras.jasper";
         JasperReport jr = null;
+       String path = "./src/vista/reportes/repCarreras.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
