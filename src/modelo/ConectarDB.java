@@ -32,16 +32,16 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5433/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:543/BDPFINSTITUTO"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego
-    private String url = "jdbc:postgresql://localhost:5433/proyecto"; //BD cesar 
+    //private String url = "jdbc:postgresql://localhost:5433/proyecto"; //BD cesar 
 
     //private String url = "jdbc:postgresql://localhost:5433/bdinsta"; //BD Alejandro
     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
-    private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
+   // private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO MEDINA
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego ServerLaptop
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
+    private String url = "jdbc:postgresql://localhost:5432/BDPFCompletaPruebas"; //BD Lina
     //private String url = "jdbc:postgresql://localhost:5432/ingreso"; //BD PAO M
     //private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     //private String user = "ROOT";
@@ -54,7 +54,7 @@ public class ConectarDB {
     //private String pass = "ROOT"; //Clave Diego
     //private String pass = "2197";// CLAVE ARMANDO
     //private String pass = "Holapostgres"; //Clave Johnny
-    private String pass = "postgres"; //Clave cesar
+    //private String pass = "postgres"; //Clave cesar
     //private String pass = "ROOT"; //Clave Diego
 
 
@@ -62,7 +62,7 @@ public class ConectarDB {
     //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-    //private String pass = "linis4413"; //Clave Lina
+    private String pass = "linis4413"; //Clave Lina
     public ConectarDB(String mensaje) {
         try {
             //Cargamos el driver
