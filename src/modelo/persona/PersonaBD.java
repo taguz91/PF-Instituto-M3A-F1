@@ -707,54 +707,39 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
-    private final String TABLA = " \"Personas\" ";
-    private final String ATRIBUTOS = ""
-            + "\"Personas\".id_persona,\n"
-            + "\"Personas\".id_lugar_natal,\n"
-            + "\"Personas\".id_lugar_residencia,\n"
-            + "\"Personas\".persona_foto,\n"
-            + "\"Personas\".persona_identificacion,\n"
-            + "\"Personas\".persona_primer_apellido,\n"
-            + "\"Personas\".persona_segundo_apellido,\n"
-            + "\"Personas\".persona_primer_nombre,\n"
-            + "\"Personas\".persona_segundo_nombre,\n"
-            + "\"Personas\".persona_genero,\n"
-            + "\"Personas\".persona_sexo,\n"
-            + "\"Personas\".persona_estado_civil,\n"
-            + "\"Personas\".persona_etnia,\n"
-            + "\"Personas\".persona_idioma_raiz,\n"
-            + "\"Personas\".persona_tipo_sangre,\n"
-            + "\"Personas\".persona_telefono,\n"
-            + "\"Personas\".persona_celular,\n"
-            + "\"Personas\".persona_correo,\n"
-            + "\"Personas\".persona_fecha_registro,\n"
-            + "\"Personas\".persona_discapacidad,\n"
-            + "\"Personas\".persona_tipo_discapacidad,\n"
-            + "\"Personas\".persona_porcenta_discapacidad,\n"
-            + "\"Personas\".persona_carnet_conadis,\n"
-            + "\"Personas\".persona_calle_principal,\n"
-            + "\"Personas\".persona_numero_casa,\n"
-            + "\"Personas\".persona_calle_secundaria,\n"
-            + "\"Personas\".persona_referencia,\n"
-            + "\"Personas\".persona_sector,\n"
-            + "\"Personas\".persona_idioma,\n"
-            + "\"Personas\".persona_tipo_residencia,\n"
-            + "\"Personas\".persona_fecha_nacimiento,\n"
-            + "\"Personas\".persona_activa  ";
+    public static List<PersonaMD> selectWhereUsername(String username) {
 
-    private final String PRIMARY_KEY = " \"Personas\".id_persona ";
-
-    private List<PersonaMD> selectSimple(String QUERY) {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Personas\".persona_identificacion\n"
+                + "FROM\n"
+                + "\"public\".\"Personas\"\n"
+                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
 
         List<PersonaMD> lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(QUERY);
+        ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
 
             while (rs.next()) {
+                PersonaMD persona = new PersonaMD();
 
-                lista.add(obtenerPersonaSinValidar(rs));
+                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                lista.add(persona);
+
             }
 
         } catch (SQLException e) {
@@ -764,15 +749,6 @@ public class PersonaBD extends PersonaMD {
         }
 
         return lista;
-    }
-
-    public List<PersonaMD> selectWhereUsername(String username) {
-
-        String SELECT = "SELECT " + ATRIBUTOS + "FROM \"Usuarios\" \n"
-                + "INNER JOIN " + TABLA + " ON \"Usuarios\".id_persona = " + PRIMARY_KEY + ""
-                + "WHERE usu_username = '" + username + "'";
-
-        return selectSimple(SELECT);
     }
 
 }
