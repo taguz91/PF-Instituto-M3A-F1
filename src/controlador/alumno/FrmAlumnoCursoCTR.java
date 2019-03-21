@@ -180,6 +180,13 @@ public class FrmAlumnoCursoCTR {
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
             JOptionPane.showMessageDialog(null, "Se guardo el alumno en el curso, correctamente");
+            //Reiniciamos todo 
+            frmAlmCurso.getTxtBuscar().setText("");
+            frmAlmCurso.getCmbCurso().removeAllItems();
+            mdAlm.setRowCount(0);
+            mdMatPen.setRowCount(0);
+            mdMatSelec.setRowCount(0); 
+            cursosSelec = new ArrayList(); 
         }
     }
 
@@ -270,7 +277,7 @@ public class FrmAlumnoCursoCTR {
                 alumnos.get(posAlmn).getId(), "C", ciclo);  
         ArrayList<MateriaMD> materias = mat.cargarMateriaPorCarreraCiclo(
                 periodos.get(posPrd - 1).getCarrera().getId(), ciclo); 
-        if (malla.size() == materias.size()) {
+        if (malla.size() == materias.size() || ciclo >= 3) {
             //JOptionPane.showMessageDialog(null, "Paso todas las materias.");
             cargarCmbCursos(posPrd, ciclo);
         }
