@@ -1,5 +1,7 @@
 package controlador.materia;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class VtnMateriaCTR {
     private final VtnMateria vtnMateria;
     private final ConectarDB conecta;
     private final MateriaBD materia;
+    private final VtnPrincipalCTR ctrPrin;
 
     //El modelo de la tabla materias  
     private DefaultTableModel mdTblMat;
@@ -33,11 +36,15 @@ public class VtnMateriaCTR {
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
 
-    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, ConectarDB conecta) {
+    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnMateria = vtnMateria;
         this.conecta = conecta;
-        
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Materias");
+
         this.materia = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
@@ -81,12 +88,14 @@ public class VtnMateriaCTR {
                 buscar();
             }
         });
-        
+
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Docentes");
     }
-    
-    private void infoMateria(){
-        int pos = vtnMateria.getTblMateria().getSelectedRow(); 
+
+    private void infoMateria() {
+        int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, materias.get(pos));
             info.iniciar();
@@ -126,7 +135,7 @@ public class VtnMateriaCTR {
             vtnMateria.getCmbCiclo().removeAllItems();
             vtnMateria.getCmbCiclo().addItem("Todos");
             ciclos.forEach(c -> {
-                vtnMateria.getCmbCiclo().addItem(c+"");
+                vtnMateria.getCmbCiclo().addItem(c + "");
             });
         } else {
             materias = materia.cargarMaterias();

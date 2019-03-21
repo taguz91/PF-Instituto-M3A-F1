@@ -1,5 +1,7 @@
 package controlador.alumno;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -36,6 +38,7 @@ public class FrmAlumnoCursoCTR {
     private final AlumnoCursoBD almnCurso;
     private final ConectarDB conecta;
     private final MateriaBD mat;
+    private final VtnPrincipalCTR ctrPrin;
 
     //Modelos para las tablas que seleecionan el curso 
     DefaultTableModel mdMatPen, mdMatSelec, mdAlm;
@@ -56,10 +59,14 @@ public class FrmAlumnoCursoCTR {
     MallaAlumnoBD mallaAlm;
     private ArrayList<MallaAlumnoMD> materiasAlmn;
 
-    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta) {
+    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCurso = frmAlmCurso;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Alumno por curso");
         //Inicializamos todas la clases que usaremos
         this.almnCurso = new AlumnoCursoBD(conecta);
         this.almCar = new AlumnoCarreraBD(conecta);
@@ -136,8 +143,10 @@ public class FrmAlumnoCursoCTR {
         });
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
-
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Alumno por curso");
     }
 
     private void guardar() {

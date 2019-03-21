@@ -71,7 +71,7 @@ INSERT INTO "Accesos" VALUES(36,'ROLES-Editar-Permisos');
 
 
 INSERT INTO "Roles"("rol_nombre") VALUES('ROOT');
-INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona") VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64), 505);
+INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona" ) VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64),908);
 
 INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'ROOT'); 
 

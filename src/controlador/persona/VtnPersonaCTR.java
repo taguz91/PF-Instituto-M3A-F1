@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,27 +25,30 @@ public class VtnPersonaCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     //Para trabajar en los datos de la tabla
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
 
-    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, ConectarDB conecta) {
+    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Personas");
 
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
         //Iniciamos la clase persona
         dbp = new PersonaBD(conecta);
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
     }
 
     public void iniciar() {
         cargarCmbTipoPersonas();
-//Inicializamos el error para que no se vea  
+        //Inicializamos el error para que no se vea  
         vtnPersona.getLblError().setVisible(false);
         //Le pasamos accion a los botones  
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
@@ -78,8 +82,9 @@ public class VtnPersonaCTR {
         });
 
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
-        
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Personas");
     }
 
     private void cargarCmbTipoPersonas() {
@@ -161,7 +166,7 @@ public class VtnPersonaCTR {
     //Damos accion al boton de guardar 
     public void ingresar() {
         FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
         ctrFrm.iniciar();
     }
 
@@ -171,7 +176,7 @@ public class VtnPersonaCTR {
         if (posFila >= 0) {
             vtnPersona.getLblError().setVisible(false);
             FrmPersona frmPersona = new FrmPersona();
-            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta);
+            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             ctrFrm.editar(personas.get(posFila));
@@ -187,18 +192,17 @@ public class VtnPersonaCTR {
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona "," Elinimar Persona",dialog);
-            if(result == 0)
-            {
-                if(dbp.eliminarPersonaId(persona.getIdPersona()) == true){
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Elinimar Persona", dialog);
+            if (result == 0) {
+                if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                   //cargarLista();
-                   cargarTipoPersona();
-                } else{
+                    //cargarLista();
+                    cargarTipoPersona();
+                } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA PERSONA");
                 }
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA PERSONA");
         }
     }

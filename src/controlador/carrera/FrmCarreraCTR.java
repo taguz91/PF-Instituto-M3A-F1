@@ -1,9 +1,10 @@
 package controlador.carrera;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -28,6 +29,7 @@ public class FrmCarreraCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmCarrera frmCarrera;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     private boolean editar = false;
     private int idCarrera = 0;
     //Para cargar el combo de coordinador  
@@ -40,10 +42,15 @@ public class FrmCarreraCTR {
     //Modelo de la tabla 
     DefaultTableModel mdTbl;
 
-    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta) {
+    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmCarrera = frmCarrera;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Carrera");
+
         this.docen = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmCarrera);
         frmCarrera.show();
@@ -74,6 +81,9 @@ public class FrmCarreraCTR {
                 frmCarrera.getTxtBuscar().getText().trim()));
         
         frmCarrera.getBtnGuardar().addActionListener(e -> guardar());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Carrera");
     }
 
     private void validaciones() {

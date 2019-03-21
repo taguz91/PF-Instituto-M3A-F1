@@ -1,5 +1,7 @@
 package controlador.prdlectivo;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -24,11 +26,17 @@ public class VtnPrdLectivoCTR {
     private final PeriodoLectivoBD bdPerLectivo;
     private FrmPrdLectivo frmPerLectivo;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
-    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, ConectarDB conecta) {
+    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnPrdLectivo = vtnPrdLectivo;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Peridos lectivos");
         
         bdPerLectivo = new PeriodoLectivoBD(conecta);
         
@@ -59,11 +67,14 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
         vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Periodos lectivos");
     }
     
     public void abrirFrmPrdLectivo(){
         FrmPrdLectivo vista = new FrmPrdLectivo();
-        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta);
+        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta, ctrPrin);
         formulario.iniciar();
     }
     
@@ -146,7 +157,7 @@ public class VtnPrdLectivoCTR {
         CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
-            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta);
+            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta, ctrPrin);
             ctrFrm.iniciar();
             carrera.setNombre(periodo.getCarrera().getNombre());
             ctrFrm.editar(periodo,carrera);

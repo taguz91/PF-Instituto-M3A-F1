@@ -116,7 +116,7 @@ public class MateriaBD extends MateriaMD {
     //Metodo buscar por id de la materia
     public MateriaMD buscarMateriaPorReferencia(int idmateria) {
         MateriaMD m = new MateriaMD();
-        String sql = "SELECT id_materia, id_carrera"
+        String sql = "SELECT id_materia, id_carrera, "
                 + " materia_nombre, materia_ciclo\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";
@@ -209,7 +209,7 @@ public class MateriaBD extends MateriaMD {
             m.setId(rs.getInt("id_materia"));
             //Aqui cargamos la carrera el id de la carrera
             //Deberiamos buscar carrera
-            CarreraMD carrera = car.buscar(rs.getInt("id_carrera"));
+            CarreraMD carrera = car.buscarParaReferencia(rs.getInt("id_carrera"));
             m.setCarrera(carrera);
 
             EjeFormacionMD eje = new EjeFormacionMD();

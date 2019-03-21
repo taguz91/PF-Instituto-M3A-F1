@@ -124,7 +124,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         ResultSet rs = conecta.sql(sql);
         if (rs != null) {
             try {
-                MateriaMD m = mat.buscarMateria(idMateria);
+                MateriaMD m = mat.buscarMateriaPorReferencia(idMateria);
                 while (rs.next()) {
                     DocenteMateriaMD dm = obtenerDocenteMateria(rs, null, m);
                     if (dm != null) {
@@ -147,11 +147,11 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         try {
             dm.setId(rs.getInt("id_docente_mat"));
             if (d == null) {
-                d = doc.buscarDocente(rs.getInt("id_docente"));
+                d = doc.buscarDocenteParaReferencia(rs.getInt("id_docente"));
             }
             dm.setDocente(d);
             if (m == null) {
-                m = mat.buscarMateria(rs.getInt("id_materia"));
+                m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
             }
             dm.setMateria(m);
             return dm;

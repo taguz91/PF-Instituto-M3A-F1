@@ -1,5 +1,7 @@
 package controlador.alumno;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class VtnMallaAlumnoCTR {
     private final VtnMallaAlumno vtnMallaAlm;
     private final ConectarDB conecta;
     private final MallaAlumnoBD mallaAlm;
+    private final VtnPrincipalCTR ctrPrin;
     private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
@@ -40,10 +43,15 @@ public class VtnMallaAlumnoCTR {
     //Modelo de la tabla  
     private DefaultTableModel mdlTbl;
 
-    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, ConectarDB conecta) {
+    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtn;
         this.vtnMallaAlm = vtnMallaAlm;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Malla alumnos");
+        
         this.almCar = new AlumnoCarreraBD(conecta);
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.car = new CarreraBD(conecta);
@@ -85,7 +93,7 @@ public class VtnMallaAlumnoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = vtnMallaAlm.getTxtBuscar().getText().trim();
-                if (a.length() > 9) {
+                if (a.length() > 10) {
                     buscarMalla(a);
                 }
             }
@@ -110,6 +118,9 @@ public class VtnMallaAlumnoCTR {
                 }
             }
         });
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Malla alumnos");
     }
 
     private void buscarAlumno(String aguja) {

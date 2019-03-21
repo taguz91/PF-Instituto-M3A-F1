@@ -43,7 +43,7 @@ public class DocenteBD extends DocenteMD {
                 + " FROM public.\"Personas\" p JOIN public.\"Docentes\" d USING(id_persona) "
                 + "WHERE d.docente_activo = true AND p.persona_activa = true;";
         //Esto estaba mal WHERE alumno_activo = 'true'
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -322,7 +322,32 @@ public class DocenteBD extends DocenteMD {
             System.out.println("No se pudo consultar docente " + idDocente);
             return null;
         }
+    }
 
+    public DocenteMD buscarDocenteParaReferencia(int idDocente) {
+        DocenteMD d = new DocenteMD();
+        String sql = "SELECT id_docente, id_persona, docente_codigo \n"
+                + "FROM public.\"Docentes\" "
+                + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
+        //System.out.println(sql);
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    d.setIdDocente(rs.getInt("id_docente"));
+                    //Buscamos todos los datos de la tabla persona de este docente 
+                    p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
+                    d.setPersona(p);
+                    d.setCodigo(rs.getString("docente_codigo"));
+                }
+                return d;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar docente " + idDocente);
+            return null;
+        }
     }
 
     public DocenteMD obtenerDocente(ResultSet rs) {
@@ -330,7 +355,7 @@ public class DocenteBD extends DocenteMD {
         try {
             d.setIdDocente(rs.getInt("id_docente"));
             //Buscamos todos los datos de la tabla persona de este docente 
-            p = per.buscarPersona(rs.getInt("id_persona"));
+            p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
             d.setPersona(p);
             d.setCodigo(rs.getString("docente_codigo"));
             if (rs.wasNull()) {
@@ -405,7 +430,7 @@ public class DocenteBD extends DocenteMD {
                 while (rs.next()) {
                     DocenteMD al = new DocenteMD();
                     al.setIdDocente(rs.getInt("id_docente"));
-                    PersonaMD pe = per.buscarPersona(rs.getInt("id_persona"));
+                    PersonaMD pe = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
                     al.setPersona(pe);
 
                     almns.add(al);

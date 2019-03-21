@@ -1,5 +1,7 @@
 package controlador.curso;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import modelo.ConectarDB;
 import modelo.curso.CursoBD;
@@ -21,10 +23,12 @@ import vista.principal.VtnPrincipal;
  * @author Johnny
  */
 public class FrmCursoCTR {
-
+    
+    private final VtnPrincipal vtnPrin; 
     private final FrmCurso frmCurso;
     private final CursoBD curso;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     //Para saber si estamos editando  
     private boolean editando = false;
     private int idCurso = 0;
@@ -42,10 +46,16 @@ public class FrmCursoCTR {
     private final JornadaBD jd;
     private ArrayList<JornadaMD> jornadas;
 
-    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta) {
+    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.frmCurso = frmCurso;
-        this.curso = new CursoBD(conecta);
+        this.vtnPrin = vtnPrin;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Alumno por carrera");
+        
+        this.curso = new CursoBD(conecta);
         this.docen = new DocenteBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         this.mt = new MateriaBD(conecta);
@@ -70,6 +80,9 @@ public class FrmCursoCTR {
         //Le damos accion a los botones  
         frmCurso.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCurso.getBtnGuardarContinuar().addActionListener(e -> guardarSeguirIngresando());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Alumno por carrera");
     }
 
     private void ocultarErrores() {

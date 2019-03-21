@@ -1,5 +1,7 @@
 package controlador.persona;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,14 +24,19 @@ public class VtnAlumnoCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, ConectarDB conecta) {
+    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnAlumno = vtnAlumno;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Alumnos");
 
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
@@ -67,11 +74,14 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
+         //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Alumnos");
     }
 
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
+        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin);
         ctrFrmAlumno.iniciar();
     }
 
@@ -142,7 +152,7 @@ public class VtnAlumnoCTR {
             new Object[] { "Editar Datos Personales", "Editar Datos de Alumno"},"Editar Datos de Alumno");
             if(seleccion == 1){
                 frmAlumno = new FrmAlumno();
-                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta);
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin);
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
@@ -154,7 +164,7 @@ public class VtnAlumnoCTR {
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
-                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar);
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();
