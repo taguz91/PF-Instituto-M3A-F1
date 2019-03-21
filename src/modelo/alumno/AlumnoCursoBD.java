@@ -122,7 +122,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         try {
             AlumnoCursoMD a = new AlumnoCursoMD();
             a.setId(rs.getInt("id_almn_curso"));
-            a.setAlumno(alm.buscarAlumno(rs.getInt("id_alumno")));
+            a.setAlumno(alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno")));
             a.setCurso(cur.buscarCurso(rs.getInt("id_curso")));
             a.setNota1Parcial(rs.getDouble("almn_curso_nt_1_parcial"));
             a.setNotaExamenInter(rs.getDouble("almn_curso_nt_examen_interciclo"));

@@ -85,7 +85,7 @@ public class VtnMallaAlumnoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = vtnMallaAlm.getTxtBuscar().getText().trim();
-                if (a.length() > 9) {
+                if (a.length() > 10) {
                     buscarMalla(a);
                 }
             }

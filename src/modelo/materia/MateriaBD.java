@@ -209,7 +209,7 @@ public class MateriaBD extends MateriaMD {
             m.setId(rs.getInt("id_materia"));
             //Aqui cargamos la carrera el id de la carrera
             //Deberiamos buscar carrera
-            CarreraMD carrera = car.buscar(rs.getInt("id_carrera"));
+            CarreraMD carrera = car.buscarParaReferencia(rs.getInt("id_carrera"));
             m.setCarrera(carrera);
 
             EjeFormacionMD eje = new EjeFormacionMD();
