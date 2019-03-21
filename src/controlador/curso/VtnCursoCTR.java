@@ -1,5 +1,7 @@
 package controlador.curso;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -21,6 +23,7 @@ public class VtnCursoCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCurso vtnCurso;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
     
     private final CursoBD curso;
     ArrayList<CursoMD> cursos;
@@ -32,12 +35,16 @@ public class VtnCursoCTR {
     //Para guardanos los nombres de los cursos  
     ArrayList<String> nombresC;
 
-    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta) {
+    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnCurso = vtnCurso;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Cursos");
         this.per = new PeriodoLectivoBD(conecta);
-
+        
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
         vtnCurso.show();
 
@@ -68,6 +75,9 @@ public class VtnCursoCTR {
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
         //Le damos una accion al combo de cursos  
         vtnCurso.getCmbCurso().addActionListener(e -> cargarCursosPorNombre());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Cursos");
     }
 
     public void abrirFrmCurso() {

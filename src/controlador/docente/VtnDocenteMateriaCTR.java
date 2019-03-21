@@ -1,5 +1,7 @@
 package controlador.docente;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class VtnDocenteMateriaCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnDocenteMateria vtnDm;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
     private final DocenteMateriaBD dm;
     private final CarreraBD car;
@@ -38,10 +41,14 @@ public class VtnDocenteMateriaCTR {
 
     DefaultTableModel mdTbl;
 
-    public VtnDocenteMateriaCTR(VtnPrincipal vtnPrin, VtnDocenteMateria vtnDm, ConectarDB conecta) {
+    public VtnDocenteMateriaCTR(VtnPrincipal vtnPrin, VtnDocenteMateria vtnDm, ConectarDB conecta,VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnDm = vtnDm;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Docentes Materia");
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(vtnDm);
         vtnDm.show();
@@ -80,6 +87,9 @@ public class VtnDocenteMateriaCTR {
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
         
         cargarDocenteMaterias();
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Docentes materia");
     }
 
     //Buscador

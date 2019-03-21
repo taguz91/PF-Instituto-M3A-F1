@@ -1,5 +1,7 @@
 package controlador.persona;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -25,17 +27,23 @@ public class VtnDocenteCTR {
     private final VtnDocente vtnDocente;
     private final DocenteBD docente;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, ConectarDB conecta) {
+    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        
         docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
         vtnDocente.show();
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Docentes");
     }
 
     public void iniciar() {
@@ -60,7 +68,9 @@ public class VtnDocenteCTR {
         vtnDocente.getTxtBuscar().addKeyListener(kl);
         docentesMD = docente.cargarDocentes();
         llenarTabla();
-
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Docentes");
     }
 
     public void llenarTabla() {
@@ -84,6 +94,7 @@ public class VtnDocenteCTR {
         }
 
         vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
+        vtnPrin.getLblEstado().setText("Termino de iniciarse la venta, cualquier error comunicarse a 0968796010.");
     }
 
     public void abrirFrmDocente() {

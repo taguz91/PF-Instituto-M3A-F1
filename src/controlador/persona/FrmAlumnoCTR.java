@@ -1,5 +1,7 @@
 package controlador.persona;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +34,7 @@ public class FrmAlumnoCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmAlumno frmAlumno;
     private AlumnoBD bdAlumno;
+    private final VtnPrincipalCTR ctrPrin;
     private final ConectarDB conecta;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false;
@@ -42,11 +45,16 @@ public class FrmAlumnoCTR {
     private SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta) {
+    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
         this.conecta = conecta;
         this.sectorE = new SectorEconomicoBD(conecta);
+        this.ctrPrin = ctrPrin;
+        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaFrm("Alumno");
 
         vtnPrin.getDpnlPrincipal().add(frmAlumno);
         frmAlumno.show();
@@ -201,11 +209,14 @@ public class FrmAlumnoCTR {
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
+         //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaFrmFin("Alumno");
     }
 
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
-        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta);
+        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin);
         c.iniciar();
     }
 

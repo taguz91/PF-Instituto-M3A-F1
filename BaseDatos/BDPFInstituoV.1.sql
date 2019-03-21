@@ -9,6 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
+ "prd_lectivo_estado" boolean NOT NULL DEFAULT 'false',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
 ) WITH (OIDS = FALSE);

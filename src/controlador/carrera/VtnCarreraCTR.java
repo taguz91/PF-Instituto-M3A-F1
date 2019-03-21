@@ -1,5 +1,7 @@
 package controlador.carrera;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -32,17 +34,22 @@ public class VtnCarreraCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCarrera vtnCarrera;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
 
     private final CarreraBD car;
     ArrayList<CarreraMD> carreras;
 
     DefaultTableModel mdTbl;
 
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, ConectarDB conecta) {
+    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnCarrera = vtnCarrera;
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
+        this.ctrPrin = ctrPrin;
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Carreras");
 
         vtnPrin.getDpnlPrincipal().add(vtnCarrera);
         vtnCarrera.show();
@@ -64,6 +71,10 @@ public class VtnCarreraCTR {
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnReporteCarreras().addActionListener(e -> llamaReporte());
+        
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Carreras");
     }
 
     private void editarCarrera() {
