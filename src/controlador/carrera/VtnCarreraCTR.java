@@ -35,7 +35,7 @@ public class VtnCarreraCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCarrera vtnCarrera;
     private final ConectarDB conecta;
-    
+
     private final CarreraBD car;
     ArrayList<CarreraMD> carreras;
 
@@ -46,7 +46,7 @@ public class VtnCarreraCTR {
         this.vtnCarrera = vtnCarrera;
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
-        
+
         vtnPrin.getDpnlPrincipal().add(vtnCarrera);
         vtnCarrera.show();
     }
@@ -61,7 +61,7 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 1, 50);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 3, 90);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
-        
+
         cargarCarreras();
         //Le damos accion al btn editar  
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
@@ -111,11 +111,12 @@ public class VtnCarreraCTR {
             });
         }
     }
-public void llamaReporte(){
-    ConexionReportes con = new ConexionReportes();
+
+    public void llamaReporte() {
+        ConexionReportes con = new ConexionReportes();
         Connection conexion = con.getConexion();
-    
-    String path = "C:\\Users\\arman\\Desktop\\githubtest1\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\repCarreras.jasper";
+
+        String path = "./src/vista/reportes/repCarreras.jasper";
         JasperReport jr = null;
         try {
             Map parametro = new HashMap();
@@ -130,6 +131,5 @@ public void llamaReporte(){
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 }
-}
-
