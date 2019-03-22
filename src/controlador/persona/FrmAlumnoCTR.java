@@ -22,6 +22,7 @@ import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.CmbValidar;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
@@ -39,6 +40,7 @@ public class FrmAlumnoCTR {
     private AlumnoBD bdAlumno;
     private final VtnPrincipalCTR ctrPrin;
     private final ConectarDB conecta;
+    private final RolMD permisos;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false; //Variable de permiso para editar mediante el filtro de datos del evento de teclado
     private boolean editar_2 = false; //Variable de permiso de edicion cuando se filtran los datos de la Ventana de Alumno
@@ -49,10 +51,12 @@ public class FrmAlumnoCTR {
     private final SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, 
+            VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
         this.conecta = conecta;
+        this.permisos = permisos; 
         this.sectorE = new SectorEconomicoBD(conecta);
         this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
@@ -220,12 +224,12 @@ public class FrmAlumnoCTR {
 
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
-        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin);
+        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin, permisos);
         c.iniciar();
     }
 
     public void iniciaDatos() {
-        Alumnos = bdAlumno.filtrarAlumno();
+        //Alumnos = bdAlumno.filtrarAlumno();
         Sectores = sectorE.capturarSectores();
     }
 
@@ -301,7 +305,7 @@ public class FrmAlumnoCTR {
 //                            VtnPrincipalCTR principal =  new 
 //                            ConectarDB conectar = new ConectarDB("Persona");
                             FrmPersona frmPersona = new FrmPersona();
-                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conectar);
+                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                             ctrPers.iniciar();
                             frmAlumno.dispose();
                         }
