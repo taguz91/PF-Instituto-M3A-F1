@@ -161,7 +161,7 @@ public class UsuarioBD extends UsuarioMD {
 
     public static String SelectNewUsername() {
 
-        String SELECT = "SELECT usu_username, usu_password, usu_estado, id_persona FROM \"Usuarios\" ORDER BY usu_username DESC LIMIT 1";
+        String SELECT = "SELECT usu_username, usu_password, usu_estado, id_persona FROM \"Usuarios\" WHERE usu_username LIKE '%USER%' ORDER BY usu_username DESC LIMIT 1";
 
         List<UsuarioMD> lista = SelectSimple(SELECT);
 
@@ -172,7 +172,7 @@ public class UsuarioBD extends UsuarioMD {
         }
         String inicio = "USER-";
 
-        if (!username.contains("USER-")) {
+        if (!username.contains("USER")) {
 
             username = inicio + "0001";
 
