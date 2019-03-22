@@ -23,7 +23,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.btn_imprimir = btn_imprimir;
     }
 
-    public JComboBox<String> getCmb_asignatura() {
+    public JComboBox<String> getCmbAsignatura() {
         return cmb_asignatura;
     }
 
@@ -39,7 +39,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.cmb_carrera = cmb_carrera;
     }
 
-    public JComboBox<String> getCmb_ciclo() {
+    public JComboBox<String> getCmbCiclo() {
         return cmb_ciclo;
     }
 
@@ -47,7 +47,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.cmb_ciclo = cmb_ciclo;
     }
 
-    public JComboBox<String> getCmb_docente() {
+    public JComboBox<String> getCmbDocente() {
         return cmb_docente;
     }
 
@@ -55,7 +55,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.cmb_docente = cmb_docente;
     }
 
-    public JComboBox<String> getCmb_jornada() {
+    public JComboBox<String> getCmbJornada() {
         return cmb_jornada;
     }
 
@@ -63,7 +63,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.cmb_jornada = cmb_jornada;
     }
 
-    public JComboBox<String> getCmb_paralelo() {
+    public JComboBox<String> getCmbParalelo() {
         return cmb_paralelo;
     }
 
@@ -71,7 +71,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.cmb_paralelo = cmb_paralelo;
     }
 
-    public JComboBox<String> getCmb_periodolectivo() {
+    public JComboBox<String> getCmbPeriodolectivo() {
         return cmb_periodolectivo;
     }
 
@@ -129,6 +129,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lbl_asignatura.setText("Asignatura:");
 
         lbl_jornada.setText("Jornada:");
+
+        cmb_carrera.setEnabled(false);
 
         cmb_docente.setEnabled(false);
 
@@ -198,15 +200,14 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                             .addComponent(lbl_asignatura, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbl_docente, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmb_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btn_imprimir))
-                            .addComponent(cmb_docente, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(cmb_docente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 138, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -235,7 +236,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(cmb_jornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

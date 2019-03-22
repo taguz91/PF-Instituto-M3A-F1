@@ -158,7 +158,7 @@ public class VtnAlumnoCTR {
                 vtnAlumno.dispose();
 
             } else if(seleccion == 0){
-                ConectarDB conectar = new ConectarDB("Persona");
+                ConectarDB conectar = new ConectarDB("postgres","password","Persona");
                 PersonaBD extraer = new PersonaBD(conectar);
 
                 FrmPersona frmPersona = new FrmPersona();
