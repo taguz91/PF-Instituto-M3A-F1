@@ -64,9 +64,7 @@ public class VtnDocenteCTR {
         };
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
-        docentesMD = docente.cargarDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(kl);
-        docentesMD = docente.cargarDocentes();
         llenarTabla();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -94,7 +92,6 @@ public class VtnDocenteCTR {
         }
 
         vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
-        vtnPrin.getLblEstado().setText("Termino de iniciarse la venta, cualquier error comunicarse a 0968796010.");
     }
 
     public void abrirFrmDocente() {

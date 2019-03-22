@@ -82,8 +82,9 @@ public class VtnRolCTR {
         vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
         vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
 
-        vista.getBtnBuscar().addActionListener(e -> btnBuscarActionPerformance(e));
-        vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
+        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
+        vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
 
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(rol.getId())) {
 

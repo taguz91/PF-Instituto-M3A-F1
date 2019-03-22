@@ -24,9 +24,9 @@ public class UsuarioBD extends UsuarioMD {
     public UsuarioBD() {
     }
 
-    private final String TABLA = " \"Usuarios\" ";
-    private final String ATRIBUTOS = " usu_username, usu_password, usu_estado, id_persona ";
-    private final String PRIMARY_KEY = " usu_username ";
+    private static final String TABLA = " \"Usuarios\" ";
+    private static final String ATRIBUTOS = " usu_username, usu_password, usu_estado, id_persona ";
+    private static final String PRIMARY_KEY = " usu_username ";
 
     public boolean insertar() {
         String INSERT = "INSERT INTO " + TABLA
@@ -41,7 +41,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "\n"
                 + "GRANT Usage ON SCHEMA \"public\" TO \"" + getUsername() + "\";\n"
                 + "\n"
-                + "GRANT Connect ON DATABASE \"Proyecto-Academico-Insta\" TO \"" + getUsername() + "\";\n"
+                + "GRANT Connect ON DATABASE \"BDinsta\" TO \"" + getUsername() + "\";\n"
                 + "\n"
                 + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Accesos\" TO \"" + getUsername() + "\";\n"
                 + "\n"
@@ -111,13 +111,14 @@ public class UsuarioBD extends UsuarioMD {
                 + ""
                 + " ";
 
+        System.out.println(INSERT);
+
         return ResourceManager.Statement(INSERT) == null;
 
     }
 
-    public List<UsuarioMD> SelectAll() {
+    public static List<UsuarioMD> SelectAll() {
         String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS TRUE";
-
         return SelectSimple(SELECT);
 
     }
@@ -160,7 +161,7 @@ public class UsuarioBD extends UsuarioMD {
 
     public static String SelectNewUsername() {
 
-        String SELECT = "SELECT usu_username, usu_password, usu_estado, id_persona FROM \"Usuarios\" ORDER BY usu_username DESC LIMIT 1";
+        String SELECT = "SELECT usu_username, usu_password, usu_estado, id_persona FROM \"Usuarios\" WHERE usu_username LIKE '%USER%' ORDER BY usu_username DESC LIMIT 1";
 
         List<UsuarioMD> lista = SelectSimple(SELECT);
 
@@ -171,7 +172,7 @@ public class UsuarioBD extends UsuarioMD {
         }
         String inicio = "USER-";
 
-        if (username.equals("ROOT")) {
+        if (!username.contains("USER")) {
 
             username = inicio + "0001";
 

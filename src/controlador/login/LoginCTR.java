@@ -79,7 +79,7 @@ public class LoginCTR {
 
             vista.dispose();
 
-            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo);
+            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "));
             vtn.Init();
 
         } else {
@@ -90,7 +90,8 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("Desde login generico"));
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"));
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "Holapostgres", "LoginGenerico"));
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

@@ -35,16 +35,18 @@
                           <Component id="lbl_carrera" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="cmb_ciclo" min="-2" pref="80" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="lbl_paralelo" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmb_paralelo" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="cmbCiclo" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="lbl_paralelo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="cmb_paralelo" min="-2" pref="80" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="cmbPeriodoLectivo" pref="300" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cmb_carrera" pref="300" max="32767" attributes="0"/>
-                          <Component id="cmb_periodolectivo" pref="300" max="32767" attributes="0"/>
+                          <Component id="lblCarrera" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -56,18 +58,16 @@
                           <Component id="lbl_docente" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cmbAsignatura" min="-2" pref="250" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="cmb_jornada" min="-2" pref="250" max="-2" attributes="0"/>
-                              <EmptySpace pref="156" max="32767" attributes="0"/>
-                              <Component id="btn_imprimir" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbJornada" min="-2" pref="250" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="cmb_docente" alignment="1" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="cmb_asignatura" min="-2" pref="250" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="cmbDocente" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -82,28 +82,28 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_periodolectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="lbl_docente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_periodolectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_docente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbPeriodoLectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbDocente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_carrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="lbl_asignatura" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_carrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_asignatura" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbAsignatura" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblCarrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_ciclo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="lbl_jornada" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="lbl_paralelo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_ciclo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbCiclo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="cmb_paralelo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmb_jornada" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="btn_imprimir" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbJornada" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="btnImprimir" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="336" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="344" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -145,7 +145,7 @@
         <Property name="text" type="java.lang.String" value="Jornada:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_periodolectivo">
+    <Component class="javax.swing.JComboBox" name="cmbPeriodoLectivo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -155,17 +155,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_carrera">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_ciclo">
+    <Component class="javax.swing.JComboBox" name="cmbCiclo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -185,7 +175,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_jornada">
+    <Component class="javax.swing.JComboBox" name="cmbJornada">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -195,7 +185,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_asignatura">
+    <Component class="javax.swing.JComboBox" name="cmbAsignatura">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -205,7 +195,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmb_docente">
+    <Component class="javax.swing.JComboBox" name="cmbDocente">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -223,7 +213,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tbl_notas">
+        <Component class="javax.swing.JTable" name="tblNotas">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="14" rowCount="4">
@@ -234,13 +224,13 @@
                 <Column editable="true" title="APORTE 1   /30" type="java.lang.Object"/>
                 <Column editable="true" title="EXAMEN INTERCICLO" type="java.lang.Object"/>
                 <Column editable="true" title="TOTAL INTERCICLO" type="java.lang.Object"/>
-                <Column editable="true" title="APORTE 2  /30" type="java.lang.Double"/>
-                <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Double"/>
-                <Column editable="true" title="/25 SUSP." type="java.lang.Double"/>
-                <Column editable="true" title="NOTA FINAL" type="java.lang.Double"/>
+                <Column editable="true" title="APORTE 2  /30" type="java.lang.Object"/>
+                <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Object"/>
+                <Column editable="true" title="/25 SUSP." type="java.lang.Object"/>
+                <Column editable="true" title="NOTA FINAL" type="java.lang.Object"/>
                 <Column editable="true" title="ESTADO" type="java.lang.Object"/>
-                <Column editable="true" title="Nro. Faltas" type="java.lang.Integer"/>
-                <Column editable="false" title="% Faltas" type="java.lang.Double"/>
+                <Column editable="true" title="Nro. Faltas" type="java.lang.Object"/>
+                <Column editable="false" title="% Faltas" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -325,10 +315,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btn_imprimir">
+    <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Impromir"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCarrera">
     </Component>
   </SubComponents>
 </Form>

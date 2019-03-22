@@ -303,7 +303,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return nueva_Fecha = fecha.getDayOfMonth() + "/" + nuevo_Mes + "/" + "20" + fecha.getYear();
     }
 
-    public List<String> selectPeriodoWhereUsername(String username) {
+    public static List<String> selectPeriodoWhereUsername(String username) {
         String SELECT = "SELECT\n"
                 + "DISTINCT \"PeriodoLectivo\".prd_lectivo_nombre\n"
                 + "FROM\n"
@@ -313,7 +313,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
+                + "\"Usuarios\".usu_username = '" + username + "'"
+                + "AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = false";
         List<String> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);

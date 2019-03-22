@@ -12,16 +12,17 @@ WHERE
 "Cursos".id_docente = 49
 
 /*
-    CONSULTA DE CARRERAS DE LOS PERIODOS LECTIVOS
+    NOMBRE DE LA CARRERA SEGUN EL NOMBRE DEL PERIODO LECTIVO Y QUE ESE PERIODO LECTIVO ESTE ACTIVO
 */
-
 SELECT
 "public"."Carreras".carrera_nombre
 FROM
-"public"."Carreras"
-INNER JOIN "public"."PeriodoLectivo" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
+"public"."PeriodoLectivo"
+INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
 WHERE
-"PeriodoLectivo".prd_lectivo_nombre = 'SDS 11/2018 - 4/2019'
+"PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019'
+AND
+"PeriodoLectivo".prd_lectivo_estado = false
 
 /*
     INFORMACION DEL CURSO

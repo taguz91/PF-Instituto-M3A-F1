@@ -28,7 +28,7 @@ import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
-import vista.persona.webCam;
+import vista.persona.VtnWebCam;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -77,7 +77,7 @@ public class FrmPersonaCTR {
         this.vtnPrin = vtnPrin;
         this.frmPersona = frmPersona;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;        
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Persona");
@@ -108,7 +108,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbParroquiaReside().addActionListener(e -> cargarCodigoPostal());
         frmPersona.getCbxDiscapacidad().addActionListener(e -> activarDiscapacidad());
         frmPersona.getBtnBuscarFoto().addActionListener(e -> buscarFoto());
-        frmPersona.getBtnCapturarFoto().addActionListener(e-> capturarFotoWebCam());
+        frmPersona.getBtnCapturarFoto().addActionListener(e -> capturarFotoWebCam());
         frmPersona.getBtnGuardarPersona().addActionListener(e -> guardarPersona());
         //frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         frmPersona.getBtnCancelar().addActionListener(e -> salirBoton());
@@ -306,12 +306,11 @@ public class FrmPersonaCTR {
             }
         }
     }
-    
+
     //Metodo para capturar una foto desde WebCam
-     private void capturarFotoWebCam() {
-         webCam vtnWebCam = new webCam();
-         vtnWebCam.show();
-         
+    private void capturarFotoWebCam() {
+        VtnWebCam vtnWebCam = new VtnWebCam(vtnPrin, false);
+        vtnWebCam.setVisible(true);
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
     }
 
@@ -988,7 +987,5 @@ public class FrmPersonaCTR {
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
 
     }
-
-   
 
 }
