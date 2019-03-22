@@ -172,7 +172,7 @@ public class UsuarioBD extends UsuarioMD {
         }
         String inicio = "USER-";
 
-        if (username.equals("ROOT")) {
+        if (!username.contains("USER-")) {
 
             username = inicio + "0001";
 

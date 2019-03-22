@@ -262,6 +262,7 @@ public class VtnNotasAlumnoCursoCTR {
     private void cargarTabla() {
 
         try {
+            tablaNotas.setRowCount(0);
             String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
             String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();

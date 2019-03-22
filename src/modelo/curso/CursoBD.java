@@ -237,8 +237,7 @@ public class CursoBD extends CursoMD {
                 + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
                 + "\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE\n"
-                + "AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
                 + "\"Cursos\".curso_ciclo = " + ciclo + "";
 
         List<String> lista = new ArrayList<>();
