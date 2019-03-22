@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.curso.CursoBD;
 import modelo.persona.AlumnoBD;
 
@@ -141,7 +142,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public List<AlumnoCursoMD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente) {
+    public List<AlumnoCursoBD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente, String nombrePeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"AlumnoCurso\".id_almn_curso,\n"
@@ -157,25 +158,51 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"AlumnoCurso\".almn_curso_estado,\n"
                 + "\"AlumnoCurso\".almn_curso_num_faltas\n"
                 + "FROM\n"
-                + "\"AlumnoCurso\"\n"
+                + "\"public\".\"AlumnoCurso\"\n"
                 + "INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
                 + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                + "INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"Cursos\".curso_paralelo = '" + paralelo + "'\n"
-                + "AND \n"
-                + "\"Cursos\".curso_ciclo = " + ciclo + "\n"
-                + "AND \n"
-                + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
-                + "AND \n"
-                + "\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
-                + "AND\n"
-                + "\"Docentes\".id_docente = " + idDocente;
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
+                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
+                + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
+                + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "';";
 
-        return consultarAlmnCursos(SELECT);
+        System.out.println(SELECT);
 
+        return selectSimple(SELECT);
+
+    }
+
+    private List<AlumnoCursoBD> selectSimple(String QUERY) {
+        List<AlumnoCursoBD> almns = new ArrayList();
+        ResultSet rs = ResourceManager.Query(QUERY);
+        try {
+
+            while (rs.next()) {
+                AlumnoCursoBD a = new AlumnoCursoBD(conecta);
+                a.setId(rs.getInt("id_almn_curso"));
+                a.setAlumno(alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno")));
+                a.setCurso(cur.buscarCurso(rs.getInt("id_curso")));
+                a.setNota1Parcial(rs.getDouble("almn_curso_nt_1_parcial"));
+                a.setNotaExamenInter(rs.getDouble("almn_curso_nt_examen_interciclo"));
+                a.setNota2Parcial(rs.getDouble("almn_curso_nt_2_parcial"));
+                a.setNotaExamenFinal(rs.getDouble("almn_curso_nt_examen_final"));
+                a.setNotaExamenSupletorio(rs.getDouble("almn_curso_nt_examen_supletorio"));
+                a.setAsistencia(rs.getString("almn_curso_asistencia"));
+                a.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
+                a.setEstado(rs.getString("almn_curso_estado"));
+                a.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+                almns.add(a);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return almns;
     }
 
 }

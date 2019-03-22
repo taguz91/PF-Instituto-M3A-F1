@@ -81,18 +81,19 @@ public class JornadaBD extends JornadaMD {
         }
     }
 
-    public List<String> selectJornadasWhereUsername(String username) {
+    public static List<String> selectJornadasWhereIdDocenteAndNombPrd(int idDocente, String nombrePeriodo) {
 
         String SELECT = "SELECT DISTINCT\n"
                 + "\"Jornadas\".nombre_jornada\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "\"Cursos\"\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
                 + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
+                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE";
 
         List<String> lista = new ArrayList<>();
 

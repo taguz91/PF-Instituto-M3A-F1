@@ -79,7 +79,7 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-    
+
     public CarreraMD buscarParaReferencia(int idCarrera) {
         CarreraMD carrera = new CarreraMD();
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
@@ -161,37 +161,33 @@ public class CarreraBD extends CarreraMD {
         }
     }
 
-    public List<String> selectCarreraWhereUsername(String username) {
+    public static String selectCarreraWherePerdLectivo(String nombre) {
 
         String SELECT = "SELECT\n"
-                + "DISTINCT \"Carreras\".carrera_nombre\n"
+                + "\"Carreras\".carrera_nombre\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"DocentesMateria\" ON \"DocentesMateria\".id_docente = \"Docentes\".id_docente\n"
-                + "INNER JOIN \"Materias\" ON \"DocentesMateria\".id_materia = \"Materias\".id_materia\n"
-                + "INNER JOIN \"Carreras\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera\n"
+                + "\"PeriodoLectivo\"\n"
+                + "INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
                 + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
+                + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombre + "'\n"
+                + "AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = false";
 
-        List<String> lista = new ArrayList<>();
+        String carrera = "";
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
             while (rs.next()) {
 
-                String paralelo = rs.getString("carrera_nombre");
-
-                lista.add(paralelo);
+                carrera = rs.getString("carrera_nombre");
 
             }
             rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return lista;
+        return carrera;
     }
 
 }

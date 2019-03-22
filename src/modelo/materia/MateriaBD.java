@@ -124,10 +124,10 @@ public class MateriaBD extends MateriaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    
-            m.setId(rs.getInt("id_materia"));
-            m.setNombre(rs.getString("materia_nombre"));
-            m.setCiclo(rs.getInt("materia_ciclo"));
+
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    m.setCiclo(rs.getInt("materia_ciclo"));
                 }
                 return m;
             } else {
@@ -175,7 +175,7 @@ public class MateriaBD extends MateriaMD {
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
-                MateriaMD m; 
+                MateriaMD m;
                 while (rs.next()) {
                     m = new MateriaMD();
                     m.setId(rs.getInt("id_materia"));
@@ -267,18 +267,21 @@ public class MateriaBD extends MateriaMD {
         }
     }
 
-    public List<String> selectMateriaWhereUsername(String username) {
+    public static List<String> selectWhere(int idDocente, int ciclo, String paralelo, String jornada) {
 
-        String SELECT = "SELECT DISTINCT\n"
+        String SELECT = "SELECT\n"
                 + "\"Materias\".materia_nombre\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "\"Cursos\"\n"
+                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
                 + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
+                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"Cursos\".curso_ciclo = " + ciclo + " AND \n"
+                + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND \n"
+                + "\"Jornadas\".nombre_jornada = '" + jornada + "'";
 
         List<String> lista = new ArrayList<>();
 
@@ -287,9 +290,7 @@ public class MateriaBD extends MateriaMD {
         try {
             while (rs.next()) {
 
-                String paralelo = rs.getString("materia_nombre");
-
-                lista.add(paralelo);
+                lista.add(rs.getString("materia_nombre"));
 
             }
             rs.close();
