@@ -1,14 +1,19 @@
 package controlador.prdlectivo;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.usuario.RolMD;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
@@ -24,11 +29,20 @@ public class VtnPrdLectivoCTR {
     private final PeriodoLectivoBD bdPerLectivo;
     private FrmPrdLectivo frmPerLectivo;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
 
-    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, ConectarDB conecta) {
+    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnPrdLectivo = vtnPrdLectivo;
         this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
+        
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Peridos lectivos");
         
         bdPerLectivo = new PeriodoLectivoBD(conecta);
         
@@ -59,11 +73,14 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
         vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Periodos lectivos");
     }
     
     public void abrirFrmPrdLectivo(){
         FrmPrdLectivo vista = new FrmPrdLectivo();
-        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta);
+        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta, ctrPrin);
         formulario.iniciar();
     }
     
@@ -146,7 +163,7 @@ public class VtnPrdLectivoCTR {
         CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
-            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta);
+            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta, ctrPrin);
             ctrFrm.iniciar();
             carrera.setNombre(periodo.getCarrera().getNombre());
             ctrFrm.editar(periodo,carrera);
@@ -173,6 +190,27 @@ public class VtnPrdLectivoCTR {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
                 }
             }
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
     

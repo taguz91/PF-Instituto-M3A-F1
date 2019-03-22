@@ -95,6 +95,7 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Permisos");
         setMinimumSize(new java.awt.Dimension(575, 551));
         setPreferredSize(new java.awt.Dimension(575, 551));
 

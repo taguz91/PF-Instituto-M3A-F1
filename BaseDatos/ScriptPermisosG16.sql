@@ -58,100 +58,26 @@ INSERT INTO "Accesos" VALUES(31,'PERIODO-INGRESO-NOTAS-Agregar');
 INSERT INTO "Accesos" VALUES(32,'PERIODO-INGRESO-NOTAS-Editar');
 INSERT INTO "Accesos" VALUES(33,'PERIODO-INGRESO-NOTAS-Eliminar');
 
-0105112890
+
+
+
+
+INSERT INTO "Accesos" VALUES(34,'USUARIOS-VerRoles');
+INSERT INTO "Accesos" VALUES(35,'ROLES-Ver-Permisos');
+INSERT INTO "Accesos" VALUES(36,'ROLES-Editar-Permisos');
+
 
 --SCRIPT USUARIO ROOT
 
 
 INSERT INTO "Roles"("rol_nombre") VALUES('ROOT');
-INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona") VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64), 505);
+INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona" ) VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64),908);
 
 INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'ROOT'); 
 
 
 --CREAR ROL DE USUARIO EN POSTGRESQL 
 CREATE ROLE "ROOT" SUPERUSER CREATEDB CREATEROLE LOGIN REPLICATION BYPASSRLS PASSWORD 'ROOT';
-
---CAMBIAR CONTRASEÑA DE UN ROL DE POSTGRESQL
---ALTER ROLE "ROOT" PASSWORD 'NEW PASSWORD';
-
-
-/*
-
-    SCRIPT PARA UN USUARIO NORMAL
-
-CREATE ROLE "DIEGO" NOINHERIT LOGIN ENCRYPTED PASSWORD '3113';
-
-GRANT Connect ON DATABASE "Proyecto-Academico-Insta" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Accesos" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AccesosDelRol" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AlumnoCurso" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Alumnos" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."AlumnosCarrera" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Carreras" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Cursos" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."DetalleJornada" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Docentes" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."DocentesMateria" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."EjesFormacion" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."EvaluacionSilabo" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."HistorialUsuarios" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."JornadaDocente" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Jornadas" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Lugares" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."MallaAlumno" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."MateriaRequisitos" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Materias" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."PeriodoIngresoNotas" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."PeriodoLectivo" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Personas" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Referencias" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."ReferenciaSilabo" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Roles" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."RolesDelUsuario" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."SectorEconomico" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."SesionClase" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Silabo" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."TipoActividad" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."TipoDeNota" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."UnidadSilabo" TO "DIEGO";
-
-GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE "public"."Usuarios" TO "DIEGO";
-*/
-
-
 
 
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 1);
@@ -187,6 +113,52 @@ INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 30);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 31);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 32);
 INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 33);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 34);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 35);
+INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 36);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"Docentes".id_docente,
+"Docentes".id_persona,
+"Docentes".docente_codigo,
+"Docentes".docente_otro_trabajo,
+"Docentes".docente_categoria,
+"Docentes".docente_fecha_contrato,
+"Docentes".docente_fecha_fin,
+"Docentes".docente_tipo_tiempo,
+"Docentes".docente_activo,
+"Docentes".docente_observacion,
+"Docentes".docente_capacitador
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

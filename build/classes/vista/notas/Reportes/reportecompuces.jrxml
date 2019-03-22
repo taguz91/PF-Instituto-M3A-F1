@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1600" pageHeight="842" columnWidth="1560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+"Alumnos".id_alumno, 
+"Personas".persona_identificacion,
+"Personas".persona_primer_apellido,
+"Personas".persona_segundo_apellido,
+"Personas".persona_primer_nombre,
+"Personas".persona_segundo_nombre,
+"AlumnoCurso".almn_curso_nt_1_parcial,
+"AlumnoCurso".almn_curso_nt_examen_interciclo,
+"AlumnoCurso".almn_curso_nt_2_parcial,
+"AlumnoCurso".almn_curso_nt_examen_final,
+"AlumnoCurso".almn_curso_nt_examen_supletorio,
+"AlumnoCurso".almn_curso_asistencia,
+"AlumnoCurso".almn_curso_nota_final,
+"AlumnoCurso".almn_curso_estado,
+"AlumnoCurso".almn_curso_num_faltas
+FROM
+"Personas"
+JOIN "Alumnos" ON "Alumnos".id_persona = "Personas".id_persona
+JOIN "AlumnoCurso" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno;]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="almn_curso_nt_1_parcial" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_interciclo" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_2_parcial" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_final" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_supletorio" class="java.math.BigDecimal"/>
+	<field name="almn_curso_asistencia" class="java.lang.String"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="almn_curso_estado" class="java.lang.String"/>
+	<field name="almn_curso_num_faltas" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="243" splitType="Stretch">
+			<staticText>
+				<reportElement x="579" y="23" width="347" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="639" y="52" width="199" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="26" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="126" y="31" width="97" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cedula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="223" y="31" width="200" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="423" y="31" width="198" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="621" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aporte 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="721" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examen Interciclo		]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="821" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aporte 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="921" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examen Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1021" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suspletorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1221" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1321" y="31" width="105" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Faltas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1121" y="31" width="100" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota Final]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="721" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="423" y="31" width="198" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="821" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1021" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1221" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1121" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1321" y="31" width="105" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="921" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="621" y="31" width="100" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="31" width="200" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="126" y="31" width="97" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="26" y="31" width="100" height="30"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="26" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{id_alumno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="97" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="488" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="621" y="0" width="100" height="20" backcolor="#33B9F4"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_1_parcial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="721" y="0" width="100" height="20" backcolor="#99FF66"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_interciclo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="821" y="0" width="100" height="20" backcolor="#33B9F4"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_2_parcial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="921" y="0" width="100" height="20" backcolor="#99FF66"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1021" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_supletorio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1121" y="0" width="100" height="20" backcolor="#FF9966"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1221" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1321" y="0" width="105" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_num_faltas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="1" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="1021" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="721" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1221" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="126" y="1" width="97" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="821" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1121" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="621" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1321" y="1" width="105" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="921" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="26" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="1" width="200" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="423" y="1" width="198" height="20"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="39" splitType="Stretch"/>
+	</summary>
+</jasperReport>

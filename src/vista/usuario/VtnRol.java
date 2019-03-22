@@ -117,8 +117,10 @@ public class VtnRol extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
 
         btnVerPermisos.setText("Ver Permisos ");
+        btnVerPermisos.setEnabled(false);
 
         btnEditarPermisos.setText("Editar Permisos ");
+        btnEditarPermisos.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

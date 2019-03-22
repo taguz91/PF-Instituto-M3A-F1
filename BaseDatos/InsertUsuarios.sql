@@ -102,8 +102,8 @@ INSERT INTO "AccesosDelRol" (id_rol, id_acceso) VALUES(1, 32);
 INSERT INTO "Usuarios"("usu_username","usu_password")
 VALUES('postgres', set_byte( MD5('Holapostgres')::bytea, 4,64));
 
---SCRIPT USUARIO ROOT
-INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona")
-VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64), /*Ingresar id de la persona con todos los accesos*/);
-
+INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'postgres');
+--Usuario maestro
+INSERT INTO "Usuarios"("usu_username","usu_password", "id_persona" )
+VALUES('ROOT', set_byte( MD5('ROOT')::bytea, 4,64),908);
 INSERT INTO "RolesDelUsuario"("id_rol", "usu_username") VALUES(1,'ROOT');

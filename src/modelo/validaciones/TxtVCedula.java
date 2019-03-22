@@ -29,7 +29,8 @@ public class TxtVCedula extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent e) {
         ingreso = txt.getText().trim();
-
+        
+        
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
             txt.setSize(txt.getWidth(), 20);
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));

@@ -8,19 +8,19 @@ import modelo.persona.AlumnoMD;
  * @author Johnny
  */
 public class AlumnoCursoMD {
-    
-    private int id; 
+
+    private int id;
     private AlumnoMD alumno;
-    private CursoMD curso; 
+    private CursoMD curso;
     private double nota1Parcial;
-    private double notaExamenInter; 
+    private double notaExamenInter;
     private double nota2Parcial;
-    private double notaExamenFinal; 
+    private double notaExamenFinal;
     private double notaExamenSupletorio;
-    private String asistencia; 
-    private double notaFinal; 
-    private String estado; 
-    private int numFalta; 
+    private String asistencia;
+    private double notaFinal;
+    private String estado;
+    private int numFalta;
 
     public AlumnoCursoMD() {
     }
@@ -120,6 +120,10 @@ public class AlumnoCursoMD {
     public void setNumFalta(int numFalta) {
         this.numFalta = numFalta;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", nota1Parcial=" + nota1Parcial + ", notaExamenInter=" + notaExamenInter + ", nota2Parcial=" + nota2Parcial + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenSupletorio=" + notaExamenSupletorio + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + '}';
+    }
+
 }

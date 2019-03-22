@@ -18,13 +18,15 @@ public class PeriodoIngresoNotasMD {
     private LocalDate fechaCierre;
     private int idPeriodoLectivo;
     private int idTipoNota;
+    private boolean estado;
 
-    public PeriodoIngresoNotasMD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, int idPeriodoLectivo, int idTipoNota) {
+    public PeriodoIngresoNotasMD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, int idPeriodoLectivo, int idTipoNota, boolean estado) {
         this.idPeriodoIngreso = idPeriodoIngreso;
         this.fechaInicio = fechaInicio;
         this.fechaCierre = fechaCierre;
         this.idPeriodoLectivo = idPeriodoLectivo;
         this.idTipoNota = idTipoNota;
+        this.estado = estado;
     }
 
     public PeriodoIngresoNotasMD() {
@@ -70,9 +72,17 @@ public class PeriodoIngresoNotasMD {
         this.idTipoNota = idTipoNota;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "PeriodoIngresoNotas{" + "idPeriodoIngreso=" + idPeriodoIngreso + ", fechaInicio=" + fechaInicio + ", fechaCierre=" + fechaCierre + ", idPeriodoLectivo=" + idPeriodoLectivo + ", idTipoNota=" + idTipoNota + '}';
+        return "PeriodoIngresoNotasMD{" + "idPeriodoIngreso=" + idPeriodoIngreso + ", fechaInicio=" + fechaInicio + ", fechaCierre=" + fechaCierre + ", idPeriodoLectivo=" + idPeriodoLectivo + ", idTipoNota=" + idTipoNota + ", estado=" + estado + '}';
     }
 
 }

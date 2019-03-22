@@ -2,15 +2,21 @@ package controlador.usuario;
 
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.persona.PersonaBD;
+import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
@@ -29,27 +35,34 @@ public class VtnUsuarioCTR {
     private final VtnPrincipal desktop; // DONDE VOY A VISUALIZAR
     private final VtnUsuario vista; // QUE VOY A VISUALIZAR
     private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
+    //Modelos para trabajar
+    private final RolMD permisos;
+    private final ConectarDB conexion;
 
-    private final RolMD permisos;// LOS PERMISOS DEL USUARIO
+    //Listas Para rellenar la tabla
+    private static List<UsuarioMD> listaUsuarios;
+    private static List<PersonaMD> listaPersonas;
 
-    private static List<UsuarioMD> ListaUsuarios;
+    //Modelo de la tabla
+    private static DefaultTableModel tablaUsuarios;
 
-    private static DefaultTableModel modelT;
-
-    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, UsuarioBD modelo, RolMD permisos) {
+    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
         this.vista = vista;
-        this.modelo = modelo;
         this.permisos = permisos;
+        this.conexion = conexion;
     }
 
     //Inits
     public void Init() {
-        modelT = (DefaultTableModel) vista.getTblUsuario().getModel();
+        //Inicializamos la tabla
+        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
 
-        ListaUsuarios = modelo.SelectAll();
+        //Inicializamos las listas con las consultas
+        listaUsuarios = UsuarioBD.SelectAll();
 
-        cargarTabla(ListaUsuarios);
+        cargarTabla(listaUsuarios);
+
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         vista.setTitle("Usuarios");
@@ -75,14 +88,19 @@ public class VtnUsuarioCTR {
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRolesActionPerformance(e));
+        vista.getBtnVerRoles().addActionListener(e -> btnVerRolesActionPerformance(e));
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscarKeyReleased(e);
+            }
+        });
 
     }
 
     private void InitPermisos() {
 
-        List<AccesosMD> listaPermisos = AccesosBD.SelectWhereACCESOROLidRol(permisos.getId());
-
-        for (AccesosMD obj : listaPermisos) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
             if (obj.getNombre().equals("USUARIOS-Agregar")) {
                 vista.getBtnIngresar().setEnabled(true);
@@ -96,23 +114,52 @@ public class VtnUsuarioCTR {
             if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
                 vista.getBtnAsignarRoles().setEnabled(true);
             }
+            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+                vista.getBtnVerRoles().setEnabled(true);
+            }
 
         }
 
     }
 
     public void cargarTabla(List<UsuarioMD> lista) {
-        modelT.setRowCount(0);
+        listaPersonas = new ArrayList<>();
+        tablaUsuarios.setRowCount(0);
         lista.stream()
-                .forEach(VtnUsuarioCTR::agregarFila);
+                .forEach(objUser -> {
+                    PersonaBD.selectWhereUsername(objUser.getUsername())
+                            .stream()
+                            .forEach(objPersona -> {
+                                agregarFila(objUser, objPersona);
+                                listaPersonas.add(objPersona);
+                            });
+                });
 
     }
 
-    private static void agregarFila(UsuarioMD obj) {
+    private void cargarTablaFilter(String Aguja) {
+        tablaUsuarios.setRowCount(0);
+        listaUsuarios
+                .stream()
+                .filter(item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase()))
+                .collect(Collectors.toList())
+                .forEach(objUsuario -> {
+                    listaPersonas
+                            .stream()
+                            .filter(itemPersona -> itemPersona.getIdPersona() == objUsuario.getIdPersona())
+                            .forEach(objPersona -> {
+                                agregarFila(objUsuario, objPersona);
+                            });
+                });
+    }
 
-        if (obj.isEstado()) {
-            modelT.addRow(new Object[]{
-                obj.getUsername()
+    private static void agregarFila(UsuarioMD objUsuario, PersonaMD objPersona) {
+
+        if (objUsuario.isEstado()) {
+            tablaUsuarios.addRow(new Object[]{
+                objUsuario.getUsername(),
+                objPersona.getIdentificacion(),
+                objPersona.getPrimerNombre() + " " + objPersona.getSegundoNombre() + " " + objPersona.getPrimerApellido() + " " + objPersona.getSegundoApellido()
             });
         }
 
@@ -120,19 +167,18 @@ public class VtnUsuarioCTR {
 
     private void setObjFromTable(int fila) {
 
-        ListaUsuarios = modelo.SelectAll();
+        listaUsuarios = UsuarioBD.SelectAll();
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
         modelo = new UsuarioBD();
 
-        ListaUsuarios.stream()
+        listaUsuarios.stream()
                 .filter(item -> item.getUsername().equals(username))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
                     modelo.setUsername(obj.getUsername());
                     modelo.setIdPersona(obj.getIdPersona());
-                    System.out.println(obj);
                 });
 
     }
@@ -156,7 +202,7 @@ public class VtnUsuarioCTR {
 
                     modelo.eliminar(Username);
 
-                    cargarTabla(modelo.SelectAll());
+                    cargarTabla(UsuarioBD.SelectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
@@ -178,7 +224,7 @@ public class VtnUsuarioCTR {
 
             setObjFromTable(fila);
 
-            FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar");
+            FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar", conexion);
 
             form.Init();
 
@@ -190,13 +236,13 @@ public class VtnUsuarioCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
 
-        cargarTabla(modelo.SelectAll());
+        cargarTabla(UsuarioBD.SelectAll());
 
     }
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar");
+        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar", conexion);
         frm.Init();
 
     }
@@ -222,4 +268,24 @@ public class VtnUsuarioCTR {
 
     }
 
+    private void btnVerRolesActionPerformance(ActionEvent e) {
+
+        int fila = vista.getTblUsuario().getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
+        } else {
+
+            setObjFromTable(fila);
+
+            FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Consultar");
+            form.Init();
+
+        }
+
+    }
+
+    private void txtBuscarKeyReleased(KeyEvent e) {
+        cargarTablaFilter(vista.getTxtBuscar().getText());
+    }
 }

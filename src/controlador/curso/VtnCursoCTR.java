@@ -1,13 +1,18 @@
 package controlador.curso;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.usuario.RolMD;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -21,23 +26,31 @@ public class VtnCursoCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnCurso vtnCurso;
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
     
     private final CursoBD curso;
-    ArrayList<CursoMD> cursos;
+    private ArrayList<CursoMD> cursos;
     //modelo de la tabla 
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
     //Para cargar el combo periodos  
-    PeriodoLectivoBD per;
-    ArrayList<PeriodoLectivoMD> periodos;
+    private final PeriodoLectivoBD prd;
+    private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
-    ArrayList<String> nombresC;
+    private ArrayList<String> nombresC;
 
-    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta) {
+    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta, 
+            VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnCurso = vtnCurso;
         this.conecta = conecta;
-        this.per = new PeriodoLectivoBD(conecta);
-
+        this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Cursos");
+        this.prd = new PeriodoLectivoBD(conecta);
+        
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
         vtnCurso.show();
 
@@ -68,11 +81,14 @@ public class VtnCursoCTR {
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
         //Le damos una accion al combo de cursos  
         vtnCurso.getCmbCurso().addActionListener(e -> cargarCursosPorNombre());
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Cursos");
     }
 
     public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
         ctrFrmCurso.iniciar();
     }
 
@@ -80,7 +96,7 @@ public class VtnCursoCTR {
         int fila = vtnCurso.getTblCurso().getSelectedRow();
         if (fila >= 0) {
             FrmCurso frmCurso = new FrmCurso();
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
             ctrFrmCurso.iniciar();
             ctrFrmCurso.editar(cursos.get(fila));
             vtnCurso.dispose();
@@ -148,7 +164,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCmbPrdLectio() {
-        periodos = per.cargarPeriodos();
+        periodos = prd.cargarPeriodos();
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().removeAllItems();
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
@@ -166,6 +182,27 @@ public class VtnCursoCTR {
                 vtnCurso.getCmbCurso().addItem(n);
             });
             vtnCurso.getCmbCurso().addItem("--BUG--");
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 }

@@ -27,19 +27,19 @@ VALUES(48,19);
 */
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(54,1,54,1,'M3B',30,3,'B');
+VALUES(54,3,54,1,'M3B',30,3,'B');
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(51,1,49,1,'M3B',30,3,'B');
+VALUES(51,3,49,1,'M3B',30,3,'B');
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(53,1,55,1,'M3B',30,3,'B');
+VALUES(53,3,55,1,'M3B',30,3,'B');
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(56,1,55,1,'M3B',30,3,'B');
+VALUES(56,3,55,1,'M3B',30,3,'B');
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(52,1,14,1,'M3B',30,3,'B');
+VALUES(52,3,14,1,'M3B',30,3,'B');
 
 INSERT INTO "Cursos"(id_materia, id_prd_lectivo,id_docente,id_jornada,curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo)
-VALUES(19,1,48,1,'M3B',30,3,'B');
+VALUES(19,3,48,1,'M3B',30,3,'B');

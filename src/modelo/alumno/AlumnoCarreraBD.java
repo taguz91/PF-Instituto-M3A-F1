@@ -28,8 +28,6 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         this.car = new CarreraBD(conecta);
     }
     
-    
-
     public boolean guardar() {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
@@ -72,7 +70,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
-        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera, almn_carrera_fecha_registro\n"
+        String sql = "SELECT id_almn_carrera, id_alumno, id_carrera\n"
                 + "	FROM public.\"AlumnosCarrera\" WHERE almn_carrera_activo = 'true' "
                 + "AND id_carrera = " + idCarrera + ";";
         return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
@@ -142,7 +140,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();
         try {
             ac.setId(rs.getInt("id_almn_carrera"));
-            AlumnoMD a = alm.buscarAlumno(rs.getInt("id_alumno"));
+            AlumnoMD a = alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno"));
             ac.setAlumno(a);
             CarreraMD c = car.buscar(rs.getInt("id_carrera"));
             ac.setCarrera(c);
@@ -158,7 +156,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();
         try {
             ac.setId(rs.getInt("id_almn_carrera"));
-            AlumnoMD a = alm.buscarAlumno(rs.getInt("id_alumno"));
+            AlumnoMD a = alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno"));
             ac.setAlumno(a);
             ac.setCarrera(c);
             ac.setFechaRegistro(rs.getTimestamp("almn_carrera_fecha_registro").toLocalDateTime());

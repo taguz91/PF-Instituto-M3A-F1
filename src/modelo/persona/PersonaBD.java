@@ -8,10 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.lugar.LugarBD;
 
 /**
@@ -20,9 +22,9 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     //Se usaran estas clases para consultar
-    private final LugarBD lugar;
+    private LugarBD lugar;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
@@ -293,36 +295,18 @@ public class PersonaBD extends PersonaMD {
     //Consultamos todos las personas en nuestro sistema 
     //que no esten eliminadas
     public ArrayList<PersonaMD> cargarPersonas() {
-        String sql = "SELECT id_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+        String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
-                + " persona_sexo, persona_estado_civil, persona_etnia, "
-                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
-                + " persona_celular, persona_correo, persona_fecha_registro,"
-                + " persona_discapacidad, persona_tipo_discapacidad,"
-                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
-                + " persona_calle_principal, persona_numero_casa,"
-                + " persona_calle_secundaria, persona_referencia, "
-                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_fecha_nacimiento, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true';";
-        return consultar(sql);
+        return consultarParaTabla(sql);
     }
 
     public ArrayList<PersonaMD> buscar(String aguja) {
-        String sql = "SELECT id_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+        String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
-                + " persona_sexo, persona_estado_civil, persona_etnia, "
-                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
-                + " persona_celular, persona_correo, persona_fecha_registro,"
-                + " persona_discapacidad, persona_tipo_discapacidad,"
-                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
-                + " persona_calle_principal, persona_numero_casa,"
-                + " persona_calle_secundaria, persona_referencia, "
-                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_fecha_nacimiento, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
                 + "persona_identificacion ILIKE '%" + aguja + "%' OR "
@@ -330,7 +314,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
                 + "persona_primer_nombre ILIKE '%" + aguja + "%' OR "
                 + "persona_segundo_nombre ILIKE '%" + aguja + "%');";
-        return consultar(sql);
+        return consultarParaTabla(sql);
     }
 
     //Consultamos unicamente a las personas que son alumnos  
@@ -338,34 +322,20 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
                 + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
-                + "persona_segundo_nombre, persona_genero, persona_sexo, \n"
-                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, \n"
-                + "persona_tipo_sangre, persona_telefono, persona_celular, \n"
-                + "persona_correo, persona_fecha_registro, persona_discapacidad, \n"
-                + "persona_tipo_discapacidad, persona_porcenta_discapacidad, \n"
-                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, \n"
-                + "persona_calle_secundaria, persona_referencia, persona_sector, \n"
-                + "persona_idioma, persona_tipo_residencia, persona_fecha_nacimiento, persona_activa\n"
+                + "persona_segundo_nombre, persona_fecha_nacimiento, persona_activa\n"
                 + "	FROM public.\"Personas\", public.\"Alumnos\" \n"
-                + "	where \"Personas\".id_persona = \"Alumnos\".id_persona;";
-        return consultar(sql);
+                + "	WHERE \"Personas\".id_persona = \"Alumnos\".id_persona AND persona_activa = true;";
+        return consultarParaTabla(sql);
     }
 
     public ArrayList<PersonaMD> cargarDocentes() {
         String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
                 + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
-                + "persona_segundo_nombre, persona_genero, persona_sexo, \n"
-                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, \n"
-                + "persona_tipo_sangre, persona_telefono, persona_celular, \n"
-                + "persona_correo, persona_fecha_registro, persona_discapacidad, \n"
-                + "persona_tipo_discapacidad, persona_porcenta_discapacidad, \n"
-                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, \n"
-                + "persona_calle_secundaria, persona_referencia, persona_sector, \n"
-                + "persona_idioma, persona_tipo_residencia, persona_fecha_nacimiento, persona_activa\n"
+                + "persona_segundo_nombre, persona_fecha_nacimiento\n"
                 + "	FROM public.\"Personas\", public.\"Docentes\" \n"
-                + "	where \"Personas\".id_persona = \"Docentes\".id_persona;";
-        return consultar(sql);
+                + "	WHERE \"Personas\".id_persona = \"Docentes\".id_persona AND persona_activa = true;";
+        return consultarParaTabla(sql);
     }
 
     //Buscar Persona con aguja
@@ -409,6 +379,28 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
+    //Buscar Persona con aguja
+    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
+        String sql = "SELECT id_persona, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre "
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+                + " id_persona = " + idPersona + ";";
+
+        return consultarParaReferencia(sql);
+    }
+
+    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
+        String sql = "SELECT id_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre "
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+                + " persona_identificacion ='" + identificacion + "'";
+
+        return consultarParaReferencia(sql);
+    }
+
     //Este meotod nos devolvera una gran cantidad de personas 
     //de nuestra base de datos dependiendo de la setencia sql 
     //que se le envie
@@ -436,6 +428,60 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    private PersonaMD consultarParaReferencia(String sql) {
+        PersonaMD p = new PersonaMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    p.setIdPersona(rs.getInt("id_persona"));
+                    p.setIdentificacion(rs.getString("persona_identificacion"));
+                    p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                }
+                rs.close();
+                return p;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar personas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private ArrayList<PersonaMD> consultarParaTabla(String sql) {
+        ArrayList<PersonaMD> pers = new ArrayList();
+        PersonaMD p;
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    p = new PersonaMD();
+                    p.setIdPersona(rs.getInt("id_persona"));
+                    p.setIdentificacion(rs.getString("persona_identificacion"));
+                    p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+                    pers.add(p);
+                }
+                rs.close();
+                return pers;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar personas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
     private PersonaMD consultarPor(String sql) {
         PersonaMD p = null;
@@ -443,7 +489,7 @@ public class PersonaBD extends PersonaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerPersona(rs);
+                    p = obtenerPersonaSinValidar(rs);
                 }
                 rs.close();
                 return p;
@@ -659,6 +705,50 @@ public class PersonaBD extends PersonaMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public static List<PersonaMD> selectWhereUsername(String username) {
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Personas\".persona_identificacion\n"
+                + "FROM\n"
+                + "\"public\".\"Personas\"\n"
+                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
+
+        List<PersonaMD> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+                PersonaMD persona = new PersonaMD();
+
+                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                lista.add(persona);
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return lista;
     }
 
 }

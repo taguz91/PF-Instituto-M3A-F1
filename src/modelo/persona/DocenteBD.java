@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 
 public class DocenteBD extends DocenteMD {
 
@@ -67,7 +68,7 @@ public class DocenteBD extends DocenteMD {
                 + " FROM public.\"Personas\" p JOIN public.\"Docentes\" d USING(id_persona) "
                 + "WHERE d.docente_activo = true AND p.persona_activa = true;";
         //Esto estaba mal WHERE alumno_activo = 'true'
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -233,8 +234,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> cargarDocentes() {
-        
-        
+        ArrayList<DocenteMD> docentes = new ArrayList(); 
         String sql="SELECT id_docente, d.id_persona, docente_codigo, docente_otro_trabajo,\n" +
 "	docente_categoria, docente_fecha_contrato, docente_fecha_fin, docente_tipo_tiempo, docente_capacitador,\n" +
 "	persona_primer_apellido\n" +
@@ -360,7 +360,32 @@ public class DocenteBD extends DocenteMD {
             System.out.println("No se pudo consultar docente " + idDocente);
             return null;
         }
+    }
 
+    public DocenteMD buscarDocenteParaReferencia(int idDocente) {
+        DocenteMD d = new DocenteMD();
+        String sql = "SELECT id_docente, id_persona, docente_codigo \n"
+                + "FROM public.\"Docentes\" "
+                + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
+        //System.out.println(sql);
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    d.setIdDocente(rs.getInt("id_docente"));
+                    //Buscamos todos los datos de la tabla persona de este docente 
+                    p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
+                    d.setPersona(p);
+                    d.setCodigo(rs.getString("docente_codigo"));
+                }
+                return d;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar docente " + idDocente);
+            return null;
+        }
     }
 
     public DocenteMD obtenerDocente(ResultSet rs) {
@@ -369,9 +394,8 @@ public class DocenteBD extends DocenteMD {
             if (!rs.wasNull()) {
                 d.setIdDocente(rs.getInt("id_docente"));
             }
-            //Buscamos todos los datos de la tabla persona de este docente            
-            PersonaMD p = per.buscarPersona(rs.getInt("id_persona"));
-            
+            //Buscamos todos los datos de la tabla persona de este docente 
+            p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
             d.setPersona(p);
           //  System.out.println(d.getPrimerApellido());
            // System.out.println(d.getPrimerNombre());
@@ -402,7 +426,8 @@ public class DocenteBD extends DocenteMD {
                 d.setDocenteTipoTiempo("SELECCIONE");
             } else {
                 d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
-            }
+                d.setFechaFinContratacion(null);
+            } 
             if (rs.wasNull()) {
                 d.setDocenteCapacitador(false);
             } else {
@@ -471,23 +496,24 @@ public class DocenteBD extends DocenteMD {
         //System.out.println(sql);
 
         return consultarDocentes(sql);
-
     }
 
     private ArrayList<DocenteMD> consultarDocente(String sql) {
-        ArrayList<DocenteMD> pers = new ArrayList();
+        ArrayList<DocenteMD> almns = new ArrayList();
         DocenteMD p;
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerDocente(rs);
-                    if (p != null) {
-                        pers.add(p);
-                    }
+                  DocenteMD al = new DocenteMD();
+                    al.setIdDocente(rs.getInt("id_docente"));
+                    PersonaMD pe = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
+                    al.setPersona(pe);
+
+                    almns.add(al);
                 }
                 rs.close();
-                return pers;
+                return almns;
             } else {
                 return null;
             }
@@ -630,4 +656,32 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
+
+    public static Integer selectIdDocenteWhereUsername(String username) {
+
+        String SELECT = "SELECT\n"
+                + "\"Docentes\".id_docente\n"
+                + "FROM\n"
+                + "\"Docentes\"\n"
+                + "INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Usuarios\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"Usuarios\".usu_username = '" + username + "'";
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        Integer idDocente = null;
+
+        try {
+            while (rs.next()) {
+                idDocente = rs.getInt("id_docente");
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return idDocente;
+    }
+
 }

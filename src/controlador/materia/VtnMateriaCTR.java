@@ -1,15 +1,20 @@
 package controlador.materia;
 
+import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.usuario.RolMD;
 import vista.materia.VtnMateria;
 import vista.principal.VtnPrincipal;
 
@@ -23,6 +28,8 @@ public class VtnMateriaCTR {
     private final VtnMateria vtnMateria;
     private final ConectarDB conecta;
     private final MateriaBD materia;
+    private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
 
     //El modelo de la tabla materias  
     private DefaultTableModel mdTblMat;
@@ -33,11 +40,17 @@ public class VtnMateriaCTR {
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
 
-    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, ConectarDB conecta) {
+    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnMateria = vtnMateria;
         this.conecta = conecta;
-        
+        this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Materias");
+
         this.materia = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
@@ -81,12 +94,14 @@ public class VtnMateriaCTR {
                 buscar();
             }
         });
-        
+
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Docentes");
     }
-    
-    private void infoMateria(){
-        int pos = vtnMateria.getTblMateria().getSelectedRow(); 
+
+    private void infoMateria() {
+        int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, materias.get(pos));
             info.iniciar();
@@ -126,7 +141,7 @@ public class VtnMateriaCTR {
             vtnMateria.getCmbCiclo().removeAllItems();
             vtnMateria.getCmbCiclo().addItem("Todos");
             ciclos.forEach(c -> {
-                vtnMateria.getCmbCiclo().addItem(c+"");
+                vtnMateria.getCmbCiclo().addItem(c + "");
             });
         } else {
             materias = materia.cargarMaterias();
@@ -161,6 +176,27 @@ public class VtnMateriaCTR {
             cargarTblMaterias();
         } else {
             filtrarPorCarrera();
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 

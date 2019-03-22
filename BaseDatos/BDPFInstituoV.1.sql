@@ -9,6 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
+ "prd_lectivo_estado" boolean NOT NULL DEFAULT 'false',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
 ) WITH (OIDS = FALSE);
@@ -496,6 +497,8 @@ CREATE TABLE "ReferenciaSilabo" (
 CREATE TABLE "UnidadSilabo" (
 
 	id_unidad serial NOT NULL,
+	--Aumentar en la base de datos
+	id_silabo integer NOT NULL,
 	numero_unidad integer NOT NULL,
 	objetivo_especifico_unidad text NOT NULL,
 	resultados_aprendizaje_unidad text NOT NULL,
@@ -508,14 +511,17 @@ CREATE TABLE "UnidadSilabo" (
 	estrategias_unidad text NOT NULL,
 
 	PRIMARY KEY(id_unidad)
-
-
+	--Aumentar en la base
+	FOREIGN KEY (id_silabo)
+        REFERENCES "Silabo" (id_silabo)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
-	id_silabo integer NOT NULL,
+--	id_silabo integer NOT NULL,
 	id_unidad integer NOT NULL,
 	actividad character varying (50) NOT NULL,
 	id_tipo_actividad integer NOT NULL,
@@ -531,16 +537,15 @@ CREATE TABLE "EvaluacionSilabo" (
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-
 	FOREIGN KEY (id_tipo_actividad)
         REFERENCES "TipoActividad" (id_tipo_actividad)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-
+/*
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
         ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON DELETE CASCADE*/
 );
 
 
