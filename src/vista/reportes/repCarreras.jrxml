@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b64ffa69-4fc2-4ba7-9f11-89a295029c24">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="13"/>
-=======
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
->>>>>>> 7c4d1f7b343d2f48bcbb45fa176f443a34271866
 	<property name="ireport.y" value="0"/>
 	<parameter name="carreras" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -29,15 +23,6 @@ where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
 	</background>
 	<title>
 		<band height="223" splitType="Stretch">
-			<image>
-<<<<<<< HEAD
-				<reportElement x="0" y="0" width="555" height="166" uuid="fa567671-e788-4df7-845b-8bacf8ab8f42"/>
-				<imageExpression><![CDATA["./src/vista/img/ISTA.jpg"]]></imageExpression>
-=======
-				<reportElement x="0" y="0" width="555" height="77"/>
-				<imageExpression class="java.lang.String"><![CDATA["C:\\Users\\DAVICHO\\Desktop\\PF-Instituto-M3A-F1\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
->>>>>>> 7c4d1f7b343d2f48bcbb45fa176f443a34271866
-			</image>
 			<staticText>
 				<reportElement x="0" y="77" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -143,6 +128,6 @@ where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="359" splitType="Stretch"/>
+		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>
