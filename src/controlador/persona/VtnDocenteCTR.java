@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.usuario.RolMD;
 import vista.persona.FrmDocente;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
@@ -28,15 +31,18 @@ public class VtnDocenteCTR {
     private final DocenteBD docente;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
 
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
@@ -137,6 +143,27 @@ public class VtnDocenteCTR {
 
         } else {
 
+        }
+    }
+     
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 

@@ -8,9 +8,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.usuario.RolMD;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
@@ -27,12 +30,15 @@ public class VtnPrdLectivoCTR {
     private FrmPrdLectivo frmPerLectivo;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
 
-    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnPrdLectivo = vtnPrdLectivo;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
         
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
@@ -184,6 +190,27 @@ public class VtnPrdLectivoCTR {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
                 }
             }
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
     
