@@ -17,11 +17,11 @@ public class ConectarDB {
     private Statement st;
     private ResultSet rs;
     //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
-    /*private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     private String user = "ROOT";
-    private String pass = "ROOT";*/
+    private String pass = "ROOT";
 
-    private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConCursados"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConCursados"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/BDPFM3A"; //BD Johnny PCNOOB
     // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
@@ -51,7 +51,7 @@ public class ConectarDB {
     //private String user = "ROOT";
 
     //private String user = "ROOT";
-    private String user = "postgres";
+    //private String user = "postgres";
     //private String url = "jdbc:postgresql://localhost:5432/Proyecto"; // BD Andres Novillo
     //  private String url = "jdbc:postgresql://localhost:5432/Pruebas"; //BD PAO MEDINA
     //private String user = "ROOT";//USUARIO DIEGO
@@ -72,7 +72,7 @@ public class ConectarDB {
     //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-    private String pass = "linis4413"; //Clave Lina
+    //private String pass = "linis4413"; //Clave Lina
     public ConectarDB(String mensaje) {
         try {
             //Cargamos el driver
