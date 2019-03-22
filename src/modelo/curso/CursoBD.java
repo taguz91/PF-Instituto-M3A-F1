@@ -228,16 +228,18 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public List<String> selectParaleloWhereUsername(String username) {
+    public static List<String> selectParaleloWhere(int idDocente, int ciclo) {
 
-        String SELECT = "SELECT\n"
-                + "DISTINCT \"Cursos\".curso_paralelo\n"
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"Cursos\".curso_paralelo\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
-                + "WHERE \"Usuarios\".usu_username = '" + username + "'";
+                + "\"Cursos\"\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "WHERE\n"
+                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE\n"
+                + "AND\n"
+                + "\"Cursos\".curso_ciclo = " + ciclo + "";
 
         List<String> lista = new ArrayList<>();
 
@@ -258,28 +260,27 @@ public class CursoBD extends CursoMD {
         return lista;
     }
 
-    public List<String> selectCicloWhereUsername(String username) {
+    public static List<Integer> selectCicloWhere(int idDocente) {
 
         String SELECT = "SELECT \n"
-                + "DISTINCT \"Cursos\".curso_ciclo\n"
+                + "DISTINCT\n"
+                + "\"Cursos\".curso_ciclo\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "\"Cursos\"\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
+                + "\"Cursos\".id_docente = " + idDocente + "\n"
+                + "AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE";
 
-        List<String> lista = new ArrayList<>();
+        List<Integer> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
             while (rs.next()) {
 
-                String paralelo = rs.getString("curso_ciclo");
-
-                lista.add(paralelo);
+                lista.add(rs.getInt("curso_ciclo"));
 
             }
             rs.close();

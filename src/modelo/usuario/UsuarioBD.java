@@ -110,16 +110,15 @@ public class UsuarioBD extends UsuarioMD {
                 + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Usuarios\" TO \"" + getUsername() + "\";"
                 + ""
                 + " ";
-        
+
         System.out.println(INSERT);
-        
+
         return ResourceManager.Statement(INSERT) == null;
 
     }
 
     public static List<UsuarioMD> SelectAll() {
         String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS TRUE";
-        System.out.println(SELECT);
         return SelectSimple(SELECT);
 
     }

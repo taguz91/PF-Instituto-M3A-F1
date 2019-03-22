@@ -12,6 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.carrera.CarreraBD;
+import modelo.curso.CursoBD;
+import modelo.jornada.JornadaBD;
+import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.persona.DocenteBD;
 import modelo.persona.PersonaBD;
@@ -33,10 +37,9 @@ public class VtnNotasAlumnoCursoCTR {
     //Conexion
     private final ConectarDB conexion;
 
-    //MODELOS
     //LISTAS
     private List<PersonaMD> listaPersonasDocentes;
-    private List<String> listaPeriodos;
+    private List<AlumnoCursoBD> listaNotas;
 
     //TABLA
     private DefaultTableModel tablaNotas;
@@ -59,16 +62,23 @@ public class VtnNotasAlumnoCursoCTR {
         INITS
      */
     public void Init() {
-        tablaNotas = (DefaultTableModel) vista.getTbl_notas().getModel();
+        tablaNotas = (DefaultTableModel) vista.getTblNotas().getModel();
 
         //RELLENADO DE LISTAS
         listaPersonasDocentes = PersonaBD.selectWhereUsername(usuario.getUsername());
         idDocente = DocenteBD.selectIdDocenteWhereUsername(usuario.getUsername());
 
-        //RELLENADO DE COMBOS
+        //RELLENADO DE COMBOS Y LABELS
         cargarComboDocente();
         cargarComboPeriodos();
-        cargarTabla();
+        rellenarLblCarrera();
+        cargarComboCiclo();
+        cargarComboParalelo();
+        cargarComboJornadas();
+
+        cargarComboMaterias();
+
+        //TABLA
         InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -82,7 +92,18 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void InitEventos() {
 
-        vista.getCmbPeriodolectivo().addActionListener(e -> cmbPeriodoLectivo(e));
+        vista.getCmbPeriodoLectivo().addActionListener(e -> rellenarLblCarrera());
+
+        vista.getCmbCiclo().addActionListener(e -> {
+            cargarComboParalelo();
+            cargarComboMaterias();
+        });
+
+        vista.getCmbParalelo().addActionListener(e -> cargarComboMaterias());
+
+        vista.getCmbJornada().addActionListener(e -> cargarComboMaterias());
+
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         tablaNotas.addTableModelListener(new TableModelListener() {
 
@@ -94,11 +115,11 @@ public class VtnNotasAlumnoCursoCTR {
 
                     active = true;
 
-                    TableModel modelo = vista.getTbl_notas().getModel();
+                    TableModel modelo = vista.getTblNotas().getModel();
 
                     setNumero();
 
-                    vista.getTbl_notas().setModel(calcularNotaFinal(modelo));
+                    vista.getTblNotas().setModel(calcularNotaFinal(modelo));
 
                     active = false;
                 }
@@ -112,17 +133,17 @@ public class VtnNotasAlumnoCursoCTR {
         METODOS DE APOYO
      */
     private void setNumero() {
-        int columna = vista.getTbl_notas().getSelectedColumn();
-        int fila = vista.getTbl_notas().getSelectedRow();
-        String valor = vista.getTbl_notas().getValueAt(fila, columna).toString();
+        int columna = vista.getTblNotas().getSelectedColumn();
+        int fila = vista.getTblNotas().getSelectedRow();
+        String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
 
         if (Validaciones.isDecimal(valor)) {
-            vista.getTbl_notas().setValueAt(valor, fila, columna);
+            vista.getTblNotas().setValueAt(valor, fila, columna);
         } else {
             if (Validaciones.isInt(valor)) {
-                vista.getTbl_notas().setValueAt(valor, fila, columna);
+                vista.getTblNotas().setValueAt(valor, fila, columna);
             } else {
-                vista.getTbl_notas().setValueAt("0.0", fila, columna);
+                vista.getTblNotas().setValueAt("0.0", fila, columna);
             }
         }
 
@@ -130,7 +151,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
 
-        int fila = vista.getTbl_notas().getSelectedRow();
+        int fila = vista.getTblNotas().getSelectedRow();
 
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
@@ -182,22 +203,103 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarComboPeriodos() {
-        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhereUsername(usuario.getUsername());
-
-        listaPeriodos
+        PeriodoLectivoBD.selectPeriodoWhereUsername(usuario.getUsername())
                 .stream()
-                .forEach(vista.getCmbPeriodolectivo()::addItem);
+                .forEach(vista.getCmbPeriodoLectivo()::addItem);
+
+    }
+
+    private void rellenarLblCarrera() {
+        vista.getLblCarrera().setText(CarreraBD.selectCarreraWherePerdLectivo(vista.getCmbPeriodoLectivo().getSelectedItem().toString()));
+
+    }
+
+    private void cargarComboCiclo() {
+
+        CursoBD.selectCicloWhere(idDocente)
+                .stream()
+                .forEach(obj -> {
+                    vista.getCmbCiclo().addItem(obj.toString());
+                });
+
+    }
+
+    private void cargarComboParalelo() {
+
+        vista.getCmbParalelo().removeAllItems();
+        vista.getCmbAsignatura().removeAllItems();
+
+        int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+        CursoBD.selectParaleloWhere(idDocente, ciclo)
+                .stream()
+                .forEach(vista.getCmbParalelo()::addItem);
+    }
+
+    private void cargarComboJornadas() {
+        JornadaBD.selectJornadasWhereIdDocenteAndNombPrd(idDocente, vista.getCmbPeriodoLectivo().getSelectedItem().toString())
+                .stream()
+                .forEach(vista.getCmbJornada()::addItem);
+    }
+
+    private void cargarComboMaterias() {
+        try {
+            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String jornada = vista.getCmbJornada().getSelectedItem().toString();
+
+            vista.getCmbAsignatura().removeAllItems();
+
+            MateriaBD.selectWhere(idDocente, ciclo, paralelo, jornada)
+                    .stream()
+                    .forEach(vista.getCmbAsignatura()::addItem);
+
+        } catch (NullPointerException e) {
+            vista.getCmbAsignatura().removeAllItems();
+        }
 
     }
 
     private void cargarTabla() {
+
+        try {
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+            String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+
+            listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+
+            listaNotas.stream()
+                    .forEach(obj -> {
+                        tablaNotas.addRow(new Object[]{
+                            tablaNotas.getDataVector().size() + 1,
+                            "CEDULA",
+                            "APELLIDOS",
+                            "NOMBRE",
+                            obj.getNota1Parcial(),
+                            obj.getNotaExamenInter(),
+                            0.0,
+                            obj.getNota2Parcial(),
+                            obj.getNotaExamenFinal(),
+                            obj.getNotaExamenSupletorio(),
+                            obj.getNotaFinal(),
+                            obj.getEstado(),
+                            obj.getNumFalta(),
+                            "%"
+                        });
+                    });
+
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
 
     }
 
     /*
         PROCESADORES DE EVENTOS
      */
-    private void cmbPeriodoLectivo(ActionEvent e) {
-
+    private void btnImprimir(ActionEvent e) {
+        cargarTabla();
     }
 }

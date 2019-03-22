@@ -313,7 +313,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
+                + "\"Usuarios\".usu_username = '" + username + "'"
+                + "AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = false";
         List<String> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
