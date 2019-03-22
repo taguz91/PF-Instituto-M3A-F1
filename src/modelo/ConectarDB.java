@@ -21,7 +21,7 @@ public class ConectarDB {
     private String user = "ROOT";
     private String pass = "ROOT";*/
 
-    private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConCursados"; //BD Johnny PCPRO
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConCursados"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3A"; //BD Johnny PCPRO
     //private String url = "jdbc:postgresql://localhost:5432/BDPFM3A"; //BD Johnny PCNOOB
     // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
@@ -32,7 +32,7 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://localhost:5433/proyecto"; //BD cesar 
 
     //private String url = "jdbc:postgresql://localhost:5433/bdinsta"; //BD Alejandro
-    //private String url = "jdbc:postgresql://localhost:5432/proyecto"; //BD David
+    private String url = "jdbc:postgresql://localhost:5432/proyecto"; //BD David
     // private String url = "jdbc:postgresql://localhost:5432/PFcompleta"; //BD Lina
 
    // private String url = "jdbc:postgresql://localhost:5432/BDTESIS"; //BD Johnny PCNOOB
@@ -72,7 +72,8 @@ public class ConectarDB {
     //private String pass = ""; //Clave Diego
     //private String pass = "PAOLA"; //Clave Paola
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
-    private String pass = "linis4413"; //Clave Lina
+    private String pass = "davicho"; // Clave David
+    //private String pass = "linis4413"; //Clave Lina
     public ConectarDB(String mensaje) {
         try {
             //Cargamos el driver
