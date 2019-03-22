@@ -15,6 +15,7 @@ import modelo.persona.PersonaMD;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
+import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
 
 public class VtnAlumnoCTR {
@@ -35,6 +36,10 @@ public class VtnAlumnoCTR {
         vtnAlumno.show();
         //Inicializamos la clase de alumno  
         bdAlumno = new AlumnoBD(conecta);
+    }
+
+    VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnDocente docVTN, ConectarDB conecta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void iniciar() {
@@ -151,16 +156,13 @@ public class VtnAlumnoCTR {
                 ConectarDB conectar = new ConectarDB("Persona");
                 PersonaBD extraer = new PersonaBD(conectar);
 
-
-            /* PersonaBD extraer = new PersonaBD();
-
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin,frmPersona,conectar);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
-                vtnAlumno.dispose();*/
+                vtnAlumno.dispose();
 
             }
         } else {

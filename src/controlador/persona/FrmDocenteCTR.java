@@ -2,15 +2,22 @@
 //http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
-import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyVetoException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.persona.PersonaBD;
+import modelo.persona.PersonaMD;
+import modelo.validaciones.TxtVCedula;
+import modelo.validaciones.Validar;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 
@@ -20,32 +27,30 @@ public class FrmDocenteCTR {
 
     //Para saber si se esta editando una persona  
     private boolean editar = false;
-    private int idPersona = 0;
+    private int idDocente = 0;
     private final VtnPrincipal vtnPrin;
     private VtnDocenteCTR docenteVtn;
     private final FrmDocente frmDocente;
-    private final DocenteBD docente;
+    private DocenteBD docente;
     private boolean guardar = false;
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
+    private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
+    private static int validar = 0; //Variable para saber a que textFiel se valida
+    //Para ver si existe una persona  
+    private PersonaBD per;
 
-    private ArrayList<String> info = new ArrayList();
-    private DocenteBD per;
-
+    // private DocenteBD per;
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
     FrmPersona persona = new FrmPersona();
-
-    String codigo, docenteTipoTiempo, estado;
-    int docenteCategoria, idDocente;
-    boolean docenteOtroTrabajo, docenteCapacitador;
-    LocalDate fechaInicioContratacion, fechaFinContratacion;
 
     public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, DocenteBD docente, ConectarDB conecta) {
         this.vtnPrin = vtnPrin;
         this.frmDocente = frmDocente;
         this.docente = docente;
         this.conecta = conecta;
-        this.per = new DocenteBD(conecta);
+        this.docente = new DocenteBD(conecta);
+        this.per = new PersonaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
@@ -68,25 +73,125 @@ public class FrmDocenteCTR {
     }
 
     public void iniciar() {
-        frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
-        frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
+        // frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
+        //frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         //Accion de buscar una persona  
         //frmDocente.getBtnBuscarPersona().addActionListener(e -> consular());
+        frmDocente.getBtnCancelar().addActionListener(e -> salirBoton());
+
+        FocusListener Buscar = new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                cont++;
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                buscarCedula();
+            }
+        };
+
+        KeyListener cedula = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                validar = 5;
+                validarComponentes(frmDocente.getTxtIdentificacion().getText());
+            }
+        };
+
+        iniciarComponentes();
+        frmDocente.getTxtIdentificacion().addFocusListener(Buscar);
+        frmDocente.getTxtIdentificacion().addKeyListener(cedula);
+        frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarCedula());
+        frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
+        frmDocente.getBtnRegistrarPersona().addActionListener(e -> abrirFrmPersona());
+        //Validacion de la cedula
+        frmDocente.getTxtIdentificacion().addKeyListener(new TxtVCedula(frmDocente.getTxtIdentificacion(),
+                frmDocente.getLblError()));
+
+    }
+
+    public void buscarCedula() {
+        boolean buscar = true;
+        String cedula = frmDocente.getTxtIdentificacion().getText().trim();
+        if (!Validar.esCedula(cedula)) {
+            buscar = false;
+        }
+        //Cedula no registrada: 0102380821
+        if (buscar) {
+            DocenteMD d = docente.buscarDocenteInactivo(cedula);
+            if (d != null) {
+                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                        "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                        new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                if (seleccion == 1) {
+                    inhabilitarComponentesDocente();
+                } else if (seleccion == 0) {
+                    docente.activarDocente(d.getIdPersona());
+                    habilitarComponentesDocente();
+                    editar(d);
+                }
+            } else {
+                d = docente.buscarDocente(cedula);
+                if (d == null) {
+                    System.out.println("No existe el docente");
+                    PersonaMD p = per.buscarPersona(cedula);
+                    if (p == null) {
+                        JOptionPane.showMessageDialog(null, "No existe la persona");
+                        frmDocente.getBtnRegistrarPersona().setVisible(true);
+
+                    } else {
+                        System.out.println("Existe persona");
+                        habilitarComponentesDocente();
+                        idDocente = p.getIdPersona();
+
+                    }
+
+                } else {
+                    System.out.println("Si existe el docente");
+                    habilitarComponentesDocente();
+                    editar(d);
+                }
+            }
+
+        }
+    }
+
+    public void validarComponentes(String texto) {
+        if (validar == 5) {
+            if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
+                frmDocente.getLblError().setVisible(true);
+            } else {
+                frmDocente.getLblError().setVisible(false);
+            }
+            validar = 0;
+        }
+    }
+
+    public void iniciarComponentes() {
+        frmDocente.getLblError().setVisible(false);
+        frmDocente.getJdcFechaFinContratacion().setSelectedDate(null);
+
+        //frmAlumno.getBtn_Guardar().setEnabled(false);
     }
 
     public void guardarDocente() {
 
-        if (existeDocente) {
-            per.setIdPersona(Integer.parseInt(info.get(0)));
-            //docente.setIdPersona(idPersona);
-            System.out.println(info + "soy info{0} de guardar Docente en FRMDOCNETE");
-        } else {
-            // DocenteMD per = docente.buscarDocente(frmDocente.getTxtIdentificacion().getText());
-            //editar(per);
-            guardar = false;
-        }
+        String codigo, docenteTipoTiempo, estado;
+        int docenteCategoria;
+        boolean docenteOtroTrabajo, docenteCapacitador;
+        LocalDate fechaInicioContratacion, fechaFinContratacion = null;
         guardar = true;
-
+        //  idPersona=docente.getIdPersona();
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
         docenteTipoTiempo = frmDocente.getCmbTipoTiempo().getSelectedItem().toString();
@@ -107,51 +212,80 @@ public class FrmDocenteCTR {
         fechaInicioContratacion = fechaIni;
 
         String fechaFin = frmDocente.getJdcFechaFinContratacion().getText().toUpperCase();
-        String fecFinC[] = fechaFin.split("/");
-        LocalDate fechaFin1 = LocalDate.of(Integer.parseInt(fecFinC[2]),
-                Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[0]));
-        fechaFinContratacion = fechaFin1;
+        if (fechaFin.length() != 0) {
+            String fecFinC[] = fechaFin.split("/");
+            LocalDate fechaFin1 = LocalDate.of(Integer.parseInt(fecFinC[2]),
+                    Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[0]));
+            fechaFinContratacion = fechaFin1;
+        } else {
+            fechaFinContratacion = null;
+        }
         estado = null;
+        
+        System.out.println("Se dio click en guardar");
+        System.out.println("Guardar = "+guardar);
+        System.out.println("Editar = "+editar);
 
         if (guardar) {
             //Llenar directo por el constructor
-            //DocenteBD per = new DocenteBD();
-            //Pasamos la informacion de la foto 
-//           per.setIdPersona((Integer.parseInt(info.get(0))));
-            per.setCodigo(codigo);
-            per.setFechaInicioContratacion(fechaInicioContratacion);
-            per.setFechaFinContratacion(fechaFinContratacion);
-            per.setEstado(estado);
-            per.setDocenteCapacitador(docenteCapacitador);
-            per.setDocenteCategoria(docenteCategoria);
-            per.setDocenteOtroTrabajo(docenteOtroTrabajo);
-            per.setDocenteTipoTiempo(docenteTipoTiempo);
-
+            docente.setCodigo(codigo);
+            docente.setFechaInicioContratacion(fechaInicioContratacion);
+            docente.setFechaFinContratacion(fechaFinContratacion);
+            docente.setEstado(estado);
+            docente.setDocenteCapacitador(docenteCapacitador);
+            docente.setDocenteCategoria(docenteCategoria);
+            docente.setDocenteOtroTrabajo(docenteOtroTrabajo);
+            docente.setDocenteTipoTiempo(docenteTipoTiempo);
             if (editar) {
-                if (idPersona > 0) {
-                    per.editarDocente(idPersona);
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
-                } else {
-                    //  per.buscarPersona(frmDocente.getTxtIdentificacion().getText());
-                    per.InsertarDocente();
+                if (idDocente > 0) {
+                    docente.editarDocente(idDocente);
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                 }
             } else {
-
+                docente.InsertarDocente();
+                JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
             }
         }
 
     }
 
-    public void buscarPersona() {
-        info = docente.buscarPersonaDocente(frmDocente.getTxtIdentificacion().getText());
-       
-        if(info!=null){
-            existeDocente=true;
-            System.out.println("existe docente");
-        }else{
-            existeDocente=false;
-            System.out.println("no existe docente");
+    public void editar(DocenteMD doc) {
+        editar = true;
+        idDocente = doc.getIdDocente();
+        Calendar calendar_Ini = Calendar.getInstance();
+        calendar_Ini.clear();
+        calendar_Ini.set(doc.getFechaInicioContratacion().getYear(), doc.getFechaInicioContratacion().getMonthValue(), doc.getFechaInicioContratacion().getDayOfMonth());
+        Calendar calendar_FinC = Calendar.getInstance();
+        calendar_FinC.clear();
+        if (doc.getFechaFinContratacion() != null) {
+            calendar_FinC.set(doc.getFechaFinContratacion().getYear(), doc.getFechaFinContratacion().getMonthValue(), doc.getFechaFinContratacion().getDayOfMonth());
+            frmDocente.getJdcFechaFinContratacion().setSelectedDate(calendar_FinC);
+        } else {
+            frmDocente.getJdcFechaFinContratacion().setSelectedDate(null);
+        }
+        frmDocente.getJdcFechaInicioContratacion().setSelectedDate(calendar_Ini);
+        frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
+        frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
+        frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
+        frmDocente.getCbxDocenteCapacitador().setSelected(doc.isDocenteCapacitador());
+        frmDocente.getCbxOtroTrabajo().setSelected(doc.isDocenteOtroTrabajo());
+
+    }
+
+    public void reiniciarComponentes(FrmDocente frmDocente) {
+        frmDocente.getTxtIdentificacion().setText("");
+        frmDocente.getCmbTipoTiempo().setSelectedItem("SELECCIONE");
+        frmDocente.getCbxDocenteCapacitador().setSelected(false);
+        frmDocente.getCbxOtroTrabajo().setSelected(false);
+        frmDocente.getSpnCategoria().setValue(3);
+
+    }
+
+    public void salirBoton() {
+        try {
+            frmDocente.setClosed(true);
+        } catch (PropertyVetoException ex) {
+            System.out.println(ex);
         }
     }
 
@@ -175,35 +309,4 @@ public class FrmDocenteCTR {
         frmDocente.getCbxOtroTrabajo().setEnabled(false);
 
     }
-
-    public void editar(DocenteMD doc) {
-        editar = true;
-        idPersona = doc.getIdPersona();
-        System.out.println("Id de la persona que editaremos " + idPersona);
-
-        /* Calendar calendar_Ini = Calendar.getInstance();
-        calendar_Ini.clear();
-        calendar_Ini.set(doc.getFechaInicioContratacion().getYear(), doc.getFechaInicioContratacion().getMonthValue() , doc.getFechaInicioContratacion().getDayOfMonth());
-       
-        Calendar calendar_FinC = Calendar.getInstance();
-        calendar_FinC.clear();
-        calendar_FinC.set(doc.getFechaFinContratacion().getYear(), doc.getFechaFinContratacion().getMonthValue() , doc.getFechaFinContratacion().getDayOfMonth());
-        System.out.println(doc.getFechaFinContratacion().getYear());
-        System.out.println(doc.getFechaFinContratacion().getMonthValue());
-        System.out.println(doc.getFechaFinContratacion().getDayOfMonth());
-        
-        
-        frmDocente.getJdcFechaInicioContratacion().setSelectedDate(calendar_Ini);
-       
-        frmDocente.getJdcFechaFinContratacion().setSelectedDate(calendar_FinC);*/
-        frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
-        frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
-        frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
-        frmDocente.getCbxDocenteCapacitador().setSelected(doc.isDocenteCapacitador());
-        frmDocente.getCbxOtroTrabajo().setSelected(doc.isDocenteOtroTrabajo());
-        habilitarComponentesDocente();
-        frmDocente.getTxtIdentificacion().setEnabled(false);
-        frmDocente.getBtnRegistrarPersona().setVisible(false);
-    }
-
 }
