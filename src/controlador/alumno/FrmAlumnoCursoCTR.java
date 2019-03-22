@@ -171,7 +171,7 @@ public class FrmAlumnoCursoCTR {
 
             cursosSelec.forEach(c -> {
                 //Guardamos el alumno en su curso 
-                almnCurso.ingresarAlmnCurso(alumnos.get(posAlm).getId(), c.getId_curso());
+                almnCurso.ingresarAlmnCurso(alumnos.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
                 //Actualizamos el numero de matricula
                 mallaAlm.actualizarNumMatricula(alumnos.get(posAlm).getAlumno().getId_Alumno(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());

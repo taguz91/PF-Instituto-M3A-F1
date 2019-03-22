@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
-import modelo.ConexionReportes;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -122,8 +121,6 @@ public class VtnCarreraCTR {
     }
 
     public void llamaReporteCarreras() {
-        ConexionReportes con = new ConexionReportes();
-        Connection conexion = con.getConexion();
 
         JasperReport jr = null;
         String path = "./src/vista/reportes/repCarreras.jasper";
@@ -134,7 +131,7 @@ public class VtnCarreraCTR {
             parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conexion);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle("Reporte de Materias por Carrera");
@@ -144,8 +141,6 @@ public class VtnCarreraCTR {
         }
     }
     public void llamaReporteAlumnoCarrera(){
-         ConexionReportes con = new ConexionReportes();
-        Connection conexion = con.getConexion();
 
         JasperReport jr = null;
         String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
@@ -156,7 +151,7 @@ public class VtnCarreraCTR {
             parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conexion);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle("Reporte de Materias por Carrera");

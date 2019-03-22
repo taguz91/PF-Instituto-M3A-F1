@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.persona;
 
 import javax.swing.JButton;
@@ -11,12 +6,15 @@ import javax.swing.JButton;
  *
  * @author Lina
  */
-public class webCam extends javax.swing.JInternalFrame {
+public class VtnWebCam extends javax.swing.JDialog {
 
     /**
-     * Creates new form webCam
+     * Creates new form JDMateriaInfo
+     * @param parent
+     * @param modal
      */
-    public webCam() {
+    public VtnWebCam(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
