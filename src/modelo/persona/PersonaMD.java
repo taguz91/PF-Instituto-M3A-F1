@@ -395,7 +395,7 @@ public class PersonaMD {
     public void setTipoResidencia(String tipoResidencia) {
         this.tipoResidencia = tipoResidencia;
     }
-       
+
     //Guardamos todos los datos de una persona 
     public void setPersona(PersonaMD per) {
         this.idPersona = per.getIdPersona();
@@ -430,9 +430,12 @@ public class PersonaMD {
         this.idioma = per.getIdioma();
         this.tipoResidencia = per.getTipoResidencia();
         this.personaActiva = per.isPersonaActiva();
-        
-        
+
     }
-    
-  
+
+    @Override
+    public String toString() {
+        return "PersonaMD{" + "file=" + file + ", logBytes=" + logBytes + ", idPersona=" + idPersona + ", lugarNatal=" + lugarNatal + ", lugarResidencia=" + lugarResidencia + ", foto=" + foto + ", identificacion=" + identificacion + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido + ", primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", etnia=" + etnia + ", idiomaRaiz=" + idiomaRaiz + ", tipoSangre=" + tipoSangre + ", telefono=" + telefono + ", celular=" + celular + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + ", discapacidad=" + discapacidad + ", tipoDiscapacidad=" + tipoDiscapacidad + ", porcentajeDiscapacidad=" + porcentajeDiscapacidad + ", carnetConadis=" + carnetConadis + ", callePrincipal=" + callePrincipal + ", numeroCasa=" + numeroCasa + ", calleSecundaria=" + calleSecundaria + ", referencia=" + referencia + ", sector=" + sector + ", idioma=" + idioma + ", tipoResidencia=" + tipoResidencia + ", personaActiva=" + personaActiva + '}';
+    }
+
 }

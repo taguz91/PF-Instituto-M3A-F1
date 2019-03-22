@@ -1,7 +1,5 @@
 package controlador.Libraries;
 
-import javax.swing.JTextField;
-
 /**
  *
  * @author MrRainx
@@ -12,7 +10,7 @@ public class Validaciones {
      * REGULAR EXPRESSIONS
      */
     private static final String INT = "^[-|+]{0,1}[0-9]+[ ]*";
-    private static final String DECIMAL = "^[+]{0,1}[0-9]*+[.]{0,1}+[0-9]{1,2}+[ ]*";
+    private static final String DECIMAL = "^[0-9]*+[.]{0,1}+[0-9]{0,1}";
     private static final String WORD = "^[A-Za-z]*+[ ]*";
     private static String WORDS = "^[A-Za-z]*+[ ]{1}";
     private static final String NUMBER = "^[0-9]*+[ ]*";
@@ -217,11 +215,9 @@ public class Validaciones {
         System.out.println("Is Not RUC");
         return false;
     }
-
-    public static void validarDoubleTxt(JTextField text) {
-        
-        
-        
-    }
+    
+    
+    
+    
 
 }

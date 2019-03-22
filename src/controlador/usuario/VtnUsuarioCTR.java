@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.persona.PersonaBD;
@@ -34,9 +35,9 @@ public class VtnUsuarioCTR {
     private final VtnPrincipal desktop; // DONDE VOY A VISUALIZAR
     private final VtnUsuario vista; // QUE VOY A VISUALIZAR
     private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
-
     //Modelos para trabajar
     private final RolMD permisos;
+    private final ConectarDB conexion;
 
     //Listas Para rellenar la tabla
     private static List<UsuarioMD> listaUsuarios;
@@ -45,11 +46,11 @@ public class VtnUsuarioCTR {
     //Modelo de la tabla
     private static DefaultTableModel tablaUsuarios;
 
-    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, UsuarioBD modelo, RolMD permisos) {
+    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
         this.vista = vista;
-        this.modelo = modelo;
         this.permisos = permisos;
+        this.conexion = conexion;
     }
 
     //Inits
@@ -58,7 +59,7 @@ public class VtnUsuarioCTR {
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
 
         //Inicializamos las listas con las consultas
-        listaUsuarios = modelo.SelectAll();
+        listaUsuarios = UsuarioBD.SelectAll();
 
         cargarTabla(listaUsuarios);
 
@@ -166,7 +167,7 @@ public class VtnUsuarioCTR {
 
     private void setObjFromTable(int fila) {
 
-        listaUsuarios = modelo.SelectAll();
+        listaUsuarios = UsuarioBD.SelectAll();
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 0);
 
@@ -201,7 +202,7 @@ public class VtnUsuarioCTR {
 
                     modelo.eliminar(Username);
 
-                    cargarTabla(modelo.SelectAll());
+                    cargarTabla(UsuarioBD.SelectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
@@ -223,7 +224,7 @@ public class VtnUsuarioCTR {
 
             setObjFromTable(fila);
 
-            FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar");
+            FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar", conexion);
 
             form.Init();
 
@@ -235,13 +236,13 @@ public class VtnUsuarioCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
 
-        cargarTabla(modelo.SelectAll());
+        cargarTabla(UsuarioBD.SelectAll());
 
     }
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar");
+        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar", conexion);
         frm.Init();
 
     }

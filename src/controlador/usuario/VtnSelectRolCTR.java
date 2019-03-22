@@ -21,14 +21,17 @@ public class VtnSelectRolCTR {
 
     private final VtnSelectRol vista;
     private final RolBD modelo;
-
     private final UsuarioBD usuario;
+
+    private final ConectarDB conexion;
+
     List<RolMD> rolesDelUsuario;
 
-    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario) {
+    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, ConectarDB conexion) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
+        this.conexion = conexion;
     }
 
     //Inits
@@ -87,7 +90,7 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, new ConectarDB(""));
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion);
         vtn.iniciar();
 
         vista.dispose();

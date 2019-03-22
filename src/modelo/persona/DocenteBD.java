@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 
 public class DocenteBD extends DocenteMD {
 
@@ -527,20 +530,10 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-    public List<DocenteMD> selectWhereUsername(String username) {
+    public static Integer selectIdDocenteWhereUsername(String username) {
 
         String SELECT = "SELECT\n"
-                + "\"Docentes\".id_docente,\n"
-                + "\"Docentes\".id_persona,\n"
-                + "\"Docentes\".docente_codigo,\n"
-                + "\"Docentes\".docente_otro_trabajo,\n"
-                + "\"Docentes\".docente_categoria,\n"
-                + "\"Docentes\".docente_fecha_contrato,\n"
-                + "\"Docentes\".docente_fecha_fin,\n"
-                + "\"Docentes\".docente_tipo_tiempo,\n"
-                + "\"Docentes\".docente_activo,\n"
-                + "\"Docentes\".docente_observacion,\n"
-                + "\"Docentes\".docente_capacitador\n"
+                + "\"Docentes\".id_docente\n"
                 + "FROM\n"
                 + "\"Docentes\"\n"
                 + "INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
@@ -548,7 +541,20 @@ public class DocenteBD extends DocenteMD {
                 + "WHERE\n"
                 + "\"Usuarios\".usu_username = '" + username + "'";
 
-        return consultarDocente(SELECT);
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        Integer idDocente = null;
+
+        try {
+            while (rs.next()) {
+                idDocente = rs.getInt("id_docente");
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return idDocente;
     }
 
 }
