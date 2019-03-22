@@ -211,7 +211,7 @@ public class CursoBD extends CursoMD {
             c.setId_materia(m);
             PeriodoLectivoMD p = prd.buscarPerido(rs.getInt("id_prd_lectivo"));
             c.setId_prd_lectivo(p);
-            DocenteMD d = doc.buscarDocente(rs.getInt("id_docente"));
+            DocenteMD d = doc.buscarDocenteParaReferencia(rs.getInt("id_docente"));
             c.setId_docente(d);
             JornadaMD j = jrd.buscarJornada(rs.getInt("id_jornada"));
             c.setCurso_jornada(j);

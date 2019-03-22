@@ -195,7 +195,7 @@ public class DocenteBD extends DocenteMD {
                 + " docente_tipo_tiempo, docente_activo,"
                 + " docente_observacion, docente_capacitador\n"
                 + "FROM public.\"Docentes\" ;";
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
