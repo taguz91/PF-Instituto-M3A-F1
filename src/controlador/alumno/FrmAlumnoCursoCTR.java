@@ -65,11 +65,10 @@ public class FrmAlumnoCursoCTR {
     private final MallaAlumnoBD mallaAlm;
     private ArrayList<MallaAlumnoMD> materiasAlmn;
     //Para eliminar las materias en las que ya estoy matriculado  
-    private ArrayList<MallaAlumnoMD> mallaPasadas;
     private ArrayList<MallaAlumnoMD> mallaPerdidas;
     private ArrayList<MallaAlumnoMD> mallaMatriculadas;
     private ArrayList<MallaAlumnoMD> mallaCursadas;
-    private ArrayList<MallaAlumnoMD> mallaRequisitos = new ArrayList();
+    private ArrayList<MateriaRequisitoMD> requisitos;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
 
@@ -304,13 +303,7 @@ public class FrmAlumnoCursoCTR {
         }
         //Se leasigna el mismo valor si es que no tiene un ciclo reprobado
         cicloReprobado = cicloCursado;
-
-        mallaPasadas = mallaAlm.buscarMateriasAlumnoPorEstadoYCiclo(alumnosCarrera.get(posAlmn).getId(), "C", cicloCursado);
-        System.out.println("Materias cursadas del ultimo ciclo. " + mallaPasadas.size());
-
-        ArrayList<MateriaMD> materias = mat.buscarMateriaPorCarreraCiclo(periodos.get(posPrd - 1).getCarrera().getId(), cicloCursado);
-        System.out.println("Materias que debia cursar en ese ciclo " + materias.size());
-
+        //Esto lo usamos para saber desde que ciclo cargar el combo de cursos
         mallaPerdidas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "R");
         System.out.println("Materias que reprobo " + mallaPerdidas.size());
 
@@ -318,12 +311,11 @@ public class FrmAlumnoCursoCTR {
         mallaMatriculadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "M");
         System.out.println("Se encuentra matriculado en " + mallaMatriculadas.size());
 
-        //Buscamos todas las materias en las que ya a cursado  
+        //Buscamos todas las materias en las que ya a cursado  para borrarlas de la tabla
         mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
         System.out.println("Ah cursado " + mallaCursadas.size());
 
         if (mallaPerdidas.size() > 0) {
-            System.out.println("Ciclo en el que se reprobo " + mallaPerdidas.get(0).getMallaCiclo());
             frmAlmCurso.getBtnReprobadas().setVisible(true);
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
             mallaPerdidas.forEach(m -> {
@@ -331,19 +323,15 @@ public class FrmAlumnoCursoCTR {
                     cicloReprobado = m.getMallaCiclo();
                 }
             });
-
         } else {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
-        }
-
-        if (mallaPasadas.size() == materias.size() || cicloCursado >= 3) {
-            //JOptionPane.showMessageDialog(null, "Paso todas las materias.");
-            cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
-        } else {
-            cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
-        }
+        }   
+        cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
-
+    
+    /*Me consulta las materias por el estado que se le pase 
+      en una ventana emergente
+    */
     private void mostrarInformacion(String estado) {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
@@ -404,7 +392,7 @@ public class FrmAlumnoCursoCTR {
                 for (int j = 0; j < cursos.size(); j++) {
                     //Si es la misma materia la eliminamos de cursos
                     if (mallaMatriculadas.get(i).getMateria().getId() == cursos.get(j).getId_materia().getId()) {
-                        System.out.println("Esta matriculado en: " + cursos.get(j).getId_materia().getNombre());
+                        //System.out.println("Esta matriculado en: " + cursos.get(j).getId_materia().getNombre());
                         cursos.remove(j);
                     }
                 }
@@ -414,7 +402,7 @@ public class FrmAlumnoCursoCTR {
                 for (int j = 0; j < cursos.size(); j++) {
                     //Si es la misma materia la eliminamos de cursos
                     if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getId_materia().getId()) {
-                        System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
+                        //System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
                         cursos.remove(j);
                     }
                 }
@@ -437,10 +425,7 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
-    private ArrayList<MateriaRequisitoMD> requisitos;
-
     private void llenarTblConRequisitosPasados(ArrayList<CursoMD> cursos) {
-        mallaRequisitos = new ArrayList();
         MallaAlumnoMD requisito;
         //Si se quiere matricular en un ciclo inferior o igual a 3 debemos revisar si
         //Paso los requisitos
@@ -449,23 +434,23 @@ public class FrmAlumnoCursoCTR {
         for (int i = 0; i < cursos.size(); i++) {
             requisitos = matReq.buscarPreRequisitos(cursos.get(i).getId_materia().getId());
             for (int j = 0; j < requisitos.size(); j++) {
-                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(), 
+                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
                         requisitos.get(j).getMateriaRequisito().getId());
-                System.out.println("La materua es "+requisitos.get(j).getMateriaRequisito().getNombre());
                 if (requisito.getEstado() != null) {
                     if (requisito.getEstado().equals("R")) {
-                        posElim[i] = i+1;
+                        posElim[i] = i + 1;
                     }
                 }
             }
         }
-        System.out.println("Debemos eliminar: ");
+        //Eliminamos las materias que tiene pre requisitos y aun no los a pasado
         for (int i = 0; i < posElim.length; i++) {
-            System.out.print(posElim[i] + " ");
             if (posElim[i] != 0) {
-                cursos.remove(posElim[i]-1); 
+                cursos.remove(posElim[i] - 1);
             }
         }
+        //Pasamos el nuevo cursos depurado al array 
+        cursosPen = cursos;
         //Si cursos no esta vacio llenamos la tabla
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {

@@ -111,7 +111,7 @@ public class CursoBD extends CursoMD {
                     c.setId_materia(m);
                     c.setCurso_capacidad(rs.getInt("curso_capacidad"));
                     c.setCurso_ciclo(rs.getInt("curso_ciclo"));
-                    
+
                     cursos.add(c);
                 }
                 return cursos;
@@ -139,12 +139,13 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int cicloReprobado, int cicloCursado) {
-        String sql = "SELECT DISTINCT curso_nombre\n"
+        String sql = "SELECT DISTINCT curso_nombre, curso_ciclo\n"
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
-                + "AND curso_ciclo >= " + cicloReprobado + " AND curso_ciclo <= " + (cicloCursado + 1) + ";";
-        System.out.println("Consulta de los ciclos por perido lectivo\n"
-                + sql);
+                + "AND curso_ciclo >= " + cicloReprobado + " AND curso_ciclo <= " + (cicloCursado + 1) + " "
+                + "ORDER BY curso_ciclo;";
+        //System.out.println("Consulta de los ciclos por perido lectivo\n"
+        //        + sql);
         return consultarNombreCursos(sql);
     }
 

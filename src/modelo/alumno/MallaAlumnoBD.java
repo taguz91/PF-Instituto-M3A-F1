@@ -162,7 +162,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         String sql = "SELECT id_malla_alumno, id_materia, malla_almn_estado \n"
                 + "FROM public.\"MallaAlumno\" "
                 + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = "+idMateria+";";
-        System.out.println(sql);
+        //System.out.println(sql);
         MallaAlumnoMD mll = new MallaAlumnoMD();
         ResultSet rs = conecta.sql(sql);
         try {
