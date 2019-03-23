@@ -139,7 +139,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 AlumnoCarreraMD a = new AlumnoCarreraMD();
                 while (rs.next()) {
                     MallaAlumnoMD mll = new MallaAlumnoMD();
-                    a.setId(rs.getInt("id_malla_alumno"));
+                    a.setId(idAlumnoCarrera);
                     mll.setId(rs.getInt("id_malla_alumno"));
                     MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
                     mll.setMateria(m);
@@ -153,6 +153,37 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             }
         } catch (SQLException e) {
             System.out.println("No se pudieron cargar mallas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public MallaAlumnoMD buscarMateriaEstado(int idAlumnoCarrera, int idMateria) {
+        String sql = "SELECT id_malla_alumno, id_materia, malla_almn_estado \n"
+                + "FROM public.\"MallaAlumno\" "
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = "+idMateria+";";
+        System.out.println(sql);
+        MallaAlumnoMD mll = new MallaAlumnoMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                while (rs.next()) {
+                    
+                    a.setId(idAlumnoCarrera);
+                    mll.setId(rs.getInt("id_malla_alumno"));
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    mll.setEstado(rs.getString("malla_almn_estado"));
+                    mll.setMateria(m);
+                    mll.setAlumnoCarrera(a);
+
+                }
+                return mll;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron buscar estado materia");
             System.out.println(e.getMessage());
             return null;
         }

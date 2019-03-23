@@ -20,6 +20,8 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.materia.MateriaRequisitoBD;
+import modelo.materia.MateriaRequisitoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.CmbValidar;
@@ -67,6 +69,9 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MallaAlumnoMD> mallaPerdidas;
     private ArrayList<MallaAlumnoMD> mallaMatriculadas;
     private ArrayList<MallaAlumnoMD> mallaCursadas;
+    private ArrayList<MallaAlumnoMD> mallaRequisitos = new ArrayList();
+    //Para revisar de que materias son requisitos y si no paso eliminarla 
+    private final MateriaRequisitoBD matReq;
 
     public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -83,6 +88,7 @@ public class FrmAlumnoCursoCTR {
         this.cur = new CursoBD(conecta);
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.mat = new MateriaBD(conecta);
+        this.matReq = new MateriaRequisitoBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
         frmAlmCurso.show();
@@ -311,10 +317,10 @@ public class FrmAlumnoCursoCTR {
         //Buscamos las materias en las que ya esta matriculado para borrarlas de la tabla
         mallaMatriculadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "M");
         System.out.println("Se encuentra matriculado en " + mallaMatriculadas.size());
-        
+
         //Buscamos todas las materias en las que ya a cursado  
         mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
-        System.out.println("Ah cursado "+mallaCursadas.size());
+        System.out.println("Ah cursado " + mallaCursadas.size());
 
         if (mallaPerdidas.size() > 0) {
             System.out.println("Ciclo en el que se reprobo " + mallaPerdidas.get(0).getMallaCiclo());
@@ -398,8 +404,8 @@ public class FrmAlumnoCursoCTR {
                 for (int j = 0; j < cursos.size(); j++) {
                     //Si es la misma materia la eliminamos de cursos
                     if (mallaMatriculadas.get(i).getMateria().getId() == cursos.get(j).getId_materia().getId()) {
-                        System.out.println("Esta matriculado en: "+cursos.get(j).getId_materia().getNombre());
-                        cursos.remove(j); 
+                        System.out.println("Esta matriculado en: " + cursos.get(j).getId_materia().getNombre());
+                        cursos.remove(j);
                     }
                 }
             }
@@ -408,11 +414,60 @@ public class FrmAlumnoCursoCTR {
                 for (int j = 0; j < cursos.size(); j++) {
                     //Si es la misma materia la eliminamos de cursos
                     if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getId_materia().getId()) {
-                        System.out.println("Ya curso: "+cursos.get(j).getId_materia().getNombre());
-                        cursos.remove(j); 
+                        System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
+                        cursos.remove(j);
                     }
                 }
             }
+            //Comprabamos que el curso en el que se quiere no estan vacios 
+            if (!cursos.isEmpty()) {
+                //Revisamos el ciclo que es 
+                if (cursos.get(0).getCurso_ciclo() > 3) {
+                    cursos.forEach(c -> {
+                        Object[] valores = {c.getId_materia().getNombre()};
+                        mdMatPen.addRow(valores);
+                        //Agregamos la lista de cursos depurada 
+                        cursosPen = cursos;
+                    });
+                } else {
+                    llenarTblConRequisitosPasados(cursos);
+                }
+
+            }
+        }
+    }
+
+    private ArrayList<MateriaRequisitoMD> requisitos;
+
+    private void llenarTblConRequisitosPasados(ArrayList<CursoMD> cursos) {
+        mallaRequisitos = new ArrayList();
+        MallaAlumnoMD requisito;
+        //Si se quiere matricular en un ciclo inferior o igual a 3 debemos revisar si
+        //Paso los requisitos
+        int[] posElim = new int[cursos.size()];
+        int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
+        for (int i = 0; i < cursos.size(); i++) {
+            requisitos = matReq.buscarPreRequisitos(cursos.get(i).getId_materia().getId());
+            for (int j = 0; j < requisitos.size(); j++) {
+                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(), 
+                        requisitos.get(j).getMateriaRequisito().getId());
+                System.out.println("La materua es "+requisitos.get(j).getMateriaRequisito().getNombre());
+                if (requisito.getEstado() != null) {
+                    if (requisito.getEstado().equals("R")) {
+                        posElim[i] = i+1;
+                    }
+                }
+            }
+        }
+        System.out.println("Debemos eliminar: ");
+        for (int i = 0; i < posElim.length; i++) {
+            System.out.print(posElim[i] + " ");
+            if (posElim[i] != 0) {
+                cursos.remove(posElim[i]-1); 
+            }
+        }
+        //Si cursos no esta vacio llenamos la tabla
+        if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
                 Object[] valores = {c.getId_materia().getNombre()};
                 mdMatPen.addRow(valores);
