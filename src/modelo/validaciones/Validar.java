@@ -95,10 +95,10 @@ public class Validar {
     }
     
     public static boolean esCorreo(String entrada){
-        if(entrada.matches("[A-Za-z0-9]+@[a-z]+\\.+[a-z]+$") == true){
-            return true;
-        } else{
-            return false;
-        }
+        return entrada.matches("[A-Za-z0-9]+@[a-z]+\\.+[a-z]+$");   
+    }
+    
+    public static boolean esNota(String entrada){
+        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}");   
     }
 }

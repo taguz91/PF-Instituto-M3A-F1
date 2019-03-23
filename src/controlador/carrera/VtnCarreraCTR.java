@@ -3,7 +3,6 @@ package controlador.carrera;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.io.File;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
+import modelo.usuario.RolMD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -34,18 +36,21 @@ public class VtnCarreraCTR {
     private final VtnCarrera vtnCarrera;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
 
     private final CarreraBD car;
     ArrayList<CarreraMD> carreras;
 
     DefaultTableModel mdTbl;
 
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnCarrera = vtnCarrera;
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Carreras");
@@ -122,7 +127,7 @@ public class VtnCarreraCTR {
 
     public void llamaReporteCarreras() {
 
-        JasperReport jr = null;
+        JasperReport jr;
         String path = "./src/vista/reportes/repCarreras.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
@@ -142,7 +147,7 @@ public class VtnCarreraCTR {
     }
     public void llamaReporteAlumnoCarrera(){
 
-        JasperReport jr = null;
+        JasperReport jr;
         String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
@@ -158,6 +163,27 @@ public class VtnCarreraCTR {
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 }

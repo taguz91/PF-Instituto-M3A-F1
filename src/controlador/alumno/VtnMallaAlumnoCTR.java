@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
@@ -15,6 +17,7 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnMallaAlumno;
@@ -32,6 +35,7 @@ public class VtnMallaAlumnoCTR {
     private final MallaAlumnoBD mallaAlm;
     private final VtnPrincipalCTR ctrPrin;
     private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
+    private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos 
@@ -43,15 +47,17 @@ public class VtnMallaAlumnoCTR {
     //Modelo de la tabla  
     private DefaultTableModel mdlTbl;
 
-    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm,
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtn;
         this.vtnMallaAlm = vtnMallaAlm;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Malla alumnos");
-        
+
         this.almCar = new AlumnoCarreraBD(conecta);
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.car = new CarreraBD(conecta);
@@ -93,7 +99,7 @@ public class VtnMallaAlumnoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = vtnMallaAlm.getTxtBuscar().getText().trim();
-                if (a.length() > 10) {
+                if (a.length() >= 10) {
                     buscarMalla(a);
                 }
             }
@@ -103,17 +109,18 @@ public class VtnMallaAlumnoCTR {
         //Buscar en el combo
 
         vtnMallaAlm.getCmbAlumnos().getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
-                int l = 3;
+                int l = 5;
                 String a = vtnMallaAlm.getCmbAlumnos().getEditor().getItem().toString().trim();
                 if (Validar.esNumeros(a)) {
-                    l = 9;
+                    l = 10;
                 }
-                if (e.getKeyCode() != 38 && e.getKeyCode() != 40 
-                        && e.getKeyCode() != 37 && e.getKeyCode() != 39 
-                        && a.length() >= l && e.getKeyCode() != 13) {
+                if (e.getKeyCode() != 38 && e.getKeyCode() != 40
+                        && e.getKeyCode() != 37 && e.getKeyCode() != 39
+                        && a.length() >= l && e.getKeyCode() != 13 
+                        && e.getKeyCode() != 10) {
                     buscarAlumno(a);
                 }
             }
@@ -127,12 +134,12 @@ public class VtnMallaAlumnoCTR {
         System.out.println(aguja);
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
         if (Validar.esLetrasYNumeros(aguja)) {
-            alumnos = almCar.buscarAlumnoCarrera(carreras.get(posCar - 1).getId(), 
+            alumnos = almCar.buscarAlumnoCarrera(carreras.get(posCar - 1).getId(),
                     aguja);
             llenarCmbAlumno(alumnos);
             vtnMallaAlm.getCmbAlumnos().showPopup();
             vtnMallaAlm.getCmbAlumnos().getEditor().setItem(aguja);
-            
+
         }
     }
 
@@ -161,22 +168,31 @@ public class VtnMallaAlumnoCTR {
         int pos = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
         if (pos >= 0) {
             MallaAlumnoMD malla = mallas.get(pos);
-            double nota = Double.parseDouble(JOptionPane.showInputDialog(
-                    "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
-                    + "Numero de matricula: " + malla.getMallaNumMatricula()));
             if (malla.getMallaNumMatricula() > 0) {
-                mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), nota);
+                if (malla.getEstado().equals("C")) {
+                    JOptionPane.showMessageDialog(vtnPrin, "Ya tiene cursada esta materia no se puede ingresar nota");
+                }else{
+                    String nota = JOptionPane.showInputDialog(
+                        "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
+                        + "Numero de matricula: " + malla.getMallaNumMatricula());
+                    if (Validar.esNota(nota)) {
+                        mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
+                    }else{
+                        JOptionPane.showMessageDialog(vtnPrin, "Ingrese una nota valida");
+                        ingresarNota();
+                    }
+                }
             } else {
                 JOptionPane.showMessageDialog(vtnPrin, "Alumno no se encuentra matricula en esta \n"
                         + "materia, no puede ingresar su nota.");
             }
+        }else{
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila para poder ingresar una nota.");
         }
     }
 
     private void cargarPorEstado() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
-        System.out.println("Posicion "+posAlm);
-        System.out.println("Tamanio: "+alumnos.size());
         int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
         if (posAlm > 0 && posEst > 0) {
             mallas = mallaAlm.cargarMallaAlumnoPorEstado(
@@ -199,6 +215,7 @@ public class VtnMallaAlumnoCTR {
                 mdlTbl.addRow(valores);
             });
         }
+        vtnMallaAlm.getLblResultados().setText(mallas.size()+ " Resultados obtenidos.");
     }
 
     private void cargarCmbCarrera() {
@@ -215,7 +232,6 @@ public class VtnMallaAlumnoCTR {
     private void clickCmbCarrera() {
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
         if (posCar > 0) {
-            cargarCmbAlumno(carreras.get(posCar - 1).getId());
             vtnMallaAlm.getCmbAlumnos().setEnabled(true);
             cargarCmbEstado();
         } else {
@@ -223,11 +239,6 @@ public class VtnMallaAlumnoCTR {
             vtnMallaAlm.getCmbAlumnos().setEnabled(false);
             vtnMallaAlm.getCmbEstado().removeAllItems();
         }
-    }
-
-    private void cargarCmbAlumno(int idCarrera) {
-        alumnos = almCar.cargarAlumnoCarreraPorCarrera(idCarrera);
-        llenarCmbAlumno(alumnos);
     }
 
     private void llenarCmbAlumno(ArrayList<AlumnoCarreraMD> alumnos) {
@@ -247,6 +258,28 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getCmbEstado().removeAllItems();
         for (String e : cmbEstado) {
             vtnMallaAlm.getCmbEstado().addItem(e);
+        }
+        vtnMallaAlm.getCmbEstado().setSelectedIndex(0);
+    }
+
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 }
