@@ -60,7 +60,6 @@ public class FrmAlumnoCTR {
         this.permisos = permisos; 
         this.sectorE = new SectorEconomicoBD(conecta);
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno");

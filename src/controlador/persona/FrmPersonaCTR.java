@@ -350,6 +350,7 @@ public class FrmPersonaCTR {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Image foto_Nueva;
+                //foto_Nueva = vtnWebCam.getLbl_Imagen().getIcon();
                 foto_Nueva = foto.getScaledInstance(frmPersona.getLblFoto().getWidth(), frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
                 frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
                 vtnWebCam.dispose();

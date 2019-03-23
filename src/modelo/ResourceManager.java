@@ -53,9 +53,12 @@ public class ResourceManager {
 
         }
 
-        JDBC_URL = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada";
-        USERNAME = "postgres";
-        PASSWORD = "Holapostgres";
+//        JDBC_URL = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada";
+//        USERNAME = "postgres";
+//        PASSWORD = "Holapostgres";
+//        JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+//        USERNAME = "ROOT";
+//        PASSWORD = "ROOT";
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;
