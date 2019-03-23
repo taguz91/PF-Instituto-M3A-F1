@@ -763,9 +763,7 @@ public class PersonaBD extends PersonaMD {
                 + "INNER JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"Alumnos\".id_alumno = " + idAlumno;
-        
-        
-        
+
         ResultSet rs = ResourceManager.Query(SELECT);
 
         PersonaMD persona = new PersonaMD();

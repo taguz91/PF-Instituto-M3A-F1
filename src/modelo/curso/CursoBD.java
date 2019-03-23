@@ -152,7 +152,7 @@ public class CursoBD extends CursoMD {
     public CursoMD buscarCurso(int idCurso) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
-                + "	FROM public.\"Cursos\" id_curso = " + idCurso + ";";
+                + "	FROM public.\"Cursos\" WHERE \"Cursos\".id_curso = " + idCurso + ";";
         return consultarCurso(sql);
     }
 
