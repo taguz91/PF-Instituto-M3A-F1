@@ -158,18 +158,22 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"AlumnoCurso\".almn_curso_estado,\n"
                 + "\"AlumnoCurso\".almn_curso_num_faltas\n"
                 + "FROM\n"
-                + "\"public\".\"AlumnoCurso\"\n"
+                + "\"AlumnoCurso\"\n"
                 + "INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
                 + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
                 + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
                 + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                + "INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
                 + "\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
                 + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "';";
+                + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
+                + "ORDER BY\n"
+                + "\"Personas\".persona_primer_apellido ASC;";
 
         System.out.println(SELECT);
 

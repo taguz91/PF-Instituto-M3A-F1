@@ -99,6 +99,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         cmbDocente.setEnabled(false);
 
+        tblNotas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -131,6 +132,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         tblNotas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
             tblNotas.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblNotas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblNotas.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tblNotas.getColumnModel().getColumn(3).setPreferredWidth(150);
         }
 
         btnImprimir.setText("Impromir");
