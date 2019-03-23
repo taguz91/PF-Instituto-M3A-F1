@@ -79,6 +79,10 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         return btnMtCursadas;
     }
 
+    public JButton getBtnReprobadas() {
+        return btnReprobadas;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +103,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblErrorBuscar = new javax.swing.JLabel();
         lblErrorPrdLectivo = new javax.swing.JLabel();
         btnMtCursadas = new javax.swing.JButton();
+        btnReprobadas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMateriasSelec = new javax.swing.JTable();
@@ -146,6 +151,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnMtCursadas.setText("Ver materias cursadas");
 
+        btnReprobadas.setText("Ver materias reprobadas");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -167,10 +174,10 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblErrorBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(btnMtCursadas)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnReprobadas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMtCursadas)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -192,8 +199,10 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(txtBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(btnMtCursadas))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMtCursadas)
+                    .addComponent(btnReprobadas)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
@@ -336,6 +345,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPasarTodos;
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnRegresarTodos;
+    private javax.swing.JButton btnReprobadas;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbPrdLectivo;
     private javax.swing.JLabel jLabel1;

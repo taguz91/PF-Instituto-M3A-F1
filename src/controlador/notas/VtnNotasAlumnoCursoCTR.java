@@ -272,21 +272,24 @@ public class VtnNotasAlumnoCursoCTR {
             listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
             listaNotas.stream()
-                    .forEach(obj -> {
+                    .forEach(objAlumCurso -> {
+
+                        PersonaMD persona = PersonaBD.selectNombresApellidosWhere(objAlumCurso.getAlumno().getId_Alumno());
+
                         tablaNotas.addRow(new Object[]{
                             tablaNotas.getDataVector().size() + 1,
-                            "CEDULA",
-                            "APELLIDOS",
-                            "NOMBRE",
-                            obj.getNota1Parcial(),
-                            obj.getNotaExamenInter(),
+                            persona.getIdentificacion(),
+                            persona.getPrimerApellido() + " " + persona.getSegundoApellido(),
+                            persona.getPrimerNombre() + " " + persona.getSegundoNombre(),
+                            objAlumCurso.getNota1Parcial(),
+                            objAlumCurso.getNotaExamenInter(),
                             0.0,
-                            obj.getNota2Parcial(),
-                            obj.getNotaExamenFinal(),
-                            obj.getNotaExamenSupletorio(),
-                            obj.getNotaFinal(),
-                            obj.getEstado(),
-                            obj.getNumFalta(),
+                            objAlumCurso.getNota2Parcial(),
+                            objAlumCurso.getNotaExamenFinal(),
+                            objAlumCurso.getNotaExamenSupletorio(),
+                            objAlumCurso.getNotaFinal(),
+                            objAlumCurso.getEstado(),
+                            objAlumCurso.getNumFalta(),
                             "%"
                         });
                     });

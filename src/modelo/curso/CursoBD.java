@@ -95,6 +95,36 @@ public class CursoBD extends CursoMD {
         return consultarCursos(sql);
     }
 
+    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
+        String sql = "SELECT id_curso, id_materia, \n"
+                + "curso_capacidad, curso_ciclo\n"
+                + "FROM public.\"Cursos\" "
+                + "WHERE curso_nombre = '" + nombre + "' AND id_prd_lectivo = " + idPrdLectivo + ";";
+        ArrayList<CursoMD> cursos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CursoMD c = new CursoMD();
+                    c.setId_curso(rs.getInt("id_curso"));
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    c.setId_materia(m);
+                    c.setCurso_capacidad(rs.getInt("curso_capacidad"));
+                    c.setCurso_ciclo(rs.getInt("curso_ciclo"));
+
+                    cursos.add(c);
+                }
+                return cursos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos. ");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public ArrayList<String> cargarNombreCursos() {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\";";
@@ -108,11 +138,14 @@ public class CursoBD extends CursoMD {
         return consultarNombreCursos(sql);
     }
 
-    public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int ciclo) {
-        String sql = "SELECT DISTINCT curso_nombre\n"
+    public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int cicloReprobado, int cicloCursado) {
+        String sql = "SELECT DISTINCT curso_nombre, curso_ciclo\n"
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
-                + "AND curso_ciclo > " + ciclo + ";";
+                + "AND curso_ciclo >= " + cicloReprobado + " AND curso_ciclo <= " + (cicloCursado + 1) + " "
+                + "ORDER BY curso_ciclo;";
+        //System.out.println("Consulta de los ciclos por perido lectivo\n"
+        //        + sql);
         return consultarNombreCursos(sql);
     }
 
