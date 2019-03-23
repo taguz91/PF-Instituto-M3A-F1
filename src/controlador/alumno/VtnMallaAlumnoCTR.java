@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
@@ -15,6 +17,7 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnMallaAlumno;
@@ -32,6 +35,7 @@ public class VtnMallaAlumnoCTR {
     private final MallaAlumnoBD mallaAlm;
     private final VtnPrincipalCTR ctrPrin;
     private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
+    private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos 
@@ -43,11 +47,13 @@ public class VtnMallaAlumnoCTR {
     //Modelo de la tabla  
     private DefaultTableModel mdlTbl;
 
-    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtn;
         this.vtnMallaAlm = vtnMallaAlm;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos; 
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Malla alumnos");
@@ -247,6 +253,27 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getCmbEstado().removeAllItems();
         for (String e : cmbEstado) {
             vtnMallaAlm.getCmbEstado().addItem(e);
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 }

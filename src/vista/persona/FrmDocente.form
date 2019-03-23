@@ -44,17 +44,20 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="40" width="-1" height="-1"/>
+          <AbsoluteConstraints x="10" y="30" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="txtIdentificacion">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Ingrese su Cedula o numero de Pasaporte"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdentificacionActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="40" width="140" height="-1"/>
+          <AbsoluteConstraints x="100" y="30" width="140" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -70,6 +73,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbxOtroTrabajo">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Seleccione si el Docente tiene otro trabajo"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Constraints>
@@ -100,6 +104,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbxDocenteCapacitador">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Seleccione si el Docente es Capacitador"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Constraints>
@@ -140,6 +145,7 @@
             <StringItem index="5" value=""/>
           </StringArray>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Seleccione el tipo de tiempo del Docente"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <AuxValues>
@@ -156,6 +162,7 @@
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
           <SpinnerModel initial="3" maximum="8" minimum="3" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Categoria que ocupa el Docente"/>
         <Property name="autoscrolls" type="boolean" value="true"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -185,6 +192,7 @@
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Presione para guardar los cambios ya realizados"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Constraints>
@@ -196,6 +204,7 @@
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Presione si desee cancelar, no se guardaran los cambios"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -232,23 +241,25 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/vista/img/icons8_Search_15px.png"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Buscar Docente"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="250" y="40" width="30" height="20"/>
+          <AbsoluteConstraints x="250" y="30" width="30" height="20"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDatosPersona">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="70" width="270" height="20"/>
+          <AbsoluteConstraints x="10" y="80" width="270" height="20"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegistrarPersona">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar Persona"/>
+        <Property name="toolTipText" type="java.lang.String" value="Registrar una nueva persona"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -280,6 +291,13 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="130" y="160" width="120" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblError">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="100" y="50" width="140" height="20"/>
         </Constraint>
       </Constraints>
     </Component>

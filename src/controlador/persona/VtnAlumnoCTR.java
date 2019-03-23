@@ -10,13 +10,17 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.accesos.AccesosBD;
+import modelo.accesos.AccesosMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.usuario.RolMD;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
+import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
 
 public class VtnAlumnoCTR {
@@ -25,15 +29,18 @@ public class VtnAlumnoCTR {
     private final VtnAlumno vtnAlumno;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
+    private final RolMD permisos;
     
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno, 
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnAlumno = vtnAlumno;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos");
@@ -42,6 +49,10 @@ public class VtnAlumnoCTR {
         vtnAlumno.show();
         //Inicializamos la clase de alumno  
         bdAlumno = new AlumnoBD(conecta);
+    }
+
+    VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnDocente docVTN, ConectarDB conecta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void iniciar() {
@@ -81,7 +92,7 @@ public class VtnAlumnoCTR {
 
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin);
+        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin, permisos);
         ctrFrmAlumno.iniciar();
     }
 
@@ -152,7 +163,7 @@ public class VtnAlumnoCTR {
             new Object[] { "Editar Datos Personales", "Editar Datos de Alumno"},"Editar Datos de Alumno");
             if(seleccion == 1){
                 frmAlumno = new FrmAlumno();
-                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin);
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin, permisos);
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
@@ -197,6 +208,27 @@ public class VtnAlumnoCTR {
                     }
                 }
             }
+        }
+    }
+    
+    private void InitPermisos() {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+
+//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
+//                vtnCarrera.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
+//                vista.getBtnAsignarRoles().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
+//                vista.getBtnVerRoles().setEnabled(true);
+//            }
         }
     }
 

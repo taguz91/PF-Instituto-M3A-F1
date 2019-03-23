@@ -11,17 +11,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
+import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.CmbValidar;
 import vista.persona.FrmAlumno;
+import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
 import vista.principal.VtnPrincipal;
 
@@ -36,19 +40,23 @@ public class FrmAlumnoCTR {
     private AlumnoBD bdAlumno;
     private final VtnPrincipalCTR ctrPrin;
     private final ConectarDB conecta;
+    private final RolMD permisos;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
-    private boolean editar = false;
-    private boolean editar_2 = false;
+    private boolean editar = false; //Variable de permiso para editar mediante el filtro de datos del evento de teclado
+    private boolean editar_2 = false; //Variable de permiso de edicion cuando se filtran los datos de la Ventana de Alumno
     private static int validar = 0; //Variable para saber a que textFiel se valida
-
+    private List<AlumnoMD> Alumnos = new ArrayList();
+    private List<SectorEconomicoMD> Sectores = new ArrayList();
 
     private final SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, 
+            VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
         this.conecta = conecta;
+        this.permisos = permisos; 
         this.sectorE = new SectorEconomicoBD(conecta);
         this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
@@ -162,7 +170,7 @@ public class FrmAlumnoCTR {
                 habilitarGuardar();
             }
         };
-        
+
         KeyListener cedula = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -180,6 +188,7 @@ public class FrmAlumnoCTR {
             }
         };
 
+        iniciaDatos();
         habilitarGuardar();
         iniciarSectores();
         iniciarAnios();
@@ -215,86 +224,151 @@ public class FrmAlumnoCTR {
 
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
-        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin);
+        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin, permisos);
         c.iniciar();
+    }
+
+    public void iniciaDatos() {
+        //Alumnos = bdAlumno.filtrarAlumno();
+        Sectores = sectorE.capturarSectores();
     }
 
     public void buscarCedula() {
         if (cont == 1) {
-            
+
             boolean error = false;
             String cedula;
             cedula = frmAlumno.getTxt_Cedula().getText();
 
             if (!cedula.equals("")) {
-
-                if (modelo.validaciones.Validar.esNumeros(cedula) == false) {
-                    error = true;
-                    frmAlumno.getLbl_ErrCedula().setVisible(true);
-                }
                 if (cedula.length() == 10) {
                     if (modelo.validaciones.Validar.esCedula(cedula) == false) {
                         error = true;
                         frmAlumno.getLbl_ErrCedula().setText("Ingrese una cédula válida");
                         frmAlumno.getLbl_ErrCedula().setVisible(true);
                     }
-                } else if(cedula.length() < 10 && cedula.length() > 10){
+                } else if (cedula.length() < 10 || cedula.length() > 10) {
                     error = true;
                     frmAlumno.getLbl_ErrCedula().setText("La cédula lleva 10 números");
                     frmAlumno.getLbl_ErrCedula().setVisible(true);
                 }
 
                 if (error == false) {
-                    if (frmAlumno.getTxt_Cedula().getText().length() >= 3) {
-                        List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-                        if (p.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Cedula Incorrecta");
-                            cont = 0;
-                        } else {
+                    boolean acceso = false;
+//                    if (frmAlumno.getTxt_Cedula().getText().length() >= 3) {
+
+                    for (int i = 0; i < Alumnos.size(); i++) {
+                        if (frmAlumno.getTxt_Cedula().getText().equals(Alumnos.get(i).getIdentificacion())) {
+                            acceso = true;
                             Font negrita = new Font("Tahoma", Font.BOLD, 13);
                             frmAlumno.getTxt_Nombre().setFont(negrita);
-                            frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
-                                    + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
-                            AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
-                            habilitarGuardar();
-                            System.out.println(p.get(0).getIdPersona());
-                            if (alumno.getTipo_Colegio() == null) {
-//                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
-//                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+                            frmAlumno.getTxt_Nombre().setText(Alumnos.get(i).getPrimerNombre() + " " + Alumnos.get(i).getSegundoNombre()
+                                    + " " + Alumnos.get(i).getPrimerApellido() + " " + Alumnos.get(i).getSegundoApellido());
+                            if (Alumnos.get(i).getTipo_Colegio() == null) {
                                 cont = 0;
                                 JOptionPane.showMessageDialog(null, "Esta persona no esta registrada como alumno");
                             } else {
-//                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
-//                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
-                                frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
-                                frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
-                                frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(alumno.getAnio_graduacion()));
-                                frmAlumno.getCmBx_NvAcademico().setSelectedItem(alumno.getNivel_Academico());
-                                frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
-                                frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
-                                if (alumno.getSectorEconomico().getId_SecEconomico() == 0) {
+                                frmAlumno.getCmBx_TipoColegio().setSelectedItem(Alumnos.get(i).getTipo_Colegio());
+                                frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(Alumnos.get(i).getTipo_Bachillerato());
+                                frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(Alumnos.get(i).getAnio_graduacion()));
+                                frmAlumno.getCmBx_NvAcademico().setSelectedItem(Alumnos.get(i).getNivel_Academico());
+                                frmAlumno.getTxt_TlSuperior().setText(Alumnos.get(i).getTitulo_Superior());
+                                frmAlumno.getTxt_Ocupacion().setText(Alumnos.get(i).getOcupacion());
+                                if (Alumnos.get(i).getSectorEconomico().getId_SecEconomico() == 0) {
                                     frmAlumno.getCmBx_SecEconomico().setSelectedItem("|SELECCIONE|");
                                 } else {
-                                    SectorEconomicoMD sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico());
-                                    frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
+                                    for (int x = 0; x < Sectores.size(); x++) {
+                                        if(Alumnos.get(i).getSectorEconomico().getId_SecEconomico() == Sectores.get(x).getId_SecEconomico()){
+                                            frmAlumno.getCmBx_SecEconomico().setSelectedItem(Sectores.get(x).getDescrip_SecEconomico().toUpperCase());
+                                        }
+                                    }
                                 }
-                                frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
-                                frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
-                                frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
-                                frmAlumno.getCmBx_Parentesco().setSelectedItem(alumno.getParentesco_Contacto());
-                                frmAlumno.getTxt_ConEmergency().setText(alumno.getContacto_Emergencia());
-                                frmAlumno.getChkBx_EdcSuperior().setSelected(alumno.isEducacion_Superior());
-                                frmAlumno.getChkBx_Pension().setSelected(alumno.isPension());
-                                frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
+                                frmAlumno.getCmBx_ForPadre().setSelectedItem(Alumnos.get(i).getFormacion_Padre());
+                                frmAlumno.getCmBx_ForMadre().setSelectedItem(Alumnos.get(i).getFormacion_Madre());
+                                frmAlumno.getTxt_NomContacto().setText(Alumnos.get(i).getNom_Contacto());
+                                frmAlumno.getCmBx_Parentesco().setSelectedItem(Alumnos.get(i).getParentesco_Contacto());
+                                frmAlumno.getTxt_ConEmergency().setText(Alumnos.get(i).getContacto_Emergencia());
+                                frmAlumno.getChkBx_EdcSuperior().setSelected(Alumnos.get(i).isEducacion_Superior());
+                                frmAlumno.getChkBx_Pension().setSelected(Alumnos.get(i).isPension());
+                                frmAlumno.getChkBx_Trabaja().setSelected(Alumnos.get(i).isTrabaja());
                                 cont = 0;
                                 editar_2 = true;
                                 habilitarGuardar();
                             }
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese una Cedúla para filtrar los datos");
+                    }
+                    
+                    if(acceso == false){
+                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                        int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
+                        if (result == 0) {
+//                            VtnPrincipalCTR principal =  new 
+//                            ConectarDB conectar = new ConectarDB("Persona");
+                            FrmPersona frmPersona = new FrmPersona();
+                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                            ctrPers.iniciar();
+                            frmAlumno.dispose();
+                        }
                         cont = 0;
                     }
+
+//                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+//                    if (p.isEmpty()) {
+//                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+//                        int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
+//                        if (result == 0) {
+//                            ConectarDB conectar = new ConectarDB("Persona");
+//                            FrmPersona frmPersona = new FrmPersona();
+//                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conectar);
+//                            ctrPers.iniciar();
+//                            frmAlumno.dispose();
+//                        }
+//                        cont = 0;
+//                    } else {
+//                        Font negrita = new Font("Tahoma", Font.BOLD, 13);
+//                        frmAlumno.getTxt_Nombre().setFont(negrita);
+//                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
+//                                + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
+//                        AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
+//                        habilitarGuardar();
+////                            System.out.println(p.get(0).getIdPersona());
+//                        if (alumno.getTipo_Colegio() == null) {
+////                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
+////                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+//                            cont = 0;
+//                            JOptionPane.showMessageDialog(null, "Esta persona no esta registrada como alumno");
+//                        } else {
+////                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
+////                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+//                            frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
+//                            frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
+//                            frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(alumno.getAnio_graduacion()));
+//                            frmAlumno.getCmBx_NvAcademico().setSelectedItem(alumno.getNivel_Academico());
+//                            frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
+//                            frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
+//                            if (alumno.getSectorEconomico().getId_SecEconomico() == 0) {
+//                                frmAlumno.getCmBx_SecEconomico().setSelectedItem("|SELECCIONE|");
+//                            } else {
+//                                SectorEconomicoMD sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico());
+//                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
+//                            }
+//                            frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
+//                            frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
+//                            frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
+//                            frmAlumno.getCmBx_Parentesco().setSelectedItem(alumno.getParentesco_Contacto());
+//                            frmAlumno.getTxt_ConEmergency().setText(alumno.getContacto_Emergencia());
+//                            frmAlumno.getChkBx_EdcSuperior().setSelected(alumno.isEducacion_Superior());
+//                            frmAlumno.getChkBx_Pension().setSelected(alumno.isPension());
+//                            frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
+//                            cont = 0;
+//                            editar_2 = true;
+//                            habilitarGuardar();
+//                        }
+//                    }
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Ingrese una Cedúla para filtrar los datos");
+//                        cont = 0;
+//                    }
                 } else {
                     //JOptionPane.showMessageDialog(null, "Advertencia!! Revise su Cédula");
                     cont = 0;
@@ -335,8 +409,9 @@ public class FrmAlumnoCTR {
                 frmAlumno.getLbl_ErrConEmergencia().setVisible(false);
             }
             validar = 0;
-        } else if(validar == 5){
+        } else if (validar == 5) {
             if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
+                frmAlumno.getLbl_ErrCedula().setText("Ingrese solo números");
                 frmAlumno.getLbl_ErrCedula().setVisible(true);
             } else {
                 frmAlumno.getLbl_ErrCedula().setVisible(false);
@@ -401,9 +476,9 @@ public class FrmAlumnoCTR {
     }
 
     public void iniciarSectores() {
-        List<SectorEconomicoMD> sector = sectorE.capturarSectores();
-        for (int i = 0; i < sector.size(); i++) {
-            frmAlumno.getCmBx_SecEconomico().addItem(sector.get(i).getDescrip_SecEconomico().toUpperCase());
+//        List<SectorEconomicoMD> sector = sectorE.capturarSectores();
+        for (int i = 0; i < Sectores.size(); i++) {
+            frmAlumno.getCmBx_SecEconomico().addItem(Sectores.get(i).getDescrip_SecEconomico().toUpperCase());
         }
     }
 

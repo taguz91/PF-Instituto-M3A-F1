@@ -16,19 +16,11 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
-    
-    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
+    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto 
+//    //jdbc:postgresql://35.193.226.187:5432/BDinsta
 //    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 //    private String user = "ROOT";
 //    private String pass = "ROOT";
-
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConCursados"; //BD Johnny PCPRO
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3A"; //BD Johnny PCPRO
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFM3A"; //BD Johnny PCNOOB
-    // private String url = "jdbc:postgresql://localhost:5433/BDPFInstitutoM3A"; //BD Johnny PCPRO
-    //private String url = "jdbc:postgresql://localhost:5432/proyecto1"; //BD ARMANDO
-    //private String url = "jdbc:postgresql://190.11.21.244:5432/BDinsta"; //BD Diego
-    //private String url = "jdbc:postgresql://192.168.1.12:5432/Proyecto-Academico-Insta"; //BD Diego
 
     
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD David
