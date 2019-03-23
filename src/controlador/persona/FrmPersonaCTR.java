@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -53,7 +52,6 @@ public class FrmPersonaCTR {
     private TxtVCedula valCe;
     private int numAccion = 0;
     private Image foto;
-    private VtnWebCam vtnWebCam;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -319,9 +317,8 @@ public class FrmPersonaCTR {
 
     //Metodo para capturar una foto desde WebCam
     private void capturarFotoWebCam() {
-        vtnWebCam = new VtnWebCam(vtnPrin, false);
-        vtnWebCam.setVisible(true);
-        iniciarCamara();
+        WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
+        ctrCam.iniciarCamara();
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
@@ -370,9 +367,6 @@ public class FrmPersonaCTR {
         vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
     }
         
-    
-                
-
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
