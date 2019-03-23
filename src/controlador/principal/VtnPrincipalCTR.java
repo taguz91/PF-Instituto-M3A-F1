@@ -152,7 +152,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso());
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         
-        carga.detener();
         carga.start();
     }
 

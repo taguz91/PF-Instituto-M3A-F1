@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -53,7 +52,6 @@ public class FrmPersonaCTR {
     private TxtVCedula valCe;
     private int numAccion = 0;
     private Image foto;
-    private VtnWebCam vtnWebCam;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -319,59 +317,12 @@ public class FrmPersonaCTR {
 
     //Metodo para capturar una foto desde WebCam
     private void capturarFotoWebCam() {
-        vtnWebCam = new VtnWebCam(vtnPrin, false);
-        vtnWebCam.setVisible(true);
-        iniciarCamara();
+        WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
+        ctrCam.iniciarCamara();
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
-    
-    public void iniciarCamara(){
-    
-        ActionListener capturarFoto = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                byte[] imagen = vtnWebCam.getPanelCam().getBytes();
-                InputStream is = new ByteArrayInputStream(imagen);
-                BufferedImage bi = ImageIO.read(is);
-                    ImageIcon icono = new ImageIcon(bi);
-                    foto = icono.getImage().getScaledInstance( 
-                            vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
-                    vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
-                } catch (IOException ex) {
-                    Logger.getLogger(FrmPersonaCTR.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        };
-        
-        ActionListener guardarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Image foto_Nueva;
-                foto_Nueva = foto.getScaledInstance(frmPersona.getLblFoto().getWidth(), frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
-                frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
-                vtnWebCam.dispose();
-            }
-        };
-        
-        ActionListener cancelarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                vtnWebCam.setVisible(false);
-            }
-            
-        };
-        
-        vtnWebCam.getBtnCapturarFoto().addActionListener(capturarFoto);
-        vtnWebCam.getBtnGuardarFoto().addActionListener(guardarFoto);
-        vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
-    }
-        
-    
-                
-
+                  
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
