@@ -115,7 +115,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, true, true, true, true, true, true, true, false
+                false, false, false, false, true, true, false, true, true, true, false, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -131,7 +131,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblNotas);
         tblNotas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
-            tblNotas.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
             tblNotas.getColumnModel().getColumn(1).setPreferredWidth(100);
             tblNotas.getColumnModel().getColumn(2).setPreferredWidth(150);
             tblNotas.getColumnModel().getColumn(3).setPreferredWidth(150);
