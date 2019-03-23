@@ -19,7 +19,6 @@ import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaBD;
-import modelo.materia.MateriaMD;
 import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;

@@ -226,11 +226,11 @@
                 <Column editable="false" title="Nombres" type="java.lang.Object"/>
                 <Column editable="true" title="APORTE 1   /30" type="java.lang.Object"/>
                 <Column editable="true" title="EXAMEN INTERCICLO" type="java.lang.Object"/>
-                <Column editable="true" title="TOTAL INTERCICLO" type="java.lang.Object"/>
+                <Column editable="false" title="TOTAL INTERCICLO" type="java.lang.Object"/>
                 <Column editable="true" title="APORTE 2  /30" type="java.lang.Object"/>
                 <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Object"/>
                 <Column editable="true" title="/25 SUSP." type="java.lang.Object"/>
-                <Column editable="true" title="NOTA FINAL" type="java.lang.Object"/>
+                <Column editable="false" title="NOTA FINAL" type="java.lang.Object"/>
                 <Column editable="true" title="ESTADO" type="java.lang.Object"/>
                 <Column editable="true" title="Nro. Faltas" type="java.lang.Object"/>
                 <Column editable="false" title="% Faltas" type="java.lang.String"/>
@@ -238,7 +238,7 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="1">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="25" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
