@@ -323,49 +323,49 @@ public class FrmPersonaCTR {
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
     
-    public void iniciarCamara(){
-    
-        ActionListener capturarFoto = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                byte[] imagen = vtnWebCam.getPanelCam().getBytes();
-                InputStream is = new ByteArrayInputStream(imagen);
-                BufferedImage bi = ImageIO.read(is);
-                    ImageIcon icono = new ImageIcon(bi);
-                    foto = icono.getImage().getScaledInstance( 
-                            vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
-                    vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
-                } catch (IOException ex) {
-                    Logger.getLogger(FrmPersonaCTR.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        };
-        
-        ActionListener guardarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Image foto_Nueva;
-                //foto_Nueva = vtnWebCam.getLbl_Imagen().getIcon();
-                foto_Nueva = foto.getScaledInstance(frmPersona.getLblFoto().getWidth(), frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
-                frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
-                vtnWebCam.dispose();
-            }
-        };
-        
-        ActionListener cancelarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                vtnWebCam.setVisible(false);
-            }
-            
-        };
-        
-        vtnWebCam.getBtnCapturarFoto().addActionListener(capturarFoto);
-        vtnWebCam.getBtnGuardarFoto().addActionListener(guardarFoto);
-        vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
-    }
+//    public void iniciarCamara(){
+//    
+//        ActionListener capturarFoto = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                byte[] imagen = vtnWebCam.getPanelCam().getBytes();
+//                InputStream is = new ByteArrayInputStream(imagen);
+//                BufferedImage bi = ImageIO.read(is);
+//                    ImageIcon icono = new ImageIcon(bi);
+//                    foto = icono.getImage().getScaledInstance( 
+//                            vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
+//                    vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
+//                } catch (IOException ex) {
+//                    Logger.getLogger(FrmPersonaCTR.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+//            }
+//        };
+//        
+//        ActionListener guardarFoto = new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//                Image foto_Nueva;
+//                //foto_Nueva = vtnWebCam.getLbl_Imagen().getIcon();
+//                foto_Nueva = foto.getScaledInstance(frmPersona.getLblFoto().getWidth(), frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
+//                frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
+//                vtnWebCam.dispose();
+//            }
+//        };
+//        
+//        ActionListener cancelarFoto = new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//                vtnWebCam.setVisible(false);
+//            }
+//            
+//        };
+//        
+//        vtnWebCam.getBtnCapturarFoto().addActionListener(capturarFoto);
+//        vtnWebCam.getBtnGuardarFoto().addActionListener(guardarFoto);
+//        vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
+//    }
         
     public void guardarPersona() {
 
