@@ -1,4 +1,5 @@
 package controlador.prdlectivo;
+
 import datechooser.events.SelectionChangedEvent;
 import datechooser.events.SelectionChangedListener;
 import java.awt.Font;
@@ -39,7 +40,7 @@ public class FrmPrdLectivoCTR {
         this.vtnPrin = vtnPrin;
         this.frmPrdLectivo = frmPrdLectivo;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;        
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Periodo lectivo");
@@ -69,132 +70,83 @@ public class FrmPrdLectivoCTR {
             }
         };
 
-        MouseListener validarFecha = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Ingreso");
-                String date_Inicio = frmPrdLectivo.getDcr_FecInicio().getText();
-                String fec_Inicio[] = date_Inicio.split("/");
-                String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
-                String fec_Fin[] = date_Fin.split("/");
-                if (Integer.valueOf(fec_Inicio[1]) >= 9 || Integer.valueOf(fec_Inicio[1]) <= 12) {
-                    switch (fec_Inicio[1]) {
-                        case "9":
-                            if (Integer.valueOf(fec_Fin[1]) <= 12 || Integer.valueOf(fec_Fin[1]) == 1 && Integer.valueOf(fec_Fin[2]) == Integer.valueOf(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe pasar por lo menos 4 meses");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "10":
-                            if (Integer.valueOf(fec_Fin[1]) <= 12 || Integer.valueOf(fec_Fin[1]) <= 2 && Integer.valueOf(fec_Fin[2]) == Integer.valueOf(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe pasar por lo menos 4 meses");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "11":
-                            if (Integer.valueOf(fec_Fin[1]) <= 12 || Integer.valueOf(fec_Fin[1]) <= 3 && Integer.valueOf(fec_Fin[2]) == Integer.valueOf(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe pasar por lo menos 4 meses");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "12":
-                            if (Integer.valueOf(fec_Fin[1]) <= 4 && Integer.valueOf(fec_Fin[2]) == Integer.valueOf(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe pasar por lo menos 4 meses");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                    }
-                } else {
-                    if (Integer.valueOf(fec_Inicio[1])+4 <= Integer.valueOf(fec_Fin[1])) {
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe pasar por lo menos 4 meses");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
-                }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        };
-        
-        SelectionChangedListener cambioFecha = new SelectionChangedListener(){
+        SelectionChangedListener cambioFecha = new SelectionChangedListener() {
             @Override
             public void onSelectionChange(SelectionChangedEvent sce) {
+
                 String date_Inicio = frmPrdLectivo.getDcr_FecInicio().getText();
                 String fec_Inicio[] = date_Inicio.split("/");
                 String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
+                System.out.println("Fecha: " + date_Fin);
                 String fec_Fin[] = date_Fin.split("/");
-                if (Integer.parseInt(fec_Inicio[1]) >= 9 && Integer.parseInt(fec_Inicio[1]) <= 12) {
-                    System.out.println("fecha compleja");
-                    switch (fec_Inicio[1]) {
-                        case "09":
-                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) == 1 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "10":
-                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 2 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "11":
-                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 3 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "12":
-                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 4 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else {
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                    }
+
+                LocalDate dia_Inicio = LocalDate.now();
+                LocalDate dia_Fin = LocalDate.now();
+                dia_Inicio.withDayOfMonth(Integer.parseInt(fec_Inicio[0]));
+                dia_Inicio.withMonth(Integer.parseInt(fec_Inicio[1]));
+                dia_Inicio.withYear(Integer.parseInt(fec_Inicio[2]));
+
+                dia_Fin.withDayOfMonth(Integer.parseInt(fec_Fin[0]));
+                dia_Fin.withMonth(Integer.parseInt(fec_Fin[1]));
+                dia_Fin.withYear(Integer.parseInt(fec_Fin[2]));
+
+                System.out.println("Fecha Inicio: " + dia_Inicio.toString());
+                System.out.println("Fecha Fin: " + dia_Fin.toString());
+                
+                if (dia_Inicio.isBefore(dia_Fin) == true) {
+                    System.out.println("Fecha correcta");
+                    frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
                 } else {
-                    System.out.println("fecha simple");
-                    if (Integer.parseInt(fec_Inicio[1])+4 >= Integer.parseInt(fec_Fin[1]) && Integer.parseInt(fec_Fin[1]) < Integer.parseInt(fec_Inicio[0])) {
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
+                    System.out.println("Fecha incorrecta");
+                    frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+                    frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
                 }
+
+//                if (Integer.parseInt(fec_Inicio[1]) >= 9 && Integer.parseInt(fec_Inicio[1]) <= 12) {
+//                    System.out.println("fecha compleja");
+//                    switch (fec_Inicio[1]) {
+//                        case "09":
+//                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) == 1 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+//                            } else {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+//                            }
+//                            break;
+//                        case "10":
+//                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 2 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+//                            } else {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+//                            }
+//                            break;
+//                        case "11":
+//                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 3 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+//                            } else {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+//                            }
+//                            break;
+//                        case "12":
+//                            if (Integer.parseInt(fec_Fin[1]) <= 12 || Integer.parseInt(fec_Fin[1]) <= 4 && Integer.parseInt(fec_Fin[2]) == Integer.parseInt(fec_Inicio[2])) {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+//                            } else {
+//                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+//                            }
+//                            break;
+//                    }
+//                } else {
+//                    System.out.println("fecha simple");
+//                    if (Integer.parseInt(fec_Inicio[1]) + 4 >= Integer.parseInt(fec_Fin[1]) && Integer.parseInt(fec_Fin[1]) < Integer.parseInt(fec_Inicio[0])) {
+//                        frmPrdLectivo.getLbl_ErrFecFin().setText("La Fecha debe ser mayor 4 meses a la Fecha Inicial");
+//                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+//                    } else {
+//                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+//                    }
+//                }
             }
         };
 
@@ -203,7 +155,6 @@ public class FrmPrdLectivoCTR {
         iniciarFechas();
         frmPrdLectivo.getCbx_Carreras().addActionListener(rellenarNombre);
         frmPrdLectivo.getDcr_FecConclusion().addSelectionChangedListener(cambioFecha);
-        //frmPrdLectivo.getDcr_FecConclusion().addMouseListener(validarFecha);
         frmPrdLectivo.getBtn_Guardar().addActionListener(e -> guardarPeriodo());
         frmPrdLectivo.getBtn_Cancelar().addActionListener(Cancelar);
         //Cuando termina de cargar todo se le vuelve a su estado normal.

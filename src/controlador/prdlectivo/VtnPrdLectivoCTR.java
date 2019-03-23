@@ -116,7 +116,6 @@ public class VtnPrdLectivoCTR {
     }
     
     public void buscaIncremental(String aguja) {
-        System.out.println(aguja);
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnPrdLectivo.getTblPrdLectivo().getModel();
         for (int i = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; i >= 0; i--) {
