@@ -30,14 +30,17 @@ public class WebCamCTR {
     public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipal vtnPrin) {
         this.frmPersona = frmPersona;
         this.ctrFrmPersona = ctrFrmPersona; 
-        this.vtnWebCam = new VtnWebCam(vtnPrin, true);
+        this.vtnWebCam = new VtnWebCam(vtnPrin, false);
         vtnWebCam.setLocationRelativeTo(vtnPrin);
+        vtnWebCam.setVisible(true);
     }
 
     public void iniciarCamara() {
         vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
         vtnWebCam.getBtnGuardarFoto().addActionListener(e -> guardarFoto());
         vtnWebCam.getBtnCancelar().addActionListener(e -> cancelarFoto());
+        
+        vtnWebCam.setModal(true);
     }
 
     public void capturarFoto() {
@@ -63,6 +66,7 @@ public class WebCamCTR {
 
     private void cancelarFoto() {
         vtnWebCam.dispose();
+        System.out.println("Se dio click en cancelar");
     }
 
 }

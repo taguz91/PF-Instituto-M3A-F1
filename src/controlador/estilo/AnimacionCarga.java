@@ -13,7 +13,7 @@ public class AnimacionCarga extends Thread {
     private final JLabel lbl;
     private int pos = 0;
     private boolean cargando = true;
-    private int cuenta = 0; 
+    private int cuenta = 0;
     //Todos los inconos que usaremos 
     ImageIcon estados[] = {
         new ImageIcon(getClass().getResource("/vista/img/animacion/LogoPosFinal.png")),
@@ -29,27 +29,20 @@ public class AnimacionCarga extends Thread {
     @Override
     public void run() {
         System.out.println("Animacion en funcionamiento 000000000");
-        while (true) {
-            while (cargando) {
-                System.out.println("Animacion en funcionamiento "+cuenta);
-                lbl.setIcon(estados[pos]);
-                //lbl.updateUI();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    System.out.println("No se realizo la animacion " + e.getMessage());
-                }
-                pos++;
-                if (pos > estados.length - 1) {
-                    pos = 1;
-                }
+
+        while (cargando) {
+            //System.out.println("Animacion en funcionamiento " + cuenta);
+            lbl.setIcon(estados[pos]);
+            //lbl.updateUI();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("No se realizo la animacion " + e.getMessage());
             }
-            cuenta++; 
-            if (cuenta > 10000) {
-                cuenta = 0;
+            pos++;
+            if (pos > estados.length - 1) {
+                pos = 1;
             }
-            System.out.println(cuenta);
-            
         }
 
         //Le regresmos al icono original
