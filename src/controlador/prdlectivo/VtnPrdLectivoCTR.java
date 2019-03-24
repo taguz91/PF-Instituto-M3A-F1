@@ -43,7 +43,7 @@ public class VtnPrdLectivoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Peridos lectivos");
-        
+        ctrPrin.setIconJIFrame(vtnPrdLectivo);
         bdPerLectivo = new PeriodoLectivoBD(conecta);
         
         vtnPrin.getDpnlPrincipal().add(vtnPrdLectivo);   

@@ -50,7 +50,7 @@ public class VtnAlumnoCarreraCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos por carrera");
-
+        ctrPrin.setIconJIFrame(vtnAlmCar);
         vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
         vtnAlmCar.show();
     }

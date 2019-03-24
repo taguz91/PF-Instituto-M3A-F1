@@ -32,7 +32,7 @@ public class VtnAlumnoCursoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos por curso");
-        
+        ctrPrin.setIconJIFrame(vtnAlmnCurso);
         vtnPrin.getDpnlPrincipal().add(vtnAlmnCurso);  
         vtnAlmnCurso.show(); 
     }

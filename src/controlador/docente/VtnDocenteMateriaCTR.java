@@ -67,6 +67,7 @@ public class VtnDocenteMateriaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes Materia");
+        ctrPrin.setIconJIFrame(vtnDm);
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(vtnDm);
         vtnDm.show();

@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +41,7 @@ public class FrmPrdLectivoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Periodo lectivo");
-
+        ctrPrin.setIconJIFrame(frmPrdLectivo);
         this.bdPerLectivo = new PeriodoLectivoBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmPrdLectivo);
         frmPrdLectivo.show();
