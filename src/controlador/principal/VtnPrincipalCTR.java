@@ -142,7 +142,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
-        vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso());
+        vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
 
     }
@@ -369,7 +369,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnNotasAlumnoCurso() {
+    private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
 
         VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
         vtnNotas.Init();
