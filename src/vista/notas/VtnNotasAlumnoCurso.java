@@ -1,11 +1,10 @@
-
 package vista.notas;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 
 /**
  *
@@ -52,6 +51,14 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     public JTable getTblNotas() {
         return tblNotas;
     }
+
+    public JButton getBtnVerNotas() {
+        return btnVerNotas;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
     
     
     
@@ -77,6 +84,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         tblNotas = new javax.swing.JTable();
         btnImprimir = new javax.swing.JButton();
         lblCarrera = new javax.swing.JLabel();
+        btnVerNotas = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -102,10 +110,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         tblNotas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "N°", "Cedula", "Apellidos", "Nombres", "APORTE 1   /30", "EXAMEN INTERCICLO", "TOTAL INTERCICLO", "APORTE 2  /30", "EXAMEN FINAL  /25", "/25 SUSP.", "NOTA FINAL", "ESTADO", "Nro. Faltas", "% Faltas"
@@ -139,6 +144,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnImprimir.setText("Impromir");
 
+        btnVerNotas.setText("Ver Notas");
+        btnVerNotas.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,13 +179,16 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                             .addComponent(lbl_docente, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVerNotas))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnImprimir))
                             .addComponent(cmbDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 136, Short.MAX_VALUE))
+                        .addGap(0, 132, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -195,7 +206,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(lbl_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +218,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,6 +228,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnVerNotas;
     private javax.swing.JComboBox<String> cmbAsignatura;
     private javax.swing.JComboBox<String> cmbCiclo;
     private javax.swing.JComboBox<String> cmbDocente;
