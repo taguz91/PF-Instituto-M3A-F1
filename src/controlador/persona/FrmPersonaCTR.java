@@ -83,6 +83,7 @@ public class FrmPersonaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Persona");
+        ctrPrin.setIconJIFrame(frmPersona);
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);
@@ -166,7 +167,7 @@ public class FrmPersonaCTR {
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
-                    editar = true;
+                    editar = false;
 
                 } else {
                     editar(per);

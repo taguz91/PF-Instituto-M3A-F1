@@ -36,7 +36,7 @@ public class JDMateriasCursadasCTR {
         this.estado = estado;
         this.jd = new JDMateriasCursadas(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
-
+        
         jd.setVisible(true);
     }
 

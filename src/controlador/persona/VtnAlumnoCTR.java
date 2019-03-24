@@ -44,7 +44,7 @@ public class VtnAlumnoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos");
-
+        ctrPrin.setIconJIFrame(vtnAlumno);
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
         //Inicializamos la clase de alumno  

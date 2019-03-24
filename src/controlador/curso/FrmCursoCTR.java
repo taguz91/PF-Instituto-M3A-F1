@@ -54,7 +54,7 @@ public class FrmCursoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno por carrera");
-        
+        ctrPrin.setIconJIFrame(frmCurso);
         this.curso = new CursoBD(conecta);
         this.docen = new DocenteBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);

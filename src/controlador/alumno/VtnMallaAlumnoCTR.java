@@ -57,7 +57,7 @@ public class VtnMallaAlumnoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Malla alumnos");
-
+        ctrPrin.setIconJIFrame(vtnMallaAlm);
         this.almCar = new AlumnoCarreraBD(conecta);
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.car = new CarreraBD(conecta);

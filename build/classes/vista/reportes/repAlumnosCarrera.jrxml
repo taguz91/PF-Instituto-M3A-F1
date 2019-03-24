@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="alumnoCarrera" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select c.carrera_nombre,
 p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
@@ -10,7 +13,7 @@ p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
 as Alumno,p.persona_identificacion,p.persona_correo,p.persona_telefono
 from ((public."AlumnosCarrera" a join public."Alumnos" al using(id_alumno))
 join  public."Personas" p using(id_persona))join  public."Carreras" c using(id_carrera)
-where a.id_carrera=2 order by Alumno;]]>
+where a.id_carrera=$P{alumnoCarrera} order by Alumno;]]>
 	</queryString>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="alumno" class="java.lang.String"/>

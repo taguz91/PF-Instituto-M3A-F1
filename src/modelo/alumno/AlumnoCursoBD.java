@@ -176,8 +176,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY\n"
                 + "\"Personas\".persona_primer_apellido ASC;";
 
-        System.out.println(SELECT);
-
         return selectSimple(SELECT);
 
     }
@@ -211,6 +209,27 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             System.out.println(e.getMessage());
         }
         return almns;
+    }
+
+    public boolean editar() {
+        String UPDATE = "UPDATE \"AlumnoCurso\" \n"
+                + "SET \n"
+                + "almn_curso_nt_1_parcial = " + getNota1Parcial() + ", \n"
+                + "almn_curso_nt_examen_interciclo = " + getNotaExamenInter() + ", \n"
+                + "almn_curso_nt_2_parcial = " + getNota2Parcial() + ", \n"
+                + "almn_curso_nt_examen_final = " + getNotaExamenFinal() + ", \n"
+                + "almn_curso_nt_examen_supletorio = " + getNotaExamenSupletorio() + ", \n"
+                + "almn_curso_asistencia = '" + getAsistencia() + "', \n"
+                + "almn_curso_nota_final = " + getNotaFinal() + ", \n"
+                + "almn_curso_estado = '" + getEstado() + "',\n"
+                + "almn_curso_num_faltas = " + getNumFalta() + "\n"
+                + "WHERE \n"
+                + "id_almn_curso = " + getId() + ";";
+
+        System.out.println(UPDATE);
+
+        return ResourceManager.Statement(UPDATE) == null;
+
     }
 
 }
