@@ -172,7 +172,7 @@ public class FrmPersonaCTR {
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
-                    editar = true;
+                    editar = false;
 
                 } else {
                     editar(per);
