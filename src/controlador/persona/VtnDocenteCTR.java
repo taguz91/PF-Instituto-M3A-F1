@@ -1,10 +1,16 @@
 package controlador.persona;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -14,6 +20,12 @@ import modelo.accesos.AccesosMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.usuario.RolMD;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmDocente;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
@@ -87,7 +99,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getTxtBuscar().addKeyListener(kl);
-        
+        vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -192,4 +204,23 @@ public class VtnDocenteCTR {
 
         }
     }
+      public void llamaReporteDocente() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repDocentes.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("cedula",String.valueOf(mdTbl.getValueAt(vtnDocente.getTblDocente().getSelectedRow(),1)));
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
 }

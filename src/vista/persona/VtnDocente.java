@@ -19,6 +19,22 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnReporteDocente() {
+        return btnReporteDocente;
+    }
+
+    public void setBtnReporteDocente(JButton btnReporteDocente) {
+        this.btnReporteDocente = btnReporteDocente;
+    }
+
+    public JButton getBtnReporteDocenteMateria() {
+        return btnReporteDocenteMateria;
+    }
+
+    public void setBtnReporteDocenteMateria(JButton btnReporteDocenteMateria) {
+        this.btnReporteDocenteMateria = btnReporteDocenteMateria;
+    }
+
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
@@ -67,6 +83,9 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         tblDocente = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        btnReporteDocente = new javax.swing.JButton();
+        btnReporteDocenteMateria = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -106,6 +125,17 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
+        jLabel6.setText("Reportes:");
+
+        btnReporteDocente.setText("Docente");
+
+        btnReporteDocenteMateria.setText("Materias Docente");
+        btnReporteDocenteMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteDocenteMateriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +146,12 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(294, 294, 294)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReporteDocente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReporteDocenteMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,12 +181,21 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(btnReporteDocente))
+                    .addComponent(btnReporteDocenteMateria)
+                    .addComponent(lblResultados, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnReporteDocenteMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteDocenteMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteDocenteMateriaActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -159,7 +203,10 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnReporteDocente;
+    private javax.swing.JButton btnReporteDocenteMateria;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblDocente;

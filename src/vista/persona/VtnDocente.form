@@ -31,7 +31,12 @@
                   <Component id="jScrollPane1" pref="728" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="lblResultados" min="-2" pref="170" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnReporteDocente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnReporteDocenteMateria" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -68,8 +73,15 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="317" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblResultados" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReporteDocente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btnReporteDocenteMateria" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblResultados" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,6 +170,24 @@
           <Image iconType="3" name="/vista/img/icons8_Search_15px.png"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reportes:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnReporteDocente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Docente"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnReporteDocenteMateria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Materias Docente"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteDocenteMateriaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

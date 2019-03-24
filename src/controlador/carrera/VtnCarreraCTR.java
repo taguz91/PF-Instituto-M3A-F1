@@ -74,7 +74,6 @@ public class VtnCarreraCTR {
         //Le damos accion al btn editar  
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
-        vtnCarrera.getBtnReporteCarreras().addActionListener(e -> llamaReporteCarreras());
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -124,28 +123,7 @@ public class VtnCarreraCTR {
             });
         }
     }
-
-    public void llamaReporteCarreras() {
-
-        JasperReport jr;
-        String path = "./src/vista/reportes/repCarreras.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
-        try {
-            Map parametro = new HashMap();
-            parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
-            System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
-
-        } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void llamaReporteAlumnoCarrera(){
+     public void llamaReporteAlumnoCarrera(){
 
         JasperReport jr;
         String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
@@ -153,7 +131,7 @@ public class VtnCarreraCTR {
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("carreras", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
+            parametro.put("alumnoCarrera", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

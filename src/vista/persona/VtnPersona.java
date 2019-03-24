@@ -20,6 +20,14 @@ public class VtnPersona extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnReportePersona() {
+        return btnReportePersona;
+    }
+
+    public void setBtnReportePersona(JButton btnReportePersona) {
+        this.btnReportePersona = btnReportePersona;
+    }
+
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
@@ -77,6 +85,8 @@ public class VtnPersona extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbTipoPersona = new javax.swing.JComboBox<>();
         lblError = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnReportePersona = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -118,6 +128,10 @@ public class VtnPersona extends javax.swing.JInternalFrame {
         lblError.setForeground(new java.awt.Color(204, 0, 0));
         lblError.setText("Debe seleccionar una persona de la lista.");
 
+        jLabel3.setText("Reportes:");
+
+        btnReportePersona.setText("Persona");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,7 +142,10 @@ public class VtnPersona extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReportePersona, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -170,8 +187,11 @@ public class VtnPersona extends javax.swing.JInternalFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblResultados)
+                    .addComponent(jLabel3)
+                    .addComponent(btnReportePersona))
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -183,9 +203,11 @@ public class VtnPersona extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnReportePersona;
     private javax.swing.JComboBox<String> cmbTipoPersona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblResultados;

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  */
 public class VtnDocenteMateria extends javax.swing.JInternalFrame {
 
-    /**
+        /**
      * Creates new form VtnDocenteMateria
      */
     public VtnDocenteMateria() {
@@ -60,6 +60,7 @@ public class VtnDocenteMateria extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -75,6 +76,8 @@ public class VtnDocenteMateria extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocentesMateria = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
+
+        jLabel5.setText("jLabel5");
 
         setClosable(true);
         setIconifiable(true);
@@ -178,7 +181,7 @@ public class VtnDocenteMateria extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addContainerGap())
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,6 +214,7 @@ public class VtnDocenteMateria extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

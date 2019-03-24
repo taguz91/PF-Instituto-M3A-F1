@@ -1,10 +1,16 @@
 package controlador.docente;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -18,6 +24,12 @@ import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
 import vista.principal.VtnPrincipal;
@@ -91,7 +103,7 @@ public class VtnDocenteMateriaCTR {
         //Acciones de los botones
         vtnDm.getBtnBuscar().addActionListener(e -> buscar(vtnDm.getTxtBuscar().getText().trim()));
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
-        
+                
         cargarDocenteMaterias();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -211,7 +223,7 @@ public class VtnDocenteMateriaCTR {
             });
         }
     }
-    
+   
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
