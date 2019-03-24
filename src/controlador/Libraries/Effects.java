@@ -1,12 +1,12 @@
 package controlador.Libraries;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 
 /**
  *
@@ -29,18 +29,9 @@ public class Effects {
 
     }
 
-    public static void setTextInLabel(JLabel label, String text, long time) {
-
-        thread = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("---------------------------------------->");
-                label.setText(text);
-            }
-
-        };
-        thread.start();
-
+    public static String getProjectPath() {
+        String path = new File(".").getAbsolutePath();
+        return path.substring(0, path.length() - 1);
     }
 
 }

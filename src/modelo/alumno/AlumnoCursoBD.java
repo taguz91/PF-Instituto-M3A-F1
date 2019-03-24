@@ -176,6 +176,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY\n"
                 + "\"Personas\".persona_primer_apellido ASC;";
 
+        System.out.println(SELECT);
+
         return selectSimple(SELECT);
 
     }

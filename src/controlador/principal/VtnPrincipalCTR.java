@@ -92,7 +92,7 @@ public class VtnPrincipalCTR {
         this.conecta = conecta;
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
-        
+
         //carga.iniciar();
         vtnPrin.setVisible(true);
         InitPermisos();
@@ -151,7 +151,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
-        
+
         carga.start();
     }
 
