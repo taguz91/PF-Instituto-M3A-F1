@@ -3,6 +3,7 @@ package vista.notas;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -54,6 +55,13 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     public JButton getBtnVerNotas() {
         return btnVerNotas;
     }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+    
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

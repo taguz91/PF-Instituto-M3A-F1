@@ -3,17 +3,22 @@ package controlador.notas;
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -61,7 +66,12 @@ public class VtnNotasAlumnoCursoCTR {
 
     //Variable para busqueda
     private int idDocente = 0;
-    private int cargarTabla = 0;
+    private boolean cargarTabla = true;
+
+    //PARA LA EDICION DE LAS COLUMNAS
+    private final boolean[] canEdit = new boolean[]{
+        false, false, false, false, true, true, false, true, true, true, false, true, true, false
+    };
 
     //Thread
     Thread thread = null;
@@ -79,7 +89,8 @@ public class VtnNotasAlumnoCursoCTR {
         INITS
      */
     public void Init() {
-        tablaNotas = (DefaultTableModel) vista.getTblNotas().getModel();
+        tablaNotas = setTablaFromTabla(vista.getTblNotas());
+        canEdit[4] = false;
 
         //RELLENADO DE LISTAS
         listaPersonasDocentes = PersonaBD.selectWhereUsername(usuario.getUsername());
@@ -158,16 +169,13 @@ public class VtnNotasAlumnoCursoCTR {
 
                     active = true;
 
-                    TableModel modelo = vista.getTblNotas().getModel();
-
-                    setNumero();
-
-                    vista.getTblNotas().setModel(calcularNotaFinal(modelo));
+                    vista.getTblNotas().setModel(calcularNotaFinal(tablaNotas));
 
                     active = false;
                 }
 
             }
+
         });
 
     }
@@ -175,6 +183,46 @@ public class VtnNotasAlumnoCursoCTR {
     /*
         METODOS DE APOYO
      */
+    private DefaultTableModel setTablaFromTabla(JTable table) {
+        DefaultTableModel tabla = new DefaultTableModel(new Object[][]{},
+                new String[]{
+                    "N°", "Cedula", "Apellidos", "Nombres", "APORTE 1   /30", "EXAMEN INTERCICLO", "TOTAL INTERCICLO", "APORTE 2  /30", "EXAMEN FINAL  /25", "/25 SUSP.", "NOTA FINAL", "ESTADO", "Nro. Faltas", "% Faltas"
+                }) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return canEdit[column];
+            }
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+
+        };
+        table.setModel(tabla);
+
+        table.setColumnSelectionAllowed(true);
+        table.getTableHeader().setReorderingAllowed(false);
+        vista.getjScrollPane1().setViewportView(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(25);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(150);
+        table.getColumnModel().getColumn(3).setPreferredWidth(150);
+
+        return tabla;
+
+    }
+
+    private int getSelectedRow() {
+        return vista.getTblNotas().getSelectedRow();
+    }
+
     private void setNumero() {
         int columna = vista.getTblNotas().getSelectedColumn();
         int fila = vista.getTblNotas().getSelectedRow();
@@ -204,10 +252,7 @@ public class VtnNotasAlumnoCursoCTR {
         double notaFinalPrimerParcial = 0;
         double notaFinal = 0;
 
-        String valor = "";
-
         try {
-
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
 
             if (notaInterCiclo > 30) {
@@ -224,10 +269,9 @@ public class VtnNotasAlumnoCursoCTR {
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
 
             datos.setValueAt(notaFinal, fila, 10);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
-
         return datos;
     }
 
@@ -335,13 +379,13 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarTabla() {
-        if (cargarTabla == 0) {
+        if (cargarTabla == true) {
 
             thread = new Thread() {
                 @Override
                 public void run() {
 
-                    cargarTabla++;
+                    cargarTabla = false;
 
                     try {
 
@@ -366,7 +410,7 @@ public class VtnNotasAlumnoCursoCTR {
                                         obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
                                         obj.getNota1Parcial(),
                                         obj.getNotaExamenInter(),
-                                        0.0,
+                                        obj.getNota1Parcial() + obj.getNotaExamenInter(),
                                         obj.getNota2Parcial(),
                                         obj.getNotaExamenFinal(),
                                         obj.getNotaExamenSupletorio(),
@@ -382,12 +426,16 @@ public class VtnNotasAlumnoCursoCTR {
                     } catch (NullPointerException e) {
                         System.out.println(e);
                     }
-                    cargarTabla = 0;
+                    cargarTabla = true;
                 }
             };
             thread.start();
         } else {
             JOptionPane.showMessageDialog(vista, "ESPERE!! CARGAR DE NOTAS EN PROCESO");
+        }
+
+        for (int i = 0; i < tablaNotas.getDataVector().size(); i++) {
+            tablaNotas.isCellEditable(i, 4);
         }
 
     }
@@ -471,7 +519,10 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void tblNotasOnKeyTyped(KeyEvent e) {
         if (e.getKeyCode() == 10) {
-            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+
+            System.out.println("-------->");
+
+//            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
         }
     }
 }
