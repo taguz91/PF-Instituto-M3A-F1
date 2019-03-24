@@ -127,15 +127,107 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         return consultaMallasPorAlumno(sql, idAlumno);
     }
 
+    public ArrayList<MallaAlumnoMD> buscarMateriasAlumnoPorEstadoYCiclo(int idAlumnoCarrera, String estado, int ciclo) {
+        String sql = "SELECT id_malla_alumno, id_materia \n"
+                + "FROM public.\"MallaAlumno\" "
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND malla_almn_estado = '" + estado.charAt(0) + "' "
+                + "AND malla_almn_ciclo = " + ciclo + ";";
+        ArrayList<MallaAlumnoMD> mallas = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                while (rs.next()) {
+                    MallaAlumnoMD mll = new MallaAlumnoMD();
+                    a.setId(idAlumnoCarrera);
+                    mll.setId(rs.getInt("id_malla_alumno"));
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    mll.setMateria(m);
+                    mll.setAlumnoCarrera(a);
+
+                    mallas.add(mll);
+                }
+                return mallas;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar mallas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public MallaAlumnoMD buscarMateriaEstado(int idAlumnoCarrera, int idMateria) {
+        String sql = "SELECT id_malla_alumno, id_materia, malla_almn_estado \n"
+                + "FROM public.\"MallaAlumno\" "
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = "+idMateria+";";
+        //System.out.println(sql);
+        MallaAlumnoMD mll = new MallaAlumnoMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                while (rs.next()) {
+                    
+                    a.setId(idAlumnoCarrera);
+                    mll.setId(rs.getInt("id_malla_alumno"));
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    mll.setEstado(rs.getString("malla_almn_estado"));
+                    mll.setMateria(m);
+                    mll.setAlumnoCarrera(a);
+
+                }
+                return mll;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron buscar estado materia");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<MallaAlumnoMD> buscarMateriasAlumnoPorEstado(int idAlumnoCarrera, String estado) {
+        String sql = "SELECT id_malla_alumno, id_materia, malla_almn_ciclo \n"
+                + "FROM public.\"MallaAlumno\" "
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND malla_almn_estado = '" + estado.charAt(0) + "';";
+        ArrayList<MallaAlumnoMD> mallas = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                while (rs.next()) {
+                    MallaAlumnoMD mll = new MallaAlumnoMD();
+                    a.setId(rs.getInt("id_malla_alumno"));
+                    mll.setId(idAlumnoCarrera);
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    mll.setMateria(m);
+                    mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
+                    mll.setAlumnoCarrera(a);
+
+                    mallas.add(mll);
+                }
+                return mallas;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar mallas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public ArrayList<MallaAlumnoMD> cargarMallaAlumnoPorEstadoYCiclo(int idAlumno, String estado, int ciclo) {
         String sql = "SELECT id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo, \n"
-                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
-                + "malla_almn_nota3, malla_almn_estado\n"
+                + "malla_almn_num_matricula, malla_almn_estado\n"
                 + "FROM public.\"MallaAlumno\" "
                 + "WHERE id_almn_carrera = " + idAlumno + " AND malla_almn_estado = '" + estado.charAt(0) + "' "
                 + "AND malla_almn_ciclo = " + ciclo + ";";
         //System.out.println(sql);
-        return consultaMallasPorAlumno(sql, idAlumno);
+        return consultaMallasPorReferencia(sql, idAlumno);
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
@@ -168,6 +260,35 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 return null;
             }
         } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    private ArrayList<MallaAlumnoMD> consultaMallasPorReferencia(String sql, int idAlumno) {
+        ArrayList<MallaAlumnoMD> mallas = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                AlumnoCarreraMD a = alm.buscarAlumnoCarrera(idAlumno);
+                while (rs.next()) {
+                    MallaAlumnoMD mll = new MallaAlumnoMD();
+                    mll.setId(rs.getInt("id_malla_alumno"));
+                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    mll.setMateria(m);
+                    mll.setAlumnoCarrera(a);
+                    mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
+                    mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
+                    mll.setEstado(rs.getString("malla_almn_estado"));
+
+                    mallas.add(mll);
+                }
+                return mallas;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar mallas");
+            System.out.println(e.getMessage());
             return null;
         }
     }

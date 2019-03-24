@@ -11,6 +11,7 @@ import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
+import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
@@ -79,6 +80,8 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final ConectarDB conecta;
+    //Agregamos la animacion 
+    public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
 
@@ -87,6 +90,10 @@ public class VtnPrincipalCTR {
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
+        //Inciamos la carga pero la detenemos
+        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
+
+        //carga.iniciar();
         vtnPrin.setVisible(true);
         InitPermisos();
     }
@@ -142,15 +149,17 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
-        vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso());
+        vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
 
+        carga.start();
     }
 
     private void abrirVtnPersona() {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
+            carga.iniciar();
             VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona, conecta, this, rolSeleccionado);
             ctrVtnPersona.iniciar();
         } else {
@@ -162,6 +171,7 @@ public class VtnPrincipalCTR {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
         if (numVtns < 5) {
+            carga.detener();
             VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente, conecta, this, rolSeleccionado);
             ctrVtnDocente.iniciar();
         } else {
@@ -198,6 +208,7 @@ public class VtnPrincipalCTR {
         VtnCurso vtnCurso = new VtnCurso();
         eventoInternal(vtnCurso);
         if (numVtns < 5) {
+            carga.iniciar();
             VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnPrin, vtnCurso, conecta, this, rolSeleccionado);
             ctrVtnCurso.iniciar();
         } else {
@@ -246,6 +257,7 @@ public class VtnPrincipalCTR {
         VtnAlumnoCarrera vtnAlmnCarrera = new VtnAlumnoCarrera();
         eventoInternal(vtnAlmnCarrera);
         if (numVtns < 5) {
+            carga.iniciar();
             VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnPrin, vtnAlmnCarrera, conecta, rolSeleccionado, this);
             ctrAlmn.iniciar();
         } else {
@@ -369,7 +381,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnNotasAlumnoCurso() {
+    private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
 
         VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
         vtnNotas.Init();

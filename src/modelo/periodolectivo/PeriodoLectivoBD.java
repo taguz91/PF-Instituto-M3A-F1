@@ -212,7 +212,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
                 p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
-                carrera = car.buscar(rs.getInt("id_carrera"));
+                carrera = car.buscarParaReferencia(rs.getInt("id_carrera"));
                 p.setCarrera(carrera);
 
                 p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));

@@ -3,21 +3,15 @@ package controlador.persona;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -36,7 +30,6 @@ import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
-import vista.persona.VtnWebCam;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -53,7 +46,6 @@ public class FrmPersonaCTR {
     private TxtVCedula valCe;
     private int numAccion = 0;
     private Image foto;
-    private VtnWebCam vtnWebCam;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -305,6 +297,9 @@ public class FrmPersonaCTR {
                 fis = new FileInputStream(j.getSelectedFile());
                 lonBytes = (int) j.getSelectedFile().length();
 
+                System.out.println("Longitud de foto buscada " + lonBytes);
+                System.out.println("FIle input stream " + fis);
+
                 Image icono = ImageIO.read(j.getSelectedFile()).getScaledInstance(frmPersona.getLblFoto().getWidth(),
                         frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
                 frmPersona.getLblFoto().setIcon(new ImageIcon(icono));
@@ -319,62 +314,11 @@ public class FrmPersonaCTR {
 
     //Metodo para capturar una foto desde WebCam
     private void capturarFotoWebCam() {
-        vtnWebCam = new VtnWebCam(vtnPrin, false);
-        vtnWebCam.setVisible(true);
-        vtnWebCam.getBtnCapturarFoto().setVisible(false);
-        
-        
-        iniciarCamara();
+        WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
+        ctrCam.iniciarCamara();
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
-    
-    public void iniciarCamara(){
-    
-        ActionListener capturarFoto = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                byte[] imagen = vtnWebCam.getPanelCam().getBytes();
-                InputStream is = new ByteArrayInputStream(imagen);
-                BufferedImage bi = ImageIO.read(is);
-                    ImageIcon icono = new ImageIcon(bi);
-                    foto = icono.getImage().getScaledInstance( 
-                            vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
-                    vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
-                } catch (IOException ex) {
-                    Logger.getLogger(FrmPersonaCTR.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        };
-        
-        ActionListener guardarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Image foto_Nueva;
-                foto_Nueva = foto.getScaledInstance(frmPersona.getLblFoto().getWidth(), frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
-                frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
-                vtnWebCam.dispose();
-            }
-        };
-        
-        ActionListener cancelarFoto = new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                vtnWebCam.setVisible(false);
-            }
-            
-        };
-        
-        vtnWebCam.getBtnGuardarFoto().setVisible(false);
-        vtnWebCam.getBtnCapturarFoto().addActionListener(capturarFoto);
-        vtnWebCam.getBtnGuardarFoto().addActionListener(guardarFoto);
-        vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
-    }
-        
-    
-                
 
     public void guardarPersona() {
 
@@ -1047,9 +991,23 @@ public class FrmPersonaCTR {
         frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
         frmPersona.getCmbCantonReside().setSelectedIndex(0);
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
+    }
 
+    public void pasarFoto(InputStream is) {
+        try {
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+
+            File salida = new File("./foto.png");
+            fis = new FileInputStream(salida);
+            lonBytes = (int) salida.length();
+
+            System.out.println("Tomada la foto " + fis);
+            System.out.println("Longitud " + lonBytes);
+        } catch (IOException ex) {
+            System.out.println("No se pudo tranformar");
+            System.out.println(ex.getMessage());
+        }
     }
 
 }
-
-

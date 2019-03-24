@@ -15,10 +15,9 @@ import java.sql.Statement;
 public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
     private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+    private static String USERNAME;
+    private static String PASSWORD;
 
     private static Driver driver = null;
 
@@ -26,7 +25,7 @@ public class ResourceManager {
     private static Statement stmt = null;
     private static ResultSet rs = null;
 
-    private static synchronized Connection getConnection()
+    public static synchronized Connection getConnection()
             throws SQLException {
 
         Connection conex = null;
@@ -49,10 +48,11 @@ public class ResourceManager {
             }
 
         }
-//        
-//        JDBC_URL = "jdbc:postgresql://localhost:5432/BDPFConAlumnosPorCurso";
+
+
+//        JDBC_URL = "jdbc:postgresql://localhost:5433/proyecto";
 //        USERNAME = "postgres";
-//        PASSWORD = "linis4413";
+//        PASSWORD = "postgres";
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;

@@ -68,6 +68,7 @@ public class VtnAlumnoCarreraCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
+        //ctrPrin.carga.detener();
     }
 
     private void cargarAlmnsCarrera() {

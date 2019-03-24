@@ -751,4 +751,40 @@ public class PersonaBD extends PersonaMD {
         return lista;
     }
 
+    public static PersonaMD selectNombresApellidosWhere(int idAlumno) {
+        String SELECT = "SELECT\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "INNER JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"Alumnos\".id_alumno = " + idAlumno;
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        PersonaMD persona = new PersonaMD();
+        try {
+
+            while (rs.next()) {
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return persona;
+
+    }
+
 }

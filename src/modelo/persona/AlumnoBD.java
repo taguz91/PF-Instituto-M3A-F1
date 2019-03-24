@@ -258,7 +258,7 @@ public class AlumnoBD extends AlumnoMD {
     public AlumnoMD buscarAlumnoParaReferencia(int idAlumno) {
         AlumnoMD al = new AlumnoMD();
         String sql = "SELECT id_alumno, id_persona\n"
-                + "	FROM public.\"Alumnos\" WHERE alumno_activo = 'true' AND "
+                + "	FROM public.\"Alumnos\" WHERE alumno_activo = true AND "
                 + "id_alumno = " + idAlumno + ";";
         ResultSet rs = conecta.sql(sql);
         try {

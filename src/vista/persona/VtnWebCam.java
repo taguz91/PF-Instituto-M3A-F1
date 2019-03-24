@@ -23,53 +23,21 @@ public class VtnWebCam extends javax.swing.JDialog {
         return btnCancelar;
     }
 
-    public void setBtnCancelar(JButton btnCancelar) {
-        this.btnCancelar = btnCancelar;
-    }
-
     public JButton getBtnGuardarFoto() {
-        return btnCapturarFoto;
-    }
-
-    public void setBtnGuardarFoto(JButton btnGuardarFoto) {
-        this.btnCapturarFoto = btnGuardarFoto;
+        return btnGuardarFoto;
     }
 
     public JPanelWebCam.JPanelWebCam getPanelCam() {
         return panelCam;
     }
 
-    public void setPanelCam(JPanelWebCam.JPanelWebCam panelCam) {
-        this.panelCam = panelCam;
-    }
-
     public JButton getBtnCapturarFoto() {
         return btnCapturarFoto;
     }
 
-    public void setBtnCapturarFoto(JButton btnCapturarFoto) {
-        this.btnCapturarFoto = btnCapturarFoto;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
     public JLabel getLbl_Imagen() {
         return Lbl_Imagen;
-    }
-
-    public void setLbl_Imagen(JLabel Lbl_Imagen) {
-        this.Lbl_Imagen = Lbl_Imagen;
-    }
-
-    
-   
-    
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,6 +54,8 @@ public class VtnWebCam extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         Lbl_Imagen = new javax.swing.JLabel();
         btnGuardarFoto = new javax.swing.JButton();
+
+        setTitle("Tomar foto");
 
         btnCapturarFoto.setText("Capturar Foto");
 

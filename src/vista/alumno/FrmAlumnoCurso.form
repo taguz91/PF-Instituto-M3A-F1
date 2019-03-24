@@ -71,10 +71,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblErrorBuscar" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnReprobadas" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnMtCursadas" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -103,8 +103,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane3" min="-2" pref="75" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Component id="btnMtCursadas" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnMtCursadas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReprobadas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -204,6 +207,11 @@
         <Component class="javax.swing.JButton" name="btnMtCursadas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver materias cursadas"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnReprobadas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ver materias reprobadas"/>
           </Properties>
         </Component>
       </SubComponents>
