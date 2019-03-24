@@ -176,8 +176,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY\n"
                 + "\"Personas\".persona_primer_apellido ASC;";
 
-        System.out.println(SELECT);
-
         return selectSimple(SELECT);
 
     }
@@ -190,9 +188,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             while (rs.next()) {
                 AlumnoCursoBD a = new AlumnoCursoBD(conecta);
                 a.setId(rs.getInt("id_almn_curso"));
-                
-                
-                
+
                 a.setAlumno(alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno")));
                 CursoMD curso = new CursoMD();
                 curso.setId_curso(rs.getInt("id_curso"));

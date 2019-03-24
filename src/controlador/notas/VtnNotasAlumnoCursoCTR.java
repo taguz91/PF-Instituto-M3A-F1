@@ -28,7 +28,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Alejandro
  */
-public class VtnNotasAlumnoCursoCTR {
+public class VtnNotasAlumnoCursoCTR implements Runnable{
 
     private final VtnPrincipal desktop;
     private final VtnNotasAlumnoCurso vista;
@@ -260,41 +260,93 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarTabla() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    
+                    desktop.getLblEstado().setText("CARGANDO NOTAS");
+                    
+                    tablaNotas.setRowCount(0);
+                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        try {
-            tablaNotas.setRowCount(0);
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-            String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+                    listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
-            listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                    listaNotas.stream()
+                            .forEach(obj -> {
 
-            listaNotas.stream()
-                    .forEach(obj -> {
+                                tablaNotas.addRow(new Object[]{
+                                    tablaNotas.getDataVector().size() + 1,
+                                    obj.getAlumno().getIdentificacion(),
+                                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                                    obj.getNota1Parcial(),
+                                    obj.getNotaExamenInter(),
+                                    0.0,
+                                    obj.getNota2Parcial(),
+                                    obj.getNotaExamenFinal(),
+                                    obj.getNotaExamenSupletorio(),
+                                    obj.getNotaFinal(),
+                                    obj.getEstado(),
+                                    obj.getNumFalta(),
+                                    "%"
+                                });
+                            });
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    desktop.getLblEstado().setText("");
 
-                        tablaNotas.addRow(new Object[]{
-                            tablaNotas.getDataVector().size() + 1,
-                            obj.getAlumno().getIdentificacion(),
-                            obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                            obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                            obj.getNota1Parcial(),
-                            obj.getNotaExamenInter(),
-                            0.0,
-                            obj.getNota2Parcial(),
-                            obj.getNotaExamenFinal(),
-                            obj.getNotaExamenSupletorio(),
-                            obj.getNotaFinal(),
-                            obj.getEstado(),
-                            obj.getNumFalta(),
-                            "%"
-                        });
-                    });
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+                try {
+                    tablaNotas.setRowCount(0);
+                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
+                    listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+
+                    listaNotas.stream()
+                            .forEach(obj -> {
+
+                                tablaNotas.addRow(new Object[]{
+                                    tablaNotas.getDataVector().size() + 1,
+                                    obj.getAlumno().getIdentificacion(),
+                                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                                    obj.getNota1Parcial(),
+                                    obj.getNotaExamenInter(),
+                                    0.0,
+                                    obj.getNota2Parcial(),
+                                    obj.getNotaExamenFinal(),
+                                    obj.getNotaExamenSupletorio(),
+                                    obj.getNotaFinal(),
+                                    obj.getEstado(),
+                                    obj.getNumFalta(),
+                                    "%"
+                                });
+                            });
+                    
+                    System.out.println("thread fin");
+
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+            }
+
+        };
+        thread.start();
 
     }
 
@@ -303,5 +355,10 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnImprimir(ActionEvent e) {
         cargarTabla();
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
