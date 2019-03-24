@@ -7,6 +7,7 @@ import java.util.List;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.curso.CursoBD;
+import modelo.curso.CursoMD;
 import modelo.persona.AlumnoBD;
 
 /**
@@ -189,8 +190,11 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             while (rs.next()) {
                 AlumnoCursoBD a = new AlumnoCursoBD(conecta);
                 a.setId(rs.getInt("id_almn_curso"));
+
                 a.setAlumno(alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno")));
-                a.setCurso(cur.buscarCurso(rs.getInt("id_curso")));
+                CursoMD curso = new CursoMD();
+                curso.setId_curso(rs.getInt("id_curso"));
+                a.setCurso(curso);
                 a.setNota1Parcial(rs.getDouble("almn_curso_nt_1_parcial"));
                 a.setNotaExamenInter(rs.getDouble("almn_curso_nt_examen_interciclo"));
                 a.setNota2Parcial(rs.getDouble("almn_curso_nt_2_parcial"));
