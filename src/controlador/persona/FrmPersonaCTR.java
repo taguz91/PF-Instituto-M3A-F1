@@ -321,6 +321,9 @@ public class FrmPersonaCTR {
     private void capturarFotoWebCam() {
         vtnWebCam = new VtnWebCam(vtnPrin, false);
         vtnWebCam.setVisible(true);
+        vtnWebCam.getBtnCapturarFoto().setVisible(false);
+        
+        
         iniciarCamara();
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
@@ -364,6 +367,7 @@ public class FrmPersonaCTR {
             
         };
         
+        vtnWebCam.getBtnGuardarFoto().setVisible(false);
         vtnWebCam.getBtnCapturarFoto().addActionListener(capturarFoto);
         vtnWebCam.getBtnGuardarFoto().addActionListener(guardarFoto);
         vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
