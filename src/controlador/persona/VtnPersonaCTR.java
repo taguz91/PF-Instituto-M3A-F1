@@ -91,6 +91,8 @@ public class VtnPersonaCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Personas");
+        //Detenemos la animacion de carga.
+        //ctrPrin.carga.detener();
     }
 
     private void cargarCmbTipoPersonas() {

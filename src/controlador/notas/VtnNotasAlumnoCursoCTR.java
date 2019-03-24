@@ -282,24 +282,22 @@ public class VtnNotasAlumnoCursoCTR {
             listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
             listaNotas.stream()
-                    .forEach(objAlumCurso -> {
-
-                        PersonaMD persona = PersonaBD.selectNombresApellidosWhere(objAlumCurso.getAlumno().getId_Alumno());
+                    .forEach(obj -> {
 
                         tablaNotas.addRow(new Object[]{
                             tablaNotas.getDataVector().size() + 1,
-                            persona.getIdentificacion(),
-                            persona.getPrimerApellido() + " " + persona.getSegundoApellido(),
-                            persona.getPrimerNombre() + " " + persona.getSegundoNombre(),
-                            objAlumCurso.getNota1Parcial(),
-                            objAlumCurso.getNotaExamenInter(),
+                            obj.getAlumno().getIdentificacion(),
+                            obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                            obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                            obj.getNota1Parcial(),
+                            obj.getNotaExamenInter(),
                             0.0,
-                            objAlumCurso.getNota2Parcial(),
-                            objAlumCurso.getNotaExamenFinal(),
-                            objAlumCurso.getNotaExamenSupletorio(),
-                            objAlumCurso.getNotaFinal(),
-                            objAlumCurso.getEstado(),
-                            objAlumCurso.getNumFalta(),
+                            obj.getNota2Parcial(),
+                            obj.getNotaExamenFinal(),
+                            obj.getNotaExamenSupletorio(),
+                            obj.getNotaFinal(),
+                            obj.getEstado(),
+                            obj.getNumFalta(),
                             "%"
                         });
                     });
