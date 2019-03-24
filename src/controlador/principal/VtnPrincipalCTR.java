@@ -26,8 +26,11 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -84,16 +87,24 @@ public class VtnPrincipalCTR {
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
+    //Icono de la aplicacion  
+    private final ImageIcon icono;
+    private final Image ista; 
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado, UsuarioBD usuario, ConectarDB conecta) {
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado, 
+            UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
-
+        this.icono = icono;
+        this.ista = ista;
+        vtnPrin.setIconImage(ista);
         //carga.iniciar();
+        //Le pasamos el icono  
+        vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
         InitPermisos();
     }
@@ -524,5 +535,21 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtUsuarios().setEnabled(true);
             }
         }
+    }
+
+    public ImageIcon getIcono() {
+        return icono;
+    }
+
+    public Image getIsta() {
+        return ista;
+    }
+    
+    public void setIconJIFrame(JInternalFrame jif){
+        jif.setFrameIcon(icono);
+    }
+    
+    public void setIconJDialog(JDialog jd){
+        jd.setIconImage(ista);
     }
 }

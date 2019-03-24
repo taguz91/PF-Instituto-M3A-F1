@@ -3,22 +3,14 @@ package controlador.persona;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -91,6 +83,7 @@ public class FrmPersonaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Persona");
+        ctrPrin.setIconJIFrame(frmPersona);
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);

@@ -50,7 +50,7 @@ public class VtnMateriaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Materias");
-
+        ctrPrin.setIconJIFrame(vtnMateria);
         this.materia = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);

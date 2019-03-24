@@ -49,7 +49,7 @@ public class VtnDocenteCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
-
+        ctrPrin.setIconJIFrame(vtnDocente);
         docente = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
         vtnDocente.show();

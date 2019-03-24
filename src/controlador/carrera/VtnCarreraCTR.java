@@ -54,7 +54,7 @@ public class VtnCarreraCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Carreras");
-
+        ctrPrin.setIconJIFrame(vtnCarrera);
         vtnPrin.getDpnlPrincipal().add(vtnCarrera);
         vtnCarrera.show();
     }
