@@ -1,5 +1,8 @@
-#Archivos privados  
+#Archivos privados
 /nbproject/private/
+
+#Foto creada temporalmente
+foto.png
 
 # Compiled class file
 *.class

@@ -9,9 +9,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,7 +38,6 @@ import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
-import vista.persona.VtnWebCam;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -302,6 +304,9 @@ public class FrmPersonaCTR {
                 //Para guardar la foto  
                 fis = new FileInputStream(j.getSelectedFile());
                 lonBytes = (int) j.getSelectedFile().length();
+                
+                System.out.println("Longitud de foto buscada "+lonBytes); 
+                System.out.println("FIle input stream "+fis);
 
                 Image icono = ImageIO.read(j.getSelectedFile()).getScaledInstance(frmPersona.getLblFoto().getWidth(),
                         frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
@@ -994,7 +999,23 @@ public class FrmPersonaCTR {
         frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
         frmPersona.getCmbCantonReside().setSelectedIndex(0);
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
-
+    }
+    
+    public void pasarFoto(InputStream is){
+        try {
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+            
+            File salida = new File("./foto.png");
+            fis = new FileInputStream(salida); 
+            lonBytes = (int)salida.length(); 
+            
+            System.out.println("Tomada la foto "+fis);
+            System.out.println("Longitud "+lonBytes);
+        } catch (IOException ex) {
+            System.out.println("No se pudo tranformar");
+            System.out.println(ex.getMessage());
+        }
     }
 
 }
