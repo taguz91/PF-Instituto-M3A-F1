@@ -106,6 +106,9 @@ public class VtnMallaAlumnoCTR {
                 }
             }
         });
+        //Validacion del buscador 
+        vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(), 
+                vtnMallaAlm.getBtnBuscar()));
         //Modificamos el cmb para que sea editable  
         vtnMallaAlm.getCmbAlumnos().setEditable(true);
         //Buscar en el combo

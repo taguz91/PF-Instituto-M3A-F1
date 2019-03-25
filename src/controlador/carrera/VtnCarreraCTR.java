@@ -48,7 +48,7 @@ public class VtnCarreraCTR {
 
     DefaultTableModel mdTbl;
 
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, 
+    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnCarrera = vtnCarrera;
@@ -80,7 +80,7 @@ public class VtnCarreraCTR {
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
-        
+
         vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -91,17 +91,18 @@ public class VtnCarreraCTR {
             }
         });
         vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
-        vtnCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnCarrera.getTxtBuscar()));
+        vtnCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnCarrera.getTxtBuscar(),
+                vtnCarrera.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Carreras");
     }
-    
-    private void buscar(String b){
+
+    private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            carreras = car.buscarCarrera(b); 
+            carreras = car.buscarCarrera(b);
             llenarTbl(carreras);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(vtnPrin, "No debe ingresar caracteres especiales.");
         }
     }
@@ -148,7 +149,8 @@ public class VtnCarreraCTR {
             });
         }
     }
-     public void llamaReporteAlumnoCarrera(){
+
+    public void llamaReporteAlumnoCarrera() {
 
         JasperReport jr;
         String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
@@ -168,7 +170,7 @@ public class VtnCarreraCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

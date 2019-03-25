@@ -102,27 +102,28 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "WHERE  a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND \n"
                 + "c.id_carrera = ac.id_carrera AND (\n"
-                + "	carrera_codigo ILIKE '%"+aguja+"%' OR \n"
+                + "	carrera_codigo ILIKE '%" + aguja + "%' OR \n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido\n"
-                + "	ILIKE '%"+aguja+"%'\n"
-                + "	OR persona_identificacion ILIKE '%"+aguja+"%'\n"
+                + "	ILIKE '%" + aguja + "%'\n"
+                + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
                 + ");";
         return consultarAlumnoCarrera(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> buscarAlumnoCarrera(int idCarrera, String aguja) {
-        String sql = "SELECT id_almn_carrera, \"AlumnosCarrera\".id_alumno, id_carrera, almn_carrera_fecha_registro\n"
-                + "FROM public.\"AlumnosCarrera\", public.\"Alumnos\", public.\"Personas\" \n"
-                + "WHERE \"Alumnos\".id_alumno = \"AlumnosCarrera\".id_alumno \n"
-                + "AND \"Personas\".id_persona = \"Alumnos\".id_persona \n"
-                + "AND almn_carrera_activo = 'true' AND id_carrera = " + idCarrera + " \n"
-                + "AND (persona_identificacion ILIKE '%" + aguja + "%' OR\n"
-                + "	 persona_primer_apellido ILIKE '%" + aguja + "%' OR\n"
-                + "	 persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
-                + "	 persona_primer_nombre ILIKE '%" + aguja + "%' OR \n"
-                + "	 persona_segundo_nombre ILIKE '%" + aguja + "%');";
-        return consultarAlumnoCarreraPorCarrera(sql, idCarrera);
+        String sql = "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
+                + "WHERE a.id_alumno = ac.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "ac.id_carrera = " + idCarrera + " AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%');";
+        return consultarAlumnoCarreraTbl(sql);
     }
 
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
@@ -158,6 +159,41 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     if (ac != null) {
                         alms.add(ac);
                     }
+                }
+                rs.close();
+                return alms;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraTbl(String sql) {
+        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                    AlumnoMD al = new AlumnoMD();
+                    CarreraMD c = new CarreraMD();
+                    c.setId(rs.getInt("id_carrera"));
+                    al.setId_Alumno(rs.getInt("id_alumno"));
+                    al.setIdPersona(rs.getInt("id_persona"));
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
+                    
+                    ac.setAlumno(al);
+
+                    alms.add(ac);
                 }
                 rs.close();
                 return alms;

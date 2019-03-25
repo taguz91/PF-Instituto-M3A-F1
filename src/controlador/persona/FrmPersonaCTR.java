@@ -208,7 +208,6 @@ public class FrmPersonaCTR {
     private void activarDiscapacidad() {
         boolean discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
         desactivarDiscapacidad(discapacidad);
-
     }
 
     private void iniciarValidaciones() {
@@ -660,8 +659,6 @@ public class FrmPersonaCTR {
 
     public void editar(PersonaMD per) {
         //Seteamos los datos en el formulario  
-        frmPersona.getTxtIdentificacion().setEnabled(true);
-        activarDiscapacidad();
         boolean discapacidad;
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
@@ -708,6 +705,8 @@ public class FrmPersonaCTR {
 
         //Discapacidad
         frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
+        activarDiscapacidad();
+        
         frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
