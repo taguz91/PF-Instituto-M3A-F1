@@ -1,16 +1,10 @@
 package controlador.docente;
 
-import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -24,12 +18,6 @@ import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
 import vista.principal.VtnPrincipal;
@@ -79,7 +67,7 @@ public class VtnDocenteMateriaCTR {
 
     public void iniciar() {
         //Iniciamos la tabla
-        String[] titulo = {"Cedula", "Docente"};
+        String[] titulo = {"Cedula", "Docente", "Materia"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDm.getTblDocentesMateria().setModel(mdTbl);
@@ -114,7 +102,8 @@ public class VtnDocenteMateriaCTR {
     //Buscador
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            System.out.println("No es funcional");
+            dms = dm.buscar(aguja);
+            llenarTblDocenteMateria(dms);
         }
     }
     
@@ -200,6 +189,7 @@ public class VtnDocenteMateriaCTR {
             materias.forEach(m -> {
                 vtnDm.getCmbMateria().addItem(m.getNombre());
             });
+            vtnDm.getCmbMateria().setSelectedIndex(0);
         }
     }
 
@@ -218,10 +208,12 @@ public class VtnDocenteMateriaCTR {
         mdTbl.setRowCount(0);
         if (dms != null) {
             dms.forEach(o -> {
-                Object[] valores = {o.getDocente().getPrimerNombre() + " " 
+                Object[] valores = {o.getDocente().getIdentificacion(),
+                    o.getDocente().getPrimerNombre() + " " 
                         + o.getDocente().getPrimerApellido(), o.getMateria().getNombre()};
                 mdTbl.addRow(valores);
             });
+            vtnDm.getLblResultados().setText(dms.size() + " Resultados obtenidos.");
         }
     }
    
