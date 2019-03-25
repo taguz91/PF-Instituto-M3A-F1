@@ -17,6 +17,7 @@ import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
@@ -85,6 +86,9 @@ public class VtnDocenteMateriaCTR {
                 }
             }
         });
+        //Validacion del buscar
+        vtnDm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDm.getTxtBuscar(), 
+        vtnDm.getBtnBuscar()));
         //Acciones de los combos
         vtnDm.getCmbCarrera().addActionListener(e -> clickCarreras());
         vtnDm.getCmbCiclo().addActionListener(e -> clickCiclo());

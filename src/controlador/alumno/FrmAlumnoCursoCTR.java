@@ -25,6 +25,7 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import vista.alumno.FrmAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -145,12 +146,6 @@ public class FrmAlumnoCursoCTR {
             buscarAlumnos(frmAlmCurso.getTxtBuscar().getText().trim());
         });
 
-        frmAlmCurso.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCurso.getTxtBuscar(),
-                frmAlmCurso.getLblErrorBuscar()));
-
-        frmAlmCurso.getCmbPrdLectivo().addActionListener(new CmbValidar(frmAlmCurso.getCmbPrdLectivo(),
-                frmAlmCurso.getLblErrorPrdLectivo()));
-
         frmAlmCurso.getTblAlumnos().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -160,9 +155,19 @@ public class FrmAlumnoCursoCTR {
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
+        
+        inicarValidaciones();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Alumno por curso");
+    }
+
+    private void inicarValidaciones() {
+        frmAlmCurso.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCurso.getTxtBuscar(),
+                frmAlmCurso.getLblErrorBuscar(), frmAlmCurso.getBtnBuscar()));
+
+        frmAlmCurso.getCmbPrdLectivo().addActionListener(new CmbValidar(frmAlmCurso.getCmbPrdLectivo(),
+                frmAlmCurso.getLblErrorPrdLectivo()));
     }
 
     private void guardar() {
@@ -241,7 +246,7 @@ public class FrmAlumnoCursoCTR {
 
     private void buscarAlumnos(String aguja) {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
-        if (posPrd > 0) {
+        if (posPrd > 0 && Validar.esLetrasYNumeros(aguja)) {
             alumnosCarrera = almCar.buscarAlumnoCarrera(periodos.get(posPrd - 1).getCarrera().getId(),
                     aguja);
             llenarTblAlumnos(alumnosCarrera);
@@ -325,13 +330,13 @@ public class FrmAlumnoCursoCTR {
             });
         } else {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
-        }   
+        }
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
-    
+
     /*Me consulta las materias por el estado que se le pase 
       en una ventana emergente
-    */
+     */
     private void mostrarInformacion(String estado) {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {

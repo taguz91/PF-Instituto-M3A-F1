@@ -83,6 +83,9 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
+        //Validacion del buscador
+        vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(), 
+                vtnPrdLectivo.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Periodos lectivos");
