@@ -2,6 +2,8 @@ package controlador.alumno;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -13,6 +15,7 @@ import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.RolMD;
+import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
 import vista.principal.VtnPrincipal;
 
@@ -37,7 +40,7 @@ public class VtnAlumnoCarreraCTR {
     private final CarreraBD carr;
     private ArrayList<CarreraMD> carreras;
 
-    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar, 
+    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar,
             ConectarDB conecta, RolMD permisos, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnAlmCar = vtnAlmCar;
@@ -58,17 +61,40 @@ public class VtnAlumnoCarreraCTR {
     public void iniciar() {
         cargarCmbCarreras();
 
-        String[] titulo = {"Carrera", "Alumno", "Fecha"};
+        String[] titulo = {"Carrera", "Alumno", "Cedula", "Fecha"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnAlmCar.getTblAlmnCarrera().setModel(mdTbl);
         //Llenamos la tabla
         cargarAlmnsCarrera();
-        
+        //acciones 
+        vtnAlmCar.getCmbCarrera().addActionListener(e -> clickCmbCarreras());
+                //Buscador 
+        vtnAlmCar.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String b = vtnAlmCar.getTxtBuscar().getText().trim();
+                if (b.length() > 2) {
+                    buscar(b);
+                }else if(b.length() == 0){
+                    cargarAlmnsCarrera();
+                }
+            }
+        });
+        vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
         //ctrPrin.carga.detener();
+    }
+
+    private void buscar(String b) {
+        if (Validar.esLetrasYNumeros(b)) {
+            almnsCarr = almnCar.buscar(b);
+            llenarTblAlmnCarreras(almnsCarr);
+        } else {
+            System.out.println("No ingrese caracteres especiales");
+        }
     }
 
     private void cargarAlmnsCarrera() {
@@ -85,11 +111,13 @@ public class VtnAlumnoCarreraCTR {
                     + a.getAlumno().getSegundoApellido() + " "
                     + a.getAlumno().getPrimerNombre() + " "
                     + a.getAlumno().getSegundoNombre(),
+                    a.getAlumno().getIdentificacion(),
                     a.getFechaRegistro().getDayOfMonth() + "/"
                     + a.getFechaRegistro().getMonth() + "/"
                     + a.getFechaRegistro().getYear()};
                 mdTbl.addRow(valores);
             });
+            vtnAlmCar.getLblResultados().setText(almns.size() + " Resultados obtenidos.");
         }
     }
 
@@ -103,7 +131,17 @@ public class VtnAlumnoCarreraCTR {
             });
         }
     }
-    
+
+    private void clickCmbCarreras() {
+        int posCar = vtnAlmCar.getCmbCarrera().getSelectedIndex();
+        if (posCar > 0) {
+            almnsCarr = almnCar.cargarAlumnoCarreraPorCarrera(carreras.get(posCar - 1).getId());
+            llenarTblAlmnCarreras(almnsCarr);
+        } else {
+            cargarAlmnsCarrera();
+        }
+    }
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {

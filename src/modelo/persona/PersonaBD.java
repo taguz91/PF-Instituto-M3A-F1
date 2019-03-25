@@ -383,7 +383,8 @@ public class PersonaBD extends PersonaMD {
     public PersonaMD buscarPersonaParaReferencia(int idPersona) {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+                + " persona_celular "
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " id_persona = " + idPersona + ";";
 
@@ -394,7 +395,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+                + " persona_celular " 
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " persona_identificacion ='" + identificacion + "'";
 
@@ -440,6 +442,8 @@ public class PersonaBD extends PersonaMD {
                     p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     p.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    p.setCorreo(rs.getString("persona_correo"));
+                    p.setCelular(rs.getString("persona_celular"));
                 }
                 rs.close();
                 return p;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import modelo.ConectarDB;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.persona.AlumnoMD;
 
 /**
  *
@@ -108,23 +109,51 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         return consultaMallas(sql);
     }
 
+    public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
+        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
+                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "materia_nombre\n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p, public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia;";
+        return consultaMallasTbl(sql);
+    }
+
     public ArrayList<MallaAlumnoMD> cargarMallasPorEstudiante(int idAlumno) {
-        String sql = "SELECT id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo, \n"
-                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
-                + "malla_almn_nota3, malla_almn_estado\n"
-                + "	FROM public.\"MallaAlumno\" "
-                + "WHERE id_almn_carrera = " + idAlumno + ";";
-        return consultaMallasPorAlumno(sql, idAlumno);
+        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
+                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "materia_nombre\n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p, public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia AND\n"
+                + "ac.id_almn_carrera = " + idAlumno + ";";
+        //return consultaMallasPorAlumno(sql, idAlumno);
+        return consultaMallasTbl(sql);
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallaAlumnoPorEstado(int idAlumno, String estado) {
-        String sql = "SELECT id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo, \n"
-                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, \n"
-                + "malla_almn_nota3, malla_almn_estado\n"
-                + "FROM public.\"MallaAlumno\" "
-                + "WHERE id_almn_carrera = " + idAlumno + " AND malla_almn_estado = '" + estado.charAt(0) + "';";
-        //System.out.println(sql);
-        return consultaMallasPorAlumno(sql, idAlumno);
+        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
+                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "materia_nombre\n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p, public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia AND\n"
+                + "ac.id_almn_carrera = 105\n"
+                + "AND malla_almn_estado = '" + estado.charAt(0) + "';";
+        //return consultaMallasPorAlumno(sql, idAlumno);
+        return consultaMallasTbl(sql);
     }
 
     public ArrayList<MallaAlumnoMD> buscarMateriasAlumnoPorEstadoYCiclo(int idAlumnoCarrera, String estado, int ciclo) {
@@ -157,11 +186,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             return null;
         }
     }
-    
+
     public MallaAlumnoMD buscarMateriaEstado(int idAlumnoCarrera, int idMateria) {
         String sql = "SELECT id_malla_alumno, id_materia, malla_almn_estado \n"
                 + "FROM public.\"MallaAlumno\" "
-                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = "+idMateria+";";
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = " + idMateria + ";";
         //System.out.println(sql);
         MallaAlumnoMD mll = new MallaAlumnoMD();
         ResultSet rs = conecta.sql(sql);
@@ -169,7 +198,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             if (rs != null) {
                 AlumnoCarreraMD a = new AlumnoCarreraMD();
                 while (rs.next()) {
-                    
+
                     a.setId(idAlumnoCarrera);
                     mll.setId(rs.getInt("id_malla_alumno"));
                     MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
@@ -231,19 +260,33 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
-        String sql = "SELECT id_malla_alumno, id_materia, ma.id_almn_carrera, malla_almn_ciclo, malla_almn_num_matricula, \n"
-                + "malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, malla_almn_estado, malla_alm_observacion\n"
-                + "FROM public.\"MallaAlumno\" AS ma, public.\"AlumnosCarrera\" AS ac, \n"
-                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
-                + "WHERE ma.id_almn_carrera = ac.id_almn_carrera \n"
-                + "AND ac.id_alumno = a.id_alumno \n"
-                + "AND a.id_persona = p.id_persona \n"
-                + "AND (persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + "	OR persona_primer_nombre ILIKE '%" + aguja + "%' \n"
-                + "	OR persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "	OR persona_segundo_nombre ILIKE '%" + aguja + "%'\n"
-                + "	OR persona_segundo_apellido ILIKE '%" + aguja + "%');";
-        return consultaMallas(sql);
+//        String sql = "SELECT id_malla_alumno, id_materia, ma.id_almn_carrera, malla_almn_ciclo, malla_almn_num_matricula, \n"
+//                + "malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, malla_almn_estado, malla_alm_observacion\n"
+//                + "FROM public.\"MallaAlumno\" AS ma, public.\"AlumnosCarrera\" AS ac, \n"
+//                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
+//                + "WHERE ma.id_almn_carrera = ac.id_almn_carrera \n"
+//                + "AND ac.id_alumno = a.id_alumno \n"
+//                + "AND a.id_persona = p.id_persona \n"
+//                + "AND (persona_identificacion ILIKE '%" + aguja + "%'\n"
+//                + "	OR persona_primer_nombre ILIKE '%" + aguja + "%' \n"
+//                + "	OR persona_primer_apellido ILIKE '%" + aguja + "%'\n"
+//                + "	OR persona_segundo_nombre ILIKE '%" + aguja + "%'\n"
+//                + "	OR persona_segundo_apellido ILIKE '%" + aguja + "%');";
+//        return consultaMallas(sql);
+        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
+                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "materia_nombre\n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p, public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
+                + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + ");";
+        return consultaMallasTbl(sql);
     }
 
     public MallaAlumnoMD buscarMallaAlumno(int idMallaAlmn) {
@@ -326,6 +369,44 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     if (m != null) {
                         mallas.add(m);
                     }
+                }
+                return mallas;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar mallas");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private ArrayList<MallaAlumnoMD> consultaMallasTbl(String sql) {
+        ArrayList<MallaAlumnoMD> mallas = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    MallaAlumnoMD mll = new MallaAlumnoMD();
+                    mll.setId(rs.getInt("id_malla_alumno"));
+                    MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    mll.setMateria(m);
+                    AlumnoCarreraMD a = new AlumnoCarreraMD();
+                    AlumnoMD al = new AlumnoMD();
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    a.setAlumno(al);
+                    mll.setAlumnoCarrera(a);
+                    mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
+                    mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
+                    mll.setNota1(rs.getDouble("malla_almn_nota1"));
+                    mll.setNota2(rs.getDouble("malla_almn_nota2"));
+                    mll.setNota2(rs.getDouble("malla_almn_nota2"));
+                    mll.setEstado(rs.getString("malla_almn_estado"));
+
+                    mallas.add(mll);
                 }
                 return mallas;
             } else {

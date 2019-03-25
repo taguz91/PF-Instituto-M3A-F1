@@ -146,24 +146,34 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<PeriodoLectivoMD> capturarPeriodos(String aguja) {
         List<PeriodoLectivoMD> lista = new ArrayList();
-        String sql = "SELECT p.id_prd_lectivo, c.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin, p.prd_lectivo_observacion, c.carrera_nombre"
-                + " FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c  USING(id_carrera) WHERE UPPER(c.carrera_nombre) LIKE '%"
-                + aguja + "%' OR UPPER(p.prd_lectivo_nombre) LIKE '%" + aguja + "%' AND p.prd_lectivo_activo = true;";
+        String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
+                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
+                + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
+                + "WHERE c.id_carrera = pl.id_carrera AND\n"
+                + "prd_lectivo_activo = true AND (\n"
+                + "	prd_lectivo_nombre ILIKE '%"+aguja+"%' OR\n"
+                + "	carrera_nombre ILIKE '%"+aguja+"%' OR\n"
+                + "	carrera_codigo ILIKE '%"+aguja+"%')\n"
+                + "ORDER BY prd_lectivo_fecha_inicio DESC;";
 
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                PeriodoLectivoMD m = new PeriodoLectivoMD();
-                CarreraMD c = new CarreraMD();
-                m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
-                m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                m.setObservacion_PerLectivo(rs.getString("prd_lectivo_observacion"));
-                c.setId(rs.getInt("id_carrera"));
-                c.setNombre(rs.getString("carrera_nombre"));
-                m.setCarrera(c);
-                lista.add(m);
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+
+                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                //Buscamos la carrera para guardarla en la clase
+                carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setCodigo(rs.getString("carrera_codigo"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                p.setCarrera(carrera);
+
+                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+
+                lista.add(p);
             }
             rs.close();
             return lista;
@@ -202,9 +212,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public ArrayList<PeriodoLectivoMD> cargarPeriodos() {
         ArrayList<PeriodoLectivoMD> lista = new ArrayList();
-        String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
-                + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
-                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true;";
+        String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
+                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
+                + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
+                + "WHERE c.id_carrera = pl.id_carrera AND\n"
+                + "prd_lectivo_activo = true\n"
+                + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -212,7 +225,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
                 p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
-                carrera = car.buscarParaReferencia(rs.getInt("id_carrera"));
+                carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setCodigo(rs.getString("carrera_codigo"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
                 p.setCarrera(carrera);
 
                 p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));

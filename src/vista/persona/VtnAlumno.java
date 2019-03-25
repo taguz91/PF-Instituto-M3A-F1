@@ -18,6 +18,14 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnReporteAlumnos() {
+        return btnReporteAlumnos;
+    }
+
+    public void setBtnReporteAlumnos(JButton btnReporteAlumnos) {
+        this.btnReporteAlumnos = btnReporteAlumnos;
+    }
+
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
@@ -65,6 +73,8 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         tblAlumno = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnReporteAlumnos = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -100,6 +110,15 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
+        jLabel2.setText("Reportes:");
+
+        btnReporteAlumnos.setText("Alumnos");
+        btnReporteAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteAlumnosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,7 +141,10 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(94, 94, 94)
+                        .addComponent(btnReporteAlumnos)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -140,12 +162,23 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblResultados)
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnReporteAlumnos)
+                            .addComponent(jLabel2))
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnReporteAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteAlumnosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteAlumnosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -153,7 +186,9 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnReporteAlumnos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblAlumno;

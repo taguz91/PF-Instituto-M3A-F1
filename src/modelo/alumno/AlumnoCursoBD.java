@@ -9,6 +9,7 @@ import modelo.ResourceManager;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.persona.AlumnoBD;
+import modelo.persona.AlumnoMD;
 
 /**
  *
@@ -109,6 +110,61 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             if (rs != null) {
                 while (rs.next()) {
                     almns.add(obtenerAlmCurso(rs));
+                }
+                return almns;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron consultar los cursos");
+            return null;
+        }
+    }
+
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosTbl() {
+        String sql = "SELECT DISTINCT curso_nombre, \n"
+                + "persona_primer_nombre, persona_primer_apellido,\n"
+                + "persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac , public.\"Alumnos\" a, \n"
+                + "public.\"Cursos\" c, public.\"Personas\" p\n"
+                + "WHERE ac.id_alumno = a.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "ac.id_curso = c.id_curso;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
+    public ArrayList<AlumnoCursoMD> buscarAlumnosCursosTbl(String aguja) {
+        String sql = "SELECT DISTINCT curso_nombre, \n"
+                + "persona_primer_nombre, persona_primer_apellido,\n"
+                + "persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac , public.\"Alumnos\" a, \n"
+                + "public.\"Cursos\" c, public.\"Personas\" p\n"
+                + "WHERE ac.id_alumno = a.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "ac.id_curso = c.id_curso AND\n"
+                + "(curso_nombre ILIKE '%" + aguja + "%' OR \n"
+                + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
+                + "OR persona_identificacion ILIKE '%" + aguja + "%');;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
+    private ArrayList<AlumnoCursoMD> consultarAlmnCursosParaTblSimple(String sql) {
+        ArrayList<AlumnoCursoMD> almns = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    AlumnoCursoMD a = new AlumnoCursoMD();
+                    CursoMD cu = new CursoMD();
+                    cu.setCurso_nombre(rs.getString("curso_nombre"));
+                    AlumnoMD al = new AlumnoMD();
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
+                    a.setAlumno(al);
+                    a.setCurso(cu);
+
+                    almns.add(a);
                 }
                 return almns;
             } else {

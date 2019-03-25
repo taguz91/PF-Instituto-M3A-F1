@@ -15,11 +15,9 @@ import java.sql.Statement;
 public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-   // private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
-    private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDPFConAlumnosPorCurso";
-    private static String USERNAME;
-    private static String PASSWORD;
-
+    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
+    private static String USERNAME = "";
+    private static String PASSWORD = "";
     private static Driver driver = null;
 
     private static Connection conn = null;
@@ -49,7 +47,6 @@ public class ResourceManager {
             }
 
         }
-
 
 //        JDBC_URL = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada";
 //        USERNAME = "postgres";

@@ -2,6 +2,8 @@ package controlador.curso;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -13,6 +15,7 @@ import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.Validar;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -28,8 +31,9 @@ public class VtnCursoCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
-    
+
     private final CursoBD curso;
+    private CursoMD cursoEdit;
     private ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     private DefaultTableModel mdTbl;
@@ -39,13 +43,13 @@ public class VtnCursoCTR {
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
 
-    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta, 
+    public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnCurso = vtnCurso;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Cursos");
@@ -61,26 +65,38 @@ public class VtnCursoCTR {
     public void iniciar() {
         cargarCmbPrdLectio();
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Periodo", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
+        String titulo[] = {"id", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnCurso.getTblCurso());
         vtnCurso.getTblCurso().setModel(mdTbl);
         TblEstilo.ocualtarID(vtnCurso.getTblCurso());
         //le pasamos un tamaño a las columnas
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 1, 150);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 3, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 4, 60);
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 70);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 70);
 
+        cargarNombreCursos();
         cargarCursos();
-
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
         //Le damos una accion al combo de periodos lectivos 
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
         //Le damos una accion al combo de cursos  
         vtnCurso.getCmbCurso().addActionListener(e -> cargarCursosPorNombre());
+        //Buscador 
+        vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String b = vtnCurso.getTxtBuscar().getText().trim();
+                if (b.length() > 2) {
+                    buscar(b);
+                }else if(b.length() == 0){
+                    cargarCursos();
+                }
+            }
+        });
+        vtnCurso.getBtnBuscar().addActionListener(e -> buscar(vtnCurso.getTxtBuscar().getText().trim()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Cursos");
@@ -99,18 +115,32 @@ public class VtnCursoCTR {
             FrmCurso frmCurso = new FrmCurso();
             FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
             ctrFrmCurso.iniciar();
-            ctrFrmCurso.editar(cursos.get(fila));
+            cursoEdit = curso.buscarCurso(
+                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
+            ctrFrmCurso.editar(cursoEdit);
             vtnCurso.dispose();
         }
     }
 
+    private void buscar(String b) {
+        if (Validar.esLetrasYNumeros(b)) {
+            cursos = curso.buscarCursos(b);
+            llenarTbl(cursos);
+        } else {
+            System.out.println("No ingrese caracteres especiales");
+        }
+    }
+
     public void cargarCursos() {
-        //Cargamos el combo con los nombres de cursos 
-        nombresC = curso.cargarNombreCursos();
-        cargarCmbCursos(nombresC);
         //Cargamos los cursos y llenamos la tabla
         cursos = curso.cargarCursos();
         llenarTbl(cursos);
+    }
+
+    public void cargarNombreCursos() {
+        //Cargamos el combo con los nombres de cursos 
+        nombresC = curso.cargarNombreCursos();
+        cargarCmbCursos(nombresC);
     }
 
     private void cargarCursosPorPeriodo() {
@@ -148,7 +178,6 @@ public class VtnCursoCTR {
             cursos.forEach((c) -> {
                 Object valores[] = {
                     c.getId_curso(),
-                    c.getId_prd_lectivo().getNombre_PerLectivo(),
                     c.getId_materia().getNombre(),
                     c.getId_docente().getPrimerNombre() + " "
                     + c.getId_docente().getPrimerApellido(),
@@ -166,8 +195,8 @@ public class VtnCursoCTR {
 
     private void cargarCmbPrdLectio() {
         periodos = prd.cargarPeriodos();
+        vtnCurso.getCmbPeriodoLectivo().removeAllItems();
         if (periodos != null) {
-            vtnCurso.getCmbPeriodoLectivo().removeAllItems();
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
             periodos.forEach((p) -> {
                 vtnCurso.getCmbPeriodoLectivo().addItem(p.getNombre_PerLectivo());
@@ -182,10 +211,10 @@ public class VtnCursoCTR {
             nombresC.forEach(n -> {
                 vtnCurso.getCmbCurso().addItem(n);
             });
-            vtnCurso.getCmbCurso().addItem("--BUG--");
+            vtnCurso.getCmbCurso().setSelectedIndex(0);
         }
     }
-    
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

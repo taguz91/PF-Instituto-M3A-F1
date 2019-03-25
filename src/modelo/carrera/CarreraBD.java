@@ -160,6 +160,58 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
+    
+    public ArrayList<CarreraMD> buscarCarrera(String aguja) {
+        ArrayList<CarreraMD> carreras = new ArrayList();
+        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
+                + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
+                + " carrera_modalidad\n"
+                + "FROM public.\"Carreras\""
+                + "WHERE carrera_activo = 'true' "
+                + "AND (carrera_nombre ILIKE '%"+aguja+"%' OR "
+                + "carrera_codigo ILIKE '%"+aguja+"%')"
+                + "ORDER BY carrera_nombre;";
+
+        ResultSet rs = conecta.sql(sql);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CarreraMD carrera = new CarreraMD();
+
+                    carrera.setId(rs.getInt("id_carrera"));
+                    DocenteMD docen = null;
+                    if (!rs.wasNull()) {
+                        docen = doc.buscarDocente(rs.getInt("id_docente_coordinador"));
+                    }
+                    carrera.setCoordinador(docen);
+                    carrera.setNombre(rs.getString("carrera_nombre"));
+
+                    carrera.setCodigo(rs.getString("carrera_codigo"));
+                    carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
+
+                    if (rs.wasNull()) {
+                        carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
+                    } else {
+                        carrera.setFechaFin(null);
+                    }
+
+                    carrera.setModalidad(rs.getString("carrera_modalidad"));
+
+                    carreras.add(carrera);
+                }
+                return carreras;
+            } else {
+                System.out.println("No se pudo consultar una carreras");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 
     public static String selectCarreraWherePerdLectivo(String nombre) {
 
