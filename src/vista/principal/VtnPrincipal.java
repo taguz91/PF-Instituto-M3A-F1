@@ -8,7 +8,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -390,15 +389,17 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         dpnlPrincipalLayout.setVerticalGroup(
             dpnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGap(0, 376, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(47, 76, 113));
 
+        btnEstado.setBackground(new java.awt.Color(51, 51, 51));
         btnEstado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnEstado.setForeground(new java.awt.Color(255, 255, 255));
         btnEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnEstado.setText("E");
+        btnEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/animacion/LogoPosFinal.png"))); // NOI18N
+        btnEstado.setToolTipText("");
 
         btnAyuda.setBackground(new java.awt.Color(51, 51, 51));
         btnAyuda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -409,7 +410,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda.setContentAreaFilled(false);
         btnAyuda.setOpaque(true);
 
-        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(255, 255, 255));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -428,11 +429,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEstado)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -577,10 +576,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(dpnlPrincipal)
-                .addGap(5, 5, 5)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 

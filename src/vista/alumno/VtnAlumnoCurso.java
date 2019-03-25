@@ -1,5 +1,10 @@
 package vista.alumno;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -7,12 +12,34 @@ package vista.alumno;
  */
 public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VtnCarrera
-     */
+    public JButton getBtnIngresar() {
+        return btnIngresar;
+    }
+
+    public JButton getBtnbuscar() {
+        return btnbuscar;
+    }
+
     public VtnAlumnoCurso() {
         initComponents();
     }
+
+    public JLabel getLblResultados() {
+        return lblResultados;
+    }
+
+    public JLabel getLblbuscar() {
+        return lblbuscar;
+    }
+
+    public JTable getTblAlumnoCurso() {
+        return tblAlumnoCurso;
+    }
+
+    public JTextField getTxtbuscar() {
+        return txtbuscar;
+    }
+    
 
     
     @SuppressWarnings("unchecked")
@@ -22,8 +49,6 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         lblbuscar = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
-        btneditar = new javax.swing.JButton();
-        btneliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlumnoCurso = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
@@ -31,16 +56,13 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Alumnos por curso");
 
         lblbuscar.setText("Buscar:");
 
         btnIngresar.setText("Ingresar");
-
-        btneditar.setText("Editar");
-
-        btneliminar.setText("Eliminar");
 
         tblAlumnoCurso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,10 +96,6 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btneditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -93,14 +111,12 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblbuscar)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnIngresar)
-                        .addComponent(btneditar)
-                        .addComponent(btneliminar)))
+                        .addComponent(btnIngresar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGap(13, 13, 13))
         );
 
         pack();
@@ -110,8 +126,6 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnbuscar;
-    private javax.swing.JButton btneditar;
-    private javax.swing.JButton btneliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JLabel lblbuscar;

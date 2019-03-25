@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="carreras" class="java.lang.Integer">
+	<parameter name="carreras" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -11,7 +11,7 @@
 p.persona_primer_apellido ||' '|| p.persona_segundo_apellido ||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as Coordinador                                                            
 from ((public."Materias" m full outer join public."Carreras" c using (id_carrera)) full outer join public."Docentes" d on id_docente_coordinador=id_docente)
 full outer join public."Personas" p using (id_persona)
-where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
+where c.carrera_codigo=$P{carreras} order by m.materia_ciclo;;]]>
 	</queryString>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="materia_ciclo" class="java.lang.Integer"/>
@@ -22,7 +22,7 @@ where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="223" splitType="Stretch">
+		<band height="185" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="77" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -48,20 +48,6 @@ where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
 				<reportElement x="253" y="34" width="297" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="186" width="140" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Coordinador de Carrera:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="153" y="186" width="402" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{coordinador}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -127,7 +113,4 @@ where c.id_carrera=$P{carreras} order by m.materia_ciclo;;]]>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

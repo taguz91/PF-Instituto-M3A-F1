@@ -2,11 +2,12 @@ package controlador.login;
 
 import controlador.principal.VtnPrincipalCTR;
 import controlador.usuario.VtnSelectRolCTR;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.List;
+import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -26,10 +27,16 @@ public class LoginCTR {
 
     private final Login vista; //LO QUE VA A VISUALIZAR
     private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
+    //Icono de la aplicacion  
+    private final ImageIcon icono;
+    private final Image ista;
 
     public LoginCTR(Login vista, UsuarioBD modelo) {
         this.vista = vista;
         this.modelo = modelo;
+        this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
+        this.ista = icono.getImage();
+        vista.setIconImage(ista);
     }
 
     //Inits
@@ -79,7 +86,10 @@ public class LoginCTR {
 
             vista.dispose();
 
-            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "));
+
+            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
+
+//            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "Holapostgres", " LOGIN "));
             vtn.Init();
 
         } else {
@@ -90,8 +100,15 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
+<<<<<<< HEAD
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"));
         VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "PAOLA", "LoginGenerico"));
+=======
+
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "Holapostgres", "Login de invitado"), icono, ista);
+
+>>>>>>> d6708c7996af14dcbe84898671d8d2b9b082839e
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

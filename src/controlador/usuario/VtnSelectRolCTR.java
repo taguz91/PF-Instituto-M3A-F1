@@ -1,11 +1,13 @@
 package controlador.usuario;
 
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
@@ -26,12 +28,19 @@ public class VtnSelectRolCTR {
     private final ConectarDB conexion;
 
     List<RolMD> rolesDelUsuario;
+    //Icono de la aplicacion  
+    private final ImageIcon icono;
+    private final Image ista;
 
-    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, ConectarDB conexion) {
+    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, 
+            ConectarDB conexion, ImageIcon icono, Image ista) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
         this.conexion = conexion;
+        this.icono = icono;
+        this.ista = ista;
+        vista.setIconImage(ista);
     }
 
     //Inits
@@ -90,7 +99,7 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista);
         vtn.iniciar();
 
         vista.dispose();

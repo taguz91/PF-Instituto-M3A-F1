@@ -1,6 +1,7 @@
 package vista.persona;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -22,33 +23,21 @@ public class VtnWebCam extends javax.swing.JDialog {
         return btnCancelar;
     }
 
-    public void setBtnCancelar(JButton btnCancelar) {
-        this.btnCancelar = btnCancelar;
-    }
-
     public JButton getBtnGuardarFoto() {
         return btnGuardarFoto;
-    }
-
-    public void setBtnGuardarFoto(JButton btnGuardarFoto) {
-        this.btnGuardarFoto = btnGuardarFoto;
-    }
-
-    public JButton getBtnNuevaFoto() {
-        return btnNuevaFoto;
-    }
-
-    public void setBtnNuevaFoto(JButton btnNuevaFoto) {
-        this.btnNuevaFoto = btnNuevaFoto;
     }
 
     public JPanelWebCam.JPanelWebCam getPanelCam() {
         return panelCam;
     }
 
-    public void setPanelCam(JPanelWebCam.JPanelWebCam panelCam) {
-        this.panelCam = panelCam;
+    public JButton getBtnCapturarFoto() {
+        return btnCapturarFoto;
     }
+
+    public JLabel getLbl_Imagen() {
+        return Lbl_Imagen;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,31 +48,37 @@ public class VtnWebCam extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnNuevaFoto = new javax.swing.JButton();
-        btnGuardarFoto = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        btnCapturarFoto = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         panelCam = new JPanelWebCam.JPanelWebCam();
+        jLabel2 = new javax.swing.JLabel();
+        Lbl_Imagen = new javax.swing.JLabel();
+        btnGuardarFoto = new javax.swing.JButton();
 
-        btnNuevaFoto.setText("Nuevo");
+        setTitle("Tomar foto");
 
-        btnGuardarFoto.setText("Guardar");
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel1.setText("Haga clic en el recuadro para activar la camara");
+        btnCapturarFoto.setText("Capturar Foto");
 
         btnCancelar.setText("Cancelar");
+
+        panelCam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelCamLayout = new javax.swing.GroupLayout(panelCam);
         panelCam.setLayout(panelCamLayout);
         panelCamLayout.setHorizontalGroup(
             panelCamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGap(0, 252, Short.MAX_VALUE)
         );
         panelCamLayout.setVerticalGroup(
             panelCamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 283, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        jLabel2.setText("Haga clic en el recuadro para activar la camara");
+
+        Lbl_Imagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnGuardarFoto.setText("Guardar Imagen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,32 +87,40 @@ public class VtnWebCam extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNuevaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnGuardarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
+                                .addComponent(btnCapturarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelCam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Lbl_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnGuardarFoto)
+                                .addGap(66, 66, 66))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(panelCam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                        .addComponent(jLabel2)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelCam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Lbl_Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                    .addComponent(panelCam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevaFoto)
-                    .addComponent(btnGuardarFoto)
-                    .addComponent(btnCancelar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCapturarFoto)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardarFoto))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,10 +128,11 @@ public class VtnWebCam extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Lbl_Imagen;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCapturarFoto;
     private javax.swing.JButton btnGuardarFoto;
-    private javax.swing.JButton btnNuevaFoto;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private JPanelWebCam.JPanelWebCam panelCam;
     // End of variables declaration//GEN-END:variables
 

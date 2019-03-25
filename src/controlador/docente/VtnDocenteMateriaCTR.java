@@ -55,6 +55,7 @@ public class VtnDocenteMateriaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes Materia");
+        ctrPrin.setIconJIFrame(vtnDm);
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(vtnDm);
         vtnDm.show();
@@ -66,7 +67,7 @@ public class VtnDocenteMateriaCTR {
 
     public void iniciar() {
         //Iniciamos la tabla
-        String[] titulo = {"Cedula", "Docente"};
+        String[] titulo = {"Cedula", "Docente", "Materia"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDm.getTblDocentesMateria().setModel(mdTbl);
@@ -91,7 +92,7 @@ public class VtnDocenteMateriaCTR {
         //Acciones de los botones
         vtnDm.getBtnBuscar().addActionListener(e -> buscar(vtnDm.getTxtBuscar().getText().trim()));
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
-        
+                
         cargarDocenteMaterias();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -101,7 +102,8 @@ public class VtnDocenteMateriaCTR {
     //Buscador
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            System.out.println("No es funcional");
+            dms = dm.buscar(aguja);
+            llenarTblDocenteMateria(dms);
         }
     }
     
@@ -187,6 +189,7 @@ public class VtnDocenteMateriaCTR {
             materias.forEach(m -> {
                 vtnDm.getCmbMateria().addItem(m.getNombre());
             });
+            vtnDm.getCmbMateria().setSelectedIndex(0);
         }
     }
 
@@ -205,13 +208,15 @@ public class VtnDocenteMateriaCTR {
         mdTbl.setRowCount(0);
         if (dms != null) {
             dms.forEach(o -> {
-                Object[] valores = {o.getDocente().getPrimerNombre() + " " 
+                Object[] valores = {o.getDocente().getIdentificacion(),
+                    o.getDocente().getPrimerNombre() + " " 
                         + o.getDocente().getPrimerApellido(), o.getMateria().getNombre()};
                 mdTbl.addRow(valores);
             });
+            vtnDm.getLblResultados().setText(dms.size() + " Resultados obtenidos.");
         }
     }
-    
+   
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
