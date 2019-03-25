@@ -130,6 +130,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
+        vtnPrin.getMnCtAlmnCurso().addActionListener(e -> abrirVtnAlumnoCurso());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -247,9 +248,8 @@ public class VtnPrincipalCTR {
             VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso, conecta, this, rolSeleccionado);
             ctrVtnAlmnCurso.iniciar();
         } else {
-
+            errorNumVentanas();
         }
-        errorNumVentanas();
     }
 
     private void abrirVtnMateria() {
@@ -446,7 +446,7 @@ public class VtnPrincipalCTR {
     }
 
     public void estadoCargaVtnFin(String vtn) {
-        vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error comunicarse a 0968796010.");
+        vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error reportarlo a M3A.");
     }
 
     public void estadoCargaFrm(String frm) {

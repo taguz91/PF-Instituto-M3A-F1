@@ -90,7 +90,10 @@ public class VtnDocenteCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                buscaIncremental(vtnDocente.getTxtBuscar().getText().toUpperCase());
+                String b = vtnDocente.getTxtBuscar().getText().toUpperCase().trim();
+                if (b.length() > 2) {
+                    buscaIncremental(vtnDocente.getTxtBuscar().getText().toUpperCase());
+                }
                 /// buscar();
             }
         };

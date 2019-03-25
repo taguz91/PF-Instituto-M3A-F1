@@ -51,6 +51,14 @@
                 <Property name="text" type="java.lang.String" value="Curso"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnCurso">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Alumnos por curso"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPrdLectivo">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

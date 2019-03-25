@@ -223,6 +223,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return lblEstado;
     }
 
+    public JMenuItem getMnCtAlmnCurso() {
+        return mnCtAlmnCurso;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,6 +261,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAlumno = new javax.swing.JMenuItem();
         mnCtCarrera = new javax.swing.JMenuItem();
         mnCtCurso = new javax.swing.JMenuItem();
+        mnCtAlmnCurso = new javax.swing.JMenuItem();
         mnCtPrdLectivo = new javax.swing.JMenuItem();
         mnCtMateria = new javax.swing.JMenuItem();
         mnCtInscripcion = new javax.swing.JMenuItem();
@@ -457,6 +462,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtCurso.setText("Curso");
         mnTipoNotas.add(mnCtCurso);
 
+        mnCtAlmnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
+        mnCtAlmnCurso.setText("Alumnos por curso");
+        mnTipoNotas.add(mnCtAlmnCurso);
+
         mnCtPrdLectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Calendar_20px.png"))); // NOI18N
         mnCtPrdLectivo.setText("Periodo Lectivo");
         mnTipoNotas.add(mnCtPrdLectivo);
@@ -607,6 +616,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JMenuBar menuCrud;
+    private javax.swing.JMenuItem mnCtAlmnCurso;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;
