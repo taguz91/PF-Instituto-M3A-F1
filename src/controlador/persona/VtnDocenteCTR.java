@@ -19,8 +19,6 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.persona.PersonaBD;
-import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -105,11 +103,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getTxtBuscar().addKeyListener(kl);
-<<<<<<< HEAD
-
-=======
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
->>>>>>> d6708c7996af14dcbe84898671d8d2b9b082839e
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
