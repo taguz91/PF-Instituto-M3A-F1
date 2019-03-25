@@ -691,7 +691,7 @@ public class FrmPersonaCTR {
         }
         frmPersona.getCmbSexo().setSelectedItem(sexo);
 
-        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
+        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
         //Codigo postal
@@ -943,7 +943,8 @@ public class FrmPersonaCTR {
 
     private void borrarCampos() {
 
-        //frmPersona.getCmbTipoId().setSelectedIndex(0);
+        frmPersona.getCmbTipoId().setSelectedIndex(0);
+        frmPersona.getTxtIdentificacion().setText("");
         frmPersona.getTxtCallePrincipal().setText("");
         frmPersona.getTxtCalleSecundaria().setText("");
         frmPersona.getTxtCelular().setText("");
