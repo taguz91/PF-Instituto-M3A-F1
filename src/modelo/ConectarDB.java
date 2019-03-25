@@ -18,12 +18,8 @@ public class ConectarDB {
     private ResultSet rs;
 
     //Base de datos en la nube ... si no quiere conectarse a la nube comente esto 
-    //jdbc:postgresql://35.193.226.187:5432/BDinsta
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    private String user = "ROOT";
-    private String pass = "ROOT";
-
-    
+    //jdbc:postgresql://35.193.226.187:5432/BDinsta  
+    String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD David
     //private String url = "jdbc:postgresql://localhost:5432/proyecto"; //BD David
     private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";
@@ -92,10 +88,6 @@ public class ConectarDB {
     //private String pass = "NuEvOsErVeR1997"; // Clave Andres
     // private String pass = "linis4413"; //Clave Lina
 
-   //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
-
-    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
-//    private String url = "jdbc:postgresql://localhost:5433/proyecto"; //BD Johnny
     public ConectarDB(String user, String pass, String mensaje) {
         try {
             //Cargamos el driver

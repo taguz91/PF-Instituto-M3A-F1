@@ -16,6 +16,8 @@ import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.principal.VtnPrincipal;
 
@@ -52,7 +54,7 @@ public class FrmAlumnoCarreraCTR {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;        
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno por carrera");
@@ -62,17 +64,17 @@ public class FrmAlumnoCarreraCTR {
         this.malla = new MallaAlumnoBD(conecta);
         this.almn = new AlumnoBD(conecta);
         this.carr = new CarreraBD(conecta);
-        
+
         vtnPrin.getDpnlPrincipal().add(frmAlmCarrera);
         frmAlmCarrera.show();
     }
 
     public void iniciar() {
         ocultarErrores();
-        cargarCmbModalidad(); 
+        cargarCmbModalidad();
         cargarCmbCarreras();
-        
-        String[] titulo = {"Cedula","Nombre"};
+
+        String[] titulo = {"Cedula", "Nombre"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -91,14 +93,16 @@ public class FrmAlumnoCarreraCTR {
                 }
             }
         });
+        frmAlmCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCarrera.getTxtBuscar(),
+                frmAlmCarrera.getBtnBuscar()));
         //Para poder editarlo
         //frmAlmCarrera.getCmbCarreras().setEditable(true);
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Alumno por carrera");
     }
-    
-    public void ocultarErrores(){        
+
+    public void ocultarErrores() {
         //Ocultamos el error  
         frmAlmCarrera.getLblError().setVisible(false);
     }
@@ -134,17 +138,19 @@ public class FrmAlumnoCarreraCTR {
     }
 
     public void buscarAlmns(String aguja) {
-        alumnos = almn.buscarAlumnos(aguja);
-        mdTbl.setRowCount(0);
-        if (alumnos != null) {
-            alumnos.forEach(a -> {
-                Object[] valores = {a.getIdentificacion(), 
-                    a.getPrimerApellido() + " "
-                    + a.getSegundoApellido() + " "
-                    + a.getPrimerNombre() + " "
-                    + a.getSegundoNombre()};
-                mdTbl.addRow(valores);
-            });
+        if (Validar.esLetrasYNumeros(aguja)) {
+            alumnos = almn.buscarAlumnos(aguja);
+            mdTbl.setRowCount(0);
+            if (alumnos != null) {
+                alumnos.forEach(a -> {
+                    Object[] valores = {a.getIdentificacion(),
+                        a.getPrimerApellido() + " "
+                        + a.getSegundoApellido() + " "
+                        + a.getPrimerNombre() + " "
+                        + a.getSegundoNombre()};
+                    mdTbl.addRow(valores);
+                });
+            }
         }
     }
 

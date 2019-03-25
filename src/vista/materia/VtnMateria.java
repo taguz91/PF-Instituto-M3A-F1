@@ -82,6 +82,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Materias");
         setMinimumSize(new java.awt.Dimension(700, 415));

@@ -2,12 +2,15 @@ package controlador.carrera;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -16,6 +19,8 @@ import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -43,7 +48,7 @@ public class VtnCarreraCTR {
 
     DefaultTableModel mdTbl;
 
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera, 
+    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnCarrera = vtnCarrera;
@@ -76,9 +81,30 @@ public class VtnCarreraCTR {
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
 
+        vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String b = vtnCarrera.getTxtBuscar().getText().trim();
+                if (b.length() > 2) {
+                    buscar(b);
+                }
+            }
+        });
+        vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
+        vtnCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnCarrera.getTxtBuscar(),
+                vtnCarrera.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Carreras");
+    }
+
+    private void buscar(String b) {
+        if (Validar.esLetrasYNumeros(b)) {
+            carreras = car.buscarCarrera(b);
+            llenarTbl(carreras);
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "No debe ingresar caracteres especiales.");
+        }
     }
 
     private void editarCarrera() {
@@ -123,7 +149,8 @@ public class VtnCarreraCTR {
             });
         }
     }
-     public void llamaReporteAlumnoCarrera(){
+
+    public void llamaReporteAlumnoCarrera() {
 
         JasperReport jr;
         String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
@@ -143,7 +170,7 @@ public class VtnCarreraCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

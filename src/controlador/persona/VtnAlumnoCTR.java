@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,6 +20,7 @@ import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -63,10 +62,6 @@ public class VtnAlumnoCTR {
         bdAlumno = new AlumnoBD(conecta);
     }
 
-    VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnDocente docVTN, ConectarDB conecta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public void iniciar() {
         KeyListener kl = new KeyListener() {
             @Override
@@ -99,6 +94,9 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
+        //Validacion del buscador  
+        vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(), 
+                vtnAlumno.getBtnBuscar()));
 
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
          //Cuando termina de cargar todo se le vuelve a su estado normal.
