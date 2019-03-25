@@ -234,13 +234,13 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> cargarDocentes() {
-        ArrayList<DocenteMD> docentes = new ArrayList(); 
-        String sql="SELECT id_docente, d.id_persona, docente_codigo, docente_otro_trabajo,\n" +
-"	docente_categoria, docente_fecha_contrato, docente_fecha_fin, docente_tipo_tiempo, docente_capacitador,\n" +
-"	persona_primer_apellido\n" +
-"FROM public.\"Docentes\" d, public.\"Personas\" p  WHERE docente_activo = 'true' AND p.id_persona = d.id_persona\n" +
-"order by persona_primer_apellido;";
-       /* String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
+        ArrayList<DocenteMD> docentes = new ArrayList();
+        String sql = "SELECT id_docente, d.id_persona, docente_codigo, docente_otro_trabajo,\n"
+                + "	docente_categoria, docente_fecha_contrato, docente_fecha_fin, docente_tipo_tiempo, docente_capacitador,\n"
+                + "	persona_primer_apellido\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p  WHERE docente_activo = 'true' AND p.id_persona = d.id_persona\n"
+                + "order by persona_primer_apellido;";
+        /* String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
                 + "docente_tipo_tiempo, docente_capacitador\n"
                 + "FROM public.\"Docentes\"  WHERE docente_activo = 'true' ;";*/
@@ -397,8 +397,8 @@ public class DocenteBD extends DocenteMD {
             //Buscamos todos los datos de la tabla persona de este docente 
             p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
             d.setPersona(p);
-          //  System.out.println(d.getPrimerApellido());
-           // System.out.println(d.getPrimerNombre());
+            //  System.out.println(d.getPrimerApellido());
+            // System.out.println(d.getPrimerNombre());
             if (!rs.wasNull()) {
                 d.setCodigo(rs.getString("docente_codigo"));
             }
@@ -422,13 +422,13 @@ public class DocenteBD extends DocenteMD {
             }
 
             //d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
-            if (rs.wasNull()) {
-                d.setDocenteTipoTiempo("SELECCIONE");
+            if (!rs.wasNull()) {
+                d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
             } else {
                 d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
                 d.setFechaFinContratacion(null);
-            } 
-            if (rs.wasNull()) {
+            }
+            if (!rs.wasNull()) {
                 d.setDocenteCapacitador(false);
             } else {
                 d.setDocenteCapacitador(rs.getBoolean("docente_capacitador"));
@@ -449,14 +449,14 @@ public class DocenteBD extends DocenteMD {
                 + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "',  "
                 + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
                 + "docente_capacitador= " + this.isDocenteCapacitador() + "\n"
-                + "WHERE id_persona= " + aguja + ";";
+                + "WHERE id_docente= " + aguja + ";";
         if (getFechaFinContratacion() != null) {
             sql = "UPDATE public.\"Docentes\" SET\n"
                     + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", docente_categoria=" + this.getDocenteCategoria() + ","
                     + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "', docente_fecha_fin='" + this.getFechaFinContratacion() + "', "
                     + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
                     + "docente_capacitador= " + this.isDocenteCapacitador() + "\n"
-                    + "WHERE id_persona= " + aguja + ";";
+                    + "WHERE id_docente= " + aguja + ";";
         }
 
         System.out.println(sql);
@@ -505,7 +505,7 @@ public class DocenteBD extends DocenteMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                  DocenteMD al = new DocenteMD();
+                    DocenteMD al = new DocenteMD();
                     al.setIdDocente(rs.getInt("id_docente"));
                     PersonaMD pe = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
                     al.setPersona(pe);
@@ -523,7 +523,6 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
-
 
     public DocenteMD buscarPersona(int aguja) {
         String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_apellido,\n"
@@ -573,8 +572,8 @@ public class DocenteBD extends DocenteMD {
         System.out.println(sql);
         return consultarPor(sql);
     }
-    
-      public DocenteMD buscarDocenteInactivo(String identificacion) {
+
+    public DocenteMD buscarDocenteInactivo(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
                 + "docente_tipo_tiempo, docente_capacitador\n"
@@ -583,9 +582,8 @@ public class DocenteBD extends DocenteMD {
         System.out.println(sql);
         return consultarPor(sql);
     }
-    
-    //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
 
+    //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
     private DocenteMD consultarPor(String sql) {
         DocenteMD d = null;
         ResultSet rs = conecta.sql(sql);
@@ -629,7 +627,7 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
-    
+
     public boolean eliminarDocente(DocenteMD a, int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = false, docente_observacion = '" + a.getEstado()
@@ -642,8 +640,7 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-    
-    
+
     public boolean activarDocente(int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = true\n"
