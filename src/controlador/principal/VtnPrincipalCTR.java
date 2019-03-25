@@ -130,7 +130,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
-        vtnPrin.getMnCtAlmnCurso().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
