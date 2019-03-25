@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,30 +52,6 @@ public class DocenteBD extends DocenteMD {
             System.out.println("Se guardo correctamente");
         }
 
-    }
-
-    private ArrayList<DocenteMD> consultarDocentes(String sql) {
-        ArrayList<DocenteMD> pers = new ArrayList();
-        DocenteMD p;
-        ResultSet rs = conecta.sql(sql);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    p = obtenerDocente(rs);
-                    if (p != null) {
-                        pers.add(p);
-                    }
-                }
-                rs.close();
-                return pers;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
-            return null;
-        }
     }
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
@@ -386,7 +361,7 @@ public class DocenteBD extends DocenteMD {
             try {
                 d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
                 System.out.println("Si tiene fecha fin");
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 System.out.println("No tiene fecha fin");
                 System.out.println(e);
             }
