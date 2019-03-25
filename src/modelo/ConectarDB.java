@@ -19,9 +19,47 @@ public class ConectarDB {
 
     //Base de datos en la nube ... si no quiere conectarse a la nube comente esto 
     //jdbc:postgresql://35.193.226.187:5432/BDinsta
-    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     private String user = "ROOT";
     private String pass = "ROOT";
+
+    
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD David
+    //private String url = "jdbc:postgresql://localhost:5432/proyecto"; //BD David
+    //private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";
+  
+    //private String user = "postgres";
+
+    //private String pass = "ROOT"; //Clave Diego
+    //private String pass = "2197";// CLAVE ARMANDO
+    //private String pass = "Holapostgres"; //Clave Johnny
+    //private String pass = "postgres"; //Clave cesar
+    //private String pass = "ROOT"; //Clave Diego
+    //private String pass = "1234"; //Clave Alejandro
+    //private String pass = ""; //Clave Diego
+    //private String pass = "PAOLA"; //Clave Paola
+    //private String pass = "NuEvOsErVeR1997"; // Clave Andres
+    //private String pass = "davicho"; // Clave David
+    //private String pass = "linis4413"; //Clave Lina*/
+    //Base de datos en la nube ... si no quiere conectarse a la nube comente esto
+    //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
+    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
+//    private String user = "ROOT";
+//    private String pass = "ROOT";
+
+
+    //BD En cloud
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    
+
+    //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
+
+//    private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
+
+
+//    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+//    private String user = "ROOT";
+//    private String pass = "ROOT";
 
 
     //BD En cloud
