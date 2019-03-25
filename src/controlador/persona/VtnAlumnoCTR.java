@@ -6,7 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -17,6 +22,12 @@ import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
@@ -30,7 +41,7 @@ public class VtnAlumnoCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
-    
+     private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
 
@@ -85,6 +96,7 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
+        vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
          //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos");
@@ -210,7 +222,22 @@ public class VtnAlumnoCTR {
             }
         }
     }
-    
+     public void llamaReporteAlumno() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repAlumnos.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
