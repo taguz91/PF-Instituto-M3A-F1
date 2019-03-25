@@ -20,6 +20,7 @@ public class ConectarDB {
     //Base de datos en la nube ... si no quiere conectarse a la nube comente esto 
     //jdbc:postgresql://35.193.226.187:5432/BDinsta  
     String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //String user = "postgres";
     //private String pass = "2197";// CLAVE ARMANDO
     //private String pass = "Holapostgres"; //Clave Johnny
     //private String pass = "postgres"; //Clave cesar
