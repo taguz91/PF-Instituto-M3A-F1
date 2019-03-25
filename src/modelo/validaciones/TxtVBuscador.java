@@ -3,6 +3,7 @@ package modelo.validaciones;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -17,15 +18,30 @@ public class TxtVBuscador extends KeyAdapter {
     //El error que mostraremos
     private final JLabel lbl;
     private String ingreso;
+    private final JButton btn;
 
     public TxtVBuscador(JTextField txt) {
         this.txt = txt;
         this.lbl = null;
+        this.btn = null;
     }
 
     public TxtVBuscador(JTextField txt, JLabel lbl) {
         this.txt = txt;
         this.lbl = lbl;
+        this.btn = null;
+    }
+
+    public TxtVBuscador(JTextField txt, JButton btn) {
+        this.txt = txt;
+        this.btn = btn;
+        this.lbl = null;
+    }
+
+    public TxtVBuscador(JTextField txt, JLabel lbl, JButton btn) {
+        this.txt = txt;
+        this.lbl = lbl;
+        this.btn = btn;
     }
 
     @Override
@@ -56,10 +72,16 @@ public class TxtVBuscador extends KeyAdapter {
                 if (lbl != null) {
                     lbl.setVisible(true);
                 }
+                if (btn != null) {
+                    btn.setEnabled(false);
+                }
             } else {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
                 if (lbl != null) {
                     lbl.setVisible(false);
+                }
+                if (btn != null) {
+                    btn.setEnabled(true);
                 }
             }
         }
