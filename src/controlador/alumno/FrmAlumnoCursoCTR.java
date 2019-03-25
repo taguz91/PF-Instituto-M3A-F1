@@ -79,6 +79,7 @@ public class FrmAlumnoCursoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno por curso");
+        ctrPrin.setIconJIFrame(frmAlmCurso);
         //Inicializamos todas la clases que usaremos
         this.almnCurso = new AlumnoCursoBD(conecta);
         this.almCar = new AlumnoCarreraBD(conecta);

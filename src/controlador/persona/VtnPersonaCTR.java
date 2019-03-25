@@ -1,10 +1,16 @@
 package controlador.persona;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -14,6 +20,12 @@ import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmPersona;
 import vista.persona.VtnPersona;
 import vista.principal.VtnPrincipal;
@@ -35,17 +47,17 @@ public class VtnPersonaCTR {
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
 
-    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, 
+    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Personas");
-
+        ctrPrin.setIconJIFrame(vtnPersona);
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
         vtnPersona.show();
         //Iniciamos la clase persona
@@ -86,7 +98,7 @@ public class VtnPersonaCTR {
                 buscar();
             }
         });
-
+        vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -200,7 +212,7 @@ public class VtnPersonaCTR {
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Elinimar Persona", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Eliminar Persona", dialog);
             if (result == 0) {
                 if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
@@ -212,6 +224,25 @@ public class VtnPersonaCTR {
             }
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA PERSONA");
+        }
+    }
+     public void llamaReportePersona() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repPersona.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("cedula",String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(),1)));
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

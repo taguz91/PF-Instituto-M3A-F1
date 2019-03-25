@@ -3,19 +3,14 @@ package controlador.persona;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -35,7 +30,6 @@ import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
 import vista.persona.FrmPersona;
-import vista.persona.VtnWebCam;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -89,6 +83,7 @@ public class FrmPersonaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Persona");
+        ctrPrin.setIconJIFrame(frmPersona);
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);
@@ -172,7 +167,7 @@ public class FrmPersonaCTR {
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
-                    editar = true;
+                    editar = false;
 
                 } else {
                     editar(per);
@@ -303,6 +298,9 @@ public class FrmPersonaCTR {
                 fis = new FileInputStream(j.getSelectedFile());
                 lonBytes = (int) j.getSelectedFile().length();
 
+                System.out.println("Longitud de foto buscada " + lonBytes);
+                System.out.println("FIle input stream " + fis);
+
                 Image icono = ImageIO.read(j.getSelectedFile()).getScaledInstance(frmPersona.getLblFoto().getWidth(),
                         frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
                 frmPersona.getLblFoto().setIcon(new ImageIcon(icono));
@@ -322,6 +320,7 @@ public class FrmPersonaCTR {
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
+
     
 //    public void iniciarCamara(){
 //    
@@ -367,6 +366,7 @@ public class FrmPersonaCTR {
 //        vtnWebCam.getBtnCancelar().addActionListener(cancelarFoto);
 //    }
         
+
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
@@ -1038,9 +1038,23 @@ public class FrmPersonaCTR {
         frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
         frmPersona.getCmbCantonReside().setSelectedIndex(0);
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
+    }
 
+    public void pasarFoto(InputStream is) {
+        try {
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+
+            File salida = new File("./foto.png");
+            fis = new FileInputStream(salida);
+            lonBytes = (int) salida.length();
+
+            System.out.println("Tomada la foto " + fis);
+            System.out.println("Longitud " + lonBytes);
+        } catch (IOException ex) {
+            System.out.println("No se pudo tranformar");
+            System.out.println(ex.getMessage());
+        }
     }
 
 }
-
-

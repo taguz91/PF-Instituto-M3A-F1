@@ -61,7 +61,7 @@ public class FrmAlumnoCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno");
-
+        ctrPrin.setIconJIFrame(frmAlumno);
         vtnPrin.getDpnlPrincipal().add(frmAlumno);
         frmAlumno.show();
         bdAlumno = new AlumnoBD(conecta);

@@ -410,7 +410,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda.setContentAreaFilled(false);
         btnAyuda.setOpaque(true);
 
-        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(255, 255, 255));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 

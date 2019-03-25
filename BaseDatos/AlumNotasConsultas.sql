@@ -85,3 +85,61 @@ FROM
 "public"."AlumnoCurso"
 INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
 
+
+
+
+
+UPDATE "AlumnoCurso" 
+SET 
+almn_curso_nt_1_parcial = 30, 
+almn_curso_nt_examen_interciclo = 15, 
+almn_curso_nt_2_parcial = 30, 
+almn_curso_nt_examen_final = 25, 
+almn_curso_nt_examen_supletorio = 0, 
+almn_curso_asistencia = 'ASISTE', 
+almn_curso_nota_final = 100, 
+almn_curso_estado = 'APROBADO',
+almn_curso_num_faltas = 3
+WHERE 
+id_almn_curso = 54;
+
+
+
+
+
+
+
+
+
+
+SELECT
+"AlumnoCurso".id_alumno,
+"Personas".persona_identificacion,
+"Personas".persona_primer_apellido || '  ' ||"Personas".persona_segundo_apellido AS "APELLIDOS",
+"Personas".persona_primer_nombre || '  '||"Personas".persona_segundo_nombre AS "NOMBRES",
+"AlumnoCurso".almn_curso_nt_1_parcial,
+"AlumnoCurso".almn_curso_nt_examen_interciclo,
+"AlumnoCurso".almn_curso_nt_2_parcial,
+"AlumnoCurso".almn_curso_nt_examen_final,
+"AlumnoCurso".almn_curso_nt_examen_supletorio,
+"AlumnoCurso".almn_curso_nota_final,
+"AlumnoCurso".almn_curso_estado,
+"AlumnoCurso".almn_curso_num_faltas
+FROM
+"public"."AlumnoCurso"
+JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+JOIN "Personas" ON "Alumnos".id_persona = "Personas".id_persona
+WHERE
+"PeriodoLectivo".prd_lectivo_estado = FALSE AND
+"Cursos".id_docente = 55 AND
+"PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' AND
+"Cursos".curso_ciclo = 4 AND
+"Cursos".curso_paralelo = 'A' AND
+"Jornadas".nombre_jornada = 'MATUTINA'
+ORDER BY
+"Personas".persona_primer_apellido ASC
+;

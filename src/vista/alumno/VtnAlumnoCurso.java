@@ -1,5 +1,7 @@
 package vista.alumno;
 
+import javax.swing.JButton;
+
 
 /**
  *
@@ -7,9 +9,41 @@ package vista.alumno;
  */
 public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
+    public JButton getBtnIngresar() {
+        return btnIngresar;
+    }
+
+    public void setBtnIngresar(JButton btnIngresar) {
+        this.btnIngresar = btnIngresar;
+    }
+
+    public JButton getBtnbuscar() {
+        return btnbuscar;
+    }
+
+    public void setBtnbuscar(JButton btnbuscar) {
+        this.btnbuscar = btnbuscar;
+    }
+
+    public JButton getBtneditar() {
+        return btneditar;
+    }
+
+    public void setBtneditar(JButton btneditar) {
+        this.btneditar = btneditar;
+    }
+
+    public JButton getBtneliminar() {
+        return btneliminar;
+    }
+
     /**
      * Creates new form VtnCarrera
      */
+    public void setBtneliminar(JButton btneliminar) {
+        this.btneliminar = btneliminar;
+    }
+
     public VtnAlumnoCurso() {
         initComponents();
     }
@@ -100,7 +134,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGap(13, 13, 13))
         );
 
         pack();

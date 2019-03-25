@@ -52,6 +52,7 @@ public class FrmDocenteMateriaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Docente materia");
+        ctrPrin.setIconJIFrame(frmDM);
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(frmDM);
         frmDM.show();

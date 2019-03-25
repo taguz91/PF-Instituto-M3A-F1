@@ -1,10 +1,16 @@
 package controlador.materia;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -15,6 +21,12 @@ import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.materia.VtnMateria;
 import vista.principal.VtnPrincipal;
 
@@ -50,7 +62,7 @@ public class VtnMateriaCTR {
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Materias");
-
+        ctrPrin.setIconJIFrame(vtnMateria);
         this.materia = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
@@ -85,7 +97,7 @@ public class VtnMateriaCTR {
         cargarCmbFiltrar();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
-
+        vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteCarreras());
         //Iniciamos el buscador  
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
         vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -178,6 +190,27 @@ public class VtnMateriaCTR {
             filtrarPorCarrera();
         }
     }
+       public void llamaReporteCarreras() {
+
+        JasperReport jr;
+        String path = "./src/vista/reportes/repCarreras.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("carreras", vtnMateria.getCmbCarreras().getSelectedItem());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {

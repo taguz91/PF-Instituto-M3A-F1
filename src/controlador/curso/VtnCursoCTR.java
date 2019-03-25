@@ -50,7 +50,7 @@ public class VtnCursoCTR {
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Cursos");
         this.prd = new PeriodoLectivoBD(conecta);
-        
+        ctrPrin.setIconJIFrame(vtnCurso);
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
         vtnCurso.show();
 
