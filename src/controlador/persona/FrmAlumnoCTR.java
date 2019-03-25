@@ -51,15 +51,13 @@ public class FrmAlumnoCTR {
     private final SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
-
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, 
-            VtnPrincipalCTR ctrPrin, RolMD permisos) {
+    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
         this.conecta = conecta;
-        this.permisos = permisos; 
         this.sectorE = new SectorEconomicoBD(conecta);
         this.ctrPrin = ctrPrin;
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno");
@@ -255,9 +253,8 @@ public class FrmAlumnoCTR {
                 }
 
                 if (error == false) {
-                    boolean acceso = false;
+//                    boolean acceso = false;
 //                    if (frmAlumno.getTxt_Cedula().getText().length() >= 3) {
-
 
 //                    for (int i = 0; i < Alumnos.size(); i++) {
 //                        if (frmAlumno.getTxt_Cedula().getText().equals(Alumnos.get(i).getIdentificacion())) {
@@ -301,65 +298,6 @@ public class FrmAlumnoCTR {
 //                    }
 //                    
 //                    if(acceso == false){
-
-                    for (int i = 0; i < Alumnos.size(); i++) {
-                        if (frmAlumno.getTxt_Cedula().getText().equals(Alumnos.get(i).getIdentificacion())) {
-                            acceso = true;
-                            Font negrita = new Font("Tahoma", Font.BOLD, 13);
-                            frmAlumno.getTxt_Nombre().setFont(negrita);
-                            frmAlumno.getTxt_Nombre().setText(Alumnos.get(i).getPrimerNombre() + " " + Alumnos.get(i).getSegundoNombre()
-                                    + " " + Alumnos.get(i).getPrimerApellido() + " " + Alumnos.get(i).getSegundoApellido());
-                            if (Alumnos.get(i).getTipo_Colegio() == null) {
-                                cont = 0;
-                                JOptionPane.showMessageDialog(null, "Esta persona no esta registrada como alumno");
-                            } else {
-                                frmAlumno.getCmBx_TipoColegio().setSelectedItem(Alumnos.get(i).getTipo_Colegio());
-                                frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(Alumnos.get(i).getTipo_Bachillerato());
-                                frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(Alumnos.get(i).getAnio_graduacion()));
-                                frmAlumno.getCmBx_NvAcademico().setSelectedItem(Alumnos.get(i).getNivel_Academico());
-                                frmAlumno.getTxt_TlSuperior().setText(Alumnos.get(i).getTitulo_Superior());
-                                frmAlumno.getTxt_Ocupacion().setText(Alumnos.get(i).getOcupacion());
-                                if (Alumnos.get(i).getSectorEconomico().getId_SecEconomico() == 0) {
-                                    frmAlumno.getCmBx_SecEconomico().setSelectedItem("|SELECCIONE|");
-                                } else {
-                                    for (int x = 0; x < Sectores.size(); x++) {
-                                        if(Alumnos.get(i).getSectorEconomico().getId_SecEconomico() == Sectores.get(x).getId_SecEconomico()){
-                                            frmAlumno.getCmBx_SecEconomico().setSelectedItem(Sectores.get(x).getDescrip_SecEconomico().toUpperCase());
-                                        }
-                                    }
-                                }
-                                frmAlumno.getCmBx_ForPadre().setSelectedItem(Alumnos.get(i).getFormacion_Padre());
-                                frmAlumno.getCmBx_ForMadre().setSelectedItem(Alumnos.get(i).getFormacion_Madre());
-                                frmAlumno.getTxt_NomContacto().setText(Alumnos.get(i).getNom_Contacto());
-                                frmAlumno.getCmBx_Parentesco().setSelectedItem(Alumnos.get(i).getParentesco_Contacto());
-                                frmAlumno.getTxt_ConEmergency().setText(Alumnos.get(i).getContacto_Emergencia());
-                                frmAlumno.getChkBx_EdcSuperior().setSelected(Alumnos.get(i).isEducacion_Superior());
-                                frmAlumno.getChkBx_Pension().setSelected(Alumnos.get(i).isPension());
-                                frmAlumno.getChkBx_Trabaja().setSelected(Alumnos.get(i).isTrabaja());
-                                cont = 0;
-                                editar_2 = true;
-                                habilitarGuardar();
-                            }
-                        }
-                    }
-                    
-                    if(acceso == false){
-                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-                        int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
-                        if (result == 0) {
-//                            VtnPrincipalCTR principal =  new 
-//                            ConectarDB conectar = new ConectarDB("Persona");
-                            FrmPersona frmPersona = new FrmPersona();
-                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
-                            ctrPers.iniciar();
-                            frmAlumno.dispose();
-                        }
-                        cont = 0;
-                    }
-
-//                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-//                    if (p.isEmpty()) {
-
 //                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
 //                        int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
 //                        if (result == 0) {
