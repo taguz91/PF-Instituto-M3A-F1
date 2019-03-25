@@ -13,8 +13,11 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.persona.PersonaBD;
+import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import vista.persona.FrmDocente;
+import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
 import vista.principal.VtnPrincipal;
 
@@ -39,13 +42,13 @@ public class VtnDocenteCTR {
 
     private DefaultTableModel mdTbl;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente, 
+    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnDocente = vtnDocente;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
@@ -87,7 +90,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getTxtBuscar().addKeyListener(kl);
-        
+
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -103,7 +106,7 @@ public class VtnDocenteCTR {
         if (docentesMD != null) {
             docentesMD.forEach(d -> {
                 Object[] valores = {d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre() + " " + d.getSegundoNombre(),
-                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
+                    d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
                 mdTbl.addRow(valores);
             });
             vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
@@ -120,6 +123,10 @@ public class VtnDocenteCTR {
         vtnDocente.dispose();
     }
 
+    public void abrirFrmPersona() {
+
+    }
+
     public void buscaIncremental(String aguja) {
         docentesMD = docente.buscar(aguja);
         llenarTabla(docentesMD);
@@ -129,22 +136,40 @@ public class VtnDocenteCTR {
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (posFila >= 0) {
-            FrmDocente frmDoc = new FrmDocente();
-            FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta, ctrPrin);
-            ctrFrm.iniciar();
-            frmDoc.getBtnRegistrarPersona().setVisible(false);
-            //Le pasamos la persona de nuestro lista justo la persona seleccionada
-            ctrFrm.habilitarComponentesDocente();
 
-            ctrFrm.editar(docentesMD.get(posFila));
-            //vtnDocente.getTblDocente().setVisible(false);
-            vtnDocente.dispose();
+            int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                    "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                    new Object[]{"Editar Datos Personales", "Editar Datos de Docente"}, "Editar Datos de Docente");
+            if (seleccion == 0) {
+              
+            
+
+                FrmPersona frmPersona = new FrmPersona();
+                FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                ctrFrmPersona.iniciar();
+                ctrFrmPersona.editar(docentesMD.get(posFila));
+                vtnDocente.dispose();
+            } else {
+                if (seleccion == 1) {
+                    FrmDocente frmDoc = new FrmDocente();
+                    FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta, ctrPrin);
+                    ctrFrm.iniciar();
+                    frmDoc.getBtnRegistrarPersona().setVisible(false);
+                    //Le pasamos la persona de nuestro lista justo la persona seleccionada
+                    ctrFrm.habilitarComponentesDocente();
+
+                    ctrFrm.editar(docentesMD.get(posFila));
+                    //vtnDocente.getTblDocente().setVisible(false);
+                    vtnDocente.dispose();
+                }
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
         }
     }
-     
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
@@ -174,13 +199,12 @@ public class VtnDocenteCTR {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar un Docente? ", " Eliminar Docente ", dialog);
             if (result == 0) {
-
                 String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este Docente?");
                 if (observacion != null) {
                     docentemd.setEstado(observacion.toUpperCase());
                     if (docente.eliminarDocente(docentemd, docentesMD.get(0).getIdPersona()) == true) {
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                        llenarTabla(docentesMD);
+                        cargarDocentes();
 
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL DOCENTE !");
@@ -189,7 +213,7 @@ public class VtnDocenteCTR {
             }
 
         } else {
-
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
         }
     }
 }

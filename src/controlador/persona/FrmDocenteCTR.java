@@ -69,6 +69,10 @@ public class FrmDocenteCTR {
         vtnPrin.getDpnlPrincipal().add(frmDocente);
         frmDocente.show();
     }
+
+    FrmDocenteCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     private void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
