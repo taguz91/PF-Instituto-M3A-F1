@@ -88,8 +88,6 @@ public class VtnPersonaCTR {
 
         //Llenamos el combo de tipos de persona
         cargarTipoPersona();
-        //Le asignamos la accion al combo de tipos de persona  
-        vtnPersona.getCmbTipoPersona().addActionListener(e -> filtrarPorTipoPersona());
 
         //Inciamos el txt de buscador  
         vtnPersona.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -157,18 +155,6 @@ public class VtnPersonaCTR {
         }
         vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
-    }
-
-    //consultamos por tipo de persona 
-    public void filtrarPorTipoPersona() {
-        int posTip = vtnPersona.getCmbTipoPersona().getSelectedIndex();
-        if (posTip > 0) {
-            //Debemos arreglar la consulta
-            //personas = dbp.cargarPorTipo(tipos.get(posTip - 1).getId());
-        } else {
-            personas = dbp.cargarPersonas();
-        }
-        cargarLista();
     }
 
     //Buscamos persona
