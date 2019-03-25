@@ -483,6 +483,18 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_I, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtMatricula().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_T, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtMallaAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O, ActionEvent.CTRL_MASK)); 
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -502,6 +514,15 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_I, ActionEvent.ALT_MASK)); 
+        
+        vtnPrin.getMnIgMatricula().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_T, ActionEvent.ALT_MASK)); 
+        
+        vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O, ActionEvent.ALT_MASK)); 
     }
 
     public int getNumVtns() {
