@@ -233,13 +233,12 @@ public class VtnAlumnoCTR {
                 vtnAlumno.dispose();
 
             } else if (seleccion == 0) {
-                ConectarDB conectar = new ConectarDB("ROOT", "password", "Persona");
-                PersonaBD extraer = new PersonaBD(conectar);
+                PersonaBD extraer = new PersonaBD(conecta);
 
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona = new PersonaMD();
                 persona = extraer.buscarPersona(al.getIdPersona());
-                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conectar, ctrPrin);
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();

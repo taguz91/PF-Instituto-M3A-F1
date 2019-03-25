@@ -26,7 +26,7 @@ public class ConectarDB {
     
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD David
     //private String url = "jdbc:postgresql://localhost:5432/proyecto"; //BD David
-    //private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";
+    private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";
   
     //private String user = "postgres";
 
@@ -49,7 +49,7 @@ public class ConectarDB {
 
 
     //BD En cloud
-    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     
 
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny

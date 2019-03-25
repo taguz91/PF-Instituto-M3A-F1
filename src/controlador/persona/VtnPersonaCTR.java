@@ -199,7 +199,9 @@ public class VtnPersonaCTR {
             FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
-            ctrFrm.editar(personas.get(posFila));
+            PersonaMD perEditar = dbp.buscarPersona(
+                    Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            ctrFrm.editar(perEditar);
         } else {
             vtnPersona.getLblError().setVisible(true);
         }

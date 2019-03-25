@@ -208,7 +208,6 @@ public class FrmPersonaCTR {
     private void activarDiscapacidad() {
         boolean discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
         desactivarDiscapacidad(discapacidad);
-
     }
 
     private void iniciarValidaciones() {
@@ -705,7 +704,6 @@ public class FrmPersonaCTR {
 
     public void editar(PersonaMD per) {
         //Seteamos los datos en el formulario  
-        activarDiscapacidad();
         boolean discapacidad;
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
@@ -737,7 +735,7 @@ public class FrmPersonaCTR {
         }
         frmPersona.getCmbSexo().setSelectedItem(sexo);
 
-        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
+        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
         //Codigo postal
@@ -752,6 +750,8 @@ public class FrmPersonaCTR {
 
         //Discapacidad
         frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
+        activarDiscapacidad();
+        
         frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
