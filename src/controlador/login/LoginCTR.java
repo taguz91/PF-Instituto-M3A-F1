@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.List;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
@@ -87,7 +86,9 @@ public class LoginCTR {
 
             vista.dispose();
 
+
             VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
+
 //            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "Holapostgres", " LOGIN "));
             vtn.Init();
 
@@ -99,8 +100,10 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
+
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
         VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "Holapostgres", "Login de invitado"), icono, ista);
+
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
 

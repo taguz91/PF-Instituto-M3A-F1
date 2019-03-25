@@ -47,13 +47,13 @@ public class VtnPersonaCTR {
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
 
-    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona, 
+    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnPersona = vtnPersona;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Personas");
@@ -212,7 +212,7 @@ public class VtnPersonaCTR {
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Elinimar Persona", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Eliminar Persona", dialog);
             if (result == 0) {
                 if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");

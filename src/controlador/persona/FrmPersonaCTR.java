@@ -297,9 +297,9 @@ public class FrmPersonaCTR {
                 //Para guardar la foto  
                 fis = new FileInputStream(j.getSelectedFile());
                 lonBytes = (int) j.getSelectedFile().length();
-                
-                System.out.println("Longitud de foto buscada "+lonBytes); 
-                System.out.println("FIle input stream "+fis);
+
+                System.out.println("Longitud de foto buscada " + lonBytes);
+                System.out.println("FIle input stream " + fis);
 
                 Image icono = ImageIO.read(j.getSelectedFile()).getScaledInstance(frmPersona.getLblFoto().getWidth(),
                         frmPersona.getLblFoto().getHeight(), Image.SCALE_SMOOTH);
@@ -320,7 +320,7 @@ public class FrmPersonaCTR {
         // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
         //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
-                  
+
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
@@ -993,18 +993,18 @@ public class FrmPersonaCTR {
         frmPersona.getCmbCantonReside().setSelectedIndex(0);
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
     }
-    
-    public void pasarFoto(InputStream is){
+
+    public void pasarFoto(InputStream is) {
         try {
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
-            
+
             File salida = new File("./foto.png");
-            fis = new FileInputStream(salida); 
-            lonBytes = (int)salida.length(); 
-            
-            System.out.println("Tomada la foto "+fis);
-            System.out.println("Longitud "+lonBytes);
+            fis = new FileInputStream(salida);
+            lonBytes = (int) salida.length();
+
+            System.out.println("Tomada la foto " + fis);
+            System.out.println("Longitud " + lonBytes);
         } catch (IOException ex) {
             System.out.println("No se pudo tranformar");
             System.out.println(ex.getMessage());
@@ -1012,5 +1012,3 @@ public class FrmPersonaCTR {
     }
 
 }
-
-
