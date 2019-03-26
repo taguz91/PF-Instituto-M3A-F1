@@ -16,9 +16,17 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
+<<<<<<< HEAD
+
+    //BD En cloud
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+
+   //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
+=======
     
     //BD En cloud
     private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+>>>>>>> c373264e12eb5d9f18ecb872ab312225484b6f1a
 
     public ConectarDB(String user, String pass, String mensaje) {
         try {

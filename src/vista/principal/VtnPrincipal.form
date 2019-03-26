@@ -99,6 +99,14 @@
                 <Property name="text" type="java.lang.String" value="Materia Docentes"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Silabos"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -209,6 +217,14 @@
                   <Image iconType="3" name="/vista/img/icons8_Literature_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Materia Docente"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/ingresar_silabo_menu.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Silabo"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -331,7 +347,11 @@
                   <Component id="btnDocenteMateria" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMateria" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="213" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnIngresarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace pref="111" max="32767" attributes="0"/>
                   <Component id="btnCerrarSesion" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -351,6 +371,8 @@
                       <Component id="btnMatricula" max="32767" attributes="0"/>
                       <Component id="btnCerrarSesion" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnDocenteMateria" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -452,6 +474,24 @@
               <Image iconType="3" name="/vista/img/icons8_Literature_25px.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Asignar materia a docente."/>
+            <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnIngresarSilabo">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/consulta_silabo.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar Silabo"/>
+            <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnConsultarSilabo">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/ingreso_silabo.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Consultar Silabo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
