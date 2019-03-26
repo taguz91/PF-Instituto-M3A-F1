@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -106,6 +107,8 @@ public class VtnPrincipalCTR {
         this.icono = icono;
         this.ista = ista;
         vtnPrin.setIconImage(ista);
+        //Iniciamos la pantala en Fullscream 
+        vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //carga.iniciar();
         //Le pasamos el icono  
         vtnPrin.setTitle("PF M3A");
@@ -191,7 +194,6 @@ public class VtnPrincipalCTR {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
         if (numVtns < 5) {
-            carga.detener();
             VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente, conecta, this, rolSeleccionado);
             ctrVtnDocente.iniciar();
         } else {

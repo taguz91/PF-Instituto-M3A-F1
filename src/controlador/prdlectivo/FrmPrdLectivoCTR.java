@@ -37,6 +37,7 @@ public class FrmPrdLectivoCTR {
     private boolean editar = false;
     private int id_PeriodoLectivo;
     private int cont = 1;
+    private List<CarreraMD> carreras;
 
     public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -67,9 +68,14 @@ public class FrmPrdLectivoCTR {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
-                    Font negrita = new Font("Tahoma", Font.BOLD, 13);
-                    frmPrdLectivo.getTxt_Nombre().setFont(negrita);
-                    frmPrdLectivo.getTxt_Nombre().setText(sacarIniciales(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()));
+                    
+                    for(int i = 0; i < carreras.size(); i++){
+                        if(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals(carreras.get(i).getNombre().toUpperCase())){
+                            Font negrita = new Font("Tahoma", Font.BOLD, 13);
+                            frmPrdLectivo.getTxt_Nombre().setFont(negrita);
+                            frmPrdLectivo.getTxt_Nombre().setText(carreras.get(i).getCodigo());
+                        }
+                    }
                 }
             }
         };
@@ -102,14 +108,7 @@ public class FrmPrdLectivoCTR {
                 habilitarGuardar();
             }
         };
-
-//        frmPrdLectivo.getDcr_FecConclusion().addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e){
-//                System.out.println("Fechaa");
-//                System.out.println(frmPrdLectivo.getDcr_FecConclusion().getText());
-//            }
-//        });
+        
         SelectionChangedListener cambioFecha = new SelectionChangedListener() {
             @Override
             public void onSelectionChange(SelectionChangedEvent sce) {
@@ -190,6 +189,7 @@ public class FrmPrdLectivoCTR {
             }
         };
 
+        iniciarDatos();
         iniciarCarreras();
         iniciarComponentes();
         iniciarFechas();
@@ -204,11 +204,14 @@ public class FrmPrdLectivoCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Periodo lectivo");
     }
+    
+    public void iniciarDatos(){
+        carreras = bdPerLectivo.capturarCarrera();
+    }
 
     public void iniciarCarreras() {
-        List<CarreraMD> sector = bdPerLectivo.capturarCarrera();
-        for (int i = 0; i < sector.size(); i++) {
-            frmPrdLectivo.getCbx_Carreras().addItem(sector.get(i).getNombre());
+        for (int i = 0; i < carreras.size(); i++) {
+            frmPrdLectivo.getCbx_Carreras().addItem(carreras.get(i).getNombre());
         }
     }
 

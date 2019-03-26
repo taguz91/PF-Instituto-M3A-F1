@@ -17,6 +17,8 @@ import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaBD;
@@ -50,6 +52,10 @@ public class VtnDocenteCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
+    private final PeriodoLectivoBD prd;
+    
+    //Lista de todos los periodos lectivos
+    private ArrayList<PeriodoLectivoMD> periodos;
 
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
@@ -65,6 +71,7 @@ public class VtnDocenteCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
+        this.prd = new PeriodoLectivoBD(conecta);
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
@@ -102,7 +109,7 @@ public class VtnDocenteCTR {
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
-        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> llamaReporteDocenteMateria());
+        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -117,9 +124,9 @@ public class VtnDocenteCTR {
         mdTbl.setRowCount(0);
         if (docentesMD != null) {
             docentesMD.forEach(d -> {
-                Object[] valores = {d.getPrimerApellido() + " " 
-                        + d.getSegundoApellido() + " " + d.getPrimerNombre() 
-                        + " " + d.getSegundoNombre(),
+                Object[] valores = {d.getPrimerApellido() + " "
+                    + d.getSegundoApellido() + " " + d.getPrimerNombre()
+                    + " " + d.getSegundoNombre(),
                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
                 mdTbl.addRow(valores);
             });
@@ -247,6 +254,7 @@ public class VtnDocenteCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "./src/vista/reportes/repDocentesCarrera.jasper";
@@ -265,6 +273,54 @@ public class VtnDocenteCTR {
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void botonReporteMateria() {
+        int s = JOptionPane.showOptionDialog(vtnDocente,
+                "Reporte de Materias del Docente\n"
+                + "¿Elegir el tipo de Reporte?", "REPORTE MATERIAS",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Materias por Periodo", "Historial de Materias",
+                    "Cancelar"}, "Historial de Materias");
+        switch (s) {
+            case 0:
+                seleccionarPeriodo();
+                break;
+            case 1:
+                llamaReporteDocenteMateria();
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void seleccionarPeriodo(){
+        periodos = prd.cargarPeriodos();
+        ArrayList<String> nmPrd = new ArrayList(); 
+        nmPrd.add("Seleccione");
+        periodos.forEach(p -> {
+            nmPrd.add(p.getNombre_PerLectivo());
+        });
+        Object np = JOptionPane.showInputDialog(vtnPrin, 
+                "Lista de periodos lectivos", "Periodos lectivos",
+                JOptionPane.QUESTION_MESSAGE, null, 
+                nmPrd.toArray(), "Seleccione"); 
+        System.out.println("Selecciono "+np);
+        //Se es null significa que no selecciono nada
+        if (np == null) {
+            botonReporteMateria();
+        }else if(np.equals("Seleccione")){
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un periodo lectivo.");
+            seleccionarPeriodo();
+        }else{
+            int posPrd = nmPrd.indexOf(np); 
+            //Se le resta 1 porque al inicio se agrega uno mas 
+            posPrd = posPrd - 1;
+            System.out.println("El peridoo esta en la pos: "+posPrd);
+            System.out.println("Id del perido "+periodos.get(posPrd).getId_PerioLectivo());
         }
     }
 }
