@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e17a9b3c-2d82-49a7-ae12-bccb7377a8fe">
+	<property name="ireport.zoom" value="2.732053821460284"/>
+	<property name="ireport.x" value="323"/>
+	<property name="ireport.y" value="94"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.persona_primer_apellido||' '|| p.persona_segundo_apellido||' '||p.persona_primer_nombre||' '|| p.persona_segundo_nombre as personaNombre, 
+c.curso_nombre ,m.materia_nombre,prd.prd_lectivo_nombre
+from 
+public."Personas" p 
+join public."Docentes" d using  (id_persona)
+join public."Cursos" c using (id_docente)
+join public."PeriodoLectivo" prd using (id_prd_lectivo)
+join public."Materias" m using (id_materia)
+where d.id_docente = $P{id}
+order by p.persona_primer_apellido;]]>
+	</queryString>
+	<field name="personanombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="258" y="0" width="297" height="20" uuid="ae3a8037-955c-42f9-b268-0c6928e4e89b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="555" height="20" uuid="72414c4d-3ce7-420a-a3ca-ba3fe1ed03b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="555" height="20" uuid="1e89a85b-ba75-49b8-a409-ff32be269a78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de materias por docente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="70" width="555" height="20" uuid="1d3d065c-13ac-43b4-9559-7204011ebdcd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{personanombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="55" y="0" width="303" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="d9a7c9b0-2ec1-45ff-92dd-2e4ba2593c28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="358" y="0" width="197" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="c8207b8e-f13f-473d-b086-6bddd1f8acf3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Period Lectivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="55" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="ceb7cffe-cf0c-440f-90eb-4a205cea0fbd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="46ad6288-4d1e-4da2-b1a0-a5939144098a"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="55" height="20" uuid="4674a169-7923-472e-b947-acaa5b7430f5"/>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="138" height="20" uuid="937ff794-6fc0-4d5c-95e6-bc0bea69851c"/>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="0" width="362" height="20" uuid="94e68fa2-6813-4a5f-95ff-69b0e1c0718d"/>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="5f515cc0-dd6d-4ffe-9f9b-7c637d53fd8c"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
