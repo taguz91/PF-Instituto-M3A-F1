@@ -2,6 +2,7 @@
 package controlador.periodoLectivoNotas;
 
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 import vista.periodoLectivoNotas.FrmIngresoNotas;
 import vista.principal.VtnPrincipal;
 

@@ -80,6 +80,8 @@ public class VtnPeriodoIngresoNotasCTR {
     public void cargarTabla() {
 
     }
+    
+   
 
     //Procesadores de eventos
     private void btnEditarActionPerformance(ActionEvent e) {
