@@ -167,6 +167,7 @@ public class ControladorSilaboCRUD {
         this.silabo = silabo;
         this.usuario = usuario;
         this.silabos = silabos;
+        this.setup = new frmConfiguracionSilabo();
         this.gestion = new frmGestionSilabo();
         this.bibliografia = new frmReferencias();
         silabos.setVisible(true);
