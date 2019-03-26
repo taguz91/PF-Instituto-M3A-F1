@@ -21,6 +21,8 @@ import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -52,13 +54,13 @@ public class VtnMateriaCTR {
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
 
-    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria, 
+    public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnMateria = vtnMateria;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Materias");
@@ -106,7 +108,9 @@ public class VtnMateriaCTR {
                 buscar();
             }
         });
-
+        //Validacion del buscador
+        vtnMateria.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMateria.getTxtBuscar(),
+                vtnMateria.getBtnBuscar()));
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -128,8 +132,11 @@ public class VtnMateriaCTR {
     }
 
     public void buscarMaterias(String b) {
-        materias = materia.cargarMaterias(b);
-        cargarTblMaterias();
+        if (Validar.esLetrasYNumeros(b)) {
+            materias = materia.cargarMaterias(b);
+            cargarTblMaterias();
+        }
+
     }
 
     public void cargarCmbFiltrar() {
@@ -190,7 +197,8 @@ public class VtnMateriaCTR {
             filtrarPorCarrera();
         }
     }
-       public void llamaReporteCarreras() {
+
+    public void llamaReporteCarreras() {
 
         JasperReport jr;
         String path = "./src/vista/reportes/repCarreras.jasper";
@@ -211,7 +219,6 @@ public class VtnMateriaCTR {
         }
     }
 
-    
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

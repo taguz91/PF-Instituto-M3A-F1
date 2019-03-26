@@ -520,9 +520,8 @@ public class VtnNotasAlumnoCursoCTR {
     private void tblNotasOnKeyTyped(KeyEvent e) {
         if (e.getKeyCode() == 10) {
 
-            System.out.println("-------->");
-
-//            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+            
         }
     }
 }

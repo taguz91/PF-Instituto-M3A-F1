@@ -131,6 +131,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
+        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -163,6 +164,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
+        vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         controladorSilabo();
         
@@ -250,9 +252,8 @@ public class VtnPrincipalCTR {
             VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso, conecta, this, rolSeleccionado);
             ctrVtnAlmnCurso.iniciar();
         } else {
-
+            errorNumVentanas();
         }
-        errorNumVentanas();
     }
 
     private void abrirVtnMateria() {
@@ -293,6 +294,11 @@ public class VtnPrincipalCTR {
             VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtnPrin, vtn, conecta, this, rolSeleccionado);
             ctrVtn.iniciar();
         }
+    }
+    
+    private void abrirVtnAyuda(){
+        JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
+        ctrAyuda.iniciar();
     }
 
     //Para abrir todos los formularios
@@ -457,7 +463,7 @@ public class VtnPrincipalCTR {
     }
 
     public void estadoCargaVtnFin(String vtn) {
-        vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error comunicarse a 0968796010.");
+        vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error reportarlo a M3A.");
     }
 
     public void estadoCargaFrm(String frm) {
@@ -494,6 +500,18 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_I, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtMatricula().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_T, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtMallaAlumno().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.CTRL_MASK)); 
+        
+        vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O, ActionEvent.CTRL_MASK)); 
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -513,6 +531,15 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_I, ActionEvent.ALT_MASK)); 
+        
+        vtnPrin.getMnIgMatricula().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_T, ActionEvent.ALT_MASK)); 
+        
+        vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O, ActionEvent.ALT_MASK)); 
     }
 
     public int getNumVtns() {

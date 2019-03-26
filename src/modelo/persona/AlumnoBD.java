@@ -18,13 +18,12 @@ public class AlumnoBD extends AlumnoMD {
         this.per = new PersonaBD(conecta);
     }
 
-
     public boolean guardarAlumno(SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"
-                + "	 id_persona, id_sec_economico, alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
+                + "	 id_persona, id_sec_economico, alumno_codigo,alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
                 + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
                 + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
-                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', '" + getNivel_Academico() + "', " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
@@ -287,15 +286,15 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     public ArrayList<AlumnoMD> buscarAlumnos(String aguja) {
-        String sql = "SELECT id_alumno, \"Personas\".id_persona\n"
-                + "FROM public.\"Alumnos\", public.\"Personas\" \n"
-                + "WHERE alumno_activo = 'true'\n"
-                + "AND \"Personas\".id_persona = \"Alumnos\".id_persona\n"
-                + "AND (persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + "OR persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "OR persona_segundo_apellido ILIKE '%" + aguja + "%'\n"
-                + "OR persona_primer_nombre ILIKE '%" + aguja + "%'\n"
-                + "OR persona_segundo_nombre ILIKE '%" + aguja + "%');";
+        String sql = "SELECT id_alumno, a.id_persona, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Alumnos\" a, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = a.id_persona AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	persona_identificacion ILIKE '%"+aguja+"%');";
         return consultarAlumnos(sql);
     }
 
@@ -307,8 +306,12 @@ public class AlumnoBD extends AlumnoMD {
                 while (rs.next()) {
                     AlumnoMD al = new AlumnoMD();
                     al.setId_Alumno(rs.getInt("id_alumno"));
-                    PersonaMD p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
-                    al.setPersona(p);
+                    al.setIdPersona(rs.getInt("id_persona"));
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
 
                     almns.add(al);
                 }

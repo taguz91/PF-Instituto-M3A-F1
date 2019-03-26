@@ -4,6 +4,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -104,6 +106,9 @@ public class VtnMallaAlumnoCTR {
                 }
             }
         });
+        //Validacion del buscador 
+        vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(),
+                vtnMallaAlm.getBtnBuscar()));
         //Modificamos el cmb para que sea editable  
         vtnMallaAlm.getCmbAlumnos().setEditable(true);
         //Buscar en el combo
@@ -119,12 +124,31 @@ public class VtnMallaAlumnoCTR {
                 }
                 if (e.getKeyCode() != 38 && e.getKeyCode() != 40
                         && e.getKeyCode() != 37 && e.getKeyCode() != 39
-                        && a.length() >= l && e.getKeyCode() != 13 
+                        && a.length() >= l && e.getKeyCode() != 13
                         && e.getKeyCode() != 10) {
                     buscarAlumno(a);
                 }
             }
         });
+        //Prueba cargando todos los datos 
+        //Funciona de la patada
+        Instant iniBusqueda = Instant.now();
+        //cargarMallas();
+        Instant terBusqueda = Instant.now();
+        System.out.println("El tiempo que tardo en buscar malla alumnos es: "
+                + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
+        vtnPrin.setCursor(new Cursor(0));
+        ctrPrin.estadoCargaVtnFin("Malla alumnos");
+    }
+
+    private void cargarMallas() {
+        //Cambiamos el estado del cursos  
+        vtnPrin.setCursor(new Cursor(3));
+        ctrPrin.estadoCargaVtn("Malla alumnos");
+
+        mallas = mallaAlm.cargarMallasTbl();
+        llenarTbl(mallas);
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Malla alumnos");
@@ -139,24 +163,45 @@ public class VtnMallaAlumnoCTR {
             llenarCmbAlumno(alumnos);
             vtnMallaAlm.getCmbAlumnos().showPopup();
             vtnMallaAlm.getCmbAlumnos().getEditor().setItem(aguja);
-
         }
     }
 
     private void buscarMalla(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
+            //Cambiamos el estado del cursos  
+            vtnPrin.setCursor(new Cursor(3));
+            ctrPrin.estadoCargaVtn("Malla alumnos");
+
             mallas = mallaAlm.buscarMallaAlumno(aguja);
             llenarTbl(mallas);
+            //Cuando termina de cargar todo se le vuelve a su estado normal.
+            vtnPrin.setCursor(new Cursor(0));
+            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         }
     }
 
     private void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         if (posAlm > 0) {
+            System.out.println("Se consultara por alumno");
+            //Cambiamos el estado del cursos  
+            vtnPrin.setCursor(new Cursor(3));
+            ctrPrin.estadoCargaVtn("Malla alumnos");
+
+            Instant iniBusqueda = Instant.now();
+
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
+
+            Instant terBusqueda = Instant.now();
+            System.out.println("El tiempo que tardo en buscar malla alumno es: "
+                    + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
             vtnMallaAlm.getCmbEstado().setEnabled(true);
+            
             llenarTbl(mallas);
             cargarCmbEstado();
+            //Cuando termina de cargar todo se le vuelve a su estado normal.
+            vtnPrin.setCursor(new Cursor(0));
+            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         } else {
             //Borramos todos los datos de la tabla si no se selecciona ninguno 
             mdlTbl.setRowCount(0);
@@ -171,13 +216,13 @@ public class VtnMallaAlumnoCTR {
             if (malla.getMallaNumMatricula() > 0) {
                 if (malla.getEstado().equals("C")) {
                     JOptionPane.showMessageDialog(vtnPrin, "Ya tiene cursada esta materia no se puede ingresar nota");
-                }else{
+                } else {
                     String nota = JOptionPane.showInputDialog(
-                        "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
-                        + "Numero de matricula: " + malla.getMallaNumMatricula());
+                            "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
+                            + "Numero de matricula: " + malla.getMallaNumMatricula());
                     if (Validar.esNota(nota)) {
                         mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(vtnPrin, "Ingrese una nota valida");
                         ingresarNota();
                     }
@@ -186,7 +231,7 @@ public class VtnMallaAlumnoCTR {
                 JOptionPane.showMessageDialog(vtnPrin, "Alumno no se encuentra matricula en esta \n"
                         + "materia, no puede ingresar su nota.");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila para poder ingresar una nota.");
         }
     }
@@ -195,9 +240,16 @@ public class VtnMallaAlumnoCTR {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
         if (posAlm > 0 && posEst > 0) {
+            //Cambiamos el estado del cursos  
+            vtnPrin.setCursor(new Cursor(3));
+            ctrPrin.estadoCargaVtn("Malla alumnos");
+
             mallas = mallaAlm.cargarMallaAlumnoPorEstado(
                     alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
             llenarTbl(mallas);
+            //Cuando termina de cargar todo se le vuelve a su estado normal.
+            vtnPrin.setCursor(new Cursor(0));
+            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         } else if (posAlm > 0) {
             cargarPorAlumno();
         }
@@ -214,8 +266,11 @@ public class VtnMallaAlumnoCTR {
                     m.getNota2(), m.getNota3()};
                 mdlTbl.addRow(valores);
             });
+            vtnMallaAlm.getLblResultados().setText(mallas.size() + " Resultados obtenidos.");
+        }else{
+            vtnMallaAlm.getLblResultados().setText("0 Resultados obtenidos.");
         }
-        vtnMallaAlm.getLblResultados().setText(mallas.size()+ " Resultados obtenidos.");
+
     }
 
     private void cargarCmbCarrera() {

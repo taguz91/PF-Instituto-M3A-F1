@@ -27,16 +27,27 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     public TipoDeNotaBD() {
     }
 
-    private final String TABLA = " \"TipoDeNota\" ";
+    public TipoDeNotaBD(TipoDeNotaMD obj) {
+        this.setIdTipoNota(obj.getIdTipoNota());
+        this.setNombre(obj.getNombre());
+        this.setValorMinimo(obj.getValorMinimo());
+        this.setValorMaximo(obj.getValorMaximo());
+        this.setFechaCreacion(obj.getFechaCreacion());
+        this.setEstado(obj.isEstado());
+    }
 
-    private final String ATRIBUTOS = "\"TipoDeNota\".id_tipo_nota,\n"
+    private static final String TABLA = " \"TipoDeNota\" ";
+
+    private static final String ATRIBUTOS = "\"TipoDeNota\".id_tipo_nota,\n"
             + "\"TipoDeNota\".tipo_nota_nombre,\n"
             + "\"TipoDeNota\".tipo_nota_valor_minimo,\n"
             + "\"TipoDeNota\".tipo_nota_valor_maximo,\n"
             + "\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
             + "\"TipoDeNota\".tipo_nota_estado";
 
-    private final String PRIMARY_KEY = " \"TipoDeNota\".id_tipo_nota ";
+    private static final String PRIMARY_KEY = " \"TipoDeNota\".id_tipo_nota ";
+
+    private static final String RESTRICCION = " \"TipoDeNota\".tipo_nota_estado  IS TRUE ";
 
     public boolean insertar() {
         String INSERT = "INSERT INTO " + TABLA + " \n"
@@ -53,7 +64,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaMD> SelectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA;
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE " + RESTRICCION + " ORDER BY tipo_nota_fecha_creacion DESC";
 
         return SelectSimple(SELECT);
 
@@ -61,9 +72,38 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaMD> SelectOneWhereNombre(String Aguja) {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%' AND " + RESTRICCION + "  ORDER BY tipo_nota_fecha_creacion DESC";
         return SelectSimple(SELECT);
 
+    }
+
+    public static TipoDeNotaMD selectWhere(int idTipoNota) {
+
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE " + RESTRICCION;
+
+        TipoDeNotaMD tipoNota = new TipoDeNotaMD();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+                
+                tipoNota.setIdTipoNota(rs.getInt("id_tipo_nota"));
+                tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
+                tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
+                tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
+                tipoNota.setEstado(rs.getBoolean("tipo_nota_estado"));
+                
+            }
+            
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return tipoNota;
     }
 
     private List<TipoDeNotaMD> SelectSimple(String QUERY) {
@@ -109,9 +149,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean eliminar(int Pk) {
         String DELETE = "UPDATE\n"
-                + "	" + TABLA + " \n"
+                + TABLA
                 + "SET \n"
-                + "     tipo_nota_estado = " + false
+                + "     tipo_nota_estado = " + false + " \n"
                 + "WHERE\n"
                 + "	" + PRIMARY_KEY + " = " + Pk;
 
@@ -120,9 +160,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean reactivar(int Pk) {
         String DELETE = "UPDATE\n"
-                + "	" + TABLA + " \n"
+                + TABLA
                 + "SET \n"
-                + "     tipo_nota_estado = " + true
+                + "     tipo_nota_estado = " + true + "\n"
                 + "WHERE\n"
                 + "	" + PRIMARY_KEY + " = " + Pk;
 

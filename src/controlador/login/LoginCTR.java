@@ -47,6 +47,8 @@ public class LoginCTR {
 
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
+        //ocusltamos el error 
+        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
@@ -86,23 +88,30 @@ public class LoginCTR {
 
             vista.dispose();
 
-
             VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
 
 //            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "Holapostgres", " LOGIN "));
             vtn.Init();
 
         } else {
-
+            vista.getLblAvisos().setVisible(true);
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
         }
     }
 
     private void LoginGenerico() {
+<<<<<<< HEAD
 
 
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
         VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "qwerty79", "Login de invitado"), icono, ista);
+=======
+        
+        USERNAME = "ROOT";
+        PASSWORD = "ROOT";
+        
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "Login de invitado"), icono, ista);
+>>>>>>> c373264e12eb5d9f18ecb872ab312225484b6f1a
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
