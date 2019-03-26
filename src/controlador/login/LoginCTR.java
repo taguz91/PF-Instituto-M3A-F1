@@ -68,7 +68,21 @@ public class LoginCTR {
         });
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-
+        
+        //Evento para ingresar rapido como JHONNY
+        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e){
+                ingresoVeloz(e.getKeyChar()+"");
+            }
+        });
+    }
+    
+    private void ingresoVeloz(String c){
+        if (c.equals("T")) {
+            vista.getTxtUsername().setText("JHONNY");
+            vista.getTxtPassword().setText("ROOT");
+        }
     }
 
     //Metodos de Apoyo
