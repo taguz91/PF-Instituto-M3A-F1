@@ -27,6 +27,15 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     public TipoDeNotaBD() {
     }
 
+    public TipoDeNotaBD(TipoDeNotaMD obj) {
+        this.setIdTipoNota(obj.getIdTipoNota());
+        this.setNombre(obj.getNombre());
+        this.setValorMinimo(obj.getValorMinimo());
+        this.setValorMaximo(obj.getValorMaximo());
+        this.setFechaCreacion(obj.getFechaCreacion());
+        this.setEstado(obj.isEstado());
+    }
+
     private final String TABLA = " \"TipoDeNota\" ";
 
     private final String ATRIBUTOS = "\"TipoDeNota\".id_tipo_nota,\n"
@@ -37,6 +46,8 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
             + "\"TipoDeNota\".tipo_nota_estado";
 
     private final String PRIMARY_KEY = " \"TipoDeNota\".id_tipo_nota ";
+
+    private final String RESTRICCION = " \"TipoDeNota\".tipo_nota_estado  IS TRUE ";
 
     public boolean insertar() {
         String INSERT = "INSERT INTO " + TABLA + " \n"
@@ -53,7 +64,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaMD> SelectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA;
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE " + RESTRICCION + " ORDER BY tipo_nota_fecha_creacion DESC";
 
         return SelectSimple(SELECT);
 
@@ -61,7 +72,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaMD> SelectOneWhereNombre(String Aguja) {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "  WHERE lower(tipo_nota_nombre) LIKE '%" + Aguja + "%' AND " + RESTRICCION + "  ORDER BY tipo_nota_fecha_creacion DESC";
         return SelectSimple(SELECT);
 
     }
@@ -109,9 +120,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean eliminar(int Pk) {
         String DELETE = "UPDATE\n"
-                + "	" + TABLA + " \n"
+                + TABLA
                 + "SET \n"
-                + "     tipo_nota_estado = " + false
+                + "     tipo_nota_estado = " + false + " \n"
                 + "WHERE\n"
                 + "	" + PRIMARY_KEY + " = " + Pk;
 
@@ -120,9 +131,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean reactivar(int Pk) {
         String DELETE = "UPDATE\n"
-                + "	" + TABLA + " \n"
+                + TABLA
                 + "SET \n"
-                + "     tipo_nota_estado = " + true
+                + "     tipo_nota_estado = " + true + "\n"
                 + "WHERE\n"
                 + "	" + PRIMARY_KEY + " = " + Pk;
 

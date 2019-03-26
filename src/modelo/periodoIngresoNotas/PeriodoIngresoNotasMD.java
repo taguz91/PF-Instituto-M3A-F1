@@ -6,6 +6,8 @@
 package modelo.periodoIngresoNotas;
 
 import java.time.LocalDate;
+import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.tipoDeNota.TipoDeNotaMD;
 
 /**
  *
@@ -16,11 +18,11 @@ public class PeriodoIngresoNotasMD {
     private int idPeriodoIngreso;
     private LocalDate fechaInicio;
     private LocalDate fechaCierre;
-    private int idPeriodoLectivo;
-    private int idTipoNota;
+    private PeriodoLectivoMD idPeriodoLectivo;
+    private TipoDeNotaMD idTipoNota;
     private boolean estado;
 
-    public PeriodoIngresoNotasMD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, int idPeriodoLectivo, int idTipoNota, boolean estado) {
+    public PeriodoIngresoNotasMD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, PeriodoLectivoMD idPeriodoLectivo, TipoDeNotaMD idTipoNota, boolean estado) {
         this.idPeriodoIngreso = idPeriodoIngreso;
         this.fechaInicio = fechaInicio;
         this.fechaCierre = fechaCierre;
@@ -56,19 +58,19 @@ public class PeriodoIngresoNotasMD {
         this.fechaCierre = fechaCierre;
     }
 
-    public int getIdPeriodoLectivo() {
+    public PeriodoLectivoMD getIdPeriodoLectivo() {
         return idPeriodoLectivo;
     }
 
-    public void setIdPeriodoLectivo(int idPeriodoLectivo) {
+    public void setIdPeriodoLectivo(PeriodoLectivoMD idPeriodoLectivo) {
         this.idPeriodoLectivo = idPeriodoLectivo;
     }
 
-    public int getIdTipoNota() {
+    public TipoDeNotaMD getIdTipoNota() {
         return idTipoNota;
     }
 
-    public void setIdTipoNota(int idTipoNota) {
+    public void setIdTipoNota(TipoDeNotaMD idTipoNota) {
         this.idTipoNota = idTipoNota;
     }
 

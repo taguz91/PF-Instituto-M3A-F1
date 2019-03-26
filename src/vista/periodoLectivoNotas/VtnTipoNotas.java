@@ -54,6 +54,8 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
     
     
     
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,11 +94,11 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
+                "ID", "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -110,6 +112,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
             tblTipoNotas.getColumnModel().getColumn(1).setResizable(false);
             tblTipoNotas.getColumnModel().getColumn(2).setResizable(false);
             tblTipoNotas.getColumnModel().getColumn(3).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(4).setResizable(false);
         }
 
         lblResultados.setText("0 Resultados Obtenidos");
