@@ -325,9 +325,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnMatricula.setToolTipText("Ingresar matricula");
         btnMatricula.setFocusPainted(false);
 
-        btnCerrarSesion.setText("Cerrar Sesion");
-        btnCerrarSesion.setToolTipText("Ver materias");
+        btnCerrarSesion.setBackground(new java.awt.Color(51, 51, 51));
+        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Sign_Out_20px_1.png"))); // NOI18N
+        btnCerrarSesion.setToolTipText("Cerrar Sesión");
+        btnCerrarSesion.setBorder(null);
+        btnCerrarSesion.setBorderPainted(false);
+        btnCerrarSesion.setContentAreaFilled(false);
+        btnCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCerrarSesion.setFocusPainted(false);
+        btnCerrarSesion.setOpaque(true);
+        btnCerrarSesion.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Sign_Out_20px.png"))); // NOI18N
 
         btnDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_25px.png"))); // NOI18N
         btnDocenteMateria.setToolTipText("Asignar materia a docente.");
@@ -358,8 +365,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnDocenteMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,12 +411,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda.setBackground(new java.awt.Color(51, 51, 51));
         btnAyuda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAyuda.setForeground(new java.awt.Color(255, 255, 255));
-        btnAyuda.setText("H");
+        btnAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Question_Mark_20px.png"))); // NOI18N
         btnAyuda.setToolTipText("Ayuda");
         btnAyuda.setBorder(null);
         btnAyuda.setBorderPainted(false);
         btnAyuda.setContentAreaFilled(false);
+        btnAyuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAyuda.setOpaque(true);
+        btnAyuda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Question_Mark_20px_1.png"))); // NOI18N
 
         lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(255, 255, 255));
