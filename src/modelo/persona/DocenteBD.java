@@ -361,7 +361,7 @@ public class DocenteBD extends DocenteMD {
             try {
                 d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
                 System.out.println("Si tiene fecha fin");
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 System.out.println("No tiene fecha fin");
                 System.out.println(e);
             }

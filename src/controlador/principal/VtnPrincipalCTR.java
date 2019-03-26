@@ -15,6 +15,7 @@ import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
+import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -43,6 +44,7 @@ import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.persona.DocenteBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
@@ -61,6 +63,7 @@ import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
 import vista.materia.VtnMateria;
 import vista.notas.VtnNotasAlumnoCurso;
+import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -90,9 +93,9 @@ public class VtnPrincipalCTR {
     private int numVtns = 0;
     //Icono de la aplicacion  
     private final ImageIcon icono;
-    private final Image ista; 
+    private final Image ista;
 
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado, 
+    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
@@ -164,11 +167,17 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
+        vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
+
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         controladorSilabo();
+<<<<<<< HEAD
         
         
+=======
+
+>>>>>>> 275b67bcc259bc9596e7eb0d3e63a6f81c72957d
         carga.start();
     }
 
@@ -296,8 +305,8 @@ public class VtnPrincipalCTR {
             ctrVtn.iniciar();
         }
     }
-    
-    private void abrirVtnAyuda(){
+
+    private void abrirVtnAyuda() {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
     }
@@ -401,13 +410,13 @@ public class VtnPrincipalCTR {
             ctrFrm.iniciar();
         }
     }
-    
-    private void controladorSilabo(){
-        
-        ControladorSilabos c= new ControladorSilabos(usuario,vtnPrin);
-        
+
+    private void controladorSilabo() {
+
+        ControladorSilabos c = new ControladorSilabos(usuario, vtnPrin);
+
         c.iniciarControlador();
-    
+
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
@@ -501,18 +510,18 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_I, ActionEvent.CTRL_MASK)); 
-        
+                KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+
         vtnPrin.getMnCtMatricula().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_T, ActionEvent.CTRL_MASK)); 
-        
+                KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+
         vtnPrin.getMnCtMallaAlumno().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_L, ActionEvent.CTRL_MASK)); 
-        
+                KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_O, ActionEvent.CTRL_MASK)); 
+                KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -532,15 +541,15 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.ALT_MASK));
-        
+
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_I, ActionEvent.ALT_MASK)); 
-        
+                KeyEvent.VK_I, ActionEvent.ALT_MASK));
+
         vtnPrin.getMnIgMatricula().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_T, ActionEvent.ALT_MASK)); 
-        
+                KeyEvent.VK_T, ActionEvent.ALT_MASK));
+
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_O, ActionEvent.ALT_MASK)); 
+                KeyEvent.VK_O, ActionEvent.ALT_MASK));
     }
 
     public int getNumVtns() {
@@ -583,12 +592,20 @@ public class VtnPrincipalCTR {
     public Image getIsta() {
         return ista;
     }
-    
-    public void setIconJIFrame(JInternalFrame jif){
+
+    public void setIconJIFrame(JInternalFrame jif) {
         jif.setFrameIcon(icono);
     }
-    
-    public void setIconJDialog(JDialog jd){
+
+    public void setIconJDialog(JDialog jd) {
         jd.setIconImage(ista);
+    }
+
+    private void btnPrdIngrNotas(ActionEvent e) {
+
+        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
+        
+        vtn.Init();
+
     }
 }

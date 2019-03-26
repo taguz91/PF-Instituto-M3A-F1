@@ -3,7 +3,6 @@ package controlador.Libraries;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 
 import javax.swing.JInternalFrame;
