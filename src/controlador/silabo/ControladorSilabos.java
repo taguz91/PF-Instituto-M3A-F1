@@ -154,6 +154,7 @@ public class ControladorSilabos {
                         };
                         cs.getGestion().getBtnSiguiente().addActionListener(a3);
 
+                        
                     }
 
                 };
@@ -171,7 +172,7 @@ public class ControladorSilabos {
                 
                 cs.getSilabos().getBtnNuevo().addActionListener(amx2->principal.getMnIgSilabo().doClick());
                 
-
+                
             }
             
         };
@@ -179,6 +180,8 @@ public class ControladorSilabos {
        
 
         principal.getMnCtSilabos().addActionListener(am);
+        
+        
 
     }
 

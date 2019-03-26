@@ -90,7 +90,7 @@ public class LoginCTR {
 
             VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
 
-//            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "Holapostgres", " LOGIN "));
+          // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
             vtn.Init();
 
         } else {
@@ -100,18 +100,18 @@ public class LoginCTR {
     }
 
     private void LoginGenerico() {
-<<<<<<< HEAD
+
 
 
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
         VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "qwerty79", "Login de invitado"), icono, ista);
-=======
+
         
         USERNAME = "ROOT";
         PASSWORD = "ROOT";
         
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "Login de invitado"), icono, ista);
->>>>>>> c373264e12eb5d9f18ecb872ab312225484b6f1a
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "Login de invitado"), icono, ista);
+
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);

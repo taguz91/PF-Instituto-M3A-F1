@@ -168,6 +168,7 @@ public class VtnPrincipalCTR {
 
         controladorSilabo();
         
+        
         carga.start();
     }
 
