@@ -127,11 +127,11 @@ public class JDAyudaCTR {
     String[][] G23 = {{"Busqueda en Ventanas", "Se buscara automaticamente, despues de ingresar mas de 3 caracteres."},
     {"Validaciones", "Si al ingresar texto se le remarca el cuadro de rojo es debido a que ingreso un caracter no valido."},
     {"Inicio de Sesion", "Para el correcto ingreso a la aplicacion debera contar con su respectivo User y Password"},
-    {"Equitetas de error", "Los campos de informacion deberan estar llenaods en su totalidad para poder guardar la informacion "},
+    {"Equitetas de error", "Los campos de informacion deberan estar llenados en su totalidad para poder guardar la informacion "},
     {"Creacion de Profesor/Alumno", "Para la creacion de un nuevo profesor o alumno se debere tener anteriormente creado una Persona"},
     {"Matricula", "Para matricular un estudiante previamente debe crear un nuevo curso"},
     {"Abrir Ventanas","El numero maximo de ejecutar subventanas en la pantalla principal  son 5 "},
-    {"Busqueda en VTN Malla","Se buscara automaticamente al ingresear los 10 digitos de la cedula"},
+    {"Busqueda en VTN Malla","Se buscara automaticament e al ingresear los 10 digitos de la cedula"},
     {"Busquedas por datos","Al ingresar la cedula en el formulario (Docente,Alumno) se le buscara automaticamente si desea editarlo"},
     {"Eliminacion","Cuando se elimina un datos cambia se estado de true a false"},
     {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}};

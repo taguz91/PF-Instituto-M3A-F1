@@ -44,6 +44,7 @@ public class ResourceManager {
                 PASSWORD = LoginCTR.PASSWORD;
 
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
+                System.out.println("------------------>");
                 System.out.println(e.getMessage());
 
             }
@@ -98,6 +99,13 @@ public class ResourceManager {
             if (e instanceof NullPointerException) {
                 driver = null;
             } else {
+                
+                String mensaje = e.getMessage();
+                
+                if (mensaje.contains("FATAL: password authentication failed for user")) {
+                    driver = null;
+                }
+                
                 System.out.println(e.getMessage());
             }
             return null;
