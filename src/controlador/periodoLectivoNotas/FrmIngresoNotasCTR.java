@@ -59,13 +59,14 @@ public class FrmIngresoNotasCTR {
     }
 
     //METODOS DE APOYO
-    public void Llenos() {
-        if (vista.getJdcFechaIni().getCalendar() != null) {
-            if (vista.getJdcFechaFin().getCalendar() != null) {
-            } else {
-                JOptionPane.showMessageDialog(null, "Escoja una fecha");
-            }
-        }
+    
+    public void camposLlenos(){
+//        if (vista.getJdcFechaIni().getCalendar()!=null) {
+//            if(vista.getJdcFechaFin().getCalendar()!=null){
+//            }else{
+//                JOptionPane.showMessageDialog(null, "Escoja una fecha");
+//            }
+//        }
     }
 
     public LocalDate conversorFechas(JDateChooser jDateChooser) {
