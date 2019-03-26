@@ -13,6 +13,7 @@ import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.alumno.VtnAlumnoCurso;
@@ -76,6 +77,9 @@ public class VtnAlumnoCursoCTR {
             }
         });
         vtnAlmnCurso.getBtnbuscar().addActionListener(e -> buscar(vtnAlmnCurso.getTxtbuscar().getText().trim()));
+        //Validacion del buscador
+        vtnAlmnCurso.getTxtbuscar().addKeyListener(new TxtVBuscador(vtnAlmnCurso.getTxtbuscar(), 
+                vtnAlmnCurso.getBtnbuscar()));
         //Acciones de los botones
         vtnAlmnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         //Cuando termina de cargar todo se le vuelve a su estado normal.

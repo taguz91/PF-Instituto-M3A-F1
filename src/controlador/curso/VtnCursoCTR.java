@@ -15,6 +15,7 @@ import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
@@ -91,12 +92,15 @@ public class VtnCursoCTR {
                 String b = vtnCurso.getTxtBuscar().getText().trim();
                 if (b.length() > 2) {
                     buscar(b);
-                }else if(b.length() == 0){
+                } else if (b.length() == 0) {
                     cargarCursos();
                 }
             }
         });
         vtnCurso.getBtnBuscar().addActionListener(e -> buscar(vtnCurso.getTxtBuscar().getText().trim()));
+        //Validacion del buscador 
+        vtnCurso.getBtnBuscar().addKeyListener(new TxtVBuscador(vtnCurso.getTxtBuscar(),
+                vtnCurso.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Cursos");

@@ -15,6 +15,7 @@ import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
 import vista.principal.VtnPrincipal;
@@ -69,19 +70,22 @@ public class VtnAlumnoCarreraCTR {
         cargarAlmnsCarrera();
         //acciones 
         vtnAlmCar.getCmbCarrera().addActionListener(e -> clickCmbCarreras());
-                //Buscador 
+        //Buscador 
         vtnAlmCar.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmCar.getTxtBuscar().getText().trim();
                 if (b.length() > 2) {
                     buscar(b);
-                }else if(b.length() == 0){
+                } else if (b.length() == 0) {
                     cargarAlmnsCarrera();
                 }
             }
         });
         vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
+        //Validacion buscar
+        vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
+                vtnAlmCar.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por carrera");

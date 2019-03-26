@@ -22,9 +22,9 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    private ConectarDB conecta;
+    private final ConectarDB conecta;
     //Se usaran estas clases para consultar
-    private LugarBD lugar;
+    private final LugarBD lugar;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
@@ -308,19 +308,17 @@ public class PersonaBD extends PersonaMD {
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_fecha_nacimiento, persona_activa\n"
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND( "
-                + "persona_identificacion ILIKE '%" + aguja + "%' OR "
-                + "persona_primer_apellido ILIKE '%" + aguja + "%' OR  "
-                + "persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
-                + "persona_primer_nombre ILIKE '%" + aguja + "%' OR "
-                + "persona_segundo_nombre ILIKE '%" + aguja + "%');";
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	persona_identificacion ILIKE '%"+aguja+"%');";
         return consultarParaTabla(sql);
     }
 
     //Consultamos unicamente a las personas que son alumnos  
     public ArrayList<PersonaMD> cargarAlumnos() {
-        String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
-                + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
+        String sql = "SELECT \"Personas\".id_persona, \n"
+                + "persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
                 + "persona_segundo_nombre, persona_fecha_nacimiento, persona_activa\n"
                 + "	FROM public.\"Personas\", public.\"Alumnos\" \n"
@@ -329,8 +327,8 @@ public class PersonaBD extends PersonaMD {
     }
 
     public ArrayList<PersonaMD> cargarDocentes() {
-        String sql = "SELECT \"Personas\".id_persona, id_lugar_natal, id_lugar_residencia, \n"
-                + "persona_foto, persona_identificacion, persona_primer_apellido, \n"
+        String sql = "SELECT \"Personas\".id_persona, \n"
+                + "persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
                 + "persona_segundo_nombre, persona_fecha_nacimiento\n"
                 + "	FROM public.\"Personas\", public.\"Docentes\" \n"
@@ -383,7 +381,8 @@ public class PersonaBD extends PersonaMD {
     public PersonaMD buscarPersonaParaReferencia(int idPersona) {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+                + " persona_celular "
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " id_persona = " + idPersona + ";";
 
@@ -394,7 +393,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+                + " persona_celular "
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " persona_identificacion ='" + identificacion + "'";
 
@@ -440,6 +440,8 @@ public class PersonaBD extends PersonaMD {
                     p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     p.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    p.setCorreo(rs.getString("persona_correo"));
+                    p.setCelular(rs.getString("persona_celular"));
                 }
                 rs.close();
                 return p;

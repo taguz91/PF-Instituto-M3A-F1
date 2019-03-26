@@ -114,6 +114,8 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Periodo lectivo");
 
         jLabel1.setText("Buscar:");
@@ -122,7 +124,7 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         btnEditar.setText("Editar");
 
-        btnEliminar.setText("Cerrar Periodo");
+        btnEliminar.setText("Cerrar Período");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -189,10 +191,10 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(btnEditar)
                         .addComponent(btnEliminar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addGap(5, 5, 5))
+                .addGap(9, 9, 9))
         );
 
         pack();

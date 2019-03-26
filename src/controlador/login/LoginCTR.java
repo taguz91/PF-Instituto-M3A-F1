@@ -86,7 +86,6 @@ public class LoginCTR {
 
             vista.dispose();
 
-
             VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
 
 //            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "Holapostgres", " LOGIN "));

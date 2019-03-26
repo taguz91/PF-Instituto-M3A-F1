@@ -20,6 +20,8 @@ import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -88,8 +90,6 @@ public class VtnPersonaCTR {
 
         //Llenamos el combo de tipos de persona
         cargarTipoPersona();
-        //Le asignamos la accion al combo de tipos de persona  
-        vtnPersona.getCmbTipoPersona().addActionListener(e -> filtrarPorTipoPersona());
 
         //Inciamos el txt de buscador  
         vtnPersona.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -98,6 +98,9 @@ public class VtnPersonaCTR {
                 buscar();
             }
         });
+        //Validacion del buscador
+        vtnPersona.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnPersona.getTxtBuscar(),
+                vtnPersona.getBtnBuscar()));
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -159,28 +162,19 @@ public class VtnPersonaCTR {
         vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
-    //consultamos por tipo de persona 
-    public void filtrarPorTipoPersona() {
-        int posTip = vtnPersona.getCmbTipoPersona().getSelectedIndex();
-        if (posTip > 0) {
-            //Debemos arreglar la consulta
-            //personas = dbp.cargarPorTipo(tipos.get(posTip - 1).getId());
-        } else {
-            personas = dbp.cargarPersonas();
-        }
-        cargarLista();
-    }
-
     //Buscamos persona
     public void buscar() {
         String busqueda = vtnPersona.getTxtBuscar().getText();
         busqueda = busqueda.trim();
-        if (busqueda.length() > 2) {
-            personas = dbp.buscar(busqueda);
-        } else if (busqueda.length() == 0) {
-            personas = dbp.cargarPersonas();
+        if (Validar.esLetrasYNumeros(busqueda)) {
+            if (busqueda.length() > 2) {
+                personas = dbp.buscar(busqueda);
+            } else if (busqueda.length() == 0) {
+                personas = dbp.cargarPersonas();
+            }
+            cargarLista();
         }
-        cargarLista();
+
     }
 
     //Damos accion al boton de guardar 
@@ -199,7 +193,9 @@ public class VtnPersonaCTR {
             FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
-            ctrFrm.editar(personas.get(posFila));
+            PersonaMD perEditar = dbp.buscarPersona(
+                    Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            ctrFrm.editar(perEditar);
         } else {
             vtnPersona.getLblError().setVisible(true);
         }
@@ -226,14 +222,15 @@ public class VtnPersonaCTR {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA PERSONA");
         }
     }
-     public void llamaReportePersona() {
+
+    public void llamaReportePersona() {
         JasperReport jr;
         String path = "./src/vista/reportes/repPersona.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("cedula",String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(),1)));
+            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

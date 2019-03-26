@@ -205,25 +205,25 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("Observación:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 252, -1, -1));
-        getContentPane().add(txtObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 252, 370, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 305, 498, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        getContentPane().add(txtObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 350, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 440, 10));
 
         Btn_Guardar.setText("Guardar");
-        getContentPane().add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 320, 104, -1));
+        getContentPane().add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 90, -1));
 
         Btn_Cancelar.setText("Cancelar");
-        getContentPane().add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 320, 104, -1));
+        getContentPane().add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 90, -1));
 
         jLabel5.setText("Carrera:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 17, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 11, -1, 20));
 
         jLabel6.setText("Nombre:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 75, -1, -1));
-        getContentPane().add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 72, 358, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        getContentPane().add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 358, -1));
 
         Cbx_Carreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
-        getContentPane().add(Cbx_Carreras, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 14, 357, -1));
+        getContentPane().add(Cbx_Carreras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 357, -1));
 
         try {
             Dcr_FecInicio.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2019, 1, 1),
@@ -231,13 +231,13 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
         e1.printStackTrace();
     }
-    getContentPane().add(Dcr_FecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 130, 166, -1));
+    getContentPane().add(Dcr_FecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 166, -1));
 
     jLabel1.setText("Fecha de Inicio:");
-    getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 130, -1, -1));
+    getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
     jLabel2.setText("Fecha de Conclusion:");
-    getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+    getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
 
     try {
         Dcr_FecConclusion.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2019, 1, 1),
@@ -245,27 +245,27 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
 } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
     e1.printStackTrace();
     }
-    getContentPane().add(Dcr_FecConclusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 166, -1));
+    getContentPane().add(Dcr_FecConclusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 166, -1));
 
     Lbl_ErrCarrera.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrCarrera.setText("Seleccione una Carrera");
-    getContentPane().add(Lbl_ErrCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 43, -1, -1));
+    getContentPane().add(Lbl_ErrCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 170, -1));
 
     Lbl_ErrNombre.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrNombre.setText("Ingrese solo letras");
-    getContentPane().add(Lbl_ErrNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
+    getContentPane().add(Lbl_ErrNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 240, -1));
 
     Lbl_ErrObservacion.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrObservacion.setText("Ingrese una Observacion");
-    getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 282, -1, -1));
+    getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 270, -1));
 
     Lbl_ErrFecInicio.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrFecInicio.setText("Fecha Incorrecta");
-    getContentPane().add(Lbl_ErrFecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, -1, -1));
+    getContentPane().add(Lbl_ErrFecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 160, -1));
 
     Lbl_ErrFecFin.setForeground(new java.awt.Color(204, 0, 0));
     Lbl_ErrFecFin.setText("Fecha Incorrecta");
-    getContentPane().add(Lbl_ErrFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 219, -1, -1));
+    getContentPane().add(Lbl_ErrFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 130, -1));
 
     pack();
     }// </editor-fold>//GEN-END:initComponents

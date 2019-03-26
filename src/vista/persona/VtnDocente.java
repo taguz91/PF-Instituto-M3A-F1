@@ -89,6 +89,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Docentes");
 
@@ -179,7 +180,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addComponent(btnEditar)
                         .addComponent(btnEliminar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -187,7 +188,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addComponent(btnReporteDocente))
                     .addComponent(btnReporteDocenteMateria)
                     .addComponent(lblResultados, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                .addGap(5, 5, 5))
         );
 
         pack();
