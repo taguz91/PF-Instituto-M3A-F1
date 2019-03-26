@@ -133,7 +133,7 @@ public class VtnMallaAlumnoCTR {
         //Prueba cargando todos los datos 
         //Funciona de la patada
         Instant iniBusqueda = Instant.now();
-        //cargarMallas();
+        cargarMallas();
         Instant terBusqueda = Instant.now();
         System.out.println("El tiempo que tardo en buscar malla alumnos es: "
                 + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
