@@ -24,6 +24,7 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -163,6 +164,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
 
+        controladorSilabo();
+        
         carga.start();
     }
 
@@ -390,6 +393,14 @@ public class VtnPrincipalCTR {
             FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, this);
             ctrFrm.iniciar();
         }
+    }
+    
+    private void controladorSilabo(){
+        
+        ControladorSilabos c= new ControladorSilabos(usuario,vtnPrin);
+        
+        c.iniciarControlador();
+    
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {

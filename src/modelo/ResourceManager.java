@@ -49,7 +49,6 @@ public class ResourceManager {
 
         }
 
-
 //        JDBC_URL = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada";
 //        USERNAME = "postgres";
 //        PASSWORD = "Holapostgres";
