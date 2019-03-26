@@ -20,8 +20,8 @@ public class ConectarDB {
     //BD En cloud
 
 
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
     private String user = "ROOT";
     private String pass = "ROOT";
     //private String url = "jdbc:postgresql://localhost:5433/BDPFM3AConMallaCursada"; //BD Johnny
