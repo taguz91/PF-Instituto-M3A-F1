@@ -392,4 +392,29 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return periodo;
     }
 
+    public static List<PeriodoLectivoMD> SelectAll() {
+
+        String SELECT = "SELECT id_perd_lectivo, prd_lectivo_nombre "
+                + "FROM \"PeriodoLectivo\" "
+                + " WHERE prd_lectivo_estado IS FALSE ";
+
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rs.getInt("id_perd_lectivo"));
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                lista.add(periodo);
+            }
+            rs.close();
+        } catch (SQLException | NullPointerException e) {
+            if (e instanceof SQLException) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+        return lista;
+    }
 }
