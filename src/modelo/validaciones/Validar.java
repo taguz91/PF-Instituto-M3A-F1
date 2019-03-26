@@ -85,11 +85,11 @@ public class Validar {
                 return Integer.parseInt(cedula[9]+"") == validador;
                 
             } else {
-                System.out.println("No pertenece a ninguna provincia del ecuador.");
+               //System.out.println("No pertenece a ninguna provincia del ecuador.");
                 return false;
             }
         } else {
-            System.out.println("No contiene solo numeros. O no contine diez digitos.");
+            //System.out.println("No contiene solo numeros. O no contine diez digitos.");
             return false;
         }
     }

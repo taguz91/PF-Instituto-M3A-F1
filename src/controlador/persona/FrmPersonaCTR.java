@@ -127,9 +127,15 @@ public class FrmPersonaCTR {
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+//                String cedula = frmPersona.getTxtIdentificacion().getText();
+//                if(cedula.length() >= 10){
+//                    e.consume();
+//                }
                 buscarIdentificacion();
             }
         });
+        
+//        frmPersona.gettx
 
         valCe = new TxtVCedula(
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
@@ -153,6 +159,19 @@ public class FrmPersonaCTR {
                 error = true;
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             }
+
+            if (cedula.length() == 10) {
+                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+                    error = true;
+                    frmPersona.getLblErrorIdentificacion().setText("Ingrese una cédula válida");
+                    frmPersona.getLblErrorIdentificacion().setVisible(true);
+                }
+            } else if (cedula.length() < 10 || cedula.length() > 10) {
+                error = true;
+                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
+                frmPersona.getLblErrorIdentificacion().setVisible(true);
+            }
+
             if (error == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
