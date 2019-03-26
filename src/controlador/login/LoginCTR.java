@@ -101,7 +101,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-<<<<<<< HEAD
+
 
 
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
@@ -113,9 +113,9 @@ public class LoginCTR {
         
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "Login de invitado"), icono, ista);
 
-=======
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
->>>>>>> 275b67bcc259bc9596e7eb0d3e63a6f81c72957d
+
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
