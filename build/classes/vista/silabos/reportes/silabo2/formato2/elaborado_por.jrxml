@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ccda24c-14eb-4a5d-b34e-45ae5f50aa92">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_MATERIA_APRO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct c.id_docente,p.persona_primer_apellido,p.persona_primer_nombre from "Cursos" c, "Docentes" d, "Personas" p
+where c.id_docente=d.id_docente 
+and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO}]]>
+	</queryString>
+	<field name="id_docente" class="java.lang.Integer"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="63" y="22" width="231" height="20" uuid="b4eaeb0b-2c92-428b-a08d-ed4ebfe28999"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ELABORADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="42" width="231" height="20" uuid="f889279d-997c-4dd6-afe9-5a22d2e44877"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DOCENTES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="57" splitType="Stretch">
+			<line>
+				<reportElement x="89" y="35" width="176" height="1" uuid="7e0f6156-8469-46f9-8107-0381a72a1f9a"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="180" y="0" width="114" height="57" uuid="cc7f90c1-c129-4242-8207-76d525a0527f"/>
+				<box>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="63" y="56" width="231" height="1" uuid="e5e3522a-8745-4d7e-8495-5906d12be74a"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="63" y="0" width="114" height="57" uuid="3ddc01bd-e245-474f-8e2c-8738589a9038"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="20">
+			<staticText>
+				<reportElement x="63" y="0" width="36" height="20" uuid="75e31f77-7040-46c7-9c4b-ab031ebdbffd"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="0" width="195" height="20" uuid="4bf1a2d1-bedc-41e0-a150-b6ef2ea48828"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
