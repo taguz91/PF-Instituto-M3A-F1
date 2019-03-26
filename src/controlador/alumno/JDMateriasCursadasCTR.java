@@ -82,7 +82,7 @@ public class JDMateriasCursadasCTR {
     private void clickTbl() {
         int pos = jd.getTblMaterias().getSelectedRow();
         if (pos >= 0) {
-            jd.getLblCarrera().setText(alumno.getCarrera().getNombre());
+            //jd.getLblCarrera().setText(alumno.getCarrera().getNombre());
             jd.getLblCiclo().setText(materiasAlmn.get(pos).getMallaCiclo() + "");
             jd.getLblNota1().setText(materiasAlmn.get(pos).getNota1() + "");
             jd.getLblNota2().setText(materiasAlmn.get(pos).getNota2() + "");

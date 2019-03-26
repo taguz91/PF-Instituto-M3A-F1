@@ -81,7 +81,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         cmbAsignatura = new javax.swing.JComboBox<>();
         cmbDocente = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblNotas = new javax.swing.JTable();
+        tblNotas = new ux.TableStyle();//javax.swing.JTable();
         btnImprimir = new javax.swing.JButton();
         lblCarrera = new javax.swing.JLabel();
         btnVerNotas = new javax.swing.JButton();
@@ -218,7 +218,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

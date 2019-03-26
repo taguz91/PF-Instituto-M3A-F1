@@ -253,7 +253,7 @@ public class PersonaBD extends PersonaMD {
                 ps.setBinaryStream(1, getFile(), getLogBytes());
                 ps.execute();
                 ps.close();
-                JOptionPane.showMessageDialog(null, "Persona editada correctamente");
+                //JOptionPane.showMessageDialog(null, "Persona editada correctamente");
             } catch (SQLException e) {
                 System.out.println("No se pudo editar persona con foto");
                 System.out.println(e.getMessage());

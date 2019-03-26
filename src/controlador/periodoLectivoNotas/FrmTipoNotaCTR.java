@@ -20,15 +20,31 @@ public class FrmTipoNotaCTR {
     private VtnPrincipal desktop;
     private FrmTipoNota vista;
     private TipoDeNotaBD modelo;
+    //Ventana Padre
+    private VtnTipoNotasCTR vtnPadre;
+    //(Agregar o Editar)
+    private String Funcion;
 
-    public FrmTipoNotaCTR(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo) {
+    private Integer PK = null;
+
+    public FrmTipoNotaCTR(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
+        this.vtnPadre = vtnPadre;
+        this.Funcion = Funcion;
     }
 
     //INICIADORES
     public void Init() {
+
+        if (Funcion.equals("Editar")) {
+            vista.setTitle("Editar");
+            setInfoEnTxts();
+            PK = modelo.getIdTipoNota();
+        } else {
+            vista.setTitle("Agregar");
+        }
 
         InitEventos();
         try {
@@ -48,9 +64,16 @@ public class FrmTipoNotaCTR {
 
         vista.getBtnGuardar().addActionListener(e -> btnGuadar(e));
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+
     }
 
     //METODOS DE APOYO
+    private void setInfoEnTxts() {
+        vista.getCmbTipoNota().setSelectedItem(modelo.getNombre());
+        vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
+        vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
+    }
+
     private void setInfoEnModelo() {
 
         modelo = new TipoDeNotaBD();
@@ -62,20 +85,42 @@ public class FrmTipoNotaCTR {
 
     }
 
-    //EVENTOS
-    private void btnGuadar(ActionEvent e) {
-        setInfoEnModelo();
-
-        System.out.println("------------>");
-
+    private void agregar() {
         if (modelo.insertar()) {
+            Effects.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL NUEVO TIPO DE NOTA", 3);
 
             JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL NUEVO TIPO DE NOTA");
+
+            vtnPadre.cargarTabla();
+
+            vista.dispose();
 
         } else {
 
             JOptionPane.showMessageDialog(vista, "REVISE LA INFORMACION");
 
+        }
+    }
+
+    private void editar() {
+        if (modelo.editar(PK)) {
+            vtnPadre.cargarTabla();
+            JOptionPane.showMessageDialog(vista, "SE HA EDITADO CORRECTAMENTE");
+            vista.dispose();
+        } else {
+            JOptionPane.showMessageDialog(vista, "REVISE LA INFORMACION");
+        }
+    }
+
+    //EVENTOS
+    private void btnGuadar(ActionEvent e) {
+
+        setInfoEnModelo();
+
+        if (Funcion.equals("Agregar")) {
+            agregar();
+        } else {
+            editar();
         }
 
     }

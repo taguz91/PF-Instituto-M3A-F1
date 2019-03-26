@@ -83,8 +83,8 @@ public class VtnPersonaCTR {
         vtnPersona.getTblPersona().setModel(mdTbl);
         //Pasamos el formato a la tabla  
         TblEstilo.formatoTbl(vtnPersona.getTblPersona());
+        TblEstilo.ocualtarID(vtnPersona.getTblPersona());
         //Cambiamos el tamaño de las columnas  
-        TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 0, 40);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 1, 100);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 3, 120);
 

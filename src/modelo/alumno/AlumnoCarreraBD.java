@@ -180,6 +180,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
                 while (rs.next()) {
                     AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                    ac.setId(rs.getInt("id_almn_carrera"));
                     AlumnoMD al = new AlumnoMD();
                     CarreraMD c = new CarreraMD();
                     c.setId(rs.getInt("id_carrera"));
@@ -191,6 +192,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     al.setIdentificacion(rs.getString("persona_identificacion"));
                     
+                    ac.setCarrera(c);
                     ac.setAlumno(al);
 
                     alms.add(ac);

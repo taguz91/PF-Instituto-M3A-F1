@@ -3,11 +3,8 @@ package controlador.notas;
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +15,6 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -520,9 +516,8 @@ public class VtnNotasAlumnoCursoCTR {
     private void tblNotasOnKeyTyped(KeyEvent e) {
         if (e.getKeyCode() == 10) {
 
-            System.out.println("-------->");
-
-//            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+            
         }
     }
 }

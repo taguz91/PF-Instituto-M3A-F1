@@ -164,9 +164,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
                 + "prd_lectivo_activo = true AND (\n"
-                + "	prd_lectivo_nombre ILIKE '%"+aguja+"%' OR\n"
-                + "	carrera_nombre ILIKE '%"+aguja+"%' OR\n"
-                + "	carrera_codigo ILIKE '%"+aguja+"%')\n"
+                + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
+                + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
+                + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
 
         ResultSet rs = conecta.sql(sql);
@@ -364,4 +364,66 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
+    public static PeriodoLectivoMD selectWhere(int idPeriodo) {
+        PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_fin,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_observacion,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado\n"
+                + "FROM\n"
+                + "\"public\".\"PeriodoLectivo\"\n"
+                + "WHERE\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo;
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                periodo.setCarrera(null);
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                periodo.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                periodo.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                periodo.setActivo_PerLectivo(rs.getBoolean("prd_lectivo_activo"));
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return periodo;
+    }
+
+    public static List<PeriodoLectivoMD> SelectAll() {
+
+        String SELECT = "SELECT id_perd_lectivo, prd_lectivo_nombre "
+                + "FROM \"PeriodoLectivo\" "
+                + " WHERE prd_lectivo_estado IS FALSE ";
+
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rs.getInt("id_perd_lectivo"));
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                lista.add(periodo);
+            }
+            rs.close();
+        } catch (SQLException | NullPointerException e) {
+            if (e instanceof SQLException) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+        return lista;
+    }
 }

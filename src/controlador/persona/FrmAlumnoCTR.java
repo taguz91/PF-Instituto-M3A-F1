@@ -508,6 +508,7 @@ public class FrmAlumnoCTR {
             if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                 reiniciarComponentes(frmAlumno);
+                iniciarComponentes();
             } else {
                 JOptionPane.showMessageDialog(null, "Error en grabar los datos");
             }
@@ -517,6 +518,7 @@ public class FrmAlumnoCTR {
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 reiniciarComponentes(frmAlumno);
+                iniciarComponentes();
                 editar = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -527,6 +529,7 @@ public class FrmAlumnoCTR {
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 reiniciarComponentes(frmAlumno);
+                iniciarComponentes();
                 editar_2 = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
