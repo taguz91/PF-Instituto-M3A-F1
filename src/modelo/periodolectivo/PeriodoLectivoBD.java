@@ -351,4 +351,28 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
+    public static PeriodoLectivoMD selectWhere() {
+        PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+
+        String SELECT = "SELECT\n"
+                + "\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "\"PeriodoLectivo\".id_carrera,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_fecha_fin,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_observacion,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado\n"
+                + "FROM\n"
+                + "\"PeriodoLectivo\"\n"
+                + "WHERE \n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE\n"
+                + "AND \n"
+                + "\"PeriodoLectivo\".id_prd_lectivo = 1";
+        
+        
+        
+        return periodo;
+    }
+
 }

@@ -13,6 +13,7 @@ import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -30,7 +31,7 @@ public class VtnTipoNotasCTR {
 
     private final VtnPrincipal desktop;
     private final VtnTipoNotas vista;
-    private final TipoDeNotaBD modelo;
+    private TipoDeNotaBD modelo;
     private final RolBD permisos;
 
     private static List<TipoDeNotaMD> listaTiposNotas;
@@ -78,8 +79,8 @@ public class VtnTipoNotasCTR {
 
     }
 
-    //Metodos de Apoyo
-    private void cargarTabla() {
+    //METODOS DE APOYO
+    public void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
         listaTiposNotas = modelo.SelectAll();
         listaTiposNotas
@@ -91,6 +92,7 @@ public class VtnTipoNotasCTR {
     private static void agregarFila(TipoDeNotaMD obj) {
 
         tablaTiposNotas.addRow(new Object[]{
+            obj.getIdTipoNota(),
             obj.getNombre(),
             obj.getValorMinimo(),
             obj.getValorMaximo(),
@@ -100,8 +102,34 @@ public class VtnTipoNotasCTR {
 
     }
 
-    //Procesadores de eventos
+    private void setModeloFromTabla(int fila) {
+
+        int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 0);
+
+        listaTiposNotas
+                .stream()
+                .filter(item -> item.getIdTipoNota() == idTipoNota)
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                    modelo = new TipoDeNotaBD(obj);
+                });
+
+    }
+
+    //PROCESADORES DE EVENTOS
     private void btnEditarActionPerformance(ActionEvent e) {
+
+        int fila = vista.getTblTipoNotas().getSelectedRow();
+
+        if (fila != -1) {
+
+            setModeloFromTabla(fila);
+            FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), modelo, this, "Editar");
+            form.Init();
+
+        } else {
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA");
+        }
 
     }
 
@@ -109,6 +137,28 @@ public class VtnTipoNotasCTR {
 
         int fila = vista.getTblTipoNotas().getSelectedRow();
         if (fila != -1) {
+
+            setModeloFromTabla(fila);
+
+            int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE ELIMINAR LA NOTA: " + modelo.getNombre());
+
+            if (opcion == 0) {
+
+                if (modelo.eliminar(modelo.getIdTipoNota())) {
+
+                    JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO LA NOTA: " + modelo.getNombre());
+
+                    desktop.getLblEstado().setText("SE HA ELIMINADO LA NOTA: " + modelo.getNombre());
+
+                    cargarTabla();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO ELIMINAR NADA");
+
+                }
+
+            }
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!!");
@@ -119,7 +169,7 @@ public class VtnTipoNotasCTR {
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), new TipoDeNotaBD());
+        FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this, "Agregar");
         form.Init();
 
     }

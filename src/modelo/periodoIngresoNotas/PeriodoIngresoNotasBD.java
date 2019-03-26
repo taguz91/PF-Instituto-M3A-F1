@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ResourceManager;
+import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.tipoDeNota.TipoDeNotaMD;
 
 /**
  *
@@ -18,7 +20,7 @@ import modelo.ResourceManager;
  */
 public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
 
-    public PeriodoIngresoNotasBD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, int idPeriodoLectivo, int idTipoNota, boolean estado) {
+    public PeriodoIngresoNotasBD(int idPeriodoIngreso, LocalDate fechaInicio, LocalDate fechaCierre, PeriodoLectivoMD idPeriodoLectivo, TipoDeNotaMD idTipoNota, boolean estado) {
         super(idPeriodoIngreso, fechaInicio, fechaCierre, idPeriodoLectivo, idTipoNota, estado);
     }
 
@@ -82,8 +84,8 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 periodo.setIdPeriodoIngreso(rs.getInt("id_perd_ingr_notas"));
                 periodo.setFechaInicio(rs.getDate("perd_notas_fecha_inicio").toLocalDate());
                 periodo.setFechaCierre(rs.getDate("perd_notas_fecha_cierre").toLocalDate());
-                periodo.setIdPeriodoLectivo(rs.getInt("id_prd_lectivo"));
-                periodo.setIdTipoNota(rs.getInt("id_tipo_nota"));
+//                periodo.setIdPeriodoLectivo();
+//                periodo.setIdTipoNota(rs.getInt("id_tipo_nota"));
                 periodo.setEstado(rs.getBoolean("perd_notas_estado"));
                 Lista.add(periodo);
             }

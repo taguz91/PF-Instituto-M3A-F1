@@ -124,7 +124,7 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         btnEditar.setText("Editar");
 
-        btnEliminar.setText("Cerrar Periodo");
+        btnEliminar.setText("Cerrar Período");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
