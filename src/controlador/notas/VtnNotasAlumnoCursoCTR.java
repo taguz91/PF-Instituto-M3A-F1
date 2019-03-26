@@ -503,7 +503,34 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnImprimir(ActionEvent e) {
 
-        generarReporte();
+        int r = JOptionPane.showOptionDialog(vista,
+                        "Reporte de Notas por Curso\n"
+                        + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
+                           "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+                switch (r) {
+                    case 0:
+                        //  REPORTE DE Alumnos con menos de 70" 
+                        break;
+                    case 1:
+                        //REPORTE DE Alumnos entre 70 a 80" 
+                        break;
+                    case 2:
+                        //REPORTE DE Alumnos entre 80 a 90"
+                        break;
+                    case 3:
+                         //REPORTE DE Alumnos entre 90 a 100"
+                        break;
+                    case 4:
+                         //REPORTE completo"
+                        generarReporte();
+                        break;
+                    default:
+                        break;
+                }
 
     }
 
