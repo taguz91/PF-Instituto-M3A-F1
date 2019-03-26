@@ -31,11 +31,13 @@ import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -176,6 +178,9 @@ public class VtnPrincipalCTR {
 
         controladorSilabo();
         carga.start();
+
+        //Esto es para la consola 
+        vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
     }
 
     private void abrirVtnPersona() {
@@ -600,8 +605,34 @@ public class VtnPrincipalCTR {
     private void btnPrdIngrNotas(ActionEvent e) {
 
         VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-        
+
         vtn.Init();
+
+    }
+
+    //Para entrar en consola de unas
+    private void iniciarConsola() {
+        JPasswordField pass = new JPasswordField();
+        int o = JOptionPane.showConfirmDialog(vtnPrin, pass, "Ingrese su contraseña",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        pass.setFocusable(true);
+        pass.requestFocus();
+        pass.selectAll();
+
+        if (o == JOptionPane.OK_OPTION) {
+            String c = new String(pass.getPassword());
+            if (c.equals("estaesunacontra")) {
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta);
+                ctr.iniciar();
+            } else if (c.length() == 0) {
+                JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+                iniciarConsola();
+            } else {
+                JOptionPane.showMessageDialog(vtnPrin, "Quieto ahi esponja.", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
 
     }
 }

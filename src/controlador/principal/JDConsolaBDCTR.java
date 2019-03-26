@@ -17,6 +17,7 @@ public class JDConsolaBDCTR {
     public JDConsolaBDCTR(VtnPrincipal vtnPrin, ConectarDB conecta) {
         this.jd = new JDConsolaBD(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
+        jd.setVisible(true);
         this.conecta = conecta;
     }
     
@@ -26,11 +27,13 @@ public class JDConsolaBDCTR {
         jd.getTxtArea().setWrapStyleWord(true);
         
         jd.getBtnEjecutar().addActionListener(e -> ejecutar());
+        
+        jd.setModal(true);
     }
     
     private void ejecutar(){
         String txt = jd.getTxtArea().getText().trim();
-        System.out.println(txt);
+        //System.out.println(txt);
         SQLException es = conecta.nosql(txt);
         if (es == null) {
             jd.getLblError().setText("<html>Se ejecuto la accion correctamente. </html>");
