@@ -222,6 +222,10 @@ public class FrmPersonaCTR {
         frmPersona.getTxtCarnetConadis().setVisible(estado);
         frmPersona.getLblPorcentaje().setVisible(estado);
         frmPersona.getTxtPorcentaje().setVisible(estado);
+        if (estado) {
+            frmPersona.getCmbTipoDiscapacidad().addActionListener(new CmbValidar(
+                    frmPersona.getCmbTipoDiscapacidad(), frmPersona.getLblErrorTipoDiscapacidad()));
+        }
     }
 
     private void activarDiscapacidad() {
@@ -277,8 +281,6 @@ public class FrmPersonaCTR {
             frmPersona.getCmbSexo().addActionListener(new CmbValidar(
                     frmPersona.getCmbSexo(), frmPersona.getLblErrorSexo()));
             frmPersona.getCmbSexo().addPropertyChangeListener(habilitar_Guardar);
-            frmPersona.getCmbTipoDiscapacidad().addActionListener(new CmbValidar(
-                    frmPersona.getCmbTipoDiscapacidad(), frmPersona.getLblErrorTipoDiscapacidad()));
             frmPersona.getCmbTipoDiscapacidad().addPropertyChangeListener(habilitar_Guardar);
             frmPersona.getCmbTipoId().addActionListener(new CmbValidar(
                     frmPersona.getCmbTipoId()));
@@ -829,7 +831,7 @@ public class FrmPersonaCTR {
         }
         frmPersona.getCmbSexo().setSelectedItem(sexo);
 
-        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre());
+        frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
         //Codigo postal

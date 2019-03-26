@@ -102,6 +102,7 @@ public class VtnDocenteCTR {
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -168,7 +169,7 @@ public class VtnDocenteCTR {
                     //Le pasamos la persona de nuestro lista justo la persona seleccionada
                     ctrFrm.habilitarComponentesDocente();
 
-                    ctrFrm.editar(docentesMD.get(posFila));
+                    ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                     //vtnDocente.getTblDocente().setVisible(false);
                     vtnDocente.dispose();
                 }
@@ -232,8 +233,9 @@ public class VtnDocenteCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
+            int posFila = vtnDocente.getTblDocente().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnDocente.getTblDocente().getSelectedRow(), 1)));
+            parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
@@ -245,4 +247,46 @@ public class VtnDocenteCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void llamaReporteDocenteMateria() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repDocentesCarrera.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            int posFila = vtnDocente.getTblDocente().getSelectedRow();
+            Map parametro = new HashMap();
+            parametro.put("id", docentesMD.get(posFila).getIdDocente());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void  botonReporteMateria(){
+          int s = JOptionPane.showOptionDialog(vtnDocente,
+                        "Reporte de Materias del Docente\n"
+                        + "¿Elegir el tipo de Reporte?", "REPORTE MATERIAS",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"Materias por Periodo", "Historial de Materias",
+                           "Cancelar"}, "Historial de Materias");
+                switch (s) {
+                    case 0:
+                        
+                        break;
+                    case 1:
+                        llamaReporteDocenteMateria();
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+}
 }

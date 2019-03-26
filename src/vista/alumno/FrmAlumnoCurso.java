@@ -94,7 +94,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cmbPrdLectivo = new javax.swing.JComboBox<>();
+        cmbPrdLectivo = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
@@ -111,7 +111,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         tblMateriasPen = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cmbCurso = new javax.swing.JComboBox<>();
+        cmbCurso = new javax.swing.JComboBox<String>();
         btnPasar1 = new javax.swing.JButton();
         btnPasarTodos = new javax.swing.JButton();
         btnRegresar1 = new javax.swing.JButton();
