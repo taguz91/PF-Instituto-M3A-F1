@@ -102,7 +102,7 @@ public class VtnDocenteCTR {
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
-        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> llamaReporteDocenteMateria());
+        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -267,4 +267,26 @@ public class VtnDocenteCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     public void  botonReporteMateria(){
+          int s = JOptionPane.showOptionDialog(vtnDocente,
+                        "Reporte de Materias del Docente\n"
+                        + "¿Elegir el tipo de Reporte?", "REPORTE MATERIAS",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"Materias por Periodo", "Historial de Materias",
+                           "Cancelar"}, "Historial de Materias");
+                switch (s) {
+                    case 0:
+                        
+                        break;
+                    case 1:
+                        llamaReporteDocenteMateria();
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+}
 }

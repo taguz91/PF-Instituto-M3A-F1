@@ -68,7 +68,21 @@ public class LoginCTR {
         });
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-
+        
+        //Evento para ingresar rapido como JHONNY
+        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e){
+                ingresoVeloz(e.getKeyChar()+"");
+            }
+        });
+    }
+    
+    private void ingresoVeloz(String c){
+        if (c.equalsIgnoreCase("T")) {
+            vista.getTxtUsername().setText("JHONNY");
+            vista.getTxtPassword().setText("ROOT");
+        }
     }
 
     //Metodos de Apoyo
@@ -90,7 +104,7 @@ public class LoginCTR {
 
             VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
 
-          // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
+            // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
             vtn.Init();
 
         } else {
@@ -101,6 +115,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
+<<<<<<< HEAD
 
 
 
@@ -116,6 +131,11 @@ public class LoginCTR {
 
         //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
 
+=======
+        USERNAME = "ROOT";
+        PASSWORD = "ROOT";
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+>>>>>>> 686a7e21c115480b69ae80d4ff0af4c9399ff567
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
