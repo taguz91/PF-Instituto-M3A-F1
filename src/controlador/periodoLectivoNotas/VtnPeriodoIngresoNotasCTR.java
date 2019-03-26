@@ -25,6 +25,7 @@ public class VtnPeriodoIngresoNotasCTR {
     private VtnPeriodoIngresoNotas vista;
     private PeriodoIngresoNotasBD modelo;
     private RolBD permisos;
+    
 
     //Tabla
     private static DefaultTableModel tablaPeriodoNotas;
@@ -93,7 +94,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Procesadores de eventos
     private void btnEditarActionPerformance(ActionEvent e) {
-
+        
     }
 
     private void btnEliminarActionPerformance(ActionEvent e) {
