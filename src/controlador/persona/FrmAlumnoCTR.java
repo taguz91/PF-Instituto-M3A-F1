@@ -231,6 +231,27 @@ public class FrmAlumnoCTR {
         //Alumnos = bdAlumno.filtrarAlumno();
         Sectores = sectorE.capturarSectores();
     }
+    
+    public boolean confirmarErrores(){
+        boolean error = false;
+        if(frmAlumno.getLbl_ErrCedula().isVisible() == false && 
+                frmAlumno.getLbl_ErrConEmergencia().isVisible() == false && 
+                frmAlumno.getLbl_ErrForMadre().isVisible() == false && 
+                frmAlumno.getLbl_ErrForPadre().isVisible() == false && 
+                frmAlumno.getLbl_ErrNomContacto().isVisible() == false &&
+                frmAlumno.getLbl_ErrNvAcademico().isVisible() == false && 
+                frmAlumno.getLbl_ErrOcupacion().isVisible() == false && 
+                frmAlumno.getLbl_ErrParentesco().isVisible() == false &&
+                frmAlumno.getLbl_ErrSecEconomico().isVisible() == false &&
+                frmAlumno.getLbl_ErrTiSuperior().isVisible() == false &&
+                frmAlumno.getLbl_ErrTipBachillerato().isVisible() == false && 
+                frmAlumno.getLbl_ErrTipColegio().isVisible() == false){
+            error = false;
+        } else{
+            error = true;
+        }
+        return error;
+    }
 
     public void buscarCedula() {
         if (cont == 1) {
@@ -242,7 +263,6 @@ public class FrmAlumnoCTR {
             if (!cedula.equals("")) {
                 if (cedula.length() == 10) {
                     if (modelo.validaciones.Validar.esCedula(cedula) == false) {
-                        error = true;
                         frmAlumno.getLbl_ErrCedula().setText("Ingrese una cédula válida");
                         frmAlumno.getLbl_ErrCedula().setVisible(true);
                     }
@@ -417,13 +437,12 @@ public class FrmAlumnoCTR {
 
     public void habilitarGuardar() {
 
-        String titulo_Superior, ocupacion, nombre_Contacto, contacto_Emergencia, cedula, nombre;
+        String titulo_Superior, nombre_Contacto, contacto_Emergencia, cedula, nombre;
         String tipo_Colegio, tipo_Bachillerato, nivel_Academico, sector_Economico, for_Padre, for_Madre, parentesco;
 
         cedula = frmAlumno.getTxt_Cedula().getText();
         nombre = frmAlumno.getTxt_Nombre().getText();
         titulo_Superior = frmAlumno.getTxt_TlSuperior().getText();
-        ocupacion = frmAlumno.getTxt_Ocupacion().getText();
         nombre_Contacto = frmAlumno.getTxt_NomContacto().getText();
         contacto_Emergencia = frmAlumno.getTxt_ConEmergency().getText();
         tipo_Colegio = frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString();
@@ -434,12 +453,16 @@ public class FrmAlumnoCTR {
         for_Madre = frmAlumno.getCmBx_ForMadre().getSelectedItem().toString();
         parentesco = frmAlumno.getCmBx_Parentesco().getSelectedItem().toString();
 
-        if (cedula.equals("") == false && nombre.equals("") == false && titulo_Superior.equals("") == false && ocupacion.equals("") == false
-                && nombre_Contacto.equals("") == false && contacto_Emergencia.equals("") == false && tipo_Colegio.equals("|SELECCIONE|") == false
-                && tipo_Bachillerato.equals("|SELECCIONE|") == false && sector_Economico.equals("|SELECCIONE|") == false && for_Padre.equals("|SELECCIONE|") == false
-                && for_Madre.equals("|SELECCIONE|") == false && parentesco.equals("|SELECCIONE|") == false) {
-            frmAlumno.getBtn_Guardar().setEnabled(true);
-        } else {
+        if(confirmarErrores() == false){
+            if (cedula.equals("") == false && nombre.equals("") == false && titulo_Superior.equals("") == false
+                    && nombre_Contacto.equals("") == false && contacto_Emergencia.equals("") == false && tipo_Colegio.equals("|SELECCIONE|") == false
+                    && tipo_Bachillerato.equals("|SELECCIONE|") == false && sector_Economico.equals("|SELECCIONE|") == false && for_Padre.equals("|SELECCIONE|") == false
+                    && for_Madre.equals("|SELECCIONE|") == false && parentesco.equals("|SELECCIONE|") == false) {
+                frmAlumno.getBtn_Guardar().setEnabled(true);
+            } else {
+                frmAlumno.getBtn_Guardar().setEnabled(false);
+            }
+        } else{
             frmAlumno.getBtn_Guardar().setEnabled(false);
         }
     }

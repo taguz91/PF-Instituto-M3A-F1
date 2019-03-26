@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -708,6 +709,10 @@ public class FrmPersonaCTR {
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
         editar = true;
+        
+        Calendar fecha_Nacimiento = Calendar.getInstance();
+        fecha_Nacimiento.clear();
+        fecha_Nacimiento.set(per.getFechaNacimiento().getYear(), per.getFechaNacimiento().getMonthValue() - 1, per.getFechaNacimiento().getDayOfMonth());
 
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtIdentificacion().setText(per.getIdentificacion());
@@ -726,6 +731,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
 
         String sexo = per.getSexo() + "";
         if ("H".equals(sexo)) {

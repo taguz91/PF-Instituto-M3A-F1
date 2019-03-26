@@ -117,10 +117,10 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         });
         jPanel1.add(Txt_TlSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 340, -1));
 
-        jLabel8.setText("Titulo Superior: ");
+        jLabel8.setText("Titulo de Bachiller: ");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, -1, 20));
 
-        jLabel5.setText("Tipo de Bachillerato:");
+        jLabel5.setText("Tipo de Bachiller:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 860, 7));
 

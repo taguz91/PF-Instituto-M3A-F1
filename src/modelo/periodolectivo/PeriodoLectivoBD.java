@@ -28,9 +28,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
-                + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo)"
+                + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
-                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true);";
+                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, false);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -65,16 +65,29 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
+    
+    public boolean cerrarPeriodo(PeriodoLectivoMD p){
+        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
+                + " prd_lectivo_estado = true"
+                + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
+        if (conecta.nosql(nsql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
-        String sql = "SELECT id_carrera, carrera_nombre FROM public.\"Carreras\";";
+        String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\";";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
                 CarreraMD a = new CarreraMD();
                 a.setId(rs.getInt("id_carrera"));
                 a.setNombre(rs.getString("carrera_nombre"));
+                a.setCodigo(rs.getString("carrera_codigo"));
                 lista.add(a);
             }
             rs.close();
@@ -216,7 +229,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true\n"
+                + "prd_lectivo_activo = true AND prd_lectivo_estado = false\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {

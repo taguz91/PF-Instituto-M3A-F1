@@ -264,17 +264,36 @@ public class VtnPrdLectivoCTR {
     public void eliminarPeriodo() {
         PeriodoLectivoMD periodo;
         if (capturarFila() == null) {
-            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
+            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona un Período Lectivo");
         } else {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? ", " Elinimar Período Lectivo ", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? ", " Eliminar Período Lectivo ", dialog);
             if (result == 0) {
                 periodo = capturarFila();
                 if (bdPerLectivo.eliminarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL PERÍODO LECTIVO");
+                }
+            }
+        }
+    }
+    
+    public void cerrarPeriodo(){
+        PeriodoLectivoMD periodo;
+        if (capturarFila() == null) {
+            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona un Período Lectivo");
+        } else {
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
+            if (result == 0) {
+                periodo = capturarFila();
+                if (bdPerLectivo.eliminarPeriodo(periodo) == true) {
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
                 }
             }
         }
