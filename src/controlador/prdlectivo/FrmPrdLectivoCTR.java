@@ -251,7 +251,7 @@ public class FrmPrdLectivoCTR {
     public void guardarPeriodo() {
 
         String carreras, nombre_Periodo, observacion, fecha_Inicio, fecha_Fin;
-        boolean error = false, vacio = false;
+        boolean error = false;
         LocalDate fechaActual = LocalDate.now();
 
         carreras = frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString();
@@ -261,122 +261,68 @@ public class FrmPrdLectivoCTR {
         observacion = frmPrdLectivo.getTxtObservacion().getText();
         fecha_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
         String fec_Fin[] = fecha_Fin.split("/");
-        LocalDate dia_Inicio = LocalDate.now();
-        LocalDate dia_Fin = LocalDate.now();
-        dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-        dia_Inicio.withMonth(Integer.parseInt(fec[1]));
-        dia_Inicio.withYear(Integer.parseInt(fec[2]));
-
-        dia_Fin.withDayOfMonth(Integer.parseInt(fec_Fin[0]));
-        dia_Fin.withMonth(Integer.parseInt(fec_Fin[1]));
-        dia_Fin.withYear(Integer.parseInt(fec_Fin[2]));
-
-        System.out.println("Fecha Inicio: " + dia_Inicio.toString());
-        System.out.println("Fecha Fin: " + dia_Fin.toString());
-
-        if (carreras.equals("|SELECCIONE|")) {
-            vacio = true;
-            frmPrdLectivo.getLbl_ErrCarrera().setVisible(true);
-        }
-
-        if (modelo.validaciones.Validar.esLetrasYNumeros(nombre_Periodo) == false && nombre_Periodo.contains("/") == false) {
-            error = true;
-            frmPrdLectivo.getLbl_ErrNombre().setVisible(true);
-        } else if (nombre_Periodo.equals("")) {
-            vacio = true;
-            frmPrdLectivo.getLbl_ErrNombre().setText("Ingrese un Nombre");
-            frmPrdLectivo.getLbl_ErrNombre().setVisible(true);
-        }
-
-        if (observacion.equals("")) {
-            vacio = true;
-            frmPrdLectivo.getLbl_ErrObservacion().setVisible(true);
-        }
+        LocalDate dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
+        LocalDate dia_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
         
         if (Integer.parseInt(fec[1]) >= 9 && Integer.parseInt(fec[1]) <= 12) {
-                    System.out.println("fecha compleja");
-                    switch (fec[1]) {
-                        case "09":
-                            dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-                            dia_Inicio.withMonth(1);
-                            dia_Inicio.withYear(Integer.parseInt(fec[2]));
-                            if(dia_Inicio.isBefore(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true){
-                                error = true;
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("Tiene que pasar 4 meses del Inicio");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else{
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "10":
-                            dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-                            dia_Inicio.withMonth(2);
-                            dia_Inicio.withYear(Integer.parseInt(fec[2]));
-                            if(dia_Inicio.isBefore(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true){
-                                error = true;
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("Tiene que pasar 4 meses del Inicio");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else{
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "11":
-                            dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-                            dia_Inicio.withMonth(3);
-                            dia_Inicio.withYear(Integer.parseInt(fec[2]));
-                            if(dia_Inicio.isBefore(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true){
-                                error = true;
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("Tiene que pasar 4 meses del Inicio");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else{
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                        case "12":
-                            dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-                            dia_Inicio.withMonth(4);
-                            dia_Inicio.withYear(Integer.parseInt(fec[2]));
-                            if(dia_Inicio.isBefore(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true){
-                                error = true;
-                                frmPrdLectivo.getLbl_ErrFecFin().setText("Tiene que pasar 4 meses del Inicio");
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                            } else{
-                                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                            }
-                            break;
-                    }
-                } else {
-                    System.out.println("fecha simple");
-                    dia_Inicio.withDayOfMonth(Integer.parseInt(fec[0]));
-                            dia_Inicio.withMonth(Integer.parseInt(fec[1]) + 4);
-                            dia_Inicio.withYear(Integer.parseInt(fec[2]));
-                    if(dia_Inicio.isBefore(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true){
+            switch (fec[1]) {
+                case "09":
+                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 1, Integer.parseInt(fec[0]));
+                    if (dia_Inicio.isAfter(dia_Fin) == true) {
                         error = true;
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("Tiene que pasar 4 meses del Inicio");
+                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
                         frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else{
+                    } else {
                         frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
                     }
-                }
-
-//        if (Integer.parseInt(fec[2]) > fechaActual.getYear()) {
-//            error = true;
-//            frmPrdLectivo.getLbl_ErrFecInicio().setVisible(true);
-//        }
-//
-//        if (Integer.parseInt(fec_Fin[1]) < Integer.parseInt(fec[1]) || Integer.parseInt(fec_Fin[1]) < Integer.parseInt(fec[1]) + 4) {
-//            error = true;
-//            frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-//        }
-        error = true;
+                    break;
+                case "10":
+                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 2, Integer.parseInt(fec[0]));
+                    if (dia_Inicio.isAfter(dia_Fin) == true) {
+                        error = true;
+                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+                    } else {
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+                    }
+                    break;
+                case "11":
+                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 3, Integer.parseInt(fec[0]));
+                    if (dia_Inicio.isAfter(dia_Fin) == true) {
+                        error = true;
+                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+                    } else {
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+                    }
+                    break;
+                case "12":
+                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 4, Integer.parseInt(fec[0]));
+                    if (dia_Inicio.isAfter(dia_Fin) == true) {
+                        error = true;
+                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+                    } else {
+                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+                    }
+                    break;
+            }
+        } else {
+            dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]) + 4, Integer.parseInt(fec[0]));
+            if (dia_Inicio.isAfter(dia_Fin) == true) {
+                error = true;
+                frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
+                frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
+            } else {
+                frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
+            }
+        }
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
             iniciarComponentes();
-        } else if (vacio == true) {
-            JOptionPane.showMessageDialog(null, "Advertencia!! Campos Vacio/s");
-            iniciarComponentes();
-        } else {
+            habilitarGuardar();
+        }else {
             if (editar == false) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 CarreraMD carrera = new CarreraMD();

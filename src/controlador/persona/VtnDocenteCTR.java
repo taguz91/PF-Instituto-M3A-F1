@@ -102,6 +102,7 @@ public class VtnDocenteCTR {
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> llamaReporteDocenteMateria());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -232,8 +233,29 @@ public class VtnDocenteCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
+            int posFila = vtnDocente.getTblDocente().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnDocente.getTblDocente().getSelectedRow(), 1)));
+            parametro.put("id", docentesMD.get(posFila).getIdDocente());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Materias por Carrera");
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void llamaReporteDocenteMateria() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repDocentesCarrera.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            int posFila = vtnDocente.getTblDocente().getSelectedRow();
+            Map parametro = new HashMap();
+            parametro.put("id", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
