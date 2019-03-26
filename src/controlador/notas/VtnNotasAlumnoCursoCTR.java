@@ -86,7 +86,6 @@ public class VtnNotasAlumnoCursoCTR {
      */
     public void Init() {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
-        canEdit[4] = false;
 
         //RELLENADO DE LISTAS
         listaPersonasDocentes = PersonaBD.selectWhereUsername(usuario.getUsername());
@@ -164,6 +163,8 @@ public class VtnNotasAlumnoCursoCTR {
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
 
                     active = true;
+
+                    setNumero();
 
                     vista.getTblNotas().setModel(calcularNotaFinal(tablaNotas));
 
@@ -517,7 +518,7 @@ public class VtnNotasAlumnoCursoCTR {
         if (e.getKeyCode() == 10) {
 
             setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
-            
+
         }
     }
 }
