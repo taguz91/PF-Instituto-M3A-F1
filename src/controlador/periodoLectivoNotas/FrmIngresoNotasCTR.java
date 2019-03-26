@@ -27,13 +27,17 @@ public class FrmIngresoNotasCTR {
     private VtnPrincipal desktop;
     private FrmIngresoNotas vista;
     private PeriodoIngresoNotasBD modelo;
+
+    private VtnPeriodoIngresoNotasCTR vtnPadre;
+
     private List<PeriodoLectivoMD> listaNomPeriodos;
     private List<TipoDeNotaMD> listaNomNotas;
 
-    public FrmIngresoNotasCTR(VtnPrincipal desktop, FrmIngresoNotas vista, PeriodoIngresoNotasBD modelo) {
+    public FrmIngresoNotasCTR(VtnPrincipal desktop, FrmIngresoNotas vista, PeriodoIngresoNotasBD modelo, VtnPeriodoIngresoNotasCTR vtnPadre) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
+        this.vtnPadre = vtnPadre;
     }
 
     //INICIADORES
@@ -41,8 +45,7 @@ public class FrmIngresoNotasCTR {
 
         listaNomPeriodos = PeriodoLectivoBD.SelectAll();
         listaNomNotas = TipoDeNotaBD.SelectAll();
-        
-        
+
         InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -59,8 +62,7 @@ public class FrmIngresoNotasCTR {
     }
 
     //METODOS DE APOYO
-    
-    public void camposLlenos(){
+    public void camposLlenos() {
 //        if (vista.getJdcFechaIni().getCalendar()!=null) {
 //            if(vista.getJdcFechaFin().getCalendar()!=null){
 //            }else{
@@ -83,10 +85,10 @@ public class FrmIngresoNotasCTR {
                 .forEach(obj -> {
                     vista.getCmbPeriodoLec().addItem(obj.getNombre_PerLectivo());
                 });
-        
+
         listaNomNotas
                 .stream()
-                .forEach(obj ->{
+                .forEach(obj -> {
                     vista.getCmbTipoNota().addItem(obj.getNombre());
                 });
     }
@@ -95,7 +97,7 @@ public class FrmIngresoNotasCTR {
     private void btnGuardarActionPerformance(ActionEvent e) {
         modelo.setFechaInicio(conversorFechas(vista.getJdcFechaIni()));
         modelo.setFechaCierre(conversorFechas(vista.getJdcFechaFin()));
-        
+
         listaNomPeriodos
                 .stream()
                 .filter(item -> item.getNombre_PerLectivo().equals(vista.getCmbPeriodoLec().getSelectedItem().toString()))
@@ -103,12 +105,12 @@ public class FrmIngresoNotasCTR {
                 .forEach(obj -> {
                     modelo.setIdPeriodoLectivo(obj);
                 });
-        
+
         listaNomNotas
                 .stream()
-                .filter(item-> item.getNombre().equals(vista.getCmbTipoNota().getSelectedItem().toString()))
+                .filter(item -> item.getNombre().equals(vista.getCmbTipoNota().getSelectedItem().toString()))
                 .collect(Collectors.toList())
-                .forEach(obj ->{
+                .forEach(obj -> {
                     modelo.setIdTipoNota(obj);
                 });
     }

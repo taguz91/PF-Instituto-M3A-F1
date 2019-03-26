@@ -11,6 +11,7 @@ import modelo.accesos.AccesosMD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasMD;
 import modelo.usuario.RolBD;
+import vista.periodoLectivoNotas.FrmIngresoNotas;
 import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
 import vista.principal.VtnPrincipal;
 
@@ -104,6 +105,9 @@ public class VtnPeriodoIngresoNotasCTR {
     }
 
     private void btnIngresarActionPerformance(ActionEvent e) {
+
+        FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this);
+        form.Init();
 
     }
 
