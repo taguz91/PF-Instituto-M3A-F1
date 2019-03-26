@@ -27,7 +27,7 @@ public class LoginCTR {
 
     private final Login vista; //LO QUE VA A VISUALIZAR
     private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
-    //Icono de la aplicacion  
+    //Icono de la aplicacion
     private final ImageIcon icono;
     private final Image ista;
 
@@ -47,7 +47,7 @@ public class LoginCTR {
 
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
-        //ocusltamos el error 
+        //ocusltamos el error
         vista.getLblAvisos().setVisible(false);
     }
 
@@ -101,8 +101,7 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "qwerty79", "Login de invitado"), icono, ista);
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);

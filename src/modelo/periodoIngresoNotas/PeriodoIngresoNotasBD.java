@@ -89,6 +89,7 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 periodo.setIdPeriodoLectivo(PeriodoLectivoBD.selectWhere(rs.getInt("id_prd_lectivo")));
                 periodo.setIdTipoNota(TipoDeNotaBD.selectWhere(rs.getInt("id_tipo_nota")));
                 periodo.setEstado(rs.getBoolean("perd_notas_estado"));
+                
                 Lista.add(periodo);
             }
 
