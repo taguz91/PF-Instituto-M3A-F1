@@ -320,6 +320,9 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ux.DTable();//javax.swing.JTable()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
