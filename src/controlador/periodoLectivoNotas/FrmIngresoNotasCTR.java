@@ -2,6 +2,7 @@
 package controlador.periodoLectivoNotas;
 
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 import vista.periodoLectivoNotas.FrmIngresoNotas;
 import vista.principal.VtnPrincipal;
 
@@ -28,6 +29,14 @@ public class FrmIngresoNotasCTR {
     
     //METODOS DE APOYO
     
+    public void camposLlenos(){
+        if (vista.getJdcFechaIni().getCalendar()!=null) {
+            if(vista.getJdcFechaFin().getCalendar()!=null){
+            }else{
+                JOptionPane.showMessageDialog(null, "Escoja una fecha");
+            }
+        }
+    }
     
     //EVENTOS
     
