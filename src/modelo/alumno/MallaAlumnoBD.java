@@ -136,6 +136,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "m.id_materia = ma.id_materia AND\n"
                 + "ac.id_almn_carrera = " + idAlumno + ";";
         //return consultaMallasPorAlumno(sql, idAlumno);
+        System.out.println(sql);
         return consultaMallasTbl(sql);
     }
 

@@ -47,6 +47,8 @@ public class LoginCTR {
 
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
+        //ocusltamos el error 
+        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
@@ -92,7 +94,7 @@ public class LoginCTR {
             vtn.Init();
 
         } else {
-
+            vista.getLblAvisos().setVisible(true);
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
         }
     }

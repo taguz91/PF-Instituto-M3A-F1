@@ -163,6 +163,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
+        vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         carga.start();
     }
@@ -290,6 +291,11 @@ public class VtnPrincipalCTR {
             VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtnPrin, vtn, conecta, this, rolSeleccionado);
             ctrVtn.iniciar();
         }
+    }
+    
+    private void abrirVtnAyuda(){
+        JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
+        ctrAyuda.iniciar();
     }
 
     //Para abrir todos los formularios
