@@ -85,6 +85,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
     private static void agregarFila(PeriodoIngresoNotasMD obj) {
         tablaPeriodoNotas.addRow(new Object[]{
+            obj.getIdPeriodoIngreso(),
             obj.getFechaInicio(),
             obj.getFechaCierre(),
             obj.getIdPeriodoLectivo().getNombre_PerLectivo(),

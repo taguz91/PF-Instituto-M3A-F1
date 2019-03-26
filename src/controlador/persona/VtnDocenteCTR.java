@@ -169,7 +169,7 @@ public class VtnDocenteCTR {
                     //Le pasamos la persona de nuestro lista justo la persona seleccionada
                     ctrFrm.habilitarComponentesDocente();
 
-                    ctrFrm.editar(docentesMD.get(posFila));
+                    ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                     //vtnDocente.getTblDocente().setVisible(false);
                     vtnDocente.dispose();
                 }
@@ -235,7 +235,7 @@ public class VtnDocenteCTR {
         try {
             int posFila = vtnDocente.getTblDocente().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("id", docentesMD.get(posFila).getIdDocente());
+            parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

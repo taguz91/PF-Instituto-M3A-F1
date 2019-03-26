@@ -9,3 +9,8 @@ ALTER TABLE public."EvaluacionSilabo" DROP CONSTRAINT "EvaluacionSilabo_id_silab
 ALTER TABLE public."EvaluacionSilabo" DROP COLUMN id_silabo;
 
 ALTER TABLE public."PeriodoLectivo" ADD COLUMN prd_lectivo_estado BOOLEAN NOT NULL DEFAULT 'false';
+
+--Grupo Andres
+ALTER TABLE public."UnidadSilabo" ADD COLUMN titulo_unidad TEXT NOT NULL;
+
+ALTER TABLE public."UnidadSilabo" DROP COLUMN estrategias_unidad;
