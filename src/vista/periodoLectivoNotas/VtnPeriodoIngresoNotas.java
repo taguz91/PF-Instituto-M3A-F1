@@ -63,8 +63,10 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
     public JTextField getTxtBuscar() {
         return txtBuscar;
     }
-    
-    
+
+    public JButton getBtnActualizar() {
+        return btnActualizar;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,9 +86,11 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeriodoIngresoNotas = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setPreferredSize(new java.awt.Dimension(700, 415));
 
         jLabel1.setText("Buscar");
@@ -104,12 +108,27 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Fecha Inicio", "Fecha Cierre", "Codigo Periodo Lectivo", "Codigo Tipo Nota"
+                "ID", "Fecha Inicio", "Fecha Cierre", "Codigo Periodo Lectivo", "Codigo Tipo Nota"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPeriodoIngresoNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPeriodoIngresoNotas);
+        if (tblPeriodoIngresoNotas.getColumnModel().getColumnCount() > 0) {
+            tblPeriodoIngresoNotas.getColumnModel().getColumn(0).setResizable(false);
+            tblPeriodoIngresoNotas.getColumnModel().getColumn(0).setPreferredWidth(0);
+        }
 
         lblResultados.setText("0 Resultados Obtenidos");
+
+        btnActualizar.setText("Actualizar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,14 +143,15 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(148, 148, 148)
-                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnIngresar)
-                        .addGap(0, 35, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
@@ -151,9 +171,10 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnEditar)
-                            .addComponent(btnIngresar))))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -166,6 +187,7 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
