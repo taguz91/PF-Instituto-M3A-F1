@@ -175,10 +175,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         controladorSilabo();
-<<<<<<< HEAD
-
-=======
->>>>>>> 686a7e21c115480b69ae80d4ff0af4c9399ff567
         carga.start();
     }
 
