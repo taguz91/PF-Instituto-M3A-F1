@@ -107,7 +107,7 @@ public class VtnMallaAlumnoCTR {
             }
         });
         //Validacion del buscador 
-        vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(), 
+        vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(),
                 vtnMallaAlm.getBtnBuscar()));
         //Modificamos el cmb para que sea editable  
         vtnMallaAlm.getCmbAlumnos().setEditable(true);
@@ -196,6 +196,7 @@ public class VtnMallaAlumnoCTR {
             System.out.println("El tiempo que tardo en buscar malla alumno es: "
                     + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
             vtnMallaAlm.getCmbEstado().setEnabled(true);
+            
             llenarTbl(mallas);
             cargarCmbEstado();
             //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -265,8 +266,11 @@ public class VtnMallaAlumnoCTR {
                     m.getNota2(), m.getNota3()};
                 mdlTbl.addRow(valores);
             });
+            vtnMallaAlm.getLblResultados().setText(mallas.size() + " Resultados obtenidos.");
+        }else{
+            vtnMallaAlm.getLblResultados().setText("0 Resultados obtenidos.");
         }
-        vtnMallaAlm.getLblResultados().setText(mallas.size() + " Resultados obtenidos.");
+
     }
 
     private void cargarCmbCarrera() {

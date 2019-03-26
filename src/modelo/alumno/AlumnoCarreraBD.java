@@ -182,6 +182,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     AlumnoCarreraMD ac = new AlumnoCarreraMD();
                     AlumnoMD al = new AlumnoMD();
                     CarreraMD c = new CarreraMD();
+                    ac.setId(rs.getInt("id_almn_carrera"));
                     c.setId(rs.getInt("id_carrera"));
                     al.setId_Alumno(rs.getInt("id_alumno"));
                     al.setIdPersona(rs.getInt("id_persona"));

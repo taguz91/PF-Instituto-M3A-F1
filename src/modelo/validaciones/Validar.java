@@ -101,4 +101,12 @@ public class Validar {
     public static boolean esNota(String entrada){
         return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}");   
     }
+    
+    public static boolean esNumCasa(String entrada){
+        return entrada.matches("[0-9]{1,4}+-+[0-9]{1,4}");   
+    }
+    
+    public static boolean esCarnetConadis(String entrada){
+        return entrada.matches("[0-9]{1,4}+\\.+[0-9]{1,6}");   
+    }
 }

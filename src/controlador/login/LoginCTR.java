@@ -27,7 +27,7 @@ public class LoginCTR {
 
     private final Login vista; //LO QUE VA A VISUALIZAR
     private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
-    //Icono de la aplicacion  
+    //Icono de la aplicacion
     private final ImageIcon icono;
     private final Image ista;
 
@@ -47,6 +47,8 @@ public class LoginCTR {
 
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
+        //ocusltamos el error
+        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
@@ -92,17 +94,14 @@ public class LoginCTR {
             vtn.Init();
 
         } else {
-
+            vista.getLblAvisos().setVisible(true);
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
         }
     }
 
     private void LoginGenerico() {
-        
-        USERNAME = "ROOT";
-        PASSWORD = "ROOT";
-        
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "Login de invitado"), icono, ista);
+
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
