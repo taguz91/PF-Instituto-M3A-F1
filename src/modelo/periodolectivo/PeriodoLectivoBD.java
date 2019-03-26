@@ -151,9 +151,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
                 + "prd_lectivo_activo = true AND (\n"
-                + "	prd_lectivo_nombre ILIKE '%"+aguja+"%' OR\n"
-                + "	carrera_nombre ILIKE '%"+aguja+"%' OR\n"
-                + "	carrera_codigo ILIKE '%"+aguja+"%')\n"
+                + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
+                + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
+                + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
 
         ResultSet rs = conecta.sql(sql);
@@ -351,7 +351,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static PeriodoLectivoMD selectWhere() {
+    public static PeriodoLectivoMD selectWhere(int idPeriodo) {
         PeriodoLectivoMD periodo = new PeriodoLectivoMD();
 
         String SELECT = "SELECT\n"
@@ -366,12 +366,33 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "FROM\n"
                 + "\"PeriodoLectivo\"\n"
                 + "WHERE \n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE\n"
-                + "AND \n"
-                + "\"PeriodoLectivo\".id_prd_lectivo = 1";
-        
-        
-        
+                + "\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo;
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+
+                periodo.setCarrera(carrera);
+
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                periodo.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                periodo.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                periodo.setObservacion_PerLectivo(rs.getString("prd_lectivo_observacion"));
+                periodo.setActivo_PerLectivo(rs.getBoolean("prd_lectivo_activo"));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return periodo;
     }
 
