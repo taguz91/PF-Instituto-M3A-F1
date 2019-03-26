@@ -101,7 +101,7 @@ public class FrmPersonaCTR {
         ocultarErrores();
         cargarIdiomas();
         desactivarDiscapacidad(false);
-        habilitarBtnGuardar();
+       
         //Cuando se realice una accion en alguno de esos combos 
         iniciarValidaciones();
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -144,6 +144,7 @@ public class FrmPersonaCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Persona");
+         habilitarBtnGuardar();
     }
 
     public void buscarIdentificacion() {
