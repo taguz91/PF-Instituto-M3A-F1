@@ -62,7 +62,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return ResourceManager.Statement(INSERT) == null;
     }
 
-    public List<TipoDeNotaMD> SelectAll() {
+    public static List<TipoDeNotaMD> SelectAll() {
 
         String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE " + RESTRICCION + " ORDER BY tipo_nota_fecha_creacion DESC";
 
@@ -106,7 +106,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return tipoNota;
     }
 
-    private List<TipoDeNotaMD> SelectSimple(String QUERY) {
+    private static List<TipoDeNotaMD> SelectSimple(String QUERY) {
         List<TipoDeNotaMD> Lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(QUERY);
