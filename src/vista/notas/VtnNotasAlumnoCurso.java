@@ -142,7 +142,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(3).setPreferredWidth(150);
         }
 
-        btnImprimir.setText("Imprimir");
+        btnImprimir.setText("Impromir");
 
         btnVerNotas.setText("Ver Notas");
         btnVerNotas.setEnabled(false);
