@@ -39,8 +39,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnIgSilabo;
     }
 
-
-
     public JButton getBtnCarrera() {
         return btnCarrera;
     }
@@ -241,6 +239,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return lblEstado;
     }
 
+    public JMenuItem getMnCtPrdIngrNotas() {
+        return mnCtPrdIngrNotas;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -288,6 +290,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRoles = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mnCtTipoNotas = new javax.swing.JMenuItem();
+        mnCtPrdIngrNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
@@ -544,6 +547,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas.setText("Tipos de Notas");
         jMenu1.add(mnCtTipoNotas);
 
+        mnCtPrdIngrNotas.setText("Periodos de Ingreso de Notas");
+        jMenu1.add(mnCtPrdIngrNotas);
+
         mnCtNotas.setText("Ingreso Notas");
         jMenu1.add(mnCtNotas);
 
@@ -674,6 +680,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtNotas;
     private javax.swing.JMenuItem mnCtPersona;
+    private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRoles;
     private javax.swing.JMenuItem mnCtSilabos;

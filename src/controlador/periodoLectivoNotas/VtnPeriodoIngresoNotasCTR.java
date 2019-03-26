@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.periodoLectivoNotas;
 
 import java.awt.event.ActionEvent;
@@ -31,23 +26,28 @@ public class VtnPeriodoIngresoNotasCTR {
     private RolBD permisos;
 
     //Tabla
-    private DefaultTableModel tablaPeriodoNotas;
+    private static DefaultTableModel tablaPeriodoNotas;
 
     //listas
     private List<PeriodoIngresoNotasMD> listaPeriodoNotas;
 
-    public VtnPeriodoIngresoNotasCTR(VtnPrincipal desktop, VtnPeriodoIngresoNotas vista, PeriodoIngresoNotasBD modelo, RolBD permisos, DefaultTableModel tablaPeriodoNotas) {
+    //Thread
+    Thread thread = null;
+
+    public VtnPeriodoIngresoNotasCTR(VtnPrincipal desktop, VtnPeriodoIngresoNotas vista, PeriodoIngresoNotasBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.permisos = permisos;
-        this.tablaPeriodoNotas = tablaPeriodoNotas;
     }
 
     //Inits
     public void Init() {
 
         tablaPeriodoNotas = (DefaultTableModel) vista.getTblPeriodoIngresoNotas().getModel();
+
+        listaPeriodoNotas = PeriodoIngresoNotasBD.SelectAll();
+        cargarTabla(listaPeriodoNotas);
 
         InitEventos();
         try {
@@ -77,8 +77,17 @@ public class VtnPeriodoIngresoNotasCTR {
     }
 
     //Metodos de Apoyo
-    public void cargarTabla() {
+    public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
+        lista.stream().forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+    }
 
+    private static void agregarFila(PeriodoIngresoNotasMD obj) {
+        tablaPeriodoNotas.addRow(new Object[]{
+            obj.getFechaInicio(),
+            obj.getFechaCierre(),
+            obj.getIdPeriodoLectivo().getNombre_PerLectivo(),
+            obj.getIdTipoNota().getNombre()
+        });
     }
 
     //Procesadores de eventos

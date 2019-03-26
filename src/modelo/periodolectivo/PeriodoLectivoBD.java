@@ -355,20 +355,18 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         PeriodoLectivoMD periodo = new PeriodoLectivoMD();
 
         String SELECT = "SELECT\n"
-                + "\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "\"PeriodoLectivo\".id_carrera,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_fecha_fin,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_observacion,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_fin,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_observacion,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado\n"
                 + "FROM\n"
-                + "\"PeriodoLectivo\"\n"
-                + "WHERE \n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE\n"
-                + "AND \n"
-                + "\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo;
+                + "\"public\".\"PeriodoLectivo\"\n"
+                + "WHERE\n"
+                + "id_prd_lectivo = " + idPeriodo;
 
         ResultSet rs = ResourceManager.Query(SELECT);
 

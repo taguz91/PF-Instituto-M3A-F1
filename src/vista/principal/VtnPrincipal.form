@@ -133,6 +133,11 @@
                     <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
                   </Properties>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtPrdIngrNotas">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                  </Properties>
+                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
