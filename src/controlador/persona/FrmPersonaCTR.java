@@ -101,6 +101,7 @@ public class FrmPersonaCTR {
         ocultarErrores();
         cargarIdiomas();
         desactivarDiscapacidad(false);
+        habilitarBtnGuardar();
         //Cuando se realice una accion en alguno de esos combos 
         iniciarValidaciones();
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
@@ -167,6 +168,7 @@ public class FrmPersonaCTR {
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
+                    habilitarBtnGuardar();
                     editar = false;
 
                 } else {
@@ -316,10 +318,80 @@ public class FrmPersonaCTR {
     private void capturarFotoWebCam() {
         WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
         ctrCam.iniciarCamara();
-        // byte[] imagen = vtnWebCam.getPanelCam().getBytes();
-        //vtnWebCam.getBtnGuardarFoto().addActionListener(e-> guardarFotoWeb());
     }
-        
+
+    public void habilitarBtnGuardar() {
+
+        String TipoId, Identificacion, PriNombre, SegNombre, PriApellido, SegApellido,
+                FechaNac, EstadoCivil, TipoSangre, Genero, Sexo, Etnia, CarnetConadis,
+                TipoDiscapacidad, PorcentajeDiscapacidad, IdiomaRaiz, Telefono, CallePrin,
+                CalleSec, Referencia, Celular, NumCasa, Sector, Correo,
+                Nacionalidad, Provincia, Canton, PaisReside, ProvinciaReside, CantonReside,
+                ParroquiaReside, CodigoPostal, TipoResidencia;
+        boolean Discapacidad;
+
+        TipoId = frmPersona.getCmbTipoId().getSelectedItem().toString();
+        Identificacion = frmPersona.getTxtIdentificacion().getText();
+        PriNombre = frmPersona.getTxtPrimerNombre().getText();
+        SegNombre = frmPersona.getTxtSegundoNombre().getText();
+        PriApellido = frmPersona.getTxtPrimerApellido().getText();
+        SegApellido = frmPersona.getTxtSegundoApellido().getText();
+        //FechaNac = frmPersona.getJdcFechaNacimiento().getSelectedDate().toString();
+        EstadoCivil = frmPersona.getCmbEstadoCivil().getSelectedItem().toString();
+        Celular = frmPersona.getTxtCelular().getText();
+        Telefono = frmPersona.getTxtTelefono().getText();
+        IdiomaRaiz = frmPersona.getCmbIdiomas().getSelectedItem().toString();
+        Sexo = frmPersona.getCmbSexo().getSelectedItem().toString();
+        Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
+        TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
+        Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
+        Correo = frmPersona.getTxtCorreo().getText();
+        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
+        TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+        CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+        PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+        Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
+        Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
+        Canton = frmPersona.getCmbCanton().getSelectedItem().toString();
+        PaisReside = frmPersona.getCmbPaisReside().getSelectedItem().toString();
+        ProvinciaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
+        CantonReside = frmPersona.getCmbCantonReside().getSelectedItem().toString();
+        ParroquiaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
+        CodigoPostal = frmPersona.getTxtCodigoPostal().getText();
+        TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
+        CallePrin = frmPersona.getTxtCallePrincipal().getText();
+        CalleSec = frmPersona.getTxtCalleSecundaria().getText();
+        Referencia = frmPersona.getTxtReferencia().getText();
+        Sector = frmPersona.getTxtSector().getText();
+        NumCasa = frmPersona.getTxtNumeroCasa().getText();
+
+        if (TipoId.equals("SELECCIONE") == false && Identificacion.equals("") == false
+                && PriNombre.equals("") == false && SegNombre.equals("") == false
+                && PriApellido.equals("") == false && SegApellido.equals("") == false
+                //                && FechaNac.equals("") == false 
+                && EstadoCivil.equals("SELECCIONE") == false
+                && Celular.equals("") == false && Telefono.equals("") == false
+                && IdiomaRaiz.equals("SELECCIONE") == false && Sexo.equals("SELECCIONE") == false
+                && Genero.equals("SELECCIONE") == false && TipoSangre.equals("SELECCIONE") == false
+                && Etnia.equals("SELECCIONE") == false && Correo.equals("") == false
+                && Nacionalidad.equals("SELECCIONE") == false && Provincia.equals("SELECCIONE") == false
+                && Canton.equals("SELECCIONE") == false && PaisReside.equals("SELECCIONE") == false
+                && ProvinciaReside.equals("SELECCIONE") == false && CantonReside.equals("SELECCIONE") == false
+                && ParroquiaReside.equals("SELECCIONE") == false && CodigoPostal.equals("") == false
+                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false
+                && CalleSec.equals("") == false && Referencia.equals("") == false
+                && Sector.equals("") == false && NumCasa.equals("") == false) {
+
+//            if (Discapacidad == false && TipoDiscapacidad.equals("SELECCIONE") == false
+//                    && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
+//                frmPersona.getBtnGuardarPersona().setEnabled(true);
+//            }
+            frmPersona.getBtnGuardarPersona().setEnabled(true);
+        } else {
+            frmPersona.getBtnGuardarPersona().setEnabled(false);
+        }
+
+    }
 
     public void guardarPersona() {
 
@@ -640,7 +712,7 @@ public class FrmPersonaCTR {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Existen errores en los formularios");
+            JOptionPane.showMessageDialog(null, "Existen errores en los campos");
         }
 
     }
@@ -663,7 +735,7 @@ public class FrmPersonaCTR {
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
         editar = true;
-
+        frmPersona.getTxtIdentificacion().setEnabled(true);
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtIdentificacion().setText(per.getIdentificacion());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
@@ -706,7 +778,7 @@ public class FrmPersonaCTR {
         //Discapacidad
         frmPersona.getCbxDiscapacidad().setSelected(per.isDiscapacidad());
         activarDiscapacidad();
-        
+
         frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
@@ -789,7 +861,7 @@ public class FrmPersonaCTR {
                 frmPersona.getCmbParroquiaReside().setSelectedItem(parroquia);
             }
         }
-
+        habilitarBtnGuardar();
     }
 
     //Metodo para ocultar errores
@@ -831,7 +903,7 @@ public class FrmPersonaCTR {
     //Metodo para cargar idiomas en el combo box
     private void cargarIdiomas() {
         frmPersona.getCmbIdiomas().removeAllItems();
-        frmPersona.getCmbIdiomas().addItem("Seleccione");
+        frmPersona.getCmbIdiomas().addItem("SELECCIONE");
         for (String i : idiomas) {
             frmPersona.getCmbIdiomas().addItem(i.toUpperCase());
         }
@@ -842,10 +914,10 @@ public class FrmPersonaCTR {
         paises = lug.buscarPaises();
         paises = ponerPrimeroPais(paises, "ECUADOR");
         frmPersona.getCmbNacionalidad().removeAllItems();
-        frmPersona.getCmbNacionalidad().addItem("Seleccione");
+        frmPersona.getCmbNacionalidad().addItem("SELECCIONE");
         //Cargamos el otro combo de paises 
         frmPersona.getCmbPaisReside().removeAllItems();
-        frmPersona.getCmbPaisReside().addItem("Seleccione");
+        frmPersona.getCmbPaisReside().addItem("SELECCIONE");
         paises.forEach((l) -> {
             frmPersona.getCmbNacionalidad().addItem(l.getNombre());
             frmPersona.getCmbPaisReside().addItem(l.getNombre());
@@ -926,7 +998,7 @@ public class FrmPersonaCTR {
 
     public void cargarCmbLugares(JComboBox cmb, ArrayList<LugarMD> lug) {
         cmb.removeAllItems();
-        cmb.addItem("Seleccione");
+        cmb.addItem("SELECCIONE");
         lug.forEach((l) -> {
             cmb.addItem(l.getNombre());
         });
@@ -944,8 +1016,6 @@ public class FrmPersonaCTR {
 
     private void borrarCampos() {
 
-        frmPersona.getCmbTipoId().setSelectedIndex(0);
-        frmPersona.getTxtIdentificacion().setText("");
         frmPersona.getTxtCallePrincipal().setText("");
         frmPersona.getTxtCalleSecundaria().setText("");
         frmPersona.getTxtCelular().setText("");
