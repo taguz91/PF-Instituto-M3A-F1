@@ -134,8 +134,7 @@ public class JDAyudaCTR {
     {"Busqueda en VTN Malla","Se buscara automaticamente al ingresear los 10 digitos de la cedula"},
     {"Busquedas por datos","Al ingresar la cedula en el formulario (Docente,Alumno) se le buscara automaticamente si desea editarlo"},
     {"Eliminacion","Cuando se elimina un datos cambia se estado de true a false"},
-    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"},
-    };
+    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}};
 
     
     public JDAyudaCTR(VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {

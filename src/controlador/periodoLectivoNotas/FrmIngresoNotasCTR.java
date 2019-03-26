@@ -30,12 +30,12 @@ public class FrmIngresoNotasCTR {
     //METODOS DE APOYO
     
     public void camposLlenos(){
-        if (vista.getJdcFechaIni().getCalendar()!=null) {
-            if(vista.getJdcFechaFin().getCalendar()!=null){
-            }else{
-                JOptionPane.showMessageDialog(null, "Escoja una fecha");
-            }
-        }
+//        if (vista.getJdcFechaIni().getCalendar()!=null) {
+//            if(vista.getJdcFechaFin().getCalendar()!=null){
+//            }else{
+//                JOptionPane.showMessageDialog(null, "Escoja una fecha");
+//            }
+//        }
     }
     
     //EVENTOS
