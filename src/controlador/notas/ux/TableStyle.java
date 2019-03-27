@@ -1,4 +1,4 @@
-package vista.notas.ux;
+package controlador.notas.ux;
 
 import javax.swing.JTable;
 import java.awt.Color;
