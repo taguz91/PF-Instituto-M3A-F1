@@ -127,30 +127,20 @@ public class FrmPersonaCTR {
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
-//       
-//frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
-//            public void keyTyped(KeyEvent e) {
-//                char caracter = e.getKeyChar();
-//// && (caracter != '\b' /*corresponde a BACK_SPACE*/)
-//                // Verificar si la tecla pulsada no es un digito
-//                if ( ((caracter < '0') || (caracter > '9')) ) {
-//                    e.consume();  // ignorar el evento de teclado
-//                }
-//                buscarIdentificacion();
-//            }
-//        });
 
         frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 String cedula = frmPersona.getTxtIdentificacion().getText();
                 char car = e.getKeyChar();
+                
                 if (car < '0' || car > '9') {
                     e.consume();
                 }
                 if (cedula.length() >= 10) {
                     e.consume();
                 }
+               
             }
 
         });
