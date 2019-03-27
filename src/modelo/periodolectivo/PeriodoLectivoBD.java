@@ -229,7 +229,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND prd_lectivo_estado = false\n"
+                + "prd_lectivo_activo = true\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {
