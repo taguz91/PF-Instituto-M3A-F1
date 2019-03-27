@@ -81,7 +81,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         cmbAsignatura = new javax.swing.JComboBox<>();
         cmbDocente = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblNotas = new ux.TableStyle();//javax.swing.JTable();
+        tblNotas = new vista.notas.ux.TableStyle();//javax.swing.JTable();
         btnImprimir = new javax.swing.JButton();
         lblCarrera = new javax.swing.JLabel();
         btnVerNotas = new javax.swing.JButton();
