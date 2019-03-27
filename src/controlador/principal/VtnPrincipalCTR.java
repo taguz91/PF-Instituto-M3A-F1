@@ -31,11 +31,13 @@ import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -74,7 +76,9 @@ import vista.persona.VtnDocente;
 import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
+import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
+import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 
@@ -95,6 +99,7 @@ public class VtnPrincipalCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
+    private final VtnBienvenida vtnBienvenida;
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
@@ -102,6 +107,7 @@ public class VtnPrincipalCTR {
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
+        this.vtnBienvenida = new VtnBienvenida();
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
         this.icono = icono;
@@ -117,6 +123,17 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciar() {
+        //Agregamos el panel de bienvenida  
+        vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
+        //Se le pasa el nombre de usuario que inicio sesio  
+        vtnBienvenida.getLblUser().setText(usuario.getUsername());
+        vtnBienvenida.show();
+        //Lo ponemos en pantalla completa
+        try {
+            vtnBienvenida.setMaximum(true);
+        } catch (PropertyVetoException e) {
+            System.out.println("No se maximiso");
+        }
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
 
@@ -138,6 +155,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -176,6 +194,9 @@ public class VtnPrincipalCTR {
 
         controladorSilabo();
         carga.start();
+
+        //Esto es para la consola 
+        vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
     }
 
     private void abrirVtnPersona() {
@@ -305,6 +326,15 @@ public class VtnPrincipalCTR {
     private void abrirVtnAyuda() {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
+    }
+    
+    private void abrirVtnHistorialUser(){
+        VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            vtnPrin.getDpnlPrincipal().add(vtn); 
+            vtn.show();
+        }
     }
 
     //Para abrir todos los formularios
@@ -440,6 +470,9 @@ public class VtnPrincipalCTR {
             }
             //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
+            //Ocultamos el borde de internal de bienvenida
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
+            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
@@ -454,11 +487,18 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                 }
+                vtnBienvenida.setVisible(false);
+                try {
+                    vtnBienvenida.setMaximum(false);
+                } catch (PropertyVetoException ex) {
+                    System.out.println("No se pudo cambiar");
+                }
             }
 
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
+                vtnBienvenida.setVisible(false);
             }
 
         });
@@ -600,8 +640,34 @@ public class VtnPrincipalCTR {
     private void btnPrdIngrNotas(ActionEvent e) {
 
         VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-        
+
         vtn.Init();
+
+    }
+
+    //Para entrar en consola de unas
+    private void iniciarConsola() {
+        JPasswordField pass = new JPasswordField();
+        int o = JOptionPane.showConfirmDialog(vtnPrin, pass, "Ingrese su contraseña",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        pass.setFocusable(true);
+        pass.requestFocus();
+        pass.selectAll();
+
+        if (o == JOptionPane.OK_OPTION) {
+            String c = new String(pass.getPassword());
+            if (c.equals("estaesunacontra")) {
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta);
+                ctr.iniciar();
+            } else if (c.length() == 0) {
+                JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+                iniciarConsola();
+            } else {
+                JOptionPane.showMessageDialog(vtnPrin, "Quieto ahi esponja.", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
 
     }
 }

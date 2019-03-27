@@ -133,7 +133,7 @@ public class VtnMallaAlumnoCTR {
         //Prueba cargando todos los datos 
         //Funciona de la patada
         Instant iniBusqueda = Instant.now();
-        //cargarMallas();
+        cargarMallas();
         Instant terBusqueda = Instant.now();
         System.out.println("El tiempo que tardo en buscar malla alumnos es: "
                 + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
@@ -196,7 +196,7 @@ public class VtnMallaAlumnoCTR {
             System.out.println("El tiempo que tardo en buscar malla alumno es: "
                     + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
             vtnMallaAlm.getCmbEstado().setEnabled(true);
-            
+
             llenarTbl(mallas);
             cargarCmbEstado();
             //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -260,14 +260,17 @@ public class VtnMallaAlumnoCTR {
         if (mallas != null) {
             mallas.forEach((m) -> {
                 Object valores[] = {m.getId(), m.getAlumnoCarrera().getAlumno().getPrimerNombre()
-                    + " " + m.getAlumnoCarrera().getAlumno().getPrimerApellido(), m.getMateria().getNombre(),
+                    + " " + m.getAlumnoCarrera().getAlumno().getSegundoNombre()
+                    + " " + m.getAlumnoCarrera().getAlumno().getPrimerApellido()
+                    + " " + m.getAlumnoCarrera().getAlumno().getSegundoApellido(),
+                    m.getMateria().getNombre(),
                     m.getEstado(),
                     m.getMallaCiclo(), m.getMallaNumMatricula(), m.getNota1(),
                     m.getNota2(), m.getNota3()};
                 mdlTbl.addRow(valores);
             });
             vtnMallaAlm.getLblResultados().setText(mallas.size() + " Resultados obtenidos.");
-        }else{
+        } else {
             vtnMallaAlm.getLblResultados().setText("0 Resultados obtenidos.");
         }
 
