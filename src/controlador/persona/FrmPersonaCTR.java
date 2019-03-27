@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -124,18 +126,26 @@ public class FrmPersonaCTR {
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
-        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-//                String cedula = frmPersona.getTxtIdentificacion().getText();
-//                if(cedula.length() >= 10){
-//                    e.consume();
-//                }
+        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                String cedula = frmPersona.getTxtIdentificacion().getText();
+                if (cedula.length() >= 10) {
+                    e.consume();
+                }
                 buscarIdentificacion();
             }
         });
-        
-//        frmPersona.gettx
+
+//        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                String cedula = frmPersona.getTxtIdentificacion().getText();
+//                if (cedula.length() >= 10) {
+//                    e.consume();
+//                }
+//                buscarIdentificacion();
+//            }
+//        });
 
         valCe = new TxtVCedula(
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
@@ -160,18 +170,17 @@ public class FrmPersonaCTR {
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             }
 
-            if (cedula.length() == 10) {
-                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
-                    error = true;
-                    frmPersona.getLblErrorIdentificacion().setText("Ingrese una cédula válida");
-                    frmPersona.getLblErrorIdentificacion().setVisible(true);
-                }
-            } else if (cedula.length() < 10 || cedula.length() > 10) {
-                error = true;
-                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
-                frmPersona.getLblErrorIdentificacion().setVisible(true);
-            }
-
+//            if (cedula.length() == 10) {
+//                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+//                    error = true;
+//                    frmPersona.getLblErrorIdentificacion().setText("Ingrese una cédula válida");
+//                    frmPersona.getLblErrorIdentificacion().setVisible(true);
+//                }
+//            } else if (cedula.length() < 10 || cedula.length() > 10) {
+//                error = true;
+//                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
+//                frmPersona.getLblErrorIdentificacion().setVisible(true);
+//            }
             if (error == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
