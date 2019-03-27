@@ -5,6 +5,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +55,7 @@ public class VtnDocenteCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final PeriodoLectivoBD prd;
-    
+
     //Lista de todos los periodos lectivos
     private ArrayList<PeriodoLectivoMD> periodos;
 
@@ -83,6 +85,8 @@ public class VtnDocenteCTR {
     }
 
     public void iniciar() {
+        vtnDocente.getBtnReporteDocente().setEnabled(false);
+        vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
         String[] titulo = {"Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
 
@@ -107,9 +111,16 @@ public class VtnDocenteCTR {
             }
         });
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
-                vtnDocente.getBtnBuscar()));
+        vtnDocente.getBtnBuscar()));
+       // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
+        vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                validarBotonesReportes();
+            }
+        });
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
@@ -296,31 +307,62 @@ public class VtnDocenteCTR {
                 break;
         }
     }
-    
-    public void seleccionarPeriodo(){
+
+    public void seleccionarPeriodo() {
         periodos = prd.cargarPeriodos();
-        ArrayList<String> nmPrd = new ArrayList(); 
+        ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
             nmPrd.add(p.getNombre_PerLectivo());
         });
-        Object np = JOptionPane.showInputDialog(vtnPrin, 
+        Object np = JOptionPane.showInputDialog(vtnPrin,
                 "Lista de periodos lectivos", "Periodos lectivos",
-                JOptionPane.QUESTION_MESSAGE, null, 
-                nmPrd.toArray(), "Seleccione"); 
-        System.out.println("Selecciono "+np);
+                JOptionPane.QUESTION_MESSAGE, null,
+                nmPrd.toArray(), "Seleccione");
+        System.out.println("Selecciono " + np);
         //Se es null significa que no selecciono nada
         if (np == null) {
             botonReporteMateria();
-        }else if(np.equals("Seleccione")){
+        } else if (np.equals("Seleccione")) {
             JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un periodo lectivo.");
             seleccionarPeriodo();
-        }else{
-            int posPrd = nmPrd.indexOf(np); 
+        } else {
+            int posPrd = nmPrd.indexOf(np);
             //Se le resta 1 porque al inicio se agrega uno mas 
             posPrd = posPrd - 1;
-            System.out.println("El peridoo esta en la pos: "+posPrd);
-            System.out.println("Id del perido "+periodos.get(posPrd).getId_PerioLectivo());
+            System.out.println("El peridodo esta en la pos: " + posPrd);
+            System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
+
+            JasperReport jr;
+            String path = "./src/vista/reportes/repDocenteCarreraPeriodo.jasper";
+            File dir = new File("./");
+            System.out.println("Direccion: " + dir.getAbsolutePath());
+            try {
+                int posFila = vtnDocente.getTblDocente().getSelectedRow();
+                Map parametro = new HashMap();
+                parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
+                parametro.put("periodo", np);
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle("Reporte de Materias por Carrera");
+
+            } catch (JRException ex) {
+                Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void validarBotonesReportes() {
+        int selecTabl = vtnDocente.getTblDocente().getSelectedRow();
+        if (selecTabl >= 0) {
+            vtnDocente.getBtnReporteDocente().setEnabled(true);
+            vtnDocente.getBtnReporteDocenteMateria().setEnabled(true);
+        } else {
+            vtnDocente.getBtnReporteDocente().setEnabled(false);
+            vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
         }
     }
 }

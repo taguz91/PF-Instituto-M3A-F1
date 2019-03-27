@@ -146,7 +146,6 @@ public class VtnUsuarioCTR {
 
     private void cargarTablaFilter(String Aguja) {
         tablaUsuarios.setRowCount(0);
-
     }
 
     private static void agregarFila(UsuarioMD obj) {

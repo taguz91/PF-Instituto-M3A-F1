@@ -28,17 +28,18 @@ public class FrmIngresoNotasCTR {
     private VtnPrincipal desktop;
     private FrmIngresoNotas vista;
     private PeriodoIngresoNotasBD modelo;
-
     private VtnPeriodoIngresoNotasCTR vtnPadre;
+    private String Funcion;
 
     private List<PeriodoLectivoMD> listaNomPeriodos;
     private List<TipoDeNotaMD> listaNomNotas;
 
-    public FrmIngresoNotasCTR(VtnPrincipal desktop, FrmIngresoNotas vista, PeriodoIngresoNotasBD modelo, VtnPeriodoIngresoNotasCTR vtnPadre) {
+    public FrmIngresoNotasCTR(VtnPrincipal desktop, FrmIngresoNotas vista, PeriodoIngresoNotasBD modelo, VtnPeriodoIngresoNotasCTR vtnPadre, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
+        this.Funcion = Funcion;
     }
 
     //INICIADORES
@@ -46,10 +47,16 @@ public class FrmIngresoNotasCTR {
 
         listaNomPeriodos = PeriodoLectivoBD.SelectAll();
         listaNomNotas = TipoDeNotaBD.SelectAll();
-        
-        
         cargarComboNotas();
         cargarComboPeriodo();
+
+        if (Funcion.equals("Editar")) {
+            vista.setTitle("Editar");
+            setObjinTxt();
+        } else {
+            vista.setTitle("Agregar");
+        }
+
         InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -94,9 +101,9 @@ public class FrmIngresoNotasCTR {
                     vista.getCmbTipoNota().addItem(obj.getNombre());
                 });
     }
-    
-    public void cargarComboPeriodo(){
-                listaNomPeriodos
+
+    public void cargarComboPeriodo() {
+        listaNomPeriodos
                 .stream()
                 .forEach(obj -> {
                     vista.getCmbPeriodoLec().addItem(obj.getNombre_PerLectivo());
@@ -133,6 +140,15 @@ public class FrmIngresoNotasCTR {
         } else {
             JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
         }
+    }
+
+    private void setObjinTxt() {
+
+        vista.getJdcFechaIni().setDate(java.sql.Date.valueOf(modelo.getFechaInicio()));
+        vista.getJdcFechaFin().setDate(java.sql.Date.valueOf(modelo.getFechaCierre()));
+        vista.getCmbPeriodoLec().setSelectedItem(modelo.getIdPeriodoLectivo().getNombre_PerLectivo());
+        vista.getCmbTipoNota().setSelectedItem(modelo.getIdTipoNota().getNombre());
+
     }
 
     //EVENTOS
