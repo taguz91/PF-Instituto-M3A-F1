@@ -26,6 +26,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorSilabos;
+import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -126,14 +127,14 @@ public class VtnPrincipalCTR {
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
         //Se le pasa el nombre de usuario que inicio sesio  
-        vtnBienvenida.getLblUser().setText(usuario.getUsername());
-        vtnBienvenida.show();
-        //Lo ponemos en pantalla completa
-        try {
-            vtnBienvenida.setMaximum(true);
-        } catch (PropertyVetoException e) {
-            System.out.println("No se maximiso");
-        }
+//        vtnBienvenida.getLblUser().setText(usuario.getUsername());
+//        vtnBienvenida.show();
+//        //Lo ponemos en pantalla completa
+//        try {
+//            vtnBienvenida.setMaximum(true);
+//        } catch (PropertyVetoException e) {
+//            System.out.println("No se maximiso");
+//        }
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
 
@@ -332,8 +333,8 @@ public class VtnPrincipalCTR {
         VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
         eventoInternal(vtn);
         if (numVtns < 5) {
-            vtnPrin.getDpnlPrincipal().add(vtn); 
-            vtn.show();
+            VtnHistorialUserCTR ctr = new VtnHistorialUserCTR(conecta, vtnPrin, this);
+            ctr.iniciar();
         }
     }
 
@@ -487,18 +488,11 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                 }
-                vtnBienvenida.setVisible(false);
-                try {
-                    vtnBienvenida.setMaximum(false);
-                } catch (PropertyVetoException ex) {
-                    System.out.println("No se pudo cambiar");
-                }
             }
 
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
-                vtnBienvenida.setVisible(false);
             }
 
         });
@@ -558,6 +552,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_H, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(

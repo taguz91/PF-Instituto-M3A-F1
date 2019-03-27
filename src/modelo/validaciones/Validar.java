@@ -9,7 +9,7 @@ public class Validar {
     //Esto nos devuelve verdadero si toda la cadena enviada contiene letras
     public static boolean esLetras(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
-        return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñ\\s]+");
+        return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\s\\/]+");
     }
     
     //Para validar letras y caracteres como // 
