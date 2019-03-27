@@ -100,14 +100,14 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre del Usuario", "Identificacion Persona", "Persona"
+                "No.", "Username", "Identificacion Persona", "Primer Apellido", "Segundo Apellido", "Primer Nombre", "Segundo Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -121,7 +121,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         tblUsuario.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblUsuario);
         if (tblUsuario.getColumnModel().getColumnCount() > 0) {
-            tblUsuario.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblUsuario.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
         lblResultados.setText("0 Resultados obtenidos");

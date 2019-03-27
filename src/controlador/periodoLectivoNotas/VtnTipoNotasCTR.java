@@ -82,7 +82,7 @@ public class VtnTipoNotasCTR {
     //METODOS DE APOYO
     public void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
-        listaTiposNotas = modelo.SelectAll();
+        listaTiposNotas = TipoDeNotaBD.SelectAll();
         listaTiposNotas
                 .stream()
                 .forEach(VtnTipoNotasCTR::agregarFila);

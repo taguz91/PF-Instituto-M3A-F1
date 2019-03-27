@@ -34,6 +34,7 @@ public class VtnPrdLectivoCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private List<PeriodoLectivoMD> periodos;
+    private List<CarreraMD> carreras;
 
     public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -83,6 +84,7 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
+        vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());
         //Validacion del buscador
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(), 
                 vtnPrdLectivo.getBtnBuscar()));
@@ -111,6 +113,7 @@ public class VtnPrdLectivoCTR {
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < periodos.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
+            String nombre;
             String dia_Inicio, mes_Inicio, anio_Inicio;
             String dia_Fin, mes_Fin, anio_Fin;
             dia_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getDayOfMonth());
@@ -119,9 +122,13 @@ public class VtnPrdLectivoCTR {
             dia_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getDayOfMonth());
             mes_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getMonthValue());
             anio_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getYear());
+            
+            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
+                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+            
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre_PerLectivo(), i, 2);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
         }
@@ -264,17 +271,36 @@ public class VtnPrdLectivoCTR {
     public void eliminarPeriodo() {
         PeriodoLectivoMD periodo;
         if (capturarFila() == null) {
-            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
+            JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona un Período Lectivo");
         } else {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? ", " Elinimar Período Lectivo ", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? ", " Eliminar Período Lectivo ", dialog);
             if (result == 0) {
                 periodo = capturarFila();
                 if (bdPerLectivo.eliminarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL PERÍODO LECTIVO");
+                }
+            }
+        }
+    }
+    
+    public void cerrarPeriodo(){
+        PeriodoLectivoMD periodo;
+        if (capturarFila() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione un Período Lectivo");
+        } else {
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
+            if (result == 0) {
+                periodo = capturarFila();
+                if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
                 }
             }
         }

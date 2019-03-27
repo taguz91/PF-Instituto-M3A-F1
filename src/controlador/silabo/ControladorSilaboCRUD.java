@@ -192,7 +192,7 @@ public class ControladorSilaboCRUD {
         MateriaMD materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\primera_pag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             String id = String.valueOf(materia.getId());
             //id_silabo = silabo.cod_sib();
@@ -878,7 +878,7 @@ public class ControladorSilaboCRUD {
         List<CarreraMD> carreras;
 
         //System.out.println(usuario.getIdPersona().getIdPersona());
-        carreras = new dbCarreras().buscarCarreras(usuario.getIdPersona());
+        carreras = new dbCarreras().buscarCarreras(usuario.getIdPersona().getIdPersona());
 
         /* for (int i = 0; i < carreras.size(); i++) {
             System.out.println(carreras.get(i).getCarreraNombre());
@@ -894,7 +894,7 @@ public class ControladorSilaboCRUD {
 
         List<MateriaMD> materias;
 
-        int[] aguja = {usuario.getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
+        int[] aguja = {usuario.getIdPersona().getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
 
         materias = new dbMaterias().buscarMateria(aguja);
 
@@ -1442,7 +1442,7 @@ public class ControladorSilaboCRUD {
 
         modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
 
-        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getIdPersona());
+        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getIdPersona().getIdPersona());
         periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo();
 
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
@@ -1486,7 +1486,7 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\primera_pag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             //String id = String.valueOf(materia.getIdMateria());
             //id_silabo = silabo.cod_sib();
@@ -1532,7 +1532,7 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\formato2\\primerapag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\formato2\\primerapag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             //String id = String.valueOf(materia.getIdMateria());
             //id_silabo = silabo.cod_sib();
