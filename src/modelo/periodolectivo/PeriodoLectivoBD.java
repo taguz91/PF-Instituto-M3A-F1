@@ -163,7 +163,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND (\n"
+                + "prd_lectivo_activo = true AND prd_lectivo_estado = false AND (\n"
                 + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
@@ -329,7 +329,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 nuevo_Mes = "DICIEMBRE";
                 break;
         }
-        return nueva_Fecha = fecha.getDayOfMonth() + "/" + nuevo_Mes + "/" + "20" + fecha.getYear();
+        return nueva_Fecha = nuevo_Mes + "/" + fecha.getYear();
     }
 
     public static List<String> selectPeriodoWhereUsername(String username) {
