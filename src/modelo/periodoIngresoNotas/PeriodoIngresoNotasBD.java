@@ -29,6 +29,15 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
     public PeriodoIngresoNotasBD() {
     }
 
+    public PeriodoIngresoNotasBD(PeriodoIngresoNotasMD obj) {
+        this.setIdPeriodoIngreso(obj.getIdPeriodoIngreso());
+        this.setFechaInicio(obj.getFechaInicio());
+        this.setFechaCierre(obj.getFechaCierre());
+        this.setEstado(obj.isEstado());
+        this.setIdPeriodoLectivo(obj.getIdPeriodoLectivo());
+        this.setIdTipoNota(obj.getIdTipoNota());
+    }
+
     private static final String TABLA = " \"PeriodoIngresoNotas\" ";
     private static final String ATRIBUTOS = " \"PeriodoIngresoNotas\".id_perd_ingr_notas,\n"
             + "\"PeriodoIngresoNotas\".perd_notas_fecha_inicio,\n"
@@ -72,8 +81,12 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
 
     }
 
-    public boolean eliminar() {
-        String DELETE = "";
+    public boolean eliminar(int PK) {
+        String DELETE = "UPDATE " + TABLA
+                + " SET "
+                + " per_notas_estado= " + false + " "
+                + " WHERE "
+                + " " + PRIMARY_KEY + "=" + PK + " ";
 
         return ResourceManager.Statement(DELETE) == null;
     }

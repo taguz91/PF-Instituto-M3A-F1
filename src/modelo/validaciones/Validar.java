@@ -85,17 +85,17 @@ public class Validar {
                 return Integer.parseInt(cedula[9]+"") == validador;
                 
             } else {
-                System.out.println("No pertenece a ninguna provincia del ecuador.");
+               //System.out.println("No pertenece a ninguna provincia del ecuador.");
                 return false;
             }
         } else {
-            System.out.println("No contiene solo numeros. O no contine diez digitos.");
+            //System.out.println("No contiene solo numeros. O no contine diez digitos.");
             return false;
         }
     }
     
     public static boolean esCorreo(String entrada){
-        return entrada.matches("[A-Za-z0-9]+@[a-z]+\\.+[a-z]+$");   
+        return entrada.matches("[A-Za-z0-9\\.]+@[a-zA-Z]+\\.+[a-zA-Z]+$");   
     }
     
     public static boolean esNota(String entrada){

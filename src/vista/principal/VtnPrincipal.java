@@ -242,6 +242,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnCtPrdIngrNotas() {
         return mnCtPrdIngrNotas;
     }
+
+    public JButton getBtnConsola() {
+        return btnConsola;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -272,6 +276,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnEstado = new javax.swing.JLabel();
         btnAyuda = new javax.swing.JButton();
         lblEstado = new javax.swing.JLabel();
+        btnConsola = new javax.swing.JButton();
         menuCrud = new javax.swing.JMenuBar();
         mnTipoNotas = new javax.swing.JMenu();
         mnCtPersona = new javax.swing.JMenuItem();
@@ -402,7 +407,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -463,6 +468,19 @@ public class VtnPrincipal extends javax.swing.JFrame {
         lblEstado.setForeground(new java.awt.Color(255, 255, 255));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        btnConsola.setBackground(new java.awt.Color(51, 51, 51));
+        btnConsola.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnConsola.setForeground(new java.awt.Color(255, 255, 255));
+        btnConsola.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Console_25px.png"))); // NOI18N
+        btnConsola.setToolTipText("Ayuda");
+        btnConsola.setBorder(null);
+        btnConsola.setBorderPainted(false);
+        btnConsola.setContentAreaFilled(false);
+        btnConsola.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConsola.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnConsola.setOpaque(true);
+        btnConsola.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Console_20px.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -470,7 +488,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -480,7 +500,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -652,6 +673,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCarrera;
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnConsola;
     private javax.swing.JButton btnConsultarSilabo;
     private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnDocente;

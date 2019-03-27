@@ -3,7 +3,6 @@ package modelo.carrera;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -115,11 +114,19 @@ public class CarreraBD extends CarreraMD {
 
     public ArrayList<CarreraMD> cargarCarreras() {
         ArrayList<CarreraMD> carreras = new ArrayList();
-        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
-                + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
-                + " carrera_modalidad\n"
-                + "FROM public.\"Carreras\""
-                + "WHERE carrera_activo = 'true' order by id_carrera;";
+        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
+                + "carrera_codigo, carrera_fecha_inicio,\n"
+                + "carrera_modalidad, (\n"
+                + "	SELECT persona_primer_nombre || ' ' || \n"
+                + "	persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' ||\n"
+                + "	persona_segundo_apellido \n"
+                + "    FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "    WHERE d.id_docente = id_docente_coordinador AND\n"
+                + "    p.id_persona = d.id_persona) AS coordinador\n"
+                + "FROM public.\"Carreras\" c\n"
+                + "WHERE carrera_activo = TRUE\n"
+                + "ORDER BY carrera_fecha_inicio;";
 
         ResultSet rs = conecta.sql(sql);
 
@@ -129,21 +136,21 @@ public class CarreraBD extends CarreraMD {
                     CarreraMD carrera = new CarreraMD();
 
                     carrera.setId(rs.getInt("id_carrera"));
-                    DocenteMD docen = null;
-                    if (!rs.wasNull()) {
-                        docen = doc.buscarDocente(rs.getInt("id_docente_coordinador"));
+                    DocenteMD docen = new DocenteMD();
+                    String nombreC = rs.getString(7);
+                    if (nombreC != null) {
+                        String nombres[] = nombreC.split(" ");
+                        docen.setPrimerNombre(nombres[0]);
+                        docen.setSegundoNombre(nombres[1]);
+                        docen.setPrimerApellido(nombres[2]);
+                        docen.setSegundoApellido(nombres[3]);
                     }
+
                     carrera.setCoordinador(docen);
                     carrera.setNombre(rs.getString("carrera_nombre"));
 
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
-
-                    if (rs.wasNull()) {
-                        carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
-                    } else {
-                        carrera.setFechaFin(null);
-                    }
 
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
 
@@ -160,17 +167,24 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-    
+
     public ArrayList<CarreraMD> buscarCarrera(String aguja) {
         ArrayList<CarreraMD> carreras = new ArrayList();
-        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
-                + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
-                + " carrera_modalidad\n"
-                + "FROM public.\"Carreras\""
-                + "WHERE carrera_activo = 'true' "
-                + "AND (carrera_nombre ILIKE '%"+aguja+"%' OR "
-                + "carrera_codigo ILIKE '%"+aguja+"%')"
-                + "ORDER BY carrera_nombre;";
+        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
+                + "carrera_codigo, carrera_fecha_inicio,\n"
+                + "carrera_modalidad, (\n"
+                + "	SELECT persona_primer_nombre || ' ' || \n"
+                + "	persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' ||\n"
+                + "	persona_segundo_apellido \n"
+                + "    FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "    WHERE d.id_docente = id_docente_coordinador AND\n"
+                + "    p.id_persona = d.id_persona) AS coordinador\n"
+                + "FROM public.\"Carreras\" c\n"
+                + "WHERE carrera_activo = TRUE AND (\n"
+                + "	carrera_codigo ILIKE '%" + aguja + "%' OR\n"
+                + "	carrera_nombre ILIKE '%" + aguja + "%'\n"
+                + ")ORDER BY carrera_fecha_inicio;";
 
         ResultSet rs = conecta.sql(sql);
 
@@ -180,23 +194,25 @@ public class CarreraBD extends CarreraMD {
                     CarreraMD carrera = new CarreraMD();
 
                     carrera.setId(rs.getInt("id_carrera"));
-                    DocenteMD docen = null;
-                    if (!rs.wasNull()) {
-                        docen = doc.buscarDocente(rs.getInt("id_docente_coordinador"));
+                    DocenteMD docen = new DocenteMD();
+                    String nombreC = rs.getString(7);
+                    if (nombreC != null) {
+                        String nombres[] = nombreC.split(" ");
+                        docen.setPrimerNombre(nombres[0]);
+                        docen.setSegundoNombre(nombres[1]);
+                        docen.setPrimerApellido(nombres[2]);
+                        docen.setSegundoApellido(nombres[3]);
                     }
+
                     carrera.setCoordinador(docen);
                     carrera.setNombre(rs.getString("carrera_nombre"));
 
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
 
-                    if (rs.wasNull()) {
-                        carrera.setFechaFin(rs.getDate("carrera_fecha_fin").toLocalDate());
-                    } else {
-                        carrera.setFechaFin(null);
-                    }
-
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
+
+                    carreras.add(carrera);
 
                     carreras.add(carrera);
                 }
@@ -211,7 +227,6 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-
 
     public static String selectCarreraWherePerdLectivo(String nombre) {
 

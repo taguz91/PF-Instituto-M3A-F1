@@ -61,7 +61,7 @@ public class VtnWebCam extends javax.swing.JDialog {
 
         btnCancelar.setText("Cancelar");
 
-        panelCam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelCam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         javax.swing.GroupLayout panelCamLayout = new javax.swing.GroupLayout(panelCam);
         panelCam.setLayout(panelCamLayout);
@@ -76,7 +76,7 @@ public class VtnWebCam extends javax.swing.JDialog {
 
         jLabel2.setText("Haga clic en el recuadro para activar la camara");
 
-        Lbl_Imagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Lbl_Imagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         btnGuardarFoto.setText("Guardar Imagen");
 

@@ -7,10 +7,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import vista.persona.FrmPersona;
 import vista.persona.VtnWebCam;
 import vista.principal.VtnPrincipal;
@@ -25,7 +24,7 @@ public class WebCamCTR {
     private final FrmPersona frmPersona;
     private final FrmPersonaCTR ctrFrmPersona;
     private InputStream is;
-    private FileInputStream fis; 
+    private FileInputStream fis;
     private Image foto = null;
 
     public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipal vtnPrin) {
@@ -49,15 +48,23 @@ public class WebCamCTR {
             if (imagen != null) {
                 is = new ByteArrayInputStream(imagen);
                 BufferedImage bi = ImageIO.read(is);
-                ImageIcon icono = new ImageIcon(bi);
-                foto = icono.getImage().getScaledInstance(
-                        vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
-                vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
-                //Guardamos en un archivo
-                ImageIO.write(bi, "png", new File("./foto.png"));
+                if (bi != null) {
+
+                    ImageIcon icono = new ImageIcon(bi);
+                    foto = icono.getImage().getScaledInstance(
+                            vtnWebCam.getLbl_Imagen().getWidth(), vtnWebCam.getLbl_Imagen().getHeight(), Image.SCALE_SMOOTH);
+                    vtnWebCam.getLbl_Imagen().setIcon(new ImageIcon(foto));
+                    //Guardamos en un archivo
+                    ImageIO.write(bi, "png", new File("./foto.png"));
+                    //Modificamos el borde por el normal
+                    vtnWebCam.getPanelCam().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+                } else {
+                    JOptionPane.showMessageDialog(vtnWebCam, "Primero debe actiavar la camara, \ndandole click al recuado idicado.");
+                    vtnWebCam.getPanelCam().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 76, 113),2));
+                }
             }
         } catch (IOException ex) {
-            Logger.getLogger(FrmPersonaCTR.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Este es un error al tomar una foto "+ex.getMessage());
         }
     }
 
@@ -70,7 +77,9 @@ public class WebCamCTR {
             frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
             cancelarFoto();
             ctrFrmPersona.pasarFoto(is);
-            
+
+        } else {
+            JOptionPane.showMessageDialog(vtnWebCam, "Aun no se a tomado una foto.");
         }
 
     }

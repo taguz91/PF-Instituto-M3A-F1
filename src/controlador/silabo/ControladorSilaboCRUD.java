@@ -167,6 +167,7 @@ public class ControladorSilaboCRUD {
         this.silabo = silabo;
         this.usuario = usuario;
         this.silabos = silabos;
+        this.setup = new frmConfiguracionSilabo();
         this.gestion = new frmGestionSilabo();
         this.bibliografia = new frmReferencias();
         silabos.setVisible(true);
@@ -191,7 +192,7 @@ public class ControladorSilaboCRUD {
         MateriaMD materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\primera_pag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             String id = String.valueOf(materia.getId());
             //id_silabo = silabo.cod_sib();
@@ -1485,7 +1486,7 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\primera_pag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             //String id = String.valueOf(materia.getIdMateria());
             //id_silabo = silabo.cod_sib();
@@ -1531,7 +1532,7 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\silabo2\\formato2\\primerapag.jrxml";
+            String report = "src\\vista\\silabos\\reportes\\silabo2\\formato2\\primerapag.jrxml";
             JasperDesign jd = JRXmlLoader.load(report);
             //String id = String.valueOf(materia.getIdMateria());
             //id_silabo = silabo.cod_sib();
