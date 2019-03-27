@@ -28,11 +28,13 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -76,6 +78,7 @@ import vista.persona.VtnDocente;
 import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
+import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
@@ -119,6 +122,14 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciar() {
+        VtnBienvenida v = new VtnBienvenida();
+        vtnPrin.getDpnlPrincipal().add(v);
+        v.show();
+        try {
+            v.setMaximum(true);
+        } catch (Exception e) {
+            System.out.println("No se maximiso");
+        }
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
 
