@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c2c7e7c0-6b5d-45b1-8736-7155fed37b42">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select f.codigo_referencia,f.descripcion_referencia from "ReferenciaSilabo" r,"Referencias" f where r.id_referencia=f.id_referencia and f.tipo_referencia='Base' and r.id_silabo=$P!{parameter1}]]>
+	</queryString>
+	<field name="codigo_referencia" class="java.lang.String"/>
+	<field name="descripcion_referencia" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="418" height="20" forecolor="#006699" uuid="65d073e9-07f8-4b13-8883-b0ed10b71d76"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 8. REFERENCIAS REQUERIAS PARA EL APRENDIZAJE DE LA ASIGNATURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="18" width="144" height="20" forecolor="#006699" uuid="0c052231-f2fe-4c60-9ada-0466533ef098"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[8.1 Bibliografía Base]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="125" height="20" uuid="d80a1fbc-342a-437d-941c-114f331853ad"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código libro Biblioteca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="0" width="430" height="20" uuid="f3dc3f13-0938-4134-9e11-7d1c72e039a9"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bibliografía]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="0" width="125" height="50" uuid="3a53de5f-9b35-474b-b95a-f98f12abcdc9"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{codigo_referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="0" width="430" height="50" uuid="a886a92e-90a1-4588-b1c8-3f362eb95b0c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{descripcion_referencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

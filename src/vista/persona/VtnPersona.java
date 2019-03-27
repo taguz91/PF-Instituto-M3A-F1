@@ -83,7 +83,7 @@ public class VtnPersona extends javax.swing.JInternalFrame {
         lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        cmbTipoPersona = new javax.swing.JComboBox<>();
+        cmbTipoPersona = new javax.swing.JComboBox<String>();
         lblError = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnReportePersona = new javax.swing.JButton();
@@ -123,7 +123,7 @@ public class VtnPersona extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Filtrar:");
 
-        cmbTipoPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoPersona.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
         lblError.setText("Debe seleccionar una persona de la lista.");
@@ -185,13 +185,13 @@ public class VtnPersona extends javax.swing.JInternalFrame {
                     .addComponent(cmbTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblError))
                 .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados)
                     .addComponent(jLabel3)
                     .addComponent(btnReportePersona))
-                .addGap(4, 4, 4))
+                .addGap(8, 8, 8))
         );
 
         pack();
