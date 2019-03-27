@@ -130,10 +130,6 @@ public class FrmPersonaCTR {
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-//                String cedula = frmPersona.getTxtIdentificacion().getText();
-//                if(cedula.length() >= 10){
-//                    e.consume();
-//                }
                 buscarIdentificacion();
             }
         });
