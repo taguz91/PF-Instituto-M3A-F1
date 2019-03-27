@@ -1,5 +1,6 @@
 package vista.persona;
 
+import com.toedter.calendar.JDateChooser;
 import datechooser.beans.DateChooserCombo;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -106,23 +107,23 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         this.btnInsertar = btnInsertar;
     }
 
-    public DateChooserCombo getJdcFechaFinContratacion() {
+    public JDateChooser getJdcFechaFinContratacion() {
         return jdcFechaFinContratacion;
     }
 
-    public void setJdcFechaFinContratacion(DateChooserCombo jdcFechaFinContratacion) {
+    public void setJdcFechaFinContratacion(JDateChooser jdcFechaFinContratacion) {
         this.jdcFechaFinContratacion = jdcFechaFinContratacion;
     }
 
-
-
-    public DateChooserCombo getJdcFechaInicioContratacion() {
+    public JDateChooser getJdcFechaInicioContratacion() {
         return jdcFechaInicioContratacion;
     }
 
-    public void setJdcFechaInicioContratacion(DateChooserCombo jdcFechaInicioContratacion) {
+    public void setJdcFechaInicioContratacion(JDateChooser jdcFechaInicioContratacion) {
         this.jdcFechaInicioContratacion = jdcFechaInicioContratacion;
     }
+
+
 
     public JLabel getLblCategoria() {
         return lblCategoria;
@@ -263,9 +264,9 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         btnBuscarPersona = new javax.swing.JButton();
         lblDatosPersona = new javax.swing.JLabel();
         btnRegistrarPersona = new javax.swing.JButton();
-        jdcFechaInicioContratacion = new datechooser.beans.DateChooserCombo();
-        jdcFechaFinContratacion = new datechooser.beans.DateChooserCombo();
         lblError = new javax.swing.JLabel();
+        jdcFechaInicioContratacion = new com.toedter.calendar.JDateChooser();
+        jdcFechaFinContratacion = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setIconifiable(true);
@@ -353,16 +354,15 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         btnRegistrarPersona.setText("Registrar Persona");
         btnRegistrarPersona.setToolTipText("Registrar una nueva persona");
         getContentPane().add(btnRegistrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
-
-        jdcFechaInicioContratacion.setFormat(2);
-        jdcFechaInicioContratacion.setEnabled(false);
-        jdcFechaInicioContratacion.setLocale(new java.util.Locale("es", "EC", ""));
-        getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 120, -1));
-
-        jdcFechaFinContratacion.setEnabled(false);
-        jdcFechaFinContratacion.setLocale(new java.util.Locale("es", "EC", ""));
-        getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 120, -1));
         getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 140, 20));
+
+        jdcFechaInicioContratacion.setDateFormatString("dd/MM/yyyy");
+        jdcFechaInicioContratacion.setMaxSelectableDate(new java.util.Date(127174514462000L));
+        jdcFechaInicioContratacion.setMinSelectableDate(new java.util.Date(-315597538000L));
+        getContentPane().add(jdcFechaInicioContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, -1));
+
+        jdcFechaFinContratacion.setDateFormatString("dd/MM/yyyy");
+        getContentPane().add(jdcFechaFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
 
         getAccessibleContext().setAccessibleDescription("");
         getAccessibleContext().setAccessibleParent(this);
@@ -387,8 +387,8 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private datechooser.beans.DateChooserCombo jdcFechaFinContratacion;
-    private datechooser.beans.DateChooserCombo jdcFechaInicioContratacion;
+    private com.toedter.calendar.JDateChooser jdcFechaFinContratacion;
+    private com.toedter.calendar.JDateChooser jdcFechaInicioContratacion;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblDatosPersona;
     private javax.swing.JLabel lblDocenteCapacitador;
