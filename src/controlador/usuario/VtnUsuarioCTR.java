@@ -41,10 +41,13 @@ public class VtnUsuarioCTR {
 
     //Listas Para rellenar la tabla
     private static List<UsuarioMD> listaUsuarios;
-    private static List<PersonaMD> listaPersonas;
 
     //Modelo de la tabla
     private static DefaultTableModel tablaUsuarios;
+
+    //Threads
+    private Thread thread;
+    private boolean carga = false;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
@@ -123,45 +126,41 @@ public class VtnUsuarioCTR {
     }
 
     public void cargarTabla(List<UsuarioMD> lista) {
-        listaPersonas = new ArrayList<>();
-        tablaUsuarios.setRowCount(0);
-        lista.stream()
-                .forEach(objUser -> {
-                    PersonaBD.selectWhereUsername(objUser.getUsername())
-                            .stream()
-                            .forEach(objPersona -> {
-                                agregarFila(objUser, objPersona);
-                                listaPersonas.add(objPersona);
-                            });
-                });
+
+        thread = new Thread() {
+            @Override
+            public void run() {
+                if (!carga) {
+                    carga = true;
+                    tablaUsuarios.setRowCount(0);
+                    lista.stream()
+                            .forEach(VtnUsuarioCTR::agregarFila);
+
+                }
+            }
+
+        };
+        thread.start();
 
     }
 
     private void cargarTablaFilter(String Aguja) {
         tablaUsuarios.setRowCount(0);
-        listaUsuarios
-                .stream()
-                .filter(item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase()))
-                .collect(Collectors.toList())
-                .forEach(objUsuario -> {
-                    listaPersonas
-                            .stream()
-                            .filter(itemPersona -> itemPersona.getIdPersona() == objUsuario.getIdPersona())
-                            .forEach(objPersona -> {
-                                agregarFila(objUsuario, objPersona);
-                            });
-                });
+
     }
 
-    private static void agregarFila(UsuarioMD objUsuario, PersonaMD objPersona) {
+    private static void agregarFila(UsuarioMD obj) {
 
-        if (objUsuario.isEstado()) {
-            tablaUsuarios.addRow(new Object[]{
-                objUsuario.getUsername(),
-                objPersona.getIdentificacion(),
-                objPersona.getPrimerNombre() + " " + objPersona.getSegundoNombre() + " " + objPersona.getPrimerApellido() + " " + objPersona.getSegundoApellido()
-            });
-        }
+        tablaUsuarios.addRow(new Object[]{
+            tablaUsuarios.getDataVector().size() + 1,
+            obj.getUsername(),
+            obj.getIdPersona().getIdentificacion(),
+            obj.getIdPersona().getPrimerApellido(),
+            obj.getIdPersona().getSegundoApellido(),
+            obj.getIdPersona().getPrimerNombre(),
+            obj.getIdPersona().getSegundoNombre()
+
+        });
 
     }
 

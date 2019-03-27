@@ -95,16 +95,16 @@ public class FrmUsuarioCTR {
     private void InitEditar() {
         
         vista.getTxtUsername().setText(modelo.getUsername());
-        
-        listaPersonas
-                .stream()
-                .filter(item -> item.getIdPersona() == modelo.getIdPersona())
-                .collect(Collectors.toList())
-                .forEach(obj -> {
-                    
-                    vista.getCmbPersona().setSelectedItem(obj.getIdentificacion() + " " + obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
-                    
-                });
+//        
+//        listaPersonas
+//                .stream()
+//                .filter(item -> item.getIdPersona() == modelo.getIdPersona())
+//                .collect(Collectors.toList())
+//                .forEach(obj -> {
+//                    
+//                    vista.getCmbPersona().setSelectedItem(obj.getIdentificacion() + " " + obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
+//                    
+//                });
         
         if (vista.getTxtUsername().getText().equals("ROOT")) {
             vista.getTxtUsername().setEnabled(false);
@@ -206,7 +206,7 @@ public class FrmUsuarioCTR {
         } else {
             listaTemporal.forEach(obj -> {
                 
-                modelo.setIdPersona(obj.getIdPersona());
+                
             });
         }
         

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ResourceManager;
+import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 
 /**
@@ -208,11 +209,8 @@ public class UsuarioBD extends UsuarioMD {
 
                 usuario.setEstado(rs.getBoolean("usu_estado"));
 
-                PersonaMD persona = new PersonaMD();
-                persona.setIdPersona(rs.getInt("id_persona"));
-
-                usuario.setIdPersona(persona);
-
+                usuario.setIdPersona(PersonaBD.selectWhere(rs.getInt("id_persona")));
+                
                 Lista.add(usuario);
             }
 
