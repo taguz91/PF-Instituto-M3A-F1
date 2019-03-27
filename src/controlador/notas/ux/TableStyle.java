@@ -1,4 +1,4 @@
-package ux;
+package controlador.notas.ux;
 
 import javax.swing.JTable;
 import java.awt.Color;
@@ -23,7 +23,6 @@ public class TableStyle extends JTable {
         component.setForeground(Color.BLACK);
         int filas = this.getRowCount();
         if (filas > 0) {
-            System.out.println(filas);
             for (int i = 0; i < filas; i++) {
                 dato = Double.parseDouble(this.getModel().getValueAt(i, 10).toString());
                 if (dato < 70.0) {

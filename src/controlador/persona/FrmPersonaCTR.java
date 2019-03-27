@@ -127,29 +127,24 @@ public class FrmPersonaCTR {
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
-        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                buscarIdentificacion();
-            }
-        });
-        
-//        frmPersona.gettx
 
         frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 String cedula = frmPersona.getTxtIdentificacion().getText();
                 char car = e.getKeyChar();
+                
                 if (car < '0' || car > '9') {
                     e.consume();
                 }
                 if (cedula.length() >= 10) {
                     e.consume();
                 }
+               
             }
 
         });
+
 
         valCe = new TxtVCedula(
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
@@ -168,7 +163,6 @@ public class FrmPersonaCTR {
         cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
-
             if (cedula.length() == 10) {
                 if (modelo.validaciones.Validar.esCedula(cedula) == false) {
                     error = true;
