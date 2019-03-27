@@ -130,9 +130,15 @@ public class FrmPersonaCTR {
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+//                String cedula = frmPersona.getTxtIdentificacion().getText();
+//                if(cedula.length() >= 10){
+//                    e.consume();
+//                }
                 buscarIdentificacion();
             }
         });
+        
+//        frmPersona.gettx
 
         frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             @Override
@@ -180,7 +186,7 @@ public class FrmPersonaCTR {
             } else{
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
-
+            
             if (error == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
