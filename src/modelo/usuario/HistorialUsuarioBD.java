@@ -17,6 +17,18 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
         this.conecta = conecta;
     }
 
+    public ArrayList<HistorialUsuarioMD> buscar(String aguja) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, \n"
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE usu_username ILIKE '%"+aguja+"%' OR\n"
+                + "historial_tipo_accion ILIKE '%"+aguja+"%' OR\n"
+                + "historial_nombre_tabla ILIKE '%"+aguja+"%' OR \n"
+                + "usu_username || ' ' || historial_tipo_accion ILIKE '%"+aguja+"%' OR\n"
+                + "usu_username || ' ' || historial_nombre_tabla ILIKE '%"+aguja+"%';;													;";
+        return consultarTbl(sql);
+    }
+
     public ArrayList<HistorialUsuarioMD> cargarHistorialHoy() {
         String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
                 + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"

@@ -2,12 +2,15 @@ package controlador.usuario;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.HistorialUsuarioBD;
 import modelo.usuario.HistorialUsuarioMD;
+import modelo.validaciones.Validar;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 
@@ -34,6 +37,8 @@ public class VtnHistorialUserCTR {
     private DefaultTableModel mdTbl;
     //Para guardar las posiciones de los combos seleccionados
     private int posTbl, posAcc, posUser, posFI, posFF;
+    //Para el buscador
+    private String b;
 
     public VtnHistorialUserCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {
         this.conecta = conecta;
@@ -71,64 +76,87 @@ public class VtnHistorialUserCTR {
         vtnH.getCmbAccion().addActionListener(e -> clickCmbAccion());
         vtnH.getCmbFechaIni().addActionListener(e -> clickFechaIni());
         vtnH.getCmbFechaFin().addActionListener(e -> clickFechaFin());
+
+        //Iniciamos el buscados 
+        vtnH.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                b = vtnH.getTxtBuscar().getText().trim();
+                if (b.length() > 2) {
+                    buscar(b);
+                }else if(b.length() == 0){
+                    mdTbl.setRowCount(0);
+                }
+            }
+        });
+        vtnH.getBtnBuscar().addActionListener(e -> buscar(vtnH.getTxtBuscar().getText().trim()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Historial usuarios.");
     }
-    
-    private void clickFechaIni(){
+
+    private void buscar(String b) {
+        if (Validar.esLetrasYNumeros(b)) {
+            historial = his.buscar(b);
+            llenarTbl(historial);
+        } else {
+            mdTbl.setRowCount(0);
+        }
+    }
+
+    private void clickFechaIni() {
         posFI = vtnH.getCmbFechaIni().getSelectedIndex();
         if (posFI > 0) {
-            historial = his.cargarHistorialFecha(fechaIni.get(posFI - 1)); 
+            historial = his.cargarHistorialFecha(fechaIni.get(posFI - 1));
             llenarTbl(historial);
             llenarCmbFechaFin();
-        }else{
+        } else {
             cargarHistorialHoy();
         }
     }
-    
-    private void clickFechaFin(){
-        posFF = vtnH.getCmbFechaFin().getSelectedIndex(); 
+
+    private void clickFechaFin() {
+        posFF = vtnH.getCmbFechaFin().getSelectedIndex();
         if (posFF > 0) {
-            historial = his.cargarHistorialEntresFechas(fechaIni.get(posFI - 1), 
+            historial = his.cargarHistorialEntresFechas(fechaIni.get(posFI - 1),
                     fechaFin.get(posFF - 1));
             llenarTbl(historial);
-        }else{
+        } else {
             clickFechaIni();
         }
     }
-    
-    private void clickCmbUsers(){
-        posUser = vtnH.getCmbUsers().getSelectedIndex(); 
+
+    private void clickCmbUsers() {
+        posUser = vtnH.getCmbUsers().getSelectedIndex();
         if (posUser > 0) {
-            historial = his.cargarHistorialUser(usuarios.get(posUser - 1)); 
+            historial = his.cargarHistorialUser(usuarios.get(posUser - 1));
             llenarTbl(historial);
-        }else{
+        } else {
             cargarHistorialHoy();
         }
     }
-    
-    private void clickCmbAccion(){
+
+    private void clickCmbAccion() {
         posAcc = vtnH.getCmbAccion().getSelectedIndex();
         if (posAcc > 0) {
-            historial = his.cargarHistorialAccion(acciones.get(posAcc -1)); 
+            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1));
             llenarTbl(historial);
-        }else{
+        } else {
             cargarHistorialHoy();
         }
     }
-    
-    private void clickCmbTbl(){
+
+    private void clickCmbTbl() {
         posTbl = vtnH.getCmbTablas().getSelectedIndex();
         if (posTbl > 0) {
             historial = his.cargarHistorialTbl(tablas.get(posTbl - 1));
             llenarTbl(historial);
-        }else{
+        } else {
             cargarHistorialHoy();
         }
     }
-    
-    private void cargarHistorialHoy(){
+
+    private void cargarHistorialHoy() {
         historial = his.cargarHistorialHoy();
         llenarTbl(historial);
     }
@@ -138,7 +166,7 @@ public class VtnHistorialUserCTR {
         fechaIni = his.cargarFechas();
         llenarCmbFechaIni(fechaIni);
     }
-    
+
     private void llenarCmbFechaFin() {
         vtnH.getCmbFechaFin().removeAllItems();
         //Llenamos el combo desde las fechas que esta
@@ -151,7 +179,7 @@ public class VtnHistorialUserCTR {
         }
         //Al final removemos el ultimo porque se carga desde el seleecionado 
         fechaFin.remove(fechaIni.get(posFI - 1));
-        
+
         if (!fechaFin.isEmpty()) {
             vtnH.getCmbFechaFin().addItem("Seleccione");
             fechaFin.forEach(f -> {
@@ -224,7 +252,6 @@ public class VtnHistorialUserCTR {
 
     private void llenarTbl(ArrayList<HistorialUsuarioMD> historial) {
         mdTbl.setRowCount(0);
-        System.out.println("Historia "+historial.size());
         if (!historial.isEmpty()) {
             historial.forEach(h -> {
                 Object[] v = {h.getUsername(), h.getNombreTbl(), h.getTipoAccion(),
