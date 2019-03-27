@@ -246,6 +246,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JButton getBtnConsola() {
         return btnConsola;
     }
+
+    public JMenuItem getMnCtHistorialUsers() {
+        return mnCtHistorialUsers;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,6 +294,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
+        mnCtHistorialUsers = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
@@ -551,6 +556,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia Docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
+        mnCtHistorialUsers.setText("Historial Usuarios");
+        mnTipoNotas.add(mnCtHistorialUsers);
+
         mnCtSilabos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consultar_silabo_menu.png"))); // NOI18N
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
@@ -696,6 +704,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
     private javax.swing.JMenuItem mnCtDocenteMateria;
+    private javax.swing.JMenuItem mnCtHistorialUsers;
     private javax.swing.JMenuItem mnCtInscripcion;
     private javax.swing.JMenuItem mnCtMallaAlumno;
     private javax.swing.JMenuItem mnCtMateria;

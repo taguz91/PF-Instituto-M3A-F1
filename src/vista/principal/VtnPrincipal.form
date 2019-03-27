@@ -99,6 +99,11 @@
                 <Property name="text" type="java.lang.String" value="Materia Docentes"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Historial Usuarios"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

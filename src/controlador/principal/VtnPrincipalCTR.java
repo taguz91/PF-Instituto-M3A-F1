@@ -482,15 +482,7 @@ public class VtnPrincipalCTR {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
-//                if (numVtns == 0) {
-//                    vtnBienvenida.setVisible(true);
-//                    //Lo ponemos en pantalla completa
-//                    try {
-//                        vtnBienvenida.setMaximum(true);
-//                    } catch (PropertyVetoException ex) {
-//                        System.out.println("No se maximiso"+ex.getMessage());
-//                    }
-//                }
+                vtnBienvenida.setVisible(false);
             }
 
         });
