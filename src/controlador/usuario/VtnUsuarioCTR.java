@@ -139,18 +139,18 @@ public class VtnUsuarioCTR {
 
     private void cargarTablaFilter(String Aguja) {
         tablaUsuarios.setRowCount(0);
-        listaUsuarios
-                .stream()
-                .filter(item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase()))
-                .collect(Collectors.toList())
-                .forEach(objUsuario -> {
-                    listaPersonas
-                            .stream()
-                            .filter(itemPersona -> itemPersona.getIdPersona() == objUsuario.getIdPersona())
-                            .forEach(objPersona -> {
-                                agregarFila(objUsuario, objPersona);
-                            });
-                });
+//        listaUsuarios
+//                .stream()
+//                .filter(item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase()))
+//                .collect(Collectors.toList())
+//                .forEach(objUsuario -> {
+//                    listaPersonas
+//                            .stream()
+//                            .filter(itemPersona -> itemPersona.)
+//                            .forEach(objPersona -> {
+//                                agregarFila(objUsuario, objPersona);
+//                            });
+//                });
     }
 
     private static void agregarFila(UsuarioMD objUsuario, PersonaMD objPersona) {

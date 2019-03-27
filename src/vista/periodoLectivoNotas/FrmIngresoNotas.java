@@ -75,8 +75,8 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
         jdcFechaIni = new com.toedter.calendar.JDateChooser();
         jdcFechaFin = new com.toedter.calendar.JDateChooser();
 
+        setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("Periodo Ingreso Notas");
 
         lblFechaInicio.setText("Fecha Inicio");

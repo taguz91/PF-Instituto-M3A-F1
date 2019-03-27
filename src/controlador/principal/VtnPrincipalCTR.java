@@ -78,6 +78,7 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
+import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 
@@ -154,6 +155,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -325,6 +327,15 @@ public class VtnPrincipalCTR {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
     }
+    
+    private void abrirVtnHistorialUser(){
+        VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            vtnPrin.getDpnlPrincipal().add(vtn); 
+            vtn.show();
+        }
+    }
 
     //Para abrir todos los formularios
     private void abrirFrmPersona() {
@@ -477,20 +488,17 @@ public class VtnPrincipalCTR {
                     errorNumVentanas();
                 }
                 vtnBienvenida.setVisible(false);
+                try {
+                    vtnBienvenida.setMaximum(false);
+                } catch (PropertyVetoException ex) {
+                    System.out.println("No se pudo cambiar");
+                }
             }
 
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
-//                if (numVtns == 0) {
-//                    vtnBienvenida.setVisible(true);
-//                    //Lo ponemos en pantalla completa
-//                    try {
-//                        vtnBienvenida.setMaximum(true);
-//                    } catch (PropertyVetoException ex) {
-//                        System.out.println("No se maximiso"+ex.getMessage());
-//                    }
-//                }
+                vtnBienvenida.setVisible(false);
             }
 
         });
