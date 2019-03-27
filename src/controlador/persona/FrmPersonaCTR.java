@@ -126,11 +126,14 @@ public class FrmPersonaCTR {
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
-        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
+       
+frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
-                String cedula = frmPersona.getTxtIdentificacion().getText();
-                if (cedula.length() >= 10) {
-                    e.consume();
+                char caracter = e.getKeyChar();
+// && (caracter != '\b' /*corresponde a BACK_SPACE*/)
+                // Verificar si la tecla pulsada no es un digito
+                if ( ((caracter < '0') || (caracter > '9')) ) {
+                    e.consume();  // ignorar el evento de teclado
                 }
                 buscarIdentificacion();
             }
@@ -139,14 +142,14 @@ public class FrmPersonaCTR {
 //        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
 //            @Override
 //            public void focusLost(FocusEvent e) {
-//                String cedula = frmPersona.getTxtIdentificacion().getText();
-//                if (cedula.length() >= 10) {
+//               String cedula = frmPersona.getTxtIdentificacion().getText();
+//              if(cedula.length() >= 10){
 //                    e.consume();
 //                }
 //                buscarIdentificacion();
 //            }
 //        });
-
+        
         valCe = new TxtVCedula(
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
 
@@ -163,6 +166,8 @@ public class FrmPersonaCTR {
         String cedula;
         cedula = frmPersona.getTxtIdentificacion().getText();
 
+         
+         
         if (!cedula.equals("")) {
 
             if (modelo.validaciones.Validar.esCedula(cedula) == false) {
@@ -181,6 +186,8 @@ public class FrmPersonaCTR {
 //                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
 //                frmPersona.getLblErrorIdentificacion().setVisible(true);
 //            }
+
+
             if (error == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
