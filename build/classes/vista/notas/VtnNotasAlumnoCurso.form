@@ -321,7 +321,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ux.TableStyle();//javax.swing.JTable()"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new vista.notas.ux.TableStyle();//javax.swing.JTable()"/>
           </AuxValues>
         </Component>
       </SubComponents>
