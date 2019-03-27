@@ -92,7 +92,9 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Metodos de Apoyo
     public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
-        lista.stream().forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+        lista
+                .stream()
+                .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
     }
 
     private static void agregarFila(PeriodoIngresoNotasMD obj) {
