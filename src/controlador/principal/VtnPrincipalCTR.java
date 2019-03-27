@@ -28,13 +28,11 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
+import java.beans.PropertyVetoException;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -100,6 +98,7 @@ public class VtnPrincipalCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
+    private final VtnBienvenida vtnBienvenida;
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
@@ -107,6 +106,7 @@ public class VtnPrincipalCTR {
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
+        this.vtnBienvenida = new VtnBienvenida();
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
         this.icono = icono;
@@ -122,12 +122,15 @@ public class VtnPrincipalCTR {
     }
 
     public void iniciar() {
-        VtnBienvenida v = new VtnBienvenida();
-        vtnPrin.getDpnlPrincipal().add(v);
-        v.show();
+        //Agregamos el panel de bienvenida  
+        vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
+        //Se le pasa el nombre de usuario que inicio sesio  
+        vtnBienvenida.getLblUser().setText(usuario.getUsername());
+        vtnBienvenida.show();
+        //Lo ponemos en pantalla completa
         try {
-            v.setMaximum(true);
-        } catch (Exception e) {
+            vtnBienvenida.setMaximum(true);
+        } catch (PropertyVetoException e) {
             System.out.println("No se maximiso");
         }
         //Iniciamos los shortcuts 
@@ -456,6 +459,9 @@ public class VtnPrincipalCTR {
             }
             //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
+            //Ocultamos el borde de internal de bienvenida
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
+            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
@@ -470,11 +476,21 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                 }
+                vtnBienvenida.setVisible(false);
             }
 
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
+//                if (numVtns == 0) {
+//                    vtnBienvenida.setVisible(true);
+//                    //Lo ponemos en pantalla completa
+//                    try {
+//                        vtnBienvenida.setMaximum(true);
+//                    } catch (PropertyVetoException ex) {
+//                        System.out.println("No se maximiso"+ex.getMessage());
+//                    }
+//                }
             }
 
         });

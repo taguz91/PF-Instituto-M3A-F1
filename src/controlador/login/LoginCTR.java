@@ -73,13 +73,16 @@ public class LoginCTR {
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e){
-                ingresoVeloz(e.getKeyChar()+"");
+                String txt = vista.getTxtUsername().getText().trim();
+                if (txt.length() < 2) {
+                    ingresoVeloz(e.getKeyChar()+"");
+                }
             }
         });
     }
     
     private void ingresoVeloz(String c){
-        if (c.equalsIgnoreCase("T")) {
+        if (c.equalsIgnoreCase("J")) {
             vista.getTxtUsername().setText("JHONNY");
             vista.getTxtPassword().setText("ROOT");
         }
