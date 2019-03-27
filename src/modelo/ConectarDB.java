@@ -17,7 +17,9 @@ public class ConectarDB {
     private Statement st;
     private ResultSet rs;
 
+
     //BD En cloud
+
 
 
     private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";

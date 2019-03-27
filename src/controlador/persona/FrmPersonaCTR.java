@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -137,6 +140,21 @@ public class FrmPersonaCTR {
         
 //        frmPersona.gettx
 
+        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                String cedula = frmPersona.getTxtIdentificacion().getText();
+                char car = e.getKeyChar();
+                if (car < '0' || car > '9') {
+                    e.consume();
+                }
+                if (cedula.length() >= 10) {
+                    e.consume();
+                }
+            }
+
+        });
+
         valCe = new TxtVCedula(
                 frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
 
@@ -155,23 +173,20 @@ public class FrmPersonaCTR {
 
         if (!cedula.equals("")) {
 
-            if (modelo.validaciones.Validar.esCedula(cedula) == false) {
-                error = true;
-                frmPersona.getLblErrorIdentificacion().setVisible(true);
-            }
-
             if (cedula.length() == 10) {
                 if (modelo.validaciones.Validar.esCedula(cedula) == false) {
                     error = true;
-                    frmPersona.getLblErrorIdentificacion().setText("Ingrese una cédula válida");
+                    frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
-            } else if (cedula.length() < 10 || cedula.length() > 10) {
+            } else if (cedula.length() < 10) {
                 error = true;
                 frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
+            } else{
+                frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
-
+            
             if (error == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
@@ -804,6 +819,11 @@ public class FrmPersonaCTR {
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
         editar = true;
+
+        Calendar fecha_Nacimiento = Calendar.getInstance();
+        fecha_Nacimiento.clear();
+        fecha_Nacimiento.set(per.getFechaNacimiento().getYear(), per.getFechaNacimiento().getMonthValue() - 1, per.getFechaNacimiento().getDayOfMonth());
+
         frmPersona.getTxtIdentificacion().setEnabled(true);
         frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtIdentificacion().setText(per.getIdentificacion());
@@ -822,6 +842,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
 
         String sexo = per.getSexo() + "";
         if ("H".equals(sexo)) {
