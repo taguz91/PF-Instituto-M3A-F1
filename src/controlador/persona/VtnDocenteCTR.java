@@ -1,4 +1,4 @@
-﻿package controlador.persona;
+package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
