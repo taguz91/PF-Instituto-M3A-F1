@@ -9,9 +9,10 @@
 	<queryString>
 		<![CDATA[select m.materia_nombre, m.materia_ciclo, m.materia_total_horas,c.carrera_nombre,
 p.persona_primer_apellido ||' '|| p.persona_segundo_apellido ||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as Coordinador                                                            
-from ((public."Materias" m full outer join public."Carreras" c using (id_carrera)) full outer join public."Docentes" d on id_docente_coordinador=id_docente)
+from ((public."Materias" m full outer join public."Carreras" c using (id_carrera)) 
+full outer join public."Docentes" d on id_docente_coordinador=id_docente)
 full outer join public."Personas" p using (id_persona)
-where c.carrera_codigo=$P{carreras} order by m.materia_ciclo;;]]>
+where c.carrera_codigo=$P{carreras} order by m.materia_ciclo;]]>
 	</queryString>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="materia_ciclo" class="java.lang.Integer"/>
@@ -113,4 +114,7 @@ where c.carrera_codigo=$P{carreras} order by m.materia_ciclo;;]]>
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

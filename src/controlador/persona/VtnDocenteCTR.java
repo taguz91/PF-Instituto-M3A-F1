@@ -283,8 +283,7 @@ public class VtnDocenteCTR {
                     case 1:
                         llamaReporteDocenteMateria();
                         break;
-                    case 2:
-                        break;
+                  
                     default:
                         break;
                 }
