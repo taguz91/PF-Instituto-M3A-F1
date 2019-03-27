@@ -390,9 +390,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public static List<PeriodoLectivoMD> SelectAll() {
 
-        String SELECT = "SELECT id_perd_lectivo, prd_lectivo_nombre "
+        String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" "
-                + " WHERE prd_lectivo_estado IS FALSE ";
+                + " WHERE prd_lectivo_estado IS TRUE";
+                System.out.println(SELECT);
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(SELECT);

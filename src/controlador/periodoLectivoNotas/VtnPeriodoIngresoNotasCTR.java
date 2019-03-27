@@ -53,6 +53,8 @@ public class VtnPeriodoIngresoNotasCTR {
 
         listaPeriodoNotas = PeriodoIngresoNotasBD.SelectAll();
         cargarTabla(listaPeriodoNotas);
+        
+       
 
         InitEventos();
         try {

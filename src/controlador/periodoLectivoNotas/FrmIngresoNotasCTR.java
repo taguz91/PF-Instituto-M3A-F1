@@ -46,7 +46,10 @@ public class FrmIngresoNotasCTR {
 
         listaNomPeriodos = PeriodoLectivoBD.SelectAll();
         listaNomNotas = TipoDeNotaBD.SelectAll();
-
+        
+        
+        cargarComboNotas();
+        cargarComboPeriodo();
         InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -84,17 +87,19 @@ public class FrmIngresoNotasCTR {
         return LocalDate.of(anio, mes, dia);
     }
 
-    public void cargarCombos() {
-        listaNomPeriodos
-                .stream()
-                .forEach(obj -> {
-                    vista.getCmbPeriodoLec().addItem(obj.getNombre_PerLectivo());
-                });
-
+    public void cargarComboNotas() {
         listaNomNotas
                 .stream()
                 .forEach(obj -> {
                     vista.getCmbTipoNota().addItem(obj.getNombre());
+                });
+    }
+    
+    public void cargarComboPeriodo(){
+                listaNomPeriodos
+                .stream()
+                .forEach(obj -> {
+                    vista.getCmbPeriodoLec().addItem(obj.getNombre_PerLectivo());
                 });
     }
 
