@@ -47,7 +47,7 @@ public class VtnUsuarioCTR {
 
     //Threads
     private Thread thread;
-    private boolean carga = false;
+    private boolean carga = true;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
@@ -63,7 +63,6 @@ public class VtnUsuarioCTR {
 
         //Inicializamos las listas con las consultas
         listaUsuarios = UsuarioBD.SelectAll();
-
         cargarTabla(listaUsuarios);
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
@@ -127,21 +126,21 @@ public class VtnUsuarioCTR {
 
     public void cargarTabla(List<UsuarioMD> lista) {
 
-        thread = new Thread() {
-            @Override
-            public void run() {
-                if (!carga) {
-                    carga = true;
+        if (carga == true) {
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    carga = false;
                     tablaUsuarios.setRowCount(0);
                     lista.stream()
                             .forEach(VtnUsuarioCTR::agregarFila);
-
+                    carga = true;
                 }
-            }
-
-        };
-        thread.start();
-
+            };
+            thread.start();
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA DE UNA TABLA PENDIENTE");
+        }
     }
 
     private void cargarTablaFilter(String Aguja) {
@@ -284,6 +283,12 @@ public class VtnUsuarioCTR {
     }
 
     private void txtBuscarKeyReleased(KeyEvent e) {
-        cargarTablaFilter(vista.getTxtBuscar().getText());
+
+        if (carga == true) {
+            cargarTablaFilter(vista.getTxtBuscar().getText());
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE");
+        }
+
     }
 }

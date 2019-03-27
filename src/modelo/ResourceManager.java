@@ -19,12 +19,6 @@ public class ResourceManager {
     //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
     private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
 
-    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
-
-
-//    private static String USERNAME = "";
-//    private static String PASSWORD = "";
-    
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
     private static Driver driver = null;
@@ -106,13 +100,13 @@ public class ResourceManager {
             if (e instanceof NullPointerException) {
                 driver = null;
             } else {
-                
+
                 String mensaje = e.getMessage();
-                
+
                 if (mensaje.contains("FATAL: password authentication failed for user")) {
                     driver = null;
                 }
-                
+
                 System.out.println(e.getMessage());
             }
             return null;
