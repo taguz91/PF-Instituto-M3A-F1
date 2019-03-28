@@ -825,7 +825,7 @@ public class FrmPersonaCTR {
             frmPersona.getCmbTipoId().setSelectedItem("PASAPORTE");
         }
         frmPersona.getTxtIdentificacion().setEnabled(true);
-        frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
+        //frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtIdentificacion().setText(per.getIdentificacion());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
@@ -839,9 +839,22 @@ public class FrmPersonaCTR {
         frmPersona.getTxtSegundoApellido().setText(per.getSegundoApellido());
         frmPersona.getTxtSegundoNombre().setText(per.getSegundoNombre());
         frmPersona.getTxtTelefono().setText(per.getTelefono());
-        frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
-        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
-        frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        if(per.getEstadoCivil() == null){
+            frmPersona.getCmbEstadoCivil().setSelectedItem("SELECCIONE");
+        } else{
+            frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
+        }
+        if(per.getTipoDiscapacidad() == null){
+            frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
+        } else{
+            frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
+        }
+        if(per.getIdiomaRaiz() == null){
+            frmPersona.getCmbIdiomas().setSelectedItem("SELECCIONE");
+        } else{
+            frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        }
+        
         frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
 
         String sexo = per.getSexo() + "";
@@ -915,10 +928,13 @@ public class FrmPersonaCTR {
                 frmPersona.getCmbCanton().setSelectedItem(ciudad);
             }
         }
-
+        int nvlLugarRes = 0;
         System.out.println("Nivel de lugar residencia  " + per.getLugarResidencia().getNivel());
-
-        int nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if(per.getLugarResidencia().getNivel() == null){
+            nvlLugarRes = 0;
+        } else{
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         String parroquia = null, canton = null, provincia = null;
         if (nvlLugarRes == 4) {
             //Guardamos el nombre del parroquia para luego selecionarlo
@@ -926,21 +942,33 @@ public class FrmPersonaCTR {
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if(per.getLugarResidencia().getNivel() == null){
+            nvlLugarRes = 0;
+        } else{
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         if (nvlLugarRes == 3) {
             //Guardamos el nombre del canton para luego selecionarlo
             canton = per.getLugarResidencia().getNombre();
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if(per.getLugarResidencia().getNivel() == null){
+            nvlLugarRes = 0;
+        } else{
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         if (nvlLugarRes == 2) {
             //Guardamos el nombre del provincia para luego selecionarlo
             provincia = per.getLugarResidencia().getNombre();
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if(per.getLugarResidencia().getNivel() == null){
+            nvlLugarRes = 0;
+        } else{
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         System.out.println("Pais reside " + per.getLugarResidencia().getNombre());
         if (nvlLugarRes == 1) {
             frmPersona.getCmbPaisReside().setSelectedItem(per.getLugarResidencia().getNombre());
