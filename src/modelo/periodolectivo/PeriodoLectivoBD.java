@@ -405,7 +405,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" "
-                + " WHERE prd_lectivo_estado IS TRUE";
+                + " WHERE prd_lectivo_estado IS FALSE";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(SELECT);

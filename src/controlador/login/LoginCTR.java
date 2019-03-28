@@ -68,20 +68,20 @@ public class LoginCTR {
         });
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-        
+
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e){
+            public void keyReleased(KeyEvent e) {
                 String txt = vista.getTxtUsername().getText().trim();
                 if (txt.length() < 2) {
-                    ingresoVeloz(e.getKeyChar()+"");
+                    ingresoVeloz(e.getKeyChar() + "");
                 }
             }
         });
     }
-    
-    private void ingresoVeloz(String c){
+
+    private void ingresoVeloz(String c) {
         if (c.equalsIgnoreCase("J")) {
             vista.getTxtUsername().setText("JHONNY");
             vista.getTxtPassword().setText("ROOT");
@@ -120,7 +120,8 @@ public class LoginCTR {
 
         USERNAME = "ROOT";
         PASSWORD = "ROOT";
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+  ///      VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "linis4413", "LoginGenerico"), icono, ista);
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);

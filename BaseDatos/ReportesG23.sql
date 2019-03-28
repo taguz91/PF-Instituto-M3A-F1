@@ -54,3 +54,11 @@ p.persona_primer_nombre || ' ' || p.persona_segundo_nombre || ' ' ||
 p.persona_primer_apellido || ' ' || p.persona_segundo_apellido AS docente,
 p.persona_foto, p.persona_celular,p.persona_correo
 	FROM public."Docentes" d join public."Personas" p using(id_persona);
+
+---Reporte Materias---
+select m.materia_codigo,m.materia_nombre, m.materia_ciclo,
+m.materia_horas_docencia,m.materia_horas_practicas,
+m.materia_horas_auto_estudio,m.materia_horas_presencial, 
+m.materia_total_horas,c.carrera_nombre
+from (public."Materias" m join public."Carreras" c using (id_carrera))
+where c.carrera_codigo= 'SDS' and m.materia_ciclo= 3 order by m.materia_ciclo;
