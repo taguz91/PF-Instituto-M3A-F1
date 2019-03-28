@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.estilo.SplastCTR;
 import controlador.login.LoginCTR;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
@@ -10,16 +11,15 @@ import vista.principal.VtnPrincipal;
  * @author Johnny
  */
 public class run {
-
+    
     public static void main(String[] args) {
         estiloWindows();
-
-
+        SplastCTR ctrSplash = new SplastCTR();
+        ctrSplash.iniciar();
         
+
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();
-        
-        
 
     }
 
