@@ -31,6 +31,10 @@ public class Validar {
     public static boolean esTelefono(String cadena){
         return cadena.matches("[0-9]{7,10}");
     }
+    
+     public static boolean esCelular(String cadena){
+        return cadena.matches("[0-9]{10}");
+    }
 
     public static boolean esAnio(String cadena) {
         return cadena.matches("[0-9]{4}");
@@ -95,7 +99,11 @@ public class Validar {
     }
     
     public static boolean esCorreo(String entrada){
-        return entrada.matches("[A-Za-z0-9\\.]+@[a-zA-Z]+\\.+[a-zA-Z]+$");   
+        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+$");   
+    }
+    
+    public static boolean esCorreoAr(String entrada){
+        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+\\.+[a-zA-Z]+$");   
     }
     
     public static boolean esNota(String entrada){
@@ -104,6 +112,10 @@ public class Validar {
     
     public static boolean esNumCasa(String entrada){
         return entrada.matches("[0-9]{1,4}+-+[0-9]{1,4}");   
+    }
+    
+    public static boolean esNumeCasa(String entrada){
+        return entrada.matches("[A-Za-z]{1}+/+[A-Za-z]{1}");   
     }
     
     public static boolean esCarnetConadis(String entrada){
