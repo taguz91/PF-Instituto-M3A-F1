@@ -31,7 +31,6 @@ public class SplastCTR {
         for (ImageIcon estado : estados) {
             s.getLblFondo().setIcon(estado);
             dormir(500);
-            System.out.println("Imagen "+estado);
         }
         s.dispose();
     }
