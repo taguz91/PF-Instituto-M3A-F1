@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.usuario;
 
 import java.sql.ResultSet;
@@ -10,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ResourceManager;
+import modelo.persona.PersonaBD;
+import modelo.persona.PersonaMD;
 
 /**
  *
@@ -17,7 +14,7 @@ import modelo.ResourceManager;
  */
 public class UsuarioBD extends UsuarioMD {
 
-    public UsuarioBD(String username, String password, boolean estado, int idPersona) {
+    public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
         super(username, password, estado, idPersona);
     }
 
@@ -212,8 +209,8 @@ public class UsuarioBD extends UsuarioMD {
 
                 usuario.setEstado(rs.getBoolean("usu_estado"));
 
-                usuario.setIdPersona(rs.getInt("id_persona"));
-
+                usuario.setIdPersona(PersonaBD.selectWhere(rs.getInt("id_persona")));
+                
                 Lista.add(usuario);
             }
 

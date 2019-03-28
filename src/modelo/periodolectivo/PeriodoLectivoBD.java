@@ -229,7 +229,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND prd_lectivo_estado = false\n"
+                + "prd_lectivo_activo = true\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {
@@ -403,9 +403,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public static List<PeriodoLectivoMD> SelectAll() {
 
-        String SELECT = "SELECT id_perd_lectivo, prd_lectivo_nombre "
+        String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" "
-                + " WHERE prd_lectivo_estado IS FALSE ";
+                + " WHERE prd_lectivo_estado IS FALSE";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(SELECT);
@@ -413,7 +413,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setId_PerioLectivo(rs.getInt("id_perd_lectivo"));
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                 lista.add(periodo);
             }

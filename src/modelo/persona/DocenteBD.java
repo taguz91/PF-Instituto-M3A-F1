@@ -37,6 +37,7 @@ public class DocenteBD extends DocenteMD {
                 + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
                 + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', '"
                 + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ");";
+        System.out.println(nsql);
         if (getFechaFinContratacion() != null) {
             nsql = "INSERT INTO public.\"Docentes\"(\n"
                     + "	 id_persona, docente_codigo, docente_otro_trabajo, "
@@ -45,7 +46,7 @@ public class DocenteBD extends DocenteMD {
                     + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
                     + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', "
                     + "'" + this.getFechaFinContratacion() + "', '" + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ");";
-
+ System.out.println(nsql);
         }
 
         if (conecta.nosql(nsql) == null) {

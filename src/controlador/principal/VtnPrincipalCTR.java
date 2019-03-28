@@ -26,6 +26,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorSilabos;
+import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.VtnRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -78,6 +79,7 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
+import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 
@@ -125,14 +127,14 @@ public class VtnPrincipalCTR {
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
         //Se le pasa el nombre de usuario que inicio sesio  
-        vtnBienvenida.getLblUser().setText(usuario.getUsername());
-        vtnBienvenida.show();
-        //Lo ponemos en pantalla completa
-        try {
-            vtnBienvenida.setMaximum(true);
-        } catch (PropertyVetoException e) {
-            System.out.println("No se maximiso");
-        }
+//        vtnBienvenida.getLblUser().setText(usuario.getUsername());
+//        vtnBienvenida.show();
+//        //Lo ponemos en pantalla completa
+//        try {
+//            vtnBienvenida.setMaximum(true);
+//        } catch (PropertyVetoException e) {
+//            System.out.println("No se maximiso");
+//        }
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
 
@@ -154,6 +156,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
 
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
 
@@ -325,6 +328,15 @@ public class VtnPrincipalCTR {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
     }
+    
+    private void abrirVtnHistorialUser(){
+        VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnHistorialUserCTR ctr = new VtnHistorialUserCTR(conecta, vtnPrin, this);
+            ctr.iniciar();
+        }
+    }
 
     //Para abrir todos los formularios
     private void abrirFrmPersona() {
@@ -476,21 +488,11 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                 }
-                vtnBienvenida.setVisible(false);
             }
 
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 numVtns--;
-//                if (numVtns == 0) {
-//                    vtnBienvenida.setVisible(true);
-//                    //Lo ponemos en pantalla completa
-//                    try {
-//                        vtnBienvenida.setMaximum(true);
-//                    } catch (PropertyVetoException ex) {
-//                        System.out.println("No se maximiso"+ex.getMessage());
-//                    }
-//                }
             }
 
         });
@@ -550,6 +552,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_H, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(

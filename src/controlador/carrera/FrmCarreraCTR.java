@@ -167,7 +167,7 @@ public class FrmCarreraCTR {
         frmCarrera.getTxtMes().setText(carrera.getFechaInicio().getMonthValue() + "");
         frmCarrera.getTxtAnio().setText(carrera.getFechaInicio().getYear() + "");
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
-        if (carrera.getCoordinador() != null) {
+        if (carrera.getCoordinador().getPrimerApellido() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
             frmCarrera.getTblDocentes().selectAll();
