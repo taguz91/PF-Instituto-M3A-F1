@@ -25,6 +25,7 @@ public class ResourceManager {
 //    private static String USERNAME = "";
 //    private static String PASSWORD = "";
     
+
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
     private static Driver driver = null;
@@ -106,13 +107,13 @@ public class ResourceManager {
             if (e instanceof NullPointerException) {
                 driver = null;
             } else {
-                
+
                 String mensaje = e.getMessage();
-                
+
                 if (mensaje.contains("FATAL: password authentication failed for user")) {
                     driver = null;
                 }
-                
+
                 System.out.println(e.getMessage());
             }
             return null;

@@ -99,7 +99,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
         String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
-                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
+                + "persona_segundo_apellido, persona_primer_apellido,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
@@ -113,7 +114,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     public ArrayList<MallaAlumnoMD> cargarMallasPorEstudiante(int idAlumno) {
         String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
-                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
+                + "persona_segundo_apellido, persona_primer_apellido,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
@@ -128,7 +130,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     public ArrayList<MallaAlumnoMD> cargarMallaAlumnoPorEstado(int idAlumno, String estado) {
         String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
-                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
+                + "persona_segundo_apellido, persona_primer_apellido,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
@@ -215,7 +218,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
         String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
-                + "malla_almn_estado, persona_primer_nombre, persona_primer_apellido,\n"
+                + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
+                + "persona_segundo_apellido, persona_primer_apellido,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
@@ -245,6 +249,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     AlumnoMD al = new AlumnoMD();
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                     a.setAlumno(al);
                     mll.setAlumnoCarrera(a);
                     mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));

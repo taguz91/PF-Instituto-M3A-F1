@@ -10,9 +10,12 @@ import java.beans.PropertyVetoException;
 import java.util.Calendar;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.xml.transform.Source;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
@@ -30,6 +33,7 @@ public class FrmDocenteCTR {
     //Para saber si se esta editando una persona  
     private boolean editar = false;
     private int idDocente = 0;
+    private int idPersona = 0;
     private final VtnPrincipal vtnPrin;
     private VtnDocenteCTR docenteVtn;
     private final FrmDocente frmDocente;
@@ -41,6 +45,7 @@ public class FrmDocenteCTR {
     //Para ver si existe una persona  
     private PersonaBD per;
     private final VtnPrincipalCTR ctrPrin;
+   private DocenteMD d;
 
     private ArrayList<String> info = new ArrayList();
 
@@ -48,10 +53,7 @@ public class FrmDocenteCTR {
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
     FrmPersona persona = new FrmPersona();
-    String codigo, docenteTipoTiempo, estado;
-    int docenteCategoria;
-    boolean docenteOtroTrabajo, docenteCapacitador;
-    LocalDate fechaInicioContratacion, fechaFinContratacion;
+ 
 
     public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -59,8 +61,8 @@ public class FrmDocenteCTR {
         this.conecta = conecta;
         this.docente = new DocenteBD(conecta);
         this.per = new PersonaBD(conecta);
-        
-        this.ctrPrin = ctrPrin;        
+
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Docente");
@@ -73,7 +75,7 @@ public class FrmDocenteCTR {
     FrmDocenteCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     private void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
         FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
@@ -138,7 +140,7 @@ public class FrmDocenteCTR {
         }
         //Cedula no registrada: 0102380821
         if (buscar) {
-            DocenteMD d = docente.buscarDocenteInactivo(cedula);
+             d = docente.buscarDocenteInactivo(cedula);
             if (d != null) {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                         "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -190,7 +192,8 @@ public class FrmDocenteCTR {
 
     public void iniciarComponentes() {
         frmDocente.getLblError().setVisible(false);
-        frmDocente.getJdcFechaFinContratacion().setSelectedDate(null);
+        frmDocente.getJdcFechaFinContratacion().setDate(null);
+        //setSelectedDate(null);
 
         //frmAlumno.getBtn_Guardar().setEnabled(false);
     }
@@ -198,11 +201,12 @@ public class FrmDocenteCTR {
     public void guardarDocente() {
 
         String codigo, docenteTipoTiempo, estado;
-        int docenteCategoria;
+        int docenteCategoria,idPer;
         boolean docenteOtroTrabajo, docenteCapacitador;
-        LocalDate fechaInicioContratacion, fechaFinContratacion = null;
+        LocalDate fechaInicioContratacion, fechaFinContratacion;
         guardar = true;
-        //  idPersona=docente.getIdPersona();
+       idPer=idDocente;
+       System.out.println(idPer);
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
         docenteTipoTiempo = frmDocente.getCmbTipoTiempo().getSelectedItem().toString();
@@ -216,30 +220,38 @@ public class FrmDocenteCTR {
         } else {
             docenteOtroTrabajo = false;
         }
-        String fechaInicio = frmDocente.getJdcFechaInicioContratacion().getText().toUpperCase();
-        String fecIni[] = fechaInicio.split("/");
-        LocalDate fechaIni = LocalDate.of(Integer.parseInt(fecIni[2]),
-                Integer.parseInt(fecIni[1]), Integer.parseInt(fecIni[0]));
+
+        frmDocente.getJdcFechaInicioContratacion().setDateFormatString("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        String d = sdf.format(frmDocente.getJdcFechaInicioContratacion().getDate());
+        String fecIniC[] = d.split("/");
+        LocalDate fechaIni = LocalDate.of(Integer.parseInt(fecIniC[0]),
+                Integer.parseInt(fecIniC[1]), Integer.parseInt(fecIniC[2]));
         fechaInicioContratacion = fechaIni;
 
-        String fechaFin = frmDocente.getJdcFechaFinContratacion().getText().toUpperCase();
-        if (fechaFin.length() != 0) {
+        try {
+            frmDocente.getJdcFechaFinContratacion().setDateFormatString("dd/MM/yyyy");
+            SimpleDateFormat fecFin = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+            String fechaFin = fecFin.format(frmDocente.getJdcFechaFinContratacion().getDate());
             String fecFinC[] = fechaFin.split("/");
-            LocalDate fechaFin1 = LocalDate.of(Integer.parseInt(fecFinC[2]),
-                    Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[0]));
+            LocalDate fechaFin1 = LocalDate.of(Integer.parseInt(fecFinC[0]),
+                    Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[2]));
             fechaFinContratacion = fechaFin1;
-        } else {
+        } catch (NullPointerException e) {
+            
             fechaFinContratacion = null;
         }
+
         estado = null;
-        
+
         System.out.println("Se dio click en guardar");
-        System.out.println("Guardar = "+guardar);
-        System.out.println("Editar = "+editar);
+        System.out.println("Guardar = " + guardar);
+        System.out.println("Editar = " + editar);
 
         if (guardar) {
             //Llenar directo por el constructor
             docente.setCodigo(codigo);
+            docente.setIdPersona(idPer);
             docente.setFechaInicioContratacion(fechaInicioContratacion);
             docente.setFechaFinContratacion(fechaFinContratacion);
             docente.setEstado(estado);
@@ -270,11 +282,11 @@ public class FrmDocenteCTR {
         calendar_FinC.clear();
         if (doc.getFechaFinContratacion() != null) {
             calendar_FinC.set(doc.getFechaFinContratacion().getYear(), doc.getFechaFinContratacion().getMonthValue(), doc.getFechaFinContratacion().getDayOfMonth());
-            frmDocente.getJdcFechaFinContratacion().setSelectedDate(calendar_FinC);
+            frmDocente.getJdcFechaFinContratacion().setCalendar(calendar_Ini);
         } else {
-            frmDocente.getJdcFechaFinContratacion().setSelectedDate(null);
+            frmDocente.getJdcFechaFinContratacion().setCalendar(null);
         }
-        frmDocente.getJdcFechaInicioContratacion().setSelectedDate(calendar_Ini);
+        frmDocente.getJdcFechaInicioContratacion().setCalendar(calendar_Ini);
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());

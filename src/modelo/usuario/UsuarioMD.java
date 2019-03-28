@@ -1,5 +1,7 @@
 package modelo.usuario;
 
+import modelo.persona.PersonaMD;
+
 /**
  *
  * @author MrRainx
@@ -9,9 +11,9 @@ public class UsuarioMD {
     private String username;
     private String password;
     private boolean estado;
-    private int idPersona;
+    private PersonaMD idPersona;
 
-    public UsuarioMD(String username, String password, boolean estado, int idPersona) {
+    public UsuarioMD(String username, String password, boolean estado, PersonaMD idPersona) {
         this.username = username;
         this.password = password;
         this.estado = estado;
@@ -21,8 +23,6 @@ public class UsuarioMD {
     public UsuarioMD() {
     }
 
-    
-    
     public String getUsername() {
         return username;
     }
@@ -47,11 +47,11 @@ public class UsuarioMD {
         this.estado = estado;
     }
 
-    public int getIdPersona() {
+    public PersonaMD getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(int idPersona) {
+    public void setIdPersona(PersonaMD idPersona) {
         this.idPersona = idPersona;
     }
 

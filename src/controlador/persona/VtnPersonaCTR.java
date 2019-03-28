@@ -5,6 +5,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +69,7 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
+        vtnPersona.getBtnReportePersona().setEnabled(false);
         cargarCmbTipoPersonas();
         //Inicializamos el error para que no se vea  
         vtnPersona.getLblError().setVisible(false);
@@ -101,6 +104,13 @@ public class VtnPersonaCTR {
         //Validacion del buscador
         vtnPersona.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnPersona.getTxtBuscar(),
                 vtnPersona.getBtnBuscar()));
+        //vALIDACION BOTONE DE REPORTES
+        vtnPersona.getTblPersona().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                validarBotonesReportes();
+            }
+        });
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -261,6 +271,14 @@ public class VtnPersonaCTR {
 //            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
 //                vista.getBtnVerRoles().setEnabled(true);
 //            }
+        }
+    }
+     public void validarBotonesReportes() {
+        int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
+        if (selecTabl >= 0) {
+            vtnPersona.getBtnReportePersona().setEnabled(true);
+        } else {
+            vtnPersona.getBtnReportePersona().setEnabled(false);
         }
     }
 }

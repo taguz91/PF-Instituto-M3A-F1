@@ -17,7 +17,6 @@ public class ConectarDB {
     private Statement st;
     private ResultSet rs;
 
-
     //BD En cloud
 
 
