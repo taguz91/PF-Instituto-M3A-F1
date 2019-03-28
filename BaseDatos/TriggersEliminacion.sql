@@ -77,9 +77,8 @@ BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla, historial_observacion)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso, 
-			old.id_jornada_docente || '%' || old.id_jornada || '%' || 
-			old.id_docente || '%' || old.id_prd_lectivo);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_jornada_docente, 
+			old.id_jornada || '%' || old.id_docente || '%' || old.id_prd_lectivo);
 		RETURN NEW;
 END;
 $jornada_docente_elim$ LANGUAGE plpgsql;
@@ -159,7 +158,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_docente_mat);
 	END IF; 	
 	RETURN NEW;
 END;
@@ -195,7 +194,7 @@ BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla, historial_observacion)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_silabo, 
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_referencia_silabo, 
 			old.id_referencia || '%' || old.id_referencia);
 		RETURN NEW;
 END;
@@ -214,7 +213,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_carrera);
 	END IF; 	
 	RETURN NEW;
 END;
@@ -233,7 +232,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_prd_lectivo);
 	END IF; 	
 	RETURN NEW;
 END;
@@ -272,7 +271,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_tipo_nota);
 	END IF; 	
 	RETURN NEW;
 END;
@@ -312,7 +311,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_persona);
 		--Eliminalos el docente o alumno que este registrado como esta persona  
 		UPDATE public."Docentes"
 		SET docente_activo = 'False'
@@ -343,7 +342,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_alumno);
 		--Eliminamos tambien el alumno carrera
 		UPDATE public."AlumnosCarrera"
 		SET almn_carrera_activo = 'False'
@@ -366,7 +365,7 @@ BEGIN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME);
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_almn_carrera);
 	END IF; 	
 	RETURN NEW;
 END;
@@ -385,7 +384,7 @@ BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla, historial_observacion)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_amn_curso, 
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_almn_curso, 
 			old.id_alumno || '%' || old.id_curso
 			|| '%' || old.almn_curso_nt_1_parcial || '%' || 
 			old.almn_curso_nt_examen_interciclo || '%' || 
