@@ -126,7 +126,15 @@ public class FrmPersonaCTR {
 
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
-
+       
+        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter(){
+            
+            public void focusLost(FocusEvent e){
+                buscarIdentificacion();
+            }
+        
+        });
+        
 
         frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             @Override
