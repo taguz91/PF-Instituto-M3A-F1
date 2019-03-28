@@ -13,6 +13,7 @@ public class JDConsolaBDCTR {
     
     private final JDConsolaBD jd; 
     private final ConectarDB conecta;
+    private int cont = 0;
 
     public JDConsolaBDCTR(VtnPrincipal vtnPrin, ConectarDB conecta) {
         this.jd = new JDConsolaBD(vtnPrin, false);
@@ -36,7 +37,9 @@ public class JDConsolaBDCTR {
         //System.out.println(txt);
         SQLException es = conecta.nosql(txt);
         if (es == null) {
-            jd.getLblError().setText("<html>Se ejecuto la accion correctamente. </html>");
+            cont++;
+            jd.getLblError().setText("<html>Se ejecuto la accion correctamente. Accion numero: "+cont+"</html>");
+            jd.getTxtArea().selectAll();
         }else{
             jd.getLblError().setText("<html>"+es.getMessage()+ "\n"+es.getSQLState()+"</html>");
         }
