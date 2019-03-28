@@ -10,18 +10,18 @@ import javax.swing.JTextField;
  *
  * @author Johnny
  */
-public class TxtVNumCasa extends KeyAdapter {
+public class TxtVCelular extends KeyAdapter {
 
     private final JTextField txt;
     private final JLabel lbl;
     private String ingreso;
 
-    public TxtVNumCasa(JTextField txt) {
+    public TxtVCelular(JTextField txt) {
         this.txt = txt;
         this.lbl = null;
     }
 
-    public TxtVNumCasa(JTextField txt, JLabel lbl) {
+    public TxtVCelular(JTextField txt, JLabel lbl) {
         this.txt = txt;
         this.lbl = lbl;
     }
@@ -33,7 +33,7 @@ public class TxtVNumCasa extends KeyAdapter {
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
             txt.setSize(txt.getWidth(), 20);
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
-            if (!Validar.esNumCasa(ingreso) && !Validar.esNumeCasa(ingreso)) {
+            if (!Validar.esCelular(ingreso)) {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                 if (lbl != null) {
                     lbl.setVisible(true);
