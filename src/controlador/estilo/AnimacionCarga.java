@@ -13,7 +13,6 @@ public class AnimacionCarga extends Thread {
     private final JLabel lbl;
     private int pos = 0;
     private boolean cargando = true;
-    private int cuenta = 0;
     //Todos los inconos que usaremos 
     ImageIcon estados[] = {
         new ImageIcon(getClass().getResource("/vista/img/animacion/LogoPosFinal.png")),
