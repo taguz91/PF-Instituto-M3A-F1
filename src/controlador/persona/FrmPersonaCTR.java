@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -13,9 +14,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -82,6 +85,8 @@ public class FrmPersonaCTR {
     //Para saber si se esta editando una persona  
     private boolean editar = false;
     private int idPersona = 0;
+
+    JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -413,7 +418,7 @@ public class FrmPersonaCTR {
         Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
-        Correo = frmPersona.getTxtCorreo().getText();
+        //Correo = frmPersona.getTxtCorreo().getText();
         Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
         if (Discapacidad) {
             TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
@@ -443,7 +448,8 @@ public class FrmPersonaCTR {
                 // && Celular.equals("") == false && Telefono.equals("") == false
                 && IdiomaRaiz.equals("SELECCIONE") == false && Sexo.equals("SELECCIONE") == false
                 && Genero.equals("SELECCIONE") == false && TipoSangre.equals("SELECCIONE") == false
-                && Etnia.equals("SELECCIONE") == false && Correo.equals("") == false
+                && Etnia.equals("SELECCIONE") == false
+                //              && Correo.equals("") == false
                 // && Nacionalidad.equals("SELECCIONE") == false && Provincia.equals("SELECCIONE") == false 
                 // && Canton.equals("SELECCIONE") == false  && PaisReside.equals("SELECCIONE") == false 
                 // && ProvinciaReside.equals("SELECCIONE") == false && CantonReside.equals("SELECCIONE") == false
@@ -465,21 +471,12 @@ public class FrmPersonaCTR {
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
+        Date fecha = new Date();
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
         boolean guardar = true;
-        //unicamente tocoa validar eso es lo feo :$$$$ 
-        //Todas las variables del formulario
-//        String identificacion = "aa", priNombre = "aa", segNombre = "aaa",
-//                priApellido = "aaa", segApellido = "aaa",
-//                fechaNac = "aa", estadoCivil = "aaaa", tipoSangre = "aaa", genero = "aaa",
-//                sexo = "M", etnia = "aaa", carnetConadis = "aaaa",
-//                tipoDiscapacidad = "aaaa", porcentajeDiscapacidad = "aaaa",
-//                idiomaRaiz = "aaa", telefono = "aaaa", callePrin = "aaaa",
-//                calleSec = "aaa", referencia = "aaaa",
-//                celular = "aaaa", numCasa = "aaa", sector = "aaa",
-//                zonaResidencia = "aaaaa", correo = "aaaa";
+
         String identificacion, priNombre, segNombre,
                 priApellido, segApellido,
                 fechaNac, estadoCivil = "a", tipoSangre = "a", genero = "a",
@@ -536,10 +533,18 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
 
-        fechaNac = frmPersona.getJdcFechaNacimiento().getText().toUpperCase();
+        fechaNac = frmPersona.getJdfechaNacimiento().getDate().toString().toUpperCase();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
+        //Dar formato a la fecha
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
 
+        System.out.println("fechaNac " + fechaNac);
+        System.out.println("fecha " + fecha);
+        System.out.println("fechaActual " + fechaActual);
+        System.out.println("fechaNacimiento " + fechaNacimiento);
+        
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
             guardar = false;
@@ -815,6 +820,8 @@ public class FrmPersonaCTR {
         String cedula;
         cedula = per.getIdentificacion();
 
+        Date fecha = new Date();
+
         Calendar fecha_Nacimiento = Calendar.getInstance();
         fecha_Nacimiento.clear();
         fecha_Nacimiento.set(per.getFechaNacimiento().getYear(), per.getFechaNacimiento().getMonthValue() - 1, per.getFechaNacimiento().getDayOfMonth());
@@ -839,24 +846,25 @@ public class FrmPersonaCTR {
         frmPersona.getTxtSegundoApellido().setText(per.getSegundoApellido());
         frmPersona.getTxtSegundoNombre().setText(per.getSegundoNombre());
         frmPersona.getTxtTelefono().setText(per.getTelefono());
-        if(per.getEstadoCivil() == null){
+        frmPersona.getJdfechaNacimiento().setDate(fecha);
+        if (per.getEstadoCivil() == null) {
             frmPersona.getCmbEstadoCivil().setSelectedItem("SELECCIONE");
-        } else{
+        } else {
             frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         }
-        if(per.getTipoDiscapacidad() == null){
+        if (per.getTipoDiscapacidad() == null) {
             frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
-        } else{
+        } else {
             frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         }
-        if(per.getIdiomaRaiz() == null){
+        if (per.getIdiomaRaiz() == null) {
             frmPersona.getCmbIdiomas().setSelectedItem("SELECCIONE");
-        } else{
+        } else {
             frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
         }
-        
-        frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
 
+        // frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
+        frmPersona.getJdfechaNacimiento().setCalendar(fecha_Nacimiento);
         String sexo = per.getSexo() + "";
         if ("H".equals(sexo)) {
             sexo = "HOMBRE";
@@ -930,9 +938,9 @@ public class FrmPersonaCTR {
         }
         int nvlLugarRes = 0;
         System.out.println("Nivel de lugar residencia  " + per.getLugarResidencia().getNivel());
-        if(per.getLugarResidencia().getNivel() == null){
+        if (per.getLugarResidencia().getNivel() == null) {
             nvlLugarRes = 0;
-        } else{
+        } else {
             nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
         }
         String parroquia = null, canton = null, provincia = null;
@@ -942,9 +950,9 @@ public class FrmPersonaCTR {
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        if(per.getLugarResidencia().getNivel() == null){
+        if (per.getLugarResidencia().getNivel() == null) {
             nvlLugarRes = 0;
-        } else{
+        } else {
             nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
         }
         if (nvlLugarRes == 3) {
@@ -953,9 +961,9 @@ public class FrmPersonaCTR {
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        if(per.getLugarResidencia().getNivel() == null){
+        if (per.getLugarResidencia().getNivel() == null) {
             nvlLugarRes = 0;
-        } else{
+        } else {
             nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
         }
         if (nvlLugarRes == 2) {
@@ -964,9 +972,9 @@ public class FrmPersonaCTR {
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel 
-        if(per.getLugarResidencia().getNivel() == null){
+        if (per.getLugarResidencia().getNivel() == null) {
             nvlLugarRes = 0;
-        } else{
+        } else {
             nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
         }
         System.out.println("Pais reside " + per.getLugarResidencia().getNombre());
