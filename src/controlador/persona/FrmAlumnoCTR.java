@@ -449,8 +449,9 @@ public class FrmAlumnoCTR {
             this.bdAlumno = pasarDatos(persona);
             if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
             } else {
                 JOptionPane.showMessageDialog(null, "Error en grabar los datos");
             }
@@ -459,8 +460,9 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
                 editar = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -470,8 +472,9 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
                 editar_2 = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");

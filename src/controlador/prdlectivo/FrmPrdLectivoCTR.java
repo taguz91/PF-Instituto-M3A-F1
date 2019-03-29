@@ -9,9 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -109,21 +115,22 @@ public class FrmPrdLectivoCTR {
             }
         };
         
-        SelectionChangedListener cambioFecha = new SelectionChangedListener() {
-            @Override
-            public void onSelectionChange(SelectionChangedEvent sce) {
-                habilitarGuardar();
-            }
-        };
-
         iniciarDatos();
         iniciarCarreras();
         iniciarComponentes();
         iniciarFechas();
         habilitarGuardar();
         frmPrdLectivo.getCbx_Carreras().addActionListener(rellenarNombre);
-        frmPrdLectivo.getDcr_FecInicio().addSelectionChangedListener(cambioFecha);
-        frmPrdLectivo.getDcr_FecConclusion().addSelectionChangedListener(cambioFecha);
+        frmPrdLectivo.getJdc_FechaInicio().addMouseListener(new MouseAdapter(){
+            public void MouseClicked(){
+                habilitarGuardar();
+            }
+        });
+        frmPrdLectivo.getJdc_FechaFin().addMouseListener(new MouseAdapter(){
+            public void MouseClicked(){
+                habilitarGuardar();
+            }
+        });
         frmPrdLectivo.getBtn_Guardar().addActionListener(e -> guardarPeriodo());
         frmPrdLectivo.getBtn_Cancelar().addActionListener(Cancelar);
         frmPrdLectivo.getCbx_Carreras().addActionListener(combo_Carreras);
@@ -162,11 +169,14 @@ public class FrmPrdLectivoCTR {
     public void iniciarFechas() {
 
         LocalDate fechaActual = LocalDate.now();
-        Calendar calendario = Calendar.getInstance();
-        calendario.clear();
-        calendario.set(fechaActual.getYear(), fechaActual.getMonthValue() - 1, fechaActual.getDayOfMonth());
-        frmPrdLectivo.getDcr_FecInicio().setSelectedDate(calendario);
-        frmPrdLectivo.getDcr_FecConclusion().setSelectedDate(calendario);
+        Date fechaHoy = Date.from(fechaActual.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        
+//        Calendar calendario = Calendar.getInstance();
+//        calendario.clear();
+//        calendario.set(fechaActual.getYear(), fechaActual.getMonthValue() - 1, fechaActual.getDayOfMonth());
+        
+        frmPrdLectivo.getJdc_FechaInicio().setDate(fechaHoy);
+        frmPrdLectivo.getJdc_FechaFin().setDate(fechaHoy);
     }
 
     public void iniciarComponentes() {
@@ -178,6 +188,10 @@ public class FrmPrdLectivoCTR {
         frmPrdLectivo.getTxt_Nombre().setEnabled(false);
         frmPrdLectivo.getBtn_Guardar().setEnabled(false);
     }
+    
+    public LocalDate convertirDate(Date fecha){
+        return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
     public void guardarPeriodo() {
 
@@ -187,18 +201,22 @@ public class FrmPrdLectivoCTR {
 
         carreras = frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString();
         nombre_Periodo = frmPrdLectivo.getTxt_Nombre().getText();
-        fecha_Inicio = frmPrdLectivo.getDcr_FecInicio().getText();
-        String fec[] = fecha_Inicio.split("/");
+//        fecha_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
+//        String fec[] = fecha_Inicio.split("/");
         observacion = frmPrdLectivo.getTxtObservacion().getText();
-        fecha_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
-        String fec_Fin[] = fecha_Fin.split("/");
-        LocalDate dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
-        LocalDate dia_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
+//        fecha_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
+//        String fec_Fin[] = fecha_Fin.split("/");
+//        System.out.println("FECHA: " + fecha_Inicio);
+        LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
+        LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
+        System.out.println("Fecha Inicio: " + dia_Inicio.toString());
+//        LocalDate dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
+//        LocalDate dia_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
         
-        if (Integer.parseInt(fec[1]) >= 9 && Integer.parseInt(fec[1]) <= 12) {
-            switch (fec[1]) {
-                case "09":
-                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 1, Integer.parseInt(fec[0]));
+        if (dia_Inicio.getMonthValue() >=9 && dia_Inicio.getMonthValue() <= 12) {
+            switch (dia_Inicio.getMonthValue()) {
+                case 9:
+                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 1, dia_Inicio.getDayOfMonth());
                     if (dia_Inicio.isAfter(dia_Fin) == true) {
                         error = true;
                         frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
@@ -207,8 +225,8 @@ public class FrmPrdLectivoCTR {
                         frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
                     }
                     break;
-                case "10":
-                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 2, Integer.parseInt(fec[0]));
+                case 10:
+                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 2, dia_Inicio.getDayOfMonth());
                     if (dia_Inicio.isAfter(dia_Fin) == true) {
                         error = true;
                         frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
@@ -217,8 +235,8 @@ public class FrmPrdLectivoCTR {
                         frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
                     }
                     break;
-                case "11":
-                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 3, Integer.parseInt(fec[0]));
+                case 11:
+                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 3, dia_Inicio.getDayOfMonth());
                     if (dia_Inicio.isAfter(dia_Fin) == true) {
                         error = true;
                         frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
@@ -227,8 +245,8 @@ public class FrmPrdLectivoCTR {
                         frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
                     }
                     break;
-                case "12":
-                    dia_Inicio = LocalDate.of(1+Integer.parseInt(20+fec[2]), 4, Integer.parseInt(fec[0]));
+                case 12:
+                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 4, dia_Inicio.getDayOfMonth());
                     if (dia_Inicio.isAfter(dia_Fin) == true) {
                         error = true;
                         frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
@@ -239,7 +257,7 @@ public class FrmPrdLectivoCTR {
                     break;
             }
         } else {
-            dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]) + 4, Integer.parseInt(fec[0]));
+            dia_Inicio = LocalDate.of(dia_Inicio.getYear(), dia_Inicio.getMonthValue() + 4, dia_Inicio.getDayOfMonth());
             if (dia_Inicio.isAfter(dia_Fin) == true) {
                 error = true;
                 frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
@@ -248,6 +266,7 @@ public class FrmPrdLectivoCTR {
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
             }
         }
+        error = true;
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
@@ -261,7 +280,8 @@ public class FrmPrdLectivoCTR {
                 periodo = pasarDatos(periodo, carrera);
                 if (bdPerLectivo.guardarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
-                    reiniciarComponentes(frmPrdLectivo);
+                    frmPrdLectivo.dispose();
+//                    reiniciarComponentes(frmPrdLectivo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }
@@ -273,7 +293,8 @@ public class FrmPrdLectivoCTR {
                 periodo.setId_PerioLectivo(id_PeriodoLectivo);
                 if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
-                    reiniciarComponentes(frmPrdLectivo);
+                    frmPrdLectivo.dispose();
+//                    reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -284,9 +305,9 @@ public class FrmPrdLectivoCTR {
 
     public PeriodoLectivoMD pasarDatos(PeriodoLectivoMD periodo, CarreraMD carrera) {
         LocalDate fechaActual = LocalDate.now();
-        String date_Inicio = frmPrdLectivo.getDcr_FecInicio().getText();
+        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
         String fec_Inicio[] = date_Inicio.split("/");
-        String date_Fin = frmPrdLectivo.getDcr_FecConclusion().getText();
+        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
         String fec_Fin[] = date_Fin.split("/");
 
         LocalDate fecha_Inicio = fechaActual;
@@ -332,8 +353,8 @@ public class FrmPrdLectivoCTR {
 
         frmPrdLectivo.getCbx_Carreras().setSelectedItem(mdCarrera.getNombre());
         frmPrdLectivo.getTxt_Nombre().setText(mdPerLectivo.getNombre_PerLectivo());
-        frmPrdLectivo.getDcr_FecInicio().setSelectedDate(calendar_Inicio);
-        frmPrdLectivo.getDcr_FecConclusion().setSelectedDate(calendar_Fin);
+        frmPrdLectivo.getJdc_FechaInicio().setCalendar(calendar_Inicio);
+        frmPrdLectivo.getJdc_FechaFin().setCalendar(calendar_Fin);
         frmPrdLectivo.getTxtObservacion().setText(mdPerLectivo.getObservacion_PerLectivo());
     }
 

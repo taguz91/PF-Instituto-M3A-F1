@@ -210,6 +210,7 @@ public class VtnAlumnoCTR {
         if (i >= 0) {
             AlumnoMD alumno;
             alumno = bdAlumno.buscarPersona(Integer.valueOf(vtnAlumno.getTblAlumno().getValueAt(i, 0).toString()));
+            System.out.println("ID: " + vtnAlumno.getTblAlumno().getValueAt(i, 0).toString());
             return alumno;
         } else {
             return null;

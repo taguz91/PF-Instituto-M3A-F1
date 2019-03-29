@@ -5,6 +5,7 @@
  */
 package vista.prdlectivo;
 
+import com.toedter.calendar.JDateChooser;
 import datechooser.beans.DateChooserCombo;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,20 +50,20 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         this.Cbx_Carreras = Cbx_Carreras;
     }
 
-    public DateChooserCombo getDcr_FecConclusion() {
-        return Dcr_FecConclusion;
+    public JDateChooser getJdc_FechaFin() {
+        return jdc_FechaFin;
     }
 
-    public void setDcr_FecConclusion(DateChooserCombo Dcr_FecConclusion) {
-        this.Dcr_FecConclusion = Dcr_FecConclusion;
+    public void setJdc_FechaFin(JDateChooser jdc_FechaFin) {
+        this.jdc_FechaFin = jdc_FechaFin;
     }
 
-    public DateChooserCombo getDcr_FecInicio() {
-        return Dcr_FecInicio;
+    public JDateChooser getJdc_FechaInicio() {
+        return jdc_FechaInicio;
     }
 
-    public void setDcr_FecInicio(DateChooserCombo Dcr_FecInicio) {
-        this.Dcr_FecInicio = Dcr_FecInicio;
+    public void setJdc_FechaInicio(JDateChooser jdc_FechaInicio) {
+        this.jdc_FechaInicio = jdc_FechaInicio;
     }
 
     public JTextField getTxt_Nombre() {
@@ -189,15 +190,15 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         Txt_Nombre = new javax.swing.JTextField();
         Cbx_Carreras = new javax.swing.JComboBox<>();
-        Dcr_FecInicio = new datechooser.beans.DateChooserCombo();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Dcr_FecConclusion = new datechooser.beans.DateChooserCombo();
         Lbl_ErrCarrera = new javax.swing.JLabel();
         Lbl_ErrNombre = new javax.swing.JLabel();
         Lbl_ErrObservacion = new javax.swing.JLabel();
         Lbl_ErrFecInicio = new javax.swing.JLabel();
         Lbl_ErrFecFin = new javax.swing.JLabel();
+        jdc_FechaInicio = new com.toedter.calendar.JDateChooser();
+        jdc_FechaFin = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setIconifiable(true);
@@ -225,49 +226,35 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         Cbx_Carreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
         getContentPane().add(Cbx_Carreras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 357, -1));
 
-        try {
-            Dcr_FecInicio.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2019, 1, 1),
-                new java.util.GregorianCalendar(2019, 1, 1))));
-    } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
-        e1.printStackTrace();
-    }
-    getContentPane().add(Dcr_FecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 166, -1));
+        jLabel1.setText("Fecha de Inicio:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
-    jLabel1.setText("Fecha de Inicio:");
-    getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        jLabel2.setText("Fecha de Conclusion:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
 
-    jLabel2.setText("Fecha de Conclusion:");
-    getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
+        Lbl_ErrCarrera.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrCarrera.setText("Seleccione una Carrera");
+        getContentPane().add(Lbl_ErrCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 170, -1));
 
-    try {
-        Dcr_FecConclusion.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2019, 1, 1),
-            new java.util.GregorianCalendar(2019, 1, 1))));
-} catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
-    e1.printStackTrace();
-    }
-    getContentPane().add(Dcr_FecConclusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 166, -1));
+        Lbl_ErrNombre.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrNombre.setText("Ingrese solo letras");
+        getContentPane().add(Lbl_ErrNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 240, -1));
 
-    Lbl_ErrCarrera.setForeground(new java.awt.Color(204, 0, 0));
-    Lbl_ErrCarrera.setText("Seleccione una Carrera");
-    getContentPane().add(Lbl_ErrCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 170, -1));
+        Lbl_ErrObservacion.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrObservacion.setText("Ingrese una Observacion");
+        getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 270, -1));
 
-    Lbl_ErrNombre.setForeground(new java.awt.Color(204, 0, 0));
-    Lbl_ErrNombre.setText("Ingrese solo letras");
-    getContentPane().add(Lbl_ErrNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 240, -1));
+        Lbl_ErrFecInicio.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrFecInicio.setText("Fecha Incorrecta");
+        getContentPane().add(Lbl_ErrFecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 160, -1));
 
-    Lbl_ErrObservacion.setForeground(new java.awt.Color(204, 0, 0));
-    Lbl_ErrObservacion.setText("Ingrese una Observacion");
-    getContentPane().add(Lbl_ErrObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 270, -1));
+        Lbl_ErrFecFin.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrFecFin.setText("Fecha Incorrecta");
+        getContentPane().add(Lbl_ErrFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 130, -1));
+        getContentPane().add(jdc_FechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 120, -1));
+        getContentPane().add(jdc_FechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 120, -1));
 
-    Lbl_ErrFecInicio.setForeground(new java.awt.Color(204, 0, 0));
-    Lbl_ErrFecInicio.setText("Fecha Incorrecta");
-    getContentPane().add(Lbl_ErrFecInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 160, -1));
-
-    Lbl_ErrFecFin.setForeground(new java.awt.Color(204, 0, 0));
-    Lbl_ErrFecFin.setText("Fecha Incorrecta");
-    getContentPane().add(Lbl_ErrFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 130, -1));
-
-    pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -275,8 +262,6 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     private javax.swing.JButton Btn_Cancelar;
     private javax.swing.JButton Btn_Guardar;
     private javax.swing.JComboBox<String> Cbx_Carreras;
-    private datechooser.beans.DateChooserCombo Dcr_FecConclusion;
-    private datechooser.beans.DateChooserCombo Dcr_FecInicio;
     private javax.swing.JLabel Lbl_ErrCarrera;
     private javax.swing.JLabel Lbl_ErrFecFin;
     private javax.swing.JLabel Lbl_ErrFecInicio;
@@ -289,6 +274,8 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private com.toedter.calendar.JDateChooser jdc_FechaFin;
+    private com.toedter.calendar.JDateChooser jdc_FechaInicio;
     private javax.swing.JTextField txtObservacion;
     // End of variables declaration//GEN-END:variables
 }

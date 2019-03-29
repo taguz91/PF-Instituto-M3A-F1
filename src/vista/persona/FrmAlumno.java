@@ -159,7 +159,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 194, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR", "NINGUNO" }));
-        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 200, -1));
+        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 200, -1));
 
         jLabel14.setText("Trabaja:");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, 20));
@@ -174,7 +174,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
         jLabel19.setText("Formacion Padre ");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
         jLabel22.setText("Nombre Contacto *");
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, 20));
@@ -231,7 +231,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Lbl_ErrForPadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForPadre.setText("Seleccione la Formación del Padre");
-        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 190, -1));
+        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 210, -1));
 
         Lbl_ErrForMadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForMadre.setText("Seleccione la Formacion de la Madre");

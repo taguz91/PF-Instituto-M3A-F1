@@ -147,17 +147,18 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     public AlumnoMD buscarPersona(int aguja) {
-        String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_apellido,\n"
-                + "p.persona_segundo_apellido, p.persona_primer_nombre, p.persona_segundo_nombre,\n"
+        String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre, p.persona_primer_apellido, p.persona_segundo_apellido,\n"
                 + "a.id_alumno, a.id_sec_economico, a.alumno_tipo_colegio, a.alumno_tipo_bachillerato,\n"
                 + "a.alumno_anio_graduacion, a.alumno_educacion_superior, a.alumno_titulo_superior, a.alumno_nivel_academico,\n"
                 + "a.alumno_pension, a.alumno_ocupacion, a.alumno_trabaja, a.alumno_nivel_formacion_padre, a.alumno_nivel_formacion_madre,\n"
-                + "a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto, a.alumno_numero_contacto\n"
+                + "a.alumno_numero_contacto, a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto\n"
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
+            
             while (rs.next()) {
                 SectorEconomicoMD sector = new SectorEconomicoMD();
                 a.setIdPersona(rs.getInt("id_persona"));
@@ -167,6 +168,7 @@ public class AlumnoBD extends AlumnoMD {
                 a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 a.setId_Alumno(rs.getInt("id_alumno"));
+                System.out.println("Aguja: " + a.getId_Alumno());
                 if (rs.wasNull()) {
                     sector.setId_SecEconomico(0);
                     a.setSectorEconomico(sector);
