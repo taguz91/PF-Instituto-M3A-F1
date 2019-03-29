@@ -395,7 +395,7 @@ public class VtnNotasAlumnoCursoCTR {
                         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
                         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-                        listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                        listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
                         listaNotas.stream()
                                 .forEach(obj -> {

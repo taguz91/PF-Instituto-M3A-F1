@@ -68,8 +68,9 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
+
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -111,6 +112,8 @@ public class ControladorSilaboCRUD {
     private List<MateriaMD> materiasSilabo;
 
     private List<PeriodoLectivoMD> periodosSilabo;
+
+    PeriodoLectivoMD pl = new dbPeriodoLectivo();
 
     static int x = 0;
 
@@ -182,35 +185,7 @@ public class ControladorSilaboCRUD {
         return silabos;
     }
 
-    public void llamar_reporte(String id_silabo) {
-
-        pgConect con = new pgConect();
-        String item = (String) setup.getCmbAsignatura().getSelectedItem();
-        //String id_silabo = silabo.cod_sib();
-        System.out.println(id_silabo);
-        dbMaterias nuevas = new dbMaterias();
-        MateriaMD materia = nuevas.retornaMateria(item);
-
-        try {
-            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
-            JasperDesign jd = JRXmlLoader.load(report);
-            String id = String.valueOf(materia.getId());
-            //id_silabo = silabo.cod_sib();
-            System.out.println(id_silabo);
-            Map parametro = new HashMap();
-            String par = "47";
-
-            parametro.put("parameter1", id);
-            parametro.put("id_silabo", id_silabo);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
-            JasperViewer.viewReport(jp, false);
-
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, "error" + e);
-        }
-    }
+   
 
     public void iniciarControlador() {
 
@@ -225,31 +200,6 @@ public class ControladorSilaboCRUD {
                     setup.getCmbAsignatura().removeAllItems();
                     cargarCombo2();
 
-                }
-
-            };
-
-            ActionListener alr = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    try {
-
-                        String report = "src\\vista\\reportes\\beta.jrxml";
-
-                        JasperDesign jd = JRXmlLoader.load(report);
-                        String p = "TT07";
-                        String sql = "SELECT * FROM \"Referencias\" WHERE codigo_referencia='" + p + "'";
-                        JRDesignQuery newQuery = new JRDesignQuery();
-                        newQuery.setText(sql);
-                        jd.setQuery(newQuery);
-                        JasperReport jr = JasperCompileManager.compileReport(jd);
-                        JasperPrint jp = JasperFillManager.fillReport(jr, null, new pgConect().getCon());
-                        JasperViewer.viewReport(jp, false);
-
-                    } catch (Exception e) {
-
-                        JOptionPane.showMessageDialog(null, e);
-                    }
                 }
 
             };
@@ -394,6 +344,7 @@ public class ControladorSilaboCRUD {
                 unidades.get(j).setObjetivoEspecificoUnidad(gestion.getTxrObjetivos().getText());
                 unidades.get(j).setContenidosUnidad(gestion.getTxrContenidos().getText());
                 unidades.get(j).setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
+
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 /*if (validarCampos() && validarEvaluaciones()) {
                     gestion.getBtnSiguiente().setEnabled(true);
@@ -447,7 +398,7 @@ public class ControladorSilaboCRUD {
             @Override
             public void mouseClicked(MouseEvent me) {
 
-                gestion.getTxrNuevaEstrategia().setEnabled(true);
+                gestion.getTxtNuevaEstrategia().setEnabled(true);
                 gestion.getLblGuardarEstrategia().setEnabled(true);
 
             }
@@ -459,11 +410,11 @@ public class ControladorSilaboCRUD {
             public void mouseClicked(MouseEvent me) {
 
                 dbEstrategiasAprendizaje nueva = new dbEstrategiasAprendizaje();
-                nueva.setDescripcionEstrategia(gestion.getTxrNuevaEstrategia().getText());
+                nueva.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
                 estrategiasAprendizaje.add(nueva);
                 insertarEstrategia(nueva);
-                gestion.getTxrNuevaEstrategia().setText("");
-                gestion.getTxrNuevaEstrategia().setEnabled(false);
+                gestion.getTxtNuevaEstrategia().setText("");
+                gestion.getTxtNuevaEstrategia().setEnabled(false);
                 gestion.getLblGuardarEstrategia().setEnabled(false);
                 cargarEstrategias(0);
 
@@ -474,10 +425,15 @@ public class ControladorSilaboCRUD {
         gestion.getDchFechaInicio().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                LocalDate fechaInicio = gestion.getDchFechaInicio().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+                LocalDate fechaInicio = gestion.getDchFechaInicio().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+               
                 int j = gestion.getCmbUnidad().getSelectedIndex();
-                unidades.get(j).setFechaInicioUnidad(fechaInicio);
+                if (unidades.get(j).getFechaFinUnidad().isAfter(fechaInicio)) {
+                    unidades.get(j).setFechaInicioUnidad(fechaInicio);
+                } else {
+                    gestion.getDchFechaInicio().setDate(Date.from(unidades.get(j).getFechaFinUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
+                }
 
             }
 
@@ -487,10 +443,13 @@ public class ControladorSilaboCRUD {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 LocalDate fechaFin = gestion.getDchFechaFin().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
+               
                 int j = gestion.getCmbUnidad().getSelectedIndex();
-                unidades.get(j).setFechaFinUnidad(fechaFin);
-
+                if (unidades.get(j).getFechaInicioUnidad().isBefore(fechaFin)) {
+                    unidades.get(j).setFechaFinUnidad(fechaFin);
+                } else {
+                    gestion.getDchFechaFin().setDate(Date.from(unidades.get(j).getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+                }
             }
 
         });
@@ -586,6 +545,24 @@ public class ControladorSilaboCRUD {
             }
 
         });
+
+        ActionListener val = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                if (!silaboValido()) {
+
+                    gestion.setVisible(true);
+                    bibliografia.setVisible(false);
+                } else {
+                    cargarBiblioteca();
+                }
+
+            }
+
+        };
+
+        gestion.getBtnSiguiente().addActionListener(val);
 
         ChangeListener cl = new ChangeListener() {
             @Override
@@ -798,9 +775,8 @@ public class ControladorSilaboCRUD {
                 }
                 );
 
-        gestion.getBtnSiguiente()
-                .addActionListener(al -> cargarBiblioteca());
-
+        /*gestion.getBtnSiguiente()
+                .addActionListener(al -> cargarBiblioteca());*/
         gestion.getTxtTitulo()
                 .addKeyListener(k1);
         gestion.getTxrObjetivos()
@@ -878,7 +854,7 @@ public class ControladorSilaboCRUD {
         List<CarreraMD> carreras;
 
         //System.out.println(usuario.getIdPersona().getIdPersona());
-        carreras = new dbCarreras().buscarCarreras(usuario.getIdPersona().getIdPersona());
+        carreras = new dbCarreras().buscarCarreras(usuario.getPersona().getIdPersona());
 
         /* for (int i = 0; i < carreras.size(); i++) {
             System.out.println(carreras.get(i).getCarreraNombre());
@@ -894,7 +870,7 @@ public class ControladorSilaboCRUD {
 
         List<MateriaMD> materias;
 
-        int[] aguja = {usuario.getIdPersona().getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
+        int[] aguja = {usuario.getPersona().getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
 
         materias = new dbMaterias().buscarMateria(aguja);
 
@@ -927,9 +903,12 @@ public class ControladorSilaboCRUD {
         }
 
         if (p == 0) {
+
             if (check.length > 0) {
+                CheckListItem nuevo = (CheckListItem) list.getModel().getElementAt(0);
+                nuevo.setSelected(true);
                 for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize() - 1; i++) {
-                    CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i);
+                    CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i + 1);
                     item2.setSelected(check[i]);
                 }
             }
@@ -1029,14 +1008,14 @@ public class ControladorSilaboCRUD {
         gestion.getSpnHorasDocencia().setValue(unidades.get(unidad).getHorasDocenciaUnidad());
         gestion.getSpnHorasPracticas().setValue(unidades.get(unidad).getHorasPracticaUnidad());
         gestion.getSpnHorasAutonomas().setValue(unidades.get(unidad).getHorasAutonomoUnidad());
-        gestion.getDchFechaEnvioAD().setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaPresentacionAD().setDate(Date.from(LocalDate.now().plus(1, ChronoUnit.DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaEnvioAC().setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaPresentacionAC().setDate(Date.from(LocalDate.now().plus(1, ChronoUnit.DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaEnvioP().setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaPresentacionP().setDate(Date.from(LocalDate.now().plus(1, ChronoUnit.DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaEnvioA().setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        gestion.getDchFechaPresentacionA().setDate(Date.from(LocalDate.now().plus(1, ChronoUnit.DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaEnvioAD().setDate(Date.from(pl.getFecha_Inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaPresentacionAD().setDate(Date.from(pl.getFecha_Fin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaEnvioAC().setDate(Date.from(pl.getFecha_Inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaPresentacionAC().setDate(Date.from(pl.getFecha_Fin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaEnvioP().setDate(Date.from(pl.getFecha_Inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaPresentacionP().setDate(Date.from(pl.getFecha_Fin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaEnvioA().setDate(Date.from(pl.getFecha_Inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        gestion.getDchFechaPresentacionA().setDate(Date.from(pl.getFecha_Fin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         //
 
         if (estrategiasUnidad.size() > 0) {
@@ -1066,9 +1045,12 @@ public class ControladorSilaboCRUD {
         evaluaciones = new ArrayList<>();
         referencias = new ArrayList<>();
         referenciasSilabo = new ArrayList<>();
+
         gestion.getCmbUnidad().removeAllItems();
 
         if (n_unidades == -1) {
+            pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbMaterias().retornaMateria(silabos.getTblSilabos().getValueAt(fila, 0).toString()).getCarrera().getId());
+
             seleccionarSilabo();
             n_unidades = unidades.size();
             System.out.println(n_unidades);
@@ -1087,21 +1069,25 @@ public class ControladorSilaboCRUD {
         cargarEstrategias(0);
 
         if (!editar) {
+            pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId());
+
             for (int i = 0; i < n_unidades; i++) {
                 agregarUnidad();
             }
+            
+            
 
         }
 
         gestion.setTitle(materia);
-
+        gestion.getCmbUnidad().setSelectedIndex(0);
         //agregarUnidad();
     }
 
     public void agregarUnidad() {
 
         //silabo.getEvaluacionSilaboList().add(new EvaluacionSilabo());
-        unidades.add(new UnidadSilabo(unidades.size(), LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS)));
+        unidades.add(new UnidadSilabo(unidades.size(), pl.getFecha_Inicio(), pl.getFecha_Fin()));
 
         gestion.getCmbUnidad().addItem("Unidad " + unidades.size());
 
@@ -1227,7 +1213,7 @@ public class ControladorSilaboCRUD {
 
     public void insertarEstrategia(dbEstrategiasAprendizaje estrategia) {
 
-        estrategia.setDescripcionEstrategia(gestion.getTxrNuevaEstrategia().getText());
+        estrategia.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
 
         if (estrategia.insertar()) {
             JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
@@ -1442,7 +1428,7 @@ public class ControladorSilaboCRUD {
 
         modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
 
-        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getIdPersona().getIdPersona());
+        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getPersona().getIdPersona());
         periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo();
 
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
@@ -1486,19 +1472,25 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\vista\\silabos\\reportes\\silabo2\\primera_pag.jrxml";
-            JasperDesign jd = JRXmlLoader.load(report);
-            //String id = String.valueOf(materia.getIdMateria());
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
+           
+            Map<String,Object> parametro =new HashMap<String, Object>();
+            
+           
+            
             //id_silabo = silabo.cod_sib();
             System.out.println(id_silabo);
-            Map parametro = new HashMap();
+           
             String par = "47";
 
             parametro.put("parameter1", id_materia1);
             parametro.put("id_silabo", id_silabo1);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            JasperPrint jp=JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            
             JasperViewer.viewReport(jp, false);
+            
+            
 
         } catch (Exception e) {
 
@@ -1532,18 +1524,22 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            String report = "src\\vista\\silabos\\reportes\\silabo2\\formato2\\primerapag.jrxml";
-            JasperDesign jd = JRXmlLoader.load(report);
-            //String id = String.valueOf(materia.getIdMateria());
+            
+             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
+           
+            Map<String,Object> parametro =new HashMap<String, Object>();
+            
+           
+            
             //id_silabo = silabo.cod_sib();
             System.out.println(id_silabo);
-            Map parametro = new HashMap();
+           
             String par = "47";
 
             parametro.put("parameter1", id_materia1);
             parametro.put("id_silabo", id_silabo1);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            JasperPrint jp=JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            
             JasperViewer.viewReport(jp, false);
 
         } catch (Exception e) {
@@ -1660,23 +1656,13 @@ public class ControladorSilaboCRUD {
     }
 
     public boolean validarEvaluaciones() {
-
+        System.out.println("entro");
         int total = 0;
 
-        for (int i = 0; i < gestion.getTblAsistidaDocente().getModel().getRowCount(); i++) {
-            total = +(int) gestion.getTblAsistidaDocente().getValueAt(2, i);
-        }
+        for (int i = 0; i < evaluaciones.size(); i++) {
 
-        for (int i = 0; i < gestion.getTblAprendizajeColaborativo().getModel().getRowCount(); i++) {
-            total = +(int) gestion.getTblAprendizajeColaborativo().getValueAt(2, i);
-        }
+            total += evaluaciones.get(i).getValoracion();
 
-        for (int i = 0; i < gestion.getTblPractica().getModel().getRowCount(); i++) {
-            total = +(int) gestion.getTblPractica().getValueAt(2, i);
-        }
-
-        for (int i = 0; i < gestion.getTblAutonoma().getModel().getRowCount(); i++) {
-            total = +(int) gestion.getTblAutonoma().getValueAt(2, i);
         }
 
         if (total == 60) {
@@ -1711,7 +1697,7 @@ public class ControladorSilaboCRUD {
                 control = false;
             }
 
-            for (int j = 0; i < estrategiasUnidad.size(); j++) {
+            for (int j = 0; j < estrategiasUnidad.size(); j++) {
                 if (estrategiasUnidad.get(j).getIdUnidad().getIdUnidad() == unidades.get(i).getIdUnidad()) {
                     contador++;
                 }
@@ -1724,6 +1710,47 @@ public class ControladorSilaboCRUD {
         }
 
         return control;
+
+    }
+
+    public boolean validarHoras() {
+
+        int docencia = 0;
+        int practica = 0;
+        int autonomo = 0;
+
+        MateriaMD m = new dbMaterias().retornaMateria(gestion.getTitle());
+
+        for (int i = 0; i < unidades.size(); i++) {
+
+            docencia = docencia + unidades.get(i).getHorasDocenciaUnidad();
+
+            practica = practica + unidades.get(i).getHorasPracticaUnidad();
+
+            autonomo = autonomo + unidades.get(i).getHorasAutonomoUnidad();
+
+        }
+
+        System.out.println(m.getHorasDocencia() + "-" + docencia);
+        System.out.println(m.getHorasPracticas() + "-" + practica);
+        System.out.println(m.getHorasAutoEstudio() + "-" + autonomo);
+
+        if (docencia == m.getHorasDocencia() && practica == m.getHorasPracticas() && autonomo == m.getHorasAutoEstudio()) {
+
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    public boolean silaboValido() {
+
+        if (validarCampos() && validarHoras() && validarEvaluaciones()) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

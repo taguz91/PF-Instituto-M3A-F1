@@ -20,7 +20,6 @@ public class CursoMD {
     private JornadaMD curso_jornada;
     private int curso_capacidad;
     private int curso_ciclo;
-    private boolean permiso_ingreso_nt;
     private String paralelo; 
 
     public CursoMD() {
@@ -28,14 +27,6 @@ public class CursoMD {
 
     public int getId_curso() {
         return id_curso;
-    }
-
-    public boolean isPermiso_ingreso_nt() {
-        return permiso_ingreso_nt;
-    }
-
-    public void setPermiso_ingreso_nt(boolean permiso_ingreso_nt) {
-        this.permiso_ingreso_nt = permiso_ingreso_nt;
     }
 
     public void setId_curso(int id_curso) {
