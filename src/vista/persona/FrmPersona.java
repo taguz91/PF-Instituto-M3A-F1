@@ -1,7 +1,6 @@
 package vista.persona;
 
 import com.toedter.calendar.JDateChooser;
-import datechooser.beans.DateChooserCombo;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
