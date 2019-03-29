@@ -99,7 +99,7 @@ public class VtnMateriaCTR {
         cargarCmbFiltrar();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
-        vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteCarreras());
+        vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
         //Iniciamos el buscador  
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
         vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -198,15 +198,15 @@ public class VtnMateriaCTR {
         }
     }
 
-    public void llamaReporteCarreras() {
+    public void llamaReporteMaterias() {
 
         JasperReport jr;
-        String path = "./src/vista/reportes/repCarreras.jasper";
+        String path = "./src/vista/reportes/repMaterias.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("carreras", vtnMateria.getCmbCarreras().getSelectedItem());
+            parametro.put("carrera",vtnMateria.getCmbCarreras().getSelectedItem());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

@@ -40,7 +40,7 @@ public class dbUsuarios extends UsuarioMD {
                 PersonaMD persona = new PersonaMD();
                 persona.setIdPersona(rs.getInt(1));
 
-                dbusuario.setIdPersona(persona);
+                dbusuario.setPersona(persona);
 
             }
 

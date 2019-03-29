@@ -491,7 +491,7 @@ public class PersonaBD extends PersonaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerPersonaSinValidar(rs);
+                    p = obtenerPersona(rs);
                 }
                 rs.close();
                 return p;

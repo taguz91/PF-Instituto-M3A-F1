@@ -145,6 +145,8 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
 
         lblUnidades.setText("Unidades");
 
+        spnUnidades.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

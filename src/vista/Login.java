@@ -61,6 +61,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ISTA - Login");
+        setResizable(false);
 
         container.setBackground(new java.awt.Color(47, 76, 113));
         container.setToolTipText("");

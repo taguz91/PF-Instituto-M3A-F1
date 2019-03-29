@@ -206,6 +206,7 @@ public class VtnPersonaCTR {
             PersonaMD perEditar = dbp.buscarPersona(
                     Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             ctrFrm.editar(perEditar);
+            cargarTipoPersona();
         } else {
             vtnPersona.getLblError().setVisible(true);
         }

@@ -287,6 +287,7 @@ public class VtnDocenteCTR {
         }
     }
 
+
     public void botonReporteMateria() {
         int s = JOptionPane.showOptionDialog(vtnDocente,
                 "Reporte de Materias del Docente\n"
