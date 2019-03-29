@@ -143,7 +143,7 @@ public class VtnUsuarioCTR {
                     vista.getLblResultados().setText(lista.size() + " Registros");
                     
                     try {
-                        sleep(2000);
+                        sleep(500);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(VtnUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
                     }

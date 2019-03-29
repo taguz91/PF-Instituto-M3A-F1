@@ -62,18 +62,16 @@ public class pgConect {
         }
 
     }
-    
-    
-    public ResultSet query(String sql){
-        
+
+    public ResultSet query(String sql) {
+
         System.out.println(sql);
         try {
-            st= con.createStatement();
-            
-            rs=st.executeQuery(sql);
-            
+            st = con.createStatement();
+
+            rs = st.executeQuery(sql);
+
             //st.close();
-            
             return rs;
         } catch (SQLException ex) {
             Logger.getLogger(pgConect.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,7 +82,5 @@ public class pgConect {
     public Connection getCon() {
         return con;
     }
-    
-    
 
 }

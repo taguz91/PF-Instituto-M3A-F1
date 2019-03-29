@@ -201,7 +201,9 @@ public class FrmUsuarioCTR {
 
         } else {
             listaTemporal.forEach(obj -> {
-
+                
+                modelo.setPersona(obj);
+                
             });
         }
 

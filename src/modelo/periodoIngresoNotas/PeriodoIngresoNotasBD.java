@@ -52,17 +52,19 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 + "(perd_notas_fecha_inicio,perd_notas_fecha_cierre,id_prd_lectivo,id_tipo_nota) \n"
                 + "VALUES\n"
                 + "("
-                + " '" + getFechaInicio() + "',"
-                + " '" + getFechaCierre() + "',"
-                + "  " + getIdPeriodoLectivo() + ","
-                + "  " + getIdTipoNota() + ""
+                + " '" + java.sql.Date.valueOf(getFechaInicio()) + "',"
+                + " '" + java.sql.Date.valueOf(getFechaCierre())+ "',"
+                + "  " + getIdPeriodoLectivo().getId_PerioLectivo() + ","
+                + "  " + getIdTipoNota().getIdTipoNota() + ""
                 + ");";
+                
+                System.out.println(INSERT);
 
         return ResourceManager.Statement(INSERT) == null;
     }
 
     public static List<PeriodoIngresoNotasMD> SelectAll() {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + ";";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "WHERE perd_notas_estado IS TRUE";
 
         return selectSimple(SELECT);
     }
@@ -84,10 +86,10 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
     public boolean eliminar(int PK) {
         String DELETE = "UPDATE " + TABLA
                 + " SET "
-                + " per_notas_estado= " + false + " "
+                + " perd_notas_estado= " + false + " "
                 + " WHERE "
                 + " " + PRIMARY_KEY + "=" + PK + " ";
-
+    
         return ResourceManager.Statement(DELETE) == null;
     }
 

@@ -47,13 +47,13 @@ public class VtnTipoNotasCTR {
 
     //Inits
     public void Init() {
+        vista.setVisible(true);
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
         cargarTabla();
-        vista.show();
         desktop.getDpnlPrincipal().add(vista);
         try {
             vista.setSelected(true);
@@ -83,15 +83,23 @@ public class VtnTipoNotasCTR {
     public void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
         listaTiposNotas = TipoDeNotaBD.SelectAll();
-        listaTiposNotas
-                .stream()
-                .forEach(VtnTipoNotasCTR::agregarFila);
+
+        for (TipoDeNotaMD obj : listaTiposNotas) {
+            if (vista.isVisible()) {
+                agregarFila(listaTiposNotas.indexOf(obj) + 1, obj);
+            } else {
+                listaTiposNotas = null;
+                System.gc();
+                break;
+            }
+        }
 
     }
 
-    private static void agregarFila(TipoDeNotaMD obj) {
+    private static void agregarFila(int indice, TipoDeNotaMD obj) {
 
         tablaTiposNotas.addRow(new Object[]{
+            indice,
             obj.getIdTipoNota(),
             obj.getNombre(),
             obj.getValorMinimo(),
@@ -182,7 +190,7 @@ public class VtnTipoNotasCTR {
             listaTiposNotas = modelo.SelectOneWhereNombre(Aguja);
             cargarTabla();
         } else if (Aguja.length() == 0) {
-            listaTiposNotas = modelo.SelectAll();
+            listaTiposNotas = TipoDeNotaBD.SelectAll();
             cargarTabla();
         }
 
