@@ -4,7 +4,6 @@ CREATE VIEW "public"."Untitled" AS SELECT
 "public"."Usuarios".usu_password,
 "public"."Usuarios".usu_estado,
 "public"."Usuarios".id_persona,
-"public"."Personas".id_persona,
 "public"."Personas".persona_foto,
 "public"."Personas".persona_identificacion,
 "public"."Personas".persona_primer_apellido,

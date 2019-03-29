@@ -182,7 +182,7 @@ public class VtnTipoNotasCTR {
             listaTiposNotas = modelo.SelectOneWhereNombre(Aguja);
             cargarTabla();
         } else if (Aguja.length() == 0) {
-            listaTiposNotas = modelo.SelectAll();
+            listaTiposNotas = TipoDeNotaBD.SelectAll();
             cargarTabla();
         }
 
