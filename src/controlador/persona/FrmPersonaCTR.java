@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import static com.sun.javafx.tk.Toolkit.getToolkit;
 import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,6 +56,7 @@ public class FrmPersonaCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
+    private TxtVCelular valCelular;
     private int numAccion = 2;
     private Image foto;
 
@@ -160,9 +161,26 @@ public class FrmPersonaCTR {
 
         });
 
-        valCe = new TxtVCedula(
-                frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
+        frmPersona.getTxtCelular().addKeyListener(new KeyAdapter() {
+            public void KeyTyped(KeyEvent ew) {
+                String celular = frmPersona.getTxtCelular().getText();
+                char car = ew.getKeyChar();
 
+                if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')) {
+                    ew.consume();
+                }
+                if (celular.length() >= 10) {
+                    ew.consume();
+                }
+                if (Character.isLetter(car)) {
+                    ew.consume();
+                }
+            }
+        });
+
+        valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
+
+        //valCelular = new TxtVCelular(frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular());
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -532,7 +550,7 @@ public class FrmPersonaCTR {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
         //Le pasamos la fecha que escribio en el calendario
-        fecha =  frmPersona.getJdfechaNacimiento().getDate();
+        fecha = frmPersona.getJdfechaNacimiento().getDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
 
@@ -543,7 +561,7 @@ public class FrmPersonaCTR {
 
         System.out.println("fechaNacimiento " + fechaNacimiento);
         System.out.println("fechaNac " + fechaNac);
-        
+
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
             guardar = false;
@@ -649,9 +667,7 @@ public class FrmPersonaCTR {
         }
 
         calleSec = frmPersona.getTxtCalleSecundaria().getText().trim().toUpperCase().toUpperCase();
-
         referencia = frmPersona.getTxtReferencia().getText().trim().toUpperCase();
-
         celular = frmPersona.getTxtCelular().getText().trim().toUpperCase();
         if (!Validar.esTelefono(celular)) {
             guardar = false;
@@ -659,10 +675,8 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorCelular().setVisible(false);
         }
-
         // Lugares en donde reside y vive 
         LugarMD lugarNac = null, lugarRes = null;
-
         //Esto igual deberiamos hacerlo de otra manera.
         //Aqui preguntamos siempre que sea mayor a la posicion 0 porque 
         //Ahi esta el texto seleccione  
@@ -770,11 +784,13 @@ public class FrmPersonaCTR {
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
+                        frmPersona.dispose();
                     } else {
                         per.editarPersona(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
+                        frmPersona.dispose();
                     }
                     editar = false;
                 }
@@ -784,16 +800,18 @@ public class FrmPersonaCTR {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
+                    frmPersona.dispose();
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
+                    frmPersona.dispose();
                 }
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Existen errores en los campos");
+            JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }
 
     }
