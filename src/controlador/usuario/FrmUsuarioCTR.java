@@ -94,7 +94,7 @@ public class FrmUsuarioCTR {
 
         listaPersonas
                 .stream()
-                .filter(item -> item.getIdPersona() == modelo.getIdPersona().getIdPersona())
+                .filter(item -> item.getIdPersona() == modelo.getPersona().getIdPersona())
                 .collect(Collectors.toList())
                 .forEach(obj -> {
 
