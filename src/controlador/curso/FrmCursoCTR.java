@@ -184,6 +184,7 @@ public class FrmCursoCTR {
     public void guardarYSalir() {
         guardar();
         frmCurso.dispose();
+        ctrPrin.abrirVtnCurso();
     }
 
     private void guardar() {
@@ -258,6 +259,7 @@ public class FrmCursoCTR {
             if (!editando) {
                 //Guardamos persona  
                 curso.guardarCurso();
+                
             } else {
                 if (idCurso > 0) {
                     //Editamos curso
@@ -266,6 +268,10 @@ public class FrmCursoCTR {
                 }
             }
         }
+    }
+    
+    private void iniciarIngresoNotas(){
+        
     }
 
     public void editar(CursoMD c) {
