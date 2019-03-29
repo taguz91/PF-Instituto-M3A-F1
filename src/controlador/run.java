@@ -1,7 +1,8 @@
 package controlador;
 
-import controlador.estilo.SplastCTR;
+import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
+import javax.swing.ImageIcon;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
 import vista.principal.VtnPrincipal;
@@ -11,12 +12,12 @@ import vista.principal.VtnPrincipal;
  * @author Johnny
  */
 public class run {
-    
+
     public static void main(String[] args) {
         estiloWindows();
-        SplastCTR ctrSplash = new SplastCTR();
+        //Icono de la aplicacion 
+        SplashCTR ctrSplash = new SplashCTR();
         ctrSplash.iniciar();
-        
 
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();

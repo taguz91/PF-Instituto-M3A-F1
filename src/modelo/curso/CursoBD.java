@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.jornada.JornadaBD;
@@ -39,13 +40,13 @@ public class CursoBD extends CursoMD {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
-                + "	curso_permiso_ingreso_nt, curso_paralelo)\n"
+                + "	curso_paralelo)\n"
                 + "	VALUES (" + getId_materia().getId() + ", " + getId_prd_lectivo().getId_PerioLectivo()
                 + ", " + getId_docente().getIdDocente() + ", " + getCurso_jornada().getId()
                 + ", '" + getCurso_nombre() + "', " + getCurso_capacidad() + ", " + getCurso_ciclo()
-                + ", '" + isPermiso_ingreso_nt() + "', '" + getParalelo() + "');";
+                + ", '" + getParalelo() + "');";
         if (conecta.nosql(nsql) == null) {
-            System.out.println("Guardamos curso");
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso "+getCurso_nombre());
         }
     }
 
@@ -56,11 +57,11 @@ public class CursoBD extends CursoMD {
                 + "id_docente= " + getId_docente().getIdDocente() + ", "
                 + "id_jornada=" + getCurso_jornada().getId() + ", "
                 + "curso_nombre='" + getCurso_nombre() + "', curso_capacidad=" + getCurso_capacidad() + ", "
-                + "curso_ciclo=" + getCurso_ciclo() + ", curso_permiso_ingreso_nt=" + isPermiso_ingreso_nt() + ", "
+                + "curso_ciclo=" + getCurso_ciclo() + ", "
                 + "curso_paralelo= '" + getParalelo() + "'\n"
                 + "	WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
-            System.out.println("Editamos curso");
+            JOptionPane.showMessageDialog(null, "Se edito correctamente el curso "+getCurso_nombre());
         }
     }
 
@@ -78,10 +79,6 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorPeriodo(int idPrdLectivo) {
-//        String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-//                + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
-//                + "	FROM public.\"Cursos\" "
-//                + "WHERE id_prd_lectivo = " + idPrdLectivo + ";";
         String sql = "SELECT id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -295,7 +292,6 @@ public class CursoBD extends CursoMD {
             c.setCurso_nombre(rs.getString("curso_nombre"));
             c.setCurso_capacidad(rs.getInt("curso_capacidad"));
             c.setCurso_ciclo(rs.getInt("curso_ciclo"));
-            c.setPermiso_ingreso_nt(rs.getBoolean("curso_permiso_ingreso_nt"));
             c.setParalelo(rs.getString("curso_paralelo"));
             return c;
         } catch (SQLException e) {
