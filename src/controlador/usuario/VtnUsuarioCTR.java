@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,8 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.persona.PersonaBD;
-import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
@@ -66,8 +63,6 @@ public class VtnUsuarioCTR {
         cargarTabla(listaUsuarios);
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-
-        vista.setTitle("Usuarios");
 
         InitPermisos();
         InitEventos();
@@ -124,6 +119,11 @@ public class VtnUsuarioCTR {
 
     }
 
+    /*
+    
+        METODOS DE APOYO
+    
+    */
     public void cargarTabla(List<UsuarioMD> lista) {
 
         if (carga == true) {
@@ -134,6 +134,7 @@ public class VtnUsuarioCTR {
                     tablaUsuarios.setRowCount(0);
                     lista.stream()
                             .forEach(VtnUsuarioCTR::agregarFila);
+                    vista.getLblResultados().setText(lista.size() + " Registros");
                     carga = true;
                 }
             };
@@ -145,18 +146,33 @@ public class VtnUsuarioCTR {
 
     private void cargarTablaFilter(String Aguja) {
         tablaUsuarios.setRowCount(0);
+
+        List<UsuarioMD> listaTemporal = listaUsuarios
+                .stream()
+                .filter(
+                        item -> item.getUsername().toUpperCase().contains(Aguja.toUpperCase())
+                        || item.getPersona().getIdentificacion().toUpperCase().contains(Aguja.toUpperCase())
+                        || item.getPersona().getPrimerApellido().toUpperCase().contains(Aguja.toUpperCase())
+                        || item.getPersona().getSegundoApellido().toUpperCase().contains(Aguja.toUpperCase())
+                        || item.getPersona().getPrimerNombre().toUpperCase().contains(Aguja.toUpperCase())
+                        || item.getPersona().getSegundoNombre().toUpperCase().contains(Aguja.toUpperCase())
+                )
+                .collect(Collectors.toList());
+
+        listaTemporal.forEach(VtnUsuarioCTR::agregarFila);
+        vista.getLblResultados().setText(listaTemporal.size() + " Registros");
+
     }
 
     private static void agregarFila(UsuarioMD obj) {
-
         tablaUsuarios.addRow(new Object[]{
             tablaUsuarios.getDataVector().size() + 1,
             obj.getUsername(),
-            obj.getIdPersona().getIdentificacion(),
-            obj.getIdPersona().getPrimerApellido(),
-            obj.getIdPersona().getSegundoApellido(),
-            obj.getIdPersona().getPrimerNombre(),
-            obj.getIdPersona().getSegundoNombre()
+            obj.getPersona().getIdentificacion(),
+            obj.getPersona().getPrimerApellido(),
+            obj.getPersona().getSegundoApellido(),
+            obj.getPersona().getPrimerNombre(),
+            obj.getPersona().getSegundoNombre()
 
         });
 
@@ -166,7 +182,7 @@ public class VtnUsuarioCTR {
 
         listaUsuarios = UsuarioBD.SelectAll();
 
-        String username = (String) vista.getTblUsuario().getValueAt(fila, 0);
+        String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
 
         modelo = new UsuarioBD();
 
@@ -175,7 +191,7 @@ public class VtnUsuarioCTR {
                 .collect(Collectors.toList())
                 .forEach(obj -> {
                     modelo.setUsername(obj.getUsername());
-                    modelo.setIdPersona(obj.getIdPersona());
+                    modelo.setPersona(obj.getPersona());
                 });
 
     }

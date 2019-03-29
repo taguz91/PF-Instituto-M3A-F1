@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -534,15 +535,14 @@ public class FrmPersonaCTR {
         fecha =  frmPersona.getJdfechaNacimiento().getDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         //Se lo pasa a un string para poder validarlo
         fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
 
-        System.out.println("fechaNac " + fechaNac);
-        System.out.println("fecha " + fecha);
-        System.out.println("fechaActual " + fechaActual);
         System.out.println("fechaNacimiento " + fechaNacimiento);
+        System.out.println("fechaNac " + fechaNac);
         
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
@@ -732,7 +732,7 @@ public class FrmPersonaCTR {
             per.setSegundoNombre(segNombre);
             per.setPrimerApellido(priApellido);
             per.setSegundoApellido(segApellido);
-            per.setFechaNacimiento(fechaNacimiento);
+            per.setFechaNacimiento(FechaNac);
             per.setEstadoCivil(estadoCivil);
             per.setCelular(celular);
             per.setTelefono(telefono);

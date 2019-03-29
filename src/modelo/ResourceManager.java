@@ -44,9 +44,7 @@ public class ResourceManager {
                 PASSWORD = LoginCTR.PASSWORD;
 
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
-                System.out.println("------------------>");
                 System.out.println(e.getMessage());
-
             }
 
         }

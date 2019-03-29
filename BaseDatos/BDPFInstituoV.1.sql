@@ -159,7 +159,6 @@ CREATE TABLE "Cursos"(
   "curso_nombre" character varying(10) NOT NULL,
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
-  "curso_permiso_ingreso_nt" boolean NOT NULL DEFAULT 'false',
   "curso_paralelo" character varying(5) NOT NULL DEFAULT 'NA',
   CONSTRAINT curso_pk PRIMARY KEY ("id_curso")
 ) WITH (OIDS = FALSE);
@@ -332,6 +331,17 @@ CREATE TABLE "HistorialUsuarios"(
 	"historial_pk_tabla" integer NOT NULL,
   "historial_observacion" character varying(200),
 	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user")
+) WITH (OIDS = FALSE);
+
+CREATE TABLE "IngresoNotas"(
+    id_ingreso_notas serial NOT NULL PRIMARY KEY,
+    nota_primer_inteciclo BOOLEAN DEFAULT FALSE,
+    nota_examen_intecilo BOOLEAN DEFAULT FALSE,
+    nota_segundo_inteciclo BOOLEAN DEFAULT FALSE,
+    nota_examen_final BOOLEAN DEFAULT FALSE,
+    nota_examen_de_recuperacion BOOLEAN DEFAULT FALSE,
+
+    id_curso INTEGER NOT NULL
 ) WITH (OIDS = FALSE);
 
 
@@ -699,6 +709,10 @@ ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "roles_rolesUsuarios_fk"
 ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "usuarios_rolesUsuarios_fk"
 	FOREIGN KEY("usu_username") REFERENCES "Usuarios"("usu_username")
 		ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
+    FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
+        ON DELETE CASCADE ON UPDATE CASCADE; 
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
