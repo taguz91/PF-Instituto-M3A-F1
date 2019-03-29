@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -536,13 +537,15 @@ public class FrmPersonaCTR {
         fechaNac = frmPersona.getJdfechaNacimiento().getDate().toString().toUpperCase();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        fechaNac = sdf.format(fecha);
-        String fec[] = fechaNac.split("/");
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        fechaNac = sdf.format(fecha);
+        LocalDate FechaNaci = LocalDate.parse(fechaNac,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String FechNac = FechaNaci.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String fec[] = FechNac.split("/");
 
+        System.out.println("FechNac " + FechNac);
         System.out.println("fechaNac " + fechaNac);
-        System.out.println("fecha " + fecha);
-        System.out.println("fechaActual " + fechaActual);
+        System.out.println("FechaNaci " + FechaNaci);
         System.out.println("fechaNacimiento " + fechaNacimiento);
         
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
@@ -733,7 +736,7 @@ public class FrmPersonaCTR {
             per.setSegundoNombre(segNombre);
             per.setPrimerApellido(priApellido);
             per.setSegundoApellido(segApellido);
-            per.setFechaNacimiento(fechaNacimiento);
+            per.setFechaNacimiento(FechaNaci);
             per.setEstadoCivil(estadoCivil);
             per.setCelular(celular);
             per.setTelefono(telefono);
