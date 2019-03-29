@@ -4,8 +4,11 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
@@ -46,7 +49,7 @@ public class FrmCarreraCTR {
         this.vtnPrin = vtnPrin;
         this.frmCarrera = frmCarrera;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;        
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Carrera");
@@ -69,8 +72,8 @@ public class FrmCarreraCTR {
         //Buscador 
         frmCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e){
-                String a = frmCarrera.getTxtBuscar().getText().trim(); 
+            public void keyReleased(KeyEvent e) {
+                String a = frmCarrera.getTxtBuscar().getText().trim();
                 if (a.length() > 2) {
                     buscarDocentes(a);
                 }
@@ -79,8 +82,9 @@ public class FrmCarreraCTR {
         //Clcik buscar 
         frmCarrera.getBtnBuscar().addActionListener(e -> buscarDocentes(
                 frmCarrera.getTxtBuscar().getText().trim()));
-        
-        frmCarrera.getBtnGuardar().addActionListener(e -> guardar());
+
+        frmCarrera.getBtnGuardar().addActionListener(e -> guardarYSalir());
+        frmCarrera.getBtnGuardarContinuar().addActionListener(e -> guardarYContinuar());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Carrera");
@@ -100,42 +104,61 @@ public class FrmCarreraCTR {
         frmCarrera.getLblErrorFecha().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
+    
+    private void guardarYSalir(){
+        guardar();
+        frmCarrera.dispose();
+        ctrPrin.abrirVtnCarrera();
+    }
+    
+    private void guardarYContinuar(){
+        guardar();
+        borrarCampos();
+    }
 
     private void guardar() {
         boolean guardar = true;
+        SimpleDateFormat formFecha = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = frmCarrera.getJdFechaInicio().getDate();
+        String fechaS = formFecha.format(fecha);
+        String fec[] = fechaS.split("/");
+
+        String dia = fec[0], mes = fec[1], anio = fec[2];
+
         String nombre = frmCarrera.getTxtNombre().getText();
         String codigo = frmCarrera.getTxtCodigo().getText();
-        String dia = frmCarrera.getTxtDia().getText();
-        String mes = frmCarrera.getTxtMes().getText();
-        String anio = frmCarrera.getTxtAnio().getText();
+
         String modalidad = frmCarrera.getCmbModalidad().getSelectedItem().toString();
         int posCoord = frmCarrera.getTblDocentes().getSelectedRow();
-        LocalDate fecha = LocalDate.now(); 
-        if (Validar.esNumeros(dia) && Validar.esNumeros(mes) && Validar.esNumeros(anio)) {  
+        LocalDate fechaInicio = LocalDate.now();
+        if (Validar.esNumeros(dia) && Validar.esNumeros(mes) && Validar.esNumeros(anio)) {
             try {
-                fecha = LocalDate.of(Integer.parseInt(anio), Integer.parseInt(mes), 
-                Integer.parseInt(dia)); 
+                fechaInicio = LocalDate.of(Integer.parseInt(anio), Integer.parseInt(mes),
+                        Integer.parseInt(dia));
             } catch (NumberFormatException e) {
                 System.out.println("No es fecha.");
                 guardar = false;
             }
-        }else{
+        } else {
             guardar = false;
         }
-        
+
         if (posCoord < 0) {
             guardar = false;
         }
-        
+
         if (guardar) {
             CarreraBD car = new CarreraBD(conecta);
             car.setCodigo(codigo);
-            car.setFechaInicio(fecha);
+            car.setFechaInicio(fechaInicio);
             car.setModalidad(modalidad);
             car.setNombre(nombre);
             car.setCoordinador(docentes.get(posCoord));
             if (editar) {
                 car.editarCarrera(idCarrera);
+                editar = false;
+            } else {
+                car.guardarCarrera();
             }
         }
     }
@@ -160,27 +183,41 @@ public class FrmCarreraCTR {
         }
     }
 
+    //Usada para el validar  
+    private final Calendar fechaIni = Calendar.getInstance();
+
     public void editar(CarreraMD carrera) {
         frmCarrera.getTxtNombre().setText(carrera.getNombre());
         frmCarrera.getTxtCodigo().setText(carrera.getCodigo());
-        frmCarrera.getTxtDia().setText(carrera.getFechaInicio().getDayOfMonth() + "");
-        frmCarrera.getTxtMes().setText(carrera.getFechaInicio().getMonthValue() + "");
-        frmCarrera.getTxtAnio().setText(carrera.getFechaInicio().getYear() + "");
+        fechaIni.set(carrera.getFechaInicio().getYear(), carrera.getFechaInicio().getMonthValue() - 1,
+                carrera.getFechaInicio().getDayOfMonth());
+        frmCarrera.getJdFechaInicio().setCalendar(fechaIni);
+
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
         if (carrera.getCoordinador().getPrimerApellido() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
             frmCarrera.getTblDocentes().selectAll();
         }
-        
+
         editar = true;
         idCarrera = carrera.getId();
         //frmCarrera.getCmbCoordinador().setSelectedItem(carrera.getCoordinador()); 
     }
 
+    private void borrarCampos() {
+        frmCarrera.getTxtNombre().setText("");
+        frmCarrera.getTxtCodigo().setText("");
+        frmCarrera.getJdFechaInicio().setCalendar(null);
+        frmCarrera.getCmbModalidad().setSelectedItem("Seleccione");
+        frmCarrera.getTxtBuscar().setText("");
+        mdTbl.setRowCount(0);
+
+    }
+
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
-        frmCarrera.getCmbModalidad().addItem("Seleccione una modalidad");
+        frmCarrera.getCmbModalidad().addItem("Seleccione");
         for (String m : MODALIDADES) {
             frmCarrera.getCmbModalidad().addItem(m);
         }

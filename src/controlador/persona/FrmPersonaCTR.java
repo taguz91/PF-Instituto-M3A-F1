@@ -732,7 +732,7 @@ public class FrmPersonaCTR {
             per.setSegundoNombre(segNombre);
             per.setPrimerApellido(priApellido);
             per.setSegundoApellido(segApellido);
-            //per.setFechaNacimiento(FechaNac);
+            per.setFechaNacimiento(fechaNacimiento);
             per.setEstadoCivil(estadoCivil);
             per.setCelular(celular);
             per.setTelefono(telefono);
