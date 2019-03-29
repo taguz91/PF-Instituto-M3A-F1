@@ -489,7 +489,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 240, -1));
 
         lblErrorIdentificacion.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorIdentificacion.setText("Ingrese un numero de cedula válido");
+        lblErrorIdentificacion.setText("Ingrese 10 digitos");
         getContentPane().add(lblErrorIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 190, 20));
 
         lblErrorPorcentaje.setForeground(new java.awt.Color(204, 0, 0));
