@@ -179,7 +179,6 @@ public class FrmCursoCTR {
         guardar();
         actualizarCmbMaterias();
         actualizarCmbDocentes();
-        frmCurso.getCbxPermisoIng().setSelected(false);
     }
 
     public void guardarYSalir() {
@@ -198,8 +197,6 @@ public class FrmCursoCTR {
         int posMat = frmCurso.getCbxMateria().getSelectedIndex();
         int posDoc = frmCurso.getCbxDocente().getSelectedIndex();
         String capacidad = frmCurso.getTxtCapacidad().getText();
-        //Este es un check box  
-        boolean permisoIng = frmCurso.getCbxPermisoIng().isSelected();
         int ciclo = 0;
         String paralelo = "SP";
 
@@ -257,7 +254,6 @@ public class FrmCursoCTR {
             curso.setId_materia(materias.get(posMat - 1));
             curso.setId_prd_lectivo(periodos.get(posPrd - 1));
             curso.setParalelo(paralelo);
-            curso.setPermiso_ingreso_nt(permisoIng);
 
             if (!editando) {
                 //Guardamos persona  
@@ -266,6 +262,7 @@ public class FrmCursoCTR {
                 if (idCurso > 0) {
                     //Editamos curso
                     curso.editarCurso(idCurso);
+                    editando = false;
                 }
             }
         }
@@ -283,7 +280,6 @@ public class FrmCursoCTR {
         frmCurso.getCbxDocente().setSelectedItem(c.getId_docente().getPrimerNombre() + " "
                 + c.getId_docente().getPrimerApellido());
         frmCurso.getTxtCapacidad().setText(c.getCurso_capacidad() + "");
-        frmCurso.getCbxPermisoIng().setSelected(c.isPermiso_ingreso_nt());
 
     }
 

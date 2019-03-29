@@ -101,7 +101,7 @@ public class LoginCTR {
 
         if (!Lista.isEmpty()) {
 
-            modelo.setIdPersona(Lista.get(0).getIdPersona());
+            modelo.setPersona(Lista.get(0).getPersona());
 
             vista.dispose();
 
@@ -120,8 +120,8 @@ public class LoginCTR {
 
         USERNAME = "ROOT";
         PASSWORD = "ROOT";
-  ///      VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "linis4413", "LoginGenerico"), icono, ista);
+        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "linis4413", "LoginGenerico"), icono, ista);
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);
