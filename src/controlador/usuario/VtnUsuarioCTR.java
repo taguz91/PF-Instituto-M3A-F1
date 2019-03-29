@@ -1,6 +1,7 @@
 package controlador.usuario;
 
 import controlador.Libraries.Effects;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -28,7 +29,7 @@ import vista.usuario.VtnUsuario;
  * @author USUARIO
  */
 public class VtnUsuarioCTR {
-
+    
     private final VtnPrincipal desktop; // DONDE VOY A VISUALIZAR
     private final VtnUsuario vista; // QUE VOY A VISUALIZAR
     private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
@@ -44,8 +45,8 @@ public class VtnUsuarioCTR {
 
     //Threads
     private Thread thread;
-    private boolean carga = true;
-
+    private boolean cargaTabla = true;
+    
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
         this.vista = vista;
@@ -61,12 +62,12 @@ public class VtnUsuarioCTR {
         //Inicializamos las listas con las consultas
         listaUsuarios = UsuarioBD.SelectAll();
         cargarTabla(listaUsuarios);
-
+        
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-
+        
         InitPermisos();
         InitEventos();
-
+        
         try {
             vista.show();
             desktop.getDpnlPrincipal().add(vista);
@@ -74,12 +75,12 @@ public class VtnUsuarioCTR {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     //METODOS DE APOYO
     private void InitEventos() {
-
+        
         vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
@@ -92,13 +93,13 @@ public class VtnUsuarioCTR {
                 txtBuscarKeyReleased(e);
             }
         });
-
+        
     }
-
+    
     private void InitPermisos() {
-
+        
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-
+            
             if (obj.getNombre().equals("USUARIOS-Agregar")) {
                 vista.getBtnIngresar().setEnabled(true);
             }
@@ -114,28 +115,43 @@ public class VtnUsuarioCTR {
             if (obj.getNombre().equals("USUARIOS-VerRoles")) {
                 vista.getBtnVerRoles().setEnabled(true);
             }
-
+            
         }
-
+        
     }
 
     /*
     
         METODOS DE APOYO
     
-    */
+     */
     public void cargarTabla(List<UsuarioMD> lista) {
-
-        if (carga == true) {
+        
+        if (cargaTabla == true) {
             thread = new Thread() {
                 @Override
                 public void run() {
-                    carga = false;
+                    cargaTabla = false;
+                    
+                    Effects.setLoadCursor(vista);
+                    
+                    desktop.getLblEstado().setText("CARGANDO USUARIOS");
                     tablaUsuarios.setRowCount(0);
+                    
                     lista.stream()
                             .forEach(VtnUsuarioCTR::agregarFila);
                     vista.getLblResultados().setText(lista.size() + " Registros");
-                    carga = true;
+                    
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    desktop.getLblEstado().setText("");
+                    
+                    Effects.setDefaultCursor(vista);
+
+                    cargaTabla = true;
                 }
             };
             thread.start();
@@ -143,10 +159,10 @@ public class VtnUsuarioCTR {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA DE UNA TABLA PENDIENTE");
         }
     }
-
+    
     private void cargarTablaFilter(String Aguja) {
         tablaUsuarios.setRowCount(0);
-
+        
         List<UsuarioMD> listaTemporal = listaUsuarios
                 .stream()
                 .filter(
@@ -158,12 +174,12 @@ public class VtnUsuarioCTR {
                         || item.getPersona().getSegundoNombre().toUpperCase().contains(Aguja.toUpperCase())
                 )
                 .collect(Collectors.toList());
-
+        
         listaTemporal.forEach(VtnUsuarioCTR::agregarFila);
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
-
+        
     }
-
+    
     private static void agregarFila(UsuarioMD obj) {
         tablaUsuarios.addRow(new Object[]{
             tablaUsuarios.getDataVector().size() + 1,
@@ -173,19 +189,19 @@ public class VtnUsuarioCTR {
             obj.getPersona().getSegundoApellido(),
             obj.getPersona().getPrimerNombre(),
             obj.getPersona().getSegundoNombre()
-
+        
         });
-
+        
     }
-
+    
     private void setObjFromTable(int fila) {
-
+        
         listaUsuarios = UsuarioBD.SelectAll();
-
+        
         String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
-
+        
         modelo = new UsuarioBD();
-
+        
         listaUsuarios.stream()
                 .filter(item -> item.getUsername().equals(username))
                 .collect(Collectors.toList())
@@ -193,118 +209,118 @@ public class VtnUsuarioCTR {
                     modelo.setUsername(obj.getUsername());
                     modelo.setPersona(obj.getPersona());
                 });
-
+        
     }
 
     //EVENTOS 
     private void btnEliminarActionPerformance(ActionEvent e) {
-
+        
         int fila = vista.getTblUsuario().getSelectedRow();
-
+        
         if (fila != -1) {
-
+            
             String Username = (String) vista.getTblUsuario().getValueAt(fila, 0);
-
+            
             if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");
             } else {
-
+                
                 int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + Username);
-
+                
                 if (opcion == 0) {
-
+                    
                     modelo.eliminar(Username);
-
+                    
                     cargarTabla(UsuarioBD.SelectAll());
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
                 }
             }
-
+            
         } else {
-
+            
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!!");
         }
-
+        
     }
-
+    
     private void btnEditarActionPerformance(ActionEvent e) {
-
+        
         int fila = vista.getTblUsuario().getSelectedRow();
-
+        
         if (fila != -1) {
-
+            
             setObjFromTable(fila);
-
+            
             FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar", conexion);
-
+            
             form.Init();
-
+            
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         }
-
+        
     }
-
+    
     private void btnActualizarActionPerformance(ActionEvent e) {
-
+        
         cargarTabla(UsuarioBD.SelectAll());
-
+        
     }
-
+    
     private void btnIngresarActionPerformance(ActionEvent e) {
-
+        
         FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar", conexion);
         frm.Init();
-
+        
     }
-
+    
     private void btnAsignarRolesActionPerformance(ActionEvent e) {
-
+        
         int fila = vista.getTblUsuario().getSelectedRow();
-
+        
         if (fila == -1) {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         } else {
-
+            
             setObjFromTable(fila);
-
+            
             if (modelo.getUsername().equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE EDITAR LOS PERMISOS DEL USUARIO ROOT!");
             } else {
                 FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar");
                 form.Init();
             }
-
+            
         }
-
+        
     }
-
+    
     private void btnVerRolesActionPerformance(ActionEvent e) {
-
+        
         int fila = vista.getTblUsuario().getSelectedRow();
-
+        
         if (fila == -1) {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         } else {
-
+            
             setObjFromTable(fila);
-
+            
             FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Consultar");
             form.Init();
-
+            
         }
-
+        
     }
-
+    
     private void txtBuscarKeyReleased(KeyEvent e) {
-
-        if (carga == true) {
+        
+        if (cargaTabla == true) {
             cargarTablaFilter(vista.getTxtBuscar().getText());
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE");
         }
-
+        
     }
 }

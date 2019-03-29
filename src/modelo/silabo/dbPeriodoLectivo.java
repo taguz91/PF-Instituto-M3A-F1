@@ -50,4 +50,29 @@ public class dbPeriodoLectivo extends PeriodoLectivoMD {
         }
 
     }
+
+    public PeriodoLectivoMD retornaPeriodoActual(int  aguja) {
+
+        try {
+            PeriodoLectivoMD periodo = null;
+            String sql = "SELECT DISTINCT prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin\n"
+                    + "FROM \"PeriodoLectivo\",\"Materias\",\"Carreras\" \n"
+                    + "WHERE \"Materias\".id_carrera=\"Carreras\".id_carrera\n"
+                    + "AND \"PeriodoLectivo\".id_carrera=\"Carreras\".id_carrera\n"
+                    + "AND prd_lectivo_fecha_fin>current_date \n"
+                    + "AND \"PeriodoLectivo\".id_carrera="+aguja+"";
+            ResultSet rs = con.query(sql);
+            while (rs.next()) {
+                periodo = new PeriodoLectivoMD();
+                periodo.setFecha_Inicio(rs.getDate(1).toLocalDate());
+                periodo.setFecha_Fin(rs.getDate(2).toLocalDate());
+            }
+
+            rs.close();
+            return periodo;
+        } catch (SQLException ex) {
+            Logger.getLogger(dbPeriodoLectivo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }

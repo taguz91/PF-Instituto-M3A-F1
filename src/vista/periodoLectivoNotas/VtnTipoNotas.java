@@ -94,11 +94,11 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
+                "No.", "ID", "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -109,10 +109,13 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblTipoNotas);
         if (tblTipoNotas.getColumnModel().getColumnCount() > 0) {
             tblTipoNotas.getColumnModel().getColumn(0).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(1);
             tblTipoNotas.getColumnModel().getColumn(1).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(1);
             tblTipoNotas.getColumnModel().getColumn(2).setResizable(false);
             tblTipoNotas.getColumnModel().getColumn(3).setResizable(false);
             tblTipoNotas.getColumnModel().getColumn(4).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(5).setResizable(false);
         }
 
         lblResultados.setText("0 Resultados Obtenidos");

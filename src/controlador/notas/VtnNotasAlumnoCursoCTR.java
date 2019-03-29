@@ -94,6 +94,7 @@ public class VtnNotasAlumnoCursoCTR {
         thread = new Thread() {
             @Override
             public void run() {
+                Effects.setLoadCursor(vista);
                 desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
                 cargarComboDocente();
                 cargarComboPeriodos();
@@ -106,12 +107,12 @@ public class VtnNotasAlumnoCursoCTR {
                 desktop.getLblEstado().setText("COMPLETADO");
 
                 try {
-                    sleep(4000);
+                    sleep(500);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 desktop.getLblEstado().setText("");
-
+                Effects.setDefaultCursor(vista);
                 vista.getBtnVerNotas().setEnabled(true);
 
             }
@@ -384,6 +385,8 @@ public class VtnNotasAlumnoCursoCTR {
 
                     cargarTabla = false;
 
+                    Effects.setLoadCursor(vista);
+
                     try {
 
                         desktop.getLblEstado().setText("CARGANDO NOTAS");
@@ -395,31 +398,36 @@ public class VtnNotasAlumnoCursoCTR {
                         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
                         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-                        listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                        listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
-                        listaNotas.stream()
-                                .forEach(obj -> {
-
-                                    tablaNotas.addRow(new Object[]{
-                                        tablaNotas.getDataVector().size() + 1,
-                                        obj.getAlumno().getIdentificacion(),
-                                        obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                                        obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                                        obj.getNota1Parcial(),
-                                        obj.getNotaExamenInter(),
-                                        obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                                        obj.getNota2Parcial(),
-                                        obj.getNotaExamenFinal(),
-                                        obj.getNotaExamenSupletorio(),
-                                        obj.getNotaFinal(),
-                                        obj.getEstado(),
-                                        obj.getNumFalta(),
-                                        "%"
-                                    });
+                        for (AlumnoCursoBD obj : listaNotas) {
+                            if (vista.isVisible()) {
+                                tablaNotas.addRow(new Object[]{
+                                    tablaNotas.getDataVector().size() + 1,
+                                    obj.getAlumno().getIdentificacion(),
+                                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                                    obj.getNota1Parcial(),
+                                    obj.getNotaExamenInter(),
+                                    obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                                    obj.getNota2Parcial(),
+                                    obj.getNotaExamenFinal(),
+                                    obj.getNotaExamenSupletorio(),
+                                    obj.getNotaFinal(),
+                                    obj.getEstado(),
+                                    obj.getNumFalta(),
+                                    "%"
                                 });
+                            } else {
+                                listaNotas = null;
+                                listaPersonasDocentes = null;
+                                System.gc();
+                                break;
+                            }
+                        }
 
                         desktop.getLblEstado().setText("");
-
+                        Effects.setDefaultCursor(vista);
                     } catch (NullPointerException e) {
                         System.out.println(e);
                     }
@@ -514,7 +522,7 @@ public class VtnNotasAlumnoCursoCTR {
                 + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
                 + "where almn_curso_nota_final<70;";
     }
-    
+
     private void generarReporteEntre70_80() {
         String QUERY = "SELECT\n"
                 + "\"Alumnos\".id_alumno, \n"
@@ -530,8 +538,8 @@ public class VtnNotasAlumnoCursoCTR {
                 + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
                 + "where almn_curso_nota_final>=70 and almn_curso_nota_final <80;";
     }
-    
-     private void generarReporteEntre80_90() {
+
+    private void generarReporteEntre80_90() {
         String QUERY = "SELECT\n"
                 + "\"Alumnos\".id_alumno, \n"
                 + "\"Personas\".persona_identificacion,\n"
@@ -546,7 +554,8 @@ public class VtnNotasAlumnoCursoCTR {
                 + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
                 + "where almn_curso_nota_final>=80 and almn_curso_nota_final <90;";
     }
-     private void generarReporteEntre90_100() {
+
+    private void generarReporteEntre90_100() {
         String QUERY = "SELECT\n"
                 + "\"Alumnos\".id_alumno, \n"
                 + "\"Personas\".persona_identificacion,\n"
@@ -568,37 +577,37 @@ public class VtnNotasAlumnoCursoCTR {
     private void btnImprimir(ActionEvent e) {
 
         int r = JOptionPane.showOptionDialog(vista,
-                        "Reporte de Notas por Curso\n"
-                        + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
-                           "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
-                switch (r) {
-                    case 0:
-                        //  REPORTE DE Alumnos con menos de 70" 
-                        generarReporteMenos70();
-                        break;
-                    case 1:
-                        //REPORTE DE Alumnos entre 70 a 80"
-                        generarReporteEntre70_80();
-                        break;
-                    case 2:
-                        //REPORTE DE Alumnos entre 80 a 90"
-                        generarReporteEntre80_90();
-                        break;
-                    case 3:
-                         //REPORTE DE Alumnos entre 90 a 100"
-                        generarReporteEntre90_100();
-                        break;
-                    case 4:
-                         //REPORTE completo"
-                        generarReporteCompleto();
-                        break;
-                    default:
-                        break;
-                }
+                "Reporte de Notas por Curso\n"
+                + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
+                    "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+        switch (r) {
+            case 0:
+                //  REPORTE DE Alumnos con menos de 70" 
+                generarReporteMenos70();
+                break;
+            case 1:
+                //REPORTE DE Alumnos entre 70 a 80"
+                generarReporteEntre70_80();
+                break;
+            case 2:
+                //REPORTE DE Alumnos entre 80 a 90"
+                generarReporteEntre80_90();
+                break;
+            case 3:
+                //REPORTE DE Alumnos entre 90 a 100"
+                generarReporteEntre90_100();
+                break;
+            case 4:
+                //REPORTE completo"
+                generarReporteCompleto();
+                break;
+            default:
+                break;
+        }
 
     }
 
