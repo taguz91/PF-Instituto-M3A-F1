@@ -878,7 +878,7 @@ public class ControladorSilaboCRUD {
         List<CarreraMD> carreras;
 
         //System.out.println(usuario.getIdPersona().getIdPersona());
-        carreras = new dbCarreras().buscarCarreras(usuario.getIdPersona().getIdPersona());
+        carreras = new dbCarreras().buscarCarreras(usuario.getPersona().getIdPersona());
 
         /* for (int i = 0; i < carreras.size(); i++) {
             System.out.println(carreras.get(i).getCarreraNombre());
@@ -894,7 +894,7 @@ public class ControladorSilaboCRUD {
 
         List<MateriaMD> materias;
 
-        int[] aguja = {usuario.getIdPersona().getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
+        int[] aguja = {usuario.getPersona().getIdPersona(), new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId()};
 
         materias = new dbMaterias().buscarMateria(aguja);
 
@@ -1442,7 +1442,7 @@ public class ControladorSilaboCRUD {
 
         modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
 
-        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getIdPersona().getIdPersona());
+        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getPersona().getIdPersona());
         periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo();
 
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {

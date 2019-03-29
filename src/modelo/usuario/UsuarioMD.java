@@ -47,11 +47,11 @@ public class UsuarioMD {
         this.estado = estado;
     }
 
-    public PersonaMD getIdPersona() {
+    public PersonaMD getPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(PersonaMD idPersona) {
+    public void setPersona(PersonaMD idPersona) {
         this.idPersona = idPersona;
     }
 

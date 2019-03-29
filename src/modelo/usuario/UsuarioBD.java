@@ -31,81 +31,11 @@ public class UsuarioBD extends UsuarioMD {
                 + " VALUES ("
                 + " '" + getUsername() + "',"
                 + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + getIdPersona() + ""
+                + " " + getPersona() + ""
                 + " );"
-                + ""
-                + "CREATE ROLE \"" + getUsername() + "\" NOINHERIT LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
+                + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "\n"
-                + "GRANT Usage ON SCHEMA \"public\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Connect ON DATABASE \"BDinsta\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Accesos\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"AccesosDelRol\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"AlumnoCurso\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Alumnos\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"AlumnosCarrera\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Carreras\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Cursos\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"DetalleJornada\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Docentes\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"DocentesMateria\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"EjesFormacion\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"EvaluacionSilabo\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"HistorialUsuarios\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"JornadaDocente\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Jornadas\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Lugares\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"MallaAlumno\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"MateriaRequisitos\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Materias\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"PeriodoIngresoNotas\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"PeriodoLectivo\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Personas\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Referencias\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"ReferenciaSilabo\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Roles\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"RolesDelUsuario\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"SectorEconomico\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"SesionClase\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Silabo\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"TipoActividad\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"TipoDeNota\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"UnidadSilabo\" TO \"" + getUsername() + "\";\n"
-                + "\n"
-                + "GRANT Delete, Insert, References, Select, Trigger, Update ON TABLE \"public\".\"Usuarios\" TO \"" + getUsername() + "\";"
-                + ""
+                + "GRANT \"usuario_simple\" TO \"" + getUsername() + "\";"
                 + " ";
 
         System.out.println(INSERT);
@@ -115,19 +45,56 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public static List<UsuarioMD> SelectAll() {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS TRUE";
-        return SelectSimple(SELECT);
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
+                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"Usuarios_Persona\"\n"
+                + "WHERE \n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado = TRUE";
+
+        return selectFromView(SELECT);
 
     }
 
-    public List<UsuarioMD> SelectWhereUsernameLIKE(String Aguja) {
-        String SELECT = "SELECT  " + ATRIBUTOS
-                + " FROM " + TABLA
-                + " WHERE "
-                + PRIMARY_KEY + " LIKE '%" + Aguja + "%' "
-                + " AND"
-                + " usu_estado IS TRUE";
-        return SelectSimple(SELECT);
+    private static List<UsuarioMD> selectFromView(String QUERY) {
+        List<UsuarioMD> lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(QUERY);
+
+        try {
+            while (rs.next()) {
+
+                UsuarioMD usuario = new UsuarioMD();
+                usuario.setUsername(rs.getString("usu_username"));
+                usuario.setEstado(rs.getBoolean("usu_estado"));
+
+                PersonaMD persona = new PersonaMD();
+                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                usuario.setPersona(persona);
+
+                lista.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lista;
+
     }
 
     public List<UsuarioMD> SelectWhereUsernamePassword() {
@@ -144,7 +111,7 @@ public class UsuarioBD extends UsuarioMD {
         return SelectSimple(SELECT);
     }
 
-    public List<UsuarioMD> SelectWhereEstadoIsFalse() {
+    public List<UsuarioMD> SelectAllWhereEstadoIsFalse() {
         String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS FALSE";
 
         return SelectSimple(SELECT);
@@ -209,8 +176,8 @@ public class UsuarioBD extends UsuarioMD {
 
                 usuario.setEstado(rs.getBoolean("usu_estado"));
 
-                usuario.setIdPersona(PersonaBD.selectWhere(rs.getInt("id_persona")));
-                
+                usuario.setPersona(PersonaBD.selectWhere(rs.getInt("id_persona")));
+
                 Lista.add(usuario);
             }
 
@@ -230,7 +197,7 @@ public class UsuarioBD extends UsuarioMD {
         String UPDATE = "UPDATE  " + TABLA
                 + " SET "
                 + "\n usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),"
-                + "\n id_persona = " + getIdPersona() + ""
+                + "\n id_persona = " + getPersona() + ""
                 + " WHERE "
                 + " " + PRIMARY_KEY + " = '" + Pk + "';"
                 + "\n"
@@ -245,22 +212,26 @@ public class UsuarioBD extends UsuarioMD {
 
     public boolean eliminar(String Pk) {
 
-        String DELETE = "UPDATE " + TABLA
-                + " SET "
-                + " usu_estado = " + false + ""
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = '" + Pk + "'";
+        String DELETE = "UPDATE " + TABLA + "\n"
+                + " SET \n"
+                + " usu_estado = " + false + "\n"
+                + " WHERE \n"
+                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + " ALTER ROLE \"" + Pk + "\" NOLOGIN;"
+                + "";
 
         return ResourceManager.Statement(DELETE) == null;
     }
 
     public boolean reactivar(String Pk) {
 
-        String REACTIVAR = "UPDATE " + TABLA
-                + " SET "
-                + " usu_estado = " + true
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = '" + Pk + "'";
+        String REACTIVAR = "UPDATE " + TABLA + "\n"
+                + " SET \n"
+                + " usu_estado = " + true + "\n"
+                + " WHERE \n"
+                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + "ALTER ROLE \"" + Pk + "\" LOGIN;"
+                + "";
 
         return ResourceManager.Statement(REACTIVAR) == null;
     }

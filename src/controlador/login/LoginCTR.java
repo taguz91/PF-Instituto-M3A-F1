@@ -101,7 +101,7 @@ public class LoginCTR {
 
         if (!Lista.isEmpty()) {
 
-            modelo.setIdPersona(Lista.get(0).getIdPersona());
+            modelo.setPersona(Lista.get(0).getPersona());
 
             vista.dispose();
 
