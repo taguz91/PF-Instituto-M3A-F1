@@ -15,7 +15,6 @@ public class run {
 
     public static void main(String[] args) {
         estiloWindows();
-        //Icono de la aplicacion 
         SplashCTR ctrSplash = new SplashCTR();
         ctrSplash.iniciar();
 

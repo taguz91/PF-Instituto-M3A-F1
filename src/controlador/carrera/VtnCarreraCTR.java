@@ -140,7 +140,6 @@ public class VtnCarreraCTR {
         mdTbl.setRowCount(0);
         if (carreras != null) {
             carreras.forEach((c) -> {
-                Object valores[] = {};
                 if (c.getCoordinador().getPrimerNombre() == null) {
                     Object valoresSD[] = {c.getId(), c.getCodigo(), c.getNombre(),
                         c.getFechaInicio(), c.getModalidad(), "SIN COORDINADOR "};
@@ -153,8 +152,9 @@ public class VtnCarreraCTR {
                     mdTbl.addRow(valoresCD);
                 }
 
-            });
+            });            
         }
+        vtnCarrera.getLblResultados().setText(carreras.size()+" Resutados obtendidos.");
     }
 
     public void llamaReporteAlumnoCarrera() {

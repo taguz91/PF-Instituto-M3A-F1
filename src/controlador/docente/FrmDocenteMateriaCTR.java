@@ -89,7 +89,7 @@ public class FrmDocenteMateriaCTR {
         frmDM.getCmbCiclo().addActionListener(e -> clickCiclo());
         //Acciones de los botones
         frmDM.getBtnBuscar().addActionListener(e -> buscarDocente(frmDM.getTxtBuscar().getText().trim()));
-        frmDM.getBtnGuardar().addActionListener(e -> guardar());
+        frmDM.getBtnGuardar().addActionListener(e -> guardarYSalir());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Docente materia");
@@ -101,6 +101,12 @@ public class FrmDocenteMateriaCTR {
         frmDM.getCmbCiclo().addActionListener(new CmbValidar(frmDM.getCmbCiclo()));
         frmDM.getCmbMateria().addActionListener(new CmbValidar(frmDM.getCmbMateria()));
         frmDM.getTxtBuscar().addKeyListener(new TxtVBuscador(frmDM.getTxtBuscar()));
+    }
+    
+    private void guardarYSalir(){
+        guardar();
+        frmDM.dispose();
+        ctrPrin.abrirVtnDocenteMateria();
     }
 
     private void guardar() {

@@ -90,6 +90,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Metodos de Apoyo
     public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
+        tablaPeriodoNotas.setRowCount(0);
         lista
                 .stream()
                 .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
@@ -118,12 +119,12 @@ public class VtnPeriodoIngresoNotasCTR {
 
     }
 
-    private void cargarTablaFilter(String Aguja) {
+//    private void cargarTablaFilter(String Aguja) {
 //        
 //        listaPeriodoNotas.stream()
-//                .filter(item -> item.getIdPeriodoIngreso);
-
-    }
+//                .filter(item -> item.getIdPeriodoIngreso());
+//
+//    }
 
     //Procesadores de eventos
     private void btnEditarActionPerformance(ActionEvent e) {
