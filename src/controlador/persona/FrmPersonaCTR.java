@@ -135,6 +135,7 @@ public class FrmPersonaCTR {
 
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
 
+            @Override
             public void focusLost(FocusEvent e) {
                 buscarIdentificacion();
             }
@@ -251,11 +252,8 @@ public class FrmPersonaCTR {
 
     private void iniciarValidaciones() {
 
-        PropertyChangeListener habilitar_Guardar = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                habilitarBtnGuardar();
-            }
+        PropertyChangeListener habilitar_Guardar = (PropertyChangeEvent evt) -> {
+            habilitarBtnGuardar();
         };
 
         if (numAccion > 1) {
@@ -471,7 +469,7 @@ public class FrmPersonaCTR {
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
-        Date fecha = new Date();
+        Date fecha;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -532,11 +530,12 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
-
-        fechaNac = frmPersona.getJdfechaNacimiento().getDate().toString().toUpperCase();
+        //Le pasamos la fecha que escribio en el calendario
+        fecha =  frmPersona.getJdfechaNacimiento().getDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //Se lo pasa a un string para poder validarlo
         fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
 
