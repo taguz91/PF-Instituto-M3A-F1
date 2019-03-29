@@ -136,6 +136,7 @@ public class FrmPersonaCTR {
 
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
 
+            @Override
             public void focusLost(FocusEvent e) {
                 buscarIdentificacion();
             }
@@ -252,11 +253,8 @@ public class FrmPersonaCTR {
 
     private void iniciarValidaciones() {
 
-        PropertyChangeListener habilitar_Guardar = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                habilitarBtnGuardar();
-            }
+        PropertyChangeListener habilitar_Guardar = (PropertyChangeEvent evt) -> {
+            habilitarBtnGuardar();
         };
 
         if (numAccion > 1) {
@@ -472,7 +470,7 @@ public class FrmPersonaCTR {
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
-        Date fecha = new Date();
+        Date fecha;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -533,20 +531,18 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
-
-        fechaNac = frmPersona.getJdfechaNacimiento().getDate().toString().toUpperCase();
+        //Le pasamos la fecha que escribio en el calendario
+        fecha =  frmPersona.getJdfechaNacimiento().getDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        fechaNac = sdf.format(fecha);
-        LocalDate FechaNaci = LocalDate.parse(fechaNac,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String FechNac = FechaNaci.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String fec[] = FechNac.split("/");
 
-        System.out.println("FechNac " + FechNac);
-        System.out.println("fechaNac " + fechaNac);
-        System.out.println("FechaNaci " + FechaNaci);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //Se lo pasa a un string para poder validarlo
+        fechaNac = sdf.format(fecha);
+        String fec[] = fechaNac.split("/");
+
         System.out.println("fechaNacimiento " + fechaNacimiento);
+        System.out.println("fechaNac " + fechaNac);
         
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
@@ -736,7 +732,7 @@ public class FrmPersonaCTR {
             per.setSegundoNombre(segNombre);
             per.setPrimerApellido(priApellido);
             per.setSegundoApellido(segApellido);
-            per.setFechaNacimiento(FechaNaci);
+            per.setFechaNacimiento(FechaNac);
             per.setEstadoCivil(estadoCivil);
             per.setCelular(celular);
             per.setTelefono(telefono);
