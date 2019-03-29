@@ -90,7 +90,9 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Metodos de Apoyo
     public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
-        lista.stream().forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+        lista
+                .stream()
+                .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
     }
 
     private static void agregarFila(PeriodoIngresoNotasMD obj) {
@@ -112,16 +114,15 @@ public class VtnPeriodoIngresoNotasCTR {
                 .collect(Collectors.toList())
                 .forEach(obj -> {
                     modelo = new PeriodoIngresoNotasBD(obj);
-
                 });
 
     }
-    
-    private void cargarTablaFilter(String Aguja){
+
+    private void cargarTablaFilter(String Aguja) {
 //        
 //        listaPeriodoNotas.stream()
 //                .filter(item -> item.getIdPeriodoIngreso);
-        
+
     }
 
     //Procesadores de eventos
@@ -131,7 +132,7 @@ public class VtnPeriodoIngresoNotasCTR {
         if (fila != -1) {
 
             setObjFromTabla(fila);
-            FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), modelo, this);
+            FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), modelo, this, "Editar");
             form.Init();
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
@@ -156,7 +157,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this);
+        FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this, "Agregar");
         form.Init();
 
     }
@@ -166,8 +167,6 @@ public class VtnPeriodoIngresoNotasCTR {
     }
 
     private void txtBuscarOnKeyReleased(KeyEvent e) {
-        
-        
-        
+
     }
 }

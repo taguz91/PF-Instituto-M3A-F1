@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e17a9b3c-2d82-49a7-ae12-bccb7377a8fe">
 	<property name="ireport.zoom" value="2.732053821460284"/>
 	<property name="ireport.x" value="323"/>
-	<property name="ireport.y" value="94"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,7 +15,7 @@ join public."Docentes" d using  (id_persona)
 join public."Cursos" c using (id_docente)
 join public."PeriodoLectivo" prd using (id_prd_lectivo)
 join public."Materias" m using (id_materia)
-where d.id_docente = $P{id}
+where d.id_docente = $P{id} 
 order by p.persona_primer_apellido;]]>
 	</queryString>
 	<field name="personanombre" class="java.lang.String"/>

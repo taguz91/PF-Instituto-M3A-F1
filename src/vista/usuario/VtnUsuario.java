@@ -78,6 +78,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Usuarios");
         setMinimumSize(new java.awt.Dimension(825, 565));
         setPreferredSize(new java.awt.Dimension(825, 565));
 
@@ -85,13 +86,10 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(69, 23));
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
 
         btnEditar.setText("Editar");
-        btnEditar.setEnabled(false);
 
         btnIngresar.setText("Ingresar");
-        btnIngresar.setEnabled(false);
 
         btnActualizar.setText("Actualizar");
 
@@ -100,14 +98,14 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre del Usuario", "Identificacion Persona", "Persona"
+                "No.", "Username", "Identificacion Persona", "Primer Apellido", "Segundo Apellido", "Primer Nombre", "Segundo Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -121,18 +119,16 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         tblUsuario.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblUsuario);
         if (tblUsuario.getColumnModel().getColumnCount() > 0) {
-            tblUsuario.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblUsuario.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
         lblResultados.setText("0 Resultados obtenidos");
 
         btnAsignarRoles.setText("Asignar un Roles");
-        btnAsignarRoles.setEnabled(false);
 
         jButton1.setText("Cancelar");
 
         btnVerRoles.setText("Ver Roles");
-        btnVerRoles.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

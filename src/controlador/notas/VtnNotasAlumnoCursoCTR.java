@@ -86,7 +86,6 @@ public class VtnNotasAlumnoCursoCTR {
      */
     public void Init() {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
-        canEdit[4] = false;
 
         //RELLENADO DE LISTAS
         listaPersonasDocentes = PersonaBD.selectWhereUsername(usuario.getUsername());
@@ -164,6 +163,8 @@ public class VtnNotasAlumnoCursoCTR {
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
 
                     active = true;
+
+                    setNumero();
 
                     vista.getTblNotas().setModel(calcularNotaFinal(tablaNotas));
 
@@ -394,7 +395,7 @@ public class VtnNotasAlumnoCursoCTR {
                         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
                         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-                        listaNotas = modelo.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                        listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
                         listaNotas.stream()
                                 .forEach(obj -> {
@@ -436,7 +437,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     }
 
-    private void generarReporte() {
+    private void generarReporteCompleto() {
         try {
             String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
             String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
@@ -498,6 +499,69 @@ public class VtnNotasAlumnoCursoCTR {
         }
     }
 
+    private void generarReporteMenos70() {
+        String QUERY = "SELECT\n"
+                + "\"Alumnos\".id_alumno, \n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"AlumnoCurso\".almn_curso_nota_final\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
+                + "where almn_curso_nota_final<70;";
+    }
+    
+    private void generarReporteEntre70_80() {
+        String QUERY = "SELECT\n"
+                + "\"Alumnos\".id_alumno, \n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"AlumnoCurso\".almn_curso_nota_final\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
+                + "where almn_curso_nota_final>=70 and almn_curso_nota_final <80;";
+    }
+    
+     private void generarReporteEntre80_90() {
+        String QUERY = "SELECT\n"
+                + "\"Alumnos\".id_alumno, \n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"AlumnoCurso\".almn_curso_nota_final\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                + "where almn_curso_nota_final>=80 and almn_curso_nota_final <90;";
+    }
+     private void generarReporteEntre90_100() {
+        String QUERY = "SELECT\n"
+                + "\"Alumnos\".id_alumno, \n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"AlumnoCurso\".almn_curso_nota_final\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
+                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
+                + "where almn_curso_nota_final>=90 and almn_curso_nota_final <100;";
+    }
+
     /*
         PROCESADORES DE EVENTOS
      */
@@ -514,19 +578,23 @@ public class VtnNotasAlumnoCursoCTR {
                 switch (r) {
                     case 0:
                         //  REPORTE DE Alumnos con menos de 70" 
+                        generarReporteMenos70();
                         break;
                     case 1:
-                        //REPORTE DE Alumnos entre 70 a 80" 
+                        //REPORTE DE Alumnos entre 70 a 80"
+                        generarReporteEntre70_80();
                         break;
                     case 2:
                         //REPORTE DE Alumnos entre 80 a 90"
+                        generarReporteEntre80_90();
                         break;
                     case 3:
                          //REPORTE DE Alumnos entre 90 a 100"
+                        generarReporteEntre90_100();
                         break;
                     case 4:
                          //REPORTE completo"
-                        generarReporte();
+                        generarReporteCompleto();
                         break;
                     default:
                         break;
@@ -544,7 +612,7 @@ public class VtnNotasAlumnoCursoCTR {
         if (e.getKeyCode() == 10) {
 
             setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
-            
+
         }
     }
 }

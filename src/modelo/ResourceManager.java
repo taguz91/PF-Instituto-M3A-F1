@@ -17,7 +17,7 @@ public class ResourceManager {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
     private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
-    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
+
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
     private static Driver driver = null;
@@ -44,16 +44,20 @@ public class ResourceManager {
                 PASSWORD = LoginCTR.PASSWORD;
 
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
-                System.out.println("------------------>");
                 System.out.println(e.getMessage());
-
             }
 
         }
 
+<<<<<<< HEAD
       /* JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
        USERNAME = "postgres";
        PASSWORD = "qwerty79";*/
+=======
+     //     JDBC_URL = "jdbc:postgresql://localhost:5432/BDPFM3AConMallaCursada";;
+//          USERNAME = "postgres";
+//          PASSWORD = "linis4413";
+>>>>>>> 56c8b6b4343b5e5a95a11a5af5688af2a2e8d4f6
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;
@@ -99,13 +103,13 @@ public class ResourceManager {
             if (e instanceof NullPointerException) {
                 driver = null;
             } else {
-                
+
                 String mensaje = e.getMessage();
-                
+
                 if (mensaje.contains("FATAL: password authentication failed for user")) {
                     driver = null;
                 }
-                
+
                 System.out.println(e.getMessage());
             }
             return null;

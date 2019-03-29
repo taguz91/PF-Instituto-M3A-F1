@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.persona.PersonaMD;
 import modelo.usuario.UsuarioMD;
 import modelo.pgConect;
 
@@ -35,10 +36,12 @@ public class dbUsuarios extends UsuarioMD {
             ResultSet rs = conecta.query(sql);
             while (rs.next()) {
                 dbusuario = new dbUsuarios();
-                
-                dbusuario.setIdPersona(rs.getInt(1));
-                
-               
+
+                PersonaMD persona = new PersonaMD();
+                persona.setIdPersona(rs.getInt(1));
+
+                dbusuario.setPersona(persona);
+
             }
 
             rs.close();
