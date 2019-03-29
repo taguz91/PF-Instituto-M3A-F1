@@ -22,7 +22,6 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     private static final String TABLA = " \"Usuarios\" ";
-    private static final String ATRIBUTOS = " usu_username, usu_password, usu_estado, id_persona ";
     private static final String PRIMARY_KEY = " usu_username ";
 
     public boolean insertar() {
@@ -35,7 +34,7 @@ public class UsuarioBD extends UsuarioMD {
                 + " );"
                 + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "\n"
-                + "GRANT \"usuario_simple\" TO \"" + getUsername() + "\";"
+                + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
                 + " ";
 
         System.out.println(INSERT);
@@ -98,36 +97,68 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public List<UsuarioMD> SelectWhereUsernamePassword() {
-        String SELECT = "SELECT " + ATRIBUTOS
-                + " FROM " + TABLA
-                + " WHERE "
-                + " usu_username = '" + getUsername() + "' "
-                + " AND "
-                + " usu_password = set_byte( MD5('" + getPassword() + "')::bytea, 4,64) "
-                + " AND "
-                + " usu_estado IS TRUE"
-                + "";
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
+                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_password\n"
+                + "FROM\n"
+                + "\"public\".\"Usuarios_Persona\"\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
+                + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
 
-        return SelectSimple(SELECT);
+        return selectFromView(SELECT);
     }
 
     public List<UsuarioMD> SelectAllWhereEstadoIsFalse() {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS FALSE";
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
+                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_password\n"
+                + "FROM\n"
+                + "\"public\".\"Usuarios_Persona\"\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado IS FALSE;";
 
-        return SelectSimple(SELECT);
-    }
-
-    public List<UsuarioMD> SelectWhereEstadoIsFalseAndUsername(String username) {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_estado IS FALSE AND usu_username = '" + username + "'";
-
-        return SelectSimple(SELECT);
+        return selectFromView(SELECT);
     }
 
     public static String SelectNewUsername() {
 
-        String SELECT = "SELECT usu_username, usu_password, usu_estado, id_persona FROM \"Usuarios\" WHERE usu_username LIKE '%USER%' ORDER BY usu_username DESC LIMIT 1";
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
+                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_password\n"
+                + "FROM\n"
+                + "\"public\".\"Usuarios_Persona\"\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
+                + "ORDER BY\n"
+                + "\"public\".\"Usuarios_Persona\".usu_username DESC";
 
-        List<UsuarioMD> lista = SelectSimple(SELECT);
+        List<UsuarioMD> lista = selectFromView(SELECT);
 
         String username = "";
 
@@ -159,38 +190,6 @@ public class UsuarioBD extends UsuarioMD {
         }
 
         return username;
-    }
-
-    private static List<UsuarioMD> SelectSimple(String QUERY) {
-
-        List<UsuarioMD> Lista = new ArrayList<>();
-        ResultSet rs = ResourceManager.Query(QUERY);
-
-        try {
-            while (rs.next()) {
-                UsuarioMD usuario = new UsuarioMD();
-
-                usuario.setUsername(rs.getString("usu_username"));
-
-                usuario.setPassword(rs.getString("usu_password"));
-
-                usuario.setEstado(rs.getBoolean("usu_estado"));
-
-                usuario.setPersona(PersonaBD.selectWhere(rs.getInt("id_persona")));
-
-                Lista.add(usuario);
-            }
-
-            rs.close();
-        } catch (SQLException | NullPointerException ex) {
-
-            if (ex instanceof SQLException) {
-                System.out.println(ex.getMessage());
-
-            }
-
-        }
-        return Lista;
     }
 
     public boolean editar(String Pk) {
