@@ -15,7 +15,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -471,6 +473,7 @@ public class FrmPersonaCTR {
 
         //Fecha actual usada para validaciones  
         Date fecha;
+        LocalDate fechaNaci;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -533,6 +536,7 @@ public class FrmPersonaCTR {
         }
         //Le pasamos la fecha que escribio en el calendario
         fecha =  frmPersona.getJdfechaNacimiento().getDate();
+        fechaNaci = Instant.ofEpochMilli(frmPersona.getJdfechaNacimiento().getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
         //Dar formato a la fecha
 
@@ -732,7 +736,7 @@ public class FrmPersonaCTR {
             per.setSegundoNombre(segNombre);
             per.setPrimerApellido(priApellido);
             per.setSegundoApellido(segApellido);
-            per.setFechaNacimiento(FechaNac);
+            per.setFechaNacimiento(fechaNaci);
             per.setEstadoCivil(estadoCivil);
             per.setCelular(celular);
             per.setTelefono(telefono);

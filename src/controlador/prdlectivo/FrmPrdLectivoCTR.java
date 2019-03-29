@@ -266,7 +266,6 @@ public class FrmPrdLectivoCTR {
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
             }
         }
-        error = true;
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
@@ -356,6 +355,7 @@ public class FrmPrdLectivoCTR {
         frmPrdLectivo.getJdc_FechaInicio().setCalendar(calendar_Inicio);
         frmPrdLectivo.getJdc_FechaFin().setCalendar(calendar_Fin);
         frmPrdLectivo.getTxtObservacion().setText(mdPerLectivo.getObservacion_PerLectivo());
+        habilitarGuardar();
     }
 
 }
