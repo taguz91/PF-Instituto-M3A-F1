@@ -15,9 +15,8 @@ public class run {
 
     public static void main(String[] args) {
         estiloWindows();
-        //Icono de la aplicacion 
-//        SplashCTR ctrSplash = new SplashCTR();
-//        ctrSplash.iniciar();
+        SplashCTR ctrSplash = new SplashCTR();
+        ctrSplash.iniciar();
 
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();
