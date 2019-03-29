@@ -82,7 +82,7 @@ public class dbUnidadSilabo extends UnidadSilabo {
                 us.setHorasDocenciaUnidad(rs.getInt(8));
                 us.setHorasPracticaUnidad(rs.getInt(9));
                 us.setHorasAutonomoUnidad(rs.getInt(10));
-                us.setTituloUnidad(rs.getString(11));
+                us.setTituloUnidad(rs.getString(12));
                 
 
                 lista.add(us);

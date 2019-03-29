@@ -166,7 +166,7 @@ public class FrmPersonaCTR {
                 String celular = frmPersona.getTxtCelular().getText();
                 char car = ew.getKeyChar();
 
-                if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')) {
+                if ((car < 'a' || car > 'z') || (car < 'A' || car > 'Z')) {
                     ew.consume();
                 }
                 if (celular.length() >= 10) {

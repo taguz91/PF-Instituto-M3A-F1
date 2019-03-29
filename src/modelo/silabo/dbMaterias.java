@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.*;
+import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 
 public class dbMaterias extends MateriaMD {
@@ -44,12 +45,16 @@ public class dbMaterias extends MateriaMD {
 
         try {
             MateriaMD materia = null;
-            String sql = "SELECT id_materia FROM \"Materias\" WHERE materia_nombre='" + aguja + "'";
+            String sql = "SELECT id_materia,materia_horas_docencia,materia_horas_practicas,materia_horas_auto_estudio, id_carrera FROM \"Materias\" WHERE materia_nombre='" + aguja + "'";
             ResultSet rs = con.query(sql);
             while (rs.next()) {
                 materia = new MateriaMD();
+                materia.setCarrera(new CarreraMD());
                 materia.setId(Integer.parseInt(rs.getString("id_materia")));
-
+                materia.setHorasDocencia(rs.getInt("materia_horas_docencia"));
+                materia.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                materia.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
+                materia.getCarrera().setId(rs.getInt("id_carrera"));
             }
 
             rs.close();

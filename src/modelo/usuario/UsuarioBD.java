@@ -25,14 +25,15 @@ public class UsuarioBD extends UsuarioMD {
     private static final String PRIMARY_KEY = " usu_username ";
 
     public boolean insertar() {
+
         String INSERT = "INSERT INTO " + TABLA
                 + " (usu_username, usu_password, id_persona)"
                 + " VALUES ("
                 + " '" + getUsername() + "',"
                 + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + getPersona() + ""
+                + " " + getPersona().getIdPersona() + ""
                 + " );"
-                + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
+                + "CREATE ROLE \"" + getUsername() + "\" CREATEROLE LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "\n"
                 + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
                 + " ";
@@ -53,7 +54,8 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
                 + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
                 + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre\n"
+                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
+                + "\"public\".\"Usuarios_Persona\".usu_password\n"
                 + "FROM\n"
                 + "\"public\".\"Usuarios_Persona\"\n"
                 + "WHERE \n"
@@ -66,14 +68,16 @@ public class UsuarioBD extends UsuarioMD {
     private static List<UsuarioMD> selectFromView(String QUERY) {
         List<UsuarioMD> lista = new ArrayList<>();
 
+        System.out.println(QUERY);
+
         ResultSet rs = ResourceManager.Query(QUERY);
-
         try {
-            while (rs.next()) {
 
+            while (rs.next()) {
                 UsuarioMD usuario = new UsuarioMD();
                 usuario.setUsername(rs.getString("usu_username"));
                 usuario.setEstado(rs.getBoolean("usu_estado"));
+                usuario.setPassword(rs.getString("usu_password"));
 
                 PersonaMD persona = new PersonaMD();
                 persona.setIdPersona(rs.getInt("id_persona"));
@@ -114,7 +118,9 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
-
+        
+        
+        
         return selectFromView(SELECT);
     }
 
