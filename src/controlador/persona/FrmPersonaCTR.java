@@ -1,14 +1,11 @@
 package controlador.persona;
 
-import static com.sun.javafx.tk.Toolkit.getToolkit;
 import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -60,7 +57,6 @@ public class FrmPersonaCTR {
     private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
     private int numAccion = 2;
-    private Image foto;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -147,23 +143,6 @@ public class FrmPersonaCTR {
 
         });
 
-//        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                String cedula = frmPersona.getTxtIdentificacion().getText();
-//                char car = e.getKeyChar();
-//
-//                if (car < '0' || car > '9') {
-//                    e.consume();
-//                }
-//                if (cedula.length() >= 10) {
-//                    e.consume();
-//                }
-//
-//            }
-//
-//        });
-//
         valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
