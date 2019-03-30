@@ -62,9 +62,13 @@ public class VtnAlumnoCarreraCTR {
     public void iniciar() {
         cargarCmbCarreras();
 
-        String[] titulo = {"Carrera", "Alumno", "Cedula", "Fecha"};
+        String[] titulo = {"Carrera", "Alumno", "Cedula", "Fecha Inscripción"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
+        //Le damos unos toques a la tabla  
+        TblEstilo.fomatoTblConColor(vtnAlmCar.getTblAlmnCarrera());
+        TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 0, 70);
+        TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 2, 120);
         vtnAlmCar.getTblAlmnCarrera().setModel(mdTbl);
         //Llenamos la tabla
         cargarAlmnsCarrera();
