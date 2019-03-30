@@ -209,63 +209,17 @@ public class FrmPrdLectivoCTR {
 //        System.out.println("FECHA: " + fecha_Inicio);
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
-        System.out.println("Fecha Inicio: " + dia_Inicio.toString());
 //        LocalDate dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
 //        LocalDate dia_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
         
-        if (dia_Inicio.getMonthValue() >=9 && dia_Inicio.getMonthValue() <= 12) {
-            switch (dia_Inicio.getMonthValue()) {
-                case 9:
-                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 1, dia_Inicio.getDayOfMonth());
-                    if (dia_Inicio.isAfter(dia_Fin) == true) {
-                        error = true;
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
-                    break;
-                case 10:
-                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 2, dia_Inicio.getDayOfMonth());
-                    if (dia_Inicio.isAfter(dia_Fin) == true) {
-                        error = true;
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
-                    break;
-                case 11:
-                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 3, dia_Inicio.getDayOfMonth());
-                    if (dia_Inicio.isAfter(dia_Fin) == true) {
-                        error = true;
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
-                    break;
-                case 12:
-                    dia_Inicio = LocalDate.of(dia_Inicio.getYear() + 1, 4, dia_Inicio.getDayOfMonth());
-                    if (dia_Inicio.isAfter(dia_Fin) == true) {
-                        error = true;
-                        frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
-                    } else {
-                        frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
-                    }
-                    break;
-            }
-        } else {
-            dia_Inicio = LocalDate.of(dia_Inicio.getYear(), dia_Inicio.getMonthValue() + 4, dia_Inicio.getDayOfMonth());
-            if (dia_Inicio.isAfter(dia_Fin) == true) {
+            if (dia_Inicio.isAfter(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true) {
                 error = true;
-                frmPrdLectivo.getLbl_ErrFecFin().setText("Debe pasar 4 Meses");
+                frmPrdLectivo.getLbl_ErrFecFin().setText("Fecha Incorrecta");
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(true);
             } else {
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
             }
-        }
+        
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
