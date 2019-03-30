@@ -513,7 +513,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
-            JasperViewer.viewReport(jp);
+            JasperViewer.viewReport(jp, false);
 
         } catch (JRException | NullPointerException q) {
             Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
