@@ -58,7 +58,6 @@ public class FrmPersonaCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
-    private TxtVCelular valCelular;
     private int numAccion = 2;
     private Image foto;
 
@@ -165,8 +164,6 @@ public class FrmPersonaCTR {
 //        });
 //
         valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
-
-        //valCelular = new TxtVCelular(frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular());
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
