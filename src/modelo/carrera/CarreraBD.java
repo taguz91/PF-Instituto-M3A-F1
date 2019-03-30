@@ -53,7 +53,7 @@ public class CarreraBD extends CarreraMD {
                 + "SET  carrera_activo='false'\n"
                 + "WHERE id_carrera=" + idCarrera + ";";
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Eliminamos correctamente \n" + getNombre());
+            JOptionPane.showMessageDialog(null, "Eliminamos correctamente ");
         }
     }
 
