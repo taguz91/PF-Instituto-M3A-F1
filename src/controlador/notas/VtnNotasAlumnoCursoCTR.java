@@ -452,37 +452,52 @@ public class VtnNotasAlumnoCursoCTR {
             String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
             String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
 
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\reportecompuces.jrxml";
+            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteCompleto.jrxml";
             String QUERY = "SELECT\n"
-                    + "\"AlumnoCurso\".id_alumno,\n"
-                    + "\"Personas\".persona_identificacion,\n"
-                    + "\"Personas\".persona_primer_apellido || '  ' ||\"Personas\".persona_segundo_apellido AS \"APELLIDOS\",\n"
-                    + "\"Personas\".persona_primer_nombre || '  '||\"Personas\".persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "\"AlumnoCurso\".almn_curso_nt_1_parcial,\n"
-                    + "\"AlumnoCurso\".almn_curso_nt_examen_interciclo,\n"
-                    + "\"AlumnoCurso\".almn_curso_nt_2_parcial,\n"
-                    + "\"AlumnoCurso\".almn_curso_nt_examen_final,\n"
-                    + "\"AlumnoCurso\".almn_curso_nt_examen_supletorio,\n"
-                    + "\"AlumnoCurso\".almn_curso_nota_final,\n"
-                    + "\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "\"AlumnoCurso\".almn_curso_num_faltas\n"
+                    + "	\"Alumnos\".id_alumno,\n"
+                    + "	p_alu.persona_identificacion,\n"
+                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
+                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
+                    + "	\"AlumnoCurso\".almn_curso_nt_1_parcial,\n"
+                    + "	\"AlumnoCurso\".almn_curso_nt_examen_interciclo,\n"
+                    + "	\"AlumnoCurso\".almn_curso_nt_2_parcial,\n"
+                    + "	\"AlumnoCurso\".almn_curso_nt_examen_final,\n"
+                    + "	\"AlumnoCurso\".almn_curso_nt_examen_supletorio,\n"
+                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
+                    + "	\"AlumnoCurso\".almn_curso_nota_final,\n"
+                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
+                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
+                    + "	\"Materias\".materia_nombre, \n"
+                    + "	\"Jornadas\".nombre_jornada,\n"
+                    + "	\"Materias\".materia_ciclo,\n"
+                    + "	\"Cursos\".curso_paralelo,\n"
+                    + "	\"Carreras\".carrera_nombre,\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
+                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
+                    + " (\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\" \n"
                     + "FROM\n"
-                    + "\"AlumnoCurso\"\n"
-                    + "INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                    + "WHERE\n"
-                    + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
-                    + "\"Cursos\".id_docente = " + idDocente + " AND\n"
-                    + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                    + "\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
-                    + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                    + "\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
+                    + "	\"AlumnoCurso\"\n"
+                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
+                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
+                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
+                    + "	\n"
+                    + "\n"
+                    + "	WHERE\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_estado = FALSE \n"
+                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
+                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
+                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
+                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
+                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
                     + "ORDER BY\n"
-                    + "\"Personas\".persona_primer_apellido ASC;";
+                    + "	p_alu.persona_primer_apellido ASC;";
 
             System.out.println(QUERY);
 
@@ -508,67 +523,286 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void generarReporteMenos70() {
-        String QUERY = "SELECT\n"
-                + "\"Alumnos\".id_alumno, \n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre,\n"
-                + "\"AlumnoCurso\".almn_curso_nota_final\n"
-                + "FROM\n"
-                + "\"Personas\"\n"
-                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
-                + "where almn_curso_nota_final<70;";
+         try {
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+
+            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasMenor70.jrxml";
+            String QUERY = "SELECT\n"
+                    + "	\"Alumnos\".id_alumno,\n"
+                    + "	p_alu.persona_identificacion,\n"
+                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
+                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
+                    + "	\"AlumnoCurso\".almn_curso_nota_final,\n"
+                    + "	\"Materias\".materia_nombre, \n"
+                    + "	\"Jornadas\".nombre_jornada,\n"
+                    + "	\"Materias\".materia_ciclo,\n"
+                    + "	\"Cursos\".curso_paralelo,\n"
+                    + "	\"Carreras\".carrera_nombre,\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
+                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\"\n"
+                    + "FROM\n"
+                    + "	\"AlumnoCurso\"\n"
+                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
+                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
+                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
+                    + "	\n"
+                    + "\n"
+                    + "	WHERE\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_estado = FALSE \n"
+                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
+                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
+                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
+                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
+                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
+                    + "	AND \"AlumnoCurso\".almn_curso_nota_final < 70\n"
+                    + "ORDER BY\n"
+                    + "	p_alu.persona_primer_apellido ASC;";
+
+            System.out.println(QUERY);
+
+            JasperDesign jd = JRXmlLoader.load(path);
+
+            JRDesignQuery newQuery = new JRDesignQuery();
+
+            newQuery.setText(QUERY);
+
+            jd.setQuery(newQuery);
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (JRException | NullPointerException q) {
+            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void generarReporteEntre70_80() {
-        String QUERY = "SELECT\n"
-                + "\"Alumnos\".id_alumno, \n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre,\n"
-                + "\"AlumnoCurso\".almn_curso_nota_final\n"
-                + "FROM\n"
-                + "\"Personas\"\n"
-                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
-                + "where almn_curso_nota_final>=70 and almn_curso_nota_final <80;";
+        try {
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+
+            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre70y80.jrxml";
+            String QUERY = "SELECT\n"
+                    + "	\"Alumnos\".id_alumno,\n"
+                    + "	p_alu.persona_identificacion,\n"
+                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
+                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
+                    + "	\"AlumnoCurso\".almn_curso_nota_final,\n"
+                    + "	\"Materias\".materia_nombre, \n"
+                    + "	\"Jornadas\".nombre_jornada,\n"
+                    + "	\"Materias\".materia_ciclo,\n"
+                    + "	\"Cursos\".curso_paralelo,\n"
+                    + "	\"Carreras\".carrera_nombre,\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
+                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\"\n"
+                    + "	\n"
+                    + "FROM\n"
+                    + "	\"AlumnoCurso\"\n"
+                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
+                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
+                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
+                    + "	\n"
+                    + "\n"
+                    + "	WHERE\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_estado = FALSE \n"
+                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
+                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
+                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
+                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
+                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
+                    + "	AND \"AlumnoCurso\".almn_curso_nota_final >=70 \n"
+                    + "	AND \"AlumnoCurso\".almn_curso_nota_final <81 \n"
+                    + "ORDER BY\n"
+                    + "	p_alu.persona_primer_apellido ASC;";
+
+            System.out.println(QUERY);
+
+            JasperDesign jd = JRXmlLoader.load(path);
+
+            JRDesignQuery newQuery = new JRDesignQuery();
+
+            newQuery.setText(QUERY);
+
+            jd.setQuery(newQuery);
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (JRException | NullPointerException q) {
+            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void generarReporteEntre80_90() {
-        String QUERY = "SELECT\n"
-                + "\"Alumnos\".id_alumno, \n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre,\n"
-                + "\"AlumnoCurso\".almn_curso_nota_final\n"
-                + "FROM\n"
-                + "\"Personas\"\n"
-                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                + "where almn_curso_nota_final>=80 and almn_curso_nota_final <90;";
+        try {
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+
+            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre80y90.jrxml";
+            String QUERY = "SELECT\n"
+            + "	\"Alumnos\".id_alumno,\n"
+            + "	p_alu.persona_identificacion,\n"
+            + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
+            + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
+            + "	\"AlumnoCurso\".almn_curso_nota_final,\n"
+            + "	\"Materias\".materia_nombre, \n"
+            + "	\"Jornadas\".nombre_jornada,\n"
+            + "	\"Materias\".materia_ciclo,\n"
+            + "	\"Cursos\".curso_paralelo,\n"
+            + "	\"Carreras\".carrera_nombre,\n"
+            + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+            + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
+            + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\"\n"
+            + "	\n"
+            + "FROM\n"
+            + "	\"AlumnoCurso\"\n"
+            + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+            + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+            + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+            + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+            + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+            + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
+            + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+            + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
+            + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
+            + "	\n"
+            + "\n"
+            + "	WHERE\n"
+            + "	\"PeriodoLectivo\".prd_lectivo_estado = FALSE \n"
+            + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
+            + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
+            + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
+            + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
+            + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
+            + "	AND \"AlumnoCurso\".almn_curso_nota_final >=80 \n"
+            + "	AND \"AlumnoCurso\".almn_curso_nota_final <91 \n"
+            + "ORDER BY\n"
+            + "	p_alu.persona_primer_apellido ASC;";
+            
+
+            System.out.println(QUERY);
+
+            JasperDesign jd = JRXmlLoader.load(path);
+
+            JRDesignQuery newQuery = new JRDesignQuery();
+
+            newQuery.setText(QUERY);
+
+            jd.setQuery(newQuery);
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (JRException | NullPointerException q) {
+            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void generarReporteEntre90_100() {
-        String QUERY = "SELECT\n"
-                + "\"Alumnos\".id_alumno, \n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre,\n"
-                + "\"AlumnoCurso\".almn_curso_nota_final\n"
-                + "FROM\n"
-                + "\"Personas\"\n"
-                + "JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "JOIN \"AlumnoCurso\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno \n"
-                + "where almn_curso_nota_final>=90 and almn_curso_nota_final <100;";
+        try {
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+
+            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre90y100.jrxml";
+            String QUERY = "SELECT\n"
+                    + "	\"Alumnos\".id_alumno,\n"
+                    + "	p_alu.persona_identificacion,\n"
+                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
+                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
+                    + "	\"AlumnoCurso\".almn_curso_nota_final,\n"
+                    + "	\"Materias\".materia_nombre, \n"
+                    + "	\"Jornadas\".nombre_jornada,\n"
+                    + "	\"Materias\".materia_ciclo,\n"
+                    + "	\"Cursos\".curso_paralelo,\n"
+                    + "	\"Carreras\".carrera_nombre,\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
+                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\"\n"
+                    + "	\n"
+                    + "FROM\n"
+                    + "	\"AlumnoCurso\"\n"
+                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
+                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
+                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
+                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
+                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
+                    + "	\n"
+                    + "\n"
+                    + "	WHERE\n"
+                    + "	\"PeriodoLectivo\".prd_lectivo_estado = FALSE \n"
+                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
+                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
+                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
+                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
+                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
+                    + "	AND \"AlumnoCurso\".almn_curso_nota_final >=90 \n"
+                    + "	AND \"AlumnoCurso\".almn_curso_nota_final <101\n"
+                    + "ORDER BY\n"
+                    + "	p_alu.persona_primer_apellido ASC;";
+
+            System.out.println(QUERY);
+
+            JasperDesign jd = JRXmlLoader.load(path);
+
+            JRDesignQuery newQuery = new JRDesignQuery();
+
+            newQuery.setText(QUERY);
+
+            jd.setQuery(newQuery);
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (JRException | NullPointerException q) {
+            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /*

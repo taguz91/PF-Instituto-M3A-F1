@@ -56,7 +56,7 @@ public class ResourceManager {
         conex = DriverManager.getConnection(JBDC_URL, USERNAME, PASSWORD);
 
        PASSWORD = "qwerty79";
-         */
+      
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;
