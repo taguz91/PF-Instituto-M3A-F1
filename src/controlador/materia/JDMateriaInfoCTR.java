@@ -47,8 +47,8 @@ public class JDMateriaInfoCTR {
         mdTblCo = TblEstilo.modelTblSinEditar(datos1, titulo1);
         mdTblPre = TblEstilo.modelTblSinEditar(datos1, titulo2);
 
-        TblEstilo.fomatoTblConColor(vtnInfo.getTblCoRequisitos());
-        TblEstilo.fomatoTblConColor(vtnInfo.getTblPreRequisitos());
+        TblEstilo.formatoTblConColor(vtnInfo.getTblCoRequisitos());
+        TblEstilo.formatoTblConColor(vtnInfo.getTblPreRequisitos());
 
         vtnInfo.getTblCoRequisitos().setModel(mdTblCo);
         vtnInfo.getTblPreRequisitos().setModel(mdTblPre);

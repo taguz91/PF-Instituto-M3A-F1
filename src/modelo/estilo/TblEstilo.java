@@ -53,7 +53,7 @@ public class TblEstilo {
         tblHead.setDefaultRenderer(hedRender);
     }
 
-    public static void fomatoTblConColor(JTable tbl) {
+    public static void formatoTblConColor(JTable tbl) {
         JTableHeader tblHead = tbl.getTableHeader();
 
         tblHead.setBackground(new Color(49, 79, 117));

@@ -19,7 +19,7 @@ public class SplashCTR {
 //        new ImageIcon(getClass().getResource("/vista/img/animacion/SP4.png")),
 //        new ImageIcon(getClass().getResource("/vista/img/animacion/SP5.png"))
 //    };
-        private final ImageIcon estados[] = {
+    private final ImageIcon estados[] = {
         new ImageIcon(getClass().getResource("/vista/img/animacion/SPL1.png")),
         new ImageIcon(getClass().getResource("/vista/img/animacion/SPL2.png")),
         new ImageIcon(getClass().getResource("/vista/img/animacion/SPL3.png")),
@@ -35,8 +35,7 @@ public class SplashCTR {
         this.s = new Splash();
         s.setLocationRelativeTo(null);
         AWTUtilities.setWindowOpaque(s, false);
-        //s.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        s.setLocationRelativeTo(null);
+        s.setExtendedState(JFrame.MAXIMIZED_BOTH);
         s.setIconImage(icono.getImage());
         s.setVisible(true);
     }
