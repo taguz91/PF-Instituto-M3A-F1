@@ -85,6 +85,9 @@ public class LoginCTR {
         if (c.equalsIgnoreCase("J")) {
             vista.getTxtUsername().setText("JHONNY");
             vista.getTxtPassword().setText("ROOT");
+        }else if(c.equalsIgnoreCase("R")){
+            vista.getTxtUsername().setText("ROOT");
+            vista.getTxtPassword().setText("ROOT");
         }
     }
 
@@ -121,7 +124,7 @@ public class LoginCTR {
         USERNAME = "ROOT";
         PASSWORD = "ROOT";
         VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", "linis4413", "LoginGenerico"), icono, ista);
+        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "LoginGenerico"), icono, ista);
 
         ventanaPrincipal.iniciar();
         vista.setVisible(false);

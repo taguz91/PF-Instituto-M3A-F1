@@ -58,7 +58,7 @@ public class MateriaBD extends MateriaMD {
                 + "AND materia_ciclo = " + ciclo + ";";
         return consultarMateriasParaTabla(sql);
     }
-    
+
     //Cargar datos de materia por carrera ciclo para ver sus materias onli materias
     public ArrayList<MateriaMD> buscarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
         String sql = "SELECT id_materia, materia_codigo,"
@@ -66,7 +66,7 @@ public class MateriaBD extends MateriaMD {
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + " "
                 + "AND materia_ciclo = " + ciclo + ";";
-          ArrayList<MateriaMD> lista = new ArrayList();
+        ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -110,6 +110,38 @@ public class MateriaBD extends MateriaMD {
         } catch (SQLException e) {
             System.out.println("No pudimos cargar los ciclos de una carrera");
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //Buscar materia para informacion
+    public MateriaMD buscarMateriaInfo(int idmateria) {
+        MateriaMD m = new MateriaMD();
+        String sql = "SELECT id_materia, m.id_carrera, materia_codigo, \n"
+                + "materia_nombre, carrera_nombre\n"
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
+                + "WHERE id_materia = "+idmateria+" AND\n"
+                + "c.id_carrera = m.id_carrera;";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    m.setId(rs.getInt("id_materia"));
+                    m.setCodigo(rs.getString("materia_codigo"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    CarreraMD cr = new CarreraMD(); 
+                    cr.setId(rs.getInt("id_carrera"));
+                    cr.setNombre(rs.getString("carrera_nombre"));
+                    m.setCarrera(cr);
+                }
+                return m;
+            } else {
+                System.out.println("No se pudo consultar carreras");
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(ex.getMessage());
             return null;
         }
     }

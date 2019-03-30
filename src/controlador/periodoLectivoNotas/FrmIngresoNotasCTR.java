@@ -120,7 +120,7 @@ public class FrmIngresoNotasCTR {
                 .filter(item -> item.getNombre_PerLectivo().equals(vista.getCmbPeriodoLec().getSelectedItem().toString()))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    modelo.setIdPeriodoLectivo(obj);
+                    modelo.setPeriodoLectivo(obj);
                 });
 
         listaNomNotas
@@ -128,7 +128,7 @@ public class FrmIngresoNotasCTR {
                 .filter(item -> item.getNombre().equals(vista.getCmbTipoNota().getSelectedItem().toString()))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    modelo.setIdTipoNota(obj);
+                    modelo.setTipoNota(obj);
                 });
     }
 
@@ -146,8 +146,8 @@ public class FrmIngresoNotasCTR {
 
         vista.getJdcFechaIni().setDate(java.sql.Date.valueOf(modelo.getFechaInicio()));
         vista.getJdcFechaFin().setDate(java.sql.Date.valueOf(modelo.getFechaCierre()));
-        vista.getCmbPeriodoLec().setSelectedItem(modelo.getIdPeriodoLectivo().getNombre_PerLectivo());
-        vista.getCmbTipoNota().setSelectedItem(modelo.getIdTipoNota().getNombre());
+        vista.getCmbPeriodoLec().setSelectedItem(modelo.getPeriodoLectivo().getNombre_PerLectivo());
+        vista.getCmbTipoNota().setSelectedItem(modelo.getTipoNota().getNombre());
 
     }
 

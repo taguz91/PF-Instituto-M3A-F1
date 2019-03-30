@@ -36,6 +36,14 @@ public class CursoBD extends CursoMD {
         this.jrd = new JornadaBD(conecta);
     }
 
+    public void iniciarIngresoNotas() {
+        String nsql = "INSERT INTO public.\"IngresoNotas\"( id_curso)\n"
+                + "	VALUES ();";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se incio ingreso notas.");
+        }
+    }
+
     public void guardarCurso() {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
@@ -46,7 +54,7 @@ public class CursoBD extends CursoMD {
                 + ", '" + getCurso_nombre() + "', " + getCurso_capacidad() + ", " + getCurso_ciclo()
                 + ", '" + getParalelo() + "');";
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso "+getCurso_nombre());
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso " + getCurso_nombre());
         }
     }
 
@@ -61,7 +69,7 @@ public class CursoBD extends CursoMD {
                 + "curso_paralelo= '" + getParalelo() + "'\n"
                 + "	WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Se edito correctamente el curso "+getCurso_nombre());
+            JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getCurso_nombre());
         }
     }
 
@@ -192,14 +200,14 @@ public class CursoBD extends CursoMD {
 
     public CursoMD buscarCurso(int idCurso) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
                 + "	FROM public.\"Cursos\" WHERE \"Cursos\".id_curso = " + idCurso + ";";
         return consultarCurso(sql);
     }
 
     public CursoMD existeMateriaCursoJornada(int idMateria, int ciclo, int idJornada, int idPrdLectivo, String paralelo) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
                 + "	FROM public.\"Cursos\"  WHERE id_materia = " + idMateria + " AND  "
                 + "curso_ciclo = " + ciclo + " AND  id_jornada = " + idJornada + " AND "
                 + "id_prd_lectivo = " + idPrdLectivo + " AND curso_paralelo = '" + paralelo + "';";
@@ -208,7 +216,7 @@ public class CursoBD extends CursoMD {
 
     public CursoMD existeDocenteMateria(int idMateria, int idDocente, int idJornada, int idPrdLectivo, int ciclo, String paralelo) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_permiso_ingreso_nt, curso_paralelo\n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
                 + "FROM public.\"Cursos\" WHERE id_materia = " + idMateria + " AND  "
                 + "id_docente = " + idDocente + " AND  id_jornada = " + idJornada + " AND "
                 + "id_prd_lectivo = " + idPrdLectivo + " AND curso_ciclo = " + ciclo + " "

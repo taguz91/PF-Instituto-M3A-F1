@@ -43,7 +43,7 @@ public class ControladorSilabos {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                System.out.println("entro");
+            
                 ControladorSilaboCRUD cs = new ControladorSilaboCRUD(new dbSilabo(), usuario, new frmConfiguracionSilabo());
 
                 principal.getDpnlPrincipal().add(cs.getSetup());
@@ -73,6 +73,8 @@ public class ControladorSilabos {
                             @Override
                             public void actionPerformed(ActionEvent ae2) {
 
+                                principal.getDpnlPrincipal().remove(cs.getBibliografia());
+                                
                                 principal.getDpnlPrincipal().add(cs.getBibliografia());
 
                                 cs.getBibliografia().show();
@@ -86,6 +88,9 @@ public class ControladorSilabos {
                             }
 
                         };
+                        
+                        
+                        
                         cs.getGestion().getBtnSiguiente().addActionListener(a3);
 
                     }
@@ -124,9 +129,12 @@ public class ControladorSilabos {
                     @Override
                     public void actionPerformed(ActionEvent ae2) {
 
+                        principal.getDpnlPrincipal().remove(cs.getBibliografia());
+                        
                         principal.getDpnlPrincipal().add(cs.getGestion());
 
                         cs.getGestion().show();
+                        //cs.getGestion().getBtnSiguiente().setEnabled(false);
                         Dimension desktopSize = principal.getDpnlPrincipal().getSize();
                         Dimension jInternalFrameSize = cs.getGestion().getSize();
                         cs.getGestion().setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
@@ -139,6 +147,8 @@ public class ControladorSilabos {
                             @Override
                             public void actionPerformed(ActionEvent ae2) {
 
+                                principal.getDpnlPrincipal().remove(cs.getBibliografia());
+                                
                                 principal.getDpnlPrincipal().add(cs.getBibliografia());
 
                                 cs.getBibliografia().show();

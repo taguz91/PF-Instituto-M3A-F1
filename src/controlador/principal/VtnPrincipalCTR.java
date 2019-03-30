@@ -32,7 +32,6 @@ import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyVetoException;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -200,7 +199,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
     }
 
-    private void abrirVtnPersona() {
+    public void abrirVtnPersona() {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
@@ -212,7 +211,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnDocente() {
+    public void abrirVtnDocente() {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
         if (numVtns < 5) {
@@ -224,7 +223,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnAlumno() {
+    public void abrirVtnAlumno() {
         VtnAlumno vtnAlumno = new VtnAlumno();
         eventoInternal(vtnAlumno);
         if (numVtns < 5) {
@@ -236,7 +235,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnCarrera() {
+    public void abrirVtnCarrera() {
         VtnCarrera vtnCarrera = new VtnCarrera();
         eventoInternal(vtnCarrera);
         if (numVtns < 5) {
@@ -248,7 +247,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnCurso() {
+    public void abrirVtnCurso() {
         VtnCurso vtnCurso = new VtnCurso();
         eventoInternal(vtnCurso);
         if (numVtns < 5) {
@@ -261,7 +260,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnPrdLectivo() {
+    public void abrirVtnPrdLectivo() {
         VtnPrdLectivo vtnPrdLectivo = new VtnPrdLectivo();
         eventoInternal(vtnPrdLectivo);
         if (numVtns < 5) {
@@ -273,7 +272,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnAlumnoCurso() {
+    public void abrirVtnAlumnoCurso() {
         VtnAlumnoCurso vtnAlmnCurso = new VtnAlumnoCurso();
         eventoInternal(vtnAlmnCurso);
         if (numVtns < 5) {
@@ -284,7 +283,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnMateria() {
+    public void abrirVtnMateria() {
         VtnMateria vtnMateria = new VtnMateria();
         eventoInternal(vtnMateria);
         if (numVtns < 5) {
@@ -296,7 +295,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirVtnAlumnoCarrera() {
+    public void abrirVtnAlumnoCarrera() {
         VtnAlumnoCarrera vtnAlmnCarrera = new VtnAlumnoCarrera();
         eventoInternal(vtnAlmnCarrera);
         if (numVtns < 5) {
@@ -308,14 +307,14 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnMallaAlumnos() {
+    public void abrirVtnMallaAlumnos() {
         VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno();
 
         VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
         ctrMalla.iniciar();
     }
 
-    private void abrirVtnDocenteMateria() {
+    public void abrirVtnDocenteMateria() {
         VtnDocenteMateria vtn = new VtnDocenteMateria();
         eventoInternal(vtn);
         if (numVtns < 5) {
@@ -324,12 +323,12 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirVtnAyuda() {
+    public void abrirVtnAyuda() {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
     }
     
-    private void abrirVtnHistorialUser(){
+    public void abrirVtnHistorialUser(){
         VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
         eventoInternal(vtn);
         if (numVtns < 5) {
@@ -339,7 +338,7 @@ public class VtnPrincipalCTR {
     }
 
     //Para abrir todos los formularios
-    private void abrirFrmPersona() {
+    public void abrirFrmPersona() {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
@@ -350,7 +349,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirFrmDocente() {
+    public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
         DocenteBD docente = new DocenteBD(conecta);
         eventoInternal(frmDocente);
@@ -364,7 +363,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirFrmAlumno() {
+    public void abrirFrmAlumno() {
         FrmAlumno frmAlumno = new FrmAlumno();
         eventoInternal(frmAlumno);
         if (numVtns < 5) {
@@ -376,7 +375,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirFrmCarrera() {
+    public void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
         eventoInternal(frmCarrera);
         if (numVtns < 5) {
@@ -388,7 +387,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirFrmCurso() {
+    public void abrirFrmCurso() {
         FrmCurso frmCurso = new FrmCurso();
         eventoInternal(frmCurso);
         if (numVtns < 5) {
@@ -399,7 +398,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirFrmPrdLectivo() {
+    public void abrirFrmPrdLectivo() {
         FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
         eventoInternal(frmPrdLectivo);
         if (numVtns < 5) {
@@ -411,7 +410,7 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void abrirFrmInscripcion() {
+    public void abrirFrmInscripcion() {
         FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera();
         eventoInternal(frmMatricula);
         if (numVtns < 5) {
@@ -420,7 +419,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirFrmMatricula() {
+    public void abrirFrmMatricula() {
         FrmAlumnoCurso frmAlmCurso = new FrmAlumnoCurso();
         eventoInternal(frmAlmCurso);
         if (numVtns < 5) {
@@ -429,7 +428,7 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void abrirFrmDocenteMateria() {
+    public void abrirFrmDocenteMateria() {
         FrmDocenteMateria frm = new FrmDocenteMateria();
         eventoInternal(frm);
         if (numVtns < 5) {

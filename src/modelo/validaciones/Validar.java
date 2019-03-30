@@ -11,15 +11,15 @@ public class Validar {
         //Es letras si continene uno de estos elementos puede contener espacios 
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\s\\/]+");
     }
-    
+
     //Para validar letras y caracteres como // 
     public static boolean esDireccion(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñ/\\-\\s]+");
     }
-    
+
     //Validamos un txt de un buscador 
-    public static boolean esLetrasYNumeros(String cadena){
+    public static boolean esLetrasYNumeros(String cadena) {
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
     }
 
@@ -27,13 +27,13 @@ public class Validar {
         //Si la cadena no contine solo numeros se retorna falso
         return cadena.matches("[0-9]+");
     }
-    
-    public static boolean esTelefono(String cadena){
-        return cadena.matches("[0-9]{7,10}");
+
+    public static boolean esTelefono(String cadena) {
+        return cadena.matches("[0-9]{7,13}");
     }
-    
-     public static boolean esCelular(String cadena){
-        return cadena.matches("[0-9]{10}");
+
+    public static boolean esCelular(String cadena) {
+        return cadena.matches("[0-9]{13}");
     }
 
     public static boolean esAnio(String cadena) {
@@ -64,32 +64,32 @@ public class Validar {
             if (Integer.parseInt(codProv) > 0 && Integer.parseInt(codProv) <= 24) {
                 int sumPares = 0;
                 int sumImpares = 0;
-                int impar; 
-                char [] cedula = cadena.toCharArray();
+                int impar;
+                char[] cedula = cadena.toCharArray();
                 //Sumamos los impares y pares de nuestro array
                 for (int i = 0; i < cedula.length - 1; i++) {
-                    if ((i+1)%2 == 0) {
-                        sumPares+= Integer.parseInt(cedula[i]+""); 
-                    }else{
-                        impar = Integer.parseInt(cedula[i]+"") * 2; 
+                    if ((i + 1) % 2 == 0) {
+                        sumPares += Integer.parseInt(cedula[i] + "");
+                    } else {
+                        impar = Integer.parseInt(cedula[i] + "") * 2;
                         if (impar > 9) {
-                            impar-= 9; 
+                            impar -= 9;
                         }
-                        sumImpares+= impar; 
-                    } 
+                        sumImpares += impar;
+                    }
                 }
-                int total = sumPares + sumImpares; 
+                int total = sumPares + sumImpares;
                 //Obtenemos la descena inmediata  
-                int decena = (Integer.parseInt((total+"").substring(0, 1)) + 1 )* 10;  
+                int decena = (Integer.parseInt((total + "").substring(0, 1)) + 1) * 10;
                 //Restamos la decena menos el total de las sumas  
-                int  validador = decena - total; 
+                int validador = decena - total;
                 if (validador == 10) {
-                    validador = 0; 
+                    validador = 0;
                 }
-                return Integer.parseInt(cedula[9]+"") == validador;
-                
+                return Integer.parseInt(cedula[9] + "") == validador;
+
             } else {
-               //System.out.println("No pertenece a ninguna provincia del ecuador.");
+                //System.out.println("No pertenece a ninguna provincia del ecuador.");
                 return false;
             }
         } else {
@@ -97,28 +97,32 @@ public class Validar {
             return false;
         }
     }
-    
-    public static boolean esCorreo(String entrada){
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+$");   
+
+    public static boolean esCorreo(String entrada) {
+        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+$");
     }
-    
-    public static boolean esCorreoAr(String entrada){
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+\\.+[a-zA-Z]+$");   
+
+    public static boolean esCorreoAr(String entrada) {
+        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+\\.+[a-zA-Z]+$");
     }
-    
-    public static boolean esNota(String entrada){
-        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}");   
+
+    public static boolean esNota(String entrada) {
+        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}");
     }
-    
-    public static boolean esNumCasa(String entrada){
-        return entrada.matches("[0-9]{1,4}+-+[0-9]{1,4}");   
+
+    public static boolean esNumCasa(String entrada) {
+        return entrada.matches("[0-9]{1,4}+-+[0-9]{1,4}");
     }
-    
-    public static boolean esNumeCasa(String entrada){
-        return entrada.matches("[A-Za-z]{1}+/+[A-Za-z]{1}");   
+
+    public static boolean esNumeCasaLetras(String entrada) {
+        return entrada.matches("[A-Za-z]{1}+/+[A-Za-z]{1}");
     }
-    
-    public static boolean esCarnetConadis(String entrada){
-        return entrada.matches("[0-9]{1,4}+\\.+[0-9]{1,6}");   
+
+    public static boolean esNumeCasaSoloNumeros(String entrada) {
+        return entrada.matches("[0-9]{1,4}+");
+    }
+
+    public static boolean esCarnetConadis(String entrada) {
+        return entrada.matches("[0-9]{1,4}+\\.+[0-9]{1,6}");
     }
 }

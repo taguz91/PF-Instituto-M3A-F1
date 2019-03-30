@@ -69,7 +69,10 @@ public class FrmTipoNotaCTR {
 
     //METODOS DE APOYO
     private void setInfoEnTxts() {
-        vista.getCmbTipoNota().setSelectedItem(modelo.getNombre());
+
+        System.out.println("---->" + modelo.getNombre());
+
+        vista.getCmbTipoNota().setSelectedItem((Object) modelo.getNombre());
         vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
         vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
     }

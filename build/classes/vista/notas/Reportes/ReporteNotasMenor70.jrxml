@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.8264462809917391"/>
+	<property name="ireport.x" value="293"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+	"Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as "APELLIDOS",
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
+	"AlumnoCurso".almn_curso_nota_final,
+	"Materias".materia_nombre, 
+	"Jornadas".nombre_jornada,
+	"Materias".materia_ciclo,
+	"Cursos".curso_paralelo,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre as "NOMBRE_PROF",
+	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as "APELLIDO_PROF"
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
+	
+
+	WHERE
+	"PeriodoLectivo".prd_lectivo_estado = FALSE 
+	AND "Cursos".id_docente = 55 
+	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
+	AND "Cursos".curso_ciclo = 4 
+	AND "Cursos".curso_paralelo = 'A' 
+	AND "Jornadas".nombre_jornada = 'MATUTINA' 
+	AND "AlumnoCurso".almn_curso_nota_final < 70
+ORDER BY
+	p_alu.persona_primer_apellido ASC;]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="nombre_jornada" class="java.lang.String"/>
+	<field name="materia_ciclo" class="java.lang.Integer"/>
+	<field name="curso_paralelo" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="NOMBRE_PROF" class="java.lang.String"/>
+	<field name="APELLIDO_PROF" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="197" splitType="Stretch">
+			<textField>
+				<reportElement x="327" y="142" width="37" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="142" width="41" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="234" y="65" width="223" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="65" width="97" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Periodo Lectivo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1049" y="65" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="977" y="142" width="56" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Jornada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="107" width="54" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="1412" height="45" forecolor="#0066CC"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1170" y="65" width="164" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="569" y="55" width="331" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES MENORES A 70]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1063" y="107" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="142" width="52" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Paralelo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="203" y="107" width="366" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="977" y="107" width="72" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1049" y="142" width="214" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="977" y="65" width="56" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="178" y="142" width="25" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="176" width="1520" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="457" y="18" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="557" y="18" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="657" y="18" width="163" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="820" y="18" width="158" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="978" y="18" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NOTA FINAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="657" y="18" width="163" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="457" y="18" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="820" y="18" width="158" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="978" y="18" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="457" y="18" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="557" y="18" width="100" height="20"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="557" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="657" y="0" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="820" y="0" width="158" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="820" y="0" width="158" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="557" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="657" y="0" width="163" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="457" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="457" y="0" width="100" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement mode="Opaque" x="978" y="0" width="100" height="20" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="978" y="0" width="100" height="20" backcolor="#FFFFFF"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="152" splitType="Stretch">
+			<textField>
+				<reportElement x="643" y="69" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="760" y="69" width="164" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="720" y="89" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="633" y="57" width="234" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="676" y="119" width="166" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

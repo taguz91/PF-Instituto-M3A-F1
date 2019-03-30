@@ -46,4 +46,12 @@ public class TxtVTelefono extends KeyAdapter {
             }
         }
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        char car = e.getKeyChar();
+        if (car < '0' || car > '9') {
+            e.consume();
+        }
+    }
 }

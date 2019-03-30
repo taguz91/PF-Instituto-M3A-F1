@@ -18,21 +18,10 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
-
-
-
-
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
-    //private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";
-   // private String url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
     private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
-    private String user = "ROOT";
-    private String pass = "ROOT";
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFM3AConMallaCursada"; //BD Johnny
+    // private String url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
+    //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
 
     public ConectarDB(String user, String pass, String mensaje) {
         try {
