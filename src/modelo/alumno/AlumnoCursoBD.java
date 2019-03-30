@@ -124,6 +124,32 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso) {
+        String sql = "SELECT DISTINCT c.curso_nombre,  \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Cursos\" c\n"
+                + "WHERE a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.curso_nombre = '" + curso + "' AND\n"
+                + "ac.id_curso = c.id_curso;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorPrdTbl(int idPrd) {
+        String sql = "SELECT DISTINCT c.curso_nombre,  \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Cursos\" c\n"
+                + "WHERE a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.id_prd_lectivo = "+idPrd+"  AND\n"
+                + "ac.id_curso = c.id_curso;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursosTbl() {
         String sql = "SELECT DISTINCT curso_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido,\n"

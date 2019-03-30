@@ -46,4 +46,12 @@ public class TxtVCelular extends KeyAdapter {
             }
         }
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        char car = e.getKeyChar();
+        if (!Validar.esCelular(car + "")) {
+            e.consume();
+        }
+    }
 }
