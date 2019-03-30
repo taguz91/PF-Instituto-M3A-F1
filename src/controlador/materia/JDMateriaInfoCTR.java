@@ -33,8 +33,6 @@ public class JDMateriaInfoCTR {
         this.vtnInfo = new JDMateriaInfo(vtnPrin, false);
         this.matRe = new MateriaRequisitoBD(conecta);
         vtnInfo.setLocationRelativeTo(vtnPrin);
-
-        this.vtnInfo.setVisible(true);
     }
 
     public void iniciar() {
@@ -48,15 +46,16 @@ public class JDMateriaInfoCTR {
 
         mdTblCo = TblEstilo.modelTblSinEditar(datos1, titulo1);
         mdTblPre = TblEstilo.modelTblSinEditar(datos1, titulo2);
-        
+
         TblEstilo.fomatoTblConColor(vtnInfo.getTblCoRequisitos());
         TblEstilo.fomatoTblConColor(vtnInfo.getTblPreRequisitos());
-        
+
         vtnInfo.getTblCoRequisitos().setModel(mdTblCo);
         vtnInfo.getTblPreRequisitos().setModel(mdTblPre);
-        
+
         llenarTblCoRequisitos();
         llenarTblPreRequisitos();
+        this.vtnInfo.setVisible(true);
     }
 
     private void llenarTblCoRequisitos() {
