@@ -34,17 +34,11 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
         this.setFechaInicio(obj.getFechaInicio());
         this.setFechaCierre(obj.getFechaCierre());
         this.setEstado(obj.isEstado());
-        this.setIdPeriodoLectivo(obj.getIdPeriodoLectivo());
-        this.setIdTipoNota(obj.getIdTipoNota());
+        this.setPeriodoLectivo(obj.getPeriodoLectivo());
+        this.setTipoNota(obj.getTipoNota());
     }
 
     private static final String TABLA = " \"PeriodoIngresoNotas\" ";
-    private static final String ATRIBUTOS = " \"PeriodoIngresoNotas\".id_perd_ingr_notas,\n"
-            + "\"PeriodoIngresoNotas\".perd_notas_fecha_inicio,\n"
-            + "\"PeriodoIngresoNotas\".perd_notas_fecha_cierre,\n"
-            + "\"PeriodoIngresoNotas\".perd_notas_estado,\n"
-            + "\"PeriodoIngresoNotas\".id_prd_lectivo,\n"
-            + "\"PeriodoIngresoNotas\".id_tipo_nota ";
     private static final String PRIMARY_KEY = " id_perd_ingr_notas ";
 
     public boolean insertar() {
@@ -53,27 +47,33 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 + "VALUES\n"
                 + "("
                 + " '" + java.sql.Date.valueOf(getFechaInicio()) + "',"
-                + " '" + java.sql.Date.valueOf(getFechaCierre())+ "',"
-                + "  " + getIdPeriodoLectivo().getId_PerioLectivo() + ","
-                + "  " + getIdTipoNota().getIdTipoNota() + ""
+                + " '" + java.sql.Date.valueOf(getFechaCierre()) + "',"
+                + "  " + getPeriodoLectivo().getId_PerioLectivo() + ","
+                + "  " + getTipoNota().getIdTipoNota() + ""
                 + ");";
-                
-                System.out.println(INSERT);
+
+        System.out.println(INSERT);
 
         return ResourceManager.Statement(INSERT) == null;
     }
 
-    public static List<PeriodoIngresoNotasMD> SelectAll() {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + "WHERE perd_notas_estado IS TRUE";
+    public static List<PeriodoIngresoNotasMD> selectAll() {
 
-        return selectSimple(SELECT);
-    }
-
-    public List<PeriodoIngresoNotasMD> SelectOne(String Aguja) {
-
-        String SELECT = "";
-        return selectSimple(SELECT);
-
+        String SELECT = "SELECT\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".prd_lectivo_nombre,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_fecha_inicio,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_fecha_cierre,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".tipo_nota_nombre,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_estado,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".tipo_nota_estado,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".id_prd_lectivo,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".id_tipo_nota,\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".id_perd_ingr_notas\n"
+                + "FROM\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\"\n"
+                + "WHERE\n"
+                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_estado IS TRUE;";
+        return selectFromView(SELECT);
     }
 
     public boolean editar(int Pk) {
@@ -89,15 +89,13 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 + " perd_notas_estado= " + false + " "
                 + " WHERE "
                 + " " + PRIMARY_KEY + "=" + PK + " ";
-    
+
         return ResourceManager.Statement(DELETE) == null;
     }
 
-    private static List<PeriodoIngresoNotasMD> selectSimple(String QUERY) {
+    private static List<PeriodoIngresoNotasMD> selectFromView(String QUERY) {
 
         List<PeriodoIngresoNotasMD> Lista = new ArrayList<>();
-
-        System.out.println(QUERY);
 
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
@@ -109,8 +107,8 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 periodo.setFechaInicio(rs.getDate("perd_notas_fecha_inicio").toLocalDate());
                 periodo.setFechaCierre(rs.getDate("perd_notas_fecha_cierre").toLocalDate());
 
-                periodo.setIdPeriodoLectivo(PeriodoLectivoBD.selectWhere(rs.getInt("id_prd_lectivo")));
-                periodo.setIdTipoNota(TipoDeNotaBD.selectWhere(rs.getInt("id_tipo_nota")));
+                periodo.setPeriodoLectivo(PeriodoLectivoBD.selectWhere(rs.getInt("id_prd_lectivo")));
+                periodo.setTipoNota(TipoDeNotaBD.selectWhere(rs.getInt("id_tipo_nota")));
                 periodo.setEstado(rs.getBoolean("perd_notas_estado"));
 
                 Lista.add(periodo);

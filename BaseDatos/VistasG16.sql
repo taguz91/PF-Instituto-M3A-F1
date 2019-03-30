@@ -1,3 +1,13 @@
+/*
+
+    IMPORTANTE!!!!!
+    PRIMERO EJECUTAR LA SCRIPT
+
+    "RolPostgres.sql"
+
+*/
+
+
 CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
     "Usuarios".usu_username,
     "Usuarios".usu_password,
@@ -38,3 +48,19 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
 
 ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
+
+
+CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
+    "PeriodoIngresoNotas".perd_notas_fecha_inicio,
+    "PeriodoIngresoNotas".perd_notas_fecha_cierre,
+    "TipoDeNota".tipo_nota_nombre,
+    "PeriodoIngresoNotas".perd_notas_estado,
+    "TipoDeNota".tipo_nota_estado,
+    "PeriodoIngresoNotas".id_prd_lectivo,
+    "PeriodoIngresoNotas".id_tipo_nota,
+    "PeriodoIngresoNotas".id_perd_ingr_notas
+   FROM (("PeriodoLectivo"
+     JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
+     JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
+
+ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
