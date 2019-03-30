@@ -175,6 +175,9 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="21"/>
+	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
@@ -200,4 +203,7 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 			</textField>
 		</band>
 	</summary>
+	<noData>
+		<band height="50"/>
+	</noData>
 </jasperReport>
