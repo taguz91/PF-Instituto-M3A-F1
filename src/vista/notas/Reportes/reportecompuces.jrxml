@@ -141,6 +141,10 @@ ORDER BY
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
 			</staticText>
+			<image>
+				<reportElement x="77" y="-1" width="95" height="90" uuid="c34a33f2-9902-45c9-b721-3b2387278f93"/>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
