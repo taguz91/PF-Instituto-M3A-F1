@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b771390-e19e-425f-9803-40fdc90c585e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_UNI" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT u.id_silabo,e.instrumento,u.numero_unidad,e.id_evaluacion,e.id_unidad,e.indicador,e.id_tipo_actividad,e.valoracion,e.fecha_presentacion,e.fecha_envio FROM "EvaluacionSilabo" e,"UnidadSilabo" u where id_tipo_actividad=2  and e.id_unidad=u.id_unidad
+
+and u.id_unidad=$P!{ID_UNI}]]>
+	</queryString>
+	<field name="id_silabo" class="java.lang.Integer"/>
+	<field name="instrumento" class="java.lang.String"/>
+	<field name="numero_unidad" class="java.lang.Integer"/>
+	<field name="id_evaluacion" class="java.lang.Integer"/>
+	<field name="id_unidad" class="java.lang.Integer"/>
+	<field name="indicador" class="java.lang.String"/>
+	<field name="id_tipo_actividad" class="java.lang.Integer"/>
+	<field name="valoracion" class="java.lang.Integer"/>
+	<field name="fecha_presentacion" class="java.sql.Date"/>
+	<field name="fecha_envio" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="135" height="20" uuid="ec4f530d-ae41-4ea1-b76e-2b8b949bc7af"/>
+				<text><![CDATA[Colaborativo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="20" uuid="208d39c8-4bef-474c-a370-3e7ea0682e92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="0" width="530" height="20" uuid="da785f26-6d2d-4414-8101-8fb3db6d5e4d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

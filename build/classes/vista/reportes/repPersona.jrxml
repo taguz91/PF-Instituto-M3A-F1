@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="155"/>
+	<parameter name="cedula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.id_persona,p.persona_foto, p.persona_identificacion, 
+p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
+ ||' '|| p.persona_primer_nombre ||' '|| 
+ p.persona_segundo_nombre as persona, p.persona_genero, 
+ p.persona_sexo, p.persona_estado_civil, 
+ p.persona_etnia, p.persona_idioma_raiz, p.persona_tipo_sangre, p.persona_telefono, 
+ p.persona_celular, p.persona_correo, p.persona_fecha_registro, p.persona_discapacidad,
+ p.persona_tipo_discapacidad, p.persona_porcenta_discapacidad, p.persona_carnet_conadis, 
+ p.persona_calle_principal, p.persona_numero_casa, p.persona_calle_secundaria, 
+ p.persona_referencia, p.persona_sector, p.persona_idioma, p.persona_tipo_residencia, 
+ p.persona_fecha_nacimiento,p.persona_activa,l.lugar_nombre as LugarNatal,
+ z.lugar_nombre as lugarResidencia
+FROM (public."Personas" p join public."Lugares" l on p.id_lugar_natal=l.id_lugar)join 
+public."Lugares" z on p.id_lugar_residencia=z.id_lugar
+where persona_identificacion=$P{cedula};]]>
+	</queryString>
+	<field name="id_persona" class="java.lang.Integer"/>
+	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="persona" class="java.lang.String"/>
+	<field name="persona_genero" class="java.lang.String"/>
+	<field name="persona_sexo" class="java.lang.String"/>
+	<field name="persona_estado_civil" class="java.lang.String"/>
+	<field name="persona_etnia" class="java.lang.String"/>
+	<field name="persona_idioma_raiz" class="java.lang.String"/>
+	<field name="persona_tipo_sangre" class="java.lang.String"/>
+	<field name="persona_telefono" class="java.lang.String"/>
+	<field name="persona_celular" class="java.lang.String"/>
+	<field name="persona_correo" class="java.lang.String"/>
+	<field name="persona_fecha_registro" class="java.sql.Timestamp"/>
+	<field name="persona_discapacidad" class="java.lang.Boolean"/>
+	<field name="persona_tipo_discapacidad" class="java.lang.String"/>
+	<field name="persona_porcenta_discapacidad" class="java.lang.Integer"/>
+	<field name="persona_carnet_conadis" class="java.lang.String"/>
+	<field name="persona_calle_principal" class="java.lang.String"/>
+	<field name="persona_numero_casa" class="java.lang.String"/>
+	<field name="persona_calle_secundaria" class="java.lang.String"/>
+	<field name="persona_referencia" class="java.lang.String"/>
+	<field name="persona_sector" class="java.lang.String"/>
+	<field name="persona_idioma" class="java.lang.String"/>
+	<field name="persona_tipo_residencia" class="java.lang.String"/>
+	<field name="persona_fecha_nacimiento" class="java.sql.Date"/>
+	<field name="persona_activa" class="java.lang.Boolean"/>
+	<field name="lugarnatal" class="java.lang.String"/>
+	<field name="lugarresidencia" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="308" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="248" y="194" width="297" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="259" width="540" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Persona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="229" width="540" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="357" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="13" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="56" width="111" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres y Apellidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="99" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="140" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="183" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="229" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Sangre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="229" width="46" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Género:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="275" width="33" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Etnia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="275" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado Civil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="229" width="111" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de nacimiento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="143" y="13" width="135" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="56" width="226" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="99" width="157" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_celular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="140" width="157" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="183" width="226" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="229" width="29" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_tipo_sangre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="229" width="62" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="275" width="71" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_etnia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="275" width="105" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_estado_civil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="229" width="105" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_fecha_nacimiento}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="429" y="13" width="116" height="170"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="421" y="275" width="38" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Idioma:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="481" y="275" width="62" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_idioma_raiz}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="321" width="65" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar Natal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="321" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar Residencia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="341" y="321" width="144" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lugarnatal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="321" width="105" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lugarresidencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
