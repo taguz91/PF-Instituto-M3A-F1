@@ -19,7 +19,6 @@ import modelo.materia.MateriaMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
-import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
 import vista.principal.VtnPrincipal;
 
@@ -112,9 +111,9 @@ public class VtnDocenteMateriaCTR {
     }
     
     private void ingresar(){
-        FrmDocenteMateria frm = new FrmDocenteMateria(); 
-        FrmDocenteMateriaCTR ctr = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, ctrPrin); 
-        ctr.iniciar();
+        ctrPrin.abrirFrmDocenteMateria();
+        vtnDm.dispose();
+        ctrPrin.cerradoJIF();
     }
     
     private void cargarDocenteMaterias(){

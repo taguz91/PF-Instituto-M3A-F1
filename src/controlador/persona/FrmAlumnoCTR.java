@@ -284,6 +284,7 @@ public class FrmAlumnoCTR {
                             FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                             ctrPers.iniciar();
                             frmAlumno.dispose();
+                            ctrPrin.cerradoJIF();
                         }
                         cont = 0;
                     } else {
@@ -381,7 +382,7 @@ public class FrmAlumnoCTR {
     public void habilitarGuardar() {
 
         String titulo_Superior, nombre_Contacto, contacto_Emergencia, cedula, nombre;
-        String tipo_Colegio, tipo_Bachillerato, nivel_Academico, sector_Economico, for_Padre, for_Madre, parentesco;
+        String tipo_Colegio, tipo_Bachillerato, nivel_Academico, sector_Economico, parentesco;
 
         cedula = frmAlumno.getTxt_Cedula().getText();
         nombre = frmAlumno.getTxt_Nombre().getText();
@@ -392,15 +393,13 @@ public class FrmAlumnoCTR {
         tipo_Bachillerato = frmAlumno.getCmBx_TipoBachillerato().getSelectedItem().toString();
         nivel_Academico = frmAlumno.getCmBx_NvAcademico().getSelectedItem().toString();
         sector_Economico = frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString();
-        for_Padre = frmAlumno.getCmBx_ForPadre().getSelectedItem().toString();
-        for_Madre = frmAlumno.getCmBx_ForMadre().getSelectedItem().toString();
         parentesco = frmAlumno.getCmBx_Parentesco().getSelectedItem().toString();
 
         if(confirmarErrores() == false){
             if (cedula.equals("") == false && nombre.equals("") == false && titulo_Superior.equals("") == false
                     && nombre_Contacto.equals("") == false && contacto_Emergencia.equals("") == false && tipo_Colegio.equals("|SELECCIONE|") == false
-                    && tipo_Bachillerato.equals("|SELECCIONE|") == false && sector_Economico.equals("|SELECCIONE|") == false && for_Padre.equals("|SELECCIONE|") == false
-                    && for_Madre.equals("|SELECCIONE|") == false && parentesco.equals("|SELECCIONE|") == false) {
+                    && tipo_Bachillerato.equals("|SELECCIONE|") == false && sector_Economico.equals("|SELECCIONE|") == false 
+                    && parentesco.equals("|SELECCIONE|") == false) {
                 frmAlumno.getBtn_Guardar().setEnabled(true);
             } else {
                 frmAlumno.getBtn_Guardar().setEnabled(false);
@@ -441,6 +440,7 @@ public class FrmAlumnoCTR {
         for (int i = 0; i < Sectores.size(); i++) {
             frmAlumno.getCmBx_SecEconomico().addItem(Sectores.get(i).getDescrip_SecEconomico().toUpperCase());
         }
+        frmAlumno.getCmBx_SecEconomico().addItem("NINGUNO");
     }
 
     public void guardarAlumno() {
@@ -450,8 +450,10 @@ public class FrmAlumnoCTR {
             this.bdAlumno = pasarDatos(persona);
             if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
             } else {
                 JOptionPane.showMessageDialog(null, "Error en grabar los datos");
             }
@@ -460,8 +462,10 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
                 editar = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -471,8 +475,10 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
-                reiniciarComponentes(frmAlumno);
-                iniciarComponentes();
+                frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
+//                reiniciarComponentes(frmAlumno);
+//                iniciarComponentes();
                 editar_2 = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -532,11 +538,17 @@ public class FrmAlumnoCTR {
 
     public AlumnoBD pasarDatos(AlumnoBD persona) {
         List<PersonaMD> user = new ArrayList();
+        Integer sectorEco = null;
         user = persona.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
         SectorEconomicoMD sector = new SectorEconomicoMD();
         persona.setIdPersona(user.get(0).getIdPersona());
         persona.setIdentificacion(user.get(0).getIdentificacion());
-        sector.setId_SecEconomico(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico());
+        if(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("|SELECCIONE|") || 
+                frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("NINGUNO")){
+            sector.setId_SecEconomico(sectorEco);
+        } else{
+             sector.setId_SecEconomico(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico());
+        }
         persona.setSectorEconomico(sector);
         persona.setTipo_Colegio(frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString());
         persona.setTipo_Bachillerato(frmAlumno.getCmBx_TipoBachillerato().getSelectedItem().toString());
@@ -547,8 +559,18 @@ public class FrmAlumnoCTR {
         persona.setPension(frmAlumno.getChkBx_Pension().isSelected());
         persona.setOcupacion(frmAlumno.getTxt_Ocupacion().getText().toUpperCase());
         persona.setTrabaja(frmAlumno.getChkBx_Trabaja().isSelected());
-        persona.setFormacion_Padre(frmAlumno.getCmBx_ForPadre().getSelectedItem().toString());
-        persona.setFormacion_Madre(frmAlumno.getCmBx_ForMadre().getSelectedItem().toString());
+        if(frmAlumno.getCmBx_ForPadre().getSelectedItem().toString().equals("|SELECCIONE|") || 
+                frmAlumno.getCmBx_ForPadre().getSelectedItem().equals("NINGUNO")){
+            persona.setFormacion_Padre(null);
+        } else{
+            persona.setFormacion_Padre(frmAlumno.getCmBx_ForPadre().getSelectedItem().toString());
+        }
+        if(frmAlumno.getCmBx_ForMadre().getSelectedItem().toString().equals("|SELECCIONE|") || 
+                frmAlumno.getCmBx_ForMadre().getSelectedItem().equals("NINGUNO")){
+            persona.setFormacion_Madre(null);
+        } else{
+            persona.setFormacion_Madre(frmAlumno.getCmBx_ForMadre().getSelectedItem().toString());
+        }
         persona.setNom_Contacto(frmAlumno.getTxt_NomContacto().getText().toUpperCase());
         persona.setParentesco_Contacto(frmAlumno.getCmBx_Parentesco().getSelectedItem().toString());
         persona.setContacto_Emergencia(frmAlumno.getTxt_ConEmergency().getText());

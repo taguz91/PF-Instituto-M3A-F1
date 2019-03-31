@@ -30,7 +30,9 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas\n"
-                + "FROM public.\"Materias\" WHERE materia_activa = 'true';";
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
+                + "WHERE materia_activa = 'true' AND c.id_carrera = m.id_carrera "
+                + "AND carrera_activo = true;";
         return consultarMateriasParaTabla(sql);
     }
 
@@ -41,8 +43,10 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas\n"
-                + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
-                + "AND id_carrera= " + idcarrera + ";";
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
+                + "WHERE materia_activa = 'true' "
+                + "AND id_carrera= " + idcarrera + " AND c.id_carrera = m.id_carrera "
+                + "AND carrera_activo = true;";
         return consultarMateriasParaTabla(sql);
     }
 
@@ -53,12 +57,15 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas\n"
-                + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
+                + "WHERE materia_activa = 'true' "
                 + "AND id_carrera= " + idcarrera + " "
-                + "AND materia_ciclo = " + ciclo + ";";
+                + "AND materia_ciclo = " + ciclo + " \n"
+                + "AND c.id_carrera = m.id_carrera "
+                + "AND carrera_activo = true;";
         return consultarMateriasParaTabla(sql);
     }
-    
+
     //Cargar datos de materia por carrera ciclo para ver sus materias onli materias
     public ArrayList<MateriaMD> buscarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
         String sql = "SELECT id_materia, materia_codigo,"
@@ -66,7 +73,7 @@ public class MateriaBD extends MateriaMD {
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true'"
                 + "AND id_carrera= " + idcarrera + " "
                 + "AND materia_ciclo = " + ciclo + ";";
-          ArrayList<MateriaMD> lista = new ArrayList();
+        ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -110,6 +117,38 @@ public class MateriaBD extends MateriaMD {
         } catch (SQLException e) {
             System.out.println("No pudimos cargar los ciclos de una carrera");
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //Buscar materia para informacion
+    public MateriaMD buscarMateriaInfo(int idmateria) {
+        MateriaMD m = new MateriaMD();
+        String sql = "SELECT id_materia, m.id_carrera, materia_codigo, \n"
+                + "materia_nombre, carrera_nombre\n"
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
+                + "WHERE id_materia = " + idmateria + " AND\n"
+                + "c.id_carrera = m.id_carrera;";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    m.setId(rs.getInt("id_materia"));
+                    m.setCodigo(rs.getString("materia_codigo"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    CarreraMD cr = new CarreraMD();
+                    cr.setId(rs.getInt("id_carrera"));
+                    cr.setNombre(rs.getString("carrera_nombre"));
+                    m.setCarrera(cr);
+                }
+                return m;
+            } else {
+                System.out.println("No se pudo consultar carreras");
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(ex.getMessage());
             return null;
         }
     }
@@ -175,31 +214,19 @@ public class MateriaBD extends MateriaMD {
 
     //Metodo buscar por aguja
     public ArrayList<MateriaMD> cargarMaterias(String aguja) {
-        String sql = "SELECT * FROM public.\"Materias\"\n"
-                + "WHERE \"materia_nombre\" ILIKE '%" + aguja + "%' "
-                + "OR \"materia_codigo\" ILIKE '%" + aguja + "%';";
-        return consultarMaterias(sql);
-    }
-
-    private ArrayList<MateriaMD> consultarMaterias(String sql) {
-        ArrayList<MateriaMD> lista = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    lista.add(obtenerMateria(rs));
-                }
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar materias");
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias");
-            System.out.println(ex.getMessage());
-            return null;
-        }
+        String sql = "SELECT id_materia, materia_codigo,"
+                + " materia_nombre, materia_ciclo, "
+                + "materia_horas_docencia, materia_horas_practicas, "
+                + "materia_horas_auto_estudio, materia_horas_presencial, "
+                + "materia_total_horas\n"
+                + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
+                + "WHERE materia_activa = 'true' AND ("
+                + "materia_codigo= '" + aguja + "' "
+                + "OR materia_nombre = '" + aguja + "') \n"
+                + "AND c.id_carrera = m.id_carrera "
+                + "AND carrera_activo = true;";
+        //System.out.println(sql);
+        return consultarMateriasParaTabla(sql);
     }
 
     private ArrayList<MateriaMD> consultarMateriasParaTabla(String sql) {

@@ -99,13 +99,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.scrEstrategiasPredeterminadas = scrEstrategiasPredeterminadas;
     }
 
-    public JScrollPane getScrNuevaEstrategia() {
-        return scrNuevaEstrategia;
-    }
-
-    public void setScrNuevaEstrategia(JScrollPane scrNuevaEstrategia) {
-        this.scrNuevaEstrategia = scrNuevaEstrategia;
-    }
+    
 
     public JSpinner getSpnHorasAutonomas() {
         return spnHorasAutonomas;
@@ -131,13 +125,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.spnHorasPracticas = spnHorasPracticas;
     }
 
-    public JTextArea getTxrNuevaEstrategia() {
-        return txrNuevaEstrategia;
+    public JTextField getTxtNuevaEstrategia() {
+        return txtNuevaEstrategia;
     }
 
-    public void setTxrNuevaEstrategia(JTextArea txrNuevaEstrategia) {
-        this.txrNuevaEstrategia = txrNuevaEstrategia;
+    public void setTxtNuevaEstrategia(JTextField txtNuevaEstrategia) {
+        this.txtNuevaEstrategia = txtNuevaEstrategia;
     }
+
+    
 
     public JLabel getLblAgregarEstrategia() {
         return lblAgregarEstrategia;
@@ -947,14 +943,13 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         spnHorasDocencia = new javax.swing.JSpinner();
         scrEstrategiasPredeterminadas = new javax.swing.JScrollPane();
         lstEstrategiasPredeterminadas = new javax.swing.JList<>();
-        scrNuevaEstrategia = new javax.swing.JScrollPane();
-        txrNuevaEstrategia = new javax.swing.JTextArea();
         lblNuevaEstrategia = new javax.swing.JLabel();
         lblEstrategiasPredeterminadas = new javax.swing.JLabel();
         lblEliminarUnidad = new javax.swing.JLabel();
         lblGuardarEstrategia = new javax.swing.JLabel();
         lblAgregarUnidad = new javax.swing.JLabel();
         lblAgregarEstrategia = new javax.swing.JLabel();
+        txtNuevaEstrategia = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -980,18 +975,18 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         lblFechaInicio.setText("Fecha de Inicio de Unidad:");
-        pnlUnidad.add(lblFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 20, -1, -1));
-        pnlUnidad.add(dchFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, -1, -1));
-        pnlUnidad.add(dchFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 60, -1, -1));
+        pnlUnidad.add(lblFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
+        pnlUnidad.add(dchFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
+        pnlUnidad.add(dchFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 60, -1, -1));
 
         lblFechaFin.setText("Fecha de Fin de Unidad:");
-        pnlUnidad.add(lblFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
+        pnlUnidad.add(lblFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 60, -1, -1));
 
         lblObjetivos.setText("Objetivos Específicos de la Unidad:");
         pnlUnidad.add(lblObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         lblResultados.setText("Resultados de Aprendizaje:");
-        pnlUnidad.add(lblResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 240, -1, -1));
+        pnlUnidad.add(lblResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 220, -1, -1));
 
         lblContenidos.setText("Contenidos de la Unidad:");
         pnlUnidad.add(lblContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
@@ -1005,6 +1000,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblInstrumentoAD.setText("Instrumento:");
         pnlAsistidaDocente.add(lblInstrumentoAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
+
+        spnValoracionAD.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
         pnlAsistidaDocente.add(spnValoracionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAD.setText("Valoración");
@@ -1255,19 +1252,25 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(tbpEvaluacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 1310, 217));
 
         txrResultados.setColumns(20);
+        txrResultados.setLineWrap(true);
         txrResultados.setRows(5);
+        txrResultados.setWrapStyleWord(true);
         scrResultados.setViewportView(txrResultados);
 
-        pnlUnidad.add(scrResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 260, 410, 100));
+        pnlUnidad.add(scrResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 240, 410, 100));
 
         txrObjetivos.setColumns(20);
+        txrObjetivos.setLineWrap(true);
         txrObjetivos.setRows(5);
+        txrObjetivos.setWrapStyleWord(true);
         scrObjetivos.setViewportView(txrObjetivos);
 
         pnlUnidad.add(scrObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 410, 100));
 
         txrContenidos.setColumns(20);
+        txrContenidos.setLineWrap(true);
         txrContenidos.setRows(5);
+        txrContenidos.setWrapStyleWord(true);
         scrContenidos.setViewportView(txrContenidos);
 
         pnlUnidad.add(scrContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 410, 100));
@@ -1277,49 +1280,51 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         btnSiguiente.setText("Siguiente");
         pnlUnidad.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 570, -1, -1));
-        pnlUnidad.add(spnHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 60, -1));
+
+        spnHorasPracticas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        pnlUnidad.add(spnHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 50, 60, -1));
 
         lblHorasPracticas.setText("Horas Prácticas:");
-        pnlUnidad.add(lblHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 40, -1, -1));
+        pnlUnidad.add(lblHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 50, -1, -1));
 
         lblHorasDocencia.setText("Horas Docencia:");
-        pnlUnidad.add(lblHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 10, -1, -1));
+        pnlUnidad.add(lblHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 20, -1, -1));
 
         lblHorasAutonomas.setText("Horas Autónomas:");
-        pnlUnidad.add(lblHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 70, -1, -1));
-        pnlUnidad.add(spnHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 60, -1));
-        pnlUnidad.add(spnHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 10, 60, -1));
+        pnlUnidad.add(lblHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, -1, -1));
+
+        spnHorasAutonomas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        pnlUnidad.add(spnHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 80, 60, -1));
+
+        spnHorasDocencia.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        pnlUnidad.add(spnHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 20, 60, -1));
 
         scrEstrategiasPredeterminadas.setViewportView(lstEstrategiasPredeterminadas);
 
         pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 370, 230));
 
-        txrNuevaEstrategia.setColumns(20);
-        txrNuevaEstrategia.setRows(5);
-        txrNuevaEstrategia.setEnabled(false);
-        scrNuevaEstrategia.setViewportView(txrNuevaEstrategia);
-
-        pnlUnidad.add(scrNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, 410, 90));
-
         lblNuevaEstrategia.setText("Nueva Estrategia de Enseñanza:");
-        pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, -1, 20));
+        pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, -1, 20));
 
         lblEstrategiasPredeterminadas.setText("Seleccione la(s) estrategias de enseñanza:");
         pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, -1, -1));
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
-        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 20, -1));
+        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 20, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
         lblGuardarEstrategia.setEnabled(false);
-        pnlUnidad.add(lblGuardarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 120, -1, -1));
+        pnlUnidad.add(lblGuardarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 150, -1, -1));
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
-        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, -1, -1));
+
+        txtNuevaEstrategia.setEnabled(false);
+        pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 170, 410, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1457,7 +1462,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane scrAutonoma;
     private javax.swing.JScrollPane scrContenidos;
     private javax.swing.JScrollPane scrEstrategiasPredeterminadas;
-    private javax.swing.JScrollPane scrNuevaEstrategia;
     private javax.swing.JScrollPane scrObjetivos;
     private javax.swing.JScrollPane scrPractica;
     private javax.swing.JScrollPane scrResultados;
@@ -1474,7 +1478,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblPractica;
     private javax.swing.JTabbedPane tbpEvaluacion;
     private javax.swing.JTextArea txrContenidos;
-    private javax.swing.JTextArea txrNuevaEstrategia;
     private javax.swing.JTextArea txrObjetivos;
     private javax.swing.JTextArea txrResultados;
     private javax.swing.JTextField txtIndicadorA;
@@ -1485,6 +1488,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtInstrumentoAC;
     private javax.swing.JTextField txtInstrumentoAD;
     private javax.swing.JTextField txtInstrumentoP;
+    private javax.swing.JTextField txtNuevaEstrategia;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
       public static class CheckListItem {

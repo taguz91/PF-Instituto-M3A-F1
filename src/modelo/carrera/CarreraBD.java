@@ -23,6 +23,18 @@ public class CarreraBD extends CarreraMD {
         this.doc = new DocenteBD(conecta);
     }
 
+    public void guardarCarrera() {
+        String nsql = "INSERT INTO public.\"Carreras\"(\n"
+                + "	id_docente_coordinador, carrera_nombre, \n"
+                + "	carrera_codigo, carrera_fecha_inicio, carrera_modalidad)\n"
+                + "	VALUES (" + getCoordinador().getIdDocente() + ", "
+                + " '" + getNombre() + "', '" + getCodigo() + "', '" + getFechaInicio() + "',"
+                + " '" + getModalidad() + "');";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Guardamos correctamente \n" + getNombre());
+        }
+    }
+
     public void editarCarrera(int idCarrera) {
         String nsql = "UPDATE public.\"Carreras\"\n"
                 + "SET id_docente_coordinador=" + getCoordinador().getIdDocente() + ", "
@@ -33,6 +45,15 @@ public class CarreraBD extends CarreraMD {
 
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Editamos correctamente \n" + getNombre());
+        }
+    }
+
+    public void eliminarCarrera(int idCarrera) {
+        String nsql = "UPDATE public.\"Carreras\"\n"
+                + "SET  carrera_activo='false'\n"
+                + "WHERE id_carrera=" + idCarrera + ";";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Eliminamos correctamente ");
         }
     }
 
@@ -120,7 +141,8 @@ public class CarreraBD extends CarreraMD {
                 + "	SELECT persona_primer_nombre || ' ' || \n"
                 + "	persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' ||\n"
-                + "	persona_segundo_apellido \n"
+                + "	persona_segundo_apellido || ' ' || "
+                + "     persona_identificacion\n"
                 + "    FROM public.\"Docentes\" d, public.\"Personas\" p \n"
                 + "    WHERE d.id_docente = id_docente_coordinador AND\n"
                 + "    p.id_persona = d.id_persona) AS coordinador\n"
@@ -144,6 +166,8 @@ public class CarreraBD extends CarreraMD {
                         docen.setSegundoNombre(nombres[1]);
                         docen.setPrimerApellido(nombres[2]);
                         docen.setSegundoApellido(nombres[3]);
+                        //El ultimo es la identificacion  
+                        docen.setIdentificacion(nombres[4]);
                     }
 
                     carrera.setCoordinador(docen);

@@ -79,6 +79,7 @@ public class VtnCarreraCTR {
         //Le damos accion al btn editar  
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
+        vtnCarrera.getBtnEliminar().addActionListener(e -> eliminarCarrera());
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
 
         vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -116,11 +117,19 @@ public class VtnCarreraCTR {
             ctrFrmCarrera.editar(carreras.get(fila));
         }
     }
+    
+    private void eliminarCarrera() {
+        int fila = vtnCarrera.getTblMaterias().getSelectedRow();
+        if (fila >= 0) {
+            car.eliminarCarrera(carreras.get(fila).getId());
+            cargarCarreras();
+        }
+    }
 
     private void abrirFrmCarrera() {
-        FrmCarrera frmCarrera = new FrmCarrera();
-        FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, ctrPrin);
-        ctrFrmCarrera.iniciar();
+        ctrPrin.abrirFrmCarrera();
+        vtnCarrera.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     public void cargarCarreras() {
@@ -132,7 +141,6 @@ public class VtnCarreraCTR {
         mdTbl.setRowCount(0);
         if (carreras != null) {
             carreras.forEach((c) -> {
-                Object valores[] = {};
                 if (c.getCoordinador().getPrimerNombre() == null) {
                     Object valoresSD[] = {c.getId(), c.getCodigo(), c.getNombre(),
                         c.getFechaInicio(), c.getModalidad(), "SIN COORDINADOR "};
@@ -145,8 +153,9 @@ public class VtnCarreraCTR {
                     mdTbl.addRow(valoresCD);
                 }
 
-            });
+            });            
         }
+        vtnCarrera.getLblResultados().setText(carreras.size()+" Resutados obtendidos.");
     }
 
     public void llamaReporteAlumnoCarrera() {

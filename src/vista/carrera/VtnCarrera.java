@@ -1,6 +1,7 @@
 package vista.carrera;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -49,6 +50,10 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         this.btnReporteAlumnoCarrera = btnReporteAlumnoCarrera;
     }
 
+    public JLabel getLblResultados() {
+        return lblResultados;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +67,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnIngresar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -91,7 +96,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblMaterias);
 
-        jLabel2.setText("0 Resultados obtenidos.");
+        lblResultados.setText("0 Resultados obtenidos.");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
@@ -119,7 +124,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,7 +160,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblResultados)
                     .addComponent(btnReporteAlumnoCarrera)
                     .addComponent(jLabel3))
                 .addGap(4, 4, 4))
@@ -176,9 +181,9 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteAlumnoCarrera;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblMaterias;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

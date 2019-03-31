@@ -14,3 +14,8 @@ ALTER TABLE public."PeriodoLectivo" ADD COLUMN prd_lectivo_estado BOOLEAN NOT NU
 ALTER TABLE public."UnidadSilabo" ADD COLUMN titulo_unidad TEXT NOT NULL;
 
 ALTER TABLE public."UnidadSilabo" DROP COLUMN estrategias_unidad;
+
+
+--Grupo Diego
+
+ALTER TABLE "Cursos" DROP "curso_permiso_ingreso_nt";

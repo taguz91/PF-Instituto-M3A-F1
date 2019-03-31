@@ -1,5 +1,3 @@
-//https://serprogramador.es/programando-mensajes-de-dialogo-en-java-parte-1/
-//http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
 import java.awt.event.FocusEvent;
@@ -15,7 +13,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.JOptionPane;
-import javax.xml.transform.Source;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;

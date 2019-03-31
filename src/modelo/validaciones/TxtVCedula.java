@@ -20,7 +20,7 @@ public class TxtVCedula extends KeyAdapter {
         this.txt = txt;
         this.lbl = null;
     }
-    
+
     public TxtVCedula(JTextField txt, JLabel lbl) {
         this.txt = txt;
         this.lbl = lbl;
@@ -29,8 +29,7 @@ public class TxtVCedula extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent e) {
         ingreso = txt.getText().trim();
-        
-        
+
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
             txt.setSize(txt.getWidth(), 20);
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
@@ -39,7 +38,7 @@ public class TxtVCedula extends KeyAdapter {
                 if (lbl != null) {
                     lbl.setVisible(true);
                 }
-                
+
             } else {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
                 if (lbl != null) {
@@ -49,4 +48,16 @@ public class TxtVCedula extends KeyAdapter {
         }
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        char car = e.getKeyChar();
+        if (car < '0' || car > '9') {
+            e.consume();
+        }
+        if (ingreso != null) {
+            if (ingreso.length() >= 10) {
+                e.consume();
+            }
+        }
+    }
 }

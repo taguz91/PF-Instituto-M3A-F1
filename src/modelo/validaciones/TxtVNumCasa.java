@@ -33,7 +33,7 @@ public class TxtVNumCasa extends KeyAdapter {
         if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
             txt.setSize(txt.getWidth(), 20);
             txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
-            if (!Validar.esNumCasa(ingreso)) {
+            if (!Validar.esNumCasa(ingreso) && !Validar.esNumeCasaLetras(ingreso) && !Validar.esNumeCasaSoloNumeros(ingreso)) {
                 txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                 if (lbl != null) {
                     lbl.setVisible(true);

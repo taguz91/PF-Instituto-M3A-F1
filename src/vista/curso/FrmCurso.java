@@ -69,10 +69,6 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         return btnGuardar;
     }
 
-    public JLabel getLblError() {
-        return lblError;
-    }
-
     public JLabel getLblErrorCapacidad() {
         return lblErrorCapacidad;
     }
@@ -101,12 +97,12 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         return lblErrorPrdLectivo;
     }
 
-    public JCheckBox getCbxPermisoIng() {
-        return cbxPermisoIng;
-    }
-
     public JButton getBtnGuardarContinuar() {
         return btnGuardarContinuar;
+    }
+
+    public JLabel getLblError() {
+        return lblError;
     }
     
    
@@ -138,12 +134,12 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         lblMateria = new javax.swing.JLabel();
         lblErrorMateria = new javax.swing.JLabel();
         lblErrorDocente = new javax.swing.JLabel();
-        cbxPermisoIng = new javax.swing.JCheckBox();
-        lblError = new javax.swing.JLabel();
         btnGuardarContinuar = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Curso-Clase");
         setMinimumSize(new java.awt.Dimension(454, 361));
         setPreferredSize(new java.awt.Dimension(454, 361));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -203,7 +199,7 @@ public class FrmCurso extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Guardar y salir.");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
 
         pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clase", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
         pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -228,19 +224,14 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         lblErrorDocente.setText("Debe seleccionar un docente.");
         pnlClase.add(lblErrorDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 390, -1));
 
-        cbxPermisoIng.setText("Permiso ingreso de notas");
-        cbxPermisoIng.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pnlClase.add(cbxPermisoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 20));
-
-        lblError.setForeground(new java.awt.Color(204, 0, 0));
-        lblError.setText("Ya registro estos datos.");
-        pnlClase.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 250, 20));
-
-        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 420, 130));
+        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 420, 100));
 
         btnGuardarContinuar.setText("Guardar y continuar ingresando");
         btnGuardarContinuar.setToolTipText("Guardar y continuar ingresando en el mismo curso.");
-        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, -1));
+        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, -1, -1));
+
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 390, 15));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -255,7 +246,6 @@ public class FrmCurso extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox cbxParalelo;
     private javax.swing.JComboBox<String> cbxPeriodoLectivo;
-    private javax.swing.JCheckBox cbxPermisoIng;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblCiclo;

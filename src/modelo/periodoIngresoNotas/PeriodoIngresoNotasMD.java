@@ -58,19 +58,19 @@ public class PeriodoIngresoNotasMD {
         this.fechaCierre = fechaCierre;
     }
 
-    public PeriodoLectivoMD getIdPeriodoLectivo() {
+    public PeriodoLectivoMD getPeriodoLectivo() {
         return idPeriodoLectivo;
     }
 
-    public void setIdPeriodoLectivo(PeriodoLectivoMD idPeriodoLectivo) {
+    public void setPeriodoLectivo(PeriodoLectivoMD idPeriodoLectivo) {
         this.idPeriodoLectivo = idPeriodoLectivo;
     }
 
-    public TipoDeNotaMD getIdTipoNota() {
+    public TipoDeNotaMD getTipoNota() {
         return idTipoNota;
     }
 
-    public void setIdTipoNota(TipoDeNotaMD idTipoNota) {
+    public void setTipoNota(TipoDeNotaMD idTipoNota) {
         this.idTipoNota = idTipoNota;
     }
 

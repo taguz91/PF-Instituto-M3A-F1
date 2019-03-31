@@ -310,8 +310,8 @@ public class PersonaBD extends PersonaMD {
                 + "persona_fecha_nacimiento, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
-                + "	persona_identificacion ILIKE '%"+aguja+"%');";
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%');";
         return consultarParaTabla(sql);
     }
 
@@ -491,7 +491,7 @@ public class PersonaBD extends PersonaMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    p = obtenerPersonaSinValidar(rs);
+                    p = obtenerPersona(rs);
                 }
                 rs.close();
                 return p;
@@ -778,6 +778,45 @@ public class PersonaBD extends PersonaMD {
                 persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
 
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return persona;
+
+    }
+
+    public static PersonaMD selectWhere(int idPersona) {
+
+        String SELECT = "SELECT\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"Personas\".id_persona\n"
+                + "FROM\n"
+                + "\"Personas\"\n"
+                + "WHERE \n"
+                + "\"Personas\".id_persona = " + idPersona;
+
+        PersonaMD persona = new PersonaMD();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+
+                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
             }
             rs.close();
 

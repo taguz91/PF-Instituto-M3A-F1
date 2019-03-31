@@ -1,26 +1,30 @@
 package controlador.persona;
 
+import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
@@ -29,6 +33,7 @@ import modelo.persona.PersonaMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVCarnetConadis;
 import modelo.validaciones.TxtVCedula;
+import modelo.validaciones.TxtVCelular;
 import modelo.validaciones.TxtVCorreo;
 import modelo.validaciones.TxtVDireccion;
 import modelo.validaciones.TxtVLetras;
@@ -52,7 +57,6 @@ public class FrmPersonaCTR {
     private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
     private int numAccion = 2;
-    private Image foto;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -81,6 +85,9 @@ public class FrmPersonaCTR {
     //Para saber si se esta editando una persona  
     private boolean editar = false;
     private int idPersona = 0;
+    private boolean errorCedula = false;
+
+    JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
 
     public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -127,57 +134,54 @@ public class FrmPersonaCTR {
         //Accion de buscar una persona  
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
+        frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
 
-        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                String cedula = frmPersona.getTxtIdentificacion().getText();
-                char car = e.getKeyChar();
-                
-                if (car < '0' || car > '9') {
-                    e.consume();
-                }
-                if (cedula.length() >= 10) {
-                    e.consume();
-                }
-               
+            public void focusLost(FocusEvent e) {
+                buscarIdentificacion();
             }
 
         });
 
-
-        valCe = new TxtVCedula(
-                frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
-
+        valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Persona");
+        cerrarandoVtn();
+    }
 
-        //habilitarBtnGuardar();
+    public void cerrarandoVtn() {
+        frmPersona.addInternalFrameListener(new InternalFrameAdapter() {
+
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                frmPersona.getTxtIdentificacion().setText("");
+            }
+        });
     }
 
     public void buscarIdentificacion() {
-        boolean error = false;
+        errorCedula = false;
         String cedula;
         cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
             if (cedula.length() == 10) {
                 if (modelo.validaciones.Validar.esCedula(cedula) == false) {
-                    error = true;
+                    errorCedula = true;
                     frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
             } else if (cedula.length() < 10) {
-                error = true;
+                errorCedula = true;
                 frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
-            } else{
+            } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
-            
-            if (error == false) {
+
+            if (errorCedula == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
 
@@ -200,6 +204,9 @@ public class FrmPersonaCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
+        } else {
+            borrarCampos();
+            ocultarErrores();
         }
     }
 
@@ -240,11 +247,8 @@ public class FrmPersonaCTR {
 
     private void iniciarValidaciones() {
 
-        PropertyChangeListener habilitar_Guardar = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                habilitarBtnGuardar();
-            }
+        PropertyChangeListener habilitar_Guardar = (PropertyChangeEvent evt) -> {
+            habilitarBtnGuardar();
         };
 
         if (numAccion > 1) {
@@ -303,8 +307,8 @@ public class FrmPersonaCTR {
         frmPersona.getTxtCallePrincipal().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCalleSecundaria().addKeyListener(new TxtVDireccion(
                 frmPersona.getTxtCalleSecundaria(), frmPersona.getLblErrorCalleSec()));
-        frmPersona.getTxtCalleSecundaria().addPropertyChangeListener(habilitar_Guardar);
-        frmPersona.getTxtCelular().addKeyListener(new TxtVTelefono(
+        // frmPersona.getTxtCalleSecundaria().addPropertyChangeListener(habilitar_Guardar);
+        frmPersona.getTxtCelular().addKeyListener(new TxtVCelular(
                 frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular()));
         //frmPersona.getTxtCelular().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCodigoPostal().addKeyListener(new TxtVNumeros(
@@ -322,10 +326,10 @@ public class FrmPersonaCTR {
         frmPersona.getTxtPrimerNombre().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtReferencia().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtReferencia(), frmPersona.getLblErrorReferencia()));
-        frmPersona.getTxtReferencia().addPropertyChangeListener(habilitar_Guardar);
+        // frmPersona.getTxtReferencia().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtSector().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtSector(), frmPersona.getLblErrorSector()));
-        frmPersona.getTxtSector().addPropertyChangeListener(habilitar_Guardar);
+        //frmPersona.getTxtSector().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtSegundoApellido().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtSegundoApellido(), frmPersona.getLblErrorSegApellido()));
         frmPersona.getTxtSegundoApellido().addPropertyChangeListener(habilitar_Guardar);
@@ -334,16 +338,14 @@ public class FrmPersonaCTR {
         frmPersona.getTxtSegundoNombre().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtTelefono().addKeyListener(new TxtVTelefono(
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
-        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
-        frmPersona.getTxtNumeroCasa().addKeyListener(new TxtVDireccion(
-                frmPersona.getTxtNumeroCasa(), frmPersona.getLblErrorNumeroCasa()));
-        frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
+//        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
+//        frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVNumeros(
                 frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
                 frmPersona.getTxtCorreo(), frmPersona.getLblErrorCorreo()));
-        frmPersona.getTxtCorreo().addPropertyChangeListener(habilitar_Guardar);
+
         frmPersona.getTxtNumeroCasa().addKeyListener(new TxtVNumCasa(frmPersona.getTxtNumeroCasa(),
                 frmPersona.getLblErrorNumeroCasa()));
         frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
@@ -387,8 +389,8 @@ public class FrmPersonaCTR {
     public void habilitarBtnGuardar() {
 
         String TipoId, Identificacion, PriNombre, SegNombre, PriApellido, SegApellido,
-                FechaNac, EstadoCivil, TipoSangre, Genero, Sexo, Etnia, CarnetConadis,
-                TipoDiscapacidad, PorcentajeDiscapacidad, IdiomaRaiz, Telefono, CallePrin,
+                FechaNac, EstadoCivil, TipoSangre, Genero, Sexo, Etnia, CarnetConadis = null,
+                TipoDiscapacidad = null, PorcentajeDiscapacidad = null, IdiomaRaiz, Telefono, CallePrin,
                 CalleSec, Referencia, Celular, NumCasa, Sector, Correo,
                 Nacionalidad, Provincia, Canton, PaisReside, ProvinciaReside, CantonReside,
                 ParroquiaReside, CodigoPostal, TipoResidencia;
@@ -409,13 +411,13 @@ public class FrmPersonaCTR {
         Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
-        Correo = frmPersona.getTxtCorreo().getText();
-//        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-//        if (Discapacidad) {
-//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
-//        }
+        //Correo = frmPersona.getTxtCorreo().getText();
+        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
+        if (Discapacidad) {
+            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+        }
         // Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
         // Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
         // Canton = frmPersona.getCmbCanton().getSelectedItem().toString();
@@ -426,10 +428,10 @@ public class FrmPersonaCTR {
         //CodigoPostal = frmPersona.getTxtCodigoPostal().getText();
         TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
-        CalleSec = frmPersona.getTxtCalleSecundaria().getText();
-        Referencia = frmPersona.getTxtReferencia().getText();
-        Sector = frmPersona.getTxtSector().getText();
-        NumCasa = frmPersona.getTxtNumeroCasa().getText();
+        // CalleSec = frmPersona.getTxtCalleSecundaria().getText();
+        //Referencia = frmPersona.getTxtReferencia().getText();
+        //Sector = frmPersona.getTxtSector().getText();
+        //NumCasa = frmPersona.getTxtNumeroCasa().getText();
 
         if (TipoId.equals("SELECCIONE") == false && Identificacion.equals("") == false
                 && PriNombre.equals("") == false && SegNombre.equals("") == false
@@ -439,15 +441,15 @@ public class FrmPersonaCTR {
                 // && Celular.equals("") == false && Telefono.equals("") == false
                 && IdiomaRaiz.equals("SELECCIONE") == false && Sexo.equals("SELECCIONE") == false
                 && Genero.equals("SELECCIONE") == false && TipoSangre.equals("SELECCIONE") == false
-                && Etnia.equals("SELECCIONE") == false && Correo.equals("") == false
+                && Etnia.equals("SELECCIONE") == false
+                //              && Correo.equals("") == false
                 // && Nacionalidad.equals("SELECCIONE") == false && Provincia.equals("SELECCIONE") == false 
                 // && Canton.equals("SELECCIONE") == false  && PaisReside.equals("SELECCIONE") == false 
                 // && ProvinciaReside.equals("SELECCIONE") == false && CantonReside.equals("SELECCIONE") == false
                 // && ParroquiaReside.equals("SELECCIONE") == false && CodigoPostal.equals("") == false
-                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false
-                && CalleSec.equals("") == false && Referencia.equals("") == false
-                && Sector.equals("") == false && NumCasa.equals("") == false) {
-
+                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false //                && CalleSec.equals("") == false && Referencia.equals("") == false
+                //                && Sector.equals("") == false && NumCasa.equals("") == false
+                ) {
 //            if (Discapacidad == false && TipoDiscapacidad.equals("SELECCIONE") == false
 //                    && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
 //                frmPersona.getBtnGuardarPersona().setEnabled(true);
@@ -462,21 +464,13 @@ public class FrmPersonaCTR {
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
+        Date fecha;
+        LocalDate fechaNaci;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
         boolean guardar = true;
-        //unicamente tocoa validar eso es lo feo :$$$$ 
-        //Todas las variables del formulario
-//        String identificacion = "aa", priNombre = "aa", segNombre = "aaa",
-//                priApellido = "aaa", segApellido = "aaa",
-//                fechaNac = "aa", estadoCivil = "aaaa", tipoSangre = "aaa", genero = "aaa",
-//                sexo = "M", etnia = "aaa", carnetConadis = "aaaa",
-//                tipoDiscapacidad = "aaaa", porcentajeDiscapacidad = "aaaa",
-//                idiomaRaiz = "aaa", telefono = "aaaa", callePrin = "aaaa",
-//                calleSec = "aaa", referencia = "aaaa",
-//                celular = "aaaa", numCasa = "aaa", sector = "aaa",
-//                zonaResidencia = "aaaaa", correo = "aaaa";
+
         String identificacion, priNombre, segNombre,
                 priApellido, segApellido,
                 fechaNac, estadoCivil = "a", tipoSangre = "a", genero = "a",
@@ -532,10 +526,18 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorSegApellido().setVisible(false);
         }
-
-        fechaNac = frmPersona.getJdcFechaNacimiento().getText().toUpperCase();
+        //Le pasamos la fecha que escribio en el calendario
+        fecha = frmPersona.getJdfechaNacimiento().getDate();
         //Auxiliar para transformar de tipo texto a tipo LocalDate
+        //Dar formato a la fecha
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //Se lo pasa a un string para poder validarlo
+        fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
+
+        System.out.println("fechaNacimiento " + fechaNacimiento);
+        System.out.println("fechaNac " + fechaNac);
 
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
@@ -642,9 +644,7 @@ public class FrmPersonaCTR {
         }
 
         calleSec = frmPersona.getTxtCalleSecundaria().getText().trim().toUpperCase().toUpperCase();
-
         referencia = frmPersona.getTxtReferencia().getText().trim().toUpperCase();
-
         celular = frmPersona.getTxtCelular().getText().trim().toUpperCase();
         if (!Validar.esTelefono(celular)) {
             guardar = false;
@@ -652,10 +652,8 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getLblErrorCelular().setVisible(false);
         }
-
         // Lugares en donde reside y vive 
         LugarMD lugarNac = null, lugarRes = null;
-
         //Esto igual deberiamos hacerlo de otra manera.
         //Aqui preguntamos siempre que sea mayor a la posicion 0 porque 
         //Ahi esta el texto seleccione  
@@ -784,9 +782,10 @@ public class FrmPersonaCTR {
                     ocultarErrores();
                 }
             }
-
+            frmPersona.dispose();
+            ctrPrin.cerradoJIF();
         } else {
-            JOptionPane.showMessageDialog(null, "Existen errores en los campos");
+            JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }
 
     }
@@ -809,13 +808,22 @@ public class FrmPersonaCTR {
         idPersona = per.getIdPersona();
         System.out.println("id" + idPersona);
         editar = true;
+        String cedula;
+        cedula = per.getIdentificacion();
+
+        Date fecha = new Date();
 
         Calendar fecha_Nacimiento = Calendar.getInstance();
         fecha_Nacimiento.clear();
         fecha_Nacimiento.set(per.getFechaNacimiento().getYear(), per.getFechaNacimiento().getMonthValue() - 1, per.getFechaNacimiento().getDayOfMonth());
 
+        if (modelo.validaciones.Validar.esCedula(cedula) == true) {
+            frmPersona.getCmbTipoId().setSelectedItem("CEDULA");
+        } else {
+            frmPersona.getCmbTipoId().setSelectedItem("PASAPORTE");
+        }
         frmPersona.getTxtIdentificacion().setEnabled(true);
-        frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
+        //frmPersona.getCmbTipoId().setSelectedItem(per.getIdPersona());
         frmPersona.getTxtIdentificacion().setText(per.getIdentificacion());
         frmPersona.getTxtCallePrincipal().setText(per.getCallePrincipal());
         frmPersona.getTxtCalleSecundaria().setText(per.getCalleSecundaria());
@@ -829,11 +837,25 @@ public class FrmPersonaCTR {
         frmPersona.getTxtSegundoApellido().setText(per.getSegundoApellido());
         frmPersona.getTxtSegundoNombre().setText(per.getSegundoNombre());
         frmPersona.getTxtTelefono().setText(per.getTelefono());
-        frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
-        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
-        frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
-        frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
+        frmPersona.getJdfechaNacimiento().setDate(fecha);
+        if (per.getEstadoCivil() == null) {
+            frmPersona.getCmbEstadoCivil().setSelectedItem("SELECCIONE");
+        } else {
+            frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
+        }
+        if (per.getTipoDiscapacidad() == null) {
+            frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
+        } else {
+            frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
+        }
+        if (per.getIdiomaRaiz() == null) {
+            frmPersona.getCmbIdiomas().setSelectedItem("SELECCIONE");
+        } else {
+            frmPersona.getCmbIdiomas().setSelectedItem(per.getIdiomaRaiz());
+        }
 
+        // frmPersona.getJdcFechaNacimiento().setSelectedDate(fecha_Nacimiento);
+        frmPersona.getJdfechaNacimiento().setCalendar(fecha_Nacimiento);
         String sexo = per.getSexo() + "";
         if ("H".equals(sexo)) {
             sexo = "HOMBRE";
@@ -905,10 +927,13 @@ public class FrmPersonaCTR {
                 frmPersona.getCmbCanton().setSelectedItem(ciudad);
             }
         }
-
+        int nvlLugarRes = 0;
         System.out.println("Nivel de lugar residencia  " + per.getLugarResidencia().getNivel());
-
-        int nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (per.getLugarResidencia().getNivel() == null) {
+            nvlLugarRes = 0;
+        } else {
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         String parroquia = null, canton = null, provincia = null;
         if (nvlLugarRes == 4) {
             //Guardamos el nombre del parroquia para luego selecionarlo
@@ -916,21 +941,33 @@ public class FrmPersonaCTR {
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (per.getLugarResidencia().getNivel() == null) {
+            nvlLugarRes = 0;
+        } else {
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         if (nvlLugarRes == 3) {
             //Guardamos el nombre del canton para luego selecionarlo
             canton = per.getLugarResidencia().getNombre();
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (per.getLugarResidencia().getNivel() == null) {
+            nvlLugarRes = 0;
+        } else {
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         if (nvlLugarRes == 2) {
             //Guardamos el nombre del provincia para luego selecionarlo
             provincia = per.getLugarResidencia().getNombre();
             per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel 
-        nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        if (per.getLugarResidencia().getNivel() == null) {
+            nvlLugarRes = 0;
+        } else {
+            nvlLugarRes = Integer.parseInt(per.getLugarResidencia().getNivel());
+        }
         System.out.println("Pais reside " + per.getLugarResidencia().getNombre());
         if (nvlLugarRes == 1) {
             frmPersona.getCmbPaisReside().setSelectedItem(per.getLugarResidencia().getNombre());
