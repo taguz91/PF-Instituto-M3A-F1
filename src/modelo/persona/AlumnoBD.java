@@ -97,10 +97,11 @@ public class AlumnoBD extends AlumnoMD {
     public List<PersonaMD> capturarPersona(String aguja) {
         List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre, p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo"
-                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) WHERE p.persona_identificacion LIKE '%" + aguja + "%' OR  p.persona_primer_nombre LIKE '%"
+                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) "
+                + "WHERE (p.persona_identificacion LIKE '%" + aguja + "%' OR  p.persona_primer_nombre LIKE '%"
                 + aguja + "%' OR p.persona_segundo_nombre LIKE '%" + aguja + "%' OR p.persona_primer_apellido LIKE '%"
                 + aguja + "%' OR p.persona_segundo_apellido LIKE '%" + aguja + "%' OR p.persona_correo LIKE '%"
-                + aguja + "%' AND p.persona_activa = true AND a.alumno_activo = true";
+                + aguja + "%') AND p.persona_activa = 'true' AND a.alumno_activo = 'true'";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -295,7 +296,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "WHERE p.id_persona = a.id_persona AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
-                + "	persona_identificacion ILIKE '%"+aguja+"%');";
+                + "	persona_identificacion ILIKE '%"+aguja+"%') "
+                + "AND persona_activa = true;";
         return consultarAlumnos(sql);
     }
 

@@ -229,7 +229,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "m.id_materia = ma.id_materia AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
                 + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + ");";
+                + ") AND persona_activa = true;";
         return consultaMallasTbl(sql);
     }
 

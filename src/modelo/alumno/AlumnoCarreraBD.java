@@ -107,7 +107,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido\n"
                 + "	ILIKE '%" + aguja + "%'\n"
                 + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + ");";
+                + ") AND persona_activa = true;";
         return consultarAlumnoCarrera(sql);
     }
 
@@ -122,7 +122,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "ac.id_carrera = " + idCarrera + " AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
-                + "	persona_identificacion ILIKE '%" + aguja + "%');";
+                + "	persona_identificacion ILIKE '%" + aguja + "%') "
+                + "AND persona_activa = true;";
         return consultarAlumnoCarreraTbl(sql);
     }
 
