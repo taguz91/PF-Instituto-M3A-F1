@@ -94,9 +94,8 @@ public class VtnPrdLectivoCTR {
     }
 
     public void abrirFrmPrdLectivo() {
-        FrmPrdLectivo vista = new FrmPrdLectivo();
-        FrmPrdLectivoCTR formulario = new FrmPrdLectivoCTR(vtnPrin, vista, conecta, ctrPrin);
-        formulario.iniciar();
+        ctrPrin.abrirFrmPrdLectivo();
+        vtnPrdLectivo.dispose();
     }
 
     public void ocultarAtributo() {

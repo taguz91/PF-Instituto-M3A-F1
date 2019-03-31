@@ -108,6 +108,7 @@ public class FrmCarreraCTR {
     private void guardarYSalir(){
         guardar();
         frmCarrera.dispose();
+        ctrPrin.cerradoJIF();
         ctrPrin.abrirVtnCarrera();
     }
     

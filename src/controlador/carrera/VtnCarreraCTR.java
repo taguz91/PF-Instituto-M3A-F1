@@ -117,18 +117,24 @@ public class VtnCarreraCTR {
             ctrFrmCarrera.editar(carreras.get(fila));
         }
     }
-    
+
     private void eliminarCarrera() {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
-            car.eliminarCarrera(carreras.get(fila).getId());
-            cargarCarreras();
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro que quiere eliminar \n"
+                    + vtnCarrera.getTblMaterias().getValueAt(fila, 2).toString() + "\n"
+                    + "No se podran recuperar los datos despues.");
+            if (r == JOptionPane.OK_OPTION) {
+                car.eliminarCarrera(carreras.get(fila).getId());
+                cargarCarreras();
+            }
         }
     }
 
     private void abrirFrmCarrera() {
         ctrPrin.abrirFrmCarrera();
         vtnCarrera.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     public void cargarCarreras() {
@@ -152,9 +158,9 @@ public class VtnCarreraCTR {
                     mdTbl.addRow(valoresCD);
                 }
 
-            });            
+            });
         }
-        vtnCarrera.getLblResultados().setText(carreras.size()+" Resutados obtendidos.");
+        vtnCarrera.getLblResultados().setText(carreras.size() + " Resutados obtendidos.");
     }
 
     public void llamaReporteAlumnoCarrera() {

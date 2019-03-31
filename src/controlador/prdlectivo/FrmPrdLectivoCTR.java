@@ -1,7 +1,5 @@
 package controlador.prdlectivo;
 
-import datechooser.events.SelectionChangedEvent;
-import datechooser.events.SelectionChangedListener;
 import java.awt.Font;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -10,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -67,6 +63,7 @@ public class FrmPrdLectivoCTR {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frmPrdLectivo.dispose();
+                ctrPrin.cerradoJIF();
             }
         };
 
@@ -233,6 +230,7 @@ public class FrmPrdLectivoCTR {
                 if (bdPerLectivo.guardarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                     frmPrdLectivo.dispose();
+                    ctrPrin.cerradoJIF();
 //                    reiniciarComponentes(frmPrdLectivo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
@@ -246,6 +244,7 @@ public class FrmPrdLectivoCTR {
                 if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
+                    ctrPrin.cerradoJIF();
 //                    reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {

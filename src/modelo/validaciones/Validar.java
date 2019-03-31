@@ -33,7 +33,7 @@ public class Validar {
     }
 
     public static boolean esCelular(String cadena) {
-        return cadena.matches("[0-9]{13}");
+        return cadena.matches("[0-9]{10,13}");
     }
 
     public static boolean esAnio(String cadena) {

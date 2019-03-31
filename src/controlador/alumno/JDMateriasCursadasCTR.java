@@ -45,7 +45,7 @@ public class JDMateriasCursadasCTR {
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         jd.getTblMaterias().setModel(mdTbl);
-        TblEstilo.fomatoTblConColor(jd.getTblMaterias());
+        TblEstilo.formatoTblConColor(jd.getTblMaterias());
 
         jd.getLblAlumno().setText(alumno.getAlumno().getPrimerNombre() + " "
                 + alumno.getAlumno().getPrimerApellido());

@@ -12,7 +12,6 @@ import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
-import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -116,6 +115,8 @@ public class VtnAlumnoCursoCTR {
 
     public void abrirFrmCurso() {
         ctrPrin.abrirFrmCurso();
+        vtnAlmnCurso.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     private void cargarAlumnosCurso() {

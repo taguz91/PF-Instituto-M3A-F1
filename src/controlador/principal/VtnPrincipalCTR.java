@@ -496,6 +496,13 @@ public class VtnPrincipalCTR {
 
         });
     }
+    
+    public void cerradoJIF(){
+        numVtns--;
+        if (numVtns < 0) {
+            numVtns = 0;
+        }
+    }
 
     public void estadoCargaVtn(String vtn) {
         vtnPrin.getLblEstado().setText("Inciando la ventana de " + vtn + ". Por favor espere la información se cargara en breve.");

@@ -485,7 +485,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btnBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 30, 20));
 
         lblErrorCelular.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCelular.setText("Solo debe ingresar numeros");
+        lblErrorCelular.setText("Ingrese un número de celular válido");
         getContentPane().add(lblErrorCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 240, -1));
 
         lblErrorIdentificacion.setForeground(new java.awt.Color(204, 0, 0));
@@ -553,7 +553,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 340, -1));
 
         lblErrorCorreo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCorreo.setText("Ingrese un correo valido");
+        lblErrorCorreo.setText("Ingrese un correo válido");
         getContentPane().add(lblErrorCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 240, -1));
 
         lblErrorNumeroCasa.setForeground(new java.awt.Color(204, 0, 0));
@@ -597,7 +597,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorSegApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 240, -1));
 
         lblErrorTelefono.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorTelefono.setText("Solo debe ingresar numeros");
+        lblErrorTelefono.setText("Ingrese un número de telefono válido");
         getContentPane().add(lblErrorTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 240, -1));
         getContentPane().add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 790, 10));
 
