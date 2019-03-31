@@ -138,22 +138,23 @@ public class dbSilabo extends Silabo {
             return false;
         }
     }
-     public String cod_sib(){
-        String sql="select max(id_silabo) from \"Silabo\"";
+
+    public String cod_sib() {
+        String sql = "select max(id_silabo) from \"Silabo\"";
         ResultSet rs = con.query(sql);
-        String id=null;
+        String id = null;
         try {
             while (rs.next()) {
-                id=rs.getString("max");
+                id = rs.getString("max");
             }
             rs.close();
             return id;
 
         } catch (Exception e) {
             System.out.println(e);
-return null;
+            return null;
         }
-        
+
     }
 
     public Silabo retornaSilabo(int aguja) {
@@ -161,7 +162,7 @@ return null;
             Silabo silabo = null;
             String sql = "SELECT id_silabo FROM \"Silabo\",\"Materias\"\n"
                     + "WHERE \"Materias\".id_materia=\"Silabo\".id_materia\n"
-                    + "AND \"Materias\".id_materia="+aguja+"";
+                    + "AND \"Materias\".id_materia=" + aguja + "";
             ResultSet rs = con.query(sql);
             while (rs.next()) {
                 silabo = new Silabo();
@@ -177,4 +178,35 @@ return null;
         }
     }
 
+    public List<Silabo> mostrarSilabos(int aguja) {
+        List<Silabo> lista = new ArrayList<Silabo>();
+        String sql = "SELECT DISTINCT \"Materias\".id_materia,\"Materias\".materia_nombre, \"Silabo\".estado_silabo \n"
+                + "FROM \"Materias\",\"Silabo\",\"PeriodoLectivo\",\"Carreras\",\"Cursos\",\"Docentes\",\"Personas\"\n"
+                + "WHERE \"Materias\".id_materia=\"Silabo\".id_materia\n"
+                + "AND \"Materias\".id_carrera =\"Carreras\".id_carrera\n"
+                + "AND \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n"
+                + "AND \"PeriodoLectivo\".prd_lectivo_fecha_fin>'2018-11-12'\n"
+                + "AND \"Personas\".id_persona="+aguja+"\n"
+                + "AND \"Materias\".id_materia=\"Cursos\".id_materia\n"
+                + "AND \"Personas\".id_persona=\"Docentes\".id_persona\n"
+                + "AND \"Cursos\".id_docente=\"Docentes\".id_docente";
+
+        ResultSet rs = con.query(sql);
+        System.out.println(sql);
+        try {
+            while (rs.next()) {
+                Silabo s = new Silabo();
+                s.getIdMateria().setId(rs.getInt(1));
+                s.getIdMateria().setNombre(rs.getString(2));
+                s.setEstadoSilabo(rs.getString(3));
+                
+                lista.add(s);
+            }
+            rs.close();
+            return lista;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }
