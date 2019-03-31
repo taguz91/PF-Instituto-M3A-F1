@@ -45,7 +45,7 @@ public class MateriaBD extends MateriaMD {
                 + "materia_total_horas\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE materia_activa = 'true' "
-                + "AND id_carrera= " + idcarrera + " AND c.id_carrera = m.id_carrera "
+                + "AND m.id_carrera= " + idcarrera + " AND c.id_carrera = m.id_carrera "
                 + "AND carrera_activo = true;";
         return consultarMateriasParaTabla(sql);
     }
