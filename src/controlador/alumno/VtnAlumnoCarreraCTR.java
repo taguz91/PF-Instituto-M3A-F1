@@ -87,6 +87,7 @@ public class VtnAlumnoCarreraCTR {
             }
         });
         vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
+        vtnAlmCar.getBtnIngresar().addActionListener(e -> abrirFrmAlumnoCarrera());
         //Validacion buscar
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
@@ -94,6 +95,12 @@ public class VtnAlumnoCarreraCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
         //ctrPrin.carga.detener();
+    }
+    
+    private void abrirFrmAlumnoCarrera(){
+        ctrPrin.abrirFrmInscripcion();
+        vtnAlmCar.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     private void buscar(String b) {

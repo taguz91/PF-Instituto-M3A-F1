@@ -761,13 +761,11 @@ public class FrmPersonaCTR {
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
-                        frmPersona.dispose();
                     } else {
                         per.editarPersona(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
-                        frmPersona.dispose();
                     }
                     editar = false;
                 }
@@ -777,16 +775,15 @@ public class FrmPersonaCTR {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
-                    frmPersona.dispose();
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
-                    frmPersona.dispose();
                 }
             }
-
+            frmPersona.dispose();
+            ctrPrin.cerradoJIF();
         } else {
             JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }

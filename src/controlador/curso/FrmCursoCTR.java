@@ -184,6 +184,7 @@ public class FrmCursoCTR {
     public void guardarYSalir() {
         guardar();
         frmCurso.dispose();
+        ctrPrin.cerradoJIF();
         ctrPrin.abrirVtnCurso();
     }
 
