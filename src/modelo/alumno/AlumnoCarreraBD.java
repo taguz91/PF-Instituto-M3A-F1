@@ -73,7 +73,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "public.\"Carreras\" c\n"
                 + "WHERE  a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera;";
+                + "c.id_carrera = ac.id_carrera AND carrera_activo = true;";
         return consultarAlumnoCarrera(sql);
     }
 
@@ -107,7 +107,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido\n"
                 + "	ILIKE '%" + aguja + "%'\n"
                 + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + ") AND persona_activa = true;";
+                + ") AND persona_activa = true AND carrera_activo = true;";
         return consultarAlumnoCarrera(sql);
     }
 
@@ -116,14 +116,16 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Carreras\" c\n"
                 + "WHERE a.id_alumno = ac.id_alumno AND\n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "ac.id_carrera = " + idCarrera + " AND (\n"
+                + "ac.id_carrera = " + idCarrera + " AND "
+                + "c.id_carrera = ac.id_carrera AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
                 + "	persona_identificacion ILIKE '%" + aguja + "%') "
-                + "AND persona_activa = true;";
+                + "AND persona_activa = true AND carrera_activo = true;";
         return consultarAlumnoCarreraTbl(sql);
     }
 
