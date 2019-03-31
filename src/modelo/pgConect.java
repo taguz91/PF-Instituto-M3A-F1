@@ -24,6 +24,16 @@ public class pgConect {
     ResultSet rs;
 
 
+   /* String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
+
+    String pgUser = "ROOT";
+    String pgContra = "ROOT";*/
+
+
+
+
+
 //    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 //    String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
 //    
@@ -33,6 +43,7 @@ public class pgConect {
     //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
     String pgUser = "ROOT";
     String pgContra = "ROOT";
+
 
     public pgConect() {
 

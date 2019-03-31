@@ -1066,6 +1066,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblInstrumentoAC.setText("Instrumento:");
         pnlAprendizajeColaborativo.add(lblInstrumentoAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
+
+        spnValoracionAC.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         pnlAprendizajeColaborativo.add(spnValoracionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAC.setText("Valoración");
@@ -1130,6 +1132,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblInstrumentoP.setText("Instrumento:");
         pnlPractica.add(lblInstrumentoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
+
+        spnValoracionP.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         pnlPractica.add(spnValoracionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionP.setText("Valoración");
@@ -1194,6 +1198,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblInstrumentoA.setText("Instrumento:");
         pnlAutonoma.add(lblInstrumentoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
+
+        spnValoracionA.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         pnlAutonoma.add(spnValoracionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionA.setText("Valoración");

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="84e84607-8e38-471e-8f82-c9d2a358eacb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\HP\\Documents\\NetBeansProjects\\silabo2\\src\\silabo2\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct c.id_docente,p.persona_primer_apellido,p.persona_primer_nombre from "Cursos" c, "Docentes" d, "Personas" p
+where c.id_docente=d.id_docente 
+and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
+	</queryString>
+	<field name="id_docente" class="java.lang.Integer"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="1" width="167" height="20" forecolor="#006699" uuid="2c34e51b-8957-4809-be39-f8f979076391"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.1. Profesor Responsable]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="58" y="0" width="184" height="20" uuid="7ad991b0-8fc0-4743-9ddf-fc72072a260a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="0" width="189" height="20" uuid="5e45dfd7-f55a-4820-bfbc-cf51fec9f3d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="431" y="0" width="107" height="20" uuid="06427b45-dd2d-498b-9d51-9103a9fc0833"/>
+				<subreportParameter name="id_profe">
+					<subreportParameterExpression><![CDATA[$F{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_materia">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cursos.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="431" height="20" uuid="6f1321ac-1021-4891-8b78-80e40c2b3ab2"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

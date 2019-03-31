@@ -135,7 +135,7 @@ PRESENTACION]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="207" y="0" width="105" height="67" uuid="e9d45d1e-2f69-42b0-ae63-3cf54aff6429"/>

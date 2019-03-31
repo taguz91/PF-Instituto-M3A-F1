@@ -170,8 +170,9 @@ public class VtnCarreraCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
+             int posFila = vtnCarrera.getTblMaterias().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("alumnoCarrera", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
+            parametro.put("alumnoCarrera", carreras.get(posFila).getId());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

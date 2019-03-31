@@ -45,7 +45,7 @@
 	<detail>
 		<band height="100" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="250" height="100" uuid="f03395c8-d39c-4485-8335-af9ef182aeaa"/>
+				<reportElement x="1" y="0" width="250" height="100" uuid="f03395c8-d39c-4485-8335-af9ef182aeaa"/>
 				<subreportParameter name="ID_MATERIA_APRO">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -53,7 +53,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "elaborado_por.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="296" y="0" width="237" height="100" uuid="713b9a33-6dd0-4057-85bc-f78d30ccc9f2"/>
+				<reportElement x="278" y="0" width="237" height="100" uuid="713b9a33-6dd0-4057-85bc-f78d30ccc9f2"/>
 				<subreportParameter name="ID_CARR">
 					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
 				</subreportParameter>

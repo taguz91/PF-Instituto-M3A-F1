@@ -11,7 +11,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as "lu",null as ma,null as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
 union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -19,7 +19,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as ma,null as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where   c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3'  and c.id_materia=$P!{id_materia}
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -28,7 +28,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -38,7 +38,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -49,7 +49,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -61,7 +61,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) else ' ' end
 				 as  sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where   c.id_materia=$P!{id_materia}
+where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
 
 ) as x
 group by hora
@@ -77,6 +77,17 @@ order by hora]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement x="30" y="0" width="161" height="20" forecolor="#006699" uuid="49d3683c-fe80-4fea-96f2-9a74bcccd55b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.2 Horario de clases]]></text>
+			</staticText>
+		</band>
+	</title>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
