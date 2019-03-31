@@ -302,7 +302,7 @@ public class VtnPrdLectivoCTR {
             if (result == 0) {
                 periodo = capturarFila();
                 if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
-                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
                     llenarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
