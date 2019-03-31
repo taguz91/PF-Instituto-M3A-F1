@@ -124,15 +124,46 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso) {
+        String sql = "SELECT DISTINCT c.curso_nombre,  \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Cursos\" c\n"
+                + "WHERE a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.curso_nombre = '" + curso + "' AND\n"
+                + "ac.id_curso = c.id_curso;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorPrdTbl(int idPrd) {
+        String sql = "SELECT DISTINCT c.curso_nombre,  \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Cursos\" c\n"
+                + "WHERE a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.id_prd_lectivo = "+idPrd+"  AND\n"
+                + "ac.id_curso = c.id_curso;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
+
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursosTbl() {
         String sql = "SELECT DISTINCT curso_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido,\n"
                 + "persona_identificacion\n"
                 + "FROM public.\"AlumnoCurso\" ac , public.\"Alumnos\" a, \n"
-                + "public.\"Cursos\" c, public.\"Personas\" p\n"
+                + "public.\"Cursos\" c, public.\"Personas\" p, "
+                + "public.\"Materias\" m, public.\"Carreras\" cr \n"
                 + "WHERE ac.id_alumno = a.id_alumno AND\n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "ac.id_curso = c.id_curso;";
+                + "ac.id_curso = c.id_curso AND \n"
+                + "m.id_materia = c.id_materia AND \n"
+                + "cr.id_carrera = m.id_carrera "
+                + "AND persona_activa = true \n"
+                + "AND alumno_activo = true AND carrera_activo = true;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 
@@ -141,13 +172,18 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "persona_primer_nombre, persona_primer_apellido,\n"
                 + "persona_identificacion\n"
                 + "FROM public.\"AlumnoCurso\" ac , public.\"Alumnos\" a, \n"
-                + "public.\"Cursos\" c, public.\"Personas\" p\n"
-                + "WHERE ac.id_alumno = a.id_alumno AND\n"
+                + "public.\"Cursos\" c, public.\"Personas\" p, public.\"Materias\" m, "
+                + "public.\"Carreras\" cr \n"
+                + "WHERE ac.id_alumno = a.id_alumno AND \n"
+                + "m.id_materia = c.id_materia AND \n"
+                + "cr.id_carrera = m.id_carrera AND\n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "ac.id_curso = c.id_curso AND\n"
                 + "(curso_nombre ILIKE '%" + aguja + "%' OR \n"
                 + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "OR persona_identificacion ILIKE '%" + aguja + "%');;";
+                + "OR persona_identificacion ILIKE '%" + aguja + "%') "
+                + "AND persona_activa = true AND alumno_activo = true "
+                + "AND carrera_activo = true;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 

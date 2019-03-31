@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.4641000000000155"/>
+	<property name="ireport.x" value="678"/>
+	<property name="ireport.y" value="345"/>
+	<queryString>
+		<![CDATA[SELECT
+	"Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as "APELLIDOS",
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
+	"AlumnoCurso".almn_curso_nt_1_parcial,
+	"AlumnoCurso".almn_curso_nt_examen_interciclo,
+	"AlumnoCurso".almn_curso_nt_2_parcial,
+	"AlumnoCurso".almn_curso_nt_examen_final,
+	"AlumnoCurso".almn_curso_nt_examen_supletorio,
+	"AlumnoCurso".almn_curso_asistencia,
+	"AlumnoCurso".almn_curso_nota_final,
+	"AlumnoCurso".almn_curso_estado,
+	"AlumnoCurso".almn_curso_num_faltas,
+	"Materias".materia_nombre, 
+	"Jornadas".nombre_jornada,
+	"Materias".materia_ciclo,
+	"Cursos".curso_paralelo,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre as "NOMBRE_PROF",
+	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as "APELLIDO_PROF",
+	("AlumnoCurso".almn_curso_num_faltas * "Materias".materia_total_horas)/100 as "% Faltas"
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
+	
+
+	WHERE
+	"PeriodoLectivo".prd_lectivo_estado = FALSE 
+	AND "Cursos".id_docente = 55 
+	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
+	AND "Cursos".curso_ciclo = 4 
+	AND "Cursos".curso_paralelo = 'A' 
+	AND "Jornadas".nombre_jornada = 'MATUTINA' 
+ORDER BY
+	p_alu.persona_primer_apellido ASC;]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="almn_curso_nt_1_parcial" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_interciclo" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_2_parcial" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_final" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nt_examen_supletorio" class="java.math.BigDecimal"/>
+	<field name="almn_curso_asistencia" class="java.lang.String"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="almn_curso_estado" class="java.lang.String"/>
+	<field name="almn_curso_num_faltas" class="java.lang.Integer"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="nombre_jornada" class="java.lang.String"/>
+	<field name="materia_ciclo" class="java.lang.Integer"/>
+	<field name="curso_paralelo" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="NOMBRE_PROF" class="java.lang.String"/>
+	<field name="APELLIDO_PROF" class="java.lang.String"/>
+	<field name="% Faltas" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="65" width="97" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Periodo Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="0" width="1412" height="45" forecolor="#0066CC"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1228" y="65" width="164" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="65" width="223" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1025" y="65" width="56" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1111" y="65" width="117" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="683" y="45" width="199" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="97" width="54" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="251" y="97" width="366" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="182" y="132" width="41" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="236" y="132" width="37" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_ciclo}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="132" width="52" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Paralelo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="372" y="132" width="37" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1025" y="97" width="72" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1111" y="97" width="300" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1025" y="132" width="56" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Jornada:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1097" y="132" width="214" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="171" width="1520" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1070" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASISTENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1270" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="49" y="41" width="74" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1370" y="41" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nro FALTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="516" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[APORTE 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="123" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="945" y="41" width="125" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[EXAMEN SUPLETORIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="223" y="41" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="379" y="41" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="845" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[EXAMEN FINAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="616" y="41" width="129" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[EXAMEN INTERCICLO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="745" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[APORTE 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1170" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOTA FINAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="49" y="41" width="74" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="379" y="41" width="136" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="41" width="156" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="123" y="41" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="515" y="41" width="101" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="616" y="41" width="129" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="845" y="41" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="945" y="41" width="125" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1070" y="41" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1170" y="41" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1270" y="41" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1370" y="41" width="68" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="745" y="41" width="100" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="1438" y="41" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[% FALTAS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="1438" y="41" width="68" height="20"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="1270" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1070" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="516" y="0" width="100" height="20" backcolor="#CCFFCC"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_1_parcial}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="945" y="0" width="125" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_supletorio}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="845" y="0" width="100" height="20" backcolor="#F4F492"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_final}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="156" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="616" y="0" width="129" height="20" backcolor="#F4F492"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_interciclo}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="0" width="137" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1170" y="0" width="100" height="20" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nota_final}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="745" y="0" width="100" height="20" backcolor="#CCFFCC"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_2_parcial}.toString()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="0" width="156" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1270" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="515" y="0" width="101" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1170" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="945" y="0" width="125" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="616" y="0" width="129" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="845" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="379" y="0" width="136" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1070" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="123" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="745" y="0" width="100" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="49" y="0" width="74" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="49" y="0" width="74" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1438" y="0" width="68" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}.toString()+"%"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="1438" y="0" width="68" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1370" y="0" width="68" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{almn_curso_num_faltas}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="1370" y="0" width="68" height="20"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="251" splitType="Stretch">
+			<textField>
+				<reportElement x="648" y="165" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="765" y="165" width="164" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="741" y="185" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="628" y="149" width="261" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="683" y="217" width="166" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

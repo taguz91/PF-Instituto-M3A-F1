@@ -44,6 +44,7 @@ public class VtnMateriaCTR {
     private final MateriaBD materia;
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
+    private final CarreraBD carrerBD;
 
     //El modelo de la tabla materias  
     private DefaultTableModel mdTblMat;
@@ -66,7 +67,7 @@ public class VtnMateriaCTR {
         ctrPrin.estadoCargaVtn("Materias");
         ctrPrin.setIconJIFrame(vtnMateria);
         this.materia = new MateriaBD(conecta);
-
+        this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
     }
@@ -119,7 +120,8 @@ public class VtnMateriaCTR {
     private void infoMateria() {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
-            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, materias.get(pos));
+            MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId()); 
+            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt);
             info.iniciar();
         }
     }
@@ -140,8 +142,6 @@ public class VtnMateriaCTR {
     }
 
     public void cargarCmbFiltrar() {
-        //Cargamos todas las carreras 
-        CarreraBD carrerBD = new CarreraBD(conecta);
         carreras = carrerBD.cargarCarreras();
         //Cargamos el combo 
         vtnMateria.getCmbCarreras().removeAllItems();
@@ -162,6 +162,7 @@ public class VtnMateriaCTR {
             ciclos.forEach(c -> {
                 vtnMateria.getCmbCiclo().addItem(c + "");
             });
+            vtnMateria.getCmbCiclo().setSelectedIndex(0);
         } else {
             materias = materia.cargarMaterias();
             //Borramos todos los item del combo ciclos  

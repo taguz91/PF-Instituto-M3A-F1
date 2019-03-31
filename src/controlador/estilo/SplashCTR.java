@@ -10,31 +10,30 @@ import vista.principal.Splash;
  * @author Johnny
  */
 public class SplashCTR {
-    //Cargamoslas imagenes para el splash
 
+    //Cargamoslas imagenes para el splash
 //    private final ImageIcon estados[] = {
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SpriteC1.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SpriteC2.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SpriteC3.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SpriteC4.png"))
-//    };
-//    private final ImageIcon estados[] = {
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasP1.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasP9.png"))
+//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP1.png")),
+//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP2.png")),
+//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP3.png")),
+//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP4.png")),
+//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP5.png"))
 //    };
     private final ImageIcon estados[] = {
-        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasPP1.png")),
-        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasPP2.png")),
-        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasPP3.png")),
-        new ImageIcon(getClass().getResource("/vista/img/animacion/SplasPP4.png"))
+        new ImageIcon(getClass().getResource("/vista/img/animacion/SPL1.png")),
+        new ImageIcon(getClass().getResource("/vista/img/animacion/SPL2.png")),
+        new ImageIcon(getClass().getResource("/vista/img/animacion/SPL3.png")),
+        new ImageIcon(getClass().getResource("/vista/img/animacion/SPL4.png")),
+        new ImageIcon(getClass().getResource("/vista/img/animacion/SPL5.png"))
     };
+
     private final ImageIcon icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
 
     private final Splash s;
 
     public SplashCTR() {
         this.s = new Splash();
-        //s.setLocationRelativeTo(null);
+        s.setLocationRelativeTo(null);
         AWTUtilities.setWindowOpaque(s, false);
         s.setExtendedState(JFrame.MAXIMIZED_BOTH);
         s.setIconImage(icono.getImage());
@@ -42,28 +41,13 @@ public class SplashCTR {
     }
 
     public void iniciar() {
-//        for (ImageIcon estado : estados) {
-//            s.getLblFondo().setIcon(estado);
-//            dormir(250);
-//        }
-        //Veremos la ancura de la pantalla
-        int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-        //Se le quita al lbl lo opaco para mirar como va el trayecto  
-        //s.getLblFondo().setOpaque(true);
-        int x = 400;
-        s.getLblFondo().setBounds(x, 0, 100, s.getHeight());
-        //dormir(10);
-        s.getLblFondo().setIcon(estados[0]);
-        while (s.getLblFondo().getX() < ancho - 400) {
-            x = x + 3;
-            s.getLblFondo().setBounds(x, 0, 100, s.getHeight());
-            dormir(5);
+
+        for (ImageIcon estado : estados) {
+            s.getLblFondo().setIcon(estado);
+            dormir(500);
         }
-        s.getLblFondo().setBounds(0, 0, s.getWidth(), s.getHeight());
-        s.getLblFondo().setIcon(estados[1]);
-        dormir(700);
-        s.getLblFondo().setIcon(estados[2]);
-        dormir(400);
+
+        dormir(250);
         s.dispose();
     }
 

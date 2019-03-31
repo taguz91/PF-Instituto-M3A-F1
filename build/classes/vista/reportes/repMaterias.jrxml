@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="carrera" class="java.lang.String">
@@ -36,31 +36,35 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="128" splitType="Stretch">
+		<band height="167" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="104" width="555" height="20"/>
+				<reportElement x="0" y="139" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="35" width="555" height="20"/>
+				<reportElement x="0" y="79" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="65" width="555" height="20"/>
+				<reportElement x="0" y="109" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de Materias]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="555" height="99"/>
+				<imageExpression class="java.lang.String"><![CDATA[".\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
+			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="358" y="0" width="197" height="20"/>
-				<textElement/>
+				<reportElement x="348" y="42" width="207" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
@@ -175,6 +179,9 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="21"/>
+	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
@@ -200,4 +207,7 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 			</textField>
 		</band>
 	</summary>
+	<noData>
+		<band height="50"/>
+	</noData>
 </jasperReport>

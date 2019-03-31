@@ -16,7 +16,10 @@ public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";//BD cloud
+
+    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
+    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
 
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
@@ -49,12 +52,17 @@ public class ResourceManager {
 
         }
 
+
     /* JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
       USERNAME = "postgres";
         PASSWORD = "qwerty79";*/
 
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
+
+
+
+        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         return conex;
 
     }

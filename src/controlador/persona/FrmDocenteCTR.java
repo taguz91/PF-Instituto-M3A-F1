@@ -1,5 +1,3 @@
-//https://serprogramador.es/programando-mensajes-de-dialogo-en-java-parte-1/
-//http://codejavu.blogspot.com/2013/12/ejemplo-joptionpane.html
 package controlador.persona;
 
 import java.awt.event.FocusEvent;
@@ -15,7 +13,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.JOptionPane;
-import javax.xml.transform.Source;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
@@ -137,6 +134,7 @@ public class FrmDocenteCTR {
         String cedula = frmDocente.getTxtIdentificacion().getText().trim();
         if (!Validar.esCedula(cedula)) {
             buscar = false;
+            frmDocente.getLblError().setText("Error! Cedula invalida");
         }
         //Cedula no registrada: 0102380821
         if (buscar) {
@@ -183,6 +181,7 @@ public class FrmDocenteCTR {
         if (validar == 5) {
             if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
                 frmDocente.getLblError().setVisible(true);
+                 frmDocente.getLblError().setText("Ingrese solo numeros");
             } else {
                 frmDocente.getLblError().setVisible(false);
             }

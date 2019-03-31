@@ -78,6 +78,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Malla Alumnos");
 
         jLabel1.setText("Buscar");
 

@@ -10,8 +10,8 @@ import javax.swing.JTextField;
  *
  * @author Johnny
  */
-public class TxtVLetras extends KeyAdapter{
-    
+public class TxtVLetras extends KeyAdapter {
+
     private final JTextField txt;
     private final JLabel lbl;
     private String ingreso;
@@ -46,4 +46,13 @@ public class TxtVLetras extends KeyAdapter{
             }
         }
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        char car = e.getKeyChar();
+        if (!Validar.esLetras(car+"")) {
+            e.consume();
+        }
+    }
+
 }

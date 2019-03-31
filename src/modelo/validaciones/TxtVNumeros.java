@@ -20,8 +20,6 @@ public class TxtVNumeros extends KeyAdapter {
         this.txt = txt;
         this.lbl = null;
     }
-    
-    
 
     public TxtVNumeros(JTextField txt, JLabel lbl) {
         this.txt = txt;
@@ -46,6 +44,14 @@ public class TxtVNumeros extends KeyAdapter {
                     lbl.setVisible(false);
                 }
             }
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        char car = e.getKeyChar();
+        if (!Validar.esNumeros(car + "")) {
+            e.consume();
         }
     }
 }

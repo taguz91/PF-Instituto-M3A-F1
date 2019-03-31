@@ -1,14 +1,11 @@
 package controlador.persona;
 
-import static com.sun.javafx.tk.Toolkit.getToolkit;
 import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -16,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
@@ -56,9 +56,7 @@ public class FrmPersonaCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
-    private TxtVCelular valCelular;
     private int numAccion = 2;
-    private Image foto;
 
     private final String[] idiomas = {"Árabe", "Croata", "Francés",
         "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
@@ -87,6 +85,7 @@ public class FrmPersonaCTR {
     //Para saber si se esta editando una persona  
     private boolean editar = false;
     private int idPersona = 0;
+    private boolean errorCedula = false;
 
     JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
 
@@ -144,71 +143,45 @@ public class FrmPersonaCTR {
 
         });
 
-        frmPersona.getTxtIdentificacion().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                String cedula = frmPersona.getTxtIdentificacion().getText();
-                char car = e.getKeyChar();
-
-                if (car < '0' || car > '9') {
-                    e.consume();
-                }
-                if (cedula.length() >= 10) {
-                    e.consume();
-                }
-
-            }
-
-        });
-
-        frmPersona.getTxtCelular().addKeyListener(new KeyAdapter() {
-            public void KeyTyped(KeyEvent ew) {
-                String celular = frmPersona.getTxtCelular().getText();
-                char car = ew.getKeyChar();
-
-                if ((car < 'a' || car > 'z') || (car < 'A' || car > 'Z')) {
-                    ew.consume();
-                }
-                if (celular.length() >= 10) {
-                    ew.consume();
-                }
-                if (Character.isLetter(car)) {
-                    ew.consume();
-                }
-            }
-        });
-
         valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
-
-        //valCelular = new TxtVCelular(frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular());
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Persona");
+        cerrarandoVtn();
+    }
 
+    public void cerrarandoVtn() {
+        frmPersona.addInternalFrameListener(new InternalFrameAdapter() {
+
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                frmPersona.getTxtIdentificacion().setText("");
+            }
+        });
     }
 
     public void buscarIdentificacion() {
-        boolean error = false;
+        errorCedula = false;
         String cedula;
         cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
             if (cedula.length() == 10) {
                 if (modelo.validaciones.Validar.esCedula(cedula) == false) {
-                    error = true;
+                    errorCedula = true;
                     frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
             } else if (cedula.length() < 10) {
-                error = true;
+                errorCedula = true;
                 frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
 
-            if (error == false) {
+            if (errorCedula == false) {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
 
@@ -231,6 +204,9 @@ public class FrmPersonaCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
+        } else {
+            borrarCampos();
+            ocultarErrores();
         }
     }
 
@@ -489,6 +465,7 @@ public class FrmPersonaCTR {
 
         //Fecha actual usada para validaciones  
         Date fecha;
+        LocalDate fechaNaci;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -784,13 +761,11 @@ public class FrmPersonaCTR {
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
-                        frmPersona.dispose();
                     } else {
                         per.editarPersona(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         borrarCamposConId();
                         ocultarErrores();
-                        frmPersona.dispose();
                     }
                     editar = false;
                 }
@@ -800,16 +775,15 @@ public class FrmPersonaCTR {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
-                    frmPersona.dispose();
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     borrarCampos();
                     ocultarErrores();
-                    frmPersona.dispose();
                 }
             }
-
+            frmPersona.dispose();
+            ctrPrin.cerradoJIF();
         } else {
             JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }

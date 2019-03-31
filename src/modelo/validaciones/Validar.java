@@ -29,11 +29,11 @@ public class Validar {
     }
 
     public static boolean esTelefono(String cadena) {
-        return cadena.matches("[0-9]{7,10}");
+        return cadena.matches("[0-9]{7,13}");
     }
 
     public static boolean esCelular(String cadena) {
-        return cadena.matches("[0-9]{10}");
+        return cadena.matches("[0-9]{10,13}");
     }
 
     public static boolean esAnio(String cadena) {
