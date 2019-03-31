@@ -56,6 +56,7 @@ public class VtnCursoCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
+   
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -235,6 +236,7 @@ public class VtnCursoCTR {
             parametro.put("ciclo", cursos.get(posFila).getCurso_ciclo());
             parametro.put("paralelo", vtnCurso.getCmbCurso().getSelectedItem());
             parametro.put("periodo", periodos.get(posFila).getNombre_PerLectivo());
+            parametro.put("idDocente",cursos.get(posFila).getId_docente().getIdDocente());
            // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
