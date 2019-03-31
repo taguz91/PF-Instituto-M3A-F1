@@ -123,9 +123,9 @@ public class VtnCursoCTR {
     }
 
     public void abrirFrmCurso() {
-        FrmCurso frmCurso = new FrmCurso();
-        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
-        ctrFrmCurso.iniciar();
+        ctrPrin.abrirFrmCurso();
+        vtnCurso.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     private void editarCurso() {
@@ -138,6 +138,7 @@ public class VtnCursoCTR {
                     Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
             ctrFrmCurso.editar(cursoEdit);
             vtnCurso.dispose();
+            ctrPrin.cerradoJIF();
         }
     }
 

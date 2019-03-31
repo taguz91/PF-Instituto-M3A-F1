@@ -80,7 +80,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
-        String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\";";
+        String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
+                + "WHERE carrera_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -229,7 +230,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND prd_lectivo_estado = true\n"
+                + "prd_lectivo_activo = true AND prd_lectivo_estado = true "
+                + "AND carrera_activo = true\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {

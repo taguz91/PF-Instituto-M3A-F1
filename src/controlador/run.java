@@ -2,7 +2,6 @@ package controlador;
 
 import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
-import javax.swing.ImageIcon;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
 import vista.principal.VtnPrincipal;

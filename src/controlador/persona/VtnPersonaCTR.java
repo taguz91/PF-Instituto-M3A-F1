@@ -189,9 +189,9 @@ public class VtnPersonaCTR {
 
     //Damos accion al boton de guardar 
     public void ingresar() {
-        FrmPersona frmPersona = new FrmPersona();
-        FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
-        ctrFrm.iniciar();
+        ctrPrin.abrirFrmPersona();
+        vtnPersona.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     //Para ejecutar el metodo editar del frm 

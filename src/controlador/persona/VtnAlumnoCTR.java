@@ -41,7 +41,7 @@ public class VtnAlumnoCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
 
-     private DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
 
@@ -95,19 +95,20 @@ public class VtnAlumnoCTR {
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         //Validacion del buscador  
-        vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(), 
+        vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(),
                 vtnAlumno.getBtnBuscar()));
 
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
-         //Cuando termina de cargar todo se le vuelve a su estado normal.
+        //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos");
     }
 
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
-        FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin, permisos);
-        ctrFrmAlumno.iniciar();
+        ctrPrin.abrirFrmAlumno();
+        vtnAlumno.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     public void ocultarAtributo() {
@@ -180,9 +181,9 @@ public class VtnAlumnoCTR {
                 vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
             }
         } else {
-            if(!aguja.equals("")){
+            if (!aguja.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese un caracter válido para la Búsqueda");
-            } else{
+            } else {
                 DefaultTableModel modelo_Tabla;
                 modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
                 for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
@@ -272,7 +273,7 @@ public class VtnAlumnoCTR {
         }
     }
 
-     public void llamaReporteAlumno() {
+    public void llamaReporteAlumno() {
         JasperReport jr;
         String path = "./src/vista/reportes/repAlumnos.jasper";
         File dir = new File("./");
@@ -288,6 +289,7 @@ public class VtnAlumnoCTR {
             Logger.getLogger(VtnAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

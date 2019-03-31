@@ -79,10 +79,13 @@ public class CursoBD extends CursoMD {
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente\n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m, \n"
-                + "public.\"Docentes\" d, public.\"Personas\" p\n"
+                + "public.\"Docentes\" d, public.\"Personas\" p, \n"
+                + "public.\"Carreras\" cr\n"
                 + "WHERE m.id_materia = c.id_materia AND \n"
+                + "cr.id_carrera = m.id_carrera AND\n"
                 + "d.id_docente = c.id_docente AND \n"
-                + "p.id_persona = d.id_persona;";
+                + "p.id_persona = d.id_persona AND persona_activa = true AND\n"
+                + "docente_activo = true AND carrera_activo = true;";
         return consultarCursos(sql);
     }
 
@@ -134,13 +137,15 @@ public class CursoBD extends CursoMD {
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente\n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m, \n"
-                + "public.\"Docentes\" d, public.\"Personas\" p\n"
+                + "public.\"Docentes\" d, public.\"Personas\" p, public.\"Carreras\" cr\n"
                 + "WHERE m.id_materia = c.id_materia AND \n"
+                + "cr.id_carrera = m.id_carrera AND\n"
                 + "d.id_docente = c.id_docente AND \n"
-                + "p.id_persona = d.id_persona AND\n"
+                + "p.id_persona = d.id_persona AND \n"
                 + "(materia_nombre ILIKE '%" + aguja + "%' OR \n"
                 + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "OR persona_identificacion ILIKE '%" + aguja + "%');";
+                + "OR persona_identificacion ILIKE '%" + aguja + "%') AND \n"
+                + "persona_activa = true AND docente_activo = true AND carrera_activo = true;";
         return consultarCursos(sql);
     }
 

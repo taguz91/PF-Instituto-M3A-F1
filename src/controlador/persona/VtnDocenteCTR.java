@@ -153,6 +153,7 @@ public class VtnDocenteCTR {
         FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, conecta, ctrPrin);
         ctrFrmDocente.iniciar();
         vtnDocente.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     public void buscaIncremental(String aguja) {
@@ -178,6 +179,7 @@ public class VtnDocenteCTR {
                 perEditar = per.buscarPersona(docentesMD.get(posFila).getIdPersona());
                 ctrFrmPersona.editar(perEditar);
                 vtnDocente.dispose();
+                ctrPrin.cerradoJIF();
             } else {
                 if (seleccion == 1) {
                     FrmDocente frmDoc = new FrmDocente();
@@ -190,6 +192,7 @@ public class VtnDocenteCTR {
                     ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                     //vtnDocente.getTblDocente().setVisible(false);
                     vtnDocente.dispose();
+                    ctrPrin.cerradoJIF();
                 }
             }
 

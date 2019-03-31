@@ -106,6 +106,7 @@ public class FrmDocenteMateriaCTR {
     private void guardarYSalir(){
         guardar();
         frmDM.dispose();
+        ctrPrin.cerradoJIF();
         ctrPrin.abrirVtnDocenteMateria();
     }
 

@@ -1,7 +1,5 @@
 package controlador.prdlectivo;
 
-import datechooser.events.SelectionChangedEvent;
-import datechooser.events.SelectionChangedListener;
 import java.awt.Font;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -10,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -67,6 +63,7 @@ public class FrmPrdLectivoCTR {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frmPrdLectivo.dispose();
+                ctrPrin.cerradoJIF();
             }
         };
 
@@ -219,7 +216,6 @@ public class FrmPrdLectivoCTR {
             } else {
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
             }
-        
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
@@ -234,6 +230,7 @@ public class FrmPrdLectivoCTR {
                 if (bdPerLectivo.guardarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                     frmPrdLectivo.dispose();
+                    ctrPrin.cerradoJIF();
 //                    reiniciarComponentes(frmPrdLectivo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
@@ -247,6 +244,7 @@ public class FrmPrdLectivoCTR {
                 if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
+                    ctrPrin.cerradoJIF();
 //                    reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {
@@ -257,22 +255,25 @@ public class FrmPrdLectivoCTR {
     }
 
     public PeriodoLectivoMD pasarDatos(PeriodoLectivoMD periodo, CarreraMD carrera) {
-        LocalDate fechaActual = LocalDate.now();
-        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
-        String fec_Inicio[] = date_Inicio.split("/");
-        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
-        String fec_Fin[] = date_Fin.split("/");
-
-        LocalDate fecha_Inicio = fechaActual;
-        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
-                Integer.parseInt(fec_Inicio[1]),
-                Integer.parseInt(fec_Inicio[0]));
-        LocalDate fecha_Fin = fechaActual;
-        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
+//        LocalDate fechaActual = LocalDate.now();
+//        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
+//        String fec_Inicio[] = date_Inicio.split("/");
+//        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
+//        String fec_Fin[] = date_Fin.split("/");
+        
+        LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
+        LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
+//
+//        LocalDate fecha_Inicio = fechaActual;
+//        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
+//                Integer.parseInt(fec_Inicio[1]),
+//                Integer.parseInt(fec_Inicio[0]));
+//        LocalDate fecha_Fin = fechaActual;
+//        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
-        periodo.setFecha_Inicio(fecha_Inicio);
-        periodo.setFecha_Fin(fecha_Fin);
+        periodo.setFecha_Inicio(dia_Inicio);
+        periodo.setFecha_Fin(dia_Fin);
         periodo.setObservacion_PerLectivo(frmPrdLectivo.getTxtObservacion().getText());
         return periodo;
     }

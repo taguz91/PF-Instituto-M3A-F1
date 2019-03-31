@@ -43,14 +43,6 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         this.btnEditar = btnEditar;
     }
 
-    public JButton getBtnEliminar() {
-        return btnCerrarPeriodo;
-    }
-
-    public void setBtnEliminar(JButton btnEliminar) {
-        this.btnCerrarPeriodo = btnEliminar;
-    }
-
     public JButton getBtnIngresar() {
         return btnIngresar;
     }
@@ -98,8 +90,14 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
     public void setBtnCerrarPeriodo(JButton btnCerrarPeriodo) {
         this.btnCerrarPeriodo = btnCerrarPeriodo;
     }
-    
-    
+
+    public JButton getBtn_EliminarPL() {
+        return Btn_EliminarPL;
+    }
+
+    public void setBtn_EliminarPL(JButton Btn_EliminarPL) {
+        this.Btn_EliminarPL = Btn_EliminarPL;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,7 +117,7 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         tblPrdLectivo = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        Btn_EliminarPL = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -162,7 +160,7 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
-        btnEliminar.setText("Eliminar");
+        Btn_EliminarPL.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,8 +181,8 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnCerrarPeriodo)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Btn_EliminarPL, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -204,9 +202,9 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
                         .addComponent(btnCerrarPeriodo)
-                        .addComponent(btnEliminar)))
+                        .addComponent(Btn_EliminarPL)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
                 .addGap(9, 9, 9))
@@ -221,11 +219,11 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_EliminarPL;
     private javax.swing.JTextField Txt_Buscar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrarPeriodo;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

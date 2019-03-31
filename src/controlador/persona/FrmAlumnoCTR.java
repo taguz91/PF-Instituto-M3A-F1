@@ -284,6 +284,7 @@ public class FrmAlumnoCTR {
                             FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                             ctrPers.iniciar();
                             frmAlumno.dispose();
+                            ctrPrin.cerradoJIF();
                         }
                         cont = 0;
                     } else {
@@ -450,6 +451,7 @@ public class FrmAlumnoCTR {
             if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                 frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
 //                iniciarComponentes();
             } else {
@@ -461,6 +463,7 @@ public class FrmAlumnoCTR {
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
 //                iniciarComponentes();
                 editar = false;
@@ -473,6 +476,7 @@ public class FrmAlumnoCTR {
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 frmAlumno.dispose();
+                ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
 //                iniciarComponentes();
                 editar_2 = false;
