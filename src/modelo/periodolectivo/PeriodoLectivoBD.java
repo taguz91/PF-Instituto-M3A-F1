@@ -80,7 +80,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
-        String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\";";
+        String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
+                + "WHERE carrera_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
