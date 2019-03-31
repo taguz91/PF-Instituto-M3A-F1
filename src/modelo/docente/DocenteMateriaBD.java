@@ -64,8 +64,8 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "m.id_materia = dm.id_materia AND "
                 + "c.id_carrera = m.id_carrera\n"
                 + "docente_mat_activo = true AND \n"
-                + "id_docente = " + idDocente + " AND"
-                + "docente_activo = true AND persona_activa = true AND"
+                + "id_docente = " + idDocente + " AND \n"
+                + "docente_activo = true AND persona_activa = true AND \n"
                 + "carrera_activo = true;";
         return consultar(sql);
     }
@@ -81,8 +81,8 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "m.id_materia = dm.id_materia AND \n"
                 + "c.id_carrera = m.id_carrera AND\n"
                 + "docente_mat_activo = true AND \n"
-                + "dm.id_materia = " + idMateria + " AND"
-                + "carrera_activo = true AND docente_activo = true AND"
+                + "dm.id_materia = " + idMateria + " AND \n"
+                + "carrera_activo = true AND docente_activo = true AND \n"
                 + "persona_activa = true;";
         return consultar(sql);
     }
