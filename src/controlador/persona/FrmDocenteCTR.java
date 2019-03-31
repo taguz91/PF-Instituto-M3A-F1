@@ -134,6 +134,7 @@ public class FrmDocenteCTR {
         String cedula = frmDocente.getTxtIdentificacion().getText().trim();
         if (!Validar.esCedula(cedula)) {
             buscar = false;
+            frmDocente.getLblError().setText("Error! Cedula invalida");
         }
         //Cedula no registrada: 0102380821
         if (buscar) {
@@ -180,6 +181,7 @@ public class FrmDocenteCTR {
         if (validar == 5) {
             if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
                 frmDocente.getLblError().setVisible(true);
+                 frmDocente.getLblError().setText("Ingrese solo numeros");
             } else {
                 frmDocente.getLblError().setVisible(false);
             }
