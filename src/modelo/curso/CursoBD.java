@@ -140,7 +140,8 @@ public class CursoBD extends CursoMD {
                 + "p.id_persona = d.id_persona AND\n"
                 + "(materia_nombre ILIKE '%" + aguja + "%' OR \n"
                 + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "OR persona_identificacion ILIKE '%" + aguja + "%');";
+                + "OR persona_identificacion ILIKE '%" + aguja + "%') AND"
+                + "persona_activo = true AND docente_activo = true;";
         return consultarCursos(sql);
     }
 
