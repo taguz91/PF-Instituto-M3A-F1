@@ -59,7 +59,7 @@ public class MateriaBD extends MateriaMD {
                 + "materia_total_horas\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE materia_activa = 'true' "
-                + "AND id_carrera= " + idcarrera + " "
+                + "AND m.id_carrera= " + idcarrera + " "
                 + "AND materia_ciclo = " + ciclo + " \n"
                 + "AND c.id_carrera = m.id_carrera "
                 + "AND carrera_activo = true;";
@@ -221,11 +221,10 @@ public class MateriaBD extends MateriaMD {
                 + "materia_total_horas\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE materia_activa = 'true' AND ("
-                + "materia_codigo= '" + aguja + "' "
-                + "OR materia_nombre = '" + aguja + "') \n"
+                + "materia_codigo ILIKE '%" + aguja + "%' "
+                + "OR materia_nombre ILIKE '%" + aguja + "%') \n"
                 + "AND c.id_carrera = m.id_carrera "
                 + "AND carrera_activo = true;";
-        //System.out.println(sql);
         return consultarMateriasParaTabla(sql);
     }
 
