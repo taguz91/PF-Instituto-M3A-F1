@@ -187,7 +187,10 @@ public class FrmPersonaCTR {
 
                 PersonaMD per = persona.buscarPersona(cedula);
                 editar = true;
-
+//
+//                if(){
+//                    
+//                }
                 if (per == null) {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
@@ -210,6 +213,7 @@ public class FrmPersonaCTR {
         }
     }
 
+    
     private void tipoID() {
         int pos = frmPersona.getCmbTipoId().getSelectedIndex();
         frmPersona.getTxtIdentificacion().setEnabled(false);
