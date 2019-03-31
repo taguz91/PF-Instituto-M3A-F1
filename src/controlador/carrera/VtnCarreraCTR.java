@@ -129,6 +129,7 @@ public class VtnCarreraCTR {
     private void abrirFrmCarrera() {
         ctrPrin.abrirFrmCarrera();
         vtnCarrera.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     public void cargarCarreras() {

@@ -116,6 +116,8 @@ public class VtnAlumnoCursoCTR {
 
     public void abrirFrmCurso() {
         ctrPrin.abrirFrmCurso();
+        vtnAlmnCurso.dispose();
+        ctrPrin.cerradoJIF();
     }
 
     private void cargarAlumnosCurso() {

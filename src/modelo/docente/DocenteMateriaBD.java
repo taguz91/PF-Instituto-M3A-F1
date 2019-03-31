@@ -43,11 +43,13 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"DocentesMateria\" dm, public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"Materias\" m\n"
+                + "public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
-                + "m.id_materia = dm.id_materia AND\n"
-                + "docente_mat_activo = true;";
+                + "m.id_materia = dm.id_materia AND \n"
+                + "c.id_carrera = m.id_carrera AND \n"
+                + "docente_mat_activo = true AND persona_activa = true "
+                + "AND docente_activo = true;";
         return consultar(sql);
     }
 
@@ -56,12 +58,15 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"DocentesMateria\" dm, public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"Materias\" m\n"
+                + "public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
-                + "m.id_materia = dm.id_materia AND\n"
+                + "m.id_materia = dm.id_materia AND "
+                + "c.id_carrera = m.id_carrera\n"
                 + "docente_mat_activo = true AND \n"
-                + "id_docente = " + idDocente + ";";
+                + "id_docente = " + idDocente + " AND"
+                + "docente_activo = true AND persona_activa = true AND"
+                + "carrera_activo = true;";
         return consultar(sql);
     }
 
@@ -70,12 +75,15 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"DocentesMateria\" dm, public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"Materias\" m\n"
+                + "public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
-                + "m.id_materia = dm.id_materia AND\n"
+                + "m.id_materia = dm.id_materia AND \n"
+                + "c.id_carrera = m.id_carrera AND\n"
                 + "docente_mat_activo = true AND \n"
-                + "dm.id_materia = " + idMateria + ";";
+                + "dm.id_materia = " + idMateria + " AND"
+                + "carrera_activo = true AND docente_activo = true AND"
+                + "persona_activa = true;";
         return consultar(sql);
     }
 
@@ -89,7 +97,8 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "p.id_persona = d.id_persona AND \n"
                 + "m.id_materia = dm.id_materia AND\n"
                 + "docente_mat_activo = true AND \n"
-                + "m.id_carrera = " + idCarrera + ";";
+                + "m.id_carrera = " + idCarrera + " AND \n"
+                + "docente_activo = true AND persona_activa = true;";
         return consultar(sql);
     }
 
@@ -98,12 +107,14 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"DocentesMateria\" dm, public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"Materias\" m\n"
+                + "public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
-                + "m.id_materia = dm.id_materia AND\n"
+                + "m.id_materia = dm.id_materia AND \n"
+                + "c.id_carrera = m.id_carrera \n"
                 + "docente_mat_activo = true AND \n"
-                + "m.id_carrera = " + idCarrera + " AND m.materia_ciclo = " + ciclo + ";";
+                + "m.id_carrera = " + idCarrera + " AND m.materia_ciclo = " + ciclo + " "
+                + "AND carrera_activo = true AND persona_activa = true AND docente_activo = true;";
         return consultar(sql);
     }
 
@@ -112,14 +123,16 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"DocentesMateria\" dm, public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"Materias\" m\n"
+                + "public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
-                + "m.id_materia = dm.id_materia AND\n"
+                + "m.id_materia = dm.id_materia AND \n"
+                + "c.id_carrera = m.id_carrera \n"
                 + "docente_mat_activo = true AND (\n"
                 + "	materia_nombre ILIKE '%"+aguja+"%' OR \n"
                 + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%'\n"
-                + "OR persona_identificacion ILIKE '%"+aguja+"%' );";
+                + "OR persona_identificacion ILIKE '%"+aguja+"%' ) \n"
+                + "AND carrera_activo = true AND persona_activa = true AND docente_activo = true;";
         return consultar(sql);
     }
 
@@ -130,52 +143,6 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
             try {
                 while (rs.next()) {
                     DocenteMateriaMD dm = obtenerDocenteMateriaTbl(rs);
-                    if (dm != null) {
-                        dms.add(dm);
-                    }
-                }
-                return dms;
-            } catch (SQLException e) {
-                System.out.println("No se pudo consultar docentes");
-                System.out.println(e.getMessage());
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private ArrayList<DocenteMateriaMD> cosultarPorDocente(String sql, int idDocente) {
-        ArrayList<DocenteMateriaMD> dms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
-        if (rs != null) {
-            try {
-                DocenteMD d = doc.buscarDocente(idDocente);
-                while (rs.next()) {
-                    DocenteMateriaMD dm = obtenerDocenteMateria(rs, d, null);
-                    if (dm != null) {
-                        dms.add(dm);
-                    }
-                }
-                return dms;
-            } catch (SQLException e) {
-                System.out.println("No se pudo consultar docentes");
-                System.out.println(e.getMessage());
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private ArrayList<DocenteMateriaMD> cosultarPorMateria(String sql, int idMateria) {
-        ArrayList<DocenteMateriaMD> dms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
-        if (rs != null) {
-            try {
-                MateriaMD m = mat.buscarMateriaPorReferencia(idMateria);
-                while (rs.next()) {
-                    DocenteMateriaMD dm = obtenerDocenteMateria(rs, null, m);
                     if (dm != null) {
                         dms.add(dm);
                     }
