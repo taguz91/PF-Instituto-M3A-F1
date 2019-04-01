@@ -41,6 +41,7 @@ public class Silabo  {
     private MateriaMD idMateria;
 
     public Silabo() {
+        this.idMateria=new MateriaMD(); 
     }
 
     public Silabo(Integer idSilabo) {

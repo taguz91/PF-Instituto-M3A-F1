@@ -7,6 +7,7 @@ package vista.silabos;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +26,23 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JComboBox<String> getCmbCarrera() {
+        return cmbCarrera;
+    }
+
+    public void setCmbCarrera(JComboBox<String> cmbCarrera) {
+        this.cmbCarrera = cmbCarrera;
+    }
+
+    public JLabel getLblCarrera() {
+        return lblCarrera;
+    }
+
+    public void setLblCarrera(JLabel lblCarrera) {
+        this.lblCarrera = lblCarrera;
+    }
+    
+    
    
 
     public JButton getBtnEditar() {
@@ -113,6 +131,8 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         CHBSILABO = new javax.swing.JCheckBox();
         CHBPROGRAMA = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        cmbCarrera = new javax.swing.JComboBox<>();
+        lblCarrera = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -125,11 +145,11 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Asignatura", "Periodo"
+                "Asignatura", "Periodo", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -140,6 +160,9 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         if (tblSilabos.getColumnModel().getColumnCount() > 0) {
             tblSilabos.getColumnModel().getColumn(1).setPreferredWidth(220);
             tblSilabos.getColumnModel().getColumn(1).setMaxWidth(220);
+            tblSilabos.getColumnModel().getColumn(2).setMinWidth(140);
+            tblSilabos.getColumnModel().getColumn(2).setPreferredWidth(140);
+            tblSilabos.getColumnModel().getColumn(2).setMaxWidth(140);
         }
 
         lblBuscar.setText("Buscar:");
@@ -170,62 +193,76 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
         jLabel1.setText("IMPRIMIR COMO:");
 
+        lblCarrera.setText("Carrera:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(srcSilabos)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBuscar)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNuevo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnImprimir)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel1))
-                    .addComponent(CHBSILABO)
-                    .addComponent(CHBPROGRAMA)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBuscar)
+                            .addComponent(lblCarrera))
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(360, 360, 360))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnNuevo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnImprimir)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(CHBPROGRAMA)
+                            .addComponent(CHBSILABO)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(BTNGENERAR)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(BTNGENERAR))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CHBPROGRAMA)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CHBSILABO)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNGENERAR))
+                        .addComponent(lblBuscar)
+                        .addGap(24, 24, 24)
+                        .addComponent(lblCarrera))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblBuscar)
+                            .addComponent(btnNuevo)
                             .addComponent(btnEditar)
                             .addComponent(btnEliminar)
-                            .addComponent(btnNuevo)
                             .addComponent(btnImprimir))
+                        .addGap(12, 12, 12)
+                        .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(4, 4, 4)
+                        .addComponent(CHBPROGRAMA)
+                        .addGap(6, 6, 6)
+                        .addComponent(CHBSILABO)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(BTNGENERAR))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -315,8 +352,10 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cmbCarrera;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblCarrera;
     private javax.swing.JScrollPane srcSilabos;
     private javax.swing.JTable tblSilabos;
     private javax.swing.JTextField txtBuscar;

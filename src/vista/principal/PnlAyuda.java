@@ -6,12 +6,12 @@ import javax.swing.JLabel;
  *
  * @author Johnny
  */
-public class PnlAyudaG23 extends javax.swing.JPanel {
+public class PnlAyuda extends javax.swing.JPanel {
 
     /**
      * Creates new form PnlAyudaG23
      */
-    public PnlAyudaG23() {
+    public PnlAyuda() {
         initComponents();
     }
 

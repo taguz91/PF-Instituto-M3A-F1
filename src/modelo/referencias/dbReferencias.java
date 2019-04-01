@@ -102,23 +102,24 @@ public class dbReferencias extends Referencias {
         }
     }
 
-    public Referencias retornaReferencia(int silabo, String referencia) {
+    public  List<Referencias> retornaReferencia(int silabo, String referencia) {
 
         try {
-            Referencias ref = null;
+            List<Referencias> lista = new ArrayList<>();
             String sql = "SELECT \"Referencias\".id_referencia FROM \"Referencias\", \"ReferenciaSilabo\"\n"
                     + "WHERE \"Referencias\".id_referencia=\"ReferenciaSilabo\".id_referencia\n"
                     + "AND \"Referencias\".descripcion_referencia='"+referencia +"' AND \"ReferenciaSilabo\".id_silabo="+silabo+"";
             ResultSet rs = conecta.query(sql);
             while (rs.next()) {
-                ref = new Referencias();
+                Referencias ref = new Referencias();
                
                 ref.setIdReferencia(rs.getInt(1));
 
+                lista.add(ref);
             }
 
             rs.close();
-            return ref;
+            return lista;
         } catch (SQLException ex) {
             Logger.getLogger(dbReferencias.class.getName()).log(Level.SEVERE, null, ex);
             return null;

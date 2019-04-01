@@ -63,9 +63,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="50">
+		<band height="33">
 			<textField>
-				<reportElement x="0" y="0" width="125" height="50" uuid="3a53de5f-9b35-474b-b95a-f98f12abcdc9"/>
+				<reportElement x="0" y="0" width="125" height="33" uuid="3a53de5f-9b35-474b-b95a-f98f12abcdc9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -77,7 +77,7 @@
 				<textFieldExpression><![CDATA[$F{codigo_referencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="0" width="430" height="50" uuid="a886a92e-90a1-4588-b1c8-3f362eb95b0c"/>
+				<reportElement x="125" y="0" width="430" height="33" uuid="a886a92e-90a1-4588-b1c8-3f362eb95b0c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

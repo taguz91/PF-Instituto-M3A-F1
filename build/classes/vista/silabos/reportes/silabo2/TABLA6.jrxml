@@ -26,7 +26,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="42" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="4" width="555" height="20" forecolor="#006699" uuid="7c39c2bb-4704-4643-9d67-0092b0ac5eb8"/>
 				<textElement>
@@ -319,7 +319,7 @@ ENSEÑANZA]]></text>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="226" y="0" width="104" height="33" uuid="9be90bcb-e3e0-4697-94c8-f81523587be6"/>
@@ -338,7 +338,7 @@ ENSEÑANZA]]></text>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="554" y="0" width="1" height="193" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
+				<reportElement x="554" y="0" width="1" height="194" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
