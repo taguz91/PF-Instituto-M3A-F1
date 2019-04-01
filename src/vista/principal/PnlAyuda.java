@@ -1,29 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.principal;
 
 import javax.swing.JLabel;
 
 /**
  *
- * @author CESAR
+ * @author Johnny
  */
-public class PnlAyudaGR16 extends javax.swing.JPanel {
+public class PnlAyuda extends javax.swing.JPanel {
 
     /**
-     * Creates new form PnlAyudaGR16
+     * Creates new form PnlAyudaG23
      */
-    public PnlAyudaGR16() {
+    public PnlAyuda() {
         initComponents();
     }
 
-    public JLabel getLblMensajeGR16() {
-        return lblMensajeGR16;
+    public JLabel getLblMensaje() {
+        return lblMensaje;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,26 +28,32 @@ public class PnlAyudaGR16 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblMensajeGR16 = new javax.swing.JLabel();
+        lblMensaje = new javax.swing.JLabel();
 
-        lblMensajeGR16.setText("jLabel1");
+        lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblMensaje.setText("jLabel1");
+        lblMensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblMensajeGR16, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMensajeGR16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblMensajeGR16;
+    private javax.swing.JLabel lblMensaje;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,8 +3,7 @@ package controlador.principal;
 import controlador.estilo.CambioPnlCTR;
 import javax.swing.JLabel;
 import vista.principal.JDAyuda;
-import vista.principal.PnlAyudaG23;
-import vista.principal.PnlAyudaGR16;
+import vista.principal.PnlAyuda;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -13,118 +12,9 @@ import vista.principal.VtnPrincipal;
  */
 public class JDAyudaCTR {
 
-    private final JDAyuda ayuda;
-    private final PnlAyudaG23 ayudaG23;
-    private final PnlAyudaGR16 ayudaGR16;
-
-    private final String[] mensajes = {"Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + ""
-        + "Este es una ayuda no se que puedo hacer con la ayuda, "
-        + "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-        + "persona_primer_nombre, persona_segundo_nombre,\n"
-        + "persona_primer_apellido, persona_segundo_apellido,\n"
-        + "persona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + "\n"
-        + "\n"
-        + "AQUI TERMINA ", "RE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.i",
-         "ersona_celular, persona_correo, persona_identificacion\n"
-        + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
-        + "WHERE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac.id_carrera = 2 AND (\n"
-        + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-        + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%%' OR\n"
-        + "	persona_identificacion ILIKE '%%');"
-        + "\n"
-        + "\n"
-        + "AQUI TERMINA ", "RE a.id_alumno = ac.id_alumno AND\n"
-        + "p.id_persona = a.id_persona AND\n"
-        + "ac."};
+    private final JDAyuda vtnAyuda;
+    private final PnlAyuda pnlAyuda;
+    private JLabel lbl;
 
     String[][] G23 = {{"Busqueda en Ventanas", "Se buscara automaticamente, despues de ingresar mas de 3 caracteres."},
     {"Validaciones", "Si al ingresar texto se le remarca el cuadro de rojo es debido a que ingreso un caracter no valido."},
@@ -136,10 +26,11 @@ public class JDAyudaCTR {
     {"Busqueda en VTN Malla","Se buscara automaticament e al ingresear los 10 digitos de la cedula"},
     {"Busquedas por datos","Al ingresar la cedula en el formulario (Docente,Alumno) se le buscara automaticamente si desea editarlo"},
     {"Eliminacion","Cuando se elimina un datos cambia se estado de true a false"},
-    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}};
+    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}
+    };
     
     
-    String[][] GR16 = {{"LogIn" , "Solo podrán ingresar a través del usuario y contraseña asignado por el/la coordinador/a de la carrera."},
+    String[][] GR16 = {{"Login" , "Solo podrán ingresar a través del usuario y contraseña asignado por el/la coordinador/a de la carrera."},
     {"Malla" , "En esta sección podrá buscar, seleccionar la carrera e ingresar notas. En el caso de estar cursando la materia, seleccionada, se le mostrara un mensaje."},
     {"Usuarios" , "Solo el usuario ROOT podrá editar, eliminar o ingresar un usuario."},
     {"Ver Roles" , "Deberá seleccionar una fila para poder visualizar cada rol que tenga un usuario."},
@@ -155,57 +46,60 @@ public class JDAyudaCTR {
 
     
     public JDAyudaCTR(VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {
-        this.ayuda = new JDAyuda(vtnPrin, false);
-        this.ayuda.setIconImage(ctrPrin.getIsta()); 
-        this.ayudaG23 = new PnlAyudaG23();
-        
-        this.ayudaGR16 = new PnlAyudaGR16();
-
+        this.vtnAyuda = new JDAyuda(vtnPrin, false);
+        this.vtnAyuda.setIconImage(ctrPrin.getIsta()); 
+        this.pnlAyuda = new PnlAyuda();
         //Mostramos la ventana 
-        this.ayuda.setLocationRelativeTo(vtnPrin);
-        this.ayuda.setVisible(true);
+        this.vtnAyuda.setLocationRelativeTo(vtnPrin);
+        this.vtnAyuda.setVisible(true);
 
     }
-    
-    public void InitGR16(){
-        CambioPnlCTR.cambioPnl(ayuda.getPnlContenedor(), ayudaGR16);
-        LlenarLblGR16();
-        ayuda.setModal(true);
-    }
-
 
     public void iniciar() {
-        CambioPnlCTR.cambioPnl(ayuda.getPnlContenedor(), ayudaG23);
-        llenarLbl();
-        ayuda.setModal(true);
+        CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
+        lbl = pnlAyuda.getLblMensaje();
+        vtnAyuda.setModal(true);
+        //Para cambiar a diferentes mensajes 
+        vtnAyuda.getBtnAyudaG16().addActionListener(e -> clickG16());
+        vtnAyuda.getBtnAyudaG23().addActionListener(e -> clickG23());
+        //Por defecto incian las indicaciones del grupo 23 
+        clickG23();
+    }
+    
+    private void clickG23(){
+        lbl.setText("");
+        llenarLblG23();
+        CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
+    }
+    
+    private void clickG16(){
+        lbl.setText("");
+        LlenarLblGR16();
+        CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
     }
     
     private void LlenarLblGR16(){
-        JLabel lbl = ayudaGR16.getLblMensajeGR16();
+        //lbl = ayudaGR16.getLblMensajeGR16();
         String h = inicioHTML;
         for (String[] g : GR16){
             h = h + escribirAyuda(g[0], g[1]);
         }
         h = h + finHTML;
         lbl.setText(h);
-        ayudaGR16.add(lbl);
+        //pnlAyuda.add(lbl);
     }
 
-    private void llenarLbl() {
-        JLabel lbl = ayudaG23.getLblMensaje();
+    private void llenarLblG23() {
+        //lbl = ayudaG23.getLblMensaje();
         //lbl.setText("<html>" + mensajes[0] + "</html>");
         String h = inicioHTML;
         for (String [] g : G23) {
             //System.out.println(g[0]+" "+g[1]);
             h = h + escribirAyuda(g[0], g[1]); 
         }
-//        h = h + escribirAyuda("Hola", mensajes[0]);
-//        h = h + escribirAyuda("Hola otra vez", mensajes[1]);
-////    h = h + escribirAyuda("Hola", "WDHKAUDHJAWGHDAWJDHAWJDHAWKDHAWKDHAWKDH\nAWKDHAKWDHDDDDD"
-////            + "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         h = h + finHTML;
         lbl.setText(h);
-        ayudaG23.add(lbl);
+        //pnlAyuda.add(lbl);
     }
 
     private String escribirAyuda(String titulo, String ayuda) {
