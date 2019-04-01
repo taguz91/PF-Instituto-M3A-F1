@@ -238,17 +238,19 @@ public class VtnAlumnoCTR {
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
                 PersonaBD extraer = new PersonaBD(conecta);
 
                 FrmPersona frmPersona = new FrmPersona();
-                PersonaMD persona = new PersonaMD();
+                PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             }
         } else {
