@@ -565,7 +565,7 @@ public class ControladorSilaboCRUD {
             }
 
         });
-        
+
         gestion.getDchFechaPresentacionAC().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
@@ -606,7 +606,7 @@ public class ControladorSilaboCRUD {
             }
 
         });
-        
+
         gestion.getDchFechaPresentacionP().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
@@ -647,7 +647,7 @@ public class ControladorSilaboCRUD {
             }
 
         });
-        
+
         gestion.getDchFechaPresentacionA().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
@@ -1559,10 +1559,16 @@ public class ControladorSilaboCRUD {
 
         estrategia.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
 
-        if (estrategia.insertar()) {
-            JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+        if (gestion.getTxtNuevaEstrategia().getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+                  
         } else {
-            JOptionPane.showMessageDialog(null, "Error al guardar.");
+            if (estrategia.insertar()) {
+                JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar.");
+            }
+
         }
 
     }
