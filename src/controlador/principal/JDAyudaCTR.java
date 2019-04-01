@@ -26,7 +26,8 @@ public class JDAyudaCTR {
     {"Busqueda en VTN Malla","Se buscara automaticament e al ingresear los 10 digitos de la cedula"},
     {"Busquedas por datos","Al ingresar la cedula en el formulario (Docente,Alumno) se le buscara automaticamente si desea editarlo"},
     {"Eliminacion","Cuando se elimina un datos cambia se estado de true a false"},
-    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}};
+    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}
+    };
     
     
     String[][] GR16 = {{"Login" , "Solo podrán ingresar a través del usuario y contraseña asignado por el/la coordinador/a de la carrera."},
@@ -68,11 +69,13 @@ public class JDAyudaCTR {
     private void clickG23(){
         lbl.setText("");
         llenarLblG23();
+        CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
     }
     
     private void clickG16(){
         lbl.setText("");
         LlenarLblGR16();
+        CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
     }
     
     private void LlenarLblGR16(){
@@ -83,7 +86,7 @@ public class JDAyudaCTR {
         }
         h = h + finHTML;
         lbl.setText(h);
-        pnlAyuda.add(lbl);
+        //pnlAyuda.add(lbl);
     }
 
     private void llenarLblG23() {
@@ -96,7 +99,7 @@ public class JDAyudaCTR {
         }
         h = h + finHTML;
         lbl.setText(h);
-        pnlAyuda.add(lbl);
+        //pnlAyuda.add(lbl);
     }
 
     private String escribirAyuda(String titulo, String ayuda) {
