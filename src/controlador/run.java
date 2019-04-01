@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
+import modelo.propiedades.Propiedades;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
 import vista.principal.VtnPrincipal;
@@ -13,12 +14,13 @@ import vista.principal.VtnPrincipal;
 public class run {
 
     public static void main(String[] args) {
+        Propiedades.escribirPropiedades();
         estiloWindows();
-        SplashCTR ctrSplash = new SplashCTR();
-        ctrSplash.iniciar();
-
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
-        login.Init();
+//        SplashCTR ctrSplash = new SplashCTR();
+//        ctrSplash.iniciar();
+//
+//        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+//        login.Init();
 
     }
 
