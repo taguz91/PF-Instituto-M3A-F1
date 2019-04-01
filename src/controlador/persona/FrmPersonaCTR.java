@@ -188,6 +188,18 @@ public class FrmPersonaCTR {
                 PersonaMD per = persona.buscarPersona(cedula);
                 editar = true;
 
+                if (per != null) {
+                    int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada, desea Activarla ? ", " Activar Persona", dialog);
+                    if (result == 0) {
+                        if (persona.activarPersonaIdentificacion(persona.getIdentificacion()) == true) {
+                            JOptionPane.showMessageDialog(null, "Persona activada correctamente");
+                            editar(per);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                        }
+                    }
+                }
                 if (per == null) {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
