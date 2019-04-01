@@ -230,6 +230,7 @@ public class VtnPersonaCTR {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     //cargarLista();
                     cargarTipoPersona();
+                    vtnPersona.getTxtBuscar().setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA PERSONA");
                 }
