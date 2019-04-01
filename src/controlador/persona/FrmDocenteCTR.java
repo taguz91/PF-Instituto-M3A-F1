@@ -7,10 +7,13 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyVetoException;
 import java.util.Calendar;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
@@ -42,7 +45,7 @@ public class FrmDocenteCTR {
     //Para ver si existe una persona  
     private PersonaBD per;
     private final VtnPrincipalCTR ctrPrin;
-   private DocenteMD d;
+    private DocenteMD d;
 
     private ArrayList<String> info = new ArrayList();
 
@@ -50,7 +53,6 @@ public class FrmDocenteCTR {
     //Para verificar si existe la persona tipo docente  
     private boolean existeDocente = false;
     FrmPersona persona = new FrmPersona();
- 
 
     public FrmDocenteCTR(VtnPrincipal vtnPrin, FrmDocente frmDocente, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -113,8 +115,9 @@ public class FrmDocenteCTR {
                 validarComponentes(frmDocente.getTxtIdentificacion().getText());
             }
         };
-
+        inhabilitarComponentesDocente();
         iniciarComponentes();
+        iniciarFechas();
         frmDocente.getTxtIdentificacion().addFocusListener(Buscar);
         frmDocente.getTxtIdentificacion().addKeyListener(cedula);
         frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarCedula());
@@ -134,11 +137,12 @@ public class FrmDocenteCTR {
         String cedula = frmDocente.getTxtIdentificacion().getText().trim();
         if (!Validar.esCedula(cedula)) {
             buscar = false;
+            frmDocente.getLblError().setForeground(Color.red);
             frmDocente.getLblError().setText("Error! Cedula invalida");
         }
         //Cedula no registrada: 0102380821
         if (buscar) {
-             d = docente.buscarDocenteInactivo(cedula);
+            d = docente.buscarDocenteInactivo(cedula);
             if (d != null) {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                         "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -146,6 +150,7 @@ public class FrmDocenteCTR {
                         new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
                 if (seleccion == 1) {
                     inhabilitarComponentesDocente();
+                    frmDocente.getBtnRegistrarPersona().setVisible(false);
                 } else if (seleccion == 0) {
                     docente.activarDocente(d.getIdPersona());
                     habilitarComponentesDocente();
@@ -170,7 +175,9 @@ public class FrmDocenteCTR {
                 } else {
                     System.out.println("Si existe el docente");
                     habilitarComponentesDocente();
+                    frmDocente.getBtnRegistrarPersona().setVisible(false);
                     editar(d);
+                    frmDocente.getLblDatosPersona().setText("[ " + d.getIdDocente() + " ] " + d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre());
                 }
             }
 
@@ -181,7 +188,7 @@ public class FrmDocenteCTR {
         if (validar == 5) {
             if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
                 frmDocente.getLblError().setVisible(true);
-                 frmDocente.getLblError().setText("Ingrese solo numeros");
+                frmDocente.getLblError().setText("Ingrese solo numeros");
             } else {
                 frmDocente.getLblError().setVisible(false);
             }
@@ -200,12 +207,12 @@ public class FrmDocenteCTR {
     public void guardarDocente() {
 
         String codigo, docenteTipoTiempo, estado;
-        int docenteCategoria,idPer;
+        int docenteCategoria, idPer;
         boolean docenteOtroTrabajo, docenteCapacitador;
         LocalDate fechaInicioContratacion, fechaFinContratacion;
         guardar = true;
-       idPer=idDocente;
-       System.out.println(idPer);
+        idPer = idDocente;
+        System.out.println(idPer);
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
         docenteTipoTiempo = frmDocente.getCmbTipoTiempo().getSelectedItem().toString();
@@ -237,7 +244,7 @@ public class FrmDocenteCTR {
                     Integer.parseInt(fecFinC[1]), Integer.parseInt(fecFinC[2]));
             fechaFinContratacion = fechaFin1;
         } catch (NullPointerException e) {
-            
+
             fechaFinContratacion = null;
         }
 
@@ -257,16 +264,27 @@ public class FrmDocenteCTR {
             docente.setDocenteCapacitador(docenteCapacitador);
             docente.setDocenteCategoria(docenteCategoria);
             docente.setDocenteOtroTrabajo(docenteOtroTrabajo);
-            docente.setDocenteTipoTiempo(docenteTipoTiempo);
-            if (editar) {
+
+            if (!docenteTipoTiempo.equalsIgnoreCase("Seleccione")) {
+                docente.setDocenteTipoTiempo(docenteTipoTiempo);
+                if (editar) {
                 if (idDocente > 0) {
                     docente.editarDocente(idDocente);
-                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
+                    JOptionPane.showMessageDialog(null, "Los Datos se han editado exitosamente");
+                    frmDocente.dispose();
                 }
             } else {
                 docente.InsertarDocente();
-                JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
+                JOptionPane.showMessageDialog(null, "Se han insertado los datos de forma correcta!");
+                frmDocente.dispose();
             }
+            
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione una opcion");
+          
+            }
+
+        
         }
 
     }
@@ -274,18 +292,25 @@ public class FrmDocenteCTR {
     public void editar(DocenteMD doc) {
         editar = true;
         idDocente = doc.getIdDocente();
-        Calendar calendar_Ini = Calendar.getInstance();
-        calendar_Ini.clear();
-        calendar_Ini.set(doc.getFechaInicioContratacion().getYear(), doc.getFechaInicioContratacion().getMonthValue(), doc.getFechaInicioContratacion().getDayOfMonth());
-        Calendar calendar_FinC = Calendar.getInstance();
-        calendar_FinC.clear();
+        frmDocente.getLblDatosPersona().setText("[ " + doc.getIdDocente() + " ] " + doc.getPrimerApellido() + " " + doc.getSegundoApellido() + " " + doc.getPrimerNombre());
+
+        if (doc.getFechaInicioContratacion() != null) {
+            Calendar calendar_Inicio = Calendar.getInstance();
+            calendar_Inicio.clear();
+            calendar_Inicio.set(doc.getFechaInicioContratacion().getYear(), doc.getFechaInicioContratacion().getMonthValue() - 1, doc.getFechaInicioContratacion().getDayOfMonth());
+            frmDocente.getJdcFechaInicioContratacion().setCalendar(calendar_Inicio);
+        } else {
+            frmDocente.getJdcFechaInicioContratacion().setCalendar(null);
+        }
+
         if (doc.getFechaFinContratacion() != null) {
-            calendar_FinC.set(doc.getFechaFinContratacion().getYear(), doc.getFechaFinContratacion().getMonthValue(), doc.getFechaFinContratacion().getDayOfMonth());
-            frmDocente.getJdcFechaFinContratacion().setCalendar(calendar_Ini);
+            Calendar calendar_Fin = Calendar.getInstance();
+            calendar_Fin.clear();
+            calendar_Fin.set(doc.getFechaFinContratacion().getYear(), doc.getFechaFinContratacion().getMonthValue() - 1, doc.getFechaFinContratacion().getDayOfMonth());
+            frmDocente.getJdcFechaFinContratacion().setCalendar(calendar_Fin);
         } else {
             frmDocente.getJdcFechaFinContratacion().setCalendar(null);
         }
-        frmDocente.getJdcFechaInicioContratacion().setCalendar(calendar_Ini);
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
@@ -330,5 +355,11 @@ public class FrmDocenteCTR {
         frmDocente.getJdcFechaInicioContratacion().setEnabled(false);
         frmDocente.getCbxOtroTrabajo().setEnabled(false);
 
+    }
+
+    public void iniciarFechas() {
+        LocalDate fechaActual = LocalDate.now();
+        Date fechaHoy = Date.from(fechaActual.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        frmDocente.getJdcFechaInicioContratacion().setDate(fechaHoy);
     }
 }

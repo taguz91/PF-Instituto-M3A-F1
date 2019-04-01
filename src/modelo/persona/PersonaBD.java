@@ -262,6 +262,20 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    public boolean activarPersonaIdentificacion(String identificacion) {
+        String sql = "UPDATE public.\"Personas\"\n"
+                + "SET persona_activa='true'"
+                + "WHERE persona_identificacion = '" + identificacion + "';";
+
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+
+    }
+
     // Utilizamos la sentencia update para modificar el estado de una persona
     // y no eliminarla por completo con parametro por identidicacion
     public boolean eliminarPersonaIdentificacion(String identificacion) {

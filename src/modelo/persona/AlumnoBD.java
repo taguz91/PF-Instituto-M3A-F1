@@ -157,6 +157,116 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
+        //System.out.println(sql);
+        try {
+            AlumnoMD a = new AlumnoMD();
+            
+            while (rs.next()) {
+                SectorEconomicoMD sector = new SectorEconomicoMD();
+                a.setIdPersona(rs.getInt("id_persona"));
+                a.setIdentificacion(rs.getString("persona_identificacion"));
+                a.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                a.setId_Alumno(rs.getInt("id_alumno"));
+                System.out.println("Aguja: " + a.getId_Alumno());
+                if (rs.wasNull()) {
+                    sector.setId_SecEconomico(0);
+                    a.setSectorEconomico(sector);
+                } else {
+                    sector.setId_SecEconomico(rs.getInt("id_sec_economico"));
+                    a.setSectorEconomico(sector);
+                }
+                if (rs.wasNull()) {
+                    a.setTipo_Colegio("|SELECCIONE|");
+                } else {
+                    a.setTipo_Colegio(rs.getString("alumno_tipo_colegio"));
+                }
+                if (rs.wasNull()) {
+                    a.setTipo_Bachillerato("|SELECCIONE|");
+                } else {
+                    a.setTipo_Bachillerato(rs.getString("alumno_tipo_bachillerato"));
+                }
+                if (rs.wasNull()) {
+                    a.setAnio_graduacion("1980");
+                } else {
+                    a.setAnio_graduacion(rs.getString("alumno_anio_graduacion"));
+                }
+                if (rs.wasNull()) {
+                    a.setEducacion_Superior(false);
+                } else {
+                    a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
+                }
+                if (rs.wasNull()) {
+                    a.setTitulo_Superior(null);
+                } else {
+                    a.setTitulo_Superior(rs.getString("alumno_titulo_superior"));
+                }
+                if (rs.wasNull()) {
+                    a.setNivel_Academico("|SELECCIONE|");
+                } else {
+                    a.setNivel_Academico(rs.getString("alumno_nivel_academico"));
+                }
+                if (rs.wasNull()) {
+                    a.setPension(false);
+                } else {
+                    a.setPension(rs.getBoolean("alumno_pension"));
+                }
+                if (rs.wasNull()) {
+                    a.setOcupacion(null);
+                } else {
+                    a.setOcupacion(rs.getString("alumno_ocupacion"));
+                }
+                if (rs.wasNull()) {
+                    a.setTrabaja(false);
+                } else {
+                    a.setTrabaja(rs.getBoolean("alumno_trabaja"));
+                }
+                if (rs.wasNull()) {
+                    a.setFormacion_Padre("|SELECCIONE|");
+                } else {
+                    a.setFormacion_Padre(rs.getString("alumno_nivel_formacion_padre"));
+                }
+                if (rs.wasNull()) {
+                    a.setFormacion_Madre("|SELECCIONE|");
+                } else {
+                    a.setFormacion_Madre(rs.getString("alumno_nivel_formacion_madre"));
+                }
+                if (rs.wasNull()) {
+                    a.setContacto_Emergencia(null);
+                } else {
+                    a.setContacto_Emergencia(rs.getString("alumno_numero_contacto"));
+                }
+                if (rs.wasNull()) {
+                    a.setParentesco_Contacto("|SELECCIONE|");
+                } else {
+                    a.setParentesco_Contacto(rs.getString("alumno_parentesco_contacto"));
+                }
+                if (rs.wasNull()) {
+                    a.setNom_Contacto(null);
+                } else {
+                    a.setNom_Contacto(rs.getString("alumno_nombre_contacto_emergencia"));
+                }
+            }
+            rs.close();
+            return a;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public AlumnoMD buscarPersonaxCedula(String cedula) {
+        String sql = "SELECT p.id_persona, p.persona_identificacion, p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre, p.persona_primer_apellido, p.persona_segundo_apellido,\n"
+                + "a.id_alumno, a.id_sec_economico, a.alumno_tipo_colegio, a.alumno_tipo_bachillerato,\n"
+                + "a.alumno_anio_graduacion, a.alumno_educacion_superior, a.alumno_titulo_superior, a.alumno_nivel_academico,\n"
+                + "a.alumno_pension, a.alumno_ocupacion, a.alumno_trabaja, a.alumno_nivel_formacion_padre, a.alumno_nivel_formacion_madre,\n"
+                + "a.alumno_numero_contacto, a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto\n"
+                + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
+                + "WHERE p.persona_identificacion LIKE '" + cedula + "' AND a.alumno_activo = true AND p.persona_activa = true;";
+        ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
             

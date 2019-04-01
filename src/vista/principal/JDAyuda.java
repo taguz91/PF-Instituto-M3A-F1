@@ -1,5 +1,6 @@
 package vista.principal;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -27,6 +28,14 @@ public class JDAyuda extends javax.swing.JDialog {
         return lblTitulo;
     }
 
+    public JButton getBtnAyudaG16() {
+        return btnAyudaG16;
+    }
+
+    public JButton getBtnAyudaG23() {
+        return btnAyudaG23;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +51,7 @@ public class JDAyuda extends javax.swing.JDialog {
         pnlContenedor = new javax.swing.JPanel();
         pnlNavegacion = new javax.swing.JPanel();
         btnAyudaG23 = new javax.swing.JButton();
+        btnAyudaG16 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ayuda");
@@ -79,7 +89,7 @@ public class JDAyuda extends javax.swing.JDialog {
         btnAyudaG23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAyudaG23.setForeground(new java.awt.Color(255, 255, 255));
         btnAyudaG23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/LogoG23.png"))); // NOI18N
-        btnAyudaG23.setText("CRUD");
+        btnAyudaG23.setText("Crud");
         btnAyudaG23.setBorder(null);
         btnAyudaG23.setBorderPainted(false);
         btnAyudaG23.setContentAreaFilled(false);
@@ -89,6 +99,20 @@ public class JDAyuda extends javax.swing.JDialog {
         btnAyudaG23.setMargin(new java.awt.Insets(4, 14, 2, 14));
         btnAyudaG23.setOpaque(true);
 
+        btnAyudaG16.setBackground(new java.awt.Color(51, 51, 51));
+        btnAyudaG16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAyudaG16.setForeground(new java.awt.Color(255, 255, 255));
+        btnAyudaG16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/LogoG16.png"))); // NOI18N
+        btnAyudaG16.setText("Users");
+        btnAyudaG16.setBorder(null);
+        btnAyudaG16.setBorderPainted(false);
+        btnAyudaG16.setContentAreaFilled(false);
+        btnAyudaG16.setFocusPainted(false);
+        btnAyudaG16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnAyudaG16.setIconTextGap(5);
+        btnAyudaG16.setMargin(new java.awt.Insets(4, 14, 2, 14));
+        btnAyudaG16.setOpaque(true);
+
         javax.swing.GroupLayout pnlNavegacionLayout = new javax.swing.GroupLayout(pnlNavegacion);
         pnlNavegacion.setLayout(pnlNavegacionLayout);
         pnlNavegacionLayout.setHorizontalGroup(
@@ -96,11 +120,14 @@ public class JDAyuda extends javax.swing.JDialog {
             .addGroup(pnlNavegacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAyudaG23, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAyudaG16, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlNavegacionLayout.setVerticalGroup(
             pnlNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnAyudaG23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAyudaG16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,6 +153,7 @@ public class JDAyuda extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAyudaG16;
     private javax.swing.JButton btnAyudaG23;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

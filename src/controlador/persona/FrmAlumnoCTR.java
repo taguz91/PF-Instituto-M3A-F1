@@ -68,7 +68,8 @@ public class FrmAlumnoCTR {
     }
 
     public void iniciar() {
-        CmbValidar combo_TipoColegio = new CmbValidar(frmAlumno.getCmBx_TipoColegio(), frmAlumno.getLbl_ErrTipColegio());
+        //Validaciones de los Combo Box
+        CmbValidar combo_TipoColegio = new CmbValidar(frmAlumno.getCmBx_TipoColegio(), frmAlumno.getLbl_ErrTipColegio()); 
         CmbValidar combo_TipoBachi = new CmbValidar(frmAlumno.getCmBx_TipoBachillerato(), frmAlumno.getLbl_ErrTipBachillerato());
         CmbValidar combo_NivAcade = new CmbValidar(frmAlumno.getCmBx_NvAcademico(), frmAlumno.getLbl_ErrNvAcademico());
         CmbValidar combo_SectEcono = new CmbValidar(frmAlumno.getCmBx_SecEconomico(), frmAlumno.getLbl_ErrSecEconomico());
@@ -187,11 +188,12 @@ public class FrmAlumnoCTR {
             }
         };
 
-        iniciaDatos();
-        habilitarGuardar();
-        iniciarSectores();
-        iniciarAnios();
+        iniciaDatos(); //Captura los datos en Listas para su utilizacion
+        habilitarGuardar(); //Compara si es que lo componentes estan llenos para habilitar el Boton Guardar
+        iniciarSectores(); //Inserta los sectores existenten en el Combo Box
+        iniciarAnios(); //Se da un rango de años para insertar en el Formulario
         iniciarComponentes();
+        //Se añaden los eventos a los componentes
         frmAlumno.getCmBx_TipoColegio().addActionListener(combo_TipoColegio);
         frmAlumno.getCmBx_TipoColegio().addPropertyChangeListener(habilitar_Guardar);
         frmAlumno.getCmBx_TipoBachillerato().addActionListener(combo_TipoBachi);
@@ -221,17 +223,20 @@ public class FrmAlumnoCTR {
         ctrPrin.estadoCargaFrmFin("Alumno");
     }
 
+    //Muestra la ventana para visualizar los Alumnos registrado
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
         VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin, permisos);
         c.iniciar();
     }
 
+    //Captura los datos de Sectores en la Base de Datos
     public void iniciaDatos() {
         //Alumnos = bdAlumno.filtrarAlumno();
         Sectores = sectorE.capturarSectores();
     }
     
+    //Devuelve un boolean para verificar si existen errores en el formulario
     public boolean confirmarErrores(){
         boolean error = false;
         if(frmAlumno.getLbl_ErrCedula().isVisible() == false && 
@@ -253,6 +258,7 @@ public class FrmAlumnoCTR {
         return error;
     }
 
+    //Este método busca al estudiante ingresado por medio de la Cédula en el formulario
     public void buscarCedula() {
         if (cont == 1) {
 
@@ -274,8 +280,9 @@ public class FrmAlumnoCTR {
 
                 if (error == false) {
 
-                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-                    if (p.isEmpty()) {
+                    AlumnoMD alumno = bdAlumno.buscarPersonaxCedula(frmAlumno.getTxt_Cedula().getText());
+                    //List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+                    if (alumno.getIdentificacion() == null) {
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {
@@ -290,9 +297,10 @@ public class FrmAlumnoCTR {
                     } else {
                         Font negrita = new Font("Tahoma", Font.BOLD, 13);
                         frmAlumno.getTxt_Nombre().setFont(negrita);
-                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
-                                + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
-                        AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
+//                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
+//                                + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
+                        frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre() + " " + 
+                                alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                         habilitarGuardar();
 //                            System.out.println(p.get(0).getIdPersona());
                         if (alumno.getTipo_Colegio() == null) {
@@ -339,6 +347,7 @@ public class FrmAlumnoCTR {
         }
     }
 
+    //Muestra un mensaje de error de ingreso dependiendo del componente
     public void validarComponentes(String texto) {
         if (validar == 1) {
             if (modelo.validaciones.Validar.esLetras(texto) == false && texto.equals("") == false) {
@@ -379,6 +388,7 @@ public class FrmAlumnoCTR {
         }
     }
 
+    //Habilita el boton Guardar cuando los siguientes componentes NO estan vacios
     public void habilitarGuardar() {
 
         String titulo_Superior, nombre_Contacto, contacto_Emergencia, cedula, nombre;
@@ -409,6 +419,7 @@ public class FrmAlumnoCTR {
         }
     }
 
+    //La visibilidad de los errores permanecen ocultos
     public void iniciarComponentes() {
         frmAlumno.getLbl_ErrCedula().setVisible(false);
         frmAlumno.getLbl_ErrTipColegio().setVisible(false);
@@ -426,6 +437,7 @@ public class FrmAlumnoCTR {
         //frmAlumno.getBtn_Guardar().setEnabled(false);
     }
 
+    //Sirve para insertar un rango de años
     public void iniciarAnios() {
         SpinnerNumberModel s = new SpinnerNumberModel();
         s.setMinimum(1980);
@@ -435,14 +447,15 @@ public class FrmAlumnoCTR {
         frmAlumno.getSpnr_Anio().setValue(1980);
     }
 
+    //Inicia los Sectores extraídos de la Lista en el Combo box
     public void iniciarSectores() {
-//        List<SectorEconomicoMD> sector = sectorE.capturarSectores();
         for (int i = 0; i < Sectores.size(); i++) {
             frmAlumno.getCmBx_SecEconomico().addItem(Sectores.get(i).getDescrip_SecEconomico().toUpperCase());
         }
         frmAlumno.getCmBx_SecEconomico().addItem("NINGUNO");
     }
 
+    //Guarda o Edita al Alumno insertado dependiendo el boolean
     public void guardarAlumno() {
 
         if (editar == false && editar_2 == false) {
@@ -486,6 +499,7 @@ public class FrmAlumnoCTR {
         }
     }
 
+    //Inserta los datos extraídos del objeto personas en los componentes para su Edición
     public void editar(AlumnoMD persona) {
         editar = true;
         //El alumno que nos pasamos lo llenamos en el formulario  
@@ -516,6 +530,7 @@ public class FrmAlumnoCTR {
         habilitarGuardar();
     }
 
+    //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
         frmAlumno.getTxt_Cedula().setText("");
         frmAlumno.getTxt_Nombre().setText("");
@@ -536,6 +551,7 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_ConEmergency().setText("");
     }
 
+    //Se extraen los datos de los componentes insertado y los devuelve en un Objeto
     public AlumnoBD pasarDatos(AlumnoBD persona) {
         List<PersonaMD> user = new ArrayList();
         Integer sectorEco = null;

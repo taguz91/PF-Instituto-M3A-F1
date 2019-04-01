@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="0.8264462809917391"/>
-	<property name="ireport.x" value="684"/>
-	<property name="ireport.y" value="61"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
 	"Alumnos".id_alumno,
@@ -64,22 +64,22 @@ ORDER BY
 			<textField>
 				<reportElement x="327" y="142" width="37" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="124" y="142" width="41" height="20"/>
+				<reportElement x="146" y="142" width="41" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="234" y="65" width="223" height="20"/>
+				<reportElement x="260" y="65" width="223" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="124" y="65" width="97" height="20"/>
+				<reportElement x="146" y="65" width="97" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
@@ -88,7 +88,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1049" y="65" width="117" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="977" y="142" width="56" height="20"/>
@@ -98,7 +98,7 @@ ORDER BY
 				<text><![CDATA[Jornada:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="107" width="54" height="20"/>
+				<reportElement x="146" y="107" width="54" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
@@ -114,7 +114,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1170" y="65" width="164" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="569" y="55" width="331" height="20"/>
@@ -126,7 +126,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1063" y="107" width="300" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="260" y="142" width="52" height="20"/>
@@ -136,9 +136,9 @@ ORDER BY
 				<text><![CDATA[Paralelo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="203" y="107" width="366" height="20"/>
+				<reportElement x="260" y="107" width="366" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="977" y="107" width="72" height="20"/>
@@ -150,7 +150,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1049" y="142" width="214" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="977" y="65" width="56" height="20"/>
@@ -160,13 +160,17 @@ ORDER BY
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="178" y="142" width="25" height="20"/>
+				<reportElement x="200" y="142" width="25" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="176" width="1520" height="1"/>
 			</line>
+			<image>
+				<reportElement x="0" y="43" width="146" height="133"/>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -224,17 +228,17 @@ ORDER BY
 			<textField>
 				<reportElement x="557" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="657" y="0" width="163" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="820" y="0" width="158" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="820" y="0" width="158" height="20"/>
@@ -248,7 +252,7 @@ ORDER BY
 			<textField>
 				<reportElement x="457" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="457" y="0" width="100" height="20"/>
@@ -256,7 +260,7 @@ ORDER BY
 			<textField>
 				<reportElement mode="Opaque" x="978" y="0" width="100" height="20" backcolor="#FFCC99"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="978" y="0" width="100" height="20" backcolor="#FFFFFF"/>
@@ -274,12 +278,12 @@ ORDER BY
 			<textField>
 				<reportElement x="643" y="69" width="117" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="760" y="69" width="164" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="720" y="89" width="100" height="20"/>
@@ -294,7 +298,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
