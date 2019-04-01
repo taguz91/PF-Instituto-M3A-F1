@@ -265,9 +265,9 @@ public class PersonaBD extends PersonaMD {
     
     public boolean activarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
-                + "SET persona_activa='true'"
+                + "SET persona_activa = 'true'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
-
+        System.out.println("Cedula "+identificacion);
         if (conecta.nosql(sql) == null) {
             return true;
         } else {
