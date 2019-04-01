@@ -213,7 +213,6 @@ public class FrmPersonaCTR {
         }
     }
 
-    
     private void tipoID() {
         int pos = frmPersona.getCmbTipoId().getSelectedIndex();
         frmPersona.getTxtIdentificacion().setEnabled(false);
