@@ -350,7 +350,7 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
 //        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
 //        frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
-        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVNumeros(
+        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
                 frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
@@ -423,11 +423,11 @@ public class FrmPersonaCTR {
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
         //Correo = frmPersona.getTxtCorreo().getText();
         Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-        if (Discapacidad) {
-            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
-        }
+//        if (Discapacidad) {
+//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+//        }
         // Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
         // Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
         // Canton = frmPersona.getCmbCanton().getSelectedItem().toString();

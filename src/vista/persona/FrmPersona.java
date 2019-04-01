@@ -529,7 +529,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorCanton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 330, 280, -1));
 
         lblErrorCarnetConadis.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCarnetConadis.setText("Solo debe ingresar numeros");
+        lblErrorCarnetConadis.setText("Ingrese un número de carnet válido");
         getContentPane().add(lblErrorCarnetConadis, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 210, -1));
 
         lblErrorGenero.setForeground(new java.awt.Color(204, 0, 0));
