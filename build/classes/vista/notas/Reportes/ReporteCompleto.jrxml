@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.7513148009015855"/>
+	<property name="ireport.zoom" value="1.7715610000000195"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="288"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Alejandro\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\notas\\Reportes\\"]]></defaultValueExpression>
 	</parameter>
@@ -12,13 +12,13 @@
 	p_alu.persona_identificacion,
 	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as "APELLIDOS",
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
-	"AlumnoCurso".almn_curso_nt_1_parcial,
-	"AlumnoCurso".almn_curso_nt_examen_interciclo,
-	"AlumnoCurso".almn_curso_nt_2_parcial,
-	"AlumnoCurso".almn_curso_nt_examen_final,
-	"AlumnoCurso".almn_curso_nt_examen_supletorio,
+	ROUND("AlumnoCurso".almn_curso_nt_1_parcial, 1) AS "APORTE 1",
+	ROUND("AlumnoCurso".almn_curso_nt_examen_interciclo, 1) AS "INTERCICLO",
+	ROUND("AlumnoCurso".almn_curso_nt_2_parcial, 1) AS "APORTE 2",
+	ROUND("AlumnoCurso".almn_curso_nt_examen_final, 1) AS "EXAMEN FINAL",
+	ROUND("AlumnoCurso".almn_curso_nt_examen_supletorio, 1) AS "SUPLETORIO",
 	"AlumnoCurso".almn_curso_asistencia,
-	"AlumnoCurso".almn_curso_nota_final,
+	ROUND("AlumnoCurso".almn_curso_nota_final, 0) AS "NOTA FINAL",
 	"AlumnoCurso".almn_curso_estado,
 	"AlumnoCurso".almn_curso_num_faltas,
 	"Materias".materia_nombre, 
@@ -62,13 +62,13 @@ ORDER BY
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="APELLIDOS" class="java.lang.String"/>
 	<field name="NOMBRES" class="java.lang.String"/>
-	<field name="almn_curso_nt_1_parcial" class="java.math.BigDecimal"/>
-	<field name="almn_curso_nt_examen_interciclo" class="java.math.BigDecimal"/>
-	<field name="almn_curso_nt_2_parcial" class="java.math.BigDecimal"/>
-	<field name="almn_curso_nt_examen_final" class="java.math.BigDecimal"/>
-	<field name="almn_curso_nt_examen_supletorio" class="java.math.BigDecimal"/>
+	<field name="APORTE 1" class="java.math.BigDecimal"/>
+	<field name="INTERCICLO" class="java.math.BigDecimal"/>
+	<field name="APORTE 2" class="java.math.BigDecimal"/>
+	<field name="EXAMEN FINAL" class="java.math.BigDecimal"/>
+	<field name="SUPLETORIO" class="java.math.BigDecimal"/>
 	<field name="almn_curso_asistencia" class="java.lang.String"/>
-	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="NOTA FINAL" class="java.math.BigDecimal"/>
 	<field name="almn_curso_estado" class="java.lang.String"/>
 	<field name="almn_curso_num_faltas" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
@@ -86,7 +86,7 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="185" splitType="Stretch">
+		<band height="190" splitType="Stretch">
 			<staticText>
 				<reportElement x="182" y="65" width="97" height="20"/>
 				<textElement>
@@ -366,17 +366,17 @@ ORDER BY
 			<textField>
 				<reportElement mode="Opaque" x="516" y="0" width="100" height="20" backcolor="#CCFFCC"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_1_parcial}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APORTE 1}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="945" y="0" width="125" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_supletorio}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SUPLETORIO}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="845" y="0" width="100" height="20" backcolor="#F4F492"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_final}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EXAMEN FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="223" y="0" width="156" height="20"/>
@@ -386,7 +386,7 @@ ORDER BY
 			<textField>
 				<reportElement mode="Opaque" x="616" y="0" width="129" height="20" backcolor="#F4F492"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_examen_interciclo}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERCICLO}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="379" y="0" width="137" height="20"/>
@@ -396,12 +396,12 @@ ORDER BY
 			<textField>
 				<reportElement mode="Opaque" x="1170" y="0" width="100" height="20" backcolor="#FFCC99"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nota_final}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="745" y="0" width="100" height="20" backcolor="#CCFFCC"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_nt_2_parcial}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APORTE 2}.toString()]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="223" y="0" width="156" height="20"/>
@@ -463,10 +463,10 @@ ORDER BY
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="18" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="21" splitType="Stretch"/>
+		<band height="16" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="260" splitType="Stretch">
@@ -489,7 +489,7 @@ ORDER BY
 				<reportElement x="331" y="202" width="261" height="1"/>
 			</line>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1354" y="238" width="166" height="20"/>
+				<reportElement x="1354" y="218" width="166" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -514,7 +514,7 @@ ORDER BY
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="682" y="10" width="200" height="100"/>
+				<reportElement x="1306" y="0" width="200" height="100"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ReporteCompleto_PromedioCurso.jasper"]]></subreportExpression>
 			</subreport>
