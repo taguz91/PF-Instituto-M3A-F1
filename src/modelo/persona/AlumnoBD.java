@@ -157,6 +157,7 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
+        //System.out.println(sql);
         try {
             AlumnoMD a = new AlumnoMD();
             

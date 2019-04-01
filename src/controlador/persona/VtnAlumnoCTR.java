@@ -244,7 +244,7 @@ public class VtnAlumnoCTR {
                 PersonaBD extraer = new PersonaBD(conecta);
 
                 FrmPersona frmPersona = new FrmPersona();
-                PersonaMD persona = new PersonaMD();
+                PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                 ctrPers.iniciar();
