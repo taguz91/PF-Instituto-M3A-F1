@@ -15,6 +15,7 @@ ALTER TABLE public."UnidadSilabo" ADD COLUMN titulo_unidad TEXT NOT NULL;
 
 ALTER TABLE public."UnidadSilabo" DROP COLUMN estrategias_unidad;
 
+ALTER TABLE public."EvaluacionSilabo" ALTER COLUMN "valoracion" TYPE numeric(4, 1);
 
 --Grupo Diego
 

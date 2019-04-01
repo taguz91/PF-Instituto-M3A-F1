@@ -532,12 +532,12 @@ CREATE TABLE "UnidadSilabo" (
 CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
---	id_silabo integer NOT NULL,
 	id_unidad integer NOT NULL,
 	actividad character varying (50) NOT NULL,
 	id_tipo_actividad integer NOT NULL,
 	instrumento character varying (50) NOT NULL,
-	valoracion integer NOT NULL,
+	--valoracion integer NOT NULL,
+  valoracion numeric (4, 1) NOT NULL,
 	fecha_envio date NOT NULL,
 	fecha_presentacion date NOT NULL,
 
@@ -712,7 +712,7 @@ ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "usuarios_rolesUsuarios_fk"
 
 ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
     FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
-        ON DELETE CASCADE ON UPDATE CASCADE; 
+        ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
