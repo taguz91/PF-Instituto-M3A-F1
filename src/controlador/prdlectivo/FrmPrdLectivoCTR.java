@@ -34,12 +34,11 @@ public class FrmPrdLectivoCTR {
     private final VtnPrincipal vtnPrin;
     private final FrmPrdLectivo frmPrdLectivo;
     private final PeriodoLectivoBD bdPerLectivo;
-    private final ConectarDB conecta;
+    private final ConectarDB conecta; //Conexión con la Base de Datos
     private final VtnPrincipalCTR ctrPrin;
-    private boolean editar = false;
-    private int id_PeriodoLectivo;
-    private int cont = 1;
-    private List<CarreraMD> carreras;
+    private boolean editar = false; //Variable de edición, donde diferencia si que se edita o se guarda
+    private int id_PeriodoLectivo; //Recibe la ID de un Período Lectivo en específico
+    private List<CarreraMD> carreras; //Recibe los datos de las Carreras Ingresadas
 
     public FrmPrdLectivoCTR(VtnPrincipal vtnPrin, FrmPrdLectivo frmPrdLectivo, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -55,6 +54,7 @@ public class FrmPrdLectivoCTR {
         frmPrdLectivo.show();
     }
 
+    //Ejerce la funcionalidad de esta Ventana
     public void iniciar() {
 
         CmbValidar combo_Carreras = new CmbValidar(frmPrdLectivo.getCbx_Carreras(), frmPrdLectivo.getLbl_ErrCarrera());
@@ -112,6 +112,7 @@ public class FrmPrdLectivoCTR {
             }
         };
         
+        //Se aplican los métodos de inicialización
         iniciarDatos();
         iniciarCarreras();
         iniciarComponentes();
@@ -128,6 +129,7 @@ public class FrmPrdLectivoCTR {
                 habilitarGuardar();
             }
         });
+        //Asignación de Eventos a los componentes
         frmPrdLectivo.getBtn_Guardar().addActionListener(e -> guardarPeriodo());
         frmPrdLectivo.getBtn_Cancelar().addActionListener(Cancelar);
         frmPrdLectivo.getCbx_Carreras().addActionListener(combo_Carreras);
@@ -137,16 +139,19 @@ public class FrmPrdLectivoCTR {
         ctrPrin.estadoCargaFrmFin("Periodo lectivo");
     }
     
+    //Se capturan los datos de Carreras en la Lista
     public void iniciarDatos(){
         carreras = bdPerLectivo.capturarCarrera();
     }
 
+    //Se insertan los datos de la Lista en el Combo box
     public void iniciarCarreras() {
         for (int i = 0; i < carreras.size(); i++) {
             frmPrdLectivo.getCbx_Carreras().addItem(carreras.get(i).getNombre());
         }
     }
 
+    //Habilita el Botón Guardar si es que estan con datos lo componentes
     public void habilitarGuardar() {
         String carrera, nombre, observacion;
 
@@ -163,19 +168,17 @@ public class FrmPrdLectivoCTR {
 
     }
 
+    //Inicia los JDateChooser en la fecha actual
     public void iniciarFechas() {
 
         LocalDate fechaActual = LocalDate.now();
         Date fechaHoy = Date.from(fechaActual.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         
-//        Calendar calendario = Calendar.getInstance();
-//        calendario.clear();
-//        calendario.set(fechaActual.getYear(), fechaActual.getMonthValue() - 1, fechaActual.getDayOfMonth());
-        
         frmPrdLectivo.getJdc_FechaInicio().setDate(fechaHoy);
         frmPrdLectivo.getJdc_FechaFin().setDate(fechaHoy);
     }
 
+    //Inicializa ocultos los labels de error 
     public void iniciarComponentes() {
         frmPrdLectivo.getLbl_ErrCarrera().setVisible(false);
         frmPrdLectivo.getLbl_ErrNombre().setVisible(false);
@@ -186,10 +189,12 @@ public class FrmPrdLectivoCTR {
         frmPrdLectivo.getBtn_Guardar().setEnabled(false);
     }
     
+    //Convierte una Date en un LocalDate
     public LocalDate convertirDate(Date fecha){
         return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    //Guarda o Edita el Período Lectivo basándose en la variable boolean Local
     public void guardarPeriodo() {
 
         String carreras, nombre_Periodo, observacion, fecha_Inicio, fecha_Fin;
@@ -254,22 +259,11 @@ public class FrmPrdLectivoCTR {
         }
     }
 
+    //Pasa los datos a un objeto para Guardarlos en la Base de Datos
     public PeriodoLectivoMD pasarDatos(PeriodoLectivoMD periodo, CarreraMD carrera) {
-//        LocalDate fechaActual = LocalDate.now();
-//        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
-//        String fec_Inicio[] = date_Inicio.split("/");
-//        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
-//        String fec_Fin[] = date_Fin.split("/");
         
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
-//
-//        LocalDate fecha_Inicio = fechaActual;
-//        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
-//                Integer.parseInt(fec_Inicio[1]),
-//                Integer.parseInt(fec_Inicio[0]));
-//        LocalDate fecha_Fin = fechaActual;
-//        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
         periodo.setFecha_Inicio(dia_Inicio);
@@ -278,12 +272,14 @@ public class FrmPrdLectivoCTR {
         return periodo;
     }
 
+    //Reinicia los componentes sin datos
     public void reiniciarComponentes(FrmPrdLectivo vista) {
         vista.getCbx_Carreras().setSelectedItem("|SELECCIONE|");
         vista.getTxt_Nombre().setText("");
         vista.getTxtObservacion().setText("");
     }
 
+    //Extrae las iniciales de una palabra, usado para extraer las iniciales de las Carreras
     public String sacarIniciales(String palabra) {
         String nombre = "";
         String palabras[] = palabra.split(" ");
@@ -295,6 +291,7 @@ public class FrmPrdLectivoCTR {
         return nombre;
     }
 
+    //Extrae los datos de los objetos y los pasa a los componentes de un respectivo Período Lectivo
     public void editar(PeriodoLectivoMD mdPerLectivo, CarreraMD mdCarrera) {
         id_PeriodoLectivo = mdPerLectivo.getId_PerioLectivo();
         editar = true;

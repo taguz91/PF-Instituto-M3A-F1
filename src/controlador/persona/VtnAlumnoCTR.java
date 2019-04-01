@@ -37,9 +37,9 @@ public class VtnAlumnoCTR {
 
     private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
-    private final ConectarDB conecta;
+    private final ConectarDB conecta; //Conexión con la Base de Datos
     private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
+    private final RolMD permisos; //Rol que tiene el Usuario
 
     private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
@@ -86,8 +86,9 @@ public class VtnAlumnoCTR {
 
         };
 
-        ocultarAtributo();
-        llenarTabla();
+        ocultarAtributo(); //Oculta la Columna del Id de Persona
+        llenarTabla(); //LLena la tabla con los datos de los Alumnos registrados
+        //Asignación de eventos a los componentes de la Ventana
         vtnAlumno.getTxtBuscar().addKeyListener(kl);
         vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
@@ -104,6 +105,7 @@ public class VtnAlumnoCTR {
         ctrPrin.estadoCargaVtnFin("Alumnos");
     }
 
+    //Muestra el Formulario de Registro de Alumno
     public void abrirFrmAlumno() {
         frmAlumno = new FrmAlumno();
         ctrPrin.abrirFrmAlumno();
@@ -111,10 +113,12 @@ public class VtnAlumnoCTR {
         ctrPrin.cerradoJIF();
     }
 
+    //Oculta la columna del Id de Persona
     public void ocultarAtributo() {
         modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
     }
 
+    //Rellena con datos de los Estudiantes registrados en el Sistema
     public void llenarTabla() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
@@ -136,6 +140,7 @@ public class VtnAlumnoCTR {
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
 
+    //Filtra los datos de los Alumnos buscados ya sea por su Cédula o por su Nombres
     public void buscaIncremental(String aguja) {
         boolean numero = true;
         if (modelo.validaciones.Validar.esNumeros(aguja) == true) {
@@ -206,6 +211,7 @@ public class VtnAlumnoCTR {
         }
     }
 
+    //Captura los datos del Alumno en un objeto
     public AlumnoMD capturarFila() {
         int i = vtnAlumno.getTblAlumno().getSelectedRow();
         if (i >= 0) {
@@ -218,6 +224,7 @@ public class VtnAlumnoCTR {
         }
     }
 
+    //Muestra el formulario de Alumno con los datos de algún Alumno seleccionado y permite su edición
     public void editarAlumno() {
         AlumnoMD al = capturarFila();
         if (al != null) {
@@ -231,17 +238,19 @@ public class VtnAlumnoCTR {
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
                 PersonaBD extraer = new PersonaBD(conecta);
 
                 FrmPersona frmPersona = new FrmPersona();
-                PersonaMD persona = new PersonaMD();
+                PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             }
         } else {
@@ -250,6 +259,7 @@ public class VtnAlumnoCTR {
 
     }
 
+    //Permite la eliminación de algún Alumno seleccionado en la tabla
     public void eliminarAlumno() {
         AlumnoMD alumno = new AlumnoMD();
         if (capturarFila() == null) {
@@ -273,6 +283,7 @@ public class VtnAlumnoCTR {
         }
     }
 
+    //Muestra los reportes con todos los Alumnos registrados
     public void llamaReporteAlumno() {
         JasperReport jr;
         String path = "./src/vista/reportes/repAlumnos.jasper";

@@ -94,6 +94,7 @@ public class UsuarioBD extends UsuarioMD {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
 
         return lista;
@@ -118,9 +119,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
-        
-        
-        
+
         return selectFromView(SELECT);
     }
 
@@ -162,7 +161,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username DESC";
+                + "\"public\".\"Usuarios_Persona\".usu_username";
 
         List<UsuarioMD> lista = selectFromView(SELECT);
 
@@ -170,6 +169,7 @@ public class UsuarioBD extends UsuarioMD {
 
         for (UsuarioMD usuarioMD : lista) {
             username = usuarioMD.getUsername();
+            System.out.println(username);
         }
         String inicio = "USER-";
 
