@@ -2,15 +2,33 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ca20592-755c-4f93-9ad6-db236b9afe9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="892"/>
+	<property name="ireport.y" value="783"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="id_silabo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select  c.id_carrera, m.materia_codigo, m.materia_nombre,m.materia_descripcion,m.materia_objetivo,m.materia_objetivo_especifico,m.materia_organizacion_curricular,m.materia_campo_formacion,m.materia_horas_docencia,m.materia_horas_practicas,m.materia_horas_auto_estudio,m.materia_horas_docencia/18 as horas_sem_docen,m.materia_horas_practicas/18  as horas_sem_prac, m.materia_horas_auto_estudio/18 as horas_sem_auto ,m.materia_total_horas, c.carrera_nombre,c.carrera_modalidad,m.materia_horas_practicas/18+m.materia_horas_docencia/18+m.materia_horas_auto_estudio/18 as horas_semanales from "Materias" m,"Carreras" c where m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
+		<![CDATA[select  
+case m.materia_ciclo 
+when 1 then 'PRIMERO'
+when 2 then 'SEGUNDO'
+when 3 then 'TERCERO'
+WHEN 4 THEN 'CUARTO'
+WHEN 5 THEN 'QUINTO'
+WHEN 6 THEN 'SEXTO'
+end as ciclo
+,c.id_carrera,m.materia_codigo, m.materia_nombre,m.materia_descripcion,
+m.materia_objetivo,m.materia_objetivo_especifico,m.materia_organizacion_curricular,
+m.materia_campo_formacion,m.materia_horas_docencia,m.materia_horas_practicas,
+m.materia_horas_auto_estudio,m.materia_horas_docencia/18 as horas_sem_docen,
+m.materia_horas_practicas/18  as horas_sem_prac, current_date,
+m.materia_horas_auto_estudio/18 as horas_sem_auto ,m.materia_total_horas, c.carrera_nombre,
+c.carrera_modalidad,m.materia_horas_practicas/18+m.materia_horas_docencia/18+m.materia_horas_auto_estudio/18 
+as horas_semanales from "Materias" m,"Carreras" c where 
+m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 	</queryString>
+	<field name="ciclo" class="java.lang.String"/>
 	<field name="id_carrera" class="java.lang.Integer"/>
 	<field name="materia_codigo" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
@@ -24,6 +42,7 @@
 	<field name="materia_horas_auto_estudio" class="java.lang.Integer"/>
 	<field name="horas_sem_docen" class="java.lang.Integer"/>
 	<field name="horas_sem_prac" class="java.lang.Integer"/>
+	<field name="current_date" class="java.sql.Date"/>
 	<field name="horas_sem_auto" class="java.lang.Integer"/>
 	<field name="materia_total_horas" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -47,18 +66,11 @@
 	<detail>
 		<band height="271" splitType="Stretch">
 			<staticText>
-				<reportElement x="274" y="0" width="172" height="20" uuid="5283ae9e-83bf-4b40-b315-fcebe445b0ca"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[NOV-ABRIL]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="125" y="0" width="149" height="20" uuid="a3ac7391-1734-47d2-93a6-e04130d5ec17"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Período Académico:]]></text>
+				<text><![CDATA[Período Académico: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="166" width="163" height="20" forecolor="#006699" uuid="eff31eda-a705-4cbc-99aa-6a3694935458"/>
@@ -140,6 +152,7 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textFieldExpression><![CDATA[$F{ciclo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="55" width="535" height="20" uuid="decbdab8-0120-408f-9656-28929c85a49b"/>
@@ -296,10 +309,18 @@
 				</box>
 				<textFieldExpression><![CDATA[$F{materia_total_horas}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="274" y="0" width="200" height="20" uuid="a8b31c20-c74a-4f27-be42-b91e17c05669"/>
+				<subreportParameter name="ID_MATERIA">
+					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PERIODO_LECTIVO.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
-		<band height="499">
+		<band height="427">
 			<textField>
-				<reportElement x="10" y="30" width="535" height="180" uuid="2d07163e-8542-401d-9a3c-6cde29f1cef9"/>
+				<reportElement x="10" y="30" width="535" height="118" uuid="2d07163e-8542-401d-9a3c-6cde29f1cef9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -310,14 +331,14 @@
 				<textFieldExpression><![CDATA[$F{materia_descripcion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="215" width="211" height="20" forecolor="#006699" uuid="f7cdb778-c777-4cbf-8b40-1343d873a861"/>
-				<textElement>
+				<reportElement x="10" y="148" width="211" height="20" forecolor="#006699" uuid="f7cdb778-c777-4cbf-8b40-1343d873a861"/>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[3.OBJETIVO DE LA ASIGNATURA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="10" y="332" width="535" height="167" uuid="f9c8aa2a-63c7-4c86-9e5d-9d54bd077281"/>
+				<reportElement x="10" y="260" width="535" height="167" uuid="f9c8aa2a-63c7-4c86-9e5d-9d54bd077281"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -328,14 +349,14 @@
 				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="37" y="312" width="168" height="20" forecolor="#006699" uuid="9e1f8731-0159-48e3-a3a8-beb22033d7b5"/>
-				<textElement>
+				<reportElement x="38" y="240" width="168" height="20" forecolor="#006699" uuid="9e1f8731-0159-48e3-a3a8-beb22033d7b5"/>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[3.1. OBJETIVOS ESPECIFICOS]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="10" y="235" width="535" height="72" uuid="73890504-0e9c-434f-ab84-cbacda9a5903"/>
+				<reportElement x="10" y="168" width="535" height="72" uuid="73890504-0e9c-434f-ab84-cbacda9a5903"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -426,9 +447,9 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "linkografia.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="56">
 			<subreport>
-				<reportElement x="0" y="0" width="520" height="50" uuid="062463f4-238f-4529-ba1c-170c0cbea494"/>
+				<reportElement x="0" y="6" width="520" height="50" uuid="062463f4-238f-4529-ba1c-170c0cbea494"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -449,7 +470,4 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

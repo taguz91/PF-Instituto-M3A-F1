@@ -8,8 +8,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select  distinct concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) from  "Cursos" c join "Jornadas" a on c.id_jornada=a.id_jornada where   
-c.id_docente=$P!{id_profe} and c.id_materia=$P!{id_materia}]]>
+		<![CDATA[select  distinct concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) from  "Cursos" c join "Jornadas" a on c.id_jornada=a.id_jornada where   c.id_docente=$P!{id_profe} and c.id_materia=$P!{id_materia}]]>
 	</queryString>
 	<field name="concat" class="java.lang.String"/>
 	<background>
@@ -19,6 +18,13 @@ c.id_docente=$P!{id_profe} and c.id_materia=$P!{id_materia}]]>
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="20" uuid="5f73bb8d-f9f0-48b5-82b9-0f106d340830"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{concat}]]></textFieldExpression>
 			</textField>

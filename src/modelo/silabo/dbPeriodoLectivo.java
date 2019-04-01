@@ -23,15 +23,19 @@ public class dbPeriodoLectivo extends PeriodoLectivoMD {
 
     pgConect con = new pgConect();
 
-    public List<PeriodoLectivoMD> mostrarPeriodosSilabo() {
+    public List<PeriodoLectivoMD> mostrarPeriodosSilabo(int aguja) {
         try {
             List<PeriodoLectivoMD> lista = new ArrayList<>();
-            String sql = "SELECT \"PeriodoLectivo\".prd_lectivo_fecha_inicio,\"PeriodoLectivo\".prd_lectivo_fecha_fin\n"
-                    + "FROM \"Materias\",\"Silabo\",\"PeriodoLectivo\",\"Carreras\"\n"
-                    + "WHERE \"Materias\".id_materia=\"Silabo\".id_materia\n"
-                    + "AND \"Materias\".id_carrera=\"Carreras\".id_carrera\n"
-                    + "AND \"PeriodoLectivo\".id_carrera=\"Carreras\".id_carrera\n"
-                    + "AND \"PeriodoLectivo\".prd_lectivo_fecha_inicio>='2018-11-12';";
+            String sql = "SELECT DISTINCT \"PeriodoLectivo\".prd_lectivo_fecha_inicio,\"PeriodoLectivo\".prd_lectivo_fecha_fin \n"
+                + "FROM \"Materias\",\"Silabo\",\"PeriodoLectivo\",\"Carreras\",\"Cursos\",\"Docentes\",\"Personas\"\n"
+                + "WHERE \"Materias\".id_materia=\"Silabo\".id_materia\n"
+                + "AND \"Materias\".id_carrera =\"Carreras\".id_carrera\n"
+                + "AND \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n"
+                + "AND \"PeriodoLectivo\".prd_lectivo_fecha_fin>'2018-11-12'\n"
+                + "AND \"Personas\".id_persona="+aguja+"\n"
+                + "AND \"Materias\".id_materia=\"Cursos\".id_materia\n"
+                + "AND \"Personas\".id_persona=\"Docentes\".id_persona\n"
+                + "AND \"Cursos\".id_docente=\"Docentes\".id_docente";
             ResultSet rs = con.query(sql);
 
             while (rs.next()) {

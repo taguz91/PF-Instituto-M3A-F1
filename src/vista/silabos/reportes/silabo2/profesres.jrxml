@@ -33,20 +33,23 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="58" y="0" width="184" height="20" uuid="7ad991b0-8fc0-4743-9ddf-fc72072a260a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="242" y="0" width="189" height="20" uuid="5e45dfd7-f55a-4820-bfbc-cf51fec9f3d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="538" height="20" uuid="c27dfe09-76e4-466f-8346-48813e1ffa19"/>
-				<graphicElement>
-					<pen lineWidth="0.75"/>
-				</graphicElement>
-			</rectangle>
 			<subreport>
-				<reportElement x="431" y="0" width="107" height="20" uuid="7982d169-b37b-4a84-bd0f-ef4e629914dd"/>
+				<reportElement x="431" y="0" width="107" height="20" uuid="06427b45-dd2d-498b-9d51-9103a9fc0833"/>
 				<subreportParameter name="id_profe">
 					<subreportParameterExpression><![CDATA[$F{id_docente}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -56,6 +59,12 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cursos.jasper"]]></subreportExpression>
 			</subreport>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="431" height="20" uuid="6f1321ac-1021-4891-8b78-80e40c2b3ab2"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 	</detail>
 </jasperReport>

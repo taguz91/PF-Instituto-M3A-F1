@@ -45,7 +45,7 @@
 	<detail>
 		<band height="100" splitType="Stretch">
 			<subreport>
-				<reportElement isPrintRepeatedValues="false" x="294" y="0" width="241" height="100" uuid="fb024136-1e9b-4fb8-ba3c-8dd4fe4f82f2"/>
+				<reportElement isPrintRepeatedValues="false" x="280" y="0" width="241" height="100" uuid="fb024136-1e9b-4fb8-ba3c-8dd4fe4f82f2"/>
 				<subreportParameter name="ID_CARR">
 					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -53,7 +53,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador_aprobacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="0" width="248" height="100" uuid="ae39316a-2ac1-41c9-8725-eece8121ab26"/>
+				<reportElement x="3" y="0" width="248" height="100" uuid="ae39316a-2ac1-41c9-8725-eece8121ab26"/>
 				<subreportParameter name="ID_MATERIA_APRO">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
