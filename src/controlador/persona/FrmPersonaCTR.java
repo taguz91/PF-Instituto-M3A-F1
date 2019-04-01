@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -187,7 +186,7 @@ public class FrmPersonaCTR {
 
                 PersonaMD per = persona.existePersona(cedula);
                 editar = true;
-                System.out.println("activo " + per.isPersonaActiva());
+//                System.out.println("activo " + per.isPersonaActiva());
                 if (per.isPersonaActiva() == false) {
                     int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                     int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
