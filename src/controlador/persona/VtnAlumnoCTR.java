@@ -238,6 +238,7 @@ public class VtnAlumnoCTR {
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
                 PersonaBD extraer = new PersonaBD(conecta);
@@ -249,6 +250,7 @@ public class VtnAlumnoCTR {
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 vtnAlumno.dispose();
+                ctrPrin.cerradoJIF();
 
             }
         } else {
