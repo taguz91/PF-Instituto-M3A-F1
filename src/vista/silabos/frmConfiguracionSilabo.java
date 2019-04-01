@@ -5,6 +5,7 @@
  */
 package vista.silabos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -21,6 +22,8 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
      */
     public frmConfiguracionSilabo() {
         initComponents();
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     
@@ -125,7 +128,6 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
-        setMaximizable(true);
         setResizable(true);
 
         lblAsignatura.setText("Asignatura");

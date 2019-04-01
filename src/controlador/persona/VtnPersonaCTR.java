@@ -212,6 +212,10 @@ public class VtnPersonaCTR {
         }
     }
 
+    private void activarPersona(){
+        
+    }
+    
     private void eliminar() {
         int posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {

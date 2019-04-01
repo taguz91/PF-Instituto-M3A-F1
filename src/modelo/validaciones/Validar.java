@@ -107,7 +107,7 @@ public class Validar {
     }
 
     public static boolean esNota(String entrada) {
-        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}");
+        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,2}") || entrada.matches("[0-9]{1,3}");
     }
 
     public static boolean esNumCasa(String entrada) {
