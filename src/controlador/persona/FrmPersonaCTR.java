@@ -184,14 +184,14 @@ public class FrmPersonaCTR {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
 
-                PersonaMD per = persona.buscarPersona(cedula);
+                PersonaMD per = persona.existePersona(cedula);
                 editar = true;
-
-                if (per != null) {
+//                System.out.println("activo " + per.isPersonaActiva());
+                if (per.isPersonaActiva() == false) {
                     int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada, desea Activarla ? ", " Activar Persona", dialog);
+                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
                     if (result == 0) {
-                        if (persona.activarPersonaIdentificacion(persona.getIdentificacion()) == true) {
+                        if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
                             JOptionPane.showMessageDialog(null, "Persona activada correctamente");
                             editar(per);
                         } else {
