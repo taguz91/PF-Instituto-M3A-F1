@@ -85,7 +85,7 @@ public class LoginCTR {
         if (c.equalsIgnoreCase("J")) {
             vista.getTxtUsername().setText("JHONNY");
             vista.getTxtPassword().setText("ROOT");
-        }else if(c.equalsIgnoreCase("R")){
+        } else if (c.equalsIgnoreCase("R")) {
             vista.getTxtUsername().setText("ROOT");
             vista.getTxtPassword().setText("ROOT");
         }
@@ -100,23 +100,30 @@ public class LoginCTR {
         USERNAME = vista.getTxtUsername().getText();
         PASSWORD = vista.getTxtPassword().getText();
 
-        List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+        try {
+            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
-        if (!Lista.isEmpty()) {
+            if (!Lista.isEmpty()) {
 
-            modelo.setPersona(Lista.get(0).getPersona());
+                modelo.setPersona(Lista.get(0).getPersona());
 
-            vista.dispose();
+                vista.dispose();
 
-            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
+                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
 
-            // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
-            vtn.Init();
+                // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
+                vtn.Init();
 
-        } else {
+            } else {
+                vista.getLblAvisos().setVisible(true);
+                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+            }
+
+        } catch (NullPointerException e) {
             vista.getLblAvisos().setVisible(true);
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
         }
+
     }
 
     private void LoginGenerico() {

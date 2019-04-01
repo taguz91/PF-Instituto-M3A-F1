@@ -164,12 +164,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND prd_lectivo_estado = true AND (\n"
+                + "prd_lectivo_activo = true AND (\n"
                 + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -182,7 +182,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 carrera.setCodigo(rs.getString("carrera_codigo"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 p.setCarrera(carrera);
-
+                
                 p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                 p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
