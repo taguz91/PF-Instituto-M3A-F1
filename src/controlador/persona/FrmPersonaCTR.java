@@ -162,19 +162,18 @@ public class FrmPersonaCTR {
 
     public void buscarIdentificacion() {
         errorCedula = false;
-        String cedula;
-        cedula = frmPersona.getTxtIdentificacion().getText();
+        String cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
             if (cedula.length() == 10) {
-                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+                if (!modelo.validaciones.Validar.esCedula(cedula)) {
                     errorCedula = true;
-                    frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
+                    frmPersona.getLblErrorIdentificacion().setText("Cédula incorrecta.");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
             } else if (cedula.length() < 10) {
                 errorCedula = true;
-                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
+                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números.");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
@@ -186,21 +185,22 @@ public class FrmPersonaCTR {
 
                 PersonaMD per = persona.existePersona(cedula);
                 editar = true;
-//                System.out.println("activo " + per.isPersonaActiva());
-                if (per.isPersonaActiva() == false) {
-                    int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
-                    if (result == 0) {
-                        if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
-                            JOptionPane.showMessageDialog(null, "Persona activada correctamente");
-                            editar(per);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                if (per != null) {
+                    if (per.isPersonaActiva() == false) {
+                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                        int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
+                        if (result == 0) {
+                            if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
+                                JOptionPane.showMessageDialog(null, "Persona activada correctamente");
+                                editar(per);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                            }
                         }
+                    } else if (per.isPersonaActiva()) {
+                        editar(per);
+                        numAccion = 2;
                     }
-                } else if (per.isPersonaActiva()) {
-                    editar(per);
-                    numAccion = 2;
                 } else {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
@@ -210,6 +210,7 @@ public class FrmPersonaCTR {
                 }
                 //Cambiamos el estado del mouse
                 vtnPrin.setCursor(new Cursor(0));
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
