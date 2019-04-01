@@ -69,7 +69,7 @@ public class VtnAlumnoCursoCTR {
     }
 
     public void iniciar() {
-        String titulo[] = {"Cedula", "Alumno", "Curso"};
+        String titulo[] = {"Cédula", "Alumno", "Curso"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnAlmnCurso.getTblAlumnoCurso());
