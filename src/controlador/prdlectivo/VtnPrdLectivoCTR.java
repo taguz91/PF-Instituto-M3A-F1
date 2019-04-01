@@ -75,7 +75,6 @@ public class VtnPrdLectivoCTR {
                 }else if(b.length() == 0){
                     llenarTabla();
                 }
-
             }
         };
 

@@ -237,7 +237,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-
                 p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = new CarreraMD();
