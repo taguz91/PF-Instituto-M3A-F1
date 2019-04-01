@@ -72,6 +72,8 @@ public class VtnPrdLectivoCTR {
                 String b = vtnPrdLectivo.getTxt_Buscar().getText().toUpperCase();
                 if (b.length() > 2) {
                     buscaIncremental(b);
+                }else if(b.length() == 0){
+                    llenarTabla();
                 }
 
             }
@@ -154,7 +156,10 @@ public class VtnPrdLectivoCTR {
             for (int i = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; i >= 0; i--) {
                 modelo_Tabla.removeRow(i);
             }
+            
             List<PeriodoLectivoMD> lista = bdPerLectivo.capturarPeriodos(aguja);
+            System.out.println("Numero de resultados : "+lista.size());
+            
             int columnas = modelo_Tabla.getColumnCount();
             for (int i = 0; i < lista.size(); i++) {
                 modelo_Tabla.addRow(new Object[columnas]);
@@ -167,12 +172,12 @@ public class VtnPrdLectivoCTR {
                 dia_Fin = String.valueOf(lista.get(i).getFecha_Fin().getDayOfMonth());
                 mes_Fin = String.valueOf(lista.get(i).getFecha_Fin().getMonthValue());
                 anio_Fin = String.valueOf(lista.get(i).getFecha_Fin().getYear());
-                
-                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
-                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+//                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
+//                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+                nombre = lista.get(i).getNombre_PerLectivo();
                 
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getId_PerioLectivo(), i, 0);
-                vtnPrdLectivo.getTblPrdLectivo().setValueAt(bdPerLectivo.capturarNomCarrera(lista.get(i).getCarrera().getId()).getNombre(), i, 1);
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getCarrera().getNombre(), i, 1);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
@@ -187,7 +192,7 @@ public class VtnPrdLectivoCTR {
 
     //Filtra datos mediante una lista local, la cual contiene los Períodos Lectivo registrados
     public void busquedaNormal(String aguja) {
-
+        System.out.println("Se ejecuta la busqueda local");
         System.out.println("Entro");
         for (int i = 0; i < periodos.size(); i++) {
             if (periodos.get(i).getNombre_PerLectivo().contains(aguja.toUpperCase())
