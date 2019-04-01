@@ -71,6 +71,8 @@ public class VtnPrdLectivoCTR {
                 String b = vtnPrdLectivo.getTxt_Buscar().getText().toUpperCase();
                 if (b.length() > 2) {
                     buscaIncremental(b);
+                } else if(b.equals("")){
+                    llenarTabla();
                 }
 
             }
@@ -88,7 +90,7 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
         vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());
         //Validacion del buscador
-        vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(), 
+        vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(),
                 vtnPrdLectivo.getBtnBuscar()));
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -126,10 +128,10 @@ public class VtnPrdLectivoCTR {
             dia_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getDayOfMonth());
             mes_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getMonthValue());
             anio_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getYear());
-            
-            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
-                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
-            
+
+            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
+                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
@@ -164,10 +166,10 @@ public class VtnPrdLectivoCTR {
                 dia_Fin = String.valueOf(lista.get(i).getFecha_Fin().getDayOfMonth());
                 mes_Fin = String.valueOf(lista.get(i).getFecha_Fin().getMonthValue());
                 anio_Fin = String.valueOf(lista.get(i).getFecha_Fin().getYear());
-                
-                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
-                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
-                
+
+                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
+                        + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getId_PerioLectivo(), i, 0);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(bdPerLectivo.capturarNomCarrera(lista.get(i).getCarrera().getId()).getNombre(), i, 1);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
@@ -179,6 +181,7 @@ public class VtnPrdLectivoCTR {
             } else {
                 vtnPrdLectivo.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
             }
+
         }
     }
 
@@ -300,9 +303,9 @@ public class VtnPrdLectivoCTR {
             }
         }
     }
-    
+
     //Cierra un Período Lectivo en específico
-    public void cerrarPeriodo(){
+    public void cerrarPeriodo() {
         PeriodoLectivoMD periodo;
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "Seleccione un Período Lectivo");
