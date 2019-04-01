@@ -5,8 +5,11 @@
  */
 package controlador.silabo;
 
+import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -59,6 +62,7 @@ import modelo.tipoActividad.dbTipoActividad;
 import modelo.unidadSilabo.dbUnidadSilabo;
 
 import modelo.pgConect;
+import modelo.silabo.Silabo;
 import modelo.silabo.dbCarreras;
 import modelo.silabo.dbMaterias;
 import modelo.silabo.dbPeriodoLectivo;
@@ -109,7 +113,7 @@ public class ControladorSilaboCRUD {
 
     private List<ReferenciaSilabo> referenciasSilabo;
 
-    private List<MateriaMD> materiasSilabo;
+    private List<Silabo> materiasSilabo;
 
     private List<PeriodoLectivoMD> periodosSilabo;
 
@@ -127,7 +131,9 @@ public class ControladorSilaboCRUD {
 
     static List<UnidadSilabo> ul = new ArrayList<>();
 
-    boolean vineta, vineta_ = true;
+    boolean vineta;
+    
+    boolean vineta_;
 
     DefaultListModel<String> model3 = new DefaultListModel<>();
 
@@ -140,6 +146,8 @@ public class ControladorSilaboCRUD {
     JList list = new JList();
 
     boolean[] check = new boolean[0];
+    
+    int horas[] = new int[3];
 
     public ControladorSilaboCRUD() {
     }
@@ -184,8 +192,6 @@ public class ControladorSilaboCRUD {
     public frmSilabos getSilabos() {
         return silabos;
     }
-
-   
 
     public void iniciarControlador() {
 
@@ -256,6 +262,8 @@ public class ControladorSilaboCRUD {
 
             silabos.getBtnEditar().addActionListener(as);
             silabos.getBtnEliminar().addActionListener(d -> eliminarSilabo(id_silabo));
+            bibliografia.getBtnAtras().addActionListener(b->bibliografia.setVisible(false));
+             bibliografia.getBtnAtras().addActionListener(b->gestion.setVisible(true));
 
         }
 
@@ -263,6 +271,8 @@ public class ControladorSilaboCRUD {
             @Override
             public void mouseClicked(MouseEvent me) {
                 agregarUnidad();
+                JOptionPane.showMessageDialog(null, "Nueva unidad agregada");
+
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -293,7 +303,13 @@ public class ControladorSilaboCRUD {
             public void mouseClicked(MouseEvent me) {
 
                 if (gestion.getLblEliminarUnidad().isEnabled()) {
-                    eliminarUnidad();
+
+                    int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta unidad?", "Eliminar", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        eliminarUnidad();
+                        JOptionPane.showMessageDialog(null, "Unidad eliminada correctamente");
+
+                    }
 
                 }
 
@@ -301,6 +317,7 @@ public class ControladorSilaboCRUD {
             }
 
             @Override
+
             public void mousePressed(MouseEvent me) {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
@@ -398,6 +415,7 @@ public class ControladorSilaboCRUD {
             @Override
             public void mouseClicked(MouseEvent me) {
 
+                PlaceHolder holder = new PlaceHolder(gestion.getTxtNuevaEstrategia(), "Ingrese la nueva estrategia...");
                 gestion.getTxtNuevaEstrategia().setEnabled(true);
                 gestion.getLblGuardarEstrategia().setEnabled(true);
 
@@ -427,11 +445,12 @@ public class ControladorSilaboCRUD {
             public void propertyChange(PropertyChangeEvent pce) {
 
                 LocalDate fechaInicio = gestion.getDchFechaInicio().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-               
+
                 int j = gestion.getCmbUnidad().getSelectedIndex();
                 if (unidades.get(j).getFechaFinUnidad().isAfter(fechaInicio)) {
                     unidades.get(j).setFechaInicioUnidad(fechaInicio);
                 } else {
+                    JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser posterior a la fecha de fin", "Alerta", JOptionPane.WARNING_MESSAGE);
                     gestion.getDchFechaInicio().setDate(Date.from(unidades.get(j).getFechaFinUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
                 }
 
@@ -443,108 +462,242 @@ public class ControladorSilaboCRUD {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 LocalDate fechaFin = gestion.getDchFechaFin().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-               
+
                 int j = gestion.getCmbUnidad().getSelectedIndex();
                 if (unidades.get(j).getFechaInicioUnidad().isBefore(fechaFin)) {
                     unidades.get(j).setFechaFinUnidad(fechaFin);
                 } else {
+                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
+
                     gestion.getDchFechaFin().setDate(Date.from(unidades.get(j).getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
                 }
             }
 
         });
 
-        gestion.getBtnAgregarAD().addMouseListener(new MouseAdapter() {
+        gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void propertyChange(PropertyChangeEvent pce) {
+                LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                System.out.println("entra");
+                if (fechaPresentacion.isBefore(fechaEnvio)) {
 
-                String[] infoE = {"Gestión de Docencia", "Asistido por el Docente"};
-                agregarEvaluacion(infoE, 1);
-                limpiarEvaluacionesAD();
+                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
 
-            }
-        });
+                    gestion.getDchFechaPresentacionAD().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
 
-        gestion.getBtnQuitarAD().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-
-                int fila = gestion.getTblAsistidaDocente().rowAtPoint(me.getPoint());
-                quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
+                }
 
             }
 
         });
 
-        gestion.getBtnAgregarAC().addMouseListener(new MouseAdapter() {
+        gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void propertyChange(PropertyChangeEvent pce) {
+                LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                String[] infoE = {"Gestión de Docencia", "Aprendizaje Colaborativo"};
+                if (fechaPresentacion.isBefore(fechaEnvio)) {
 
-                agregarEvaluacion(infoE, 2);
-                limpiarEvaluacionesAC();
-            }
-        });
+                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
 
-        gestion.getBtnQuitarAC().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+                    gestion.getDchFechaPresentacionAD().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
 
-                int fila = gestion.getTblAprendizajeColaborativo().rowAtPoint(me.getPoint());
-                quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
+                }
 
             }
 
         });
 
-        gestion.getBtnAgregarP().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+        gestion.getBtnAgregarAD()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-                String[] infoE = {"Gestión de la Práctica", "Aprendizaje Colaborativo"};
+                        System.out.println("entra");
 
-                agregarEvaluacion(infoE, 3);
+                        String[] infoE = {"Gestión de Docencia", "Asistido por el Docente"};
+                        agregarEvaluacion(infoE, 1);
+                        limpiarEvaluacionesAD();
 
-                limpiarEvaluacionesP();
+                    }
+                }
+                );
 
-            }
-        });
+        gestion.getBtnQuitarAD()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-        gestion.getBtnQuitarP().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+                        int fila = gestion.getTblAsistidaDocente().rowAtPoint(me.getPoint());
+                        quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
 
-                int fila = gestion.getTblPractica().rowAtPoint(me.getPoint());
-                quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+                    }
 
-            }
+                }
+                );
 
-        });
+        gestion.getBtnAgregarAC()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-        gestion.getBtnAgregarA().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+                        String[] infoE = {"Gestión de Docencia", "Aprendizaje Colaborativo"};
 
-                String[] infoE = {"Gestión de Trabajo Autónomo", "Aprendizaje Colaborativo"};
-                agregarEvaluacion(infoE, 4);
+                        agregarEvaluacion(infoE, 2);
+                        limpiarEvaluacionesAC();
+                    }
+                }
+                );
 
-                limpiarEvaluacionesAD();
-            }
-        });
+        gestion.getBtnQuitarAC()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-        gestion.getBtnQuitarA().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+                        int fila = gestion.getTblAprendizajeColaborativo().rowAtPoint(me.getPoint());
+                        quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
 
-                int fila = gestion.getTblAutonoma().rowAtPoint(me.getPoint());
-                quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+                    }
 
-            }
+                }
+                );
 
-        });
+        gestion.getBtnAgregarP()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
+
+                        String[] infoE = {"Gestión de la Práctica", "Aprendizaje Colaborativo"};
+
+                        agregarEvaluacion(infoE, 3);
+
+                        limpiarEvaluacionesP();
+
+                    }
+                }
+                );
+
+        gestion.getBtnQuitarP()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
+
+                        int fila = gestion.getTblPractica().rowAtPoint(me.getPoint());
+                        quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+
+                    }
+
+                }
+                );
+
+        gestion.getBtnAgregarA()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
+
+                        String[] infoE = {"Gestión de Trabajo Autónomo", "Aprendizaje Colaborativo"};
+                        agregarEvaluacion(infoE, 4);
+
+                        limpiarEvaluacionesAD();
+                    }
+                }
+                );
+
+        gestion.getBtnQuitarA()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
+
+                        int fila = gestion.getTblAutonoma().rowAtPoint(me.getPoint());
+                        quitarEvaluacion(fila, (DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+
+                    }
+
+                }
+                );
+
+        gestion.getSpnHorasDocencia()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseExited(MouseEvent me
+                    ) {
+                        int total = 0;
+
+                        for (int i = 0; i < unidades.size(); i++) {
+                            total = total + unidades.get(i).getHorasDocenciaUnidad();
+
+                        }
+
+                        int limite = horas[0];
+
+                        System.out.println(limite);
+
+                        if (total > limite) {
+                            gestion.getSpnHorasDocencia().setValue((int) gestion.getSpnHorasDocencia().getValue() - (total - limite));
+                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión docente", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                        }
+                    }
+
+                }
+                );
+
+        gestion.getSpnHorasAutonomas()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseExited(MouseEvent me
+                    ) {
+                        int total = 0;
+
+                        for (int i = 0; i < unidades.size(); i++) {
+                            total = total + unidades.get(i).getHorasAutonomoUnidad();
+
+                        }
+
+                        int limite = horas[2];
+                        if (total > limite) {
+                            gestion.getSpnHorasAutonomas().setValue((int) gestion.getSpnHorasAutonomas().getValue() - (total - limite));
+                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión autonoma", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                        }
+                    }
+
+                }
+                );
+
+        gestion.getSpnHorasPracticas()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseExited(MouseEvent me
+                    ) {
+                        int total = 0;
+
+                        for (int i = 0; i < unidades.size(); i++) {
+                            total = total + unidades.get(i).getHorasPracticaUnidad();
+
+                        }
+
+                        int limite = horas[1];
+                        if (total > limite) {
+                            gestion.getSpnHorasPracticas().setValue((int) gestion.getSpnHorasPracticas().getValue() - (total - limite));
+                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión practica", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                        }
+                    }
+
+                }
+                );
 
         ActionListener val = new ActionListener() {
             @Override
@@ -554,6 +707,7 @@ public class ControladorSilaboCRUD {
 
                     gestion.setVisible(true);
                     bibliografia.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "No ha completado de manera correcta todos los campos requeridos", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     cargarBiblioteca();
                 }
@@ -562,7 +716,8 @@ public class ControladorSilaboCRUD {
 
         };
 
-        gestion.getBtnSiguiente().addActionListener(val);
+        gestion.getBtnSiguiente()
+                .addActionListener(val);
 
         ChangeListener cl = new ChangeListener() {
             @Override
@@ -591,76 +746,88 @@ public class ControladorSilaboCRUD {
 
         };
 
-        gestion.getSpnHorasDocencia().addChangeListener(cl);
-        gestion.getSpnHorasPracticas().addChangeListener(c2);
-        gestion.getSpnHorasAutonomas().addChangeListener(c3);
+        gestion.getSpnHorasDocencia()
+                .addChangeListener(cl);
+        gestion.getSpnHorasPracticas()
+                .addChangeListener(c2);
+        gestion.getSpnHorasAutonomas()
+                .addChangeListener(c3);
 
-        bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent ke) {
-                buscarBiblioteca(bibliografia.getTxtBuscar().getText());
-            }
+        bibliografia.getTxtBuscar()
+                .addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent ke
+                    ) {
+                        buscarBiblioteca(bibliografia.getTxtBuscar().getText());
+                    }
 
-        });
+                }
+                );
 
-        bibliografia.getTblBiblioteca().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+        bibliografia.getTblBiblioteca()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-                fila = bibliografia.getTblBiblioteca().rowAtPoint(me.getPoint());
+                        fila = bibliografia.getTblBiblioteca().rowAtPoint(me.getPoint());
 
-                System.out.println(fila);
-                //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
+                        System.out.println(fila);
+                        //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
 
-            }
+                    }
 
-        });
+                }
+                );
 
-        bibliografia.getBtnAgregarBibliografiaBase().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
+        bibliografia.getBtnAgregarBibliografiaBase()
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
-                /*for (int m = 0; m < referencias.size(); m++) {
+                        /*for (int m = 0; m < referencias.size(); m++) {
                     System.out.println(referencias.get(m).getIdReferencia()+"r");
                 }
                 
                 for (int m = 0; m < referenciasSilabo.size(); m++) {
                     System.out.println(referenciasSilabo.get(m).getIdReferencia().getIdReferencia());
                 }*/
-                boolean valido = true;
-                for (int i = 0; i < referencias.size(); i++) {
+                        boolean valido = true;
+                        for (int i = 0; i < referencias.size(); i++) {
 
-                    if (referencias.get(i).getCodigoReferencia().equals(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString())) {
+                            if (referencias.get(i).getCodigoReferencia().equals(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString())) {
 
-                        for (int m = 0; m < referenciasSilabo.size(); m++) {
+                                for (int m = 0; m < referenciasSilabo.size(); m++) {
 
-                            if (Objects.equals(referencias.get(i).getIdReferencia(), referenciasSilabo.get(m).getIdReferencia().getIdReferencia())) {
-                                valido = false;
-                                System.out.println("no paso filtro");
+                                    if (Objects.equals(referencias.get(i).getIdReferencia(), referenciasSilabo.get(m).getIdReferencia().getIdReferencia())) {
+                                        valido = false;
+                                        System.out.println("no paso filtro");
+                                    }
+                                }
+
+                                if (valido) {
+                                    referenciasSilabo.add(new ReferenciaSilabo(referencias.get(i)));
+                                    agregarBiblioBase();
+                                    System.out.println("paso filtro");
+
+                                }
+
                             }
-                        }
-
-                        if (valido) {
-                            referenciasSilabo.add(new ReferenciaSilabo(referencias.get(i)));
-                            agregarBiblioBase();
-                            System.out.println("paso filtro");
 
                         }
 
                     }
 
                 }
-
-            }
-
-        });
+                );
 
         bibliografia.getTxrBibliografiaComplementaria()
                 .addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent ke
                     ) {
-                        String a;
+                        String a=bibliografia.getTxrBibliografiaComplementaria().getText();
                         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
 
                             if (vineta) {
@@ -717,7 +884,7 @@ public class ControladorSilaboCRUD {
                     @Override
                     public void keyPressed(KeyEvent ke
                     ) {
-                        String a;
+                        String a=bibliografia.getTxrLinkografia().getText();
                         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
 
                             if (vineta_) {
@@ -757,13 +924,25 @@ public class ControladorSilaboCRUD {
         bibliografia.getBtnFinalizar()
                 .addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(MouseEvent me) {
+                    public void mouseClicked(MouseEvent me
+                    ) {
 
                         if (editar) {
+
+                            List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia().getDescripcionReferencia());
+
+                            old.add(new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia().getDescripcionReferencia()).get(0));
+
+                            referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
+
+                            for (int i = 0; i < old.size(); i++) {
+                                new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
+                            }
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
                             silabos.dispose();
+
                         }
                         guardarSilabo();
 
@@ -911,6 +1090,7 @@ public class ControladorSilaboCRUD {
                     CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i + 1);
                     item2.setSelected(check[i]);
                 }
+
             }
         } else {
 
@@ -960,6 +1140,7 @@ public class ControladorSilaboCRUD {
         }
 
         silabo.insertarDatos();
+
         insertarUnidades();
 
         insertarReferencias();
@@ -1046,6 +1227,12 @@ public class ControladorSilaboCRUD {
         referencias = new ArrayList<>();
         referenciasSilabo = new ArrayList<>();
 
+        MateriaMD m = new dbMaterias().retornaMateria(gestion.getTitle());
+        
+        horas[0]=m.getHorasDocencia();
+        horas[1]=m.getHorasPracticas();
+        horas[2]=m.getHorasAutoEstudio();
+        
         gestion.getCmbUnidad().removeAllItems();
 
         if (n_unidades == -1) {
@@ -1074,8 +1261,6 @@ public class ControladorSilaboCRUD {
             for (int i = 0; i < n_unidades; i++) {
                 agregarUnidad();
             }
-            
-            
 
         }
 
@@ -1216,7 +1401,7 @@ public class ControladorSilaboCRUD {
         estrategia.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
 
         if (estrategia.insertar()) {
-            JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
+            JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
         } else {
             JOptionPane.showMessageDialog(null, "Error al guardar.");
         }
@@ -1227,28 +1412,52 @@ public class ControladorSilaboCRUD {
 
         switch (p) {
             case 1:
-                evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Integer.parseInt(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
 
-                cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
+                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionAD().getValue().toString()))) {
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Integer.parseInt(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
 
                 break;
             case 2:
-                evaluaciones.add(new EvaluacionSilabo(gestion.getTblAprendizajeColaborativo().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAC().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAC().getText(), Integer.parseInt(gestion.getSpnValoracionAC().getValue().toString()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
 
-                cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
+                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionAC().getValue().toString()))) {
+
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAprendizajeColaborativo().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAC().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAC().getText(), Integer.parseInt(gestion.getSpnValoracionAC().getValue().toString()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
 
                 break;
             case 3:
-                evaluaciones.add(new EvaluacionSilabo(gestion.getTblPractica().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorP().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoP().getText(), Integer.parseInt(gestion.getSpnValoracionP().getValue().toString()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionP().getValue().toString()))) {
 
-                cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblPractica().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorP().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoP().getText(), Integer.parseInt(gestion.getSpnValoracionP().getValue().toString()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
 
                 break;
             case 4:
-                evaluaciones.add(new EvaluacionSilabo(gestion.getTblAutonoma().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorA().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoA().getText(), Integer.parseInt(gestion.getSpnValoracionA().getValue().toString()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionA().getValue().toString()))) {
 
-                cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAutonoma().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorA().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoA().getText(), Integer.parseInt(gestion.getSpnValoracionA().getValue().toString()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
 
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder el valor de 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
                 break;
         }
 
@@ -1428,8 +1637,8 @@ public class ControladorSilaboCRUD {
 
         modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
 
-        materiasSilabo = new dbMaterias().mostrarMateriasSilabo(usuario.getPersona().getIdPersona());
-        periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo();
+        materiasSilabo = new dbSilabo().mostrarSilabos(usuario.getPersona().getIdPersona());
+        periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo(usuario.getPersona().getIdPersona());
 
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -1438,8 +1647,9 @@ public class ControladorSilaboCRUD {
 
         for (int i = 0; i < materiasSilabo.size(); i++) {
             modeloTabla.addRow(new Object[]{
-                materiasSilabo.get(i).getNombre(),
-                periodosSilabo.get(i).getFecha_Inicio() + " / " + periodosSilabo.get(i).getFecha_Fin(),});
+                materiasSilabo.get(i).getIdMateria().getNombre(),
+                periodosSilabo.get(i).getFecha_Inicio() + " / " + periodosSilabo.get(i).getFecha_Fin(),
+                materiasSilabo.get(i).getEstadoSilabo(),});
 
         }
 
@@ -1452,12 +1662,12 @@ public class ControladorSilaboCRUD {
         //System.out.println(silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString());
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
-            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getNombre())
+            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
                     && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
                     && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
 
-                id_materia = materiasSilabo.get(i).getId();
-                gestion.setTitle(materiasSilabo.get(i).getNombre());
+                id_materia = materiasSilabo.get(i).getIdMateria().getId();
+                gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
 
             }
         }
@@ -1472,25 +1682,18 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            
+
+            System.out.println("Imprimiendo.......");
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
-           
-            Map<String,Object> parametro =new HashMap<String, Object>();
-            
-           
-            
-            //id_silabo = silabo.cod_sib();
-            System.out.println(id_silabo);
-           
+            Map parametro = new HashMap();
             String par = "47";
 
             parametro.put("parameter1", id_materia1);
             parametro.put("id_silabo", id_silabo1);
-            JasperPrint jp=JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
-            
-            JasperViewer.viewReport(jp, false);
-            
-            
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            JasperViewer pv = new JasperViewer(jp, false);
+            pv.setVisible(true);
+            pv.setTitle("Sílabo");
 
         } catch (Exception e) {
 
@@ -1504,12 +1707,12 @@ public class ControladorSilaboCRUD {
         //System.out.println(silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString());
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
-            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getNombre())
+            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
                     && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
                     && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
 
-                id_materia = materiasSilabo.get(i).getId();
-                gestion.setTitle(materiasSilabo.get(i).getNombre());
+                id_materia = materiasSilabo.get(i).getIdMateria().getId();
+                gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
 
             }
         }
@@ -1524,23 +1727,18 @@ public class ControladorSilaboCRUD {
         //Materias materia = nuevas.retornaMateria(item);
 
         try {
-            
-             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
-           
-            Map<String,Object> parametro =new HashMap<String, Object>();
-            
-           
-            
-            //id_silabo = silabo.cod_sib();
-            System.out.println(id_silabo);
-           
+
+            System.out.println("Imprimiendo.......");
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
+            Map parametro = new HashMap();
             String par = "47";
 
             parametro.put("parameter1", id_materia1);
             parametro.put("id_silabo", id_silabo1);
-            JasperPrint jp=JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
-            
-            JasperViewer.viewReport(jp, false);
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new pgConect().getCon());
+            JasperViewer pv = new JasperViewer(jp, false);
+            pv.setVisible(true);
+            pv.setTitle("Programa Analítico");
 
         } catch (Exception e) {
 
@@ -1555,12 +1753,12 @@ public class ControladorSilaboCRUD {
         //System.out.println(silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString());
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
-            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getNombre())
+            if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
                     && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
                     && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
 
-                id_materia = materiasSilabo.get(i).getId();
-                gestion.setTitle(materiasSilabo.get(i).getNombre());
+                id_materia = materiasSilabo.get(i).getIdMateria().getId();
+                gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
 
             }
         }
@@ -1656,7 +1854,7 @@ public class ControladorSilaboCRUD {
     }
 
     public boolean validarEvaluaciones() {
-        System.out.println("entro");
+
         int total = 0;
 
         for (int i = 0; i < evaluaciones.size(); i++) {
@@ -1666,6 +1864,24 @@ public class ControladorSilaboCRUD {
         }
 
         if (total == 60) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean validarLimiteEvaluaciones(int valor) {
+
+        int total = 0;
+
+        for (int i = 0; i < evaluaciones.size(); i++) {
+
+            total += evaluaciones.get(i).getValoracion();
+
+        }
+
+        if ((total + valor) <= 60) {
             return true;
         } else {
             return false;
@@ -1731,11 +1947,10 @@ public class ControladorSilaboCRUD {
 
         }
 
-        System.out.println(m.getHorasDocencia() + "-" + docencia);
+        /*System.out.println(m.getHorasDocencia() + "-" + docencia);
         System.out.println(m.getHorasPracticas() + "-" + practica);
-        System.out.println(m.getHorasAutoEstudio() + "-" + autonomo);
-
-        if (docencia == m.getHorasDocencia() && practica == m.getHorasPracticas() && autonomo == m.getHorasAutoEstudio()) {
+        System.out.println(m.getHorasAutoEstudio() + "-" + autonomo);*/
+        if (docencia == horas[0] && practica == horas[1] && autonomo == horas[2]) {
 
             return true;
 
@@ -1743,6 +1958,12 @@ public class ControladorSilaboCRUD {
             return false;
         }
     }
+
+    
+
+    
+
+   
 
     public boolean silaboValido() {
 
@@ -1753,5 +1974,31 @@ public class ControladorSilaboCRUD {
         }
 
     }
+    
+     /*public void buscarSilabo(String aguja, ) {
+
+        DefaultTableModel modeloTabla;
+
+        modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
+
+        materiasSilabo = new dbSilabo().mostrarSilabos(usuario.getPersona().getIdPersona());
+        periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo(usuario.getPersona().getIdPersona());
+
+        for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
+
+            modeloTabla.removeRow(j);
+        }
+
+        for (int i = 0; i < materiasSilabo.size(); i++) {
+            modeloTabla.addRow(new Object[]{
+                materiasSilabo.get(i).getIdMateria().getNombre(),
+                periodosSilabo.get(i).getFecha_Inicio() + " / " + periodosSilabo.get(i).getFecha_Fin(),
+                materiasSilabo.get(i).getEstadoSilabo(),});
+
+        }
+
+        silabos.getTblSilabos().setModel(modeloTabla);
+
+    }*/
 
 }

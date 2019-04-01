@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f49dec58-ab42-4f8e-9290-68edccba7dae">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="23"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from "Materias" where id_materia=$P!{parameter1}]]>
@@ -34,7 +34,7 @@
 	<detail>
 		<band height="554" splitType="Stretch">
 			<staticText>
-				<reportElement x="10" y="22" width="511" height="154" uuid="d04ea945-0e39-41b6-9eea-9f878a312fcb"/>
+				<reportElement x="10" y="22" width="533" height="154" uuid="d04ea945-0e39-41b6-9eea-9f878a312fcb"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -55,7 +55,7 @@
 ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="348" width="511" height="192" uuid="080c1b82-c86a-41cf-bf0f-ba5c300f454d"/>
+				<reportElement x="10" y="348" width="533" height="192" uuid="080c1b82-c86a-41cf-bf0f-ba5c300f454d"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -104,7 +104,7 @@ EVALUACION]]></text>
 				<text><![CDATA[PUNTAJE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="272" y="176" width="249" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="bc6b8ae2-5e50-419a-b830-65eff9f87320"/>
+				<reportElement mode="Opaque" x="272" y="176" width="271" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="bc6b8ae2-5e50-419a-b830-65eff9f87320"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -212,7 +212,7 @@ EVALUACION]]></text>
 				<text><![CDATA[30]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="207" width="249" height="40" uuid="04b20193-50b5-4707-8806-aa62ee4201c1"/>
+				<reportElement x="272" y="207" width="271" height="40" uuid="04b20193-50b5-4707-8806-aa62ee4201c1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -222,11 +222,10 @@ EVALUACION]]></text>
 				</box>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[Gestión en aula: Lecciones, participación, trabajos 
-en clase, Pruebas de Unidad, trabajos individuales y
- en grupo]]></text>
+en clase, Pruebas de Unidad, trabajos individuales y en grupo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="247" width="249" height="20" uuid="1f7a9155-c05e-432e-8ea5-ba8b10cbefe6"/>
+				<reportElement x="272" y="247" width="271" height="20" uuid="1f7a9155-c05e-432e-8ea5-ba8b10cbefe6"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -238,7 +237,7 @@ en clase, Pruebas de Unidad, trabajos individuales y
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="267" width="249" height="41" uuid="bdc1bb5f-ae15-4418-8447-db8630d35fd7"/>
+				<reportElement x="272" y="267" width="271" height="41" uuid="bdc1bb5f-ae15-4418-8447-db8630d35fd7"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -252,7 +251,7 @@ en clase, Pruebas de Unidad, trabajos individuales y
 en grupo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="308" width="249" height="20" uuid="d6c7f6c0-33f3-44fb-b133-9edec3e31ca4"/>
+				<reportElement x="272" y="308" width="271" height="20" uuid="d6c7f6c0-33f3-44fb-b133-9edec3e31ca4"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -288,7 +287,7 @@ en grupo]]></text>
 				<text><![CDATA[100]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="328" width="249" height="20" uuid="016f8ed0-7c2c-4446-8e6f-a5c57fe487cd"/>
+				<reportElement x="272" y="328" width="271" height="20" uuid="016f8ed0-7c2c-4446-8e6f-a5c57fe487cd"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>

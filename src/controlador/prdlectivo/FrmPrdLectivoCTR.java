@@ -216,7 +216,6 @@ public class FrmPrdLectivoCTR {
             } else {
                 frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
             }
-        
 
         if (error == true) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
@@ -256,22 +255,25 @@ public class FrmPrdLectivoCTR {
     }
 
     public PeriodoLectivoMD pasarDatos(PeriodoLectivoMD periodo, CarreraMD carrera) {
-        LocalDate fechaActual = LocalDate.now();
-        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
-        String fec_Inicio[] = date_Inicio.split("/");
-        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
-        String fec_Fin[] = date_Fin.split("/");
-
-        LocalDate fecha_Inicio = fechaActual;
-        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
-                Integer.parseInt(fec_Inicio[1]),
-                Integer.parseInt(fec_Inicio[0]));
-        LocalDate fecha_Fin = fechaActual;
-        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
+//        LocalDate fechaActual = LocalDate.now();
+//        String date_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
+//        String fec_Inicio[] = date_Inicio.split("/");
+//        String date_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
+//        String fec_Fin[] = date_Fin.split("/");
+        
+        LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
+        LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
+//
+//        LocalDate fecha_Inicio = fechaActual;
+//        fecha_Inicio = LocalDate.of(Integer.parseInt(20+fec_Inicio[2]),
+//                Integer.parseInt(fec_Inicio[1]),
+//                Integer.parseInt(fec_Inicio[0]));
+//        LocalDate fecha_Fin = fechaActual;
+//        fecha_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
-        periodo.setFecha_Inicio(fecha_Inicio);
-        periodo.setFecha_Fin(fecha_Fin);
+        periodo.setFecha_Inicio(dia_Inicio);
+        periodo.setFecha_Fin(dia_Fin);
         periodo.setObservacion_PerLectivo(frmPrdLectivo.getTxtObservacion().getText());
         return periodo;
     }

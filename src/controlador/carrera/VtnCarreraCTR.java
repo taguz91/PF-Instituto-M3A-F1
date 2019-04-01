@@ -117,12 +117,17 @@ public class VtnCarreraCTR {
             ctrFrmCarrera.editar(carreras.get(fila));
         }
     }
-    
+
     private void eliminarCarrera() {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
-            car.eliminarCarrera(carreras.get(fila).getId());
-            cargarCarreras();
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro que quiere eliminar \n"
+                    + vtnCarrera.getTblMaterias().getValueAt(fila, 2).toString() + "\n"
+                    + "No se podran recuperar los datos despues.");
+            if (r == JOptionPane.OK_OPTION) {
+                car.eliminarCarrera(carreras.get(fila).getId());
+                cargarCarreras();
+            }
         }
     }
 
@@ -153,9 +158,9 @@ public class VtnCarreraCTR {
                     mdTbl.addRow(valoresCD);
                 }
 
-            });            
+            });
         }
-        vtnCarrera.getLblResultados().setText(carreras.size()+" Resutados obtendidos.");
+        vtnCarrera.getLblResultados().setText(carreras.size() + " Resutados obtendidos.");
     }
 
     public void llamaReporteAlumnoCarrera() {
@@ -165,8 +170,9 @@ public class VtnCarreraCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
+             int posFila = vtnCarrera.getTblMaterias().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("alumnoCarrera", vtnCarrera.getTblMaterias().getSelectedRow() + 1);
+            parametro.put("alumnoCarrera", carreras.get(posFila).getId());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());

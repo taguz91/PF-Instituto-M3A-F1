@@ -1,10 +1,16 @@
 package controlador.curso;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -12,11 +18,18 @@ import modelo.accesos.AccesosMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
+import modelo.jornada.JornadaMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -43,6 +56,7 @@ public class VtnCursoCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
+   
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -97,6 +111,7 @@ public class VtnCursoCTR {
                 }
             }
         });
+      
         vtnCurso.getBtnBuscar().addActionListener(e -> buscar(vtnCurso.getTxtBuscar().getText().trim()));
         //Validacion del buscador 
         vtnCurso.getBtnBuscar().addKeyListener(new TxtVBuscador(vtnCurso.getTxtBuscar(),
@@ -104,6 +119,7 @@ public class VtnCursoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Cursos");
+          vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
         //ctrPrin.carga.detener();
     }
 
@@ -208,7 +224,31 @@ public class VtnCursoCTR {
             });
         }
     }
+  public void reporteListaAlumnos() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repListaAlumnos.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+             int posFila = vtnCurso.getTblCurso().getSelectedRow();
+            Map parametro = new HashMap();
+           // parametro.put("idDocente", cursos.get(posFila).getId_docente());
+            parametro.put("ciclo", cursos.get(posFila).getCurso_ciclo());
+            parametro.put("paralelo", vtnCurso.getCmbCurso().getSelectedItem());
+            parametro.put("periodo", periodos.get(posFila).getNombre_PerLectivo());
+            parametro.put("idDocente",cursos.get(posFila).getId_docente().getIdDocente());
+           // parametro.put("jornada", jornada.get(posFila).getNombre());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Lista de estudiantes");
 
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void cargarCmbCursos(ArrayList<String> nombresC) {
         vtnCurso.getCmbCurso().removeAllItems();
         if (nombresC != null) {
@@ -219,7 +259,7 @@ public class VtnCursoCTR {
             vtnCurso.getCmbCurso().setSelectedIndex(0);
         }
     }
-
+        
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

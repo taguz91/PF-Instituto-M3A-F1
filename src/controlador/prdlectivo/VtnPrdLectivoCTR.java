@@ -81,7 +81,7 @@ public class VtnPrdLectivoCTR {
         llenarTabla();
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(kl);
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
-        vtnPrdLectivo.getBtnEliminar().addActionListener(e -> eliminarPeriodo());
+        vtnPrdLectivo.getBtn_EliminarPL().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
         vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());
@@ -301,7 +301,7 @@ public class VtnPrdLectivoCTR {
             if (result == 0) {
                 periodo = capturarFila();
                 if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
-                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+                    JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
                     llenarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
