@@ -52,7 +52,7 @@ public class ResourceManager {
         }
 
 
-<<<<<<< HEAD
+
     /*JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
       USERNAME = "postgres";
         PASSWORD = "qwerty79";*/
