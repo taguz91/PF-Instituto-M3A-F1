@@ -100,7 +100,7 @@ public class FrmCursoCTR {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
             frmCurso.getCbxPeriodoLectivo().removeAllItems();
-            frmCurso.getCbxPeriodoLectivo().addItem("Seleccione");
+            frmCurso.getCbxPeriodoLectivo().addItem("Seleccioné");
             periodos.forEach((p) -> {
                 frmCurso.getCbxPeriodoLectivo().addItem(p.getNombre_PerLectivo());
             });
@@ -146,7 +146,7 @@ public class FrmCursoCTR {
     private void cargarCmbMaterias(ArrayList<MateriaMD> materias) {
         if (materias != null) {
             frmCurso.getCbxMateria().removeAllItems();
-            frmCurso.getCbxMateria().addItem("Seleccione");
+            frmCurso.getCbxMateria().addItem("Seleccioné");
             materias.forEach((m) -> {
                 frmCurso.getCbxMateria().addItem(m.getNombre());
             });
@@ -156,7 +156,7 @@ public class FrmCursoCTR {
     private void cargarCmbDocente(ArrayList<DocenteMD> docentes) {
         if (docentes != null) {
             frmCurso.getCbxDocente().removeAllItems();
-            frmCurso.getCbxDocente().addItem("Seleccione");
+            frmCurso.getCbxDocente().addItem("Seleccioné");
             docentes.forEach((d) -> {
                 frmCurso.getCbxDocente().addItem(d.getPrimerNombre() + " "
                         + d.getPrimerApellido());
@@ -168,7 +168,7 @@ public class FrmCursoCTR {
         jornadas = jd.cargarJornadas();
         if (jornadas != null) {
             frmCurso.getCbxJornada().removeAllItems();
-            frmCurso.getCbxJornada().addItem("Seleccione");
+            frmCurso.getCbxJornada().addItem("Seleccioné");
             jornadas.forEach((j) -> {
                 frmCurso.getCbxJornada().addItem(j.getNombre());
             });
@@ -225,7 +225,7 @@ public class FrmCursoCTR {
 
                 if (existeCurso != null) {
                     guardar = false;
-                    frmCurso.getLblError().setText("Ya guardo estos datos.");
+                    frmCurso.getLblError().setText("Datos ya guardados.");
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
@@ -236,7 +236,7 @@ public class FrmCursoCTR {
                         paralelo);
                 if (existeCurso != null) {
                     guardar = false;
-                    frmCurso.getLblError().setText("Ya guardo esta materia en el curso.");
+                    frmCurso.getLblError().setText("Este curso ya tiene guardado: "+materias.get(posMat - 1).getNombre()+".");
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
@@ -269,10 +269,6 @@ public class FrmCursoCTR {
                 }
             }
         }
-    }
-    
-    private void iniciarIngresoNotas(){
-        
     }
 
     public void editar(CursoMD c) {
