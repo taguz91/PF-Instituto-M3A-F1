@@ -11,6 +11,7 @@ import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraMD;
+import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
@@ -93,6 +94,8 @@ public class VtnPrdLectivoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Periodos lectivos");
+        //Le damos formato a la tabla
+        TblEstilo.formatoTbl(vtnPrdLectivo.getTblPrdLectivo());
     }
 
     //Permite visualizar el Formulario de Período Lectivo
