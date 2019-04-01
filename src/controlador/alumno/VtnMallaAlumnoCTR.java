@@ -36,7 +36,7 @@ public class VtnMallaAlumnoCTR {
     private final ConectarDB conecta;
     private final MallaAlumnoBD mallaAlm;
     private final VtnPrincipalCTR ctrPrin;
-    private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
+    private final String[] cmbEstado = {"Seleccioné", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
     private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
@@ -69,7 +69,7 @@ public class VtnMallaAlumnoCTR {
 
     public void iniciar() {
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Alumno", "Materia", "Estado", "Ciclo", "Matricula", "Nota 1", "Nota 2", "Nota 3"};
+        String titulo[] = {"id", "Alumno", "Materia", "Estado", "Ciclo", "Matrícula", "Nota 1", "Nota 2", "Nota 3"};
         String datos[][] = {};
         mdlTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnMallaAlm.getTblMallaAlumno());
@@ -215,7 +215,7 @@ public class VtnMallaAlumnoCTR {
             MallaAlumnoMD malla = mallas.get(pos);
             if (malla.getMallaNumMatricula() > 0) {
                 if (malla.getEstado().equals("C")) {
-                    JOptionPane.showMessageDialog(vtnPrin, "Ya tiene cursada esta materia no se puede ingresar nota");
+                    JOptionPane.showMessageDialog(vtnPrin, "Ya curso está materia, no se puede ingresar  una nota.");
                 } else {
                     String nota = JOptionPane.showInputDialog(
                             "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
@@ -223,12 +223,12 @@ public class VtnMallaAlumnoCTR {
                     if (Validar.esNota(nota)) {
                         mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
                     } else {
-                        JOptionPane.showMessageDialog(vtnPrin, "Ingrese una nota valida");
+                        JOptionPane.showMessageDialog(vtnPrin, "Ingresé una nota válida.");
                         ingresarNota();
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "Alumno no se encuentra matricula en esta \n"
+                JOptionPane.showMessageDialog(vtnPrin, "No se encuentra matrícula en esta \n"
                         + "materia, no puede ingresar su nota.");
             }
         } else {
@@ -280,7 +280,7 @@ public class VtnMallaAlumnoCTR {
         carreras = car.cargarCarreras();
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
-            vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
+            vtnMallaAlm.getCmbCarreras().addItem("Seleccioné");
             carreras.forEach(c -> {
                 vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
             });
