@@ -94,6 +94,7 @@ public class UsuarioBD extends UsuarioMD {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
 
         return lista;
