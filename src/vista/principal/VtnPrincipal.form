@@ -106,6 +106,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+B"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
                 </Property>
@@ -231,6 +234,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+B"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/ingresar_silabo_menu.png"/>
                 </Property>
@@ -520,6 +526,9 @@
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Silabo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIngresarSilaboActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnConsultarSilabo">
           <Properties>

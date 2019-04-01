@@ -37,7 +37,6 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="348" y="39" width="207" height="20"/>
-				<reportElement x="258" y="39" width="297" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

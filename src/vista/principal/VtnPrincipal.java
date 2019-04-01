@@ -380,6 +380,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarSilabo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consulta_silabo.png"))); // NOI18N
         btnIngresarSilabo.setToolTipText("Ingresar Silabo");
         btnIngresarSilabo.setFocusPainted(false);
+        btnIngresarSilabo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarSilaboActionPerformed(evt);
+            }
+        });
 
         btnConsultarSilabo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/ingreso_silabo.png"))); // NOI18N
         btnConsultarSilabo.setToolTipText("Consultar Silabo");
@@ -581,6 +586,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtHistorialUsers.setText("Historial Usuarios");
         mnTipoNotas.add(mnCtHistorialUsers);
 
+        mnCtSilabos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
         mnCtSilabos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consultar_silabo_menu.png"))); // NOI18N
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
@@ -646,6 +652,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt.setText("Materia Docente");
         mnIngresar.add(mnIgDocenteMt);
 
+        mnIgSilabo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
         mnIgSilabo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/ingresar_silabo_menu.png"))); // NOI18N
         mnIgSilabo.setText("Silabo");
         mnIngresar.add(mnIgSilabo);
@@ -697,6 +704,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarSilaboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSilaboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIngresarSilaboActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlumno;
