@@ -54,6 +54,7 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.show();
     }
 
+    //Inicia la funcionalidad de la Ventana de visualización de los Períodos Lectivos
     public void iniciar() {
 
         KeyListener kl = new KeyListener() {
@@ -79,6 +80,7 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar()));
         ocultarAtributo();
         llenarTabla();
+        //Inicio de eventos en los componentes
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(kl);
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
         vtnPrdLectivo.getBtn_EliminarPL().addActionListener(e -> eliminarPeriodo());
@@ -93,15 +95,18 @@ public class VtnPrdLectivoCTR {
         ctrPrin.estadoCargaVtnFin("Periodos lectivos");
     }
 
+    //Permite visualizar el Formulario de Período Lectivo
     public void abrirFrmPrdLectivo() {
         ctrPrin.abrirFrmPrdLectivo();
         vtnPrdLectivo.dispose();
     }
 
+    //Oculta la columna del ID del Período Lectivo
     public void ocultarAtributo() {
         modelo.estilo.TblEstilo.ocualtarID(vtnPrdLectivo.getTblPrdLectivo());
     }
 
+    //Llena con todos los Períodos Lectivo registrado las tabla localizada en la ventana de Visualización
     public void llenarTabla() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnPrdLectivo.getTblPrdLectivo().getModel();
@@ -138,6 +143,7 @@ public class VtnPrdLectivoCTR {
         }
     }
 
+    //Filtra datos en la tabla ya sea por su carerra o por su nombre
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             DefaultTableModel modelo_Tabla;
@@ -176,6 +182,7 @@ public class VtnPrdLectivoCTR {
         }
     }
 
+    //Filtra datos mediante una lista local, la cual contiene los Períodos Lectivo registrados
     public void busquedaNormal(String aguja) {
 
         System.out.println("Entro");
@@ -246,6 +253,7 @@ public class VtnPrdLectivoCTR {
 
     }
 
+    //Captura una fila en específico al hacer un click
     public PeriodoLectivoMD capturarFila() {
         int i = vtnPrdLectivo.getTblPrdLectivo().getSelectedRow();
         if (i >= 0) {
@@ -257,6 +265,7 @@ public class VtnPrdLectivoCTR {
         }
     }
 
+    //Edita un Período Lectivo en específico
     public void editarPeriodo() {
         PeriodoLectivoMD periodo = capturarFila();
         CarreraMD carrera = new CarreraMD();
@@ -272,6 +281,7 @@ public class VtnPrdLectivoCTR {
         }
     }
 
+    //Elimina un Período Lectivo en específico
     public void eliminarPeriodo() {
         PeriodoLectivoMD periodo;
         if (capturarFila() == null) {
@@ -291,6 +301,7 @@ public class VtnPrdLectivoCTR {
         }
     }
     
+    //Cierra un Período Lectivo en específico
     public void cerrarPeriodo(){
         PeriodoLectivoMD periodo;
         if (capturarFila() == null) {
@@ -310,6 +321,7 @@ public class VtnPrdLectivoCTR {
         }
     }
 
+    //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
