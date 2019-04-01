@@ -102,7 +102,7 @@ public class FrmAlumnoCursoCTR {
         //Pasamos los modelos a las tablas 
         String[] titulo1 = {"Materias no seleccionadas"};
         String[] titulo2 = {"Materias seleccionadas"};
-        String[] tituloAlmn = {"Cedula", "Alumnos"};
+        String[] tituloAlmn = {"Cédula", "Alumnos"};
         String[][] datos1 = {};
         String[][] datos2 = {};
         String[][] datos3 = {};
@@ -228,7 +228,7 @@ public class FrmAlumnoCursoCTR {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
             frmAlmCurso.getCmbPrdLectivo().removeAllItems();
-            frmAlmCurso.getCmbPrdLectivo().addItem("Seleccione");
+            frmAlmCurso.getCmbPrdLectivo().addItem("Seleccioné");
             periodos.forEach((p) -> {
                 frmAlmCurso.getCmbPrdLectivo().addItem(p.getNombre_PerLectivo());
             });
@@ -367,7 +367,7 @@ public class FrmAlumnoCursoCTR {
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
                 cicloCursado);
         if (nombreCursos != null) {
-            frmAlmCurso.getCmbCurso().addItem("Seleccione");
+            frmAlmCurso.getCmbCurso().addItem("Seleccioné");
             nombreCursos.forEach(c -> {
                 frmAlmCurso.getCmbCurso().addItem(c);
             });

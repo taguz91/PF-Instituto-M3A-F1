@@ -45,13 +45,13 @@ public class VtnDocenteMateriaCTR {
 
     DefaultTableModel mdTbl;
 
-    public VtnDocenteMateriaCTR(VtnPrincipal vtnPrin, VtnDocenteMateria vtnDm, 
-            ConectarDB conecta,VtnPrincipalCTR ctrPrin, RolMD permisos) {
+    public VtnDocenteMateriaCTR(VtnPrincipal vtnPrin, VtnDocenteMateria vtnDm,
+            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.vtnDm = vtnDm;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.permisos = permisos; 
+        this.permisos = permisos;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes Materia");
@@ -67,7 +67,7 @@ public class VtnDocenteMateriaCTR {
 
     public void iniciar() {
         //Iniciamos la tabla
-        String[] titulo = {"Cedula", "Docente", "Materia"};
+        String[] titulo = {"Cédula", "Docente", "Materia"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDm.getTblDocentesMateria().setModel(mdTbl);
@@ -86,8 +86,8 @@ public class VtnDocenteMateriaCTR {
             }
         });
         //Validacion del buscar
-        vtnDm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDm.getTxtBuscar(), 
-        vtnDm.getBtnBuscar()));
+        vtnDm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDm.getTxtBuscar(),
+                vtnDm.getBtnBuscar()));
         //Acciones de los combos
         vtnDm.getCmbCarrera().addActionListener(e -> clickCarreras());
         vtnDm.getCmbCiclo().addActionListener(e -> clickCiclo());
@@ -95,7 +95,7 @@ public class VtnDocenteMateriaCTR {
         //Acciones de los botones
         vtnDm.getBtnBuscar().addActionListener(e -> buscar(vtnDm.getTxtBuscar().getText().trim()));
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
-                
+
         cargarDocenteMaterias();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -109,15 +109,15 @@ public class VtnDocenteMateriaCTR {
             llenarTblDocenteMateria(dms);
         }
     }
-    
-    private void ingresar(){
+
+    private void ingresar() {
         ctrPrin.abrirFrmDocenteMateria();
         vtnDm.dispose();
         ctrPrin.cerradoJIF();
     }
-    
-    private void cargarDocenteMaterias(){
-        dms = dm.cargarDocenteMateria(); 
+
+    private void cargarDocenteMaterias() {
+        dms = dm.cargarDocenteMateria();
         llenarTblDocenteMateria(dms);
     }
 
@@ -139,8 +139,8 @@ public class VtnDocenteMateriaCTR {
             llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
-            
-            dms = dm.cargarDocenteMateriaPorCarrera(idCar); 
+
+            dms = dm.cargarDocenteMateriaPorCarrera(idCar);
             llenarTblDocenteMateria(dms);
         } else {
             estadoCmbCicloYMateria(false);
@@ -156,20 +156,20 @@ public class VtnDocenteMateriaCTR {
                     posCic);
             llenarCmbMaterias(materias);
             dms = dm.cargarDocenteMateriaPorCarreraYCiclo(carreras.get(posCar - 1).getId(),
-                    posCic); 
+                    posCic);
             llenarTblDocenteMateria(dms);
         } else {
             clickCarreras();
         }
     }
-    
+
     //Al hacer click en una materia 
-    private void clickMateria(){
-        int posMat = vtnDm.getCmbMateria().getSelectedIndex(); 
+    private void clickMateria() {
+        int posMat = vtnDm.getCmbMateria().getSelectedIndex();
         if (posMat > 0) {
-            dms = dm.cargarDocenteMateriaPorMateria(materias.get(posMat - 1).getId()); 
+            dms = dm.cargarDocenteMateriaPorMateria(materias.get(posMat - 1).getId());
             llenarTblDocenteMateria(dms);
-        }else{
+        } else {
             clickCiclo();
         }
     }
@@ -178,7 +178,7 @@ public class VtnDocenteMateriaCTR {
         vtnDm.getCmbCarrera().removeAllItems();
         carreras = car.cargarCarreras();
         if (carreras != null) {
-            vtnDm.getCmbCarrera().addItem("Seleccione");
+            vtnDm.getCmbCarrera().addItem("Todas");
             carreras.forEach(c -> {
                 vtnDm.getCmbCarrera().addItem(c.getCodigo());
             });
@@ -212,14 +212,14 @@ public class VtnDocenteMateriaCTR {
         if (dms != null) {
             dms.forEach(o -> {
                 Object[] valores = {o.getDocente().getIdentificacion(),
-                    o.getDocente().getPrimerNombre() + " " 
-                        + o.getDocente().getPrimerApellido(), o.getMateria().getNombre()};
+                    o.getDocente().getPrimerNombre() + " "
+                    + o.getDocente().getPrimerApellido(), o.getMateria().getNombre()};
                 mdTbl.addRow(valores);
             });
             vtnDm.getLblResultados().setText(dms.size() + " Resultados obtenidos.");
         }
     }
-   
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

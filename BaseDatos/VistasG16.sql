@@ -22,7 +22,7 @@ CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usua
    FROM ("Usuarios"
      JOIN "Personas" ON (("Usuarios".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."Usuarios_Persona" OWNER TO "permisos";
+
 
 CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
@@ -47,8 +47,6 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
-
 
 CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
     "PeriodoIngresoNotas".perd_notas_fecha_inicio,
@@ -62,11 +60,6 @@ CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLec
    FROM (("PeriodoLectivo"
      JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
      JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
-
-ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
-
-
-
 
 SELECT
 	"Alumnos".id_alumno,
@@ -82,7 +75,7 @@ SELECT
 	"AlumnoCurso".almn_curso_nota_final,
 	"AlumnoCurso".almn_curso_estado,
 	"AlumnoCurso".almn_curso_num_faltas,
-	"Materias".materia_nombre, 
+	"Materias".materia_nombre,
 	"Jornadas".nombre_jornada,
 	"Materias".materia_ciclo,
 	"Cursos".curso_paralelo,
@@ -91,7 +84,7 @@ SELECT
 	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre as "NOMBRE_PROF",
 	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as "APELLIDO_PROF",
 	("AlumnoCurso".almn_curso_num_faltas * "Materias".materia_total_horas)/100 as "% Faltas"
-	
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -103,15 +96,22 @@ FROM
 	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
-  INNER JOIN "Docente" doc_coor ON "public".id_docente = public
-	
+  INNER JOIN "Docentes" doc_coor ON "public".id_docente = public
+
 
 	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = FALSE 
-	AND "Cursos".id_docente = 55 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
-	AND "Cursos".curso_ciclo = 4 
-	AND "Cursos".curso_paralelo = 'A' 
-	AND "Jornadas".nombre_jornada = 'MATUTINA' 
+	"PeriodoLectivo".prd_lectivo_estado = FALSE
+	AND "Cursos".id_docente = 55
+	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019'
+	AND "Cursos".curso_ciclo = 4
+	AND "Cursos".curso_paralelo = 'A'
+	AND "Jornadas".nombre_jornada = 'MATUTINA'
 ORDER BY
 	p_alu.persona_primer_apellido ASC;
+
+--Propietario de las vistas
+  ALTER TABLE "public"."Usuarios_Persona" OWNER TO "permisos";
+
+  ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
+
+  ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
