@@ -198,17 +198,15 @@ public class FrmPersonaCTR {
                             JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
                         }
                     }
-                }
-                if (per == null) {
+                } else if (per.isPersonaActiva()) {
+                    editar(per);
+                    numAccion = 2;
+                } else {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
                     editar = false;
-
-                } else {
-                    editar(per);
-                    numAccion = 2;
                 }
                 //Cambiamos el estado del mouse
                 vtnPrin.setCursor(new Cursor(0));
