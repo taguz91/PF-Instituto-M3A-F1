@@ -14,7 +14,7 @@ import vista.principal.VtnPrincipal;
 public class run {
 
     public static void main(String[] args) {
-        Propiedades.escribirPropiedades();
+        
         estiloWindows();
         SplashCTR ctrSplash = new SplashCTR();
         ctrSplash.iniciar();

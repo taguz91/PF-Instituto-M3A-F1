@@ -590,6 +590,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRoles.setText("Roles Usuarios");
         mnTipoNotas.add(mnCtRoles);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         jMenu1.setText("Notas");
 
         mnCtTipoNotas.setText("Tipos de Notas");

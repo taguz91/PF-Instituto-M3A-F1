@@ -47,6 +47,7 @@ public class dbReferenciaSilabo extends ReferenciaSilabo {
                 r.getIdReferencia().setTipoReferencia(rs.getString(2));
                 r.getIdReferencia().setDescripcionReferencia(rs.getString(3));
                 r.getIdReferencia().setExisteEnBiblioteca(rs.getBoolean(4));
+
                 //e.getIdUnidad().;
 
                 referencias.add(r);

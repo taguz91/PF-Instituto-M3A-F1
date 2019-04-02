@@ -77,6 +77,7 @@ public class VtnCursoCTR {
     }
 
     public void iniciar() {
+        vtnCurso.getBtnListaAlumnos().setEnabled(false);
         cargarCmbPrdLectio();
         //Iniciamos la tabla  
         String titulo[] = {"id", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
