@@ -6,8 +6,6 @@
     "RolPostgres.sql"
 
 */
-
-
 CREATE MATERIALIZED VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
     "Usuarios".usu_username,
     "Usuarios".usu_password,
