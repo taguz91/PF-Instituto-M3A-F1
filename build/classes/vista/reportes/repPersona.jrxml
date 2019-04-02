@@ -24,7 +24,7 @@ public."Lugares" z on p.id_lugar_residencia=z.id_lugar
 where persona_identificacion=$P{cedula};]]>
 	</queryString>
 	<field name="id_persona" class="java.lang.Integer"/>
-	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_foto" class="java.io.InputStream"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="persona" class="java.lang.String"/>
 	<field name="persona_genero" class="java.lang.String"/>
@@ -69,7 +69,7 @@ where persona_identificacion=$P{cedula};]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>

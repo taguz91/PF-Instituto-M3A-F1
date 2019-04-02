@@ -26,7 +26,7 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="119" width="555" height="20"/>
@@ -49,7 +49,7 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cedula]]></text>
+				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="55" y="0" width="303" height="20" forecolor="#FFFFFF" backcolor="#006699"/>

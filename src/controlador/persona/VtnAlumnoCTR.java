@@ -294,7 +294,7 @@ public class VtnAlumnoCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Alumnos");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);

@@ -253,7 +253,7 @@ public class VtnPersonaCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Persona");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
