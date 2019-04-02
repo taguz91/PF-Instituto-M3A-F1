@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.stream.Collectors;
+import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -16,7 +18,7 @@ public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    private static String JDBC_URL = "";
     //Esta base de datos es la que entrera en pruebas del dia de mañana no modificar nada
     //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
     //private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
@@ -53,13 +55,13 @@ public class ResourceManager {
 
         }
 
-        /*JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
-      USERNAME = "postgres";
-        PASSWORD = "qwerty79";*/
- /* JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
-      USERNAME = "postgres";
-        PASSWORD = "qwerty79";*/
-        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        JDBC_URL = Propiedades.loadIP();
+        try {
+            conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+        } catch (NullPointerException e) {
+            System.out.println("-------------");
+        }
         return conex;
 
     }
