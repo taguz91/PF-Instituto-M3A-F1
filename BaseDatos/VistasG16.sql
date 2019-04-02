@@ -99,5 +99,22 @@ SELECT "IngresoNotas".nota_primer_inteciclo,
 ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
 
 
+------------------------------------------------------------
+script indice 
+
+CREATE UNIQUE INDEX cursospermisosnotas ON "ViewCursosPermisosNotas"(
+	id_ingreso_notas,
+	id_curso,
+	id_materia,
+id_prd_lectivo,
+id_docente,
+curso_nombre,
+    materia_nombre,
+    prd_lectivo_nombre,
+    persona_identificacion,
+    persona_primer_nombre,
+	persona_identificacion,
+persona_primer_apellido)
+
 
 
