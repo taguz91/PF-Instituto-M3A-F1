@@ -100,7 +100,38 @@ ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
 
 
 ------------------------------------------------------------
-script indice 
+script indice
+
+CREATE UNIQUE INDEX usuariospersona ON "Usuarios_Persona"(
+	id_usuario,
+  id_persona,
+  persona_identificacion,
+  persona_primer_apellido,
+  persona_primer_nombre)
+  
+  
+  
+CREATE UNIQUE INDEX viewalumnocurso ON "ViewAlumnoCurso"(
+	id_almn_curso,
+    id_alumno,
+    id_curso,
+    persona_identificacion,
+    persona_primer_apellido,
+    persona_primer_nombre,
+    id_persona,
+    alumno_codigo)
+	
+	
+CREATE UNIQUE INDEX viewperiodoingresonotas ON "ViewPeriodoIngresoNotas"(
+	prd_lectivo_nombre,
+  tipo_nota_nombre,
+  id_prd_lectivo,
+  id_tipo_nota,
+  id_perd_ingr_notas)
+  
+  
+  
+  
 
 CREATE UNIQUE INDEX cursospermisosnotas ON "ViewCursosPermisosNotas"(
 	id_ingreso_notas,
