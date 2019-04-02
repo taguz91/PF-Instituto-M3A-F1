@@ -169,12 +169,14 @@ ON public."DocentesMateria" FOR EACH ROW
 EXECUTE PROCEDURE docentes_materia_elim();
 
 --Silabo
-CREATE OR REPLACE FUNCTION silabo_elim()
+--Trigger no funcional 
+/*CREATE OR REPLACE FUNCTION silabo_elim()
 RETURNS TRIGGER AS $silabo_elim$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla, historial_observacion)
+		historial_nombre_tabla, historial_pk_tabla, 
+		historial_observacion)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_silabo,
 			old.id_materia);
 		RETURN NEW;
@@ -185,6 +187,7 @@ CREATE TRIGGER auditoria_silabo_elim
 BEFORE DELETE
 ON public."Silabo" FOR EACH ROW
 EXECUTE PROCEDURE silabo_elim();
+*/
 
 --ReferenciaSilabo
 CREATE OR REPLACE FUNCTION referencia_silabo_elim()
