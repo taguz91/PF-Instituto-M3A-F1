@@ -100,10 +100,7 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
 
-            System.out.println("--------->1");
             while (rs.next()) {
-                System.out.println(rs);
-                System.out.println("--------->2");
                 PeriodoIngresoNotasMD periodo = new PeriodoIngresoNotasMD();
 
                 periodo.setIdPeriodoIngreso(rs.getInt("id_perd_ingr_notas"));
