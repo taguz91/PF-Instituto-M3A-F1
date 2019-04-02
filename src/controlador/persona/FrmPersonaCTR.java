@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -163,19 +162,18 @@ public class FrmPersonaCTR {
 
     public void buscarIdentificacion() {
         errorCedula = false;
-        String cedula;
-        cedula = frmPersona.getTxtIdentificacion().getText();
+        String cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
             if (cedula.length() == 10) {
-                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+                if (!modelo.validaciones.Validar.esCedula(cedula)) {
                     errorCedula = true;
-                    frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
+                    frmPersona.getLblErrorIdentificacion().setText("Cédula incorrecta.");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
             } else if (cedula.length() < 10) {
                 errorCedula = true;
-                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
+                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números.");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
@@ -185,34 +183,34 @@ public class FrmPersonaCTR {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
 
-                PersonaMD per = persona.buscarPersona(cedula);
+                PersonaMD per = persona.existePersona(cedula);
                 editar = true;
-
                 if (per != null) {
-                    int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada, desea Activarla ? ", " Activar Persona", dialog);
-                    if (result == 0) {
-                        if (persona.activarPersonaIdentificacion(persona.getIdentificacion()) == true) {
-                            JOptionPane.showMessageDialog(null, "Persona activada correctamente");
-                            editar(per);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                    if (per.isPersonaActiva() == false) {
+                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                        int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
+                        if (result == 0) {
+                            if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
+                                JOptionPane.showMessageDialog(null, "Persona activada correctamente");
+                                editar(per);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                            }
                         }
+                    } else if (per.isPersonaActiva()) {
+                        editar(per);
+                        numAccion = 2;
                     }
-                }
-                if (per == null) {
+                } else {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
                     editar = false;
-
-                } else {
-                    editar(per);
-                    numAccion = 2;
                 }
                 //Cambiamos el estado del mouse
                 vtnPrin.setCursor(new Cursor(0));
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
@@ -352,7 +350,7 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
 //        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
 //        frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
-        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVNumeros(
+        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
                 frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
@@ -425,11 +423,11 @@ public class FrmPersonaCTR {
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
         //Correo = frmPersona.getTxtCorreo().getText();
         Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-        if (Discapacidad) {
-            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
-        }
+//        if (Discapacidad) {
+//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+//        }
         // Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
         // Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
         // Canton = frmPersona.getCmbCanton().getSelectedItem().toString();

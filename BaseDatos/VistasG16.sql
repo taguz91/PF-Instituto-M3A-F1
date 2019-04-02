@@ -22,7 +22,7 @@ CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usua
    FROM ("Usuarios"
      JOIN "Personas" ON (("Usuarios".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."Usuarios_Persona" OWNER TO "permisos";
+
 
 CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
@@ -46,8 +46,6 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
    FROM (("AlumnoCurso"
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
-
-ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
 
 CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,

@@ -64,7 +64,7 @@ public class FrmCarreraCTR {
         cargarCmbModalidades();
         validaciones();
         //Formato tbl
-        String[] titulo = {"Cedula", "Nombre"};
+        String[] titulo = {"Cédula", "Nombre"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         frmCarrera.getTblDocentes().setModel(mdTbl);
@@ -210,7 +210,7 @@ public class FrmCarreraCTR {
         frmCarrera.getTxtNombre().setText("");
         frmCarrera.getTxtCodigo().setText("");
         frmCarrera.getJdFechaInicio().setCalendar(null);
-        frmCarrera.getCmbModalidad().setSelectedItem("Seleccione");
+        frmCarrera.getCmbModalidad().setSelectedItem("Seleccioné");
         frmCarrera.getTxtBuscar().setText("");
         mdTbl.setRowCount(0);
 
@@ -218,7 +218,7 @@ public class FrmCarreraCTR {
 
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
-        frmCarrera.getCmbModalidad().addItem("Seleccione");
+        frmCarrera.getCmbModalidad().addItem("Seleccioné");
         for (String m : MODALIDADES) {
             frmCarrera.getCmbModalidad().addItem(m);
         }
