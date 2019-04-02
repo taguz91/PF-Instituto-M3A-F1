@@ -44,29 +44,22 @@ public class Effects {
     }
 
     public static void setTextInLabel(JLabel label, String text, long time) {
+        thread = new Thread() {
+            @Override
+            public void run() {
 
-        if (thread == null) {
-            thread = new Thread() {
-                @Override
-                public void run() {
+                label.setText(text);
 
-                    label.setText(text);
-
-                    try {
-                        sleep(time * 1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Effects.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    label.setText("");
-
+                try {
+                    sleep(time * 1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Effects.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            };
-            thread.start();
-        } else {
-            thread.start();
-        }
 
+                label.setText("");
+            }
+        };
+        thread.start();
     }
 
     public static void setLoadCursor(JComponent view) {

@@ -98,7 +98,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "Username", "Identificacion Persona", "Primer Apellido", "Segundo Apellido", "Primer Nombre", "Segundo Nombre"
+                "No.", "Username", "Identificación Persona", "Primer Apellido", "Segundo Apellido", "Primer Nombre", "Segundo Nombre"
             }
         ) {
             Class[] types = new Class [] {

@@ -158,7 +158,7 @@ public class FrmAlumnoCarreraCTR {
         carreras = carr.cargarCarreras();
         if (carreras != null) {
             frmAlmCarrera.getCmbCarreras().removeAllItems();
-            frmAlmCarrera.getCmbCarreras().addItem("Seleccioné");
+            frmAlmCarrera.getCmbCarreras().addItem("Seleccione");
             carreras.forEach((c) -> {
                 frmAlmCarrera.getCmbCarreras().addItem(c.getNombre());
             });
@@ -167,7 +167,7 @@ public class FrmAlumnoCarreraCTR {
 
     private void cargarCmbModalidad() {
         frmAlmCarrera.getCmbModalidad().removeAllItems();
-        frmAlmCarrera.getCmbModalidad().addItem("Seleccioné");
+        frmAlmCarrera.getCmbModalidad().addItem("Seleccione");
         for (String m : MODALIDADES) {
             frmAlmCarrera.getCmbModalidad().addItem(m);
         }

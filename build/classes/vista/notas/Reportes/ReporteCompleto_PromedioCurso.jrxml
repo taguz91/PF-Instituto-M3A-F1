@@ -28,7 +28,7 @@ WHERE
 			<textField>
 				<reportElement mode="Opaque" x="115" y="2" width="100" height="20" forecolor="#000000" backcolor="#FFFF99"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="115" y="2" width="100" height="20"/>
