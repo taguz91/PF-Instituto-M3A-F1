@@ -281,21 +281,26 @@ public class VtnNotasAlumnoCursoCTR {
                 examenFinal = 25.0;
                 datos.setValueAt(25.0, fila, 9);
             }
-
-            notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal + notaSupletorio;
+            if (notaFinal < 70) {
+                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + notaSupletorio;
+                estado = "Reprobado";
+                datos.setValueAt(estado, fila, 11);
+            } else if (notaFinal >= 70) {
+                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
+                estado = "Aprobado";
+                datos.setValueAt(estado, fila, 11);
+            }
 
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
 
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
 
-            datos.setValueAt(notaFinal, fila, 10);
+            datos.setValueAt(Math.round(notaFinal), fila, 10);
 
             if (notaFinal >= 70.0) {
-                estado = "Aprobado";
-                datos.setValueAt(estado, fila, 11);
+
             } else {
-                estado = "Reprobado";
-                datos.setValueAt(estado, fila, 11);
+
             }
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
@@ -624,9 +629,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-            
+
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasMenor70.jasper"));
-            
+
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -708,9 +713,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-            
+
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre70y80.jasper"));
-            
+
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -792,9 +797,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-            
+
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre80y90.jasper"));
-            
+
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -876,9 +881,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-            
+
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre90y100.jasper"));
-            
+
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
