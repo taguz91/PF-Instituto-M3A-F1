@@ -108,10 +108,10 @@ public class VtnPrincipalCTR {
     {"Carreras", "Carreras-Eliminar", "Carreras-Editar", "Carreras-Ingresar", "Carreras-Estado"},
     {"Cursos", "Cursos-Editar", "Cursos-Ingresar"},
     {"Materias", "Materias-Informacion", "Materias-Estado"},
-    {"AlumnosCarrera","AlumnosCarrera-Ingresar"},
-    {"AlumnosCursoPorPeriodo","AlumnosCursoPorPeriodo-Ingresar"},
-    {"AlumnosCurso","AlumnosCurso-Ingresar","AlumnosCurso-Eliminar","AlumnosCurso-Editar"},
-    {"DocenteMateria","DocenteMateria-Ingresar"}};
+    {"AlumnosCarrera", "AlumnosCarrera-Ingresar"},
+    {"AlumnosCursoPorPeriodo", "AlumnosCursoPorPeriodo-Ingresar"},
+    {"AlumnosCurso", "AlumnosCurso-Ingresar", "AlumnosCurso-Eliminar", "AlumnosCurso-Editar"},
+    {"DocenteMateria", "DocenteMateria-Ingresar"}};
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
