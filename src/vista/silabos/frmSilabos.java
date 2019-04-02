@@ -142,6 +142,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setVisible(true);
 
@@ -180,8 +181,10 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         lblBuscar.setText("Buscar:");
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +194,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setEnabled(false);
 
         BTNGENERAR.setText("GENERAR");
 
