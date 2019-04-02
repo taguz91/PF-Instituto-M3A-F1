@@ -86,115 +86,115 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="190" splitType="Stretch">
+		<band height="224" splitType="Stretch">
 			<staticText>
-				<reportElement x="182" y="65" width="97" height="20" uuid="e4b92c94-f49e-49c7-a09a-e67ac0488f51"/>
+				<reportElement x="203" y="80" width="97" height="20" uuid="e4b92c94-f49e-49c7-a09a-e67ac0488f51"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
-				<text><![CDATA[Periodo Lectivo:]]></text>
+				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="58" y="0" width="1412" height="45" forecolor="#0066CC" uuid="61367ca3-152f-4cf5-acdc-30cbdd34b455"/>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#0066CC" uuid="61367ca3-152f-4cf5-acdc-30cbdd34b455"/>
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY]]></text>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1228" y="65" width="164" height="20" uuid="3bf7270a-31f3-4e71-a176-e62987cb872f"/>
+				<reportElement x="1249" y="80" width="164" height="20" uuid="3bf7270a-31f3-4e71-a176-e62987cb872f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="65" width="223" height="20" uuid="ed33c784-ab88-4134-b9b2-489d147b9656"/>
+				<reportElement x="313" y="80" width="223" height="20" uuid="ed33c784-ab88-4134-b9b2-489d147b9656"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1025" y="65" width="56" height="20" uuid="cebacf0f-8423-412a-af8c-7a19e2b7540e"/>
+				<reportElement x="1046" y="80" width="56" height="20" uuid="cebacf0f-8423-412a-af8c-7a19e2b7540e"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1111" y="65" width="117" height="20" uuid="8bd59785-b21d-43bd-a6ef-8a6da78ef203"/>
+				<reportElement x="1132" y="80" width="117" height="20" uuid="8bd59785-b21d-43bd-a6ef-8a6da78ef203"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="683" y="45" width="199" height="20" uuid="a411062b-478c-432e-85bf-7f90bbcf0b4b"/>
+				<reportElement x="704" y="60" width="199" height="20" uuid="a411062b-478c-432e-85bf-7f90bbcf0b4b"/>
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="182" y="97" width="54" height="20" uuid="6792a8d1-2edd-4719-b0bd-2c147fb005b4"/>
+				<reportElement x="203" y="112" width="54" height="20" uuid="6792a8d1-2edd-4719-b0bd-2c147fb005b4"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="251" y="97" width="366" height="20" uuid="f5279ec9-e25c-424f-a581-7f2d3cc39002"/>
+				<reportElement x="272" y="112" width="366" height="20" uuid="f5279ec9-e25c-424f-a581-7f2d3cc39002"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="182" y="132" width="41" height="20" uuid="9c577909-98c8-4125-a370-114ee7be7111"/>
+				<reportElement x="203" y="147" width="41" height="20" uuid="9c577909-98c8-4125-a370-114ee7be7111"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="236" y="132" width="37" height="20" uuid="150680db-00fd-47b3-a644-eadca0befb49"/>
+				<reportElement x="257" y="147" width="37" height="20" uuid="150680db-00fd-47b3-a644-eadca0befb49"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{materia_ciclo}.toString()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="308" y="132" width="52" height="20" uuid="365c7685-e275-48f0-83c2-e23c82b5493b"/>
+				<reportElement x="329" y="147" width="52" height="20" uuid="365c7685-e275-48f0-83c2-e23c82b5493b"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Paralelo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="372" y="132" width="37" height="20" uuid="96c7fc1b-b490-4efd-9fe3-557c263fb346"/>
+				<reportElement x="393" y="147" width="37" height="20" uuid="96c7fc1b-b490-4efd-9fe3-557c263fb346"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1025" y="97" width="72" height="20" uuid="0a104a79-73aa-4b28-b1ff-5c90ba05fc00"/>
+				<reportElement x="1046" y="112" width="72" height="20" uuid="0a104a79-73aa-4b28-b1ff-5c90ba05fc00"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1111" y="97" width="300" height="20" uuid="3b516eda-6146-4b25-9440-998293e3cc0c"/>
+				<reportElement x="1132" y="112" width="300" height="20" uuid="3b516eda-6146-4b25-9440-998293e3cc0c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1025" y="132" width="56" height="20" uuid="5178cbbd-16ff-4141-9377-dc67ff4148a8"/>
+				<reportElement x="1046" y="147" width="56" height="20" uuid="5178cbbd-16ff-4141-9377-dc67ff4148a8"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Jornada:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1097" y="132" width="214" height="20" uuid="460c5aa5-216d-4ff8-88f6-f2e8fa1d3900"/>
+				<reportElement x="1118" y="147" width="214" height="20" uuid="460c5aa5-216d-4ff8-88f6-f2e8fa1d3900"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="171" width="1520" height="1" uuid="6f05a28d-b79a-4aa1-829f-062004fa374a"/>
+				<reportElement x="0" y="207" width="1520" height="1" uuid="6f05a28d-b79a-4aa1-829f-062004fa374a"/>
 			</line>
 			<image>
-				<reportElement x="0" y="45" width="146" height="126" uuid="4eb0a63f-4b6f-468f-9b31-facfc5ec360f"/>
+				<reportElement x="28" y="60" width="160" height="125" uuid="4f6894e2-dd16-474a-a8d1-4bb84fa86a32"/>
 				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>
@@ -244,7 +244,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[CEDULA]]></text>
+				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="945" y="41" width="125" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="98111ae1-10a2-4dd3-ac38-9c6a535bfa2f"/>
