@@ -194,7 +194,7 @@ ORDER BY
 				<reportElement x="0" y="207" width="1520" height="1" uuid="6f05a28d-b79a-4aa1-829f-062004fa374a"/>
 			</line>
 			<image>
-				<reportElement x="28" y="60" width="160" height="125" uuid="4f6894e2-dd16-474a-a8d1-4bb84fa86a32"/>
+				<reportElement x="41" y="57" width="147" height="124" uuid="27b95386-3e6b-4873-aedf-78b885262d7f"/>
 				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>

@@ -542,8 +542,8 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            //JasperReport jr = JasperCompileManager.compileReport(jd);
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteCompleto.jasper"));
+            
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
