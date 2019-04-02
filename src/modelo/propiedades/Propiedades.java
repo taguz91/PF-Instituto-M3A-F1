@@ -59,7 +59,9 @@ public class Propiedades {
             String IP = config.getProperty("IP_ADRESS");
 
             if (IP == null) {
+                System.out.println(IP);
                 setDefault();
+                System.out.println(IP);
                 loadIP();
             } else {
                 return IP;
