@@ -101,14 +101,17 @@ public class VtnPrincipalCTR {
     private final Image ista;
     private final VtnBienvenida vtnBienvenida;
     //Matriz de permisos
-    String[][] accesos = {{"Alumnos","Alumnos-Ingresar","Alumnos-Editar","Alumnos-Eliminar","Alumnos-Estado"},
-    {"PeriodoLectivo","PeriodoLectivo-Cerrar-Periodo","PeriodoLectivo-Editar","PeriodoLectivo-Ingresar","PeriodoLectivo-Eliminar","PeriodoLectivo-Estado"},
-    {"Docentes","Docentes-Ingresar","Docentes-Editar","Docentes-Eliminar","Docentes-Materias-Docente","Docentes-Estado"},
-    {"Personas","Personas-Ingresar","Personas-Editar","Personas-Eliminar","Personas-Estado"},
-    {"Carreras","Carreras-Eliminar","Carreras-Editar","Carreras-Ingresar","Carreras-Estado"},
-    {"Cursos","Cursos-Editar","Cursos-Ingresar"},
-    {"Materias","Materias-Informacion","Materias-Estado"},
-    };
+    String[][] accesos = {{"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
+    {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
+    {"Docentes", "Docentes-Ingresar", "Docentes-Editar", "Docentes-Eliminar", "Docentes-Materias-Docente", "Docentes-Estado"},
+    {"Personas", "Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"},
+    {"Carreras", "Carreras-Eliminar", "Carreras-Editar", "Carreras-Ingresar", "Carreras-Estado"},
+    {"Cursos", "Cursos-Editar", "Cursos-Ingresar"},
+    {"Materias", "Materias-Informacion", "Materias-Estado"},
+    {"AlumnosCarrera","AlumnosCarrera-Ingresar"},
+    {"AlumnosCursoPorPeriodo","AlumnosCursoPorPeriodo-Ingresar"},
+    {"AlumnosCurso","AlumnosCurso-Ingresar","AlumnosCurso-Eliminar","AlumnosCurso-Editar"},
+    {"DocenteMateria","DocenteMateria-Ingresar"}};
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
