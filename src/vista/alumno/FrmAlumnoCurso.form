@@ -115,7 +115,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccione un periodo lectivo:"/>
+            <Property name="text" type="java.lang.String" value="Seleccione un per&#xed;odo lectivo:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbPrdLectivo">
@@ -201,7 +201,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Debe seleccionar un periodo lectivo."/>
+            <Property name="text" type="java.lang.String" value="Debe seleccionar un per&#xed;odo lectivo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnMtCursadas">
@@ -348,12 +348,12 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Seleccion&#xe9; las materias que tomara el alumno en este ciclo."/>
+            <Property name="text" type="java.lang.String" value="Seleccione las materias que tomar&#xe1; el alumno en este ciclo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccion&#xe9; un curso:"/>
+            <Property name="text" type="java.lang.String" value="Seleccione un curso:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbCurso">

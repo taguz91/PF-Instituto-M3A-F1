@@ -226,7 +226,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnInfo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Informacion"/>
+            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n"/>
           </Properties>
         </Component>
       </SubComponents>

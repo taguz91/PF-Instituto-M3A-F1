@@ -77,7 +77,6 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Periodo Ingreso Notas");
 
         lblFechaInicio.setText("Fecha Inicio");
 
@@ -87,7 +86,7 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
 
-        lblPeriodoLectivo.setText("Periodo Lectivo");
+        lblPeriodoLectivo.setText("Período Lectivo");
 
         lblTipoNota.setText("Tipo Nota");
 

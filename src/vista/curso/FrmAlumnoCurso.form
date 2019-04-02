@@ -144,7 +144,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblExamenInterciclo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Examen Interciclo"/>
+        <Property name="text" type="java.lang.String" value="Ex&#xe1;men Interciclo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtExamenInterciclo">
@@ -158,7 +158,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblExamenFinal">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Examen Final"/>
+        <Property name="text" type="java.lang.String" value="Ex&#xe1;men Final"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtExamenFinal">
@@ -168,7 +168,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblExamenSuple">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Examen Supletorio"/>
+        <Property name="text" type="java.lang.String" value="Ex&#xe1;men Supletorio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtExamenSuple">
