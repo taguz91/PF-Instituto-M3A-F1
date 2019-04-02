@@ -1,3 +1,7 @@
+--Tabla docentes
+ALTER TABLE public."Docentes" ADD COLUMN docente_titulo character varying(200);
+ALTER TABLE public."Docentes" ADD COLUMN docente_abreviatura character varying(20);
+
 ALTER TABLE public."UnidadSilabo" ADD COLUMN id_silabo integer NOT NULL;
 
 ALTER TABLE "UnidadSilabo" ADD CONSTRAINT "unidad_silabo_pk1"
@@ -81,7 +85,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
 
-    
+
 
 --Grupo Diego
 
