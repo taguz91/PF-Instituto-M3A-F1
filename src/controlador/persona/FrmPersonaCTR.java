@@ -412,37 +412,21 @@ public class FrmPersonaCTR {
         SegNombre = frmPersona.getTxtSegundoNombre().getText();
         PriApellido = frmPersona.getTxtPrimerApellido().getText();
         SegApellido = frmPersona.getTxtSegundoApellido().getText();
-        //FechaNac = frmPersona.getJdcFechaNacimiento().getSelectedDate().toString();
         EstadoCivil = frmPersona.getCmbEstadoCivil().getSelectedItem().toString();
-        //Celular = frmPersona.getTxtCelular().getText();
-        //Telefono = frmPersona.getTxtTelefono().getText();
         IdiomaRaiz = frmPersona.getCmbIdiomas().getSelectedItem().toString();
         Sexo = frmPersona.getCmbSexo().getSelectedItem().toString();
         Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
-        //Correo = frmPersona.getTxtCorreo().getText();
         Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
 //        if (Discapacidad) {
 //            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
 //            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
 //            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
 //        }
-        // Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
-        // Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
-        // Canton = frmPersona.getCmbCanton().getSelectedItem().toString();
-        //PaisReside = frmPersona.getCmbPaisReside().getSelectedItem().toString();
-        //ProvinciaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
-        //CantonReside = frmPersona.getCmbCantonReside().getSelectedItem().toString();
-        //ParroquiaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
-        //CodigoPostal = frmPersona.getTxtCodigoPostal().getText();
         TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
-        // CalleSec = frmPersona.getTxtCalleSecundaria().getText();
-        //Referencia = frmPersona.getTxtReferencia().getText();
-        //Sector = frmPersona.getTxtSector().getText();
-        //NumCasa = frmPersona.getTxtNumeroCasa().getText();
-
+       
         if (TipoId.equals("SELECCIONE") == false && Identificacion.equals("") == false
                 && PriNombre.equals("") == false && SegNombre.equals("") == false
                 && PriApellido.equals("") == false && SegApellido.equals("") == false
@@ -452,13 +436,7 @@ public class FrmPersonaCTR {
                 && IdiomaRaiz.equals("SELECCIONE") == false && Sexo.equals("SELECCIONE") == false
                 && Genero.equals("SELECCIONE") == false && TipoSangre.equals("SELECCIONE") == false
                 && Etnia.equals("SELECCIONE") == false
-                //              && Correo.equals("") == false
-                // && Nacionalidad.equals("SELECCIONE") == false && Provincia.equals("SELECCIONE") == false 
-                // && Canton.equals("SELECCIONE") == false  && PaisReside.equals("SELECCIONE") == false 
-                // && ProvinciaReside.equals("SELECCIONE") == false && CantonReside.equals("SELECCIONE") == false
-                // && ParroquiaReside.equals("SELECCIONE") == false && CodigoPostal.equals("") == false
-                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false //                && CalleSec.equals("") == false && Referencia.equals("") == false
-                //                && Sector.equals("") == false && NumCasa.equals("") == false
+                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false
                 ) {
 //            if (Discapacidad == false && TipoDiscapacidad.equals("SELECCIONE") == false
 //                    && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
@@ -468,14 +446,12 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getBtnGuardarPersona().setEnabled(false);
         }
-
     }
 
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
         Date fecha;
-        LocalDate fechaNaci;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -545,9 +521,6 @@ public class FrmPersonaCTR {
         //Se lo pasa a un string para poder validarlo
         fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
-
-        System.out.println("fechaNacimiento " + fechaNacimiento);
-        System.out.println("fechaNac " + fechaNac);
 
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
@@ -877,6 +850,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
+        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         //Codigo postal
         frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());
