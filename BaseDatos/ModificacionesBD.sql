@@ -1,3 +1,8 @@
+--Grupo 23
+ALTER TABLE public."Docentes" ADD COLUMN docente_titulo character varying(200) NOT NULL;
+ALTER TABLE public."Docentes" ADD COLUMN docente_abreviatura character varying(20) NOT NULL;
+--Grupo 
+
 ALTER TABLE public."UnidadSilabo" ADD COLUMN id_silabo integer NOT NULL;
 
 ALTER TABLE "UnidadSilabo" ADD CONSTRAINT "unidad_silabo_pk1"
