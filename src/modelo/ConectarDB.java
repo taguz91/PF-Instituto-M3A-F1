@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -18,26 +19,27 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
-    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //Base de datos que entrara en prueba el dia de mañana no modificar nada 
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-    //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //private String url = "jdbc:postgresql://localhost:5432/baseNueva";
-    //private String url = "jdbc:postgresql://LocalHost:5432/BD_Final";
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
-    //private String url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
-    //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
-    //private String url = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
-
+    private String url = "";
 
     public ConectarDB(String user, String pass, String mensaje) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
             //Nos conectamos
-            ct = DriverManager.getConnection(url, user, pass);
+            url = Propiedades.loadIP();
+            //Base de datos que entrara en prueba el dia de mañana no modificar nada 
+            //url = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
+            //url = "jdbc:postgresql://localhost:5432/BDinsta";
+            //url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+            //url = "jdbc:postgresql://localhost:5432/baseNueva";
+            //url = "jdbc:postgresql://LocalHost:5432/BD_Final";
+            //url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+            //url = "jdbc:postgresql://localhost:5432/BDinsta";
+            //url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
+            //url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
+            //url = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
+            ct = ResourceManager.getConnection();
+            //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -74,7 +76,9 @@ public class ConectarDB {
     public ResultSet sql(String sql) {
         try {
             //Iniciamos la variable para las transacciones
-            st = ct.createStatement();
+//            if (st == null) {
+                st = ct.createStatement();
+//            }
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);
             //Si todo salio bien retornamos los resultados.
