@@ -136,6 +136,9 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Notas"/>
               </Properties>
               <SubComponents>

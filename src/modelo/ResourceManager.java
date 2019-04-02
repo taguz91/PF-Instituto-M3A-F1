@@ -1,4 +1,5 @@
-﻿package modelo;
+package modelo;
+
 
 import controlador.login.LoginCTR;
 import java.sql.Connection;
@@ -7,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.stream.Collectors;
+import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -15,17 +18,12 @@ import java.sql.Statement;
 public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-<<<<<<< HEAD
-    
-    //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
-=======
 
     //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     //Esta base de datos es la que entrera en pruebas del dia de mañana no modificar nada
     //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
     //private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
->>>>>>> 2aa005bebedf9d60c75b0f8277d5e8e7df6b131d
+
     //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
     private static final String JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final"; //BD Andres
 
@@ -60,24 +58,9 @@ public class ResourceManager {
 
         }
 
+            conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
 
-       
-
-
-
-
-
-        /* JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
-
-        /*JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
-      USERNAME = "postgres";
-        PASSWORD = "qwerty79";*/
- /* JDBC_URL = "jdbc:postgresql://localhost:5432/baseNueva";
-
-      USERNAME = "postgres";
-        PASSWORD = "qwerty79";*/
-        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         return conex;
 
     }
