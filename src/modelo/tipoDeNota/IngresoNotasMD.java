@@ -17,9 +17,9 @@ public class IngresoNotasMD {
 
     private boolean notaPrimerInterCiclo;
     private boolean notaExamenInteCiclo;
-    private boolean notaSegundoInterCicli;
-    private boolean examenFinal;
-    private boolean examenDeRecuperacion;
+    private boolean notaSegundoInterCiclo;
+    private boolean notaExamenFinal;
+    private boolean notaExamenDeRecuperacion;
 
     private CursoMD curso;
 
@@ -27,9 +27,9 @@ public class IngresoNotasMD {
         this.idIngresoNotas = idIngresoNotas;
         this.notaPrimerInterCiclo = notaPrimerInterCiclo;
         this.notaExamenInteCiclo = notaExamenInteCiclo;
-        this.notaSegundoInterCicli = notaSegundoInterCicli;
-        this.examenFinal = examenFinal;
-        this.examenDeRecuperacion = examenDeRecuperacion;
+        this.notaSegundoInterCiclo = notaSegundoInterCicli;
+        this.notaExamenFinal = examenFinal;
+        this.notaExamenDeRecuperacion = examenDeRecuperacion;
         this.curso = curso;
     }
 
@@ -60,28 +60,28 @@ public class IngresoNotasMD {
         this.notaExamenInteCiclo = notaExamenInteCiclo;
     }
 
-    public boolean isNotaSegundoInterCicli() {
-        return notaSegundoInterCicli;
+    public boolean isNotaSegundoInterCiclo() {
+        return notaSegundoInterCiclo;
     }
 
-    public void setNotaSegundoInterCicli(boolean notaSegundoInterCicli) {
-        this.notaSegundoInterCicli = notaSegundoInterCicli;
+    public void setNotaSegundoInterCiclo(boolean notaSegundoInterCiclo) {
+        this.notaSegundoInterCiclo = notaSegundoInterCiclo;
     }
 
-    public boolean isExamenFinal() {
-        return examenFinal;
+    public boolean isNotaExamenFinal() {
+        return notaExamenFinal;
     }
 
-    public void setExamenFinal(boolean examenFinal) {
-        this.examenFinal = examenFinal;
+    public void setNotaExamenFinal(boolean notaExamenFinal) {
+        this.notaExamenFinal = notaExamenFinal;
     }
 
-    public boolean isExamenDeRecuperacion() {
-        return examenDeRecuperacion;
+    public boolean isNotaExamenDeRecuperacion() {
+        return notaExamenDeRecuperacion;
     }
 
-    public void setExamenDeRecuperacion(boolean examenDeRecuperacion) {
-        this.examenDeRecuperacion = examenDeRecuperacion;
+    public void setNotaExamenDeRecuperacion(boolean notaExamenDeRecuperacion) {
+        this.notaExamenDeRecuperacion = notaExamenDeRecuperacion;
     }
 
     public CursoMD getCurso() {
@@ -94,7 +94,7 @@ public class IngresoNotasMD {
 
     @Override
     public String toString() {
-        return "IngresoNotasMD{" + "idIngresoNotas=" + idIngresoNotas + ", notaPrimerInterCiclo=" + notaPrimerInterCiclo + ", notaExamenInteCiclo=" + notaExamenInteCiclo + ", notaSegundoInterCicli=" + notaSegundoInterCicli + ", examenFinal=" + examenFinal + ", examenDeRecuperacion=" + examenDeRecuperacion + ", curso=" + curso + '}';
+        return "IngresoNotasMD{" + "idIngresoNotas=" + idIngresoNotas + ", notaPrimerInterCiclo=" + notaPrimerInterCiclo + ", notaExamenInteCiclo=" + notaExamenInteCiclo + ", notaSegundoInterCiclo=" + notaSegundoInterCiclo + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenDeRecuperacion=" + notaExamenDeRecuperacion + ", curso=" + curso + '}';
     }
 
 }
