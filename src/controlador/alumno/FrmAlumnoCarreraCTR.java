@@ -74,7 +74,7 @@ public class FrmAlumnoCarreraCTR {
         cargarCmbModalidad();
         cargarCmbCarreras();
 
-        String[] titulo = {"Cedula", "Nombre"};
+        String[] titulo = {"Cédula", "Nombre"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);

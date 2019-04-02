@@ -262,6 +262,21 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    
+    public boolean activarPersonaIdentificacion(String identificacion) {
+        String sql = "UPDATE public.\"Personas\"\n"
+                + "SET persona_activa = 'true'"
+                + "WHERE persona_identificacion = '" + identificacion + "';";
+        System.out.println("Cedula "+identificacion);
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+
+    }
+
     // Utilizamos la sentencia update para modificar el estado de una persona
     // y no eliminarla por completo con parametro por identidicacion
     public boolean eliminarPersonaIdentificacion(String identificacion) {
@@ -372,6 +387,46 @@ public class PersonaBD extends PersonaMD {
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
                 + "persona_fecha_nacimiento, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+                + " persona_identificacion ='" + identificacion + "'";
+
+        return consultarPor(sql);
+    }
+    
+   public PersonaMD buscarPersonaNoActiva(String identificacion) {
+        String sql = "SELECT id_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE persona_activa = 'false' AND"
+                + " persona_identificacion ='" + identificacion + "'";
+
+        return consultarPor(sql);
+    }
+   
+      public PersonaMD existePersona(String identificacion) {
+        String sql = "SELECT id_persona, id_lugar_natal, "
+                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+                + " persona_primer_apellido, persona_segundo_apellido, "
+                + "persona_primer_nombre, persona_segundo_nombre, persona_genero,"
+                + " persona_sexo, persona_estado_civil, persona_etnia, "
+                + "persona_idioma_raiz, persona_tipo_sangre, persona_telefono,"
+                + " persona_celular, persona_correo, persona_fecha_registro,"
+                + " persona_discapacidad, persona_tipo_discapacidad,"
+                + " persona_porcenta_discapacidad, persona_carnet_conadis,"
+                + " persona_calle_principal, persona_numero_casa,"
+                + " persona_calle_secundaria, persona_referencia, "
+                + "persona_sector, persona_idioma, persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, persona_activa\n"
+                + "FROM public.\"Personas\" WHERE \n"
                 + " persona_identificacion ='" + identificacion + "'";
 
         return consultarPor(sql);

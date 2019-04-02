@@ -93,7 +93,7 @@ public class JornadaBD extends JornadaMD {
                 + "WHERE\n"
                 + "\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE";
+                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE";
 
         List<String> lista = new ArrayList<>();
 

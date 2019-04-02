@@ -66,7 +66,7 @@ public class FrmDocenteMateriaCTR {
     public void iniciar() {
         iniciarValidaciones();
         //Iniciamos la tabla
-        String[] titulo = {"Cedula", "Docente"};
+        String[] titulo = {"Cédula", "Docente"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         frmDM.getTblDocentes().setModel(mdTbl);

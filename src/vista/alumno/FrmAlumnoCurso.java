@@ -94,7 +94,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cmbPrdLectivo = new javax.swing.JComboBox<String>();
+        cmbPrdLectivo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
@@ -111,7 +111,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         tblMateriasPen = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cmbCurso = new javax.swing.JComboBox<String>();
+        cmbCurso = new javax.swing.JComboBox<>();
         btnPasar1 = new javax.swing.JButton();
         btnPasarTodos = new javax.swing.JButton();
         btnRegresar1 = new javax.swing.JButton();
@@ -121,9 +121,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Matricula en un periodo");
+        setTitle("Matrícula en un periodo");
 
-        jLabel1.setText("Seleccione un periodo lectivo:");
+        jLabel1.setText("Seleccione un período lectivo:");
 
         cmbPrdLectivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -147,7 +147,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblErrorBuscar.setText("No debe ingresar caracteres especiales");
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPrdLectivo.setText("Debe seleccionar un periodo lectivo.");
+        lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
 
         btnMtCursadas.setText("Ver materias cursadas");
 
@@ -234,7 +234,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblMateriasPen);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Seleccione las materias que tomara el estudiante en este ciclo.");
+        jLabel3.setText("Seleccione las materias que tomará el alumno en este ciclo.");
 
         jLabel4.setText("Seleccione un curso:");
 

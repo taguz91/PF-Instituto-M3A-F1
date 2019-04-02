@@ -62,7 +62,7 @@ public class VtnAlumnoCarreraCTR {
     public void iniciar() {
         cargarCmbCarreras();
 
-        String[] titulo = {"Carrera", "Alumno", "Cedula", "Fecha Inscripción"};
+        String[] titulo = {"Carrera", "Alumno", "Cédula", "Fecha inscripción"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         //Le damos unos toques a la tabla  

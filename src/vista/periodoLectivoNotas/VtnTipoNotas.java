@@ -94,7 +94,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "ID", "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
+                "No.", "ID", "Nombre ", "Valor Máximo", "Valor Mínimo", "Fecha Creación"
             }
         ) {
             boolean[] canEdit = new boolean [] {

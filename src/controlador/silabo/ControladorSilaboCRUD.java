@@ -8,6 +8,7 @@ package controlador.silabo;
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -117,7 +118,7 @@ public class ControladorSilaboCRUD {
 
     private List<PeriodoLectivoMD> periodosSilabo;
 
-    PeriodoLectivoMD pl = new dbPeriodoLectivo();
+    PeriodoLectivoMD pl;
 
     static int x = 0;
 
@@ -132,7 +133,7 @@ public class ControladorSilaboCRUD {
     static List<UnidadSilabo> ul = new ArrayList<>();
 
     boolean vineta;
-    
+
     boolean vineta_;
 
     DefaultListModel<String> model3 = new DefaultListModel<>();
@@ -146,7 +147,7 @@ public class ControladorSilaboCRUD {
     JList list = new JList();
 
     boolean[] check = new boolean[0];
-    
+
     int horas[] = new int[3];
 
     public ControladorSilaboCRUD() {
@@ -164,8 +165,9 @@ public class ControladorSilaboCRUD {
         return gestion;
     }
 
-    public ControladorSilaboCRUD(dbSilabo silabo, UsuarioBD usuario, frmConfiguracionSilabo setup) {
-        this.silabo = silabo;
+    public ControladorSilaboCRUD(UsuarioBD usuario, frmConfiguracionSilabo setup) {
+
+        this.silabo = new dbSilabo();
         this.usuario = usuario;
         this.setup = setup;
         this.gestion = new frmGestionSilabo();
@@ -174,8 +176,9 @@ public class ControladorSilaboCRUD {
         iniciarControlador();
     }
 
-    public ControladorSilaboCRUD(dbSilabo silabo, UsuarioBD usuario, frmSilabos silabos) {
-        this.silabo = silabo;
+    public ControladorSilaboCRUD(UsuarioBD usuario, frmSilabos silabos) {
+
+        this.silabo = new dbSilabo();
         this.usuario = usuario;
         this.silabos = silabos;
         this.setup = new frmConfiguracionSilabo();
@@ -187,6 +190,7 @@ public class ControladorSilaboCRUD {
         silabos.getCHBSILABO().setVisible(false);
         silabos.getjLabel1().setVisible(false);
         iniciarControlador();
+
     }
 
     public frmSilabos getSilabos() {
@@ -218,6 +222,8 @@ public class ControladorSilaboCRUD {
 
         if (silabos != null) {
 
+            cargarComboSilabos();
+
             cargarMateriasSilabo();
 
             ActionListener as = new ActionListener() {
@@ -227,6 +233,10 @@ public class ControladorSilaboCRUD {
                     //recuperarInfo(fila);
                     iniciarSilabo(-1, setup.getCmbAsignatura().getSelectedItem().toString());
                     mostrarUnidades(gestion.getCmbUnidad().getSelectedIndex());
+                    silabos.getBtnNuevo().setEnabled(false);
+                    silabos.getBtnEditar().setEnabled(false);
+                    silabos.getBtnImprimir().setEnabled(false);
+                    silabos.getBtnEliminar().setEnabled(false);
                 }
 
             };
@@ -237,6 +247,9 @@ public class ControladorSilaboCRUD {
 
                     fila = silabos.getTblSilabos().rowAtPoint(me.getPoint());
                     seleccionarSilabo();
+                    silabos.getBtnEditar().setEnabled(true);
+                    silabos.getBtnImprimir().setEnabled(true);
+                    silabos.getBtnEliminar().setEnabled(true);
                     //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
                 }
 
@@ -253,17 +266,50 @@ public class ControladorSilaboCRUD {
 
             });
 
-            silabos.getBtnImprimir().addActionListener(e
-                    -> //imprimirPrograma()
-                    hacervisible()
+            silabos.getBtnImprimir().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    hacervisible();
+                    silabos.getBtnEditar().setEnabled(false);
+                    silabos.getBtnEliminar().setEnabled(false);
+                    silabos.getBtnImprimir().setEnabled(false); }
+                
+            }); //imprimirPrograma()
+                    
             //imprimirSilabo()
-            );
+            
             silabos.getBTNGENERAR().addActionListener(e -> impresion());
 
             silabos.getBtnEditar().addActionListener(as);
             silabos.getBtnEliminar().addActionListener(d -> eliminarSilabo(id_silabo));
-            bibliografia.getBtnAtras().addActionListener(b->bibliografia.setVisible(false));
-             bibliografia.getBtnAtras().addActionListener(b->gestion.setVisible(true));
+            bibliografia.getBtnAtras().addActionListener(b -> bibliografia.setVisible(false));
+            bibliografia.getBtnAtras().addActionListener(b -> gestion.setVisible(true));
+
+            silabos.getTxtBuscar().addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent ke) {
+                    cargarMateriasSilabo();
+                }
+
+            });
+
+            silabos.getCmbCarrera().addActionListener(as1 -> cargarMateriasSilabo());
+
+            silabos.getCHBPROGRAMA().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    silabos.getCHBSILABO().setSelected(false);
+                }
+
+            });
+
+            silabos.getCHBSILABO().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    silabos.getCHBPROGRAMA().setSelected(false);
+                }
+
+            });
 
         }
 
@@ -423,6 +469,23 @@ public class ControladorSilaboCRUD {
 
         });
 
+        gestion.getBtnSiguiente().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                if (bibliografia.getTxrBibliografiaComplementaria().getText().isEmpty()) {
+                    PlaceHolder holder = new PlaceHolder(bibliografia.getTxrBibliografiaComplementaria(), "• H. M. Deitel y P. J. Deitel, Cómo Programar en C/C++ y Java. (Cuarta edición). Ed. Pearson Educación, 2004. [Deitel y Deitel, 2004]");
+
+                }
+
+                if (bibliografia.getTxrLinkografia().getText().isEmpty()) {
+                    PlaceHolder holder = new PlaceHolder(bibliografia.getTxrLinkografia(), "• https://docs.google.com/file/d/0Byy7aUl9u4fBRnJwc1U5Vkdnalk/edit");
+
+                }
+            }
+
+        });
+
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -434,7 +497,12 @@ public class ControladorSilaboCRUD {
                 gestion.getTxtNuevaEstrategia().setText("");
                 gestion.getTxtNuevaEstrategia().setEnabled(false);
                 gestion.getLblGuardarEstrategia().setEnabled(false);
-                cargarEstrategias(0);
+
+                if (editar) {
+                    cargarEstrategias(1);
+                } else {
+                    cargarEstrategias(0);
+                }
 
             }
 
@@ -478,33 +546,161 @@ public class ControladorSilaboCRUD {
         gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                if (fechaPresentacion.isBefore(fechaEnvio)) {
+                if (gestion.getDchFechaEnvioAD().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (fechaPresentacion.isBefore(fechaEnvio)) {
 
-                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La fecha de presentación no puede ser anterior a la fecha de envío", "Alerta", JOptionPane.WARNING_MESSAGE);
 
-                    gestion.getDchFechaPresentacionAD().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+                        gestion.getDchFechaPresentacionAD().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
 
+                    }
                 }
 
             }
 
         });
 
-        gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
+        gestion.getDchFechaEnvioAD().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                if (fechaPresentacion.isBefore(fechaEnvio)) {
+                if (gestion.getDchFechaPresentacionAD().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    if (fechaEnvio.isAfter(fechaPresentacion)) {
 
-                    gestion.getDchFechaPresentacionAD().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+                        JOptionPane.showMessageDialog(null, "La fecha de envío no puede ser posterior a la fecha de presentación", "Alerta", JOptionPane.WARNING_MESSAGE);
 
+                        gestion.getDchFechaEnvioAD().setDate(Date.from(fechaPresentacion.atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaPresentacionAC().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaEnvioAC().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (fechaPresentacion.isBefore(fechaEnvio)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de presentación no puede ser anterior a la fecha de envío", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaPresentacionAC().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaEnvioAC().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaPresentacionAC().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if (fechaEnvio.isAfter(fechaPresentacion)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de envío no puede ser posterior a la fecha de presentación", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaEnvioAC().setDate(Date.from(fechaPresentacion.atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaPresentacionP().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaEnvioP().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (fechaPresentacion.isBefore(fechaEnvio)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de presentación no puede ser anterior a la fecha de envío", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaPresentacionP().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaEnvioP().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaPresentacionP().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if (fechaEnvio.isAfter(fechaPresentacion)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de envío no puede ser posterior a la fecha de presentación", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaEnvioP().setDate(Date.from(fechaPresentacion.atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaPresentacionA().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaEnvioA().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (fechaPresentacion.isBefore(fechaEnvio)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de presentación no puede ser anterior a la fecha de envío", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaPresentacionA().setDate(Date.from(fechaEnvio.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
+
+                    }
+                }
+
+            }
+
+        });
+
+        gestion.getDchFechaEnvioA().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+
+                if (gestion.getDchFechaPresentacionA().getDate() != null) {
+                    LocalDate fechaPresentacion = gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaEnvio = gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if (fechaEnvio.isAfter(fechaPresentacion)) {
+
+                        JOptionPane.showMessageDialog(null, "La fecha de envío no puede ser posterior a la fecha de presentación", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                        gestion.getDchFechaEnvioA().setDate(Date.from(fechaPresentacion.atStartOfDay(ZoneId.systemDefault()).toInstant().minus(1, ChronoUnit.DAYS)));
+
+                    }
                 }
 
             }
@@ -627,78 +823,6 @@ public class ControladorSilaboCRUD {
                 }
                 );
 
-        gestion.getSpnHorasDocencia()
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseExited(MouseEvent me
-                    ) {
-                        int total = 0;
-
-                        for (int i = 0; i < unidades.size(); i++) {
-                            total = total + unidades.get(i).getHorasDocenciaUnidad();
-
-                        }
-
-                        int limite = horas[0];
-
-                        System.out.println(limite);
-
-                        if (total > limite) {
-                            gestion.getSpnHorasDocencia().setValue((int) gestion.getSpnHorasDocencia().getValue() - (total - limite));
-                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión docente", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                        }
-                    }
-
-                }
-                );
-
-        gestion.getSpnHorasAutonomas()
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseExited(MouseEvent me
-                    ) {
-                        int total = 0;
-
-                        for (int i = 0; i < unidades.size(); i++) {
-                            total = total + unidades.get(i).getHorasAutonomoUnidad();
-
-                        }
-
-                        int limite = horas[2];
-                        if (total > limite) {
-                            gestion.getSpnHorasAutonomas().setValue((int) gestion.getSpnHorasAutonomas().getValue() - (total - limite));
-                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión autonoma", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                        }
-                    }
-
-                }
-                );
-
-        gestion.getSpnHorasPracticas()
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseExited(MouseEvent me
-                    ) {
-                        int total = 0;
-
-                        for (int i = 0; i < unidades.size(); i++) {
-                            total = total + unidades.get(i).getHorasPracticaUnidad();
-
-                        }
-
-                        int limite = horas[1];
-                        if (total > limite) {
-                            gestion.getSpnHorasPracticas().setValue((int) gestion.getSpnHorasPracticas().getValue() - (total - limite));
-                            JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión practica", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                        }
-                    }
-
-                }
-                );
-
         ActionListener val = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -722,8 +846,28 @@ public class ControladorSilaboCRUD {
         ChangeListener cl = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
+
+                int total = 0;
                 int j = gestion.getCmbUnidad().getSelectedIndex();
+                for (int i = 0; i < unidades.size(); i++) {
+                    if (i != j) {
+                        total = total + unidades.get(i).getHorasDocenciaUnidad();
+                    }
+
+                }
+
+                int limite = horas[0];
+
+                System.out.println(limite);
+
+                if ((total + (int) gestion.getSpnHorasDocencia().getValue()) > limite) {
+                    gestion.getSpnHorasDocencia().setValue(limite - total);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión docente", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
                 unidades.get(j).setHorasDocenciaUnidad(Integer.parseInt(gestion.getSpnHorasDocencia().getValue().toString()));
+
             }
 
         };
@@ -731,7 +875,21 @@ public class ControladorSilaboCRUD {
         ChangeListener c2 = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
+                int total = 0;
                 int j = gestion.getCmbUnidad().getSelectedIndex();
+                for (int i = 0; i < unidades.size(); i++) {
+                    if (i != j) {
+                        total = total + unidades.get(i).getHorasPracticaUnidad();
+                    }
+
+                }
+
+                int limite = horas[1];
+                if ((total + (int) gestion.getSpnHorasPracticas().getValue()) > limite) {
+                    gestion.getSpnHorasPracticas().setValue(limite - total);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión práctica", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
                 unidades.get(j).setHorasPracticaUnidad(Integer.parseInt(gestion.getSpnHorasPracticas().getValue().toString()));
             }
 
@@ -740,12 +898,28 @@ public class ControladorSilaboCRUD {
         ChangeListener c3 = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
+                int total = 0;
                 int j = gestion.getCmbUnidad().getSelectedIndex();
+                for (int i = 0; i < unidades.size(); i++) {
+                    if (i != j) {
+                        total = total + unidades.get(i).getHorasAutonomoUnidad();
+                    }
+
+                }
+
+                int limite = horas[2];
+                if ((total + (int) gestion.getSpnHorasAutonomas().getValue()) > limite) {
+                    gestion.getSpnHorasAutonomas().setValue(limite - total);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + limite + " horas de gestión autónoma", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
                 unidades.get(j).setHorasAutonomoUnidad(Integer.parseInt(gestion.getSpnHorasAutonomas().getValue().toString()));
             }
 
         };
 
+        // PlaceHolder holder = new PlaceHolder(gestion.getTxtNuevaEstrategia(), "");
         gestion.getSpnHorasDocencia()
                 .addChangeListener(cl);
         gestion.getSpnHorasPracticas()
@@ -827,7 +1001,7 @@ public class ControladorSilaboCRUD {
                     @Override
                     public void keyPressed(KeyEvent ke
                     ) {
-                        String a=bibliografia.getTxrBibliografiaComplementaria().getText();
+                        String a = bibliografia.getTxrBibliografiaComplementaria().getText();
                         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
 
                             if (vineta) {
@@ -884,7 +1058,7 @@ public class ControladorSilaboCRUD {
                     @Override
                     public void keyPressed(KeyEvent ke
                     ) {
-                        String a=bibliografia.getTxrLinkografia().getText();
+                        String a = bibliografia.getTxrLinkografia().getText();
                         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
 
                             if (vineta_) {
@@ -929,15 +1103,16 @@ public class ControladorSilaboCRUD {
 
                         if (editar) {
 
-                            List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia().getDescripcionReferencia());
+                            System.out.println(referenciasSilabo.size());
+                            List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo);
 
-                            old.add(new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia().getDescripcionReferencia()).get(0));
+                            
+                               referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
 
-                            referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
-
-                            for (int i = 0; i < old.size(); i++) {
-                                new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
-                            }
+                                for (int i = 0; i < old.size(); i++) {
+                                    new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
+                                }
+                            
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
@@ -945,6 +1120,8 @@ public class ControladorSilaboCRUD {
 
                         }
                         guardarSilabo();
+
+                        JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente!.");
 
                         bibliografia.dispose();
                         gestion.dispose();
@@ -1227,17 +1404,19 @@ public class ControladorSilaboCRUD {
         referencias = new ArrayList<>();
         referenciasSilabo = new ArrayList<>();
 
-        MateriaMD m = new dbMaterias().retornaMateria(gestion.getTitle());
-        
-        horas[0]=m.getHorasDocencia();
-        horas[1]=m.getHorasPracticas();
-        horas[2]=m.getHorasAutoEstudio();
-        
         gestion.getCmbUnidad().removeAllItems();
 
         if (n_unidades == -1) {
             pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbMaterias().retornaMateria(silabos.getTblSilabos().getValueAt(fila, 0).toString()).getCarrera().getId());
 
+            gestion.setTitle(silabos.getTblSilabos().getValueAt(fila, 0).toString());
+            MateriaMD m = new dbMaterias().retornaMateria(gestion.getTitle());
+
+            horas[0] = m.getHorasDocencia();
+            horas[1] = m.getHorasPracticas();
+            horas[2] = m.getHorasAutoEstudio();
+
+            bibliografia.setTitle(silabos.getTblSilabos().getValueAt(fila, 0).toString());
             seleccionarSilabo();
             n_unidades = unidades.size();
             System.out.println(n_unidades);
@@ -1246,8 +1425,11 @@ public class ControladorSilaboCRUD {
             }
             list = gestion.getLstEstrategiasPredeterminadas();
             estrategiasUnidad = new dbEstrategiasUnidad().cargarEstrategiasU(id_silabo);
+
             evaluaciones = new dbEvaluacionSilabo().recuperarEvaluaciones(id_silabo);
+
             referenciasSilabo = new dbReferenciaSilabo().recuperarReferencias(id_silabo);
+
             cargarReferencias(referenciasSilabo);
             editar = true;
 
@@ -1256,15 +1438,22 @@ public class ControladorSilaboCRUD {
         cargarEstrategias(0);
 
         if (!editar) {
+
+            MateriaMD m = new dbMaterias().retornaMateria(materia);
+
+            horas[0] = m.getHorasDocencia();
+            horas[1] = m.getHorasPracticas();
+            horas[2] = m.getHorasAutoEstudio();
             pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId());
 
             for (int i = 0; i < n_unidades; i++) {
                 agregarUnidad();
             }
+            gestion.setTitle(materia);
+            bibliografia.setTitle(materia);
 
         }
 
-        gestion.setTitle(materia);
         gestion.getCmbUnidad().setSelectedIndex(0);
         //agregarUnidad();
     }
@@ -1400,10 +1589,16 @@ public class ControladorSilaboCRUD {
 
         estrategia.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
 
-        if (estrategia.insertar()) {
-            JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+        if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
+            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+
         } else {
-            JOptionPane.showMessageDialog(null, "Error al guardar.");
+            if (estrategia.insertar()) {
+                JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar.");
+            }
+
         }
 
     }
@@ -1637,9 +1832,11 @@ public class ControladorSilaboCRUD {
 
         modeloTabla = (DefaultTableModel) silabos.getTblSilabos().getModel();
 
-        materiasSilabo = new dbSilabo().mostrarSilabos(usuario.getPersona().getIdPersona());
-        periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo(usuario.getPersona().getIdPersona());
+        materiasSilabo = new dbSilabo().mostrarSilabos(usuario.getPersona().getIdPersona(), silabos.getTxtBuscar().getText(), silabos.getCmbCarrera().getSelectedItem().toString());
+        periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo(usuario.getPersona().getIdPersona(), silabos.getTxtBuscar().getText(), silabos.getCmbCarrera().getSelectedItem().toString());
 
+        System.out.println(periodosSilabo.size());
+        System.out.println(materiasSilabo.size());
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
             modeloTabla.removeRow(j);
@@ -1648,7 +1845,7 @@ public class ControladorSilaboCRUD {
         for (int i = 0; i < materiasSilabo.size(); i++) {
             modeloTabla.addRow(new Object[]{
                 materiasSilabo.get(i).getIdMateria().getNombre(),
-                periodosSilabo.get(i).getFecha_Inicio() + " / " + periodosSilabo.get(i).getFecha_Fin(),
+                periodosSilabo.get(0).getFecha_Inicio() + " / " + periodosSilabo.get(0).getFecha_Fin(),
                 materiasSilabo.get(i).getEstadoSilabo(),});
 
         }
@@ -1663,8 +1860,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1674,7 +1871,7 @@ public class ControladorSilaboCRUD {
         String id_materia1 = String.valueOf(id_materia);
         int id_silabo = new dbSilabo().retornaSilabo(id_materia).getIdSilabo();
         String id_silabo1 = String.valueOf(id_silabo);
-        pgConect con = new pgConect();
+
         String item = (String) setup.getCmbAsignatura().getSelectedItem();
         //String id_silabo = silabo.cod_sib();
         System.out.println(id_silabo);
@@ -1708,8 +1905,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1719,7 +1916,7 @@ public class ControladorSilaboCRUD {
         String id_materia1 = String.valueOf(id_materia);
         int id_silabo = new dbSilabo().retornaSilabo(id_materia).getIdSilabo();
         String id_silabo1 = String.valueOf(id_silabo);
-        pgConect con = new pgConect();
+
         String item = (String) setup.getCmbAsignatura().getSelectedItem();
         //String id_silabo = silabo.cod_sib();
         System.out.println(id_silabo);
@@ -1754,8 +1951,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1801,11 +1998,15 @@ public class ControladorSilaboCRUD {
     }
 
     public void eliminarSilabo(int aguja) {
+        
+        silabos.getBtnEliminar().setEnabled(false);
+        silabos.getBtnEditar().setEnabled(false);
+        silabos.getBtnImprimir().setEnabled(false);
 
-        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             if (new dbSilabo().EliminarSilabo(aguja)) {
-                JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
+                JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
 
             } else {
                 JOptionPane.showMessageDialog(null, "Error al eliminar");
@@ -1959,12 +2160,6 @@ public class ControladorSilaboCRUD {
         }
     }
 
-    
-
-    
-
-   
-
     public boolean silaboValido() {
 
         if (validarCampos() && validarHoras() && validarEvaluaciones()) {
@@ -1974,8 +2169,8 @@ public class ControladorSilaboCRUD {
         }
 
     }
-    
-     /*public void buscarSilabo(String aguja, ) {
+
+    /*public void buscarSilabo(String aguja, ) {
 
         DefaultTableModel modeloTabla;
 
@@ -2000,5 +2195,17 @@ public class ControladorSilaboCRUD {
         silabos.getTblSilabos().setModel(modeloTabla);
 
     }*/
+    public void cargarComboSilabos() {
+        List<CarreraMD> carreras;
 
+        //System.out.println(usuario.getIdPersona().getIdPersona());
+        carreras = new dbCarreras().buscarCarreras(usuario.getPersona().getIdPersona());
+
+        /* for (int i = 0; i < carreras.size(); i++) {
+            System.out.println(carreras.get(i).getCarreraNombre());
+        }*/
+        for (int i = 0; i < carreras.size(); i++) {
+            silabos.getCmbCarrera().addItem(carreras.get(i).getNombre());
+        }
+    }
 }

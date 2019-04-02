@@ -302,7 +302,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         cmbTipoId.setBorder(null);
         getContentPane().add(cmbTipoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 130, -1));
 
-        jLabel2.setText("Identificacion *");
+        jLabel2.setText("Identificación *");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, 20));
         getContentPane().add(txtIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 130, -1));
 
@@ -327,7 +327,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "HOMBRE", "MUJER" }));
         getContentPane().add(cmbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, -1));
 
-        jLabel9.setText("Estado Civil *");
+        jLabel9.setText("Estado Civíl *");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, 20));
 
         cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "SOLTERO/A", "CASADO/A", "DIVORCIADO/A", "UNION LIBRE", "VIUDO/A" }));
@@ -343,7 +343,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         cmbEtnia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "INDIGENA", "MESTIZO", "MULATO", "AFRO-ECUATORIANO", "BLANCO", "AWA", "ACHUAR", "CHACHI", "COFÁN", "SECOYA", "SHIWIAR", "SHUAR", "TSACHILA", "WAORANI", "ANDOA", "KICHWA DE LA SIERRA", "PASTOS", "OTAVALO", "KARANKI", "KAYAMBI", "CHIBULEOSALASAKA", "KISAPINCHA", "PURUHÁ", "KAÑARI", "SARAGURO", "PALTAS", "HUANCAVILCA", "OTRA ETNIA", "SE IGNORA" }));
         getContentPane().add(cmbEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 130, 20));
 
-        jLabel11.setText("Genero *");
+        jLabel11.setText("Género *");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, -1, 20));
 
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "MASCULINO", "FEMENINO", "LGBTI" }));
@@ -384,7 +384,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         });
         getContentPane().add(cbxDiscapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
 
-        jLabel19.setText("Telefono");
+        jLabel19.setText("Teléfono");
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, -1, 20));
 
         jLabel20.setText("Celular");
@@ -396,16 +396,16 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 128, -1));
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, 260, -1));
 
-        jLabel23.setText("Pais Reside *");
+        jLabel23.setText("País Reside *");
         getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 80, 20));
 
-        jLabel24.setText("Canton Reside *");
+        jLabel24.setText("Cantón Reside *");
         getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 100, 20));
 
         jLabel25.setText("Parroquia Reside *");
         getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 110, 20));
 
-        jLabel26.setText("Codigo Postal *");
+        jLabel26.setText("Código Postal *");
         getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 90, 20));
         getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 322, 515, 0));
 
@@ -422,7 +422,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         jLabel30.setText("Provincia *");
         getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 70, 20));
 
-        jLabel31.setText("Canton *");
+        jLabel31.setText("Cantón *");
         getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 310, 60, 20));
 
         cmbProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
@@ -446,7 +446,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(txtCallePrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 440, 310, -1));
         getContentPane().add(txtReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 440, 460, -1));
 
-        jLabel32.setText("Numero Casa");
+        jLabel32.setText("Número Casa");
         getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 480, -1, 20));
 
         jLabel33.setText("Sector");
@@ -489,11 +489,11 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 240, -1));
 
         lblErrorIdentificacion.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorIdentificacion.setText("Ingrese 10 digitos");
+        lblErrorIdentificacion.setText("Ingrese 10 dígitos");
         getContentPane().add(lblErrorIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 190, 20));
 
         lblErrorPorcentaje.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPorcentaje.setText("Solo debe ingresar numeros");
+        lblErrorPorcentaje.setText("Solo debe ingresar números");
         getContentPane().add(lblErrorPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 280, 130, -1));
 
         lblErrorTipoSangre.setForeground(new java.awt.Color(204, 0, 0));
@@ -501,11 +501,11 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 240, -1));
 
         lblErrorPriApellido.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPriApellido.setText("Solo debe ingresar letras.");
+        lblErrorPriApellido.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorPriApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 240, -1));
 
         lblErrorSegNombre.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorSegNombre.setText("Solo debe ingresar letras.");
+        lblErrorSegNombre.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorSegNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 240, -1));
 
         lblErrorEtnia.setForeground(new java.awt.Color(204, 0, 0));
@@ -529,11 +529,11 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorCanton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 330, 280, -1));
 
         lblErrorCarnetConadis.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCarnetConadis.setText("Solo debe ingresar numeros");
+        lblErrorCarnetConadis.setText("Ingrese un número de carnet válido");
         getContentPane().add(lblErrorCarnetConadis, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 210, -1));
 
         lblErrorGenero.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorGenero.setText("Seleccione su genero");
+        lblErrorGenero.setText("Seleccione su género");
         getContentPane().add(lblErrorGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 240, -1));
 
         lblErrorTipoDiscapacidad.setForeground(new java.awt.Color(204, 0, 0));
@@ -557,7 +557,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 240, -1));
 
         lblErrorNumeroCasa.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorNumeroCasa.setText("Ejemplo: 4-32  ó  s/n");
+        lblErrorNumeroCasa.setText("Ejémplo: 4-32  ó  s/n");
         getContentPane().add(lblErrorNumeroCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 500, 190, -1));
 
         lblErrorProvinciaReside.setForeground(new java.awt.Color(204, 0, 0));
@@ -565,27 +565,27 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorProvinciaReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 310, -1));
 
         lblErrorCallePrin.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCallePrin.setText("Solo debe ingresar numeros y letras");
+        lblErrorCallePrin.setText("Sólo debe ingresar números y letras");
         getContentPane().add(lblErrorCallePrin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 440, -1));
 
         lblErrorCalleSec.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCalleSec.setText("Solo debe ingresar numeros y letras");
+        lblErrorCalleSec.setText("Sólo debe ingresar números y letras");
         getContentPane().add(lblErrorCalleSec, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 440, -1));
 
         lblErrorCantonReside.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCantonReside.setText("Seleccione su canton que reside");
+        lblErrorCantonReside.setText("Seleccione su cantón que reside");
         getContentPane().add(lblErrorCantonReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 380, 320, -1));
 
         lblErrorCodigoPostal.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCodigoPostal.setText("Solo debe ingresar numeros");
+        lblErrorCodigoPostal.setText("Sólo debe ingresar números");
         getContentPane().add(lblErrorCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 290, -1));
 
         lblErrorReferencia.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorReferencia.setText("Solo debe ingresar letras.");
+        lblErrorReferencia.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 460, 540, -1));
 
         lblErrorSector.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorSector.setText("Solo debe ingresar letras.");
+        lblErrorSector.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 500, 290, -1));
 
         lblErrorTipoResidencia.setForeground(new java.awt.Color(204, 0, 0));
@@ -593,16 +593,16 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(lblErrorTipoResidencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 420, 190, -1));
 
         lblErrorSegApellido.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorSegApellido.setText("Solo debe ingresar letras.");
+        lblErrorSegApellido.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorSegApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 240, -1));
 
         lblErrorTelefono.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorTelefono.setText("Ingrese un número de telefono válido");
+        lblErrorTelefono.setText("Ingrese un número de teléfono válido");
         getContentPane().add(lblErrorTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 240, -1));
         getContentPane().add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 790, 10));
 
         lblErrorEstadoCivil.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorEstadoCivil.setText("Seleccione un estado civil");
+        lblErrorEstadoCivil.setText("Seleccione un estado civíl");
         getContentPane().add(lblErrorEstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 240, -1));
 
         jLabel36.setText("Provincia Reside *");
@@ -612,7 +612,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(cmbPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 200, -1));
 
         lblErrorPaisReside.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPaisReside.setText("Seleccione su pais de residencia");
+        lblErrorPaisReside.setText("Seleccione su país de residencia");
         getContentPane().add(lblErrorPaisReside, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 310, -1));
 
         jLabel18.setText("Tipo de Identificación*");
@@ -622,7 +622,7 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         getContentPane().add(cmbIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 130, -1));
 
         lblErrorPriNombre.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPriNombre.setText("Solo debe ingresar letras.");
+        lblErrorPriNombre.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorPriNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 240, -1));
 
         btnCapturarFoto.setText("Capturar Foto");

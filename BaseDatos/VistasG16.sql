@@ -6,9 +6,7 @@
     "RolPostgres.sql"
 
 */
-
-
-CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
+CREATE MATERIALIZED VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
     "Usuarios".usu_username,
     "Usuarios".usu_password,
     "Usuarios".usu_estado,
@@ -22,9 +20,9 @@ CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usua
    FROM ("Usuarios"
      JOIN "Personas" ON (("Usuarios".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."Usuarios_Persona" OWNER TO "permisos";
 
-CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
+
+CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -47,10 +45,8 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
-
-CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
+CREATE MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
     "PeriodoIngresoNotas".perd_notas_fecha_inicio,
     "PeriodoIngresoNotas".perd_notas_fecha_cierre,
     "TipoDeNota".tipo_nota_nombre,
@@ -63,55 +59,91 @@ CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLec
      JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
      JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
 
-ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
+ALTER MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
 
 
 
+--------------------------------------------------------------------------------------
+ViewCursosPermisosNotas
 
-SELECT
-	"Alumnos".id_alumno,
-	p_alu.persona_identificacion,
-	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as "APELLIDOS",
-	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
-	"AlumnoCurso".almn_curso_nt_1_parcial,
-	"AlumnoCurso".almn_curso_nt_examen_interciclo,
-	"AlumnoCurso".almn_curso_nt_2_parcial,
-	"AlumnoCurso".almn_curso_nt_examen_final,
-	"AlumnoCurso".almn_curso_nt_examen_supletorio,
-	"AlumnoCurso".almn_curso_asistencia,
-	"AlumnoCurso".almn_curso_nota_final,
-	"AlumnoCurso".almn_curso_estado,
-	"AlumnoCurso".almn_curso_num_faltas,
-	"Materias".materia_nombre, 
-	"Jornadas".nombre_jornada,
-	"Materias".materia_ciclo,
-	"Cursos".curso_paralelo,
-	"Carreras".carrera_nombre,
-	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre as "NOMBRE_PROF",
-	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as "APELLIDO_PROF",
-	("AlumnoCurso".almn_curso_num_faltas * "Materias".materia_total_horas)/100 as "% Faltas"
+CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+AS
+SELECT "IngresoNotas".nota_primer_inteciclo,
+    "IngresoNotas".nota_examen_intecilo,
+    "IngresoNotas".nota_segundo_inteciclo,
+    "IngresoNotas".nota_examen_final,
+    "IngresoNotas".nota_examen_de_recuperacion,
+    "IngresoNotas".id_ingreso_notas,
+    "IngresoNotas".id_curso,
+    "Cursos".id_materia,
+    "Cursos".id_prd_lectivo,
+    "Cursos".id_docente,
+    "Cursos".curso_nombre,
+    "Materias".materia_nombre,
+    "Materias".materia_codigo,
+    "PeriodoLectivo".prd_lectivo_nombre,
+    "Personas".persona_identificacion,
+    "Personas".persona_primer_apellido,
+    "Personas".persona_segundo_apellido,
+    "Personas".persona_primer_nombre,
+    "Personas".persona_segundo_nombre
+   FROM ((((("IngresoNotas"
+     JOIN "Cursos" ON (("IngresoNotas".id_curso = "Cursos".id_curso)))
+     JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)))
+     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
+     JOIN "Docentes" ON (("Cursos".id_docente = "Docentes".id_docente)))
+     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
+
+ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
+
+
+------------------------------------------------------------
+script indice
+
+CREATE UNIQUE INDEX usuariospersona ON "Usuarios_Persona"(
+	id_usuario,
+  id_persona,
+  persona_identificacion,
+  persona_primer_apellido,
+  persona_primer_nombre)
+  
+  
+  
+CREATE UNIQUE INDEX viewalumnocurso ON "ViewAlumnoCurso"(
+	id_almn_curso,
+    id_alumno,
+    id_curso,
+    persona_identificacion,
+    persona_primer_apellido,
+    persona_primer_nombre,
+    id_persona,
+    alumno_codigo)
 	
-FROM
-	"AlumnoCurso"
-	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
-	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
-	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
-	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
-	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
-	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
-	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
-	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
-	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
-  INNER JOIN "Docente" doc_coor ON "public".id_docente = public
 	
+CREATE UNIQUE INDEX viewperiodoingresonotas ON "ViewPeriodoIngresoNotas"(
+	prd_lectivo_nombre,
+  tipo_nota_nombre,
+  id_prd_lectivo,
+  id_tipo_nota,
+  id_perd_ingr_notas)
+  
+  
+  
+  
 
-	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = FALSE 
-	AND "Cursos".id_docente = 55 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
-	AND "Cursos".curso_ciclo = 4 
-	AND "Cursos".curso_paralelo = 'A' 
-	AND "Jornadas".nombre_jornada = 'MATUTINA' 
-ORDER BY
-	p_alu.persona_primer_apellido ASC;
+CREATE UNIQUE INDEX cursospermisosnotas ON "ViewCursosPermisosNotas"(
+	id_ingreso_notas,
+	id_curso,
+	id_materia,
+id_prd_lectivo,
+id_docente,
+curso_nombre,
+    materia_nombre,
+    prd_lectivo_nombre,
+    persona_identificacion,
+    persona_primer_nombre,
+	persona_identificacion,
+persona_primer_apellido)
+
+
+

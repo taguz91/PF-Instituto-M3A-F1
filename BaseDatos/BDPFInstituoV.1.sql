@@ -136,6 +136,9 @@ CREATE TABLE "Docentes"(
   "docente_activo" boolean NOT NULL DEFAULT 'true',
   "docente_observacion" character varying(20),
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
+	--Nuevos campos
+	"docente_titulo" character varying(200) NOT NULL, 
+	"docente_abreviatura" character varying(20) NOT NULL, 
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
@@ -457,7 +460,8 @@ CREATE TABLE "Silabo" (
 
 	id_silabo serial NOT NULL,
 	id_materia integer NOT NULL,
-	estado_silabo character varying (50) NOT NULL,
+  id_prd_lectivo integer NOT NULL,
+  estado_silabo character varying (50) NOT NULL,
 
 	PRIMARY KEY(id_silabo),
 
@@ -532,12 +536,14 @@ CREATE TABLE "UnidadSilabo" (
 CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
---	id_silabo integer NOT NULL,
 	id_unidad integer NOT NULL,
-	actividad character varying (50) NOT NULL,
+	--actividad character varying (50) NOT NULL,
+  indicador TEXT NOT NULL,
 	id_tipo_actividad integer NOT NULL,
-	instrumento character varying (50) NOT NULL,
-	valoracion integer NOT NULL,
+	--instrumento character varying (50) NOT NULL,
+  instrumento text NOT NULL,
+	--valoracion integer NOT NULL,
+  valoracion numeric (4, 1) NOT NULL,
 	fecha_envio date NOT NULL,
 	fecha_presentacion date NOT NULL,
 
@@ -558,6 +564,10 @@ CREATE TABLE "EvaluacionSilabo" (
         ON UPDATE CASCADE
         ON DELETE CASCADE*/
 );
+
+ALTER TABLE "Silabo" ADD CONSTRAINT "fk_silabo_prd_lectivo"
+    FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+        ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 /*
@@ -712,7 +722,7 @@ ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "usuarios_rolesUsuarios_fk"
 
 ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
     FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
-        ON DELETE CASCADE ON UPDATE CASCADE; 
+        ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 

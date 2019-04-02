@@ -13,8 +13,10 @@ import modelo.referenciasSilabo.ReferenciaSilabo;
 public class dbSilabo extends Silabo {
 
     pgConect con = new pgConect();
+   
 
     public dbSilabo() {
+        
     }
 
     public dbSilabo(Integer idSilabo) {
@@ -178,7 +180,7 @@ public class dbSilabo extends Silabo {
         }
     }
 
-    public List<Silabo> mostrarSilabos(int aguja) {
+    public List<Silabo> mostrarSilabos(int id, String aguja, String filtro) {
         List<Silabo> lista = new ArrayList<Silabo>();
         String sql = "SELECT DISTINCT \"Materias\".id_materia,\"Materias\".materia_nombre, \"Silabo\".estado_silabo \n"
                 + "FROM \"Materias\",\"Silabo\",\"PeriodoLectivo\",\"Carreras\",\"Cursos\",\"Docentes\",\"Personas\"\n"
@@ -186,10 +188,15 @@ public class dbSilabo extends Silabo {
                 + "AND \"Materias\".id_carrera =\"Carreras\".id_carrera\n"
                 + "AND \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n"
                 + "AND \"PeriodoLectivo\".prd_lectivo_fecha_fin>'2018-11-12'\n"
-                + "AND \"Personas\".id_persona="+aguja+"\n"
+                + "AND \"Personas\".id_persona="+id+"\n"
                 + "AND \"Materias\".id_materia=\"Cursos\".id_materia\n"
                 + "AND \"Personas\".id_persona=\"Docentes\".id_persona\n"
-                + "AND \"Cursos\".id_docente=\"Docentes\".id_docente";
+                + "AND \"Cursos\".id_docente=\"Docentes\".id_docente\n"
+                + "AND \"Carreras\".carrera_nombre='"+filtro+"'\n"
+                + "AND (\"Materias\".materia_nombre ILIKE '%"+aguja+"%' \n"
+                + "	 OR TO_CHAR(\"PeriodoLectivo\".prd_lectivo_fecha_inicio,'yyyy-MM-dd') ILIKE '%"+aguja+"%'\n"
+                + "	OR TO_CHAR(\"PeriodoLectivo\".prd_lectivo_fecha_inicio,'yyyy-MM-dd') ILIKE '%"+aguja+"%'\n"
+                + "	OR \"Silabo\".estado_silabo ILIKE '%"+aguja+"%')";
 
         ResultSet rs = con.query(sql);
         System.out.println(sql);
@@ -199,7 +206,7 @@ public class dbSilabo extends Silabo {
                 s.getIdMateria().setId(rs.getInt(1));
                 s.getIdMateria().setNombre(rs.getString(2));
                 s.setEstadoSilabo(rs.getString(3));
-                
+
                 lista.add(s);
             }
             rs.close();

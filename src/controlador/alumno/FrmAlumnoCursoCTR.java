@@ -102,7 +102,7 @@ public class FrmAlumnoCursoCTR {
         //Pasamos los modelos a las tablas 
         String[] titulo1 = {"Materias no seleccionadas"};
         String[] titulo2 = {"Materias seleccionadas"};
-        String[] tituloAlmn = {"Cedula", "Alumnos"};
+        String[] tituloAlmn = {"Cédula", "Alumnos"};
         String[][] datos1 = {};
         String[][] datos2 = {};
         String[][] datos3 = {};
@@ -200,7 +200,7 @@ public class FrmAlumnoCursoCTR {
                 mallaAlm.actualizarEstadoMallaAlmn(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
-            JOptionPane.showMessageDialog(null, "Se guardo el alumno en el curso, correctamente");
+            JOptionPane.showMessageDialog(null, "Se guardó el alumno en el curso, correctamente");
             //Reiniciamos todo 
             frmAlmCurso.getTxtBuscar().setText("");
             frmAlmCurso.getCmbCurso().removeAllItems();

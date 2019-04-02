@@ -87,7 +87,7 @@
                   <Component id="cmbCursos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="317" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="321" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="lblResultados" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Periodo"/>
+        <Property name="text" type="java.lang.String" value="Per&#xed;odo:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

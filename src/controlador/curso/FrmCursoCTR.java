@@ -225,7 +225,7 @@ public class FrmCursoCTR {
 
                 if (existeCurso != null) {
                     guardar = false;
-                    frmCurso.getLblError().setText("Ya guardo estos datos.");
+                    frmCurso.getLblError().setText("Datos ya guardados.");
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
@@ -236,7 +236,7 @@ public class FrmCursoCTR {
                         paralelo);
                 if (existeCurso != null) {
                     guardar = false;
-                    frmCurso.getLblError().setText("Ya guardo esta materia en el curso.");
+                    frmCurso.getLblError().setText("Este curso ya tiene guardado: "+materias.get(posMat - 1).getNombre()+".");
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
@@ -269,10 +269,6 @@ public class FrmCursoCTR {
                 }
             }
         }
-    }
-    
-    private void iniciarIngresoNotas(){
-        
     }
 
     public void editar(CursoMD c) {

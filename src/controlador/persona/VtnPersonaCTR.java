@@ -50,6 +50,9 @@ public class VtnPersonaCTR {
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
+    //Para permisos
+    String [] accesos = {"Personas-Ingresar","Personas-Editar","Personas-Eliminar","Personas-Estado"};
+    
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -212,6 +215,10 @@ public class VtnPersonaCTR {
         }
     }
 
+    private void activarPersona(){
+        
+    }
+    
     private void eliminar() {
         int posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
@@ -219,12 +226,14 @@ public class VtnPersonaCTR {
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Eliminar Persona", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"+
+                    vtnPersona.getTblPersona().getValueAt(posFila, 2)+"?", " Eliminar Persona", dialog);
             if (result == 0) {
                 if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     //cargarLista();
                     cargarTipoPersona();
+                    vtnPersona.getTxtBuscar().setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA PERSONA");
                 }
@@ -247,7 +256,7 @@ public class VtnPersonaCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Persona");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);

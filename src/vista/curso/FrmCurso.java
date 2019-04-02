@@ -144,10 +144,10 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(454, 361));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbxPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
+        cbxPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
         jPanel1.add(cbxPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, -1));
 
         lblPeriodoLectivo.setText("Período Lectivo:");
@@ -176,7 +176,7 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         jPanel1.add(cbxJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 350, -1));
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPrdLectivo.setText("Debe seleccionar un periodo lectivo.");
+        lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
         jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 386, -1));
 
         lblErrorJornada.setForeground(new java.awt.Color(204, 0, 0));
@@ -201,7 +201,7 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         btnGuardar.setToolTipText("Guardar y salir.");
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
 
-        pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clase", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+        pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clase", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
         pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDocete.setText("Docente:");

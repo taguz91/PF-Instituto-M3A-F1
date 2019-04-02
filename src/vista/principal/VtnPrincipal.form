@@ -56,7 +56,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Calendar_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMateria">
@@ -72,7 +72,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Inscripcion"/>
+                <Property name="text" type="java.lang.String" value="Inscripci&#xf3;n"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMatricula">
@@ -96,16 +96,22 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Literature_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Materia Docentes"/>
+                <Property name="text" type="java.lang.String" value="Materia docentes"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Historial Usuarios"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Historial usuarios"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+B"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
                 </Property>
@@ -130,6 +136,9 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Notas"/>
               </Properties>
               <SubComponents>
@@ -202,7 +211,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Calendar_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgInscripcion">
@@ -210,7 +219,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Inscripcion"/>
+                <Property name="text" type="java.lang.String" value="Inscripci&#xf3;n"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgMatricula">
@@ -218,7 +227,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Documents_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Matricula"/>
+                <Property name="text" type="java.lang.String" value="Matr&#xed;cula"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgDocenteMt">
@@ -226,11 +235,14 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Literature_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Materia Docente"/>
+                <Property name="text" type="java.lang.String" value="Materia docente"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+B"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/ingresar_silabo_menu.png"/>
                 </Property>
@@ -361,9 +373,7 @@
                   <Component id="btnIngresarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="165" max="32767" attributes="0"/>
                   <Component id="btnCerrarSesion" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -371,26 +381,20 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnAlumno" max="32767" attributes="0"/>
-                          <Component id="btnDocente" max="32767" attributes="0"/>
-                          <Component id="btnCarrera" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnCurso" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnPrdLectivo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnMateria" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnPersona" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnInscripcion" max="32767" attributes="0"/>
-                          <Component id="btnMatricula" max="32767" attributes="0"/>
-                          <Component id="btnCerrarSesion" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnDocenteMateria" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnAlumno" max="32767" attributes="0"/>
+                      <Component id="btnDocente" max="32767" attributes="0"/>
+                      <Component id="btnCarrera" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnCurso" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnPrdLectivo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnMateria" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnPersona" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnInscripcion" max="32767" attributes="0"/>
+                      <Component id="btnMatricula" max="32767" attributes="0"/>
+                      <Component id="btnCerrarSesion" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnDocenteMateria" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -403,7 +407,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_School_Director_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar docente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar docente."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -412,7 +416,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_User_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar alumno"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar alumno."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -421,7 +425,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Graduation_Cap_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar carrera"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar carrera."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -430,7 +434,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Class_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar curso"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar curso."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -439,7 +443,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Calendar_25px.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar periodo lectivo"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar per&#xed;odo lectivo."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -457,7 +461,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icons8_Team_25px_1.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Ingresar docente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar persona."/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -520,6 +524,9 @@
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Silabo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIngresarSilaboActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnConsultarSilabo">
           <Properties>
@@ -528,14 +535,6 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Consultar Silabo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Triggers Prueba"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -585,15 +584,15 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnAyuda" max="32767" attributes="0"/>
-                      <Component id="btnConsola" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel2" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="btnAyuda" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnConsola" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="btnEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>

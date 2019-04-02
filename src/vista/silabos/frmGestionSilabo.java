@@ -7,6 +7,7 @@ package vista.silabos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -33,6 +34,9 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
      */
     public frmGestionSilabo() {
         initComponents();
+        
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JLabel getLblEliminarUnidad() {
@@ -968,10 +972,10 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         });
         pnlUnidad.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 510, -1));
 
-        lblUnidad.setText("Seleccione la unidad:");
+        lblUnidad.setText("Seleccione la Unidad:");
         pnlUnidad.add(lblUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        lblTitulo.setText("Titulo de la unidad:");
+        lblTitulo.setText("Titulo de la Unidad:");
         pnlUnidad.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         lblFechaInicio.setText("Fecha de Inicio de Unidad:");
@@ -1001,7 +1005,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblInstrumentoAD.setText("Instrumento:");
         pnlAsistidaDocente.add(lblInstrumentoAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
-        spnValoracionAD.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
+        spnValoracionAD.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60, 0.5d));
         pnlAsistidaDocente.add(spnValoracionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAD.setText("Valoración");
@@ -1067,7 +1071,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblInstrumentoAC.setText("Instrumento:");
         pnlAprendizajeColaborativo.add(lblInstrumentoAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
-        spnValoracionAC.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnValoracionAC.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
         pnlAprendizajeColaborativo.add(spnValoracionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAC.setText("Valoración");
@@ -1133,7 +1137,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblInstrumentoP.setText("Instrumento:");
         pnlPractica.add(lblInstrumentoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
-        spnValoracionP.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnValoracionP.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
         pnlPractica.add(spnValoracionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionP.setText("Valoración");
@@ -1199,7 +1203,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblInstrumentoA.setText("Instrumento:");
         pnlAutonoma.add(lblInstrumentoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
-        spnValoracionA.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnValoracionA.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
         pnlAutonoma.add(spnValoracionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionA.setText("Valoración");
@@ -1317,16 +1321,20 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
+        lblEliminarUnidad.setToolTipText("Eliminar Unidad");
         pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 20, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
+        lblGuardarEstrategia.setToolTipText("Guardar Nueva Estrategia");
         lblGuardarEstrategia.setEnabled(false);
         pnlUnidad.add(lblGuardarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 150, -1, -1));
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
+        lblAgregarUnidad.setToolTipText("Agregar Unidad");
         pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
+        lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
         pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, -1, -1));
 
         txtNuevaEstrategia.setEnabled(false);

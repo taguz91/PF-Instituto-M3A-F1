@@ -145,7 +145,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "public.\"Cursos\" c\n"
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "c.id_prd_lectivo = "+idPrd+"  AND\n"
+                + "c.id_prd_lectivo = " + idPrd + "  AND\n"
                 + "ac.id_curso = c.id_curso;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
@@ -269,7 +269,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "INNER JOIN \"Alumnos\" ON \"ViewAlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
                 + "INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado IS FALSE AND\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado IS TRUE AND\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
@@ -277,6 +277,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
+        System.out.println(SELECT);
 
         return selectFromView(SELECT);
 
