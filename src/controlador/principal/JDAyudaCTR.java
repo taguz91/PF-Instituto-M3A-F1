@@ -16,17 +16,18 @@ public class JDAyudaCTR {
     private final PnlAyuda pnlAyuda;
     private JLabel lbl;
 
-    String[][] G23 = {{"Busqueda en Ventanas", "Se buscara automaticamente, despues de ingresar mas de 3 caracteres."},
-    {"Validaciones", "Si al ingresar texto se le remarca el cuadro de rojo es debido a que ingreso un caracter no valido."},
-    {"Inicio de sesion", "Para el correcto ingreso a la aplicacion debera contar con su respectivo User y Password"},
-    {"Etiquetas de error", "Los campos de informacion deberan estar llenados en su totalidad para poder guardar la informacion "},
-    {"Creacion de profesor/alumno", "Para la creacion de un nuevo profesor o alumno se debere tener anteriormente creado una Persona"},
-    {"Matricula", "Para matricular un estudiante previamente debe crear un nuevo curso"},
-    {"Abrir ventanas","El numero maximo de ejecutar subventanas en la pantalla principal  son 5 "},
-    {"Busqueda en malla de alumnos","Se buscara automaticament e al ingresear los 10 digitos de la cedula"},
-    {"Busquedas por datos","Al ingresar la cedula en el formulario (Docente,Alumno) se le buscara automaticamente si desea editarlo"},
-    {"Eliminacion","Cuando se elimina un datos cambia se estado de true a false"},
-    {"Atajos","Podra acceder a las distintas ventas utilizando las respectivas combinacions de teclas"}
+    String[][] G23 = {{"Busqueda en ventanas", "Se buscará automaticamente, posterior al ingreso de mas de 3 caracteres."},
+    {"Validaciones", "Si al ingresar texto se remarca el cuadro de color rojo, es a causa del ingreso  un caracter no válido."},
+    {"Inicio de sesión", "Para ingresar a la aplicación, usted debe contar con su respectivo Usuario y Contraseña"},
+    {"Etiquetas de error", "Los campos de información deberan estar llenados en su totalidad para poder guardar la información "},
+    {"Creación de profesor/alumno", "Para la correcta creación de un nuevo profesor o alumno, es necesario haber creado anteriormente a una Persona"},
+    {"Matricula", "Para matricular un estudiante previamente debe haber creado un nuevo curso"},
+    {"Abrir ventanas","El número máximo de subventanas en la pantalla principal que pueden ser ejectuadas a la vez son 5 "},
+    {"Busqueda en malla de alumnos","Se buscará automaticamente al ingresar los 10 dígitos de la cédula"},
+    {"Busquedas por datos","Al ingresar la cédula en el formulario (Docente,Alumno), la busqueda se realiza automaticamente si desea editarlo"},
+    {"Eliminación","Cuando se elimina una Persona,Alumno,etc. El dato cambia se estado de true a false"},
+    {"Accesos directos","Podra acceder a las distintas ventanas de la aplicación, utilizando las respectivas combinaciones de teclas" },
+    {"Cerrar Sesión","Para salir de la aplicación,pulse el botón que permita el cierre de sesión en la aplicación"}
     };
     
     
