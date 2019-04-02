@@ -8,7 +8,7 @@
 */
 
 
-CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
+CREATE MATERIALIZED VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
     "Usuarios".usu_username,
     "Usuarios".usu_password,
     "Usuarios".usu_estado,
@@ -24,7 +24,7 @@ CREATE OR REPLACE VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usua
 
 
 
-CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
+CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -48,7 +48,7 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
 
 
-CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
+CREATE MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
     "PeriodoIngresoNotas".perd_notas_fecha_inicio,
     "PeriodoIngresoNotas".perd_notas_fecha_cierre,
     "TipoDeNota".tipo_nota_nombre,
@@ -61,7 +61,7 @@ CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLec
      JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
      JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
 
-ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
+ALTER MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
 
 
 
