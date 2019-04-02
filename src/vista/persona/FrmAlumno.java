@@ -85,6 +85,9 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         Lbl_ErrParentesco = new javax.swing.JLabel();
         Lbl_ErrConEmergencia = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
+        Cbx_Identificacion = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        Lbl_ErrTipoIdenti = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -93,172 +96,182 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Cedula *");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, 20));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 860, 10));
-        jPanel1.add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 420, -1));
+        jLabel2.setText("Cédula *");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, 20));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 860, 10));
+        jPanel1.add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 480, -1));
 
         jLabel3.setText("Nombre *");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, 20));
 
         Txt_Cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_CedulaActionPerformed(evt);
             }
         });
-        jPanel1.add(Txt_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 223, -1));
+        jPanel1.add(Txt_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 180, -1));
 
         CmBx_TipoBachillerato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "BGU", "BI", "TECNICO", "TECNICO PRODUCTIVO", "OTRO" }));
-        jPanel1.add(CmBx_TipoBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 340, -1));
+        jPanel1.add(CmBx_TipoBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 340, -1));
 
         Txt_TlSuperior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_TlSuperiorActionPerformed(evt);
             }
         });
-        jPanel1.add(Txt_TlSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 340, -1));
+        jPanel1.add(Txt_TlSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 340, -1));
 
         jLabel8.setText("Titulo de Bachiller *");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, -1, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, -1, 20));
 
         jLabel5.setText("Tipo de Bachiller *");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 860, 7));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, -1, -1));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 860, 7));
 
         Spnr_Anio.setModel(new javax.swing.SpinnerDateModel());
-        jPanel1.add(Spnr_Anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 137, -1));
+        jPanel1.add(Spnr_Anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 137, -1));
 
         CmBx_SecEconomico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
-        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 340, -1));
+        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, 340, -1));
 
         CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR", "NINGUNO" }));
-        jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 340, -1));
+        jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 310, 340, -1));
 
         CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "ESPOSO/A", "OTRO" }));
-        jPanel1.add(CmBx_Parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 340, -1));
+        jPanel1.add(CmBx_Parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 340, -1));
 
         jLabel21.setText("Parentesco Contacto *");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, -1, 20));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, -1, 20));
 
         jLabel20.setText("Formacion Madre ");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, 20));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, -1, 20));
 
         jLabel15.setText("Sector Económico");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, -1, 20));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, -1, 20));
 
         jLabel6.setText("Año de Bachiller *");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, 20));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 870, 10));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, -1, 20));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 870, 10));
 
         Btn_Cancelar.setText("Cancelar");
-        jPanel1.add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 410, 90, -1));
+        jPanel1.add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 450, 90, -1));
 
         Btn_Guardar.setText("Guardar");
-        jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 410, 100, -1));
-        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, 194, -1));
-        jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 194, -1));
+        jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 450, 100, -1));
+        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, 194, -1));
+        jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 194, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR", "NINGUNO" }));
-        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 200, -1));
+        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 200, -1));
 
         jLabel14.setText("Trabaja:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, 20));
-        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
-        jPanel1.add(Txt_Ocupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 250, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, 20));
+        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, -1, -1));
+        jPanel1.add(Txt_Ocupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 250, -1));
 
         jLabel13.setText("Ocupacion:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         jLabel12.setText("Pension:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, 20));
-        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 20));
+        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
 
         jLabel19.setText("Formacion Padre ");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
         jLabel22.setText("Nombre Contacto *");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, 20));
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, 20));
 
         jLabel23.setText("Contacto Emergencia *");
-        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, 20));
-        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, -1, -1));
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, 20));
+        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, -1, -1));
 
         jLabel7.setText("Educación Superior: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, 20));
 
         jLabel9.setText("Nivel Académico *");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
         jLabel4.setText("Tipo de Colegio *");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
         CmBx_TipoColegio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "FISCAL", "FISCOMISIONAL", "PRIVADA", "MUNICIPAL", "OTROS" }));
-        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 200, -1));
+        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 200, -1));
 
         CmBx_NvAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "EDUCACIÓN MEDIA", "EDUCACIÓN SUPERIOR", "POST-GRADO", "PRIMARIA", "SECUNDARIA", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "NINGUNO" }));
-        jPanel1.add(CmBx_NvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 200, -1));
+        jPanel1.add(CmBx_NvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 200, -1));
 
         Btn_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(Btn_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 31, -1));
+        jPanel1.add(Btn_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 31, -1));
 
         Lbl_ErrCedula.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrCedula.setText("Ingrese solo números");
-        jPanel1.add(Lbl_ErrCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 160, -1));
+        jPanel1.add(Lbl_ErrCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 160, -1));
 
         Lbl_ErrTipColegio.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipColegio.setText("Seleccione un Colegio");
-        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 130, -1));
+        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 130, -1));
 
         Lbl_ErrTipBachillerato.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipBachillerato.setText("Seleccione un Bachillerato");
-        jPanel1.add(Lbl_ErrTipBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
+        jPanel1.add(Lbl_ErrTipBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
         Lbl_ErrNvAcademico.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrNvAcademico.setText("Seleccione un Nivel Academico");
-        jPanel1.add(Lbl_ErrNvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+        jPanel1.add(Lbl_ErrNvAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
 
         Lbl_ErrTiSuperior.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTiSuperior.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrTiSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, -1));
+        jPanel1.add(Lbl_ErrTiSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, -1, -1));
 
         Lbl_ErrOcupacion.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrOcupacion.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrOcupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 130, -1));
+        jPanel1.add(Lbl_ErrOcupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 130, -1));
 
         Lbl_ErrSecEconomico.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrSecEconomico.setText("Seleccione un Sector");
-        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, 190, -1));
+        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 290, 190, -1));
 
         Lbl_ErrForPadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForPadre.setText("Seleccione la Formación del Padre");
-        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 210, -1));
+        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 210, -1));
 
         Lbl_ErrForMadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForMadre.setText("Seleccione la Formacion de la Madre");
-        jPanel1.add(Lbl_ErrForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, 250, -1));
+        jPanel1.add(Lbl_ErrForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 250, -1));
 
         Lbl_ErrNomContacto.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrNomContacto.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrNomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 190, -1));
+        jPanel1.add(Lbl_ErrNomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 120, -1));
 
         Lbl_ErrParentesco.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrParentesco.setText("Seleccione un Parentesco");
-        jPanel1.add(Lbl_ErrParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, 250, -1));
+        jPanel1.add(Lbl_ErrParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 250, -1));
 
         Lbl_ErrConEmergencia.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrConEmergencia.setText("Ingrese solo números");
-        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 170, -1));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 870, 10));
+        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 170, -1));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 870, 10));
+
+        Cbx_Identificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CÉDULA", "PASAPORTE" }));
+        jPanel1.add(Cbx_Identificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 140, -1));
+
+        jLabel1.setText("Tipo de Identificación *");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        Lbl_ErrTipoIdenti.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrTipoIdenti.setText("Seleccione un tipo de Identificación");
+        jPanel1.add(Lbl_ErrTipoIdenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 210, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -695,14 +708,30 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         this.Lbl_ErrTipColegio = Lbl_ErrTipColegio;
     }
 
+    public JComboBox<String> getCbx_Identificacion() {
+        return Cbx_Identificacion;
+    }
 
+    public void setCbx_Identificacion(JComboBox<String> Cbx_Identificacion) {
+        this.Cbx_Identificacion = Cbx_Identificacion;
+    }
+
+    public JLabel getLbl_ErrTipoIdenti() {
+        return Lbl_ErrTipoIdenti;
+    }
+
+    public void setLbl_ErrTipoIdenti(JLabel Lbl_ErrTipoIdenti) {
+        this.Lbl_ErrTipoIdenti = Lbl_ErrTipoIdenti;
+    }
 
     
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Buscar;
     private javax.swing.JButton Btn_Cancelar;
     private javax.swing.JButton Btn_Guardar;
+    private javax.swing.JComboBox<String> Cbx_Identificacion;
     private javax.swing.JCheckBox ChkBx_EdcSuperior;
     private javax.swing.JCheckBox ChkBx_Pension;
     private javax.swing.JCheckBox ChkBx_Trabaja;
@@ -725,6 +754,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_ErrTiSuperior;
     private javax.swing.JLabel Lbl_ErrTipBachillerato;
     private javax.swing.JLabel Lbl_ErrTipColegio;
+    private javax.swing.JLabel Lbl_ErrTipoIdenti;
     private javax.swing.JSpinner Spnr_Anio;
     private javax.swing.JTextField Txt_Cedula;
     private javax.swing.JTextField Txt_ConEmergency;
@@ -732,6 +762,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JTextField Txt_Nombre;
     private javax.swing.JTextField Txt_Ocupacion;
     private javax.swing.JTextField Txt_TlSuperior;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

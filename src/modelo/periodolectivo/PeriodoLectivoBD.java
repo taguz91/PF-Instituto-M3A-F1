@@ -30,7 +30,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
-                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
+                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, false);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -68,7 +68,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_estado = false"
+                + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -136,7 +136,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public List<PeriodoLectivoMD> llenarTabla() {
         List<PeriodoLectivoMD> lista = new ArrayList();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin"
-                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND prd_lectivo_estado = true;";
+                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND prd_lectivo_estado = false;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -164,7 +164,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND (\n"
+                + "prd_lectivo_activo = true AND prd_lectivo_estado = false AND (\n"
                 + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
@@ -201,7 +201,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT p.id_prd_lectivo, p.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin, p.prd_lectivo_observacion, c.carrera_nombre"
                 + " FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c USING(id_carrera)"
                 + " WHERE p.id_prd_lectivo = "
-                + ID + " AND prd_lectivo_activo = true AND prd_lectivo_estado = true;";
+                + ID + " AND prd_lectivo_activo = true AND prd_lectivo_estado = false;";
         ResultSet rs = conecta.sql(sql);
         try {
             PeriodoLectivoMD m = new PeriodoLectivoMD();
@@ -230,7 +230,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND prd_lectivo_estado = true "
+                + "prd_lectivo_activo = true AND prd_lectivo_estado = false "
                 + "AND carrera_activo = true\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
@@ -264,7 +264,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
                 + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
-                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND prd_lectivo_estado = true AND "
+                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND prd_lectivo_estado = false AND "
                 + "id_prd_lectivo = " + idPeriodo + ";";
         ResultSet rs = conecta.sql(sql);
         try {
@@ -293,7 +293,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
                 + "FROM public.\"PeriodoLectivo\"\n"
-                + "WHERE prd_lectivo_activo = true\n"
+                + "WHERE prd_lectivo_activo = true AND prd_lectivo_estado = false\n"
                 + "ORDER BY prd_lectivo_fecha_inicio;";
         ResultSet rs = conecta.sql(sql);
         try {
