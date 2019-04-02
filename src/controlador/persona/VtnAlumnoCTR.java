@@ -242,7 +242,6 @@ public class VtnAlumnoCTR {
 
             } else if (seleccion == 0) {
                 PersonaBD extraer = new PersonaBD(conecta);
-
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());

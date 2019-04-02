@@ -169,7 +169,12 @@ public class AlumnoBD extends AlumnoMD {
                 a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                a.setId_Alumno(rs.getInt("id_alumno"));
+                numero = rs.getInt("id_alumno");
+                if(numero == null){
+                    a.setId_Alumno(0);
+                } else{
+                    a.setId_Alumno(numero);
+                }
                 numero = rs.getInt("id_sec_economico");
                 if(numero == null){
                     sector.setId_SecEconomico(0);
