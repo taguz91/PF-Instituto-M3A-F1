@@ -1,7 +1,5 @@
 CREATE ROLE "permisos" CREATEROLE LOGIN ENCRYPTED PASSWORD 'ROOT';
 
-GRANT "permisos" TO "permisos";
-
 GRANT Connect, Create, Temporary ON DATABASE "BDinsta" TO "permisos";
 
 GRANT Create, Usage ON SCHEMA "public" TO "permisos";

@@ -94,7 +94,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cmbPrdLectivo = new javax.swing.JComboBox<String>();
+        cmbPrdLectivo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
@@ -111,7 +111,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         tblMateriasPen = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cmbCurso = new javax.swing.JComboBox<String>();
+        cmbCurso = new javax.swing.JComboBox<>();
         btnPasar1 = new javax.swing.JButton();
         btnPasarTodos = new javax.swing.JButton();
         btnRegresar1 = new javax.swing.JButton();
@@ -121,7 +121,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Matricula en un periodo");
+        setTitle("Matrícula en un periodo");
 
         jLabel1.setText("Seleccione un periodo lectivo:");
 
@@ -234,9 +234,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblMateriasPen);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Seleccione las materias que tomara el estudiante en este ciclo.");
+        jLabel3.setText("Seleccioné las materias que tomara el alumno en este ciclo.");
 
-        jLabel4.setText("Seleccione un curso:");
+        jLabel4.setText("Seleccioné un curso:");
 
         btnPasar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Chevron_Right_20px.png"))); // NOI18N
 

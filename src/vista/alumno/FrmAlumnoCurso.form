@@ -4,7 +4,7 @@
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Matricula en un periodo"/>
+    <Property name="title" type="java.lang.String" value="Matr&#xed;cula en un periodo"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -348,12 +348,12 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Seleccione las materias que tomara el estudiante en este ciclo."/>
+            <Property name="text" type="java.lang.String" value="Seleccion&#xe9; las materias que tomara el alumno en este ciclo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccione un curso:"/>
+            <Property name="text" type="java.lang.String" value="Seleccion&#xe9; un curso:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbCurso">

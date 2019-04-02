@@ -75,7 +75,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Consola porsi existen cambios que debemos realizar fast."/>
+            <Property name="text" type="java.lang.String" value="Consola para ejecutar, plsql."/>
           </Properties>
         </Component>
       </SubComponents>

@@ -145,7 +145,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "public.\"Cursos\" c\n"
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "c.id_prd_lectivo = "+idPrd+"  AND\n"
+                + "c.id_prd_lectivo = " + idPrd + "  AND\n"
                 + "ac.id_curso = c.id_curso;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
