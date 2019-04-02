@@ -22,7 +22,7 @@ public class ConectarDB {
     //Base de datos que entrara en prueba el dia de mañana no modificar nada 
     //private String url = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
     //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
-    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private String url = "jdbc:postgresql://35.193.226.187:5432/baseFinal";
     //private String url = "jdbc:postgresql://localhost:5432/baseNueva";
     //private String url = "jdbc:postgresql://LocalHost:5432/BD_Final";
     //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";

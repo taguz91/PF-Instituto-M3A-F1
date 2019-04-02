@@ -1608,8 +1608,8 @@ public class ControladorSilaboCRUD {
         switch (p) {
             case 1:
 
-                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionAD().getValue().toString()))) {
-                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Integer.parseInt(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()))) {
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
 
                 } else {
@@ -1620,9 +1620,9 @@ public class ControladorSilaboCRUD {
                 break;
             case 2:
 
-                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionAC().getValue().toString()))) {
+                if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionAC().getValue().toString()))) {
 
-                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAprendizajeColaborativo().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAC().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAC().getText(), Integer.parseInt(gestion.getSpnValoracionAC().getValue().toString()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAprendizajeColaborativo().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAC().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAC().getText(), Double.parseDouble(gestion.getSpnValoracionAC().getValue().toString()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
 
                 } else {
@@ -1632,9 +1632,9 @@ public class ControladorSilaboCRUD {
 
                 break;
             case 3:
-                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionP().getValue().toString()))) {
+                if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionP().getValue().toString()))) {
 
-                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblPractica().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorP().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoP().getText(), Integer.parseInt(gestion.getSpnValoracionP().getValue().toString()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblPractica().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorP().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoP().getText(), Double.parseDouble(gestion.getSpnValoracionP().getValue().toString()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
 
                 } else {
@@ -1644,9 +1644,9 @@ public class ControladorSilaboCRUD {
 
                 break;
             case 4:
-                if (validarLimiteEvaluaciones(Integer.parseInt(gestion.getSpnValoracionA().getValue().toString()))) {
+                if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionA().getValue().toString()))) {
 
-                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAutonoma().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorA().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoA().getText(), Integer.parseInt(gestion.getSpnValoracionA().getValue().toString()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                    evaluaciones.add(new EvaluacionSilabo(gestion.getTblAutonoma().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorA().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoA().getText(), Double.parseDouble(gestion.getSpnValoracionA().getValue().toString()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
 
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
                 } else {
@@ -2056,7 +2056,7 @@ public class ControladorSilaboCRUD {
 
     public boolean validarEvaluaciones() {
 
-        int total = 0;
+        double total = 0;
 
         for (int i = 0; i < evaluaciones.size(); i++) {
 
@@ -2072,9 +2072,9 @@ public class ControladorSilaboCRUD {
 
     }
 
-    public boolean validarLimiteEvaluaciones(int valor) {
+    public boolean validarLimiteEvaluaciones(double valor) {
 
-        int total = 0;
+        double total = 0;
 
         for (int i = 0; i < evaluaciones.size(); i++) {
 
