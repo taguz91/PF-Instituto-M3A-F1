@@ -241,6 +241,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
 
         lblBibliografiaBase.setText("Bibliografía Base:");

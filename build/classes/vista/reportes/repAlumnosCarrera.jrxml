@@ -30,7 +30,7 @@ where a.id_carrera=$P{alumnoCarrera} order by Alumno;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="176" width="555" height="20"/>
@@ -64,7 +64,7 @@ where a.id_carrera=$P{alumnoCarrera} order by Alumno;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cedula]]></text>
+				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="304" y="0" width="84" height="20" forecolor="#FFFFFF" backcolor="#006699"/>

@@ -52,7 +52,7 @@ public class ControladorSilabos {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                ControladorSilaboCRUD cs = new ControladorSilaboCRUD(new dbSilabo(), usuario, new frmConfiguracionSilabo());
+                ControladorSilaboCRUD cs = new ControladorSilaboCRUD( usuario, new frmConfiguracionSilabo());
 
                 principal.getDpnlPrincipal().add(cs.getSetup());
 
@@ -111,7 +111,7 @@ public class ControladorSilabos {
                 cs.getGestion().getBtnCancelar().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
+                        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             cs.getGestion().dispose();
                         }
@@ -122,7 +122,7 @@ public class ControladorSilabos {
                 cs.getBibliografia().getBtnCancelar().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
+                        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             cs.getBibliografia().dispose();
                             cs.getGestion().dispose();
@@ -145,8 +145,9 @@ public class ControladorSilabos {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                ControladorSilaboCRUD cs = new ControladorSilaboCRUD(new dbSilabo(), usuario, new frmSilabos());
-
+                
+                ControladorSilaboCRUD cs = new ControladorSilaboCRUD( usuario, new frmSilabos());
+                
                 principal.getDpnlPrincipal().add(cs.getSilabos());
 
                 cs.getSilabos().setTitle("Silabos");
@@ -217,7 +218,7 @@ public class ControladorSilabos {
                 cs.getGestion().getBtnCancelar().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        int reply = JOptionPane.showConfirmDialog(null, "Esta que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
+                        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             cs.getGestion().dispose();
                         }
@@ -228,7 +229,7 @@ public class ControladorSilabos {
                 cs.getBibliografia().getBtnCancelar().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        int reply = JOptionPane.showConfirmDialog(null, "Esta que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
+                        int reply = JOptionPane.showConfirmDialog(null, "¿Está  seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             cs.getBibliografia().dispose();
                             cs.getGestion().dispose();
@@ -241,10 +242,10 @@ public class ControladorSilabos {
         };
 
         principal.getMnCtSilabos().addActionListener(am);
-        principal.getMnCtSilabos().addActionListener(msg->principal.getLblEstado().setText("Cargando la información de Silabos..."));
-        principal.getMnIgSilabo().addActionListener(msg->principal.getLblEstado().setText("Configurando información de Silabo..."));
-        principal.getBtnConsultarSilabo().addActionListener(msg->principal.getLblEstado().setText("Cargando la información de Silabos... "));
-        principal.getBtnIngresarSilabo().addActionListener(msg->principal.getLblEstado().setText("Configurando información de Silabo..."));
+        principal.getMnCtSilabos().addActionListener(msg->principal.getLblEstado().setText("Terminó de iniciarse la ventana de consulta Silabos, cualquier error reportarlo a M3A"));
+        principal.getMnIgSilabo().addActionListener(msg->principal.getLblEstado().setText("Terminó de iniciarse la ventana de configuración de Silabos, cualquier error reportarlo a M3A"));
+        principal.getBtnConsultarSilabo().addActionListener(msg->principal.getLblEstado().setText("Terminó de iniciarse la ventana de consulta Silabos, cualquier error reportarlo a M3A"));
+        principal.getBtnIngresarSilabo().addActionListener(msg->principal.getLblEstado().setText("Terminó de iniciarse la ventana de configuración de Silabos, cualquier error reportarlo a M3A"));
         principal.getBtnConsultarSilabo().addActionListener(am);
 
 

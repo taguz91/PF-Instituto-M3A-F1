@@ -22,7 +22,7 @@ import modelo.pgConect;
 public class dbPeriodoLectivo extends PeriodoLectivoMD {
 
     pgConect con = new pgConect();
-
+    
     public List<PeriodoLectivoMD> mostrarPeriodosSilabo(int id, String aguja, String filtro) {
         try {
             List<PeriodoLectivoMD> lista = new ArrayList<>();
