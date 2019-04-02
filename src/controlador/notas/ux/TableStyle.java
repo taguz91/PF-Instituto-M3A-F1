@@ -28,31 +28,11 @@ public class TableStyle extends JTable {
         dato = Double.parseDouble(this.getModel().getValueAt(rowIndex, 10).toString());
         if (dato >= 70){
             component.setBackground(Color.WHITE);
+            component.setForeground(Color.BLUE);
         }else{
             component.setForeground(Color.RED);
         }
-        
-        
-//        if (filas > 0) {
-//            for (int i = 0; i < filas; i++) {
-//                dato = Double.parseDouble(this.getModel().getValueAt(i, 10).toString());
-//                if (dato < 70.0) {
-//
-//                    if ((Object.class.equals(this.getColumnClass(columnIndex))) && (getValueAt(i, columnIndex) != null)) {
-//                        component.setBackground(Color.RED);
-//                        component.setForeground(Color.BLACK);
-//                    }
-//
-//                } else if (dato >= 70.0) {
-//                    if ((Object.class.equals(this.getColumnClass(columnIndex))) && (getValueAt(i, columnIndex) != null)) {
-//                        component.setBackground(Color.GREEN);
-//                        component.setForeground(Color.BLACK);
-//                    }
-//
-//                }
-//            }
-//        }
-
+       
         return component;
     }
 

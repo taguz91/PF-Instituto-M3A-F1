@@ -100,7 +100,7 @@ public class FrmCursoCTR {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
             frmCurso.getCbxPeriodoLectivo().removeAllItems();
-            frmCurso.getCbxPeriodoLectivo().addItem("Seleccioné");
+            frmCurso.getCbxPeriodoLectivo().addItem("Seleccione");
             periodos.forEach((p) -> {
                 frmCurso.getCbxPeriodoLectivo().addItem(p.getNombre_PerLectivo());
             });
@@ -146,7 +146,7 @@ public class FrmCursoCTR {
     private void cargarCmbMaterias(ArrayList<MateriaMD> materias) {
         if (materias != null) {
             frmCurso.getCbxMateria().removeAllItems();
-            frmCurso.getCbxMateria().addItem("Seleccioné");
+            frmCurso.getCbxMateria().addItem("Seleccione");
             materias.forEach((m) -> {
                 frmCurso.getCbxMateria().addItem(m.getNombre());
             });
@@ -156,7 +156,7 @@ public class FrmCursoCTR {
     private void cargarCmbDocente(ArrayList<DocenteMD> docentes) {
         if (docentes != null) {
             frmCurso.getCbxDocente().removeAllItems();
-            frmCurso.getCbxDocente().addItem("Seleccioné");
+            frmCurso.getCbxDocente().addItem("Seleccione");
             docentes.forEach((d) -> {
                 frmCurso.getCbxDocente().addItem(d.getPrimerNombre() + " "
                         + d.getPrimerApellido());
@@ -168,7 +168,7 @@ public class FrmCursoCTR {
         jornadas = jd.cargarJornadas();
         if (jornadas != null) {
             frmCurso.getCbxJornada().removeAllItems();
-            frmCurso.getCbxJornada().addItem("Seleccioné");
+            frmCurso.getCbxJornada().addItem("Seleccione");
             jornadas.forEach((j) -> {
                 frmCurso.getCbxJornada().addItem(j.getNombre());
             });

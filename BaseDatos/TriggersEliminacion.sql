@@ -249,7 +249,7 @@ BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla, historial_observacion)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_prd_ingr_notas,
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_perd_ingr_notas,
 			old.perd_notas_fecha_inicio || '%' || old.perd_notas_fecha_cierre
 			|| '%' || old.perd_notas_estado || '%' || old.id_prd_lectivo
 			|| '%' || old.id_tipo_nota);

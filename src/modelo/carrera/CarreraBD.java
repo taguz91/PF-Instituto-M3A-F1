@@ -262,7 +262,7 @@ public class CarreraBD extends CarreraMD {
                 + "WHERE\n"
                 + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombre + "'\n"
                 + "AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = false";
+                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE";
 
         String carrera = "";
 
