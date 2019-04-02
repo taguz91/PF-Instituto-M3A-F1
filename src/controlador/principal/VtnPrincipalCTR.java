@@ -100,6 +100,15 @@ public class VtnPrincipalCTR {
     private final ImageIcon icono;
     private final Image ista;
     private final VtnBienvenida vtnBienvenida;
+    //Matriz de permisos
+    String[][] accesos = {{"Alumnos","Alumnos-Ingresar","Alumnos-Editar","Alumnos-Eliminar","Alumnos-Estado"},
+    {"PeriodoLectivo","PeriodoLectivo-Cerrar-Periodo","PeriodoLectivo-Editar","PeriodoLectivo-Ingresar","PeriodoLectivo-Eliminar","PeriodoLectivo-Estado"},
+    {"Docentes","Docentes-Ingresar","Docentes-Editar","Docentes-Eliminar","Docentes-Materias-Docente","Docentes-Estado"},
+    {"Personas","Personas-Ingresar","Personas-Editar","Personas-Eliminar","Personas-Estado"},
+    {"Carreras","Carreras-Eliminar","Carreras-Editar","Carreras-Ingresar","Carreras-Estado"},
+    {"Cursos","Cursos-Editar","Cursos-Ingresar"},
+    {"Materias","Materias-Informacion","Materias-Estado"},
+    };
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
@@ -327,9 +336,9 @@ public class VtnPrincipalCTR {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
         ctrAyuda.iniciar();
     }
-    
-    public void abrirVtnHistorialUser(){
-        VtnHistorialUsuarios vtn = new VtnHistorialUsuarios(); 
+
+    public void abrirVtnHistorialUser() {
+        VtnHistorialUsuarios vtn = new VtnHistorialUsuarios();
         eventoInternal(vtn);
         if (numVtns < 5) {
             VtnHistorialUserCTR ctr = new VtnHistorialUserCTR(conecta, vtnPrin, this);
@@ -496,8 +505,8 @@ public class VtnPrincipalCTR {
 
         });
     }
-    
-    public void cerradoJIF(){
+
+    public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
             numVtns = 0;
@@ -558,7 +567,7 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
 
