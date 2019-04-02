@@ -624,9 +624,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasMenor70.jasper"));
+            
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -708,9 +708,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre70y80.jasper"));
+            
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -792,9 +792,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre80y90.jasper"));
+            
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
@@ -876,9 +876,9 @@ public class VtnNotasAlumnoCursoCTR {
             newQuery.setText(QUERY);
 
             jd.setQuery(newQuery);
-
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre90y100.jasper"));
+            
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
             JasperViewer.viewReport(jp, false);
