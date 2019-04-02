@@ -1,6 +1,5 @@
 package modelo;
 
-
 import controlador.login.LoginCTR;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -55,9 +54,7 @@ public class ResourceManager {
 
         }
 
-
-            conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-
+        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conex;
 
