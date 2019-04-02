@@ -50,6 +50,9 @@ public class VtnPersonaCTR {
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
+    //Para permisos
+    String [] accesos = {"Personas-Ingresar","Personas-Editar","Personas-Eliminar","Personas-Estado"};
+    
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -253,7 +256,7 @@ public class VtnPersonaCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Persona");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);

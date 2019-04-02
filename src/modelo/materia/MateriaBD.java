@@ -335,7 +335,7 @@ public class MateriaBD extends MateriaMD {
                 + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
                 + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = FALSE AND\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE AND\n"
                 + "\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"Cursos\".curso_ciclo = " + ciclo + " AND \n"
                 + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND \n"

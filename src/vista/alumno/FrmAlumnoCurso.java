@@ -123,7 +123,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Matrícula en un periodo");
 
-        jLabel1.setText("Seleccione un periodo lectivo:");
+        jLabel1.setText("Seleccione un período lectivo:");
 
         cmbPrdLectivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -147,7 +147,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblErrorBuscar.setText("No debe ingresar caracteres especiales");
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorPrdLectivo.setText("Debe seleccionar un periodo lectivo.");
+        lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
 
         btnMtCursadas.setText("Ver materias cursadas");
 
@@ -234,9 +234,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblMateriasPen);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Seleccioné las materias que tomara el alumno en este ciclo.");
+        jLabel3.setText("Seleccione las materias que tomará el alumno en este ciclo.");
 
-        jLabel4.setText("Seleccioné un curso:");
+        jLabel4.setText("Seleccione un curso:");
 
         btnPasar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Chevron_Right_20px.png"))); // NOI18N
 

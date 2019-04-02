@@ -77,6 +77,7 @@ public class VtnCursoCTR {
     }
 
     public void iniciar() {
+        vtnCurso.getBtnListaAlumnos().setEnabled(false);
         cargarCmbPrdLectio();
         //Iniciamos la tabla  
         String titulo[] = {"id", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
@@ -234,7 +235,7 @@ public class VtnCursoCTR {
            // parametro.put("idDocente", cursos.get(posFila).getId_docente());
             parametro.put("ciclo", cursos.get(posFila).getCurso_ciclo());
             parametro.put("paralelo", vtnCurso.getCmbCurso().getSelectedItem());
-            parametro.put("periodo", periodos.get(posFila).getNombre_PerLectivo());
+            parametro.put("período", periodos.get(posFila).getNombre_PerLectivo());
             parametro.put("idDocente",cursos.get(posFila).getId_docente().getIdDocente());
            // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);

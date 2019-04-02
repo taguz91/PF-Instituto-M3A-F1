@@ -155,7 +155,7 @@ public class JDMateriasCursadas extends javax.swing.JDialog {
 
         lblAlumno6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblAlumno6.setForeground(new java.awt.Color(49, 79, 117));
-        lblAlumno6.setText("Numero Matricula:");
+        lblAlumno6.setText("Número Matrícula:");
         lblAlumno6.setToolTipText("");
 
         lblAlumno13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -188,7 +188,7 @@ public class JDMateriasCursadas extends javax.swing.JDialog {
         lblAlumno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblAlumno1.setForeground(new java.awt.Color(49, 79, 117));
         lblAlumno1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAlumno1.setText("Informacion");
+        lblAlumno1.setText("Información");
         lblAlumno1.setToolTipText("");
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);

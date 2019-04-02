@@ -4,6 +4,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +67,7 @@ public class VtnCarreraCTR {
     }
 
     public void iniciar() {
+        vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
         String titutlo[] = {"id", "Codigo", "Nombre", "Fecha Inicio", "Modalidad", "Coordinador"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titutlo);
@@ -80,6 +83,12 @@ public class VtnCarreraCTR {
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnEliminar().addActionListener(e -> eliminarCarrera());
+         vtnCarrera.getTblMaterias().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                validarBotonesReportes();
+            }
+        });
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
 
         vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -178,7 +187,7 @@ public class VtnCarreraCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Alumnos por Carrera");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,6 +212,14 @@ public class VtnCarreraCTR {
 //            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
 //                vista.getBtnVerRoles().setEnabled(true);
 //            }
+        }
+    }
+    public void validarBotonesReportes() {
+        int selecTabl = vtnCarrera.getTblMaterias().getSelectedRow();
+        if (selecTabl >= 0) {
+            vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(true);
+        } else {
+            vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
         }
     }
 }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -26,42 +27,52 @@ import javax.swing.JOptionPane;
 public class Propiedades {
 
     private static Properties config;
-    private static FileInputStream configInput;
-    private static FileOutputStream configOutput;
     private static String PATH = "configuracion.properties";
     private static File archivo;
 
     static {
         config = new Properties();
         PATH = Effects.getProjectPath() + PATH;
+        archivo = new File(PATH);
     }
 
-    public static boolean verificador() {
-        return archivo.exists();
-    }
+    public static void setDefault() {
 
-    public static void setPropertyValue(String propiedad, String valor) {
+        config.setProperty("IP_ADRESS", "jdbc:postgresql://35.193.226.187:5432/BDinsta");
 
         try {
-            configOutput = new FileOutputStream(PATH);
-            config.setProperty(propiedad, valor);
-
-            configOutput.close();
+            config.store(new FileWriter(archivo), "comentario");
         } catch (IOException ex) {
             Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void escribirPropiedades() {
-        //            configOutput = new FileOutputStream(PATH);
+    public static String loadIP() {
+        if (archivo.exists()) {
+            try {
+                config.load(new FileReader(archivo));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String IP = config.getProperty("IP_ADRESS");
 
-        config.setProperty("IP_ADRESS", "35.193.226.187");
+            if (IP == null) {
+                System.out.println(IP);
+                setDefault();
+                System.out.println(IP);
+                loadIP();
+            } else {
+                return IP;
+            }
 
-        try {
-            config.store(new FileWriter(PATH), "comentario");
-        } catch (IOException ex) {
-            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            setDefault();
+            loadIP();
         }
+
+        return null;
     }
 
 }

@@ -36,7 +36,7 @@ order by p.persona_primer_apellido;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="119" width="555" height="20"/>
@@ -66,14 +66,14 @@ order by p.persona_primer_apellido;]]>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="358" y="0" width="197" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="417" y="0" width="138" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Period Lectivo]]></text>
+				<text><![CDATA[Periodo Lectivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="55" y="0" width="303" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="55" y="0" width="362" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -113,6 +113,9 @@ order by p.persona_primer_apellido;]]>
 			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
@@ -122,4 +125,7 @@ order by p.persona_primer_apellido;]]>
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

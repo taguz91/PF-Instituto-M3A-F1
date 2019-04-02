@@ -114,8 +114,6 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
                 Lista.add(periodo);
             }
 
-            rs.close();
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

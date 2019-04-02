@@ -269,7 +269,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "INNER JOIN \"Alumnos\" ON \"ViewAlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
                 + "INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado IS FALSE AND\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado IS TRUE AND\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
@@ -277,6 +277,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
+        System.out.println(SELECT);
 
         return selectFromView(SELECT);
 
