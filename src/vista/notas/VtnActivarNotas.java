@@ -23,20 +23,12 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public JButton getBtnEditar() {
-        return btnEditar;
+    public JButton getBtnActualizar() {
+        return btnActualizar;
     }
 
-    public void setBtnEditar(JButton btnEditar) {
-        this.btnEditar = btnEditar;
-    }
-
-    public JButton getBtnEliminar() {
-        return btnEliminar;
-    }
-
-    public void setBtnEliminar(JButton btnEliminar) {
-        this.btnEliminar = btnEliminar;
+    public void setBtnActualizar(JButton btnActualizar) {
+        this.btnActualizar = btnActualizar;
     }
 
     public JLabel getLblResultados() {
@@ -63,6 +55,8 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         this.txtBuscar = txtBuscar;
     }
 
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,27 +67,29 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         txtBuscar = new javax.swing.JTextField();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCursoTipoNotas = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         lblBuscar = new javax.swing.JLabel();
 
-        btnEditar.setText("Editar");
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setTitle("Activacion Notas");
 
-        btnEliminar.setText("Eliminar");
+        btnActualizar.setText("Actualizar");
 
         tblCursoTipoNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Curso", "Aporte 1", "Examen Interciclo", "Aporte 2", "Examen Final", "Examen Supletorio", "Nota Final"
+                "Prd Lectivo", "Jornada", "Curso", "Materia", "Nombre", "Apellido", "Aporte 1", "Examen Interciclo", "Aporte 2", "Examen Final", "Examen Supletorio"
             }
         ));
         jScrollPane1.setViewportView(tblCursoTipoNotas);
@@ -110,17 +106,15 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(71, 71, 71))
+                        .addComponent(btnActualizar)
+                        .addGap(158, 158, 158))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -130,9 +124,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar))
+                    .addComponent(btnActualizar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblBuscar)))
@@ -148,8 +140,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblResultados;
