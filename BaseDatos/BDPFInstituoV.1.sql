@@ -9,7 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
- "prd_lectivo_estado" boolean NOT NULL DEFAULT 'false',
+ "prd_lectivo_estado" boolean NOT NULL DEFAULT 'true',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
 ) WITH (OIDS = FALSE);
@@ -508,7 +508,6 @@ CREATE TABLE "ReferenciaSilabo" (
 CREATE TABLE "UnidadSilabo" (
 
 	id_unidad serial NOT NULL,
-	--Aumentar en la base de datos
 	id_silabo integer NOT NULL,
 	numero_unidad integer NOT NULL,
 	objetivo_especifico_unidad text NOT NULL,
@@ -519,10 +518,9 @@ CREATE TABLE "UnidadSilabo" (
 	horas_docencia_unidad integer NOT NULL,
 	horas_practica_unidad integer NOT NULL,
 	horas_autonomo_unidad integer NOT NULL,
-  --Aumentar en la base de datos
   titulo_unidad TEXT NOT NULL,
 
-	PRIMARY KEY(id_unidad)
+	PRIMARY KEY(id_unidad),
 	--Aumentar en la base
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
@@ -534,12 +532,9 @@ CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
 	id_unidad integer NOT NULL,
-	--actividad character varying (50) NOT NULL,
   indicador TEXT NOT NULL,
 	id_tipo_actividad integer NOT NULL,
-	--instrumento character varying (50) NOT NULL,
   instrumento text NOT NULL,
-	--valoracion integer NOT NULL,
   valoracion numeric (4, 1) NOT NULL,
 	fecha_envio date NOT NULL,
 	fecha_presentacion date NOT NULL,
@@ -554,12 +549,7 @@ CREATE TABLE "EvaluacionSilabo" (
 	FOREIGN KEY (id_tipo_actividad)
         REFERENCES "TipoActividad" (id_tipo_actividad)
         ON UPDATE CASCADE
-        ON DELETE CASCADE,
-/*
-	FOREIGN KEY (id_silabo)
-        REFERENCES "Silabo" (id_silabo)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE*/
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Silabo" ADD CONSTRAINT "fk_silabo_prd_lectivo"
@@ -674,6 +664,10 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "DocentesMateria" ADD CONSTRAINT "docente_materia_fk2"
 FOREIGN KEY ("id_materia") REFERENCES "Materias"("id_materia")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "UnidadSilabo" ADD CONSTRAINT "unidad_silabo_pk1"
+FOREIGN KEY ("id_silabo") REFERENCES "Silabo"("id_silabo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 

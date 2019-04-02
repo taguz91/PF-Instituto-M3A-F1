@@ -8,7 +8,7 @@ ALTER TABLE public."EvaluacionSilabo" DROP CONSTRAINT "EvaluacionSilabo_id_silab
 
 ALTER TABLE public."EvaluacionSilabo" DROP COLUMN id_silabo;
 
-ALTER TABLE public."PeriodoLectivo" ADD COLUMN prd_lectivo_estado BOOLEAN NOT NULL DEFAULT 'false';
+ALTER TABLE public."PeriodoLectivo" ADD COLUMN prd_lectivo_estado BOOLEAN NOT NULL DEFAULT 'true';
 
 --Grupo Andres
 ALTER TABLE public."UnidadSilabo" ADD COLUMN titulo_unidad TEXT NOT NULL;
@@ -19,7 +19,7 @@ ALTER TABLE public."EvaluacionSilabo" ALTER COLUMN "valoracion" TYPE numeric(4, 
 
 ALTER TABLE public."EvaluacionSilabo" ALTER COLUMN "instrumento" TYPE TEXT;
 
-ALTER TABLE "EvaluacionSilabo" DROP "actividad";
+ALTER TABLE public."EvaluacionSilabo" DROP "actividad";
 
 ALTER TABLE public."EvaluacionSilabo" ADD COLUMN indicador TEXT NOT NULL;
 
