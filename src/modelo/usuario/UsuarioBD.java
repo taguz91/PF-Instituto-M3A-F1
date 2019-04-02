@@ -68,7 +68,7 @@ public class UsuarioBD extends UsuarioMD {
     private static List<UsuarioMD> selectFromView(String QUERY) {
         List<UsuarioMD> lista = new ArrayList<>();
 
-        System.out.println(QUERY);
+        //System.out.println(QUERY);
 
         ResultSet rs = ResourceManager.Query(QUERY);
         try {

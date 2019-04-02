@@ -21,6 +21,7 @@ public class ResourceManager {
     //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
     //private static String JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
     //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
+    //private static final String JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final";
 
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
