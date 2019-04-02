@@ -1,12 +1,20 @@
 package controlador.alumno;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -22,6 +30,12 @@ import modelo.alumno.MallaAlumnoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.alumno.VtnMallaAlumno;
 import vista.principal.VtnPrincipal;
 
@@ -69,6 +83,9 @@ public class VtnMallaAlumnoCTR {
 
     public void iniciar() {
         //Iniciamos la tabla  
+        //El boton de reportes sale en inactivo
+        vtnMallaAlm.getBtnReporteMallaAlumno().setEnabled(false);
+
         String titulo[] = {"id", "Alumno", "Materia", "Estado", "Ciclo", "Matrícula", "Nota 1", "Nota 2", "Nota 3"};
         String datos[][] = {};
         mdlTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -106,6 +123,7 @@ public class VtnMallaAlumnoCTR {
                 }
             }
         });
+        vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());
         //Validacion del buscador 
         vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(),
                 vtnMallaAlm.getBtnBuscar()));
@@ -128,6 +146,14 @@ public class VtnMallaAlumnoCTR {
                         && e.getKeyCode() != 10) {
                     buscarAlumno(a);
                 }
+            }
+        });
+
+        //Evento de clcik en la tabla 
+        vtnMallaAlm.getTblMallaAlumno().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                clickTbl();
             }
         });
         //Prueba cargando todos los datos 
@@ -196,6 +222,14 @@ public class VtnMallaAlumnoCTR {
             System.out.println("El tiempo que tardo en buscar malla alumno es: "
                     + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
             vtnMallaAlm.getCmbEstado().setEnabled(true);
+
+            //Guardamos la posicion del alumno seleccionado 
+            posFila = vtnMallaAlm.getCmbAlumnos().getSelectedIndex() - 1;
+            if (posFila >= 0) {
+                idAlmnSeleccionado = alumnos.get(posFila).getId();
+                //Se activa el boton de reporte tambien 
+                vtnMallaAlm.getBtnReporteMallaAlumno().setEnabled(true);
+            }
 
             llenarTbl(mallas);
             cargarCmbEstado();
@@ -340,4 +374,39 @@ public class VtnMallaAlumnoCTR {
 //            }
         }
     }
+    //Para saber el alumno seleccionado 
+    private int posFila = -1;
+    private int idAlmnSeleccionado = 0;
+
+    public void llamaReporteMallaALumno() {
+
+        JasperReport jr;
+        String path = "./src/vista/reportes/repMalaAlumnos.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            if (idAlmnSeleccionado > 0) {
+                //int posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
+                Map parametro = new HashMap();
+                parametro.put("id", idAlmnSeleccionado);
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle("Reporte de Malla de Alumno");
+            }
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void clickTbl() {
+        posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
+        idAlmnSeleccionado = mallas.get(posFila).getAlumnoCarrera().getId();
+        System.out.println("Este es el id que sale "+idAlmnSeleccionado);
+        //Activamos el boton  
+        vtnMallaAlm.getBtnReporteMallaAlumno().setEnabled(true);
+    }
+
 }
