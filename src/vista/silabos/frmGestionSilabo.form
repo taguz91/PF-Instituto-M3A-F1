@@ -73,7 +73,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblUnidad">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccione la unidad:"/>
+            <Property name="text" type="java.lang.String" value="Seleccione la Unidad:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -83,7 +83,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblTitulo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Titulo de la unidad:"/>
+            <Property name="text" type="java.lang.String" value="Titulo de la Unidad:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -213,10 +213,13 @@
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spnValoracionAD">
                   <Properties>
-                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="1" maximum="60" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60, 0.5d)" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner()"/>
+                  </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="834" y="36" width="61" height="29"/>
@@ -410,6 +413,11 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spnValoracionAC">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d)" type="code"/>
+                    </Property>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="834" y="36" width="61" height="29"/>
@@ -603,6 +611,11 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spnValoracionP">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d)" type="code"/>
+                    </Property>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="834" y="36" width="61" height="29"/>
@@ -796,6 +809,11 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spnValoracionA">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d)" type="code"/>
+                    </Property>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="834" y="36" width="61" height="29"/>
@@ -1145,6 +1163,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icono_eliminar_unidad.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Eliminar Unidad"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1157,6 +1176,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icono_guardar_estrategia.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Guardar Nueva Estrategia"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Constraints>
@@ -1170,6 +1190,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icono_agregar.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Agregar Unidad"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1182,6 +1203,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/vista/img/icono_agregar.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Agregar Nueva Estrategia"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

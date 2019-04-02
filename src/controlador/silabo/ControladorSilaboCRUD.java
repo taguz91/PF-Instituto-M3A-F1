@@ -8,6 +8,7 @@ package controlador.silabo;
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -117,7 +118,7 @@ public class ControladorSilaboCRUD {
 
     private List<PeriodoLectivoMD> periodosSilabo;
 
-    PeriodoLectivoMD pl = new dbPeriodoLectivo();
+    PeriodoLectivoMD pl;
 
     static int x = 0;
 
@@ -164,8 +165,9 @@ public class ControladorSilaboCRUD {
         return gestion;
     }
 
-    public ControladorSilaboCRUD(dbSilabo silabo, UsuarioBD usuario, frmConfiguracionSilabo setup) {
-        this.silabo = silabo;
+    public ControladorSilaboCRUD(UsuarioBD usuario, frmConfiguracionSilabo setup) {
+
+        this.silabo = new dbSilabo();
         this.usuario = usuario;
         this.setup = setup;
         this.gestion = new frmGestionSilabo();
@@ -174,8 +176,9 @@ public class ControladorSilaboCRUD {
         iniciarControlador();
     }
 
-    public ControladorSilaboCRUD(dbSilabo silabo, UsuarioBD usuario, frmSilabos silabos) {
-        this.silabo = silabo;
+    public ControladorSilaboCRUD(UsuarioBD usuario, frmSilabos silabos) {
+
+        this.silabo = new dbSilabo();
         this.usuario = usuario;
         this.silabos = silabos;
         this.setup = new frmConfiguracionSilabo();
@@ -187,6 +190,7 @@ public class ControladorSilaboCRUD {
         silabos.getCHBSILABO().setVisible(false);
         silabos.getjLabel1().setVisible(false);
         iniciarControlador();
+
     }
 
     public frmSilabos getSilabos() {
@@ -229,6 +233,10 @@ public class ControladorSilaboCRUD {
                     //recuperarInfo(fila);
                     iniciarSilabo(-1, setup.getCmbAsignatura().getSelectedItem().toString());
                     mostrarUnidades(gestion.getCmbUnidad().getSelectedIndex());
+                    silabos.getBtnNuevo().setEnabled(false);
+                    silabos.getBtnEditar().setEnabled(false);
+                    silabos.getBtnImprimir().setEnabled(false);
+                    silabos.getBtnEliminar().setEnabled(false);
                 }
 
             };
@@ -239,6 +247,9 @@ public class ControladorSilaboCRUD {
 
                     fila = silabos.getTblSilabos().rowAtPoint(me.getPoint());
                     seleccionarSilabo();
+                    silabos.getBtnEditar().setEnabled(true);
+                    silabos.getBtnImprimir().setEnabled(true);
+                    silabos.getBtnEliminar().setEnabled(true);
                     //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
                 }
 
@@ -255,11 +266,18 @@ public class ControladorSilaboCRUD {
 
             });
 
-            silabos.getBtnImprimir().addActionListener(e
-                    -> //imprimirPrograma()
-                    hacervisible()
+            silabos.getBtnImprimir().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    hacervisible();
+                    silabos.getBtnEditar().setEnabled(false);
+                    silabos.getBtnEliminar().setEnabled(false);
+                    silabos.getBtnImprimir().setEnabled(false); }
+                
+            }); //imprimirPrograma()
+                    
             //imprimirSilabo()
-            );
+            
             silabos.getBTNGENERAR().addActionListener(e -> impresion());
 
             silabos.getBtnEditar().addActionListener(as);
@@ -901,6 +919,7 @@ public class ControladorSilaboCRUD {
 
         };
 
+        // PlaceHolder holder = new PlaceHolder(gestion.getTxtNuevaEstrategia(), "");
         gestion.getSpnHorasDocencia()
                 .addChangeListener(cl);
         gestion.getSpnHorasPracticas()
@@ -1084,15 +1103,16 @@ public class ControladorSilaboCRUD {
 
                         if (editar) {
 
-                            List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia().getDescripcionReferencia());
+                            System.out.println(referenciasSilabo.size());
+                            List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo);
 
-                            old.add(new dbReferencias().retornaReferencia(id_silabo, referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia().getDescripcionReferencia()).get(0));
+                            
+                               referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
 
-                            referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
-
-                            for (int i = 0; i < old.size(); i++) {
-                                new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
-                            }
+                                for (int i = 0; i < old.size(); i++) {
+                                    new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
+                                }
+                            
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
@@ -1384,17 +1404,18 @@ public class ControladorSilaboCRUD {
         referencias = new ArrayList<>();
         referenciasSilabo = new ArrayList<>();
 
-        MateriaMD m = new dbMaterias().retornaMateria(materia);
-
-        horas[0] = m.getHorasDocencia();
-        horas[1] = m.getHorasPracticas();
-        horas[2] = m.getHorasAutoEstudio();
-
         gestion.getCmbUnidad().removeAllItems();
 
         if (n_unidades == -1) {
             pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbMaterias().retornaMateria(silabos.getTblSilabos().getValueAt(fila, 0).toString()).getCarrera().getId());
+
             gestion.setTitle(silabos.getTblSilabos().getValueAt(fila, 0).toString());
+            MateriaMD m = new dbMaterias().retornaMateria(gestion.getTitle());
+
+            horas[0] = m.getHorasDocencia();
+            horas[1] = m.getHorasPracticas();
+            horas[2] = m.getHorasAutoEstudio();
+
             bibliografia.setTitle(silabos.getTblSilabos().getValueAt(fila, 0).toString());
             seleccionarSilabo();
             n_unidades = unidades.size();
@@ -1404,8 +1425,11 @@ public class ControladorSilaboCRUD {
             }
             list = gestion.getLstEstrategiasPredeterminadas();
             estrategiasUnidad = new dbEstrategiasUnidad().cargarEstrategiasU(id_silabo);
+
             evaluaciones = new dbEvaluacionSilabo().recuperarEvaluaciones(id_silabo);
+
             referenciasSilabo = new dbReferenciaSilabo().recuperarReferencias(id_silabo);
+
             cargarReferencias(referenciasSilabo);
             editar = true;
 
@@ -1414,6 +1438,12 @@ public class ControladorSilaboCRUD {
         cargarEstrategias(0);
 
         if (!editar) {
+
+            MateriaMD m = new dbMaterias().retornaMateria(materia);
+
+            horas[0] = m.getHorasDocencia();
+            horas[1] = m.getHorasPracticas();
+            horas[2] = m.getHorasAutoEstudio();
             pl = new dbPeriodoLectivo().retornaPeriodoActual(new dbCarreras().retornaCarrera(setup.getCmbCarrera().getSelectedItem().toString()).getId());
 
             for (int i = 0; i < n_unidades; i++) {
@@ -1559,9 +1589,9 @@ public class ControladorSilaboCRUD {
 
         estrategia.setDescripcionEstrategia(gestion.getTxtNuevaEstrategia().getText());
 
-        if (gestion.getTxtNuevaEstrategia().getText().isEmpty()) {
+        if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
             JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
-                  
+
         } else {
             if (estrategia.insertar()) {
                 JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
@@ -1805,6 +1835,8 @@ public class ControladorSilaboCRUD {
         materiasSilabo = new dbSilabo().mostrarSilabos(usuario.getPersona().getIdPersona(), silabos.getTxtBuscar().getText(), silabos.getCmbCarrera().getSelectedItem().toString());
         periodosSilabo = new dbPeriodoLectivo().mostrarPeriodosSilabo(usuario.getPersona().getIdPersona(), silabos.getTxtBuscar().getText(), silabos.getCmbCarrera().getSelectedItem().toString());
 
+        System.out.println(periodosSilabo.size());
+        System.out.println(materiasSilabo.size());
         for (int j = silabos.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
             modeloTabla.removeRow(j);
@@ -1813,7 +1845,7 @@ public class ControladorSilaboCRUD {
         for (int i = 0; i < materiasSilabo.size(); i++) {
             modeloTabla.addRow(new Object[]{
                 materiasSilabo.get(i).getIdMateria().getNombre(),
-                periodosSilabo.get(i).getFecha_Inicio() + " / " + periodosSilabo.get(i).getFecha_Fin(),
+                periodosSilabo.get(0).getFecha_Inicio() + " / " + periodosSilabo.get(0).getFecha_Fin(),
                 materiasSilabo.get(i).getEstadoSilabo(),});
 
         }
@@ -1828,8 +1860,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1839,7 +1871,7 @@ public class ControladorSilaboCRUD {
         String id_materia1 = String.valueOf(id_materia);
         int id_silabo = new dbSilabo().retornaSilabo(id_materia).getIdSilabo();
         String id_silabo1 = String.valueOf(id_silabo);
-        pgConect con = new pgConect();
+
         String item = (String) setup.getCmbAsignatura().getSelectedItem();
         //String id_silabo = silabo.cod_sib();
         System.out.println(id_silabo);
@@ -1873,8 +1905,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1884,7 +1916,7 @@ public class ControladorSilaboCRUD {
         String id_materia1 = String.valueOf(id_materia);
         int id_silabo = new dbSilabo().retornaSilabo(id_materia).getIdSilabo();
         String id_silabo1 = String.valueOf(id_silabo);
-        pgConect con = new pgConect();
+
         String item = (String) setup.getCmbAsignatura().getSelectedItem();
         //String id_silabo = silabo.cod_sib();
         System.out.println(id_silabo);
@@ -1919,8 +1951,8 @@ public class ControladorSilaboCRUD {
         String[] fechas = silabos.getTblSilabos().getModel().getValueAt(fila, 1).toString().split(" / ");
         for (int i = 0; i < materiasSilabo.size(); i++) {
             if (silabos.getTblSilabos().getModel().getValueAt(fila, 0).equals(materiasSilabo.get(i).getIdMateria().getNombre())
-                    && fechas[0].equals(periodosSilabo.get(i).getFecha_Inicio().toString())
-                    && fechas[1].equals(periodosSilabo.get(i).getFecha_Fin().toString())) {
+                    && fechas[0].equals(periodosSilabo.get(0).getFecha_Inicio().toString())
+                    && fechas[1].equals(periodosSilabo.get(0).getFecha_Fin().toString())) {
 
                 id_materia = materiasSilabo.get(i).getIdMateria().getId();
                 gestion.setTitle(materiasSilabo.get(i).getIdMateria().getNombre());
@@ -1966,8 +1998,12 @@ public class ControladorSilaboCRUD {
     }
 
     public void eliminarSilabo(int aguja) {
+        
+        silabos.getBtnEliminar().setEnabled(false);
+        silabos.getBtnEditar().setEnabled(false);
+        silabos.getBtnImprimir().setEnabled(false);
 
-        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             if (new dbSilabo().EliminarSilabo(aguja)) {
                 JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
