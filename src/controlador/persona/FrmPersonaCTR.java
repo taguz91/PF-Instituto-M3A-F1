@@ -522,9 +522,6 @@ public class FrmPersonaCTR {
         fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
 
-        System.out.println("fechaNacimiento " + fechaNacimiento);
-        System.out.println("fechaNac " + fechaNac);
-
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
             guardar = false;
@@ -853,6 +850,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
+        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         //Codigo postal
         frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());
