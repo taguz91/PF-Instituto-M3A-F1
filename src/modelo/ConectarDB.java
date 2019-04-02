@@ -25,7 +25,7 @@ public class ConectarDB {
     //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     //private String url = "jdbc:postgresql://localhost:5432/baseNueva";
     //private String url = "jdbc:postgresql://LocalHost:5432/BD_Final";
-    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     //private String url = "jdbc:postgresql://localhost:5432/BDinsta";
     //private String url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
     //private String url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
