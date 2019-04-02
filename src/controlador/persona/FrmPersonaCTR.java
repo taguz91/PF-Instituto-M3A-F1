@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -163,19 +162,18 @@ public class FrmPersonaCTR {
 
     public void buscarIdentificacion() {
         errorCedula = false;
-        String cedula;
-        cedula = frmPersona.getTxtIdentificacion().getText();
+        String cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
             if (cedula.length() == 10) {
-                if (modelo.validaciones.Validar.esCedula(cedula) == false) {
+                if (!modelo.validaciones.Validar.esCedula(cedula)) {
                     errorCedula = true;
-                    frmPersona.getLblErrorIdentificacion().setText("Cédula Incorrecta");
+                    frmPersona.getLblErrorIdentificacion().setText("Cédula incorrecta.");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
                 }
             } else if (cedula.length() < 10) {
                 errorCedula = true;
-                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números");
+                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números.");
                 frmPersona.getLblErrorIdentificacion().setVisible(true);
             } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
@@ -185,34 +183,34 @@ public class FrmPersonaCTR {
                 //Cambiamos el estado del cursos  
                 vtnPrin.setCursor(new Cursor(3));
 
-                PersonaMD per = persona.buscarPersona(cedula);
+                PersonaMD per = persona.existePersona(cedula);
                 editar = true;
-
                 if (per != null) {
-                    int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-                    int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada, desea Activarla ? ", " Activar Persona", dialog);
-                    if (result == 0) {
-                        if (persona.activarPersonaIdentificacion(persona.getIdentificacion()) == true) {
-                            JOptionPane.showMessageDialog(null, "Persona activada correctamente");
-                            editar(per);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                    if (per.isPersonaActiva() == false) {
+                        int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                        int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
+                        if (result == 0) {
+                            if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
+                                JOptionPane.showMessageDialog(null, "Persona activada correctamente");
+                                editar(per);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "NO SE PUDO ACTUALIZAR A LA PERSONA");
+                            }
                         }
+                    } else if (per.isPersonaActiva()) {
+                        editar(per);
+                        numAccion = 2;
                     }
-                }
-                if (per == null) {
+                } else {
                     JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
                     editar = false;
-
-                } else {
-                    editar(per);
-                    numAccion = 2;
                 }
                 //Cambiamos el estado del mouse
                 vtnPrin.setCursor(new Cursor(0));
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
@@ -352,7 +350,7 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
 //        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
 //        frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
-        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVNumeros(
+        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
                 frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
@@ -414,37 +412,21 @@ public class FrmPersonaCTR {
         SegNombre = frmPersona.getTxtSegundoNombre().getText();
         PriApellido = frmPersona.getTxtPrimerApellido().getText();
         SegApellido = frmPersona.getTxtSegundoApellido().getText();
-        //FechaNac = frmPersona.getJdcFechaNacimiento().getSelectedDate().toString();
         EstadoCivil = frmPersona.getCmbEstadoCivil().getSelectedItem().toString();
-        //Celular = frmPersona.getTxtCelular().getText();
-        //Telefono = frmPersona.getTxtTelefono().getText();
         IdiomaRaiz = frmPersona.getCmbIdiomas().getSelectedItem().toString();
         Sexo = frmPersona.getCmbSexo().getSelectedItem().toString();
         Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
-        //Correo = frmPersona.getTxtCorreo().getText();
         Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-        if (Discapacidad) {
-            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
-        }
-        // Nacionalidad = frmPersona.getCmbNacionalidad().getSelectedItem().toString();
-        // Provincia = frmPersona.getCmbProvincia().getSelectedItem().toString();
-        // Canton = frmPersona.getCmbCanton().getSelectedItem().toString();
-        //PaisReside = frmPersona.getCmbPaisReside().getSelectedItem().toString();
-        //ProvinciaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
-        //CantonReside = frmPersona.getCmbCantonReside().getSelectedItem().toString();
-        //ParroquiaReside = frmPersona.getCmbParroquiaReside().getSelectedItem().toString();
-        //CodigoPostal = frmPersona.getTxtCodigoPostal().getText();
+//        if (Discapacidad) {
+//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+//        }
         TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
-        // CalleSec = frmPersona.getTxtCalleSecundaria().getText();
-        //Referencia = frmPersona.getTxtReferencia().getText();
-        //Sector = frmPersona.getTxtSector().getText();
-        //NumCasa = frmPersona.getTxtNumeroCasa().getText();
-
+       
         if (TipoId.equals("SELECCIONE") == false && Identificacion.equals("") == false
                 && PriNombre.equals("") == false && SegNombre.equals("") == false
                 && PriApellido.equals("") == false && SegApellido.equals("") == false
@@ -454,13 +436,7 @@ public class FrmPersonaCTR {
                 && IdiomaRaiz.equals("SELECCIONE") == false && Sexo.equals("SELECCIONE") == false
                 && Genero.equals("SELECCIONE") == false && TipoSangre.equals("SELECCIONE") == false
                 && Etnia.equals("SELECCIONE") == false
-                //              && Correo.equals("") == false
-                // && Nacionalidad.equals("SELECCIONE") == false && Provincia.equals("SELECCIONE") == false 
-                // && Canton.equals("SELECCIONE") == false  && PaisReside.equals("SELECCIONE") == false 
-                // && ProvinciaReside.equals("SELECCIONE") == false && CantonReside.equals("SELECCIONE") == false
-                // && ParroquiaReside.equals("SELECCIONE") == false && CodigoPostal.equals("") == false
-                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false //                && CalleSec.equals("") == false && Referencia.equals("") == false
-                //                && Sector.equals("") == false && NumCasa.equals("") == false
+                && TipoResidencia.equals("SELECCIONE") == false && CallePrin.equals("") == false
                 ) {
 //            if (Discapacidad == false && TipoDiscapacidad.equals("SELECCIONE") == false
 //                    && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
@@ -470,14 +446,12 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getBtnGuardarPersona().setEnabled(false);
         }
-
     }
 
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
         Date fecha;
-        LocalDate fechaNaci;
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimiento = fechaActual;
         //Para validar todo  
@@ -547,9 +521,6 @@ public class FrmPersonaCTR {
         //Se lo pasa a un string para poder validarlo
         fechaNac = sdf.format(fecha);
         String fec[] = fechaNac.split("/");
-
-        System.out.println("fechaNacimiento " + fechaNacimiento);
-        System.out.println("fechaNac " + fechaNac);
 
         if (Integer.parseInt(fec[2]) > fechaActual.getYear()
                 || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
@@ -879,6 +850,7 @@ public class FrmPersonaCTR {
         frmPersona.getCmbTipoSangre().setSelectedItem(per.getTipoSangre().trim());
         frmPersona.getCmbGenero().setSelectedItem(per.getGenero());
         frmPersona.getCmbEtnia().setSelectedItem(per.getEtnia());
+        frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
         //Codigo postal
         frmPersona.getCmbNacionalidad().setSelectedItem(per.getLugarNatal());
         frmPersona.getCmbProvincia().setSelectedItem(per.getLugarNatal());

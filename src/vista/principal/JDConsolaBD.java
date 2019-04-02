@@ -63,7 +63,7 @@ public class JDConsolaBD extends javax.swing.JDialog {
         lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Consola porsi existen cambios que debemos realizar fast.");
+        lblTitulo.setText("Consola para ejecutar, plsql.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
