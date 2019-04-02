@@ -260,6 +260,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"ViewAlumnoCurso\".persona_segundo_nombre,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_persona,\n"
                 + "\"public\".\"ViewAlumnoCurso\".alumno_codigo\n"
+               // + "(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\" \n"
                 + "FROM\n"
                 + "\"public\".\"ViewAlumnoCurso\"\n"
                 + "INNER JOIN \"Cursos\" ON \"ViewAlumnoCurso\".id_curso = \"Cursos\".id_curso\n"

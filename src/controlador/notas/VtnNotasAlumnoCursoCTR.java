@@ -285,17 +285,19 @@ public class VtnNotasAlumnoCursoCTR {
                 notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + notaSupletorio;
                 estado = "Reprobado";
                 datos.setValueAt(estado, fila, 11);
-            } else if (notaFinal >= 70) {
+                 datos.setValueAt(Math.round(notaFinal), fila, 10);
+            } else  {
                 notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
+                 datos.setValueAt(Math.round(notaFinal), fila, 10);
             }
 
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
 
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
 
-            datos.setValueAt(Math.round(notaFinal), fila, 10);
+           
 
             if (notaFinal >= 70.0) {
 
