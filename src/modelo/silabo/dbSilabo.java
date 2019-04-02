@@ -13,8 +13,10 @@ import modelo.referenciasSilabo.ReferenciaSilabo;
 public class dbSilabo extends Silabo {
 
     pgConect con = new pgConect();
+   
 
     public dbSilabo() {
+        
     }
 
     public dbSilabo(Integer idSilabo) {

@@ -262,7 +262,7 @@ public class VtnDocenteCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
@@ -283,7 +283,7 @@ public class VtnDocenteCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
@@ -351,7 +351,7 @@ public class VtnDocenteCTR {
                 JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
                 JasperViewer view = new JasperViewer(print, false);
                 view.setVisible(true);
-                view.setTitle("Reporte de Materias por Carrera");
+                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);

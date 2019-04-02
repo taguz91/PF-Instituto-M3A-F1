@@ -5,6 +5,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +75,7 @@ public class VtnMateriaCTR {
     }
 
     public void iniciar() {
+        vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Codigo", "Nombre", "Ciclo", "Docencia", "Practicas", "Autonomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
@@ -100,6 +103,13 @@ public class VtnMateriaCTR {
         cargarCmbFiltrar();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
+        
+        vtnMateria.getCmbCarreras().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                validarBotonesReportes();
+            }
+        });
         vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
         //Iniciamos el buscador  
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
@@ -240,5 +250,12 @@ public class VtnMateriaCTR {
 //            }
         }
     }
-
+  public void validarBotonesReportes() {
+        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
+        if (selecTabl >= 0) {
+            vtnMateria.getBtnReporteMaterias().setEnabled(true);
+        } else {
+            vtnMateria.getBtnReporteMaterias().setEnabled(false);
+        }
+    }
 }
