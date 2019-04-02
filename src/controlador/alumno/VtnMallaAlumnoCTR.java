@@ -50,7 +50,7 @@ public class VtnMallaAlumnoCTR {
     private final ConectarDB conecta;
     private final MallaAlumnoBD mallaAlm;
     private final VtnPrincipalCTR ctrPrin;
-    private final String[] cmbEstado = {"Seleccioné", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
+    private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado"};
     private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
@@ -161,7 +161,7 @@ public class VtnMallaAlumnoCTR {
         Instant iniBusqueda = Instant.now();
         cargarMallas();
         Instant terBusqueda = Instant.now();
-        System.out.println("El tiempo que tardo en buscar malla alumnos es: "
+        System.out.println("El tiempo que tardó en buscar malla alumnos es: "
                 + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -209,7 +209,7 @@ public class VtnMallaAlumnoCTR {
     private void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         if (posAlm > 0) {
-            System.out.println("Se consultara por alumno");
+            System.out.println("Se consultará por alumno");
             //Cambiamos el estado del cursos  
             vtnPrin.setCursor(new Cursor(3));
             ctrPrin.estadoCargaVtn("Malla alumnos");
@@ -219,7 +219,7 @@ public class VtnMallaAlumnoCTR {
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
 
             Instant terBusqueda = Instant.now();
-            System.out.println("El tiempo que tardo en buscar malla alumno es: "
+            System.out.println("El tiempo que tardó en buscar malla alumno es: "
                     + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
             vtnMallaAlm.getCmbEstado().setEnabled(true);
 
@@ -249,15 +249,15 @@ public class VtnMallaAlumnoCTR {
             MallaAlumnoMD malla = mallas.get(pos);
             if (malla.getMallaNumMatricula() > 0) {
                 if (malla.getEstado().equals("C")) {
-                    JOptionPane.showMessageDialog(vtnPrin, "Ya curso está materia, no se puede ingresar  una nota.");
+                    JOptionPane.showMessageDialog(vtnPrin, "Ya cursó ésta materia, no se puede ingresar  una nota.");
                 } else {
                     String nota = JOptionPane.showInputDialog(
                             "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
-                            + "Numero de matricula: " + malla.getMallaNumMatricula());
+                            + "Número de matrícula: " + malla.getMallaNumMatricula());
                     if (Validar.esNota(nota)) {
                         mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
                     } else {
-                        JOptionPane.showMessageDialog(vtnPrin, "Ingresé una nota válida.");
+                        JOptionPane.showMessageDialog(vtnPrin, "Ingrese una nota válida.");
                         ingresarNota();
                     }
                 }
@@ -314,7 +314,7 @@ public class VtnMallaAlumnoCTR {
         carreras = car.cargarCarreras();
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
-            vtnMallaAlm.getCmbCarreras().addItem("Seleccioné");
+            vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
             carreras.forEach(c -> {
                 vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
             });

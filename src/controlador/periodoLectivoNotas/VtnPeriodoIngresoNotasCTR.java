@@ -1,5 +1,6 @@
 package controlador.periodoLectivoNotas;
 
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,7 +25,7 @@ import vista.principal.VtnPrincipal;
  * @author MrRainx
  */
 public class VtnPeriodoIngresoNotasCTR {
-    
+
     private VtnPrincipal desktop;
     private VtnPeriodoIngresoNotas vista;
     private PeriodoIngresoNotasBD modelo;
@@ -37,8 +38,10 @@ public class VtnPeriodoIngresoNotasCTR {
     private List<PeriodoIngresoNotasMD> listaPeriodoNotas;
 
     //Thread
-    Thread thread = null;
-    
+    private Thread thread = null;
+
+    private boolean cargarTabla = true;
+
     public VtnPeriodoIngresoNotasCTR(VtnPrincipal desktop, VtnPeriodoIngresoNotas vista, PeriodoIngresoNotasBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
@@ -48,26 +51,26 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Inits
     public void Init() {
-        
+
         tablaPeriodoNotas = (DefaultTableModel) vista.getTblPeriodoIngresoNotas().getModel();
-        
+
         listaPeriodoNotas = PeriodoIngresoNotasBD.selectAll();
         cargarTabla(listaPeriodoNotas);
-        
+
         InitEventos();
         try {
-            
+
             desktop.getDpnlPrincipal().add(vista);
             vista.show();
             vista.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnPeriodoIngresoNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private void InitEventos() {
-        
+
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -75,12 +78,12 @@ public class VtnPeriodoIngresoNotasCTR {
             public void keyReleased(KeyEvent e) {
                 txtBuscarOnKeyReleased(e);
             }
-            
+
         });
         vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
     }
-    
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
@@ -90,12 +93,32 @@ public class VtnPeriodoIngresoNotasCTR {
 
     //Metodos de Apoyo
     public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
-        tablaPeriodoNotas.setRowCount(0);
-        lista
-                .stream()
-                .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+        if (cargarTabla) {
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    Effects.setLoadCursor(vista);
+
+                    cargarTabla = true;
+
+                    tablaPeriodoNotas.setRowCount(0);
+                    lista
+                            .stream()
+                            .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+                    Effects.setDefaultCursor(vista);
+
+                    cargarTabla = false;
+
+                }
+            };
+            thread.start();
+
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!!");
+        }
+
     }
-    
+
     private static void agregarFila(PeriodoIngresoNotasMD obj) {
         tablaPeriodoNotas.addRow(new Object[]{
             obj.getIdPeriodoIngreso(),
@@ -105,10 +128,10 @@ public class VtnPeriodoIngresoNotasCTR {
             obj.getTipoNota().getNombre()
         });
     }
-    
+
     private void setObjFromTabla(int fila) {
         int idPeriodoIngreso = (Integer) vista.getTblPeriodoIngresoNotas().getValueAt(fila, 0);
-        
+
         listaPeriodoNotas
                 .stream()
                 .filter(item -> item.getIdPeriodoIngreso() == idPeriodoIngreso)
@@ -116,32 +139,30 @@ public class VtnPeriodoIngresoNotasCTR {
                 .forEach(obj -> {
                     modelo = new PeriodoIngresoNotasBD(obj);
                 });
-        
+
     }
-    
+
     private void cargarTablaFilter(String Aguja) {
-        
+        tablaPeriodoNotas.setRowCount(0);
         List<PeriodoIngresoNotasMD> listaTemporal = listaPeriodoNotas.stream()
                 .filter(item -> item.getFechaCierre().toString().toUpperCase().contains(Aguja.toUpperCase())
                 || item.getFechaInicio().toString().toUpperCase().contains(Aguja.toUpperCase())
                 || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja.toUpperCase())
                 || item.getTipoNota().getNombre().toUpperCase().contains(Aguja.toUpperCase())
                 ).collect(Collectors.toList());
-        
-        for (PeriodoIngresoNotasMD obj : listaTemporal) {
-            agregarFila(obj);
-        }
-        
+
+        listaTemporal.forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
+
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
-        
+
     }
 
     //Procesadores de eventos
     private void btnEditarActionPerformance(ActionEvent e) {
         int fila = vista.getTblPeriodoIngresoNotas().getSelectedRow();
-        
+
         if (fila != -1) {
-            
+
             setObjFromTabla(fila);
             FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), modelo, this, "Editar");
             form.Init();
@@ -149,14 +170,14 @@ public class VtnPeriodoIngresoNotasCTR {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         }
     }
-    
+
     private void btnEliminarActionPerformance(ActionEvent e) {
         int fila = vista.getTblPeriodoIngresoNotas().getSelectedRow();
-        
+
         if (fila != -1) {
             int PK = (Integer) vista.getTblPeriodoIngresoNotas().getValueAt(fila, 0);
             int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR EL ELEMENTO SELECCIONADO");
-            
+
             if (opcion == 0) {
                 modelo.eliminar(PK);
                 cargarTabla(PeriodoIngresoNotasBD.selectAll());
@@ -165,18 +186,18 @@ public class VtnPeriodoIngresoNotasCTR {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         }
     }
-    
+
     private void btnIngresarActionPerformance(ActionEvent e) {
-        
+
         FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this, "Agregar");
         form.Init();
-        
+
     }
-    
+
     private void btnActualizarActionPerformance(ActionEvent e) {
         cargarTabla(PeriodoIngresoNotasBD.selectAll());
     }
-    
+
     private void txtBuscarOnKeyReleased(KeyEvent e) {
         cargarTablaFilter(vista.getTxtBuscar().getText());
     }

@@ -50,6 +50,9 @@ public class VtnPersonaCTR {
     private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
+    //Para permisos
+    String [] accesos = {"Personas-Ingresar","Personas-Editar","Personas-Eliminar","Personas-Estado"};
+    
 
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {

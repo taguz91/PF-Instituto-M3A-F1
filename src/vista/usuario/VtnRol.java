@@ -105,7 +105,7 @@ public class VtnRol extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Codigo Rol", "Nombre Rol"
+                "Código Rol", "Nombre Rol"
             }
         ));
         jScrollPane1.setViewportView(tabRoles);

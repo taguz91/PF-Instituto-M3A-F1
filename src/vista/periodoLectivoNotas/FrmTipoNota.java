@@ -64,7 +64,6 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Restricción de Notas del Periodo");
 
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNombre.setText("Nombre:");

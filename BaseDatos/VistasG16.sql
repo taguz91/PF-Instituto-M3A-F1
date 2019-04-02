@@ -64,3 +64,57 @@ CREATE OR REPLACE VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLec
 ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
 
 
+
+--------------------------------------------------------------------------------------
+ViewCursosPermisosNotas
+
+CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+AS
+SELECT "IngresoNotas".nota_primer_inteciclo,
+    "IngresoNotas".nota_examen_intecilo,
+    "IngresoNotas".nota_segundo_inteciclo,
+    "IngresoNotas".nota_examen_final,
+    "IngresoNotas".nota_examen_de_recuperacion,
+    "IngresoNotas".id_ingreso_notas,
+    "IngresoNotas".id_curso,
+    "Cursos".id_materia,
+    "Cursos".id_prd_lectivo,
+    "Cursos".id_docente,
+    "Cursos".curso_nombre,
+    "Materias".materia_nombre,
+    "Materias".materia_codigo,
+    "PeriodoLectivo".prd_lectivo_nombre,
+    "Personas".persona_identificacion,
+    "Personas".persona_primer_apellido,
+    "Personas".persona_segundo_apellido,
+    "Personas".persona_primer_nombre,
+    "Personas".persona_segundo_nombre
+   FROM ((((("IngresoNotas"
+     JOIN "Cursos" ON (("IngresoNotas".id_curso = "Cursos".id_curso)))
+     JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)))
+     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
+     JOIN "Docentes" ON (("Cursos".id_docente = "Docentes".id_docente)))
+     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
+
+ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
+
+
+------------------------------------------------------------
+script indice 
+
+CREATE UNIQUE INDEX cursospermisosnotas ON "ViewCursosPermisosNotas"(
+	id_ingreso_notas,
+	id_curso,
+	id_materia,
+id_prd_lectivo,
+id_docente,
+curso_nombre,
+    materia_nombre,
+    prd_lectivo_nombre,
+    persona_identificacion,
+    persona_primer_nombre,
+	persona_identificacion,
+persona_primer_apellido)
+
+
+

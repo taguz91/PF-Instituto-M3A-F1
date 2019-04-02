@@ -101,7 +101,7 @@ public class AlumnoBD extends AlumnoMD {
                 + "WHERE (p.persona_identificacion LIKE '%" + aguja + "%' OR  p.persona_primer_nombre LIKE '%"
                 + aguja + "%' OR p.persona_segundo_nombre LIKE '%" + aguja + "%' OR p.persona_primer_apellido LIKE '%"
                 + aguja + "%' OR p.persona_segundo_apellido LIKE '%" + aguja + "%' OR p.persona_correo LIKE '%"
-                + aguja + "%') AND p.persona_activa = 'true' AND a.alumno_activo = 'true'";
+                + aguja + "%') AND p.persona_activa = true AND a.alumno_activo = true;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -157,12 +157,10 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
-        //System.out.println(sql);
         try {
             AlumnoMD a = new AlumnoMD();
             String palabra;
             Integer numero;
-            boolean check;
             while (rs.next()) {
                 SectorEconomicoMD sector = new SectorEconomicoMD();
                 a.setIdPersona(rs.getInt("id_persona"));
@@ -171,7 +169,12 @@ public class AlumnoBD extends AlumnoMD {
                 a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                a.setId_Alumno(rs.getInt("id_alumno"));
+                numero = rs.getInt("id_alumno");
+                if(numero == null){
+                    a.setId_Alumno(0);
+                } else{
+                    a.setId_Alumno(numero);
+                }
                 numero = rs.getInt("id_sec_economico");
                 if(numero == null){
                     sector.setId_SecEconomico(0);
@@ -180,53 +183,30 @@ public class AlumnoBD extends AlumnoMD {
                     sector.setId_SecEconomico(numero);
                     a.setSectorEconomico(sector);
                 }
-//                if (rs.wasNull()) {
-//                    sector.setId_SecEconomico(0);
-//                    a.setSectorEconomico(sector);
-//                } else {
-//                    sector.setId_SecEconomico(rs.getInt("id_sec_economico"));
-//                    a.setSectorEconomico(sector);
-//                }
                 palabra = rs.getString("alumno_tipo_colegio");
                 if(palabra == null){
                     a.setTipo_Colegio("|SELECCIONE|");
                 } else{
                     a.setTipo_Colegio(rs.getString("alumno_tipo_colegio"));
                 }
-//                if (rs.wasNull()) {
-//                    a.setTipo_Colegio("|SELECCIONE|");
-//                } else {
-//                    a.setTipo_Colegio(rs.getString("alumno_tipo_colegio"));
-//                }
                 palabra = rs.getString("alumno_tipo_bachillerato");
                 if(palabra == null){
                     a.setTipo_Bachillerato("|SELECCIONE|");
                 } else{
                     a.setTipo_Bachillerato(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setTipo_Bachillerato("|SELECCIONE|");
-//                } else {
-//                    a.setTipo_Bachillerato(rs.getString("alumno_tipo_bachillerato"));
-//                }
                 palabra = rs.getString("alumno_anio_graduacion");
                 if(palabra == null){
                     a.setAnio_graduacion("1980");
                 } else{
                     a.setAnio_graduacion(palabra);
                 }
-//                if(palabra == null){
-//                    a.setAnio_graduacion("1980");
-//                } else{
-//                    a.setAnio_graduacion(rs.getString("alumno_anio_graduacion"));
-//                }
                 palabra = String.valueOf(rs.getBoolean("alumno_educacion_superior"));
                 if(palabra == null){
                   a.setEducacion_Superior(false);  
                 } else{
                     a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
                 }
-                System.out.println("Boolean: " + palabra);
 //                if (rs.wasNull()) {
 //                    a.setEducacion_Superior(false);
 //                } else {
@@ -238,29 +218,18 @@ public class AlumnoBD extends AlumnoMD {
                 } else{
                     a.setTitulo_Superior(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setTitulo_Superior(null);
-//                } else {
-//                    a.setTitulo_Superior(rs.getString("alumno_titulo_superior"));
-//                }
                 palabra = rs.getString("alumno_nivel_academico");
                 if(palabra == null){
                     a.setNivel_Academico("|SELECCIONE|");
                 } else{
                     a.setNivel_Academico(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setNivel_Academico("|SELECCIONE|");
-//                } else {
-//                    a.setNivel_Academico(rs.getString("alumno_nivel_academico"));
-//                }
                 palabra = String.valueOf(rs.getBoolean("alumno_pension"));
                 if(palabra == null){
                     a.setPension(false);
                 } else{
                     a.setPension(rs.getBoolean("alumno_pension"));
                 }
-                System.out.println("Boolean: " + palabra);
 //                if (rs.wasNull()) {
 //                    a.setPension(false);
 //                } else {
@@ -272,18 +241,12 @@ public class AlumnoBD extends AlumnoMD {
                 } else{
                     a.setOcupacion(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setOcupacion(null);
-//                } else {
-//                    a.setOcupacion(rs.getString("alumno_ocupacion"));
-//                }
                 palabra = String.valueOf(rs.getBoolean("alumno_trabaja"));
                 if(palabra == null){
                     a.setTrabaja(false);
                 } else{
                     a.setTrabaja(rs.getBoolean("alumno_trabaja"));
                 }
-                System.out.println("Boolean: " + palabra);
 //                if (rs.wasNull()) {
 //                    a.setTrabaja(false);
 //                } else {
@@ -295,55 +258,30 @@ public class AlumnoBD extends AlumnoMD {
                 } else{
                     a.setFormacion_Padre(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setFormacion_Padre("|SELECCIONE|");
-//                } else {
-//                    a.setFormacion_Padre(rs.getString("alumno_nivel_formacion_padre"));
-//                }
                 palabra = rs.getString("alumno_nivel_formacion_madre");
                 if(palabra == null){
                     a.setFormacion_Madre("|SELECCIONE|");
                 } else{
                     a.setFormacion_Madre(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setFormacion_Madre("|SELECCIONE|");
-//                } else {
-//                    a.setFormacion_Madre(rs.getString("alumno_nivel_formacion_madre"));
-//                }
                 palabra = rs.getString("alumno_numero_contacto");
                 if(palabra == null){
                     a.setContacto_Emergencia(null);
                 } else{
                     a.setContacto_Emergencia(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setContacto_Emergencia(null);
-//                } else {
-//                    a.setContacto_Emergencia(rs.getString("alumno_numero_contacto"));
-//                }
                 palabra = rs.getString("alumno_parentesco_contacto");
                 if(palabra == null){
                     a.setParentesco_Contacto("|SELECCIONE|");
                 } else{
                     a.setParentesco_Contacto(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setParentesco_Contacto("|SELECCIONE|");
-//                } else {
-//                    a.setParentesco_Contacto(rs.getString("alumno_parentesco_contacto"));
-//                }
                 palabra = rs.getString("alumno_nombre_contacto_emergencia");
                 if(palabra == null){
                    a.setNom_Contacto(null); 
                 } else{
                     a.setNom_Contacto(palabra);
                 }
-//                if (rs.wasNull()) {
-//                    a.setNom_Contacto(null);
-//                } else {
-//                    a.setNom_Contacto(rs.getString("alumno_nombre_contacto_emergencia"));
-//                }
             }
             rs.close();
             return a;
