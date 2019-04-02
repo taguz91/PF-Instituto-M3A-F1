@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import static java.lang.Thread.sleep;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -243,30 +244,55 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
 
-        int fila = vista.getTblNotas().getSelectedRow();
+         int fila = vista.getTblNotas().getSelectedRow();
 
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
         double notaFinalPrimerParcial = 0;
+        double notaInterCiclo2 = 0;
+        double examenFinal = 0;
+        double notaSupletorio = 0;
         double notaFinal = 0;
+        String estado = null;
 
         try {
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
-
-            if (notaInterCiclo > 30) {
-                notaInterCiclo = 30;
-                datos.setValueAt(30, fila, 4);
-            }
-
             examenInterCiclo = validarNumero(datos.getValueAt(fila, 5).toString());
+            notaInterCiclo2 = validarNumero(datos.getValueAt(fila, 7).toString());
+            examenFinal = validarNumero(datos.getValueAt(fila, 8).toString());
+            notaSupletorio = validarNumero(datos.getValueAt(fila, 9).toString());
+            if (notaInterCiclo > 30) {
+                notaInterCiclo = 30.0;
+                datos.setValueAt(30.0, fila, 4);
+            }else if(examenInterCiclo > 15){
+                examenInterCiclo = 15.0;
+                datos.setValueAt(15.0, fila, 5);
+            }else if (notaInterCiclo2 > 30){
+                notaInterCiclo2 = 30.0;
+                datos.setValueAt(30.0, fila, 7);
+            }else if (examenFinal > 25){
+                examenFinal = 25.0;
+                datos.setValueAt(25.0, fila, 8);
+            }else if (notaSupletorio > 25){
+                examenFinal = 25.0;
+                datos.setValueAt(25.0, fila, 9);
+            }
+            
+            notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal + notaSupletorio;
 
-            notaFinal = notaInterCiclo + examenInterCiclo;
-
-            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
+            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo ;
 
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
 
             datos.setValueAt(notaFinal, fila, 10);
+            
+            if (notaFinal >= 70.0){
+                estado = "Aprobado";
+                datos.setValueAt(estado, fila, 11);
+            }else{
+                estado = "Reprobado";
+                datos.setValueAt(estado, fila, 11);
+            }
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
@@ -873,30 +899,70 @@ public class VtnNotasAlumnoCursoCTR {
                 null,
                 new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
                     "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
-        switch (r) {
+       
+         thread = new Thread() {
+            @Override
+            public void run() {
+                Effects.setLoadCursor(vista);
+                
+                 switch (r) {
             case 0:
-                //  REPORTE DE Alumnos con menos de 70" 
+               
+                desktop.getLblEstado().setText("CARGANDO REPORTE....");
                 generarReporteMenos70();
+                desktop.getLblEstado().setText("COMPLETADO");
+                
                 break;
+                
             case 1:
-                //REPORTE DE Alumnos entre 70 a 80"
-                generarReporteEntre70_80();
-                break;
+                
+               desktop.getLblEstado().setText("CARGANDO REPORTE....");
+               generarReporteEntre70_80();
+               desktop.getLblEstado().setText("COMPLETADO");
+               
+               break;
+               
             case 2:
-                //REPORTE DE Alumnos entre 80 a 90"
+                
+                desktop.getLblEstado().setText("CARGANDO REPORTE....");
                 generarReporteEntre80_90();
+                desktop.getLblEstado().setText("COMPLETADO");
+                
                 break;
+                
             case 3:
-                //REPORTE DE Alumnos entre 90 a 100"
+                
+                desktop.getLblEstado().setText("CARGANDO REPORTE....");
                 generarReporteEntre90_100();
+                desktop.getLblEstado().setText("COMPLETADO");
+                
                 break;
+                
             case 4:
-                //REPORTE completo"
+                desktop.getLblEstado().setText("CARGANDO REPORTE....");
                 generarReporteCompleto();
+                desktop.getLblEstado().setText("COMPLETADO");
                 break;
+                
             default:
                 break;
         }
+                
+
+                try {
+                    sleep(5000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                desktop.getLblEstado().setText("");
+                Effects.setDefaultCursor(vista);
+                vista.getBtnVerNotas().setEnabled(true);
+
+            }
+
+        };
+        thread.start();
+        
 
     }
 

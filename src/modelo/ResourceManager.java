@@ -20,6 +20,10 @@ public class ResourceManager {
     private static String JDBC_URL = "";
     //Esta base de datos es la que entrera en pruebas del dia de mañana no modificar nada
 
+
+    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
+    //private static final String JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final"; //BD Andres
+
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
     private static Driver driver = null;

@@ -51,8 +51,6 @@ public class FrmAlumnoCTR {
     private List<SectorEconomicoMD> Sectores = new ArrayList();
 
     private final SectorEconomicoBD sectorE;
-    //Para ver si existe esa persona  
-    private final PersonaBD per;
 
     //Para cargar los sectores economico  
     public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -68,8 +66,7 @@ public class FrmAlumnoCTR {
         ctrPrin.setIconJIFrame(frmAlumno);
         vtnPrin.getDpnlPrincipal().add(frmAlumno);
         frmAlumno.show();
-        this.bdAlumno = new AlumnoBD(conecta);
-        this.per = new PersonaBD(conecta);
+        bdAlumno = new AlumnoBD(conecta);
     }
 
     public void iniciar() {
@@ -336,10 +333,8 @@ public class FrmAlumnoCTR {
 
                 if (error == false) {
 
-                    AlumnoMD alumno = bdAlumno.buscarPersonaxCedula(frmAlumno.getTxt_Cedula().getText());
-                    PersonaMD p = per.buscarPersonaParaReferencia(frmAlumno.getTxt_Cedula().getText());
-                    //List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-                    if (alumno.getIdentificacion() == null && p.getIdentificacion() == null) {
+                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+                    if (p.get(0).getIdentificacion() == null) {
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {
@@ -352,15 +347,17 @@ public class FrmAlumnoCTR {
                         }
                         cont = 0;
                     } else {
+                        AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
+                        Integer idAlumno = alumno.getId_Alumno();
                         Font negrita = new Font("Tahoma", Font.BOLD, 13);
                         frmAlumno.getTxt_Nombre().setFont(negrita);
 //                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
 //                                + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
-                        frmAlumno.getTxt_Nombre().setText(p.getPrimerNombre() + " " + p.getSegundoNombre() + " " + 
-                                p.getPrimerApellido() + " " + p.getSegundoApellido());
+                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre() + " "
+                                + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
                         habilitarGuardar();
-//                            System.out.println(p.get(0).getIdPersona());
-                        if (alumno.getTipo_Colegio() == null) {
+//                        if (alumno.getTipo_Colegio() == null) {
+                        if(alumno.getId_Alumno() == 0){
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             cont = 0;
