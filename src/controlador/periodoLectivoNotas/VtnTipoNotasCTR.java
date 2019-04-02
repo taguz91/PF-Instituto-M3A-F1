@@ -94,6 +94,24 @@ public class VtnTipoNotasCTR {
             }
         }
 
+        vista.getLblResultados().setText(listaTiposNotas.size() + " Resultados Obtenidos");
+
+    }
+
+    private void cargarTablaFilter(String Aguja) {
+        tablaTiposNotas.setRowCount(0);
+        List<TipoDeNotaMD> listaTemporal = listaTiposNotas.stream()
+                .filter(item -> item.getNombre().toUpperCase().contains(Aguja)
+                || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
+                || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
+                || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja))
+                .collect(Collectors.toList());
+
+        listaTemporal.forEach(obj -> {
+            agregarFila(listaTemporal.indexOf(obj) + 1, obj);
+        });
+
+        vista.getLblResultados().setText(listaTemporal.size() + " Resultados Obtenidos");
     }
 
     private static void agregarFila(int indice, TipoDeNotaMD obj) {
@@ -184,15 +202,7 @@ public class VtnTipoNotasCTR {
 
     private void txtBuscarOnKeyReleased(KeyEvent e) {
 
-        String Aguja = vista.getTxtBuscar().getText().toLowerCase();
-        tablaTiposNotas.setRowCount(0);
-        if (Aguja.length() >= 3) {
-            listaTiposNotas = modelo.SelectOneWhereNombre(Aguja);
-            cargarTabla();
-        } else if (Aguja.length() == 0) {
-            listaTiposNotas = TipoDeNotaBD.SelectAll();
-            cargarTabla();
-        }
+        cargarTablaFilter(vista.getTxtBuscar().getText().toUpperCase());
 
     }
 
