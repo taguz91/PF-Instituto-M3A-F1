@@ -46,6 +46,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
@@ -234,7 +235,7 @@ public class VtnPrincipalCTR {
                 vtnPrin.getBtnAlumno().setEnabled(false);
                 vtnPrin.getMnIgAlumno().setEnabled(false);
             }
-            
+
             if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_PERIODO_LECTIVO][3])) {
                 vtnPrin.getBtnPrdLectivo().setEnabled(true);
                 vtnPrin.getMnIgPrdLectivo().setEnabled(true);
@@ -250,7 +251,6 @@ public class VtnPrincipalCTR {
                 vtnPrin.getBtnInscripcion().setEnabled(false);
                 vtnPrin.getMnIgInscripcion().setEnabled(false);
             }
-
 
         });
     }
@@ -662,6 +662,7 @@ public class VtnPrincipalCTR {
     }
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {
+        ResourceManager.cerrarSesion();
         vtnPrin.dispose();
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();
