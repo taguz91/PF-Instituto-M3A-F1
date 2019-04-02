@@ -68,7 +68,9 @@ ALTER TABLE "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
 --------------------------------------------------------------------------------------
 ViewCursosPermisosNotas
 
-CREATE VIEW "public"."ViewCursosPermisosNotas" AS  SELECT "IngresoNotas".nota_primer_inteciclo,
+CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+AS
+SELECT "IngresoNotas".nota_primer_inteciclo,
     "IngresoNotas".nota_examen_intecilo,
     "IngresoNotas".nota_segundo_inteciclo,
     "IngresoNotas".nota_examen_final,
@@ -78,32 +80,23 @@ CREATE VIEW "public"."ViewCursosPermisosNotas" AS  SELECT "IngresoNotas".nota_pr
     "Cursos".id_materia,
     "Cursos".id_prd_lectivo,
     "Cursos".id_docente,
-    "Cursos".id_jornada,
     "Cursos".curso_nombre,
-    "Cursos".curso_capacidad,
-    "Cursos".curso_ciclo,
-    "Cursos".curso_paralelo,
     "Materias".materia_nombre,
     "Materias".materia_codigo,
     "PeriodoLectivo".prd_lectivo_nombre,
-    "PeriodoLectivo".prd_lectivo_fecha_inicio,
-    "PeriodoLectivo".prd_lectivo_fecha_fin,
     "Personas".persona_identificacion,
     "Personas".persona_primer_apellido,
     "Personas".persona_segundo_apellido,
     "Personas".persona_primer_nombre,
-    "Personas".persona_segundo_nombre,
-    "Jornadas".nombre_jornada
-   FROM (((((("IngresoNotas"
+    "Personas".persona_segundo_nombre
+   FROM ((((("IngresoNotas"
      JOIN "Cursos" ON (("IngresoNotas".id_curso = "Cursos".id_curso)))
      JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)))
      JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
      JOIN "Docentes" ON (("Cursos".id_docente = "Docentes".id_docente)))
-     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)))
-     JOIN "Jornadas" ON (("Cursos".id_jornada = "Jornadas".id_jornada)));
+     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
 
-ALTER TABLE "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
-
+ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
 
 
 
