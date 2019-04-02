@@ -5,11 +5,18 @@
  */
 package modelo.propiedades;
 
+import controlador.Libraries.Effects;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.effect.Effect;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,12 +28,12 @@ public class Propiedades {
     private static Properties config;
     private static FileInputStream configInput;
     private static FileOutputStream configOutput;
-    private final static String PATH = "configs/configuracion.properties";
+    private static String PATH = "configuracion.properties";
     private static File archivo;
 
     static {
         config = new Properties();
-        archivo = new File(PATH);
+        PATH = Effects.getProjectPath() + PATH;
     }
 
     public static boolean verificador() {
@@ -34,12 +41,26 @@ public class Propiedades {
     }
 
     public static void setPropertyValue(String propiedad, String valor) {
-        
+
         try {
-            configOutput = new FileOutputStream(archivo);
+            configOutput = new FileOutputStream(PATH);
             config.setProperty(propiedad, valor);
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Error guardando configuración\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            configOutput.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void escribirPropiedades() {
+        //            configOutput = new FileOutputStream(PATH);
+
+        config.setProperty("IP_ADRESS", "35.193.226.187");
+
+        try {
+            config.store(new FileWriter(PATH), "comentario");
+        } catch (IOException ex) {
+            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
