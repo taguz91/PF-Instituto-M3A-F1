@@ -143,7 +143,7 @@ public class VtnPeriodoIngresoNotasCTR {
     }
 
     private void cargarTablaFilter(String Aguja) {
-
+        tablaPeriodoNotas.setRowCount(0);
         List<PeriodoIngresoNotasMD> listaTemporal = listaPeriodoNotas.stream()
                 .filter(item -> item.getFechaCierre().toString().toUpperCase().contains(Aguja.toUpperCase())
                 || item.getFechaInicio().toString().toUpperCase().contains(Aguja.toUpperCase())
@@ -151,9 +151,7 @@ public class VtnPeriodoIngresoNotasCTR {
                 || item.getTipoNota().getNombre().toUpperCase().contains(Aguja.toUpperCase())
                 ).collect(Collectors.toList());
 
-        for (PeriodoIngresoNotasMD obj : listaTemporal) {
-            agregarFila(obj);
-        }
+        listaTemporal.forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
 
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
 
