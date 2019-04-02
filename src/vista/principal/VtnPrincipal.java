@@ -573,6 +573,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
+        mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
         mnCtHistorialUsers.setText("Historial usuarios");
         mnTipoNotas.add(mnCtHistorialUsers);
 

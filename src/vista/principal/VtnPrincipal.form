@@ -101,6 +101,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Historial usuarios"/>
               </Properties>
             </MenuItem>
