@@ -120,11 +120,11 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         jLabel5.setText("Modalidad:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
 
-        jLabel1.setText("Codigo:");
+        jLabel1.setText("Código:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
 
         lblErrorFecha.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorFecha.setText("Ingrese una fecha valida");
+        lblErrorFecha.setText("Ingrese una fecha válida.");
         jPanel1.add(lblErrorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
 
         jLabel3.setText("Fecha inicio:");

@@ -223,12 +223,14 @@ public class VtnPersonaCTR {
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a esta Persona ", " Eliminar Persona", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"+
+                    vtnPersona.getTblPersona().getValueAt(posFila, 2)+"?", " Eliminar Persona", dialog);
             if (result == 0) {
                 if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     //cargarLista();
                     cargarTipoPersona();
+                    vtnPersona.getTxtBuscar().setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA PERSONA");
                 }

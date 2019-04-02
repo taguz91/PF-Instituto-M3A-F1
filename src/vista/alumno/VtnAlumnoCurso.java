@@ -92,7 +92,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
-        jLabel1.setText("Periodo");
+        jLabel1.setText("Período:");
 
         jLabel2.setText("Cursos:");
 
@@ -147,7 +147,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
                 .addContainerGap())

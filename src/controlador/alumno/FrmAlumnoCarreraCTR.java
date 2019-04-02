@@ -74,7 +74,7 @@ public class FrmAlumnoCarreraCTR {
         cargarCmbModalidad();
         cargarCmbCarreras();
 
-        String[] titulo = {"Cedula", "Nombre"};
+        String[] titulo = {"Cédula", "Nombre"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -158,7 +158,7 @@ public class FrmAlumnoCarreraCTR {
         carreras = carr.cargarCarreras();
         if (carreras != null) {
             frmAlmCarrera.getCmbCarreras().removeAllItems();
-            frmAlmCarrera.getCmbCarreras().addItem("Seleccione");
+            frmAlmCarrera.getCmbCarreras().addItem("Seleccioné");
             carreras.forEach((c) -> {
                 frmAlmCarrera.getCmbCarreras().addItem(c.getNombre());
             });
@@ -167,7 +167,7 @@ public class FrmAlumnoCarreraCTR {
 
     private void cargarCmbModalidad() {
         frmAlmCarrera.getCmbModalidad().removeAllItems();
-        frmAlmCarrera.getCmbModalidad().addItem("Seleccione");
+        frmAlmCarrera.getCmbModalidad().addItem("Seleccioné");
         for (String m : MODALIDADES) {
             frmAlmCarrera.getCmbModalidad().addItem(m);
         }

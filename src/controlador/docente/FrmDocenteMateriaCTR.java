@@ -66,7 +66,7 @@ public class FrmDocenteMateriaCTR {
     public void iniciar() {
         iniciarValidaciones();
         //Iniciamos la tabla
-        String[] titulo = {"Cedula", "Docente"};
+        String[] titulo = {"Cédula", "Docente"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         frmDM.getTblDocentes().setModel(mdTbl);
@@ -177,7 +177,7 @@ public class FrmDocenteMateriaCTR {
         frmDM.getCmbCarrera().removeAllItems();
         carreras = car.cargarCarreras();
         if (carreras != null) {
-            frmDM.getCmbCarrera().addItem("Seleccione");
+            frmDM.getCmbCarrera().addItem("Seleccioné");
             carreras.forEach(c -> {
                 frmDM.getCmbCarrera().addItem(c.getCodigo());
             });

@@ -39,5 +39,3 @@ INSERT INTO "Accesos" VALUES(64,'TipoDeNota-Ingresar');
 INSERT INTO "Accesos" VALUES(65,'PeriodoLectivo-Cerrar Periodo');
 INSERT INTO "Accesos" VALUES(66,'PeriodoLectivo-Ingresar');
 INSERT INTO "Accesos" VALUES(67,'PeriodoLectivo-Editar');
-
-
