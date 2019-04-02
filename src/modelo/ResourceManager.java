@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -33,9 +35,7 @@ public class ResourceManager {
 
         if (driver == null) {
             try {
-                /*
-                    JAVA REFLECTION
-                 */
+
                 Class jdbcDriverClass = Class.forName(JDBC_DRIVER);
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver(driver);
@@ -115,6 +115,24 @@ public class ResourceManager {
                 System.out.println(e.getMessage());
             }
             return null;
+        }
+    }
+
+    public static void cerrarSesion() {
+
+        try {
+            conn.close();
+            conex.close();
+            stmt.close();
+            rs.close();
+
+            driver = null;
+            stmt = null;
+            conn = null;
+            conex = null;
+            rs = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
