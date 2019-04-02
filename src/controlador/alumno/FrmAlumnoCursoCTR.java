@@ -200,7 +200,7 @@ public class FrmAlumnoCursoCTR {
                 mallaAlm.actualizarEstadoMallaAlmn(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
                         periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
-            JOptionPane.showMessageDialog(null, "Se guardo el alumno en el curso, correctamente");
+            JOptionPane.showMessageDialog(null, "Se guardó el alumno en el curso, correctamente");
             //Reiniciamos todo 
             frmAlmCurso.getTxtBuscar().setText("");
             frmAlmCurso.getCmbCurso().removeAllItems();
@@ -228,7 +228,7 @@ public class FrmAlumnoCursoCTR {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
             frmAlmCurso.getCmbPrdLectivo().removeAllItems();
-            frmAlmCurso.getCmbPrdLectivo().addItem("Seleccioné");
+            frmAlmCurso.getCmbPrdLectivo().addItem("Seleccione");
             periodos.forEach((p) -> {
                 frmAlmCurso.getCmbPrdLectivo().addItem(p.getNombre_PerLectivo());
             });
@@ -367,7 +367,7 @@ public class FrmAlumnoCursoCTR {
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
                 cicloCursado);
         if (nombreCursos != null) {
-            frmAlmCurso.getCmbCurso().addItem("Seleccioné");
+            frmAlmCurso.getCmbCurso().addItem("Seleccione");
             nombreCursos.forEach(c -> {
                 frmAlmCurso.getCmbCurso().addItem(c);
             });

@@ -251,7 +251,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="75" green="4f" red="31" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero Matricula:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero Matr&#xed;cula:"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -332,7 +332,7 @@
               <Color blue="75" green="4f" red="31" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Informacion"/>
+            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>

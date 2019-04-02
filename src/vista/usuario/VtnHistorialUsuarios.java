@@ -98,11 +98,11 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Usuario:");
 
-        jLabel4.setText("Accion:");
+        jLabel4.setText("Acción:");
 
         jLabel5.setText("Tabla:");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
 
         jLabel6.setText("Inicio:");
 

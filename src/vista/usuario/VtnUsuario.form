@@ -143,7 +143,7 @@
               <Table columnCount="7" rowCount="0">
                 <Column editable="false" title="No." type="java.lang.Object"/>
                 <Column editable="false" title="Username" type="java.lang.String"/>
-                <Column editable="false" title="Identificacion Persona" type="java.lang.String"/>
+                <Column editable="false" title="Identificaci&#xf3;n Persona" type="java.lang.String"/>
                 <Column editable="false" title="Primer Apellido" type="java.lang.String"/>
                 <Column editable="false" title="Segundo Apellido" type="java.lang.Object"/>
                 <Column editable="false" title="Primer Nombre" type="java.lang.Object"/>

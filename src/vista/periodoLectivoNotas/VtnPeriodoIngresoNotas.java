@@ -82,6 +82,7 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Período Ingreso Notas");
         setPreferredSize(new java.awt.Dimension(700, 415));
 
         jLabel1.setText("Buscar");
@@ -97,7 +98,7 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Fecha Inicio", "Fecha Cierre", "Codigo Periodo Lectivo", "Codigo Tipo Nota"
+                "ID", "Fecha Inicio", "Fecha Cierre", "Código Período Lectivo", "Código Tipo Nota"
             }
         ) {
             boolean[] canEdit = new boolean [] {

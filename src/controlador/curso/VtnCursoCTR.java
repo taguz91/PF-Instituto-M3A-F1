@@ -235,7 +235,7 @@ public class VtnCursoCTR {
            // parametro.put("idDocente", cursos.get(posFila).getId_docente());
             parametro.put("ciclo", cursos.get(posFila).getCurso_ciclo());
             parametro.put("paralelo", vtnCurso.getCmbCurso().getSelectedItem());
-            parametro.put("periodo", periodos.get(posFila).getNombre_PerLectivo());
+            parametro.put("período", periodos.get(posFila).getNombre_PerLectivo());
             parametro.put("idDocente",cursos.get(posFila).getId_docente().getIdDocente());
            // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);

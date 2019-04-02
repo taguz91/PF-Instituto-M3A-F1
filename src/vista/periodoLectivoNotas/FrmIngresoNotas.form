@@ -4,7 +4,6 @@
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Periodo Ingreso Notas"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -135,7 +134,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblPeriodoLectivo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
+        <Property name="text" type="java.lang.String" value="Per&#xed;odo Lectivo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTipoNota">

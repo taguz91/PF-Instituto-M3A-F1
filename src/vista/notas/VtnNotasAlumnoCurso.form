@@ -117,7 +117,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lbl_periodolectivo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Periodo Lectivo:"/>
+        <Property name="text" type="java.lang.String" value="Per&#xed;odo Lectivo:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_carrera">
@@ -226,17 +226,17 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="14" rowCount="0">
                 <Column editable="false" title="N&#xb0;" type="java.lang.Object"/>
-                <Column editable="false" title="Cedula" type="java.lang.Object"/>
+                <Column editable="false" title="C&#xe9;dula" type="java.lang.Object"/>
                 <Column editable="false" title="Apellidos" type="java.lang.Object"/>
                 <Column editable="false" title="Nombres" type="java.lang.Object"/>
-                <Column editable="true" title="APORTE 1   /30" type="java.lang.Object"/>
-                <Column editable="true" title="EXAMEN INTERCICLO" type="java.lang.Object"/>
-                <Column editable="false" title="TOTAL INTERCICLO" type="java.lang.Object"/>
-                <Column editable="true" title="APORTE 2  /30" type="java.lang.Object"/>
-                <Column editable="true" title="EXAMEN FINAL  /25" type="java.lang.Object"/>
-                <Column editable="true" title="/25 SUSP." type="java.lang.Object"/>
-                <Column editable="false" title="NOTA FINAL" type="java.lang.Object"/>
-                <Column editable="true" title="ESTADO" type="java.lang.Object"/>
+                <Column editable="true" title="Aporte 1   /30" type="java.lang.Object"/>
+                <Column editable="true" title="Ex&#xe1;men Interciclo /15" type="java.lang.Object"/>
+                <Column editable="false" title="Total Interciclo /45" type="java.lang.Object"/>
+                <Column editable="true" title="Aporte 2  /30" type="java.lang.Object"/>
+                <Column editable="true" title="Ex&#xe1;men Final  /25" type="java.lang.Object"/>
+                <Column editable="true" title="Supletorio /25" type="java.lang.Object"/>
+                <Column editable="false" title="Nota Final" type="java.lang.Object"/>
+                <Column editable="true" title="Estado" type="java.lang.Object"/>
                 <Column editable="true" title="Nro. Faltas" type="java.lang.Object"/>
                 <Column editable="false" title="% Faltas" type="java.lang.String"/>
               </Table>
