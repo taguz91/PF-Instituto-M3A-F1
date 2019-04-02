@@ -1,8 +1,3 @@
---Grupo 23
-ALTER TABLE public."Docentes" ADD COLUMN docente_titulo character varying(200) NOT NULL;
-ALTER TABLE public."Docentes" ADD COLUMN docente_abreviatura character varying(20) NOT NULL;
---Grupo 
-
 ALTER TABLE public."UnidadSilabo" ADD COLUMN id_silabo integer NOT NULL;
 
 ALTER TABLE "UnidadSilabo" ADD CONSTRAINT "unidad_silabo_pk1"
@@ -33,6 +28,61 @@ ALTER TABLE public."Silabo" ADD COLUMN id_prd_lectivo integer NOT NULL;
 ALTER TABLE "Silabo" ADD CONSTRAINT "fk_silabo_prd_lectivo"
     FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*
+    NUEVAS
+*/
+
+CREATE SEQUENCE public."EstrategiasSilabo_id_estrategia_seq";
+
+ALTER SEQUENCE public."EstrategiasSilabo_id_estrategia_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."EstrategiasAprendizaje"
+(
+    id_estrategia integer NOT NULL DEFAULT nextval('"EstrategiasSilabo_id_estrategia_seq"'::regclass),
+    descripcion_estrategia text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "EstrategiasSilabo_pkey" PRIMARY KEY (id_estrategia)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."EstrategiasAprendizaje"
+    OWNER to postgres;
+
+
+CREATE SEQUENCE public."EstrategiasUnidad_id_estrategia_unidad_seq";
+
+ALTER SEQUENCE public."EstrategiasUnidad_id_estrategia_unidad_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."EstrategiasUnidad"
+(
+    id_estrategia_unidad integer NOT NULL DEFAULT nextval('"EstrategiasUnidad_id_estrategia_unidad_seq"'::regclass),
+    id_unidad integer NOT NULL,
+    id_estrategia integer NOT NULL,
+    CONSTRAINT "EstrategiasUnidad_pkey" PRIMARY KEY (id_estrategia_unidad),
+    CONSTRAINT "EstrategiasUnidad_id_estrategia_fkey" FOREIGN KEY (id_estrategia)
+        REFERENCES public."EstrategiasAprendizaje" (id_estrategia) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "EstrategiasUnidad_id_unidad_fkey" FOREIGN KEY (id_unidad)
+        REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."EstrategiasUnidad"
+    OWNER to postgres;
+
+    
+
 --Grupo Diego
 
 ALTER TABLE "Cursos" DROP "curso_permiso_ingreso_nt";
