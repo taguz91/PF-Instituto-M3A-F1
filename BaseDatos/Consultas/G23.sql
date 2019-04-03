@@ -25,3 +25,9 @@ WHERE a.id_alumno = ac.id_alumno AND
 p.id_persona = a.id_persona AND
 c.curso_nombre = 'M4A'  AND
 ac.id_curso = c.id_curso;
+
+
+--Filtra el numero de Alumnos matriculados segun la ID de la carrera mandada
+SELECT COUNT(*) FROM (public."Carreras" c JOIN public."AlumnosCarrera" a
+					  USING(id_carrera)) JOIN public."MallaAlumno" m USING(id_almn_carrera)
+							WHERE c.id_carrera = 2 AND m.malla_almn_estado LIKE 'M';

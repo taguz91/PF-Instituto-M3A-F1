@@ -44,7 +44,6 @@ public class VtnAlumnoCTR {
     private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
-    private String[] alumnoPermisoEstado = {"Alumnos-Ingresar","Alumnos-Editar","Alumnos-Eliminar","Alumnos-"};
 
     public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
