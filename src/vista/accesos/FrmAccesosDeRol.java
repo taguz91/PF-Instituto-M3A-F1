@@ -1,5 +1,6 @@
 package vista.accesos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,6 +18,9 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
      */
     public FrmAccesosDeRol() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {

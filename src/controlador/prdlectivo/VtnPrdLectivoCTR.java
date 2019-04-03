@@ -72,7 +72,7 @@ public class VtnPrdLectivoCTR {
                 String b = vtnPrdLectivo.getTxt_Buscar().getText().toUpperCase();
                 if (b.length() > 2) {
                     buscaIncremental(b);
-                }else if(b.length() == 0){
+                } else if (b.length() == 0) {
                     llenarTabla();
                 }
             }
@@ -155,10 +155,10 @@ public class VtnPrdLectivoCTR {
             for (int i = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; i >= 0; i--) {
                 modelo_Tabla.removeRow(i);
             }
-            
+
             List<PeriodoLectivoMD> lista = bdPerLectivo.capturarPeriodos(aguja);
-            System.out.println("Numero de resultados : "+lista.size());
-            
+            System.out.println("Numero de resultados : " + lista.size());
+
             int columnas = modelo_Tabla.getColumnCount();
             for (int i = 0; i < lista.size(); i++) {
                 modelo_Tabla.addRow(new Object[columnas]);
@@ -225,34 +225,6 @@ public class VtnPrdLectivoCTR {
                     vtnPrdLectivo.getLblResultados().setText(String.valueOf(periodos.size()) + " Resultados obtenidos.");
                 }
             } else {
-//                DefaultTableModel modelo_Tabla;
-//                modelo_Tabla = (DefaultTableModel) vtnPrdLectivo.getTblPrdLectivo().getModel();
-//                for (int y = vtnPrdLectivo.getTblPrdLectivo().getRowCount() - 1; y >= 0; y--) {
-//                    modelo_Tabla.removeRow(y);
-//                }
-//                periodos = bdPerLectivo.cargarPeriodos();
-//                int columnas = modelo_Tabla.getColumnCount();
-//                for (int a = 0; a < periodos.size(); a++) {
-//                    modelo_Tabla.addRow(new Object[columnas]);
-//                    String dia_Inicio, mes_Inicio, anio_Inicio;
-//                    String dia_Fin, mes_Fin, anio_Fin;
-//                    dia_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getDayOfMonth());
-//                    mes_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getMonthValue());
-//                    anio_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getYear());
-//                    dia_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getDayOfMonth());
-//                    mes_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getMonthValue());
-//                    anio_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getYear());
-//                    vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
-//                    vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
-//                    vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre_PerLectivo(), i, 2);
-//                    vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
-//                    vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
-//                }
-//                if (periodos.isEmpty()) {
-//                    vtnPrdLectivo.getLblResultados().setText("0 Resultados obtenidos.");
-//                } else {
-//                    vtnPrdLectivo.getLblResultados().setText(String.valueOf(periodos.size()) + " Resultados obtenidos.");
-//                }
             }
         }
 
@@ -314,16 +286,28 @@ public class VtnPrdLectivoCTR {
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "Seleccione un Período Lectivo");
         } else {
+            periodo = capturarFila();
+            String num = bdPerLectivo.alumnosMatriculados(periodo.getCarrera().getId());
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
+            int result = JOptionPane.showConfirmDialog(null, "ADVERTENCIA!!\n"
+                    + "Está a punto de Cerrar un Período Lectivo\n"
+                    + "Al hacer esto se pasaran las notas de todos los estudiantes matriculados en la carrera de " + periodo.getCarrera().getNombre() + "\n"
+                    + "A la Malla General, esto quiere decir que las notas de " + num + " Alumnos serán cambiadas de lugar, esta acción es irreversible\n"
+                    + "Si está de acuerdo con realizar esta acción deberá disponer de una excelente conexión a Internet\n"
+                    + "Este proceso se tardará algunos minutos\n"
+                    + "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
             if (result == 0) {
-                periodo = capturarFila();
-                if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
-                    JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
-                    llenarTabla();
+                if (periodo.isEstado_PerLectivo() == false) {
+                    JOptionPane.showMessageDialog(null, "Este Período Lectivo ya fue cerrado");
                 } else {
-                    JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
+                    if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
+                        JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
+                        llenarTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
+                    }
                 }
+
             }
         }
     }
