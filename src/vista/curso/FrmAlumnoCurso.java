@@ -5,6 +5,7 @@
  */
 package vista.curso;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -20,6 +21,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
      */
     public FrmAlumnoCurso() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {

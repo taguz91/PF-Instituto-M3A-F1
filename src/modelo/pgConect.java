@@ -6,7 +6,6 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,6 +22,7 @@ public class pgConect {
     Statement st;
     ResultSet rs;
 
+<<<<<<< HEAD
 
 
     String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
@@ -53,6 +53,8 @@ public class pgConect {
     /*String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
     String pgUser = "postgres";
     String pgContra = "qwerty";*/
+=======
+>>>>>>> f833301c1eef244bf1a9466503e3068924faf4a0
     public pgConect() {
 
         try {

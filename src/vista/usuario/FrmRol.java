@@ -5,6 +5,7 @@
  */
 package vista.usuario;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -19,6 +20,9 @@ public class FrmRol extends javax.swing.JInternalFrame {
      */
     public FrmRol() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {

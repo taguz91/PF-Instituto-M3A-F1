@@ -19,25 +19,13 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
-    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 
     public ConectarDB(String user, String pass, String mensaje) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
             //Nos conectamos
-            url = Propiedades.loadIP();
-            //Base de datos que entrara en prueba el dia de mañana no modificar nada 
-            //url = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-            //url = "jdbc:postgresql://localhost:5432/BDinsta";
-            //url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-            //url = "jdbc:postgresql://localhost:5432/baseNueva";
-            //url = "jdbc:postgresql://LocalHost:5432/BD_Final";
-            //url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-            //url = "jdbc:postgresql://localhost:5432/BDinsta";
-            //url = "jdbc:postgresql://localhost:5432/Personas_Lleno";
-            //url = "jdbc:postgresql://localhost:5432/BDPFConAlumnosCurso";
-            //url = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
+
             ct = ResourceManager.getConnection();
             //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);

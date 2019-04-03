@@ -20,6 +20,8 @@ public class VtnSelectRol extends javax.swing.JFrame {
      */
     public VtnSelectRol() {
         initComponents();
+        
+        
     }
 
     public JButton getBtnCancelar() {

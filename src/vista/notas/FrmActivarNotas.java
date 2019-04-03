@@ -5,6 +5,8 @@
  */
 package vista.notas;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Alejandro
@@ -16,6 +18,9 @@ public class FrmActivarNotas extends javax.swing.JInternalFrame {
      */
     public FrmActivarNotas() {
         initComponents();
+        
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     /**
