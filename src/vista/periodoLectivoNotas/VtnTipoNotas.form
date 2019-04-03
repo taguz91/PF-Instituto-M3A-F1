@@ -115,9 +115,9 @@
                 <Column editable="false" title="No." type="java.lang.Object"/>
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre " type="java.lang.Object"/>
-                <Column editable="false" title="Valor Maximo" type="java.lang.Object"/>
-                <Column editable="false" title="Valor Minimo" type="java.lang.Object"/>
-                <Column editable="false" title="Fecha Creacion" type="java.lang.Object"/>
+                <Column editable="false" title="Valor M&#xe1;ximo" type="java.lang.Object"/>
+                <Column editable="false" title="Valor M&#xed;nimo" type="java.lang.Object"/>
+                <Column editable="false" title="Fecha Creaci&#xf3;n" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

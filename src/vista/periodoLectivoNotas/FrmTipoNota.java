@@ -5,6 +5,7 @@
  */
 package vista.periodoLectivoNotas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -21,6 +22,9 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
      */
     public FrmTipoNota() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {
@@ -64,7 +68,6 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Restricción de Notas del Periodo");
 
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNombre.setText("Nombre:");

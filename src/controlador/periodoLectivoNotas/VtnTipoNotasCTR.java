@@ -62,6 +62,8 @@ public class VtnTipoNotasCTR {
         }
 
     }
+    
+    
 
     private void InitEventos() {
 

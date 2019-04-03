@@ -76,7 +76,7 @@ public class VtnMateriaCTR {
 
     public void iniciar() {
         vtnMateria.getBtnReporteMaterias().setEnabled(false);
-        String titulo[] = {"id", "Codigo", "Nombre", "Ciclo", "Docencia", "Practicas", "Autonomas", "Presencial", "Total"};
+        String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
         mdTblMat = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -214,7 +214,7 @@ public class VtnMateriaCTR {
         JasperReport jr;
         String path = "./src/vista/reportes/repMaterias.jasper";
         File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
+        System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("carrera",vtnMateria.getCmbCarreras().getSelectedItem());

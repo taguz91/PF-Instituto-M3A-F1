@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="84e84607-8e38-471e-8f82-c9d2a358eacb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select materia_nombre from "Materias" where id_materia=$P!{parameter1}]]>
+	</queryString>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="1" width="167" height="20" forecolor="#006699" uuid="2c34e51b-8957-4809-be39-f8f979076391"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.1. Profesor Responsable]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="29" y="17" width="509" height="20" uuid="a60f0c2f-2a2d-4405-acc3-9bfe9e985a4a"/>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="532" height="70" uuid="a6d80031-78cb-40a7-9d2c-212d71995fe6"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

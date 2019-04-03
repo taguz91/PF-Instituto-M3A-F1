@@ -5,8 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select id_materia,materia_nombre from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='P' and id_materia=$P!{parameter1})
-]]>
+		<![CDATA[select id_materia,materia_nombre from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='P' and id_materia=$P!{parameter1})]]>
 	</queryString>
 	<field name="id_materia" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
@@ -55,7 +54,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Codigo]]></text>
+				<text><![CDATA[Código]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

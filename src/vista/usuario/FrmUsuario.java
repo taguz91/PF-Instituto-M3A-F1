@@ -1,6 +1,8 @@
 package vista.usuario;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -13,6 +15,9 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
 
     public FrmUsuario() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnBuscarPer() {
@@ -47,6 +52,11 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         return cmbPersona;
     }
 
+    public JCheckBox getChxDefinido() {
+        return chxDefinido;
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

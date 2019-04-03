@@ -1,5 +1,6 @@
 package vista.notas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,6 +15,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
     public VtnNotasAlumnoCurso() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnImprimir() {
@@ -91,7 +95,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Notas");
 
-        lbl_periodolectivo.setText("Periodo Lectivo:");
+        lbl_periodolectivo.setText("Período Lectivo:");
 
         lbl_carrera.setText("Carrera:");
 
@@ -113,7 +117,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "N°", "Cedula", "Apellidos", "Nombres", "APORTE 1   /30", "EXAMEN INTERCICLO", "TOTAL INTERCICLO", "APORTE 2  /30", "EXAMEN FINAL  /25", "/25 SUSP.", "NOTA FINAL", "ESTADO", "Nro. Faltas", "% Faltas"
+                "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1   /30", "Exámen Interciclo /15", "Total Interciclo /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas"
             }
         ) {
             Class[] types = new Class [] {

@@ -130,7 +130,7 @@ order by hora]]>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Miercoles]]></text>
+				<text><![CDATA[Miércoles]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="320" y="0" width="73" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="c5cdb02d-27dc-4633-a6be-70a8cba5bb7f"/>
@@ -172,7 +172,7 @@ order by hora]]>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sabado]]></text>
+				<text><![CDATA[Sábado]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="393" y="0" width="73" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="cdd103fa-5c9b-4c06-98a9-9a71be29d1df"/>

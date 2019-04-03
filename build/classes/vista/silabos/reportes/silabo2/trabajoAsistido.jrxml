@@ -46,7 +46,7 @@ and u.id_silabo=$P!{parameter1}]]>
 				</box>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[UNIDAD 
-DIDACTICA]]></text>
+DIDÁCTICA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="207" y="0" width="105" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="ec9213af-f3bc-435d-ab84-366b077d3d84"/>
@@ -70,7 +70,7 @@ DIDACTICA]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[VALORACION]]></text>
+				<text><![CDATA[VALORACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="387" y="0" width="78" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="1142d7ed-42c8-4876-bb3f-3ec53f137df3"/>
@@ -96,7 +96,7 @@ DE ENVIO]]></text>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[FECHA DE 
-PRESENTACION]]></text>
+PRESENTACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="41" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="fdc2c7db-dd32-4c58-ac0d-f0eb1adef976"/>
@@ -160,7 +160,7 @@ PRESENTACION]]></text>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{valoracion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="387" y="0" width="78" height="67" uuid="613f1030-d6b8-4f5d-b98c-106ae3a77275"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -169,9 +169,10 @@ PRESENTACION]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{fecha_envio}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="465" y="0" width="90" height="67" uuid="182443a1-5aa2-4e8f-bec9-8fb48437e728"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -180,6 +181,7 @@ PRESENTACION]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{fecha_presentacion}]]></textFieldExpression>
 			</textField>
 			<staticText>

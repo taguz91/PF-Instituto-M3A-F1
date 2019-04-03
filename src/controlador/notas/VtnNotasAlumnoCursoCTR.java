@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import static java.lang.Thread.sleep;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,6 +39,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.notas.VtnNotasAlumnoCurso;
@@ -185,7 +189,7 @@ public class VtnNotasAlumnoCursoCTR {
     private DefaultTableModel setTablaFromTabla(JTable table) {
         DefaultTableModel tabla = new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "N°", "Cedula", "Apellidos", "Nombres", "APORTE 1   /30", "EXAMEN INTERCICLO", "TOTAL INTERCICLO", "APORTE 2  /30", "EXAMEN FINAL  /25", "/25 SUSP.", "NOTA FINAL", "ESTADO", "Nro. Faltas", "% Faltas"
+                    "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1  /30", "Exámen Interciclo  /15", "Total Interciclo  /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio  /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas"
                 }) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
@@ -244,7 +248,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
 
-         int fila = vista.getTblNotas().getSelectedRow();
+        int fila = vista.getTblNotas().getSelectedRow();
 
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
@@ -264,35 +268,38 @@ public class VtnNotasAlumnoCursoCTR {
             if (notaInterCiclo > 30) {
                 notaInterCiclo = 30.0;
                 datos.setValueAt(30.0, fila, 4);
-            }else if(examenInterCiclo > 15){
+            } else if (examenInterCiclo > 15) {
                 examenInterCiclo = 15.0;
                 datos.setValueAt(15.0, fila, 5);
-            }else if (notaInterCiclo2 > 30){
+            } else if (notaInterCiclo2 > 30) {
                 notaInterCiclo2 = 30.0;
                 datos.setValueAt(30.0, fila, 7);
-            }else if (examenFinal > 25){
+            } else if (examenFinal > 25) {
                 examenFinal = 25.0;
                 datos.setValueAt(25.0, fila, 8);
-            }else if (notaSupletorio > 25){
+            } else if (notaSupletorio > 25) {
                 examenFinal = 25.0;
                 datos.setValueAt(25.0, fila, 9);
             }
-            
-            notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal + notaSupletorio;
+           if(notaFinal < 70){
+               
+                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + notaSupletorio;
+                estado = "Reprobado";
+                datos.setValueAt(estado, fila, 11);
+                datos.setValueAt(Math.round(notaFinal), fila, 10);
+            } else{
+                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
+            estado = "Aprobado";
 
-            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo ;
+            datos.setValueAt(estado, fila, 11);
+            datos.setValueAt(Math.round(notaFinal), fila, 10);
+           }
+           
+
+            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
 
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
 
-            datos.setValueAt(notaFinal, fila, 10);
-            
-            if (notaFinal >= 70.0){
-                estado = "Aprobado";
-                datos.setValueAt(estado, fila, 11);
-            }else{
-                estado = "Reprobado";
-                datos.setValueAt(estado, fila, 11);
-            }
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
@@ -538,7 +545,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteCompleto.jasper"));
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
@@ -621,7 +628,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasMenor70.jasper"));
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
@@ -705,7 +712,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre70y80.jasper"));
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
@@ -731,7 +738,7 @@ public class VtnNotasAlumnoCursoCTR {
                     + "	p_alu.persona_identificacion,\n"
                     + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
                     + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                     + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
+                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
                     + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
                     + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
                     + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
@@ -789,7 +796,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre80y90.jasper"));
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
@@ -873,7 +880,7 @@ public class VtnNotasAlumnoCursoCTR {
 
             jd.setQuery(newQuery);
 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre90y100.jasper"));
 
             JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
 
@@ -899,55 +906,54 @@ public class VtnNotasAlumnoCursoCTR {
                 null,
                 new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
                     "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
-       
-         thread = new Thread() {
+
+        thread = new Thread() {
             @Override
             public void run() {
                 Effects.setLoadCursor(vista);
-                
-                 switch (r) {
-            case 0:
-               
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                generarReporteMenos70();
-                desktop.getLblEstado().setText("COMPLETADO");
-                
-                break;
-                
-            case 1:
-                
-               desktop.getLblEstado().setText("CARGANDO REPORTE....");
-               generarReporteEntre70_80();
-               desktop.getLblEstado().setText("COMPLETADO");
-               
-               break;
-               
-            case 2:
-                
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                generarReporteEntre80_90();
-                desktop.getLblEstado().setText("COMPLETADO");
-                
-                break;
-                
-            case 3:
-                
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                generarReporteEntre90_100();
-                desktop.getLblEstado().setText("COMPLETADO");
-                
-                break;
-                
-            case 4:
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                generarReporteCompleto();
-                desktop.getLblEstado().setText("COMPLETADO");
-                break;
-                
-            default:
-                break;
-        }
-                
+
+                switch (r) {
+                    case 0:
+
+                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                        generarReporteMenos70();
+                        desktop.getLblEstado().setText("COMPLETADO");
+
+                        break;
+
+                    case 1:
+
+                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                        generarReporteEntre70_80();
+                        desktop.getLblEstado().setText("COMPLETADO");
+
+                        break;
+
+                    case 2:
+
+                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                        generarReporteEntre80_90();
+                        desktop.getLblEstado().setText("COMPLETADO");
+
+                        break;
+
+                    case 3:
+
+                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                        generarReporteEntre90_100();
+                        desktop.getLblEstado().setText("COMPLETADO");
+
+                        break;
+
+                    case 4:
+                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                        generarReporteCompleto();
+                        desktop.getLblEstado().setText("COMPLETADO");
+                        break;
+
+                    default:
+                        break;
+                }
 
                 try {
                     sleep(5000);
@@ -962,7 +968,6 @@ public class VtnNotasAlumnoCursoCTR {
 
         };
         thread.start();
-        
 
     }
 

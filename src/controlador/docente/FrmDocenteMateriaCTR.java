@@ -177,7 +177,7 @@ public class FrmDocenteMateriaCTR {
         frmDM.getCmbCarrera().removeAllItems();
         carreras = car.cargarCarreras();
         if (carreras != null) {
-            frmDM.getCmbCarrera().addItem("Seleccioné");
+            frmDM.getCmbCarrera().addItem("Seleccione");
             carreras.forEach(c -> {
                 frmDM.getCmbCarrera().addItem(c.getCodigo());
             });

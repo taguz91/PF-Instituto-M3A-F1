@@ -40,7 +40,7 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[EVALUACION]]></text>
+				<text><![CDATA[EVALUACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="388" y="0" width="167" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="8290c504-ed9c-4a1d-9b7a-b7f513d90bba"/>
@@ -110,7 +110,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL EXAMENES]]></text>
+				<text><![CDATA[TOTAL EXÁMENES]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="0" width="313" height="20" uuid="6cab6f98-612b-49d6-b1fd-a552159aa6e9"/>
@@ -124,7 +124,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL GESTION DE AULA]]></text>
+				<text><![CDATA[TOTAL GESTIÓN DE AULA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="40" width="313" height="20" uuid="58ff5391-94b2-4504-852d-05cc6f7608d7"/>

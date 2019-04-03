@@ -31,3 +31,13 @@ ac.id_curso = c.id_curso;
 SELECT COUNT(*) FROM (public."Carreras" c JOIN public."AlumnosCarrera" a
 					  USING(id_carrera)) JOIN public."MallaAlumno" m USING(id_almn_carrera)
 							WHERE c.id_carrera = 2 AND m.malla_almn_estado LIKE 'M';
+
+--Consultamos todos los alumnos de una malla por carrera 
+SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
+malla_almn_ciclo, malla_almn_num_matricula,
+malla_almn_nota1, malla_almn_nota2,
+malla_almn_nota3, malla_almn_estado
+FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
+WHERE ac.id_carrera = 2
+AND ma.id_almn_carrera = ac.id_almn_carrera
+AND malla_almn_estado = 'M';

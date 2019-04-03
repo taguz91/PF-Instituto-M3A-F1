@@ -277,6 +277,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
+        System.out.println(SELECT);
 
         return selectFromView(SELECT);
 

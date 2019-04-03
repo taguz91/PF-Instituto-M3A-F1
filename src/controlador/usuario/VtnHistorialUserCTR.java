@@ -61,7 +61,7 @@ public class VtnHistorialUserCTR {
         cargarCmbTablas();
         cargarCmbFechas();
         //Le damos el modelo a la tabla  
-        String[] titulo = {"Usuario", "Tabla", "Accion", "PK", "Fecha"};
+        String[] titulo = {"Usuario", "Tabla", "Acción", "PK", "Fecha"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnH.getTblHistorial().setModel(mdTbl);

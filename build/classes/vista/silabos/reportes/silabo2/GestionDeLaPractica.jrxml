@@ -33,7 +33,7 @@ and u.id_silabo=$P!{parameter1}]]>
 				</box>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[UNIDAD 
-DIDACTICA]]></text>
+DIDÁCTICA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="466" y="0" width="89" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="950c3189-83c7-4bab-b7d1-77c60a4414dc"/>
@@ -46,7 +46,7 @@ DIDACTICA]]></text>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[FECHA DE 
-PRESENTACION]]></text>
+PRESENTACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="41" y="0" width="104" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="e5d107fb-3cfb-4884-8c01-8675ac65d07d"/>
@@ -70,7 +70,7 @@ PRESENTACION]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[VALORACION]]></text>
+				<text><![CDATA[VALORACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="388" y="0" width="78" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="f37866af-2349-4196-b88a-b0a20f546667"/>
@@ -113,7 +113,7 @@ DE ENVIO]]></text>
 	</columnHeader>
 	<detail>
 		<band height="68" splitType="Stretch">
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="466" y="0" width="89" height="67" uuid="ceacc1c4-6847-4374-a113-41ecc8f04eb8"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -122,6 +122,7 @@ DE ENVIO]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{fecha_presentacion}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -134,7 +135,7 @@ DE ENVIO]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="208" y="0" width="105" height="67" uuid="e278f838-3ea9-4437-91ed-abc99ef1829b"/>
@@ -147,7 +148,7 @@ DE ENVIO]]></text>
 				</box>
 				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="388" y="0" width="78" height="67" uuid="82e35136-30ba-4a25-9be0-4732782f8eb9"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -156,6 +157,7 @@ DE ENVIO]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{fecha_envio}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -191,7 +193,7 @@ DE ENVIO]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
-				<text><![CDATA[Gestion de la practica]]></text>
+				<text><![CDATA[Gestión de la práctica]]></text>
 			</staticText>
 		</band>
 	</detail>

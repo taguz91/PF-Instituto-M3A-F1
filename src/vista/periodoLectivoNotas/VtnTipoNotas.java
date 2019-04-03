@@ -5,6 +5,7 @@
  */
 package vista.periodoLectivoNotas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -22,6 +23,9 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
      */
     public VtnTipoNotas() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {
@@ -94,7 +98,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "ID", "Nombre ", "Valor Maximo", "Valor Minimo", "Fecha Creacion"
+                "No.", "ID", "Nombre ", "Valor Máximo", "Valor Mínimo", "Fecha Creación"
             }
         ) {
             boolean[] canEdit = new boolean [] {

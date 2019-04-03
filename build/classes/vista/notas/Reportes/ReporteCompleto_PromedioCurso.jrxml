@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
 ROUND(Avg("public"."AlumnoCurso".almn_curso_nota_final),0) AS "PROMEDIO CURSO"
 FROM
@@ -12,7 +12,7 @@ INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Curs
 INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
 INNER JOIN "public"."Jornadas" ON "public"."Cursos".id_jornada = "public"."Jornadas".id_jornada
 WHERE
-"public"."PeriodoLectivo".prd_lectivo_estado IS FALSE AND
+"public"."PeriodoLectivo".prd_lectivo_estado IS TRUE AND
 "public"."Cursos".id_docente = 55 AND
 "public"."PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' AND
 "public"."Cursos".curso_ciclo = 4 AND
@@ -28,7 +28,7 @@ WHERE
 			<textField>
 				<reportElement mode="Opaque" x="115" y="2" width="100" height="20" forecolor="#000000" backcolor="#FFFF99"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="115" y="2" width="100" height="20"/>
