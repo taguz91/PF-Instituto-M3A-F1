@@ -94,7 +94,7 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
     }
 
     private static List<PeriodoIngresoNotasMD> selectFromView(String QUERY) {
-
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewPeriodoIngresoNotas\" \n");
         List<PeriodoIngresoNotasMD> Lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(QUERY);

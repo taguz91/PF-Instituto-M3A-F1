@@ -219,8 +219,12 @@ public class ControladorSilaboCRUD {
 
             setup.getCmbCarrera().addActionListener(a1);
 
-            setup.getBtnSiguiente().addActionListener(e -> iniciarSilabo(Integer.parseInt(setup.getSpnUnidades().getValue().toString()), setup.getCmbAsignatura().getSelectedItem().toString()));
-
+            if (setup.getCmbAsignatura().getItemCount()>0){
+               setup.getBtnSiguiente().addActionListener(e -> iniciarSilabo(Integer.parseInt(setup.getSpnUnidades().getValue().toString()), setup.getCmbAsignatura().getSelectedItem().toString()));
+            }else{
+                JOptionPane.showMessageDialog(null, "Todos los silabos asignados para este periodo ya se encuentran ingresados");
+            }
+            
         }
 
         if (silabos != null) {
@@ -609,7 +613,7 @@ public class ControladorSilaboCRUD {
                 if (gestion.getDchFechaEnvioAD().getDate() != null) {
                     LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     LocalDate fechaEnvio = gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    if (fechaPresentacion.isBefore(fechaEnvio)) {
+                    if (fechaPresentacion.isBefore(fechaEnvio) && fechaPresentacion.isBefore(fechaEnvio) ) {
 
                         JOptionPane.showMessageDialog(null, "La fecha de presentación no puede ser anterior a la fecha de envío", "Alerta", JOptionPane.WARNING_MESSAGE);
 
@@ -1168,7 +1172,7 @@ public class ControladorSilaboCRUD {
                     public void keyReleased(KeyEvent ke
                     ) {
 
-                        r1 = new Referencias(bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria", false);
+                        r1 = new Referencias(bibliografia.getTxrBibliografiaComplementaria().getText()+"•", "Complementaria", false);
 
                         //referenciasSilabo.add();
                     }
@@ -1182,7 +1186,7 @@ public class ControladorSilaboCRUD {
                     public void keyReleased(KeyEvent ke
                     ) {
 
-                        r2 = new Referencias(bibliografia.getTxrLinkografia().getText(), "Linkografia", false);
+                        r2 = new Referencias(bibliografia.getTxrLinkografia().getText()+"•", "Linkografia", false);
 
                         //referenciasSilabo.add();
                     }
@@ -1241,14 +1245,14 @@ public class ControladorSilaboCRUD {
 
                         if (editar) {
 
-                            System.out.println(referenciasSilabo.size());
+                            /*System.out.println(referenciasSilabo.size());
                             List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo);
 
                             referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
 
                             for (int i = 0; i < old.size(); i++) {
                                 new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
-                            }
+                            }*/
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
@@ -1780,7 +1784,7 @@ public class ControladorSilaboCRUD {
                 if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()))) {
                     evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
 
@@ -2147,11 +2151,11 @@ public class ControladorSilaboCRUD {
 
             } else if (referenciasSilabo.get(i).getIdReferencia().getTipoReferencia().equals("Complementaria")) {
 
-                bibliografia.getTxrBibliografiaComplementaria().setText(referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
+                bibliografia.getTxrBibliografiaComplementaria().setText(referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().substring(0,referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().length()-1 ));
 
             } else if (referenciasSilabo.get(i).getIdReferencia().getTipoReferencia().equals("Linkografia")) {
 
-                bibliografia.getTxrLinkografia().setText(referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
+                bibliografia.getTxrLinkografia().setText(referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().substring(0,referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().length()-1 ));
 
             }
 

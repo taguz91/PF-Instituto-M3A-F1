@@ -284,6 +284,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     }
 
     private static List<AlumnoCursoBD> selectFromView(String QUERY) {
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewAlumnoCurso\" \n");
         List<AlumnoCursoBD> lista = new ArrayList();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {

@@ -1,5 +1,6 @@
 package vista.curso;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -15,6 +16,9 @@ public class FrmCurso extends javax.swing.JInternalFrame {
    
     public FrmCurso() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JFormattedTextField getTxtCapacidad() {

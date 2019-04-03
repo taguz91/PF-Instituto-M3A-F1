@@ -49,8 +49,6 @@ public class ResourceManager {
 
         }
         JDBC_URL = Propiedades.loadIP();
-        //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-        //JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
 
         if (conex == null) {
             conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -68,9 +66,8 @@ public class ResourceManager {
             if (conn == null) {
                 conn = getConnection();
             }
-            if (stmt == null) {
-                stmt = conn.createStatement();
-            }
+
+            stmt = conn.createStatement();
 
             stmt.execute(Statement);
             return null;
@@ -84,6 +81,23 @@ public class ResourceManager {
             }
         }
         return null;
+    }
+
+    public static void Statements(String Statement) {
+        try {
+
+            //System.out.println(Statement);
+            if (conn == null) {
+                conn = getConnection();
+            }
+
+            stmt = conn.createStatement();
+
+            stmt.execute(Statement);
+
+        } catch (SQLException | NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static ResultSet Query(String Query) {

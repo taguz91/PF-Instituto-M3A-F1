@@ -391,7 +391,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
 
         cmbTipoTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "TIEMPO COMPLETO", "TIEMPO PARCIAL", "MEDIO TIEMPO", "POR HORAS", "" }));
         cmbTipoTiempo.setToolTipText("Seleccione el tipo de tiempo del Docente");
-        cmbTipoTiempo.setEnabled(false);
         getContentPane().add(cmbTipoTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 130, 20));
 
         spnCategoria.setModel(new javax.swing.SpinnerNumberModel(3, 3, 8, 1));
@@ -403,7 +402,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         lblCategoria.setText("Categoria");
         getContentPane().add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 630, 10));
-
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Presione para guardar los cambios ya realizados");
         btnGuardar.setEnabled(false);
@@ -459,7 +457,6 @@ public class FrmDocente extends javax.swing.JInternalFrame {
         getContentPane().add(txtTituloDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 210, -1));
         getContentPane().add(lblDatoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 180, 20));
         getContentPane().add(lblDatoAbreviatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 210, 20));
-
         getAccessibleContext().setAccessibleDescription("");
         getAccessibleContext().setAccessibleParent(this);
 
@@ -480,10 +477,12 @@ public class FrmDocente extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox cbxOtroTrabajo;
     private javax.swing.JComboBox<String> cmbTipoIdentificacion;
     private javax.swing.JComboBox<String> cmbTipoTiempo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JTextField jTextField1;
     private com.toedter.calendar.JDateChooser jdcFechaFinContratacion;
     private com.toedter.calendar.JDateChooser jdcFechaInicioContratacion;
     private javax.swing.JLabel lblAbreviaturaDocente;
