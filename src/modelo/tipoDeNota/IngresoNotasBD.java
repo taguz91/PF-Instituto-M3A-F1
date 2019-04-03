@@ -23,7 +23,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
     public IngresoNotasBD() {
     }
 
-    public List<IngresoNotasMD> selectAll() {
+    public static List<IngresoNotasMD> selectAll() {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".nota_primer_inteciclo,\n"
@@ -36,51 +36,44 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "\"public\".\"ViewCursosPermisosNotas\".id_materia,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".id_prd_lectivo,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".id_docente,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".id_jornada,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".curso_nombre,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".curso_capacidad,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".curso_ciclo,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".curso_paralelo,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".materia_nombre,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".materia_codigo,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".prd_lectivo_nombre,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".prd_lectivo_fecha_inicio,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".prd_lectivo_fecha_fin,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_identificacion,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_primer_apellido,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_segundo_apellido,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_primer_nombre,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".persona_segundo_nombre,\n"
-                + "\"public\".\"ViewCursosPermisosNotas\".nombre_jornada\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".persona_segundo_nombre\n"
                 + "FROM\n"
                 + "\"public\".\"ViewCursosPermisosNotas\"";
+
+        System.out.println(SELECT);
 
         return selectFromView(SELECT);
     }
 
-    private List<IngresoNotasMD> selectFromView(String QUERY) {
+    private static List<IngresoNotasMD> selectFromView(String QUERY) {
 
         List<IngresoNotasMD> lista = new ArrayList<>();
-
         ResultSet rs = ResourceManager.Query(QUERY);
-
         try {
             while (rs.next()) {
 
                 IngresoNotasMD ingreso = new IngresoNotasMD();
-
                 ingreso.setIdIngresoNotas(rs.getInt("id_ingreso_notas"));
                 ingreso.setNotaPrimerInterCiclo(rs.getBoolean("nota_primer_inteciclo"));
                 ingreso.setNotaExamenInteCiclo(rs.getBoolean("nota_examen_intecilo"));
                 ingreso.setNotaSegundoInterCiclo(rs.getBoolean("nota_segundo_inteciclo"));
                 ingreso.setNotaExamenFinal(rs.getBoolean("nota_examen_final"));
                 ingreso.setNotaExamenDeRecuperacion(rs.getBoolean("nota_examen_de_recuperacion"));
+
                 CursoMD curso = new CursoMD();
                 curso.setId_curso(rs.getInt("id_curso"));
                 curso.setCurso_nombre(rs.getString("curso_nombre"));
 
                 MateriaMD materia = new MateriaMD();
-                materia.setId(rs.getInt(rs.getInt("id_materia")));
+                materia.setId(rs.getInt("id_materia"));
                 materia.setNombre(rs.getString("materia_nombre"));
                 materia.setCodigo(rs.getString("materia_codigo"));
                 curso.setId_materia(materia);//GUARDAMOS LA MATERIA EN EL CURSO
@@ -100,6 +93,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 curso.setId_docente(docente);//GUARDAMOS AL DOCENTE
 
                 ingreso.setCurso(curso);//GUARDAMOS EL CURSO
+                lista.add(ingreso);
 
             }
         } catch (SQLException e) {
