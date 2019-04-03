@@ -295,13 +295,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
-        mnCtHistorialUsers = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
+        mnCtHistorialUsers = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtPrdIngrNotas = new javax.swing.JMenuItem();
+        mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
@@ -573,10 +573,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
-        mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
-        mnCtHistorialUsers.setText("Historial usuarios");
-        mnTipoNotas.add(mnCtHistorialUsers);
-
         mnCtSilabos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
         mnCtSilabos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consultar_silabo_menu.png"))); // NOI18N
         mnCtSilabos.setText("Silabos");
@@ -590,14 +586,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRoles.setText("Roles Usuarios");
         mnTipoNotas.add(mnCtRoles);
 
+        mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
+        mnCtHistorialUsers.setText("Historial usuarios");
+        mnTipoNotas.add(mnCtHistorialUsers);
+
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         jMenu1.setText("Notas");
 
-        mnCtTipoNotas.setText("Tipos de Notas");
-        jMenu1.add(mnCtTipoNotas);
-
         mnCtPrdIngrNotas.setText("Periodos de Ingreso de Notas");
         jMenu1.add(mnCtPrdIngrNotas);
+
+        mnCtTipoNotas.setText("Tipos de Notas");
+        jMenu1.add(mnCtTipoNotas);
 
         mnCtNotas.setText("Ingreso Notas");
         jMenu1.add(mnCtNotas);

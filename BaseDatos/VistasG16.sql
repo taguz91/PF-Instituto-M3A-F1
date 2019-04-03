@@ -6,7 +6,9 @@
     "RolPostgres.sql"
 
 */
-CREATE MATERIALIZED VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_usuario,
+CREATE MATERIALIZED VIEW "public"."Usuarios_Persona"
+AS
+SELECT "Usuarios".id_usuario,
     "Usuarios".usu_username,
     "Usuarios".usu_password,
     "Usuarios".usu_estado,
@@ -20,9 +22,24 @@ CREATE MATERIALIZED VIEW "public"."Usuarios_Persona" AS  SELECT "Usuarios".id_us
    FROM ("Usuarios"
      JOIN "Personas" ON (("Usuarios".id_persona = "Personas".id_persona)));
 
+ALTER MATERIALIZED VIEW "public"."Usuarios_Persona" OWNER TO "permisos";
 
+CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree (
+  "id_usuario" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_persona" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "persona_identificacion" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_apellido" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
 
-CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
+/*
+
+  ALUMNO CURSO
+
+*/
+CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso"
+AS
+SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -45,27 +62,22 @@ CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
 
+ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
-CREATE MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" AS  SELECT "PeriodoLectivo".prd_lectivo_nombre,
-    "PeriodoIngresoNotas".perd_notas_fecha_inicio,
-    "PeriodoIngresoNotas".perd_notas_fecha_cierre,
-    "TipoDeNota".tipo_nota_nombre,
-    "PeriodoIngresoNotas".perd_notas_estado,
-    "TipoDeNota".tipo_nota_estado,
-    "PeriodoIngresoNotas".id_prd_lectivo,
-    "PeriodoIngresoNotas".id_tipo_nota,
-    "PeriodoIngresoNotas".id_perd_ingr_notas
-   FROM (("PeriodoLectivo"
-     JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
-     JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
+CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree (
+  "id_almn_curso" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_alumno" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_curso" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "persona_identificacion" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_apellido" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "id_persona" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "alumno_codigo" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
 
-ALTER MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
-
-
-
---------------------------------------------------------------------------------------
-ViewCursosPermisosNotas
-
+/*
+  PERMISOS DE IMGRESO DE NOTAS EN UN CURSO
+*/
 CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
 AS
 SELECT "IngresoNotas".nota_primer_inteciclo,
@@ -96,54 +108,48 @@ SELECT "IngresoNotas".nota_primer_inteciclo,
 
 ALTER MATERIALIZED VIEW "public"."ViewCursosPermisosNotas" OWNER TO "permisos";
 
+CREATE UNIQUE INDEX "cursospermisosnotas" ON "public"."ViewCursosPermisosNotas" USING btree (
+  "id_ingreso_notas" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_curso" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_materia" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_prd_lectivo" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_docente" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "curso_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "materia_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "prd_lectivo_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_identificacion" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_identificacion" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "persona_primer_apellido" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
 
-------------------------------------------------------------
-script indice
 
-CREATE UNIQUE INDEX usuariospersona ON "Usuarios_Persona"(
-	id_usuario,
-  id_persona,
-  persona_identificacion,
-  persona_primer_apellido,
-  persona_primer_nombre)
-  
-  
-  
-CREATE UNIQUE INDEX viewalumnocurso ON "ViewAlumnoCurso"(
-	id_almn_curso,
-    id_alumno,
-    id_curso,
-    persona_identificacion,
-    persona_primer_apellido,
-    persona_primer_nombre,
-    id_persona,
-    alumno_codigo)
-	
-	
-CREATE UNIQUE INDEX viewperiodoingresonotas ON "ViewPeriodoIngresoNotas"(
-	prd_lectivo_nombre,
-  tipo_nota_nombre,
-  id_prd_lectivo,
-  id_tipo_nota,
-  id_perd_ingr_notas)
-  
-  
-  
-  
+/*
+  PERIODO INGRESO NOTAS
+*/
+CREATE MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas"
+AS
+SELECT "PeriodoLectivo".prd_lectivo_nombre,
+    "PeriodoIngresoNotas".perd_notas_fecha_inicio,
+    "PeriodoIngresoNotas".perd_notas_fecha_cierre,
+    "TipoDeNota".tipo_nota_nombre,
+    "PeriodoIngresoNotas".perd_notas_estado,
+    "TipoDeNota".tipo_nota_estado,
+    "PeriodoIngresoNotas".id_prd_lectivo,
+    "PeriodoIngresoNotas".id_tipo_nota,
+    "PeriodoIngresoNotas".id_perd_ingr_notas
+   FROM (("PeriodoLectivo"
+     JOIN "PeriodoIngresoNotas" ON (("PeriodoIngresoNotas".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
+     JOIN "TipoDeNota" ON (("PeriodoIngresoNotas".id_tipo_nota = "TipoDeNota".id_tipo_nota)));
 
-CREATE UNIQUE INDEX cursospermisosnotas ON "ViewCursosPermisosNotas"(
-	id_ingreso_notas,
-	id_curso,
-	id_materia,
-id_prd_lectivo,
-id_docente,
-curso_nombre,
-    materia_nombre,
-    prd_lectivo_nombre,
-    persona_identificacion,
-    persona_primer_nombre,
-	persona_identificacion,
-persona_primer_apellido)
+ALTER MATERIALIZED VIEW "public"."ViewPeriodoIngresoNotas" OWNER TO "permisos";
 
+CREATE UNIQUE INDEX "viewperiodoingresonotas" ON "public"."ViewPeriodoIngresoNotas" USING btree (
+  "prd_lectivo_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "tipo_nota_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "id_prd_lectivo" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_tipo_nota" "pg_catalog"."int4_ops" ASC NULLS LAST,
+  "id_perd_ingr_notas" "pg_catalog"."int4_ops" ASC NULLS LAST
+);
 
 

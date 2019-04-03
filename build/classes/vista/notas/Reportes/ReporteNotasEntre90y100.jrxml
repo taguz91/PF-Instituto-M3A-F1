@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96c8ec65-11c3-44c2-8ed8-237cd7db3008">
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="28"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
 	"Alumnos".id_alumno,
@@ -46,7 +46,7 @@ FROM
 	
 
 	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = FALSE 
+	"PeriodoLectivo".prd_lectivo_estado = TRUE 
 	AND "Cursos".id_docente = 55 
 	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
 	AND "Cursos".curso_ciclo = 4 
@@ -185,7 +185,7 @@ ORDER BY
 				<reportElement x="0" y="215" width="1520" height="1" uuid="dc6ac14f-2cf9-4187-8184-5cc58ab3a8bc"/>
 			</line>
 			<image>
-				<reportElement x="38" y="45" width="146" height="133" uuid="5cd5cc7a-3643-44fe-8ca1-f0db889386aa"/>
+				<reportElement x="13" y="57" width="172" height="111" uuid="24863561-f90d-4508-ba64-a418a8c8c642"/>
 				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>

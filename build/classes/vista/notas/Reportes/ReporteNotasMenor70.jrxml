@@ -46,7 +46,7 @@ FROM
 	
 
 	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = FALSE 
+	"PeriodoLectivo".prd_lectivo_estado = TRUE 
 	AND "Cursos".id_docente = 55 
 	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
 	AND "Cursos".curso_ciclo = 4 
@@ -184,7 +184,7 @@ ORDER BY
 				<reportElement x="0" y="203" width="1520" height="1" uuid="fde573cc-c2c3-4876-97b0-d55400938db2"/>
 			</line>
 			<image>
-				<reportElement x="16" y="59" width="160" height="125" uuid="b25576ad-dd0e-4e36-ae38-ec3c338765d7"/>
+				<reportElement x="23" y="52" width="152" height="114" uuid="9e52b495-37a3-4af8-902b-590cf97f6e4d"/>
 				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>

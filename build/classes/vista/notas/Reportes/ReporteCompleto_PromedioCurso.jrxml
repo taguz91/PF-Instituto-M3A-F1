@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCompleto_PromedioCurso" language="groovy" pageWidth="250" pageHeight="555" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCompleto_PromedioCurso" language="groovy" pageWidth="250" pageHeight="555" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b8672636-4f2f-4740-b17f-b50c7e8c6f66">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
 ROUND(Avg("public"."AlumnoCurso".almn_curso_nota_final),0) AS "PROMEDIO CURSO"
 FROM
@@ -12,7 +12,7 @@ INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Curs
 INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
 INNER JOIN "public"."Jornadas" ON "public"."Cursos".id_jornada = "public"."Jornadas".id_jornada
 WHERE
-"public"."PeriodoLectivo".prd_lectivo_estado IS FALSE AND
+"public"."PeriodoLectivo".prd_lectivo_estado IS TRUE AND
 "public"."Cursos".id_docente = 55 AND
 "public"."PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' AND
 "public"."Cursos".curso_ciclo = 4 AND
@@ -26,18 +26,18 @@ WHERE
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="115" y="2" width="100" height="20" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="115" y="2" width="100" height="20" forecolor="#000000" backcolor="#FFFF99" uuid="680b858e-d651-4a95-93a9-b997f637bd10"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="115" y="2" width="100" height="20"/>
+				<reportElement mode="Transparent" x="115" y="2" width="100" height="20" uuid="143e4bf8-3da7-4a05-854e-b3f21c3579b6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="15" y="2" width="100" height="20"/>
+				<reportElement mode="Transparent" x="15" y="2" width="100" height="20" uuid="ce7bc0eb-d706-4952-a165-2fc9f34ea325"/>
 			</rectangle>
 			<staticText>
-				<reportElement mode="Opaque" x="15" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#0033CC"/>
+				<reportElement mode="Opaque" x="15" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#0033CC" uuid="74b6ffce-d552-42c0-a8c5-63b60dcbc467"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[PROMEDIO CURSO]]></text>
 			</staticText>
