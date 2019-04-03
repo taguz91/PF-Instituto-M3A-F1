@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ca20592-755c-4f93-9ad6-db236b9afe9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="783"/>
+	<property name="ireport.y" value="672"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
@@ -98,7 +98,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CODIGO:]]></text>
+				<text><![CDATA[CÓDIGO:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="21" y="29" width="173" height="20" forecolor="#006699" uuid="699136e9-6ed0-466e-b43b-89621c0ee22d"/>
@@ -141,7 +141,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[ Unidad de formacion curricular:]]></text>
+				<text><![CDATA[ Unidad de formación curricular:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="173" y="106" width="372" height="20" uuid="08963fb4-d4f4-424d-9f13-76894953d5bf"/>
@@ -191,7 +191,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[ Campo de formacion:]]></text>
+				<text><![CDATA[ Campo de formación:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="173" y="146" width="372" height="20" uuid="66e81931-db67-42ca-a444-c2936896f388"/>
@@ -353,7 +353,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[3.1. OBJETIVOS ESPECIFICOS]]></text>
+				<text><![CDATA[3.1. OBJETIVOS ESPECÍFICOS]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="10" y="168" width="535" height="72" uuid="73890504-0e9c-434f-ab84-cbacda9a5903"/>

@@ -46,7 +46,7 @@ public class dbEvaluacionSilabo extends EvaluacionSilabo {
                 e.setIndicador(rs.getString(1));
                 e.getIdTipoActividad().setIdTipoActividad(rs.getInt(2));
                 e.setInstrumento(rs.getString(3));
-                e.setValoracion(rs.getInt(4));
+                e.setValoracion(rs.getDouble(4));
                 e.setFechaEnvio(rs.getDate(5).toLocalDate());
                 e.setFechaPresentacion(rs.getDate(6).toLocalDate());
                 e.getIdUnidad().setIdUnidad(rs.getInt(7));
