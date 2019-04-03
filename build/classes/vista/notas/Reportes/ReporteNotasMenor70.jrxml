@@ -185,7 +185,7 @@ ORDER BY
 			</line>
 			<image>
 				<reportElement x="23" y="52" width="152" height="114" uuid="9e52b495-37a3-4af8-902b-590cf97f6e4d"/>
-				<imageExpression><![CDATA["C:\\Users\\CESAR\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\notas\\Reportes\\logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
