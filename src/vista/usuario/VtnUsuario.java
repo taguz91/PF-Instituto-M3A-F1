@@ -90,10 +90,13 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(69, 23));
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
 
         btnIngresar.setText("Ingresar");
+        btnIngresar.setEnabled(false);
 
         btnActualizar.setText("Actualizar");
 

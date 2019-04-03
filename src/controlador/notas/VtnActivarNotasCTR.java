@@ -80,8 +80,6 @@ public class VtnActivarNotasCTR {
 
                     active = true;
 
-                    System.out.println("--------->");
-
                     active = false;
                 }
 
@@ -99,6 +97,16 @@ public class VtnActivarNotasCTR {
 
         vista.getBtnActualizar().addActionListener(e -> btnActualizar(e));
 
+        vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    setObj(vista.getTblCursoTipoNotas().getSelectedRow());
+                    System.out.println(modelo);
+                }
+            }
+        });
+
     }
 
     //METODOS DE APOYO
@@ -109,10 +117,24 @@ public class VtnActivarNotasCTR {
 
             modelo.setIdIngresoNotas(Integer.parseInt(vista.getTblCursoTipoNotas().getValueAt(fila, 1).toString()));
 
-            modelo.setNotaPrimerInterCiclo(Boolean.parseBoolean(vista.getTblCursoTipoNotas().getValueAt(fila, 7).toString()));
+            modelo.setNotaPrimerInterCiclo(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 7).toString()));
+            modelo.setNotaExamenInteCiclo(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 8).toString()));
+            modelo.setNotaSegundoInterCiclo(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 9).toString()));
+            modelo.setNotaExamenFinal(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 10).toString()));
+            modelo.setNotaExamenDeRecuperacion(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 11).toString()));
 
         }
 
+    }
+
+    private boolean validarValor(String valor) {
+        boolean valorBool = false;
+        try {
+            valorBool = Boolean.parseBoolean(valor);
+        } catch (Exception e) {
+            valorBool = false;
+        }
+        return valorBool;
     }
 
     private void cargarTabla() {
