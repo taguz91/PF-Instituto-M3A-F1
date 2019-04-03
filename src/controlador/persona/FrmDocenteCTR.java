@@ -9,6 +9,7 @@ import java.util.Calendar;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -46,6 +47,8 @@ public class FrmDocenteCTR {
     private PersonaBD per;
     private final VtnPrincipalCTR ctrPrin;
     private DocenteMD d;
+    private TxtVCedula valCe;
+    private  String comboId;
 
     private ArrayList<String> info = new ArrayList();
 
@@ -79,6 +82,7 @@ public class FrmDocenteCTR {
         FrmPersona frmPersona = new FrmPersona();
         FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
         ctrFrmPersona.iniciar();
+        frmDocente.dispose();
     }
 
     public void iniciar() {
@@ -112,7 +116,7 @@ public class FrmDocenteCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 5;
-                validarComponentes(frmDocente.getTxtIdentificacion().getText());
+                //validarComponentes(frmDocente.getTxtIdentificacion().getText());
             }
         };
         inhabilitarComponentesDocente();
@@ -124,67 +128,165 @@ public class FrmDocenteCTR {
         frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         frmDocente.getBtnRegistrarPersona().addActionListener(e -> abrirFrmPersona());
         //Validacion de la cedula
-        frmDocente.getTxtIdentificacion().addKeyListener(new TxtVCedula(frmDocente.getTxtIdentificacion(),
-                frmDocente.getLblError()));
+        //frmDocente.getTxtIdentificacion().addKeyListener(new TxtVCedula(frmDocente.getTxtIdentificacion(),
+        //    frmDocente.getLblError()));
+        frmDocente.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                buscarCedula();
+            }
+
+        });
+        valCe = new TxtVCedula(frmDocente.getTxtIdentificacion(), frmDocente.getLblError());
+        frmDocente.getCmbTipoIdentificacion().addActionListener(e -> tipoID());
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Alumno por carrera");
+        ctrPrin.estadoCargaFrmFin("FORMULARIO DE REGISTRO DOCENTE");
+    }
+
+    private void tipoID() {
+        int pos = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
+        frmDocente.getTxtIdentificacion().setEnabled(false);
+        if (pos == 1) {
+            frmDocente.getTxtIdentificacion().addKeyListener(valCe);
+            //Activamos el campo para ingresar los datos
+            frmDocente.getTxtIdentificacion().setEnabled(true);
+            inhabilitarComponentesDocente();
+            reiniciarComponentes(frmDocente);
+            frmDocente.getBtnRegistrarPersona().setVisible(false);
+            comboId=frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString();
+           
+        } else if (pos == 2) {
+            frmDocente.getTxtIdentificacion().removeKeyListener(valCe);
+            frmDocente.getTxtIdentificacion().setBorder(
+                    javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+            frmDocente.getLblError().setVisible(false);
+            //Activamos el campo para ingresar los datos
+            frmDocente.getTxtIdentificacion().setEnabled(true);
+               inhabilitarComponentesDocente();
+            reiniciarComponentes(frmDocente);
+            frmDocente.getBtnRegistrarPersona().setVisible(false);
+            comboId=frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString();
+        }else if (pos == 0) {
+            reiniciarComponentes(frmDocente);
+            inhabilitarComponentesDocente();
+            
+        }
     }
 
     public void buscarCedula() {
         boolean buscar = true;
-        String cedula = frmDocente.getTxtIdentificacion().getText().trim();
-        if (!Validar.esCedula(cedula)) {
-            buscar = false;
-            frmDocente.getLblError().setForeground(Color.red);
-            frmDocente.getLblError().setText("Error! Cedula invalida");
-        }
-        //Cedula no registrada: 0102380821
-        if (buscar) {
-            d = docente.buscarDocenteInactivo(cedula);
-            if (d != null) {
-                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
-                        "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
-                        new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
-                if (seleccion == 1) {
-                    inhabilitarComponentesDocente();
-                    frmDocente.getBtnRegistrarPersona().setVisible(false);
-                } else if (seleccion == 0) {
-                    docente.activarDocente(d.getIdPersona());
-                    habilitarComponentesDocente();
-                    editar(d);
-                }
+        frmDocente.getTxtIdentificacion().setVisible(true);
+        int tipoIdentifi;
+        String cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
+        tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
+        if (tipoIdentifi == 1) {
+            if (!Validar.esCedula(cedula)) {
+                guardar = false;
+                frmDocente.getLblError().setVisible(true);
+                frmDocente.getLblError().setForeground(Color.red);
+                frmDocente.getLblError().setText("Error! Cedula invalida");
             } else {
-                d = docente.buscarDocente(cedula);
-                if (d == null) {
-                    System.out.println("No existe el docente");
-                    PersonaMD p = per.buscarPersona(cedula);
-                    if (p == null) {
-                        JOptionPane.showMessageDialog(null, "No existe la persona");
-                        frmDocente.getBtnRegistrarPersona().setVisible(true);
-
+                frmDocente.getLblError().setVisible(false);
+                //Cedula no registrada: 0102380821
+                if (buscar) {
+                    d = docente.buscarDocenteInactivo(cedula);
+                    if (d != null) {
+                        int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                                "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                                new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                        if (seleccion == 1) {
+                            inhabilitarComponentesDocente();
+                            frmDocente.getBtnRegistrarPersona().setVisible(false);
+                        } else if (seleccion == 0) {
+                            docente.activarDocente(d.getIdPersona());
+                            habilitarComponentesDocente();
+                            editar(d);
+                        }
                     } else {
-                        System.out.println("Existe persona");
-                        habilitarComponentesDocente();
-                        idDocente = p.getIdPersona();
-
+                        d = docente.buscarDocente(cedula);
+                        if (d == null) {
+                            System.out.println("No existe el docente");
+                            PersonaMD p = per.buscarPersona(cedula);
+                            if (p == null) {
+                                JOptionPane.showMessageDialog(null, "No existe la persona");
+                                frmDocente.getBtnRegistrarPersona().setVisible(true);
+                                inhabilitarComponentesDocente();
+                                reiniciarComponentes(frmDocente);
+                                
+                            } else {
+                                System.out.println("Existe persona");
+                                habilitarComponentesDocente();
+                                idDocente = p.getIdPersona();
+                            }
+                        } else {
+                            System.out.println("Si existe el docente");
+                            habilitarComponentesDocente();
+                            frmDocente.getBtnRegistrarPersona().setVisible(false);
+                            editar(d);
+                            frmDocente.getLblDatosPersona().setText("[ " + d.getIdDocente() + " ] " + d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre());
+                        }
                     }
 
-                } else {
-                    System.out.println("Si existe el docente");
-                    habilitarComponentesDocente();
-                    frmDocente.getBtnRegistrarPersona().setVisible(false);
-                    editar(d);
-                    frmDocente.getLblDatosPersona().setText("[ " + d.getIdDocente() + " ] " + d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre());
                 }
+
+            }
+        } else {
+            //Validar cuando es pasaporte 
+
+            if (buscar) {
+                d = docente.buscarDocenteInactivo(cedula);
+                if (d != null) {
+                    int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                            "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                            new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                    if (seleccion == 1) {
+                        inhabilitarComponentesDocente();
+                        frmDocente.getBtnRegistrarPersona().setVisible(false);
+                    } else if (seleccion == 0) {
+                        docente.activarDocente(d.getIdPersona());
+                        habilitarComponentesDocente();
+                        editar(d);
+                    }
+                } else {
+                    d = docente.buscarDocente(cedula);
+                    if (d == null) {
+                        System.out.println("No existe el docente");
+                        PersonaMD p = per.buscarPersona(cedula);
+                        if (p == null) {
+                            JOptionPane.showMessageDialog(null, "No existe la persona");
+                            frmDocente.getBtnRegistrarPersona().setVisible(true);
+                            inhabilitarComponentesDocente();
+                            reiniciarComponentes(frmDocente);
+                            frmDocente.getLblDatosPersona().setText("");
+
+                        } else {
+                            System.out.println("Existe persona");
+                            habilitarComponentesDocente();
+                            idDocente = p.getIdPersona();
+
+                        }
+
+                    } else {
+                        System.out.println("Si existe el docente");
+                        habilitarComponentesDocente();
+                        frmDocente.getBtnRegistrarPersona().setVisible(false);
+                        editar(d);
+                        frmDocente.getLblDatosPersona().setText("[ " + d.getIdDocente() + " ] " + d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre());
+                    }
+                }
+
             }
 
         }
+
     }
 
-    public void validarComponentes(String texto) {
+    /*public void validarComponentes(String texto) {
         if (validar == 5) {
             if (modelo.validaciones.Validar.esNumeros(texto) == false && texto.equals("") == false) {
                 frmDocente.getLblError().setVisible(true);
@@ -194,8 +296,7 @@ public class FrmDocenteCTR {
             }
             validar = 0;
         }
-    }
-
+    }*/
     public void iniciarComponentes() {
         frmDocente.getLblError().setVisible(false);
         frmDocente.getJdcFechaFinContratacion().setDate(null);
@@ -206,11 +307,13 @@ public class FrmDocenteCTR {
 
     public void guardarDocente() {
 
-        String codigo, docenteTipoTiempo, estado;
+        String codigo, docenteTipoTiempo, estado, tipoId;
         int docenteCategoria, idPer;
         boolean docenteOtroTrabajo, docenteCapacitador;
         LocalDate fechaInicioContratacion, fechaFinContratacion;
         guardar = true;
+
+        //  tipoId=frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString();;
         idPer = idDocente;
         System.out.println(idPer);
         codigo = (frmDocente.getTxtIdentificacion().getText());
@@ -226,7 +329,7 @@ public class FrmDocenteCTR {
         } else {
             docenteOtroTrabajo = false;
         }
-
+        comboId=frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString();
         frmDocente.getJdcFechaInicioContratacion().setDateFormatString("dd/MM/yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         String d = sdf.format(frmDocente.getJdcFechaInicioContratacion().getDate());
@@ -268,23 +371,22 @@ public class FrmDocenteCTR {
             if (!docenteTipoTiempo.equalsIgnoreCase("Seleccione")) {
                 docente.setDocenteTipoTiempo(docenteTipoTiempo);
                 if (editar) {
-                if (idDocente > 0) {
-                    docente.editarDocente(idDocente);
-                    JOptionPane.showMessageDialog(null, "Los Datos se han editado exitosamente");
+                    if (idDocente > 0) {
+                        docente.editarDocente(idDocente);
+                        JOptionPane.showMessageDialog(null, "Los Datos se han editado exitosamente");
+                        frmDocente.dispose();
+                    }
+                } else {
+                    docente.InsertarDocente();
+                    JOptionPane.showMessageDialog(null, "Se han insertado los datos de forma correcta!");
                     frmDocente.dispose();
                 }
-            } else {
-                docente.InsertarDocente();
-                JOptionPane.showMessageDialog(null, "Se han insertado los datos de forma correcta!");
-                frmDocente.dispose();
-            }
-            
+
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione una opcion");
-          
+
             }
 
-        
         }
 
     }
@@ -314,6 +416,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
+        frmDocente.getCmbTipoIdentificacion().setSelectedItem(comboId);
         frmDocente.getCbxDocenteCapacitador().setSelected(doc.isDocenteCapacitador());
         frmDocente.getCbxOtroTrabajo().setSelected(doc.isDocenteOtroTrabajo());
 
@@ -325,6 +428,9 @@ public class FrmDocenteCTR {
         frmDocente.getCbxDocenteCapacitador().setSelected(false);
         frmDocente.getCbxOtroTrabajo().setSelected(false);
         frmDocente.getSpnCategoria().setValue(3);
+        iniciarFechas();
+        frmDocente.getJdcFechaFinContratacion().setCalendar(null);
+        frmDocente.getLblDatosPersona().setText("");
 
     }
 
