@@ -281,7 +281,7 @@ public class VtnNotasAlumnoCursoCTR {
                 examenFinal = 25.0;
                 datos.setValueAt(25.0, fila, 9);
             }
-            if (notaFinal >= 70 || notaFinal >= 70) {
+            if (notaFinal >= 70 ) {
                  notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
