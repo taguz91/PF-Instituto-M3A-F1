@@ -1,4 +1,4 @@
---Consultamos todos los coursos con el nombre de jornada
+--Consultamos todos los cursos con el nombre de jornada
 SELECT matp_numero, matp_periodolectivo, matp_profesor, matp_materia, matp_jornada, matp_paralelo,
  matp_capacidad, jor_descripcion
 FROM public.materiaperiodos, public.jornadas
