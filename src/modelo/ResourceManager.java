@@ -51,33 +51,11 @@ public class ResourceManager {
         JDBC_URL = Propiedades.loadIP();
 
         //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-        JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+        //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
         //JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
-<<<<<<< HEAD
-        
-
-        /*JDBC_URL = "jdbc:postgresql://localhost:5432/baseFinal";
-        USERNAME = "postgres";
-        PASSWORD = "qwerty79";
-
-        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);*/
-
         if (conex == null) {
             conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         }
-
-=======
-        //JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final";
-
-        //JDBC_URL = "jdbc:postgresql://localhost:5432/baseFinal";
-        //USERNAME = "postgres";
-        //PASSWORD = "qwerty79";
-        System.out.println(JDBC_URL);
-
-        if (conex == null) {
-            conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-        }
->>>>>>> f833301c1eef244bf1a9466503e3068924faf4a0
 
         return conex;
 
