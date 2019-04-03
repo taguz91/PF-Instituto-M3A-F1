@@ -6,7 +6,6 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,36 +22,6 @@ public class pgConect {
     Statement st;
     ResultSet rs;
 
-
-//<<<<<<< HEAD
-    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //String cadConexion = "jdbc:postgresql://localhost:5432/baseFinal";
-//=======
-//>>>>>>> e9e58db610795c66f5ce4aee1a28f33529aeec68
-
-    String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
-
-
-    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-
-    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-
-    //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
-
-
-    String pgUser = "postgres";
-    String pgContra = "qwerty79";
-
-//    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-//    String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
-//
-//    String pgUser = "postgres";
-//    String pgContra = "qwerty79";
-    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    /*String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
-    String pgUser = "postgres";
-    String pgContra = "qwerty";*/
     public pgConect() {
 
         try {
