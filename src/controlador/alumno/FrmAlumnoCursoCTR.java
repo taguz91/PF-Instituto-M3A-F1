@@ -155,7 +155,7 @@ public class FrmAlumnoCursoCTR {
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
-        
+
         inicarValidaciones();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -341,7 +341,8 @@ public class FrmAlumnoCursoCTR {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
             //Mostramos las materias que curso
-            JDMateriasCursadasCTR jdCtr = new JDMateriasCursadasCTR(vtnPrin, alumnosCarrera.get(posAlm), mallaAlm, estado);
+            JDMateriasCursadasCTR jdCtr = new JDMateriasCursadasCTR(vtnPrin, alumnosCarrera.get(posAlm),
+                    mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");

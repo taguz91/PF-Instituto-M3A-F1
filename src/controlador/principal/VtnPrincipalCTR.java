@@ -33,6 +33,8 @@ import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -411,7 +413,6 @@ public class VtnPrincipalCTR {
 
     public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
-        DocenteBD docente = new DocenteBD(conecta);
         eventoInternal(frmDocente);
         if (numVtns < 5) {
             frmDocente.getBtnRegistrarPersona().setVisible(false);
@@ -557,6 +558,21 @@ public class VtnPrincipalCTR {
         });
     }
 
+    //Se desactivara la ventana al abrir un jdialog
+    public void eventoJDCerrar(JDialog jd) {
+        jd.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                vtnPrin.setEnabled(true);
+            }
+            
+            @Override
+            public void windowOpened(WindowEvent e){
+                vtnPrin.setEnabled(false);
+            }
+        });
+    }
+
     public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
@@ -618,7 +634,7 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtUsuarios().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 
@@ -655,8 +671,7 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-        
-        
+
     }
 
     public int getNumVtns() {
