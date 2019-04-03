@@ -196,7 +196,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         btnImprimir.setText("Imprimir");
         btnImprimir.setEnabled(false);
 
-        BTNGENERAR.setText("GENERAR");
+        BTNGENERAR.setText("Generar");
 
         CHBSILABO.setText("Silabo");
 
@@ -241,15 +241,13 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                                         .addComponent(btnImprimir))
                                     .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CHBPROGRAMA)
-                            .addComponent(CHBSILABO)
-                            .addComponent(BTNGENERAR))))
-                .addGap(22, 22, 22))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(BTNGENERAR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CHBPROGRAMA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CHBSILABO)))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

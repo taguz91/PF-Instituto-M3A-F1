@@ -29,7 +29,7 @@ public class EvaluacionSilabo  {
 
     private String instrumento;
 
-    private int valoracion;
+    private double valoracion;
 
 
     private LocalDate fechaEnvio;
@@ -51,7 +51,7 @@ public class EvaluacionSilabo  {
 
    
 
-    public EvaluacionSilabo( Integer idEvaluacion,UnidadSilabo idUnidad,String indicador, TipoActividad idTipoActividad, String instrumento, int valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion) {
+    public EvaluacionSilabo( Integer idEvaluacion,UnidadSilabo idUnidad,String indicador, TipoActividad idTipoActividad, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion) {
         
         this.idEvaluacion = idEvaluacion;
         this.indicador = indicador;
@@ -83,11 +83,11 @@ public class EvaluacionSilabo  {
         this.instrumento = instrumento;
     }
 
-    public int getValoracion() {
+    public double getValoracion() {
         return valoracion;
     }
 
-    public void setValoracion(int valoracion) {
+    public void setValoracion(double valoracion) {
         this.valoracion = valoracion;
     }
 

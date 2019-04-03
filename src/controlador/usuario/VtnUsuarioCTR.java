@@ -116,8 +116,6 @@ public class VtnUsuarioCTR {
                 vista.getBtnVerRoles().setEnabled(true);
             }
 
-            System.out.println(obj);
-
         }
 
     }

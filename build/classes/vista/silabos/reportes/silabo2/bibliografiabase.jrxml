@@ -44,7 +44,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código libro Biblioteca]]></text>
+				<text><![CDATA[Código ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="125" y="0" width="430" height="20" uuid="f3dc3f13-0938-4134-9e11-7d1c72e039a9"/>

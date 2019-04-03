@@ -19,10 +19,10 @@ public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-    private static String JDBC_URL = "";
+    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+    private static String USERNAME = "ROOT";
+    private static String PASSWORD = "ROOT";
     private static Driver driver = null;
 
     private static Connection conn = null;
@@ -52,9 +52,17 @@ public class ResourceManager {
         //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
         //JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
 
+<<<<<<< HEAD
+        JDBC_URL = "jdbc:postgresql://localhost:5432/baseFinal";
+        USERNAME = "postgres";
+        PASSWORD = "qwerty79";
+
+        conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+=======
         if (conex == null) {
             conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         }
+>>>>>>> e9e58db610795c66f5ce4aee1a28f33529aeec68
 
         return conex;
 
