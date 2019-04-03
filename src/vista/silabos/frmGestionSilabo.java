@@ -1331,7 +1331,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
         lblEliminarUnidad.setToolTipText("Eliminar Unidad");
-        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 20, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
         lblGuardarEstrategia.setToolTipText("Guardar Nueva Estrategia");
@@ -1340,7 +1340,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarUnidad.setToolTipText("Agregar Unidad");
-        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 20, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");

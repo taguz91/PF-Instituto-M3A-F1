@@ -219,8 +219,12 @@ public class ControladorSilaboCRUD {
 
             setup.getCmbCarrera().addActionListener(a1);
 
-            setup.getBtnSiguiente().addActionListener(e -> iniciarSilabo(Integer.parseInt(setup.getSpnUnidades().getValue().toString()), setup.getCmbAsignatura().getSelectedItem().toString()));
-
+            if (setup.getCmbAsignatura().getItemCount()>0){
+               setup.getBtnSiguiente().addActionListener(e -> iniciarSilabo(Integer.parseInt(setup.getSpnUnidades().getValue().toString()), setup.getCmbAsignatura().getSelectedItem().toString()));
+            }else{
+                JOptionPane.showMessageDialog(null, "Todos los silabos asignados para este periodo ya se encuentran ingresados");
+            }
+            
         }
 
         if (silabos != null) {
