@@ -14,6 +14,7 @@ import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
+import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
@@ -68,6 +69,7 @@ import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
 import vista.docente.VtnDocenteMateria;
 import vista.materia.VtnMateria;
+import vista.notas.VtnActivarNotas;
 import vista.notas.VtnNotasAlumnoCurso;
 import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
 import vista.periodoLectivoNotas.VtnTipoNotas;
@@ -209,12 +211,13 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
 
         //menus grupo 16
-        vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuariosActionPerformance(e));
-        vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRolesActionPerformance(e));
-        vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesionActionPerformance(e));
+        vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
+        vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRoles(e));
+        vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesion(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
+        vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -615,6 +618,12 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtUsuarios().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_U, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtRoles().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
@@ -646,23 +655,25 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
+        
+        
     }
 
     public int getNumVtns() {
         return numVtns;
     }
 
-    private void mnCtUsuariosActionPerformance(ActionEvent e) {
+    private void mnCtUsuarios(ActionEvent e) {
         VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
         vtn.Init();
     }
 
-    private void mnCtRolesActionPerformance(ActionEvent e) {
+    private void mnCtRoles(ActionEvent e) {
         VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
         vtn.Init();
     }
 
-    private void btnCerrarSesionActionPerformance(ActionEvent e) {
+    private void btnCerrarSesion(ActionEvent e) {
         ResourceManager.cerrarSesion();
         vtnPrin.dispose();
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
@@ -730,5 +741,11 @@ public class VtnPrincipalCTR {
             }
         }
 
+    }
+
+    private void btnActivarNotas(ActionEvent e) {
+
+        VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), rolSeleccionado, conecta);
+        vtn.Init();
     }
 }

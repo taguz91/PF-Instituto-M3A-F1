@@ -157,6 +157,11 @@
                     <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
                   </Properties>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Activar Ingreso de Notas"/>
+                  </Properties>
+                </MenuItem>
               </SubComponents>
             </Menu>
           </SubComponents>

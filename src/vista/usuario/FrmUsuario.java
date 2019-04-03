@@ -1,5 +1,6 @@
 package vista.usuario;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -14,6 +15,9 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
 
     public FrmUsuario() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnBuscarPer() {

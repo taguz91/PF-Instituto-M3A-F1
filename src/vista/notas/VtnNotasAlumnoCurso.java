@@ -1,5 +1,6 @@
 package vista.notas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,6 +15,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
     public VtnNotasAlumnoCurso() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnImprimir() {
@@ -143,6 +147,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         }
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setEnabled(false);
 
         btnVerNotas.setText("Ver Notas");
         btnVerNotas.setEnabled(false);
