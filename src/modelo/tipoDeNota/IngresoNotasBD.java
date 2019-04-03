@@ -48,13 +48,51 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "FROM\n"
                 + "\"public\".\"ViewCursosPermisosNotas\"";
 
-        System.out.println(SELECT);
-
         return selectFromView(SELECT);
     }
 
-    private static List<IngresoNotasBD> selectFromView(String QUERY) {
+    public static IngresoNotasMD selectFromViewActivos(int idCurso) {
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
+        String SELECT = "SELECT\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".nota_primer_inteciclo,\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".nota_examen_intecilo,\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".nota_segundo_inteciclo,\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".nota_examen_final,\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".nota_examen_de_recuperacion,\n"
+                + "\"public\".\"ViewCursosPermisosNotas\".id_ingreso_notas\n"
+                + "FROM\n"
+                + "\"public\".\"ViewCursosPermisosNotas\"\n"
+                + "WHERE\n"
+                + "\"ViewCursosPermisosNotas\".id_curso = " + idCurso + "";
 
+        IngresoNotasMD ingreso = new IngresoNotasMD();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+                ingreso.setIdIngresoNotas(rs.getInt("id_ingreso_notas"));
+                
+                ingreso.setNotaPrimerInterCiclo(rs.getBoolean("nota_primer_inteciclo"));
+                ingreso.setNotaExamenInteCiclo(rs.getBoolean("nota_examen_intecilo"));
+                ingreso.setNotaSegundoInterCiclo(rs.getBoolean("nota_segundo_inteciclo"));
+                ingreso.setNotaExamenFinal(rs.getBoolean("nota_examen_final"));
+                ingreso.setNotaExamenDeRecuperacion(rs.getBoolean("nota_examen_de_recuperacion"));
+
+                System.out.println(ingreso);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return ingreso;
+    }
+
+    private static List<IngresoNotasBD> selectFromView(String QUERY) {
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
         List<IngresoNotasBD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {

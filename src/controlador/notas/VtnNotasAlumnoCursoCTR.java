@@ -31,6 +31,8 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.persona.DocenteBD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
+import modelo.tipoDeNota.IngresoNotasBD;
+import modelo.tipoDeNota.IngresoNotasMD;
 import modelo.usuario.UsuarioBD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -68,10 +70,12 @@ public class VtnNotasAlumnoCursoCTR {
     //Variable para busqueda
     private int idDocente = 0;
     private boolean cargarTabla = true;
+    private int idCurso = -1;
 
     //PARA LA EDICION DE LAS COLUMNAS
     private final boolean[] canEdit = new boolean[]{
-        false, false, false, false, true, true, false, true, true, true, false, true, true, false
+        false, false, false, false, false, false, false, false, false, false, false, true, true, false
+    //false, false, false, false, true, true, false, true, true, true, false, true, true, false
     };
 
     //Thread
@@ -101,24 +105,31 @@ public class VtnNotasAlumnoCursoCTR {
             public void run() {
                 Effects.setLoadCursor(vista);
                 desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
-                cargarComboDocente();
-                cargarComboPeriodos();
-                rellenarLblCarrera();
-                cargarComboCiclo();
-                cargarComboParalelo();
-                cargarComboJornadas();
-                cargarComboMaterias();
-
-                desktop.getLblEstado().setText("COMPLETADO");
 
                 try {
-                    sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    cargarComboDocente();
+                    cargarComboPeriodos();
+                    rellenarLblCarrera();
+                    cargarComboCiclo();
+                    cargarComboParalelo();
+                    cargarComboJornadas();
+                    cargarComboMaterias();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    activarColumnas();
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    desktop.getLblEstado().setText("");
+                    Effects.setDefaultCursor(vista);
+                    vista.getBtnVerNotas().setEnabled(true);
+                    vista.getBtnImprimir().setEnabled(true);
+
+                } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
+                    JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
-                desktop.getLblEstado().setText("");
-                Effects.setDefaultCursor(vista);
-                vista.getBtnVerNotas().setEnabled(true);
 
             }
 
@@ -170,7 +181,7 @@ public class VtnNotasAlumnoCursoCTR {
 
                     active = true;
 
-                    setNumero();
+                    setValorEnTabla();
 
                     vista.getTblNotas().setModel(calcularNotaFinal(tablaNotas));
 
@@ -222,32 +233,75 @@ public class VtnNotasAlumnoCursoCTR {
 
     }
 
+    private void activarColumnas() {
+        String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+        String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+        Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+
+        idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, nombrePeriodo);
+
+        IngresoNotasMD ingreso = IngresoNotasBD.selectFromViewActivos(idCurso);
+
+        if (ingreso.isNotaPrimerInterCiclo()) {
+            canEdit[4] = true;
+        }
+        if (ingreso.isNotaExamenInteCiclo()) {
+            canEdit[5] = true;
+        }
+        if (ingreso.isNotaSegundoInterCiclo()) {
+            canEdit[7] = true;
+        }
+        if (ingreso.isNotaExamenFinal()) {
+            canEdit[8] = true;
+        }
+        if (ingreso.isNotaExamenDeRecuperacion()) {
+            canEdit[9] = true;
+        }
+
+    }
+
     private int getSelectedRow() {
         return vista.getTblNotas().getSelectedRow();
     }
 
-    private void setNumero() {
+    private void setValorEnTabla() {
         int columna = vista.getTblNotas().getSelectedColumn();
         int fila = vista.getTblNotas().getSelectedRow();
         String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
-        if (!valor.isEmpty()) {
-            if (Validaciones.isDecimal(valor)) {
-                vista.getTblNotas().setValueAt(valor, fila, columna);
-            } else {
-                if (Validaciones.isInt(valor)) {
-                    vista.getTblNotas().setValueAt(valor, fila, columna);
+
+        switch (columna) {
+
+            case 12:
+                if (!valor.matches("^[0-9]*")) {
+
+                    System.out.println("-----");
+
+                    valor = String.valueOf(listaNotas.get(fila).getNumFalta());
+                    tablaNotas.setValueAt(valor, fila, 12);
+                }
+                break;
+            default:
+                if (!valor.isEmpty()) {
+                    if (Validaciones.isDecimal(valor)) {
+                        vista.getTblNotas().setValueAt(valor, fila, columna);
+                    } else {
+                        if (Validaciones.isInt(valor)) {
+                            vista.getTblNotas().setValueAt(valor, fila, columna);
+                        } else {
+                            vista.getTblNotas().setValueAt("0.0", fila, columna);
+                        }
+                    }
                 } else {
                     vista.getTblNotas().setValueAt("0.0", fila, columna);
                 }
-            }
-        } else {
-            vista.getTblNotas().setValueAt("0.0", fila, columna);
+                break;
         }
 
     }
 
     private TableModel calcularNotaFinal(TableModel datos) {
-        int fila = vista.getTblNotas().getSelectedRow();
+        int fila = getSelectedRow();
 
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
@@ -290,8 +344,10 @@ public class VtnNotasAlumnoCursoCTR {
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + notaSupletorio;
                 datos.setValueAt(Math.round(notaFinal), fila, 10);
                 isCellEditor(fila, 8);
+
                 estado = "Aprobado";
-                datos.setValueAt(estado, fila, 11);
+                datos.setValueAt("Aprobado", fila, 11);
+                vista.getTblNotas().updateUI();
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
 
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
@@ -429,7 +485,6 @@ public class VtnNotasAlumnoCursoCTR {
 
                         desktop.getLblEstado().setText("CARGANDO NOTAS");
 
-                        tablaNotas.setRowCount(0);
                         String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
                         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
                         String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
@@ -438,31 +493,7 @@ public class VtnNotasAlumnoCursoCTR {
 
                         listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
 
-                        for (AlumnoCursoBD obj : listaNotas) {
-                            if (vista.isVisible()) {
-                                tablaNotas.addRow(new Object[]{
-                                    tablaNotas.getDataVector().size() + 1,
-                                    obj.getAlumno().getIdentificacion(),
-                                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                                    obj.getNota1Parcial(),
-                                    obj.getNotaExamenInter(),
-                                    obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                                    obj.getNota2Parcial(),
-                                    obj.getNotaExamenFinal(),
-                                    obj.getNotaExamenSupletorio(),
-                                    obj.getNotaFinal(),
-                                    obj.getEstado(),
-                                    obj.getNumFalta(),
-                                    "%"
-                                });
-                            } else {
-                                listaNotas = null;
-                                listaPersonasDocentes = null;
-                                System.gc();
-                                break;
-                            }
-                        }
+                        agregarFilas();
 
                         desktop.getLblEstado().setText("");
                         Effects.setDefaultCursor(vista);
@@ -481,6 +512,35 @@ public class VtnNotasAlumnoCursoCTR {
             tablaNotas.isCellEditable(i, 4);
         }
 
+    }
+
+    private void agregarFilas() {
+        tablaNotas.setRowCount(0);
+        for (AlumnoCursoBD obj : listaNotas) {
+            if (vista.isVisible()) {
+                tablaNotas.addRow(new Object[]{
+                    tablaNotas.getDataVector().size() + 1,
+                    obj.getAlumno().getIdentificacion(),
+                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                    obj.getNota1Parcial(),
+                    obj.getNotaExamenInter(),
+                    obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                    obj.getNota2Parcial(),
+                    obj.getNotaExamenFinal(),
+                    obj.getNotaExamenSupletorio(),
+                    obj.getNotaFinal(),
+                    obj.getEstado(),
+                    obj.getNumFalta(),
+                    "%"
+                });
+            } else {
+                listaNotas = null;
+                listaPersonasDocentes = null;
+                System.gc();
+                break;
+            }
+        }
     }
 
     private void generarReporteCompleto() {
