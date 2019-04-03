@@ -111,6 +111,7 @@ public class VtnPrincipalCTR {
             ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
             ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
+
     private final String[][] ACCESOS = {
         {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
         {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},

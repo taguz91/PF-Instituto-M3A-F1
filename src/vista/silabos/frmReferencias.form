@@ -252,11 +252,13 @@
     <Component class="javax.swing.JButton" name="btnAgregarBibliografiaBase">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar &gt;&gt;"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnQuitarBibliografiaBase">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt; Quitar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -1053,7 +1053,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlAsistidaDocente.add(btnAgregarAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarAD.setText("Quitar");
-        pnlAsistidaDocente.add(btnQuitarAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 76, -1));
+        btnQuitarAD.setEnabled(false);
+        pnlAsistidaDocente.add(btnQuitarAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAsistidaDocente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAsistidaDocente.setText("Asistida Docente");
@@ -1119,7 +1120,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlAprendizajeColaborativo.add(btnAgregarAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarAC.setText("Quitar");
-        pnlAprendizajeColaborativo.add(btnQuitarAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 76, -1));
+        btnQuitarAC.setEnabled(false);
+        pnlAprendizajeColaborativo.add(btnQuitarAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAprendizajeColaborativo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAprendizajeColaborativo.setText("Aprendizaje Colaborativo");
@@ -1185,7 +1187,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlPractica.add(btnAgregarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarP.setText("Quitar");
-        pnlPractica.add(btnQuitarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 76, -1));
+        btnQuitarP.setEnabled(false);
+        pnlPractica.add(btnQuitarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblPractica.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPractica.setText("Gestión Práctica");
@@ -1251,7 +1254,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlAutonoma.add(btnAgregarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarA.setText("Quitar");
-        pnlAutonoma.add(btnQuitarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 76, -1));
+        btnQuitarA.setEnabled(false);
+        pnlAutonoma.add(btnQuitarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAutonoma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAutonoma.setText("Gestión Autónoma");
@@ -1286,10 +1290,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(scrContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 410, 100));
 
         btnCancelar.setText("Cancelar");
-        pnlUnidad.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 570, -1, -1));
+        pnlUnidad.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 570, -1, -1));
 
         btnSiguiente.setText("Siguiente");
-        pnlUnidad.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 570, -1, -1));
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+        pnlUnidad.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 570, -1, -1));
 
         spnHorasPracticas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         pnlUnidad.add(spnHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 50, 60, -1));
@@ -1316,13 +1325,13 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblNuevaEstrategia.setText("Nueva Estrategia de Enseñanza:");
         pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, -1, 20));
 
-        lblEstrategiasPredeterminadas.setText("Seleccione la(s) estrategias de enseñanza:");
+        lblEstrategiasPredeterminadas.setText("Seleccione la(s) Estrategias de Enseñanza:");
         pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, -1, -1));
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
         lblEliminarUnidad.setToolTipText("Eliminar Unidad");
-        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 20, -1));
+        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
         lblGuardarEstrategia.setToolTipText("Guardar Nueva Estrategia");
@@ -1331,7 +1340,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarUnidad.setToolTipText("Agregar Unidad");
-        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
@@ -1360,6 +1369,10 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
     /**
      * @param args the command line arguments

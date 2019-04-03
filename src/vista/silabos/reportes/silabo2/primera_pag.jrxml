@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="800"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
@@ -96,7 +96,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CODIGO:]]></text>
+				<text><![CDATA[CÓDIGO:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="21" y="19" width="173" height="20" forecolor="#006699" uuid="47679ae4-7b7d-4bbc-ad89-3524550366a7"/>
@@ -136,7 +136,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<text><![CDATA[ Campo de formacion:]]></text>
+				<text><![CDATA[ Campo de formación:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="156" width="163" height="20" uuid="b8949dd4-27c7-4179-a385-77f17bcf20c3"/>
@@ -158,7 +158,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<text><![CDATA[ Unidad de formacion curricular:]]></text>
+				<text><![CDATA[ Unidad de formación curricular:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="173" y="156" width="372" height="20" uuid="fce43460-62dc-4819-a2e9-dec2537ffad2"/>
@@ -252,7 +252,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 		</band>
 		<band height="207">
 			<staticText>
-				<reportElement x="21" y="5" width="211" height="20" forecolor="#006699" uuid="c48f09d1-d3bf-4f26-8bbd-fa99b7b8ca44"/>
+				<reportElement x="10" y="5" width="211" height="20" forecolor="#006699" uuid="c48f09d1-d3bf-4f26-8bbd-fa99b7b8ca44"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -282,7 +282,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[ Horas Autonomas]]></text>
+				<text><![CDATA[ Horas Autónomas]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="273" y="117" width="135" height="20" uuid="13caca91-4e58-448d-8485-00f8a6af99da"/>
@@ -306,7 +306,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[ Horas Practicas]]></text>
+				<text><![CDATA[ Horas Prácticas]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="45" width="263" height="32" uuid="d0680cba-3856-40d7-a048-2373edcee0e4"/>
@@ -474,6 +474,9 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "horario.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement x="0" y="7" width="100" height="1" uuid="1d9eb71c-753b-4311-93e1-fa99153dfc71"/>
+			</break>
 		</band>
 		<band height="446">
 			<staticText>
@@ -499,7 +502,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[5.1. OBJETIVOS ESPECIFICOS]]></text>
+				<text><![CDATA[5.1. OBJETIVOS ESPECÍFICOS]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="21" y="251" width="524" height="195" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
@@ -531,12 +534,12 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textFieldExpression><![CDATA[$F{materia_descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="50">
+		<band height="61">
 			<break>
 				<reportElement x="0" y="1" width="555" height="1" uuid="4ac910bb-c617-4a9a-ba3f-00f4ea70598c"/>
 			</break>
 			<subreport>
-				<reportElement x="0" y="0" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
+				<reportElement x="0" y="11" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -544,10 +547,13 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "TABLA6.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement x="0" y="6" width="100" height="1" uuid="0bfe6557-f2c3-469b-b85d-e88e50a59936"/>
+			</break>
 		</band>
-		<band height="58">
+		<band height="63">
 			<subreport>
-				<reportElement x="1" y="0" width="509" height="58" uuid="29f15136-c8b5-493a-a094-42a7ce8f88ce"/>
+				<reportElement x="0" y="5" width="509" height="58" uuid="29f15136-c8b5-493a-a094-42a7ce8f88ce"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -555,6 +561,9 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tabla6.1.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement x="0" y="3" width="100" height="1" uuid="d0aa356c-e9b2-4750-af86-80d7f962e249"/>
+			</break>
 		</band>
 		<band height="51">
 			<subreport>

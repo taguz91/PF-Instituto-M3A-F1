@@ -54,7 +54,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código libro Biblioteca]]></text>
+				<text><![CDATA[Código ]]></text>
 			</staticText>
 		</band>
 	</title>

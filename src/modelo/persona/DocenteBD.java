@@ -2,7 +2,6 @@ package modelo.persona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,31 +21,31 @@ public class DocenteBD extends DocenteMD {
         this.per = new PersonaBD(conecta);
     }
 
-    public DocenteBD(ConectarDB conecta, PersonaBD per, String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador) {
-        super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador);
+    /* public DocenteBD(ConectarDB conecta, PersonaBD per, String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador, String tituloDocente,String abreviaturaDocente) {
+        super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador, tituloDocente,abreviaturaDocente);
         this.conecta = conecta;
         this.per = per;
-    }
-
+    }*/
     public void InsertarDocente() {
         // DocenteMD doc = new DocenteMD();
         String nsql = "INSERT INTO public.\"Docentes\"(\n"
                 + "	 id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, "
-                + "docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador)\n"
+                + "docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura)\n"
                 + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
                 + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', '"
-                + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ");";
+                + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ", '" + this.getTituloDocente() + "', '" + this.getAbreviaturaDocente() + "' " + ");";
         System.out.println(nsql);
         if (getFechaFinContratacion() != null) {
             nsql = "INSERT INTO public.\"Docentes\"(\n"
                     + "	 id_persona, docente_codigo, docente_otro_trabajo, "
                     + "docente_categoria, docente_fecha_contrato, "
-                    + "docente_fecha_fin, docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador)\n"
+                    + "docente_fecha_fin, docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura)\n"
                     + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
                     + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', "
-                    + "'" + this.getFechaFinContratacion() + "', '" + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ");";
- System.out.println(nsql);
+                    + "'" + this.getFechaFinContratacion() + "', '" + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador()
+                    + ", '" + this.getTituloDocente() + "', '" + this.getAbreviaturaDocente() + "' " + ");";
+            System.out.println(nsql);
         }
 
         if (conecta.nosql(nsql) == null) {
@@ -73,7 +72,7 @@ public class DocenteBD extends DocenteMD {
                     d.setCorreo(rs.getString("persona_correo"));
                     d.setCelular(rs.getString("persona_celular"));
                     d.setIdentificacion(rs.getString("persona_identificacion"));
-                    
+
                     pers.add(d);
                 }
                 rs.close();
@@ -146,7 +145,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_otro_trabajo, docente_categoria, "
                 + "docente_fecha_contrato, docente_fecha_fin,"
                 + " docente_tipo_tiempo, docente_activo,"
-                + " docente_observacion, docente_capacitador\n"
+                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura \n"
                 + "FROM public.\"Docentes\" "
                 + "WHERE id_docente = '" + id + "';";
         System.out.println(sql);
@@ -174,6 +173,8 @@ public class DocenteBD extends DocenteMD {
                 doc.setEstado(rs.getString(""));
                 doc.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
                 doc.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
+                doc.setTituloDocente(rs.getString("docente_titulo"));
+                doc.setAbreviaturaDocente(rs.getString("docente_abreviatura"));
             }
             rs.close();
             return doc;
@@ -288,7 +289,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_otro_trabajo, docente_categoria, "
                 + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
-                + " docente_observacion, docente_capacitador\n"
+                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura\n"
                 + "FROM public.\"Docentes\" "
                 + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
         //System.out.println(sql);
@@ -380,6 +381,8 @@ public class DocenteBD extends DocenteMD {
                 d.setDocenteCapacitador(rs.getBoolean("docente_capacitador"));
             }
 
+            d.setTituloDocente(rs.getString("docente_titulo"));
+            d.setAbreviaturaDocente(rs.getString("docente_abreviatura"));
             return d;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener docente");
@@ -394,14 +397,18 @@ public class DocenteBD extends DocenteMD {
                 + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", docente_categoria=" + this.getDocenteCategoria() + ","
                 + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "',  "
                 + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
-                + "docente_capacitador= " + this.isDocenteCapacitador() + "\n"
+                + "docente_capacitador= " + this.isDocenteCapacitador()
+                + ", docente_titulo= '" + this.getTituloDocente() + "',"
+                + " docente_abreviatura= '" + this.getAbreviaturaDocente() + "'  \n"
                 + "WHERE id_docente= " + aguja + ";";
         if (getFechaFinContratacion() != null) {
             sql = "UPDATE public.\"Docentes\" SET\n"
                     + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", docente_categoria=" + this.getDocenteCategoria() + ","
                     + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "', docente_fecha_fin='" + this.getFechaFinContratacion() + "', "
                     + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
-                    + "docente_capacitador= " + this.isDocenteCapacitador() + "\n"
+                    + "docente_capacitador= " + this.isDocenteCapacitador()
+                    + ", docente_titulo= '" + this.getTituloDocente() + "',"
+                    + " docente_abreviatura= '" + this.getAbreviaturaDocente() + "' \n"
                     + "WHERE id_docente= " + aguja + ";";
         }
 
@@ -424,8 +431,8 @@ public class DocenteBD extends DocenteMD {
                 + "WHERE p.id_persona = d.id_persona AND \n"
                 + "docente_activo = true AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
-                + "	persona_identificacion ILIKE '%"+aguja+"%'\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%'\n"
                 + ");";
         return consultarDocenteTbl(sql);
     }
@@ -433,7 +440,7 @@ public class DocenteBD extends DocenteMD {
     public DocenteMD buscarDocente(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
-                + "docente_tipo_tiempo, docente_capacitador\n"
+                + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura\n"
                 + "FROM public.\"Docentes\" WHERE "
                 + " docente_activo=true and docente_codigo ='" + identificacion + "'";
         //System.out.println(sql);
@@ -443,7 +450,7 @@ public class DocenteBD extends DocenteMD {
     public DocenteMD buscarDocenteInactivo(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
-                + "docente_tipo_tiempo, docente_capacitador\n"
+                + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura\n"
                 + "FROM public.\"Docentes\" WHERE "
                 + " docente_activo=false and docente_codigo ='" + identificacion + "'";
         //System.out.println(sql);

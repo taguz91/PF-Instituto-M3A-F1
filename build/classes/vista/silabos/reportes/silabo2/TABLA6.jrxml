@@ -52,7 +52,7 @@
 
 
 OBJETIVO 
-ESPECIFICO]]></text>
+ESPECÍFICO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="84" y="0" width="94" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="a311e88a-b3f1-4739-8539-3aae5639ecfe"/>
@@ -159,7 +159,7 @@ CONTENIDOS]]></text>
 				<textElement rotation="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PRACTICAS]]></text>
+				<text><![CDATA[PRÁCTICAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="407" y="20" width="22" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="b08bd04e-aa6d-4855-b40b-1726aba71fd8"/>
@@ -173,7 +173,7 @@ CONTENIDOS]]></text>
 				<textElement verticalAlignment="Middle" rotation="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[AUTONOMAS]]></text>
+				<text><![CDATA[AUTÓNOMAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="429" y="0" width="126" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="06581f6b-fa0f-477d-9a33-2c41dfc3775d"/>
@@ -253,7 +253,7 @@ ENSEÑANZA]]></text>
 				</box>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="178" y="0" width="24" height="194" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -265,7 +265,7 @@ ENSEÑANZA]]></text>
 				<textElement textAlignment="Center" rotation="Left"/>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="202" y="0" width="24" height="194" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
 				<box>
 					<pen lineWidth="0.75"/>

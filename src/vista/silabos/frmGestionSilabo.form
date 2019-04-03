@@ -345,10 +345,11 @@
                 <Component class="javax.swing.JButton" name="btnQuitarAD">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Quitar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="162" y="121" width="76" height="-1"/>
+                      <AbsoluteConstraints x="162" y="121" width="70" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -543,10 +544,11 @@
                 <Component class="javax.swing.JButton" name="btnQuitarAC">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Quitar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="162" y="121" width="76" height="-1"/>
+                      <AbsoluteConstraints x="162" y="121" width="70" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -741,10 +743,11 @@
                 <Component class="javax.swing.JButton" name="btnQuitarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Quitar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="162" y="121" width="76" height="-1"/>
+                      <AbsoluteConstraints x="162" y="121" width="70" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -939,10 +942,11 @@
                 <Component class="javax.swing.JButton" name="btnQuitarA">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Quitar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="162" y="121" width="76" height="-1"/>
+                      <AbsoluteConstraints x="162" y="121" width="70" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1033,7 +1037,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1200" y="570" width="-1" height="-1"/>
+              <AbsoluteConstraints x="1180" y="570" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1041,9 +1045,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Siguiente"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSiguienteActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1100" y="570" width="-1" height="-1"/>
+              <AbsoluteConstraints x="1080" y="570" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1149,7 +1156,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblEstrategiasPredeterminadas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccione la(s) estrategias de ense&#xf1;anza:"/>
+            <Property name="text" type="java.lang.String" value="Seleccione la(s) Estrategias de Ense&#xf1;anza:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1167,7 +1174,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="170" y="60" width="20" height="-1"/>
+              <AbsoluteConstraints x="160" y="60" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1194,7 +1201,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="170" y="20" width="-1" height="-1"/>
+              <AbsoluteConstraints x="160" y="30" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
