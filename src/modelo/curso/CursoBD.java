@@ -402,4 +402,30 @@ public class CursoBD extends CursoMD {
         return lista;
     }
 
+    public static int selectIdCursoWhere(String paralelo, int ciclo, String nombreJornada, int idDocente, String nombrePeriodo) {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Cursos\".id_curso\n"
+                + "FROM\n"
+                + "\"public\".\"Cursos\"\n"
+                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
+                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "WHERE\n"
+                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
+                + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
+                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'";
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+        int idCurso = -1;
+        try {
+            while (rs.next()) {
+                idCurso = rs.getInt("id_curso");
+            }
+        } catch (SQLException e) {
+        }
+        return idCurso;
+    }
+
 }
