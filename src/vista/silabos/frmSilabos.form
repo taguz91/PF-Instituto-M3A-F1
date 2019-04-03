@@ -59,18 +59,15 @@
                   </Group>
               </Group>
               <EmptySpace pref="35" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="CHBPROGRAMA" min="-2" max="-2" attributes="0"/>
-                          <Component id="CHBSILABO" min="-2" max="-2" attributes="0"/>
-                          <Component id="BTNGENERAR" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="BTNGENERAR" alignment="1" max="32767" attributes="0"/>
+                      <Component id="CHBPROGRAMA" max="32767" attributes="0"/>
+                      <Component id="CHBSILABO" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -198,7 +195,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="BTNGENERAR">
       <Properties>
-        <Property name="text" type="java.lang.String" value="GENERAR"/>
+        <Property name="text" type="java.lang.String" value="Generar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="CHBSILABO">
