@@ -9,7 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
- "prd_lectivo_estado" boolean NOT NULL DEFAULT 'false',
+ "prd_lectivo_estado" boolean NOT NULL DEFAULT 'true',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
 ) WITH (OIDS = FALSE);
@@ -136,9 +136,8 @@ CREATE TABLE "Docentes"(
   "docente_activo" boolean NOT NULL DEFAULT 'true',
   "docente_observacion" character varying(20),
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
-	--Nuevos campos
-	"docente_titulo" character varying(200) NOT NULL, 
-	"docente_abreviatura" character varying(20) NOT NULL, 
+	"docente_titulo" character varying(200),
+	"docente_abreviatura" character varying(20),
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
@@ -242,6 +241,7 @@ CREATE TABLE "DocentesMateria"(
 
 
 CREATE TABLE "Usuarios"(
+  "id_usuario" serial NOT NULL, 
 	"usu_username" VARCHAR(50) NOT NULL,
 	"usu_password" bytea NOT NULL,
 	"usu_estado" BOOLEAN DEFAULT TRUE,
@@ -511,7 +511,6 @@ CREATE TABLE "ReferenciaSilabo" (
 CREATE TABLE "UnidadSilabo" (
 
 	id_unidad serial NOT NULL,
-	--Aumentar en la base de datos
 	id_silabo integer NOT NULL,
 	numero_unidad integer NOT NULL,
 	objetivo_especifico_unidad text NOT NULL,
@@ -522,10 +521,9 @@ CREATE TABLE "UnidadSilabo" (
 	horas_docencia_unidad integer NOT NULL,
 	horas_practica_unidad integer NOT NULL,
 	horas_autonomo_unidad integer NOT NULL,
-  --Aumentar en la base de datos
   titulo_unidad TEXT NOT NULL,
 
-	PRIMARY KEY(id_unidad)
+	PRIMARY KEY(id_unidad),
 	--Aumentar en la base
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
@@ -537,12 +535,9 @@ CREATE TABLE "EvaluacionSilabo" (
 
 	id_evaluacion serial NOT NULL,
 	id_unidad integer NOT NULL,
-	--actividad character varying (50) NOT NULL,
   indicador TEXT NOT NULL,
 	id_tipo_actividad integer NOT NULL,
-	--instrumento character varying (50) NOT NULL,
   instrumento text NOT NULL,
-	--valoracion integer NOT NULL,
   valoracion numeric (4, 1) NOT NULL,
 	fecha_envio date NOT NULL,
 	fecha_presentacion date NOT NULL,
@@ -557,12 +552,7 @@ CREATE TABLE "EvaluacionSilabo" (
 	FOREIGN KEY (id_tipo_actividad)
         REFERENCES "TipoActividad" (id_tipo_actividad)
         ON UPDATE CASCADE
-        ON DELETE CASCADE,
-/*
-	FOREIGN KEY (id_silabo)
-        REFERENCES "Silabo" (id_silabo)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE*/
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Silabo" ADD CONSTRAINT "fk_silabo_prd_lectivo"
@@ -679,6 +669,10 @@ ALTER TABLE "DocentesMateria" ADD CONSTRAINT "docente_materia_fk2"
 FOREIGN KEY ("id_materia") REFERENCES "Materias"("id_materia")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "UnidadSilabo" ADD CONSTRAINT "unidad_silabo_pk1"
+FOREIGN KEY ("id_silabo") REFERENCES "Silabo"("id_silabo")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 /*
 	FK GRUPO 16
@@ -723,6 +717,57 @@ ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "usuarios_rolesUsuarios_fk"
 ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
     FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Tablas nuevas de G
+
+CREATE SEQUENCE public."EstrategiasSilabo_id_estrategia_seq";
+
+ALTER SEQUENCE public."EstrategiasSilabo_id_estrategia_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."EstrategiasAprendizaje"
+(
+    id_estrategia integer NOT NULL DEFAULT nextval('"EstrategiasSilabo_id_estrategia_seq"'::regclass),
+    descripcion_estrategia text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "EstrategiasSilabo_pkey" PRIMARY KEY (id_estrategia)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."EstrategiasAprendizaje"
+    OWNER to postgres;
+
+
+CREATE SEQUENCE public."EstrategiasUnidad_id_estrategia_unidad_seq";
+
+ALTER SEQUENCE public."EstrategiasUnidad_id_estrategia_unidad_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."EstrategiasUnidad"
+(
+    id_estrategia_unidad integer NOT NULL DEFAULT nextval('"EstrategiasUnidad_id_estrategia_unidad_seq"'::regclass),
+    id_unidad integer NOT NULL,
+    id_estrategia integer NOT NULL,
+    CONSTRAINT "EstrategiasUnidad_pkey" PRIMARY KEY (id_estrategia_unidad),
+    CONSTRAINT "EstrategiasUnidad_id_estrategia_fkey" FOREIGN KEY (id_estrategia)
+        REFERENCES public."EstrategiasAprendizaje" (id_estrategia) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "EstrategiasUnidad_id_unidad_fkey" FOREIGN KEY (id_unidad)
+        REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."EstrategiasUnidad"
+    OWNER to postgres;
+
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
