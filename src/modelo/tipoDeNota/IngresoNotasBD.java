@@ -48,13 +48,11 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "FROM\n"
                 + "\"public\".\"ViewCursosPermisosNotas\"";
 
-        System.out.println(SELECT);
-
         return selectFromView(SELECT);
     }
 
     private static List<IngresoNotasBD> selectFromView(String QUERY) {
-
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
         List<IngresoNotasBD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {

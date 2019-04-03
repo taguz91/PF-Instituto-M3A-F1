@@ -69,9 +69,8 @@ public class ResourceManager {
             if (conn == null) {
                 conn = getConnection();
             }
-            if (stmt == null) {
-                stmt = conn.createStatement();
-            }
+
+            stmt = conn.createStatement();
 
             stmt.execute(Statement);
             return null;
@@ -85,6 +84,23 @@ public class ResourceManager {
             }
         }
         return null;
+    }
+
+    public static void Statements(String Statement) {
+        try {
+
+            //System.out.println(Statement);
+            if (conn == null) {
+                conn = getConnection();
+            }
+
+            stmt = conn.createStatement();
+
+            stmt.execute(Statement);
+
+        } catch (SQLException | NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static ResultSet Query(String Query) {

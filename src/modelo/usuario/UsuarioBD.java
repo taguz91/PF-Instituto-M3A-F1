@@ -24,12 +24,6 @@ public class UsuarioBD extends UsuarioMD {
     private static final String TABLA = " \"Usuarios\" ";
     private static final String PRIMARY_KEY = " usu_username ";
 
-    private static void refreshView() {
-
-        ResourceManager.Statement("REFRESH MATERIALIZED VIEW \"Usuarios_Persona\" \n");
-
-    }
-
     public boolean insertar() {
 
         String INSERT = "INSERT INTO " + TABLA
@@ -72,7 +66,7 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     private static List<UsuarioMD> selectFromView(String QUERY) {
-        refreshView();
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"Usuarios_Persona\" \n");
         List<UsuarioMD> lista = new ArrayList<>();
 
         //System.out.println(QUERY);

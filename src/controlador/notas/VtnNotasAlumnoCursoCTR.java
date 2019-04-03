@@ -71,7 +71,8 @@ public class VtnNotasAlumnoCursoCTR {
 
     //PARA LA EDICION DE LAS COLUMNAS
     private final boolean[] canEdit = new boolean[]{
-        false, false, false, false, true, true, false, true, true, true, false, true, true, false
+        false, false, false, false, false, false, false, false, false, false, false, true, true, false
+        //false, false, false, false, true, true, false, true, true, true, false, true, true, false
     };
 
     //Thread
@@ -101,24 +102,33 @@ public class VtnNotasAlumnoCursoCTR {
             public void run() {
                 Effects.setLoadCursor(vista);
                 desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
-                cargarComboDocente();
-                cargarComboPeriodos();
-                rellenarLblCarrera();
-                cargarComboCiclo();
-                cargarComboParalelo();
-                cargarComboJornadas();
-                cargarComboMaterias();
-
-                desktop.getLblEstado().setText("COMPLETADO");
-
+                
                 try {
-                    sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    cargarComboDocente();
+                    cargarComboPeriodos();
+                    rellenarLblCarrera();
+                    cargarComboCiclo();
+                    cargarComboParalelo();
+                    cargarComboJornadas();
+                    cargarComboMaterias();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    desktop.getLblEstado().setText("");
+                    Effects.setDefaultCursor(vista);
+                    vista.getBtnVerNotas().setEnabled(true);
+                    vista.getBtnImprimir().setEnabled(true);
+                    
+                } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
+                    JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
-                desktop.getLblEstado().setText("");
-                Effects.setDefaultCursor(vista);
-                vista.getBtnVerNotas().setEnabled(true);
+                
+
 
             }
 
@@ -281,20 +291,19 @@ public class VtnNotasAlumnoCursoCTR {
                 examenFinal = 25.0;
                 datos.setValueAt(25.0, fila, 9);
             }
-           if(notaFinal < 70){
-               
+            if (notaFinal < 70) {
+
                 notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + notaSupletorio;
                 estado = "Reprobado";
                 datos.setValueAt(estado, fila, 11);
                 datos.setValueAt(Math.round(notaFinal), fila, 10);
-            } else{
+            } else {
                 notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
-            estado = "Aprobado";
+                estado = "Aprobado";
 
-            datos.setValueAt(estado, fila, 11);
-            datos.setValueAt(Math.round(notaFinal), fila, 10);
-           }
-           
+                datos.setValueAt(estado, fila, 11);
+                datos.setValueAt(Math.round(notaFinal), fila, 10);
+            }
 
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
 
