@@ -5,6 +5,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,6 +121,14 @@ public class VtnCursoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Cursos");
+          vtnCurso.getTblCurso().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                validarBotonesReportes();
+            }
+        });
+
+
           vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
         //ctrPrin.carga.detener();
     }
@@ -232,11 +242,7 @@ public class VtnCursoCTR {
         try {
              int posFila = vtnCurso.getTblCurso().getSelectedRow();
             Map parametro = new HashMap();
-           // parametro.put("idDocente", cursos.get(posFila).getId_docente());
-            parametro.put("ciclo", cursos.get(posFila).getCurso_ciclo());
-            parametro.put("paralelo", vtnCurso.getCmbCurso().getSelectedItem());
-            parametro.put("período", periodos.get(posFila).getNombre_PerLectivo());
-            parametro.put("idDocente",cursos.get(posFila).getId_docente().getIdDocente());
+            parametro.put("curso",cursos.get(posFila).getId_curso());
            // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
@@ -280,4 +286,12 @@ public class VtnCursoCTR {
 //            }
         }
     }
-}
+      public void validarBotonesReportes() {
+        int selecTabl = vtnCurso.getTblCurso().getSelectedRow();
+        if (selecTabl >= 0) {
+            vtnCurso.getBtnListaAlumnos().setEnabled(true);
+        } else {
+            vtnCurso.getBtnListaAlumnos().setEnabled(false);
+        }
+    }
+   }
