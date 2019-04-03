@@ -24,6 +24,12 @@ public class UsuarioBD extends UsuarioMD {
     private static final String TABLA = " \"Usuarios\" ";
     private static final String PRIMARY_KEY = " usu_username ";
 
+    private static void refreshView() {
+
+        ResourceManager.Statement("REFRESH MATERIALIZED VIEW \"Usuarios_Persona\" \n");
+
+    }
+
     public boolean insertar() {
 
         String INSERT = "INSERT INTO " + TABLA
@@ -66,10 +72,10 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     private static List<UsuarioMD> selectFromView(String QUERY) {
+        refreshView();
         List<UsuarioMD> lista = new ArrayList<>();
 
         //System.out.println(QUERY);
-
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
 
@@ -161,7 +167,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username";
+                + "\"public\".\"Usuarios_Persona\".usu_username DESC";
 
         List<UsuarioMD> lista = selectFromView(SELECT);
 
@@ -169,7 +175,6 @@ public class UsuarioBD extends UsuarioMD {
 
         for (UsuarioMD usuarioMD : lista) {
             username = usuarioMD.getUsername();
-            System.out.println(username);
         }
         String inicio = "USER-";
 

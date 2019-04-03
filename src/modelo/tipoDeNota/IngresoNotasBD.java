@@ -23,7 +23,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
     public IngresoNotasBD() {
     }
 
-    public static List<IngresoNotasMD> selectAll() {
+    public static List<IngresoNotasBD> selectAll() {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".nota_primer_inteciclo,\n"
@@ -53,14 +53,14 @@ public class IngresoNotasBD extends IngresoNotasMD {
         return selectFromView(SELECT);
     }
 
-    private static List<IngresoNotasMD> selectFromView(String QUERY) {
+    private static List<IngresoNotasBD> selectFromView(String QUERY) {
 
-        List<IngresoNotasMD> lista = new ArrayList<>();
+        List<IngresoNotasBD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
             while (rs.next()) {
 
-                IngresoNotasMD ingreso = new IngresoNotasMD();
+                IngresoNotasBD ingreso = new IngresoNotasBD();
                 ingreso.setIdIngresoNotas(rs.getInt("id_ingreso_notas"));
                 ingreso.setNotaPrimerInterCiclo(rs.getBoolean("nota_primer_inteciclo"));
                 ingreso.setNotaExamenInteCiclo(rs.getBoolean("nota_examen_intecilo"));
