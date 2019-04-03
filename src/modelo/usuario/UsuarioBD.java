@@ -66,10 +66,10 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     private static List<UsuarioMD> selectFromView(String QUERY) {
+        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"Usuarios_Persona\" \n");
         List<UsuarioMD> lista = new ArrayList<>();
 
         //System.out.println(QUERY);
-
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
 
@@ -161,7 +161,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username";
+                + "\"public\".\"Usuarios_Persona\".usu_username DESC";
 
         List<UsuarioMD> lista = selectFromView(SELECT);
 
@@ -169,7 +169,6 @@ public class UsuarioBD extends UsuarioMD {
 
         for (UsuarioMD usuarioMD : lista) {
             username = usuarioMD.getUsername();
-            System.out.println(username);
         }
         String inicio = "USER-";
 

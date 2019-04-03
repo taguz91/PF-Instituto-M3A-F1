@@ -147,6 +147,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         }
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setEnabled(false);
 
         btnVerNotas.setText("Ver Notas");
         btnVerNotas.setEnabled(false);
