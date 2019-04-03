@@ -1784,7 +1784,7 @@ public class ControladorSilaboCRUD {
                 if (validarLimiteEvaluaciones(Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()))) {
                     evaluaciones.add(new EvaluacionSilabo(gestion.getTblAsistidaDocente().getRowCount(), unidades.get(gestion.getCmbUnidad().getSelectedIndex()), gestion.getTxtIndicadorAD().getText(), new dbTipoActividad().retornaTipo(infoE), gestion.getTxtInstrumentoAD().getText(), Double.parseDouble(gestion.getSpnValoracionAD().getValue().toString()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
 
