@@ -247,7 +247,6 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private TableModel calcularNotaFinal(TableModel datos) {
-
         int fila = vista.getTblNotas().getSelectedRow();
 
         double notaInterCiclo = 0;
@@ -265,45 +264,51 @@ public class VtnNotasAlumnoCursoCTR {
             notaInterCiclo2 = validarNumero(datos.getValueAt(fila, 7).toString());
             examenFinal = validarNumero(datos.getValueAt(fila, 8).toString());
             notaSupletorio = validarNumero(datos.getValueAt(fila, 9).toString());
-            if (notaInterCiclo > 30) {
+            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
+            datos.setValueAt(notaFinalPrimerParcial, fila, 6);
+            notaFinal = notaFinalPrimerParcial;
+            datos.setValueAt(notaFinal, fila, 10);
+
+            if (notaInterCiclo > 30.0) {
                 notaInterCiclo = 30.0;
-                datos.setValueAt(30.0, fila, 4);
-            } else if (examenInterCiclo > 15) {
+                datos.setValueAt(notaInterCiclo, fila, 4);
+            } else if (examenInterCiclo > 15.0) {
                 examenInterCiclo = 15.0;
-                datos.setValueAt(15.0, fila, 5);
-            } else if (notaInterCiclo2 > 30) {
+                datos.setValueAt(examenInterCiclo, fila, 5);
+            } else if (notaInterCiclo2 > 30.0) {
                 notaInterCiclo2 = 30.0;
-                datos.setValueAt(30.0, fila, 7);
-            } else if (examenFinal > 25) {
+                datos.setValueAt(notaInterCiclo2, fila, 7);
+            } else if (examenFinal > 25.0) {
                 examenFinal = 25.0;
-                datos.setValueAt(25.0, fila, 8);
-            } else if (notaSupletorio > 25) {
+                datos.setValueAt(examenFinal, fila, 8);
+            } else if (notaSupletorio > 25.0) {
                 examenFinal = 25.0;
-                datos.setValueAt(25.0, fila, 9);
-            }
-           if(notaFinal < 70){
-               
-                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + notaSupletorio;
+                datos.setValueAt(examenFinal, fila, 9);
+
+            } else if (notaFinal > 70 || notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
+
+                notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + notaSupletorio;
+                datos.setValueAt(Math.round(notaFinal), fila, 10);
+                isCellEditor(fila, 8);
+                estado = "Aprobado";
+                datos.setValueAt(estado, fila, 11);
+            } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
+
+                notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
+                isCellEditor(fila, 9);
                 estado = "Reprobado";
                 datos.setValueAt(estado, fila, 11);
                 datos.setValueAt(Math.round(notaFinal), fila, 10);
-            } else{
-                notaFinal = notaInterCiclo + examenInterCiclo + notaInterCiclo2 + examenFinal;
-            estado = "Aprobado";
-
-            datos.setValueAt(estado, fila, 11);
-            datos.setValueAt(Math.round(notaFinal), fila, 10);
-           }
-           
-
-            notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
-
-            datos.setValueAt(notaFinalPrimerParcial, fila, 6);
+            }
 
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
         return datos;
+    }
+
+    private boolean isCellEditor(int row, int col) {
+        return false;
     }
 
     private AlumnoCursoBD setObjFromTable(int fila) {
