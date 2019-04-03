@@ -250,7 +250,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnCtHistorialUsers() {
         return mnCtHistorialUsers;
     }
-    
+
+    public JMenuItem getMnCtActivarNotas() {
+        return mnCtActivarNotas;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -303,6 +307,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtPrdIngrNotas = new javax.swing.JMenuItem();
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
+        mnCtActivarNotas = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -602,6 +607,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtNotas.setText("Ingreso Notas");
         jMenu1.add(mnCtNotas);
 
+        mnCtActivarNotas.setText("Activar Ingreso de Notas");
+        jMenu1.add(mnCtActivarNotas);
+
         mnTipoNotas.add(jMenu1);
 
         menuCrud.add(mnTipoNotas);
@@ -725,6 +733,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JMenuBar menuCrud;
+    private javax.swing.JMenuItem mnCtActivarNotas;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;
