@@ -37,7 +37,7 @@ public class VtnActivarNotasCTR {
     private static DefaultTableModel tablaActivarNotas;
 
     //LISTA
-    private List<IngresoNotasMD> listaNotasActivadas;
+    private List<IngresoNotasBD> listaNotasActivadas;
 
     private boolean cargarTabla = true;
     private Thread thread;
@@ -79,6 +79,8 @@ public class VtnActivarNotasCTR {
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
 
                     active = true;
+
+                    System.out.println("--------->");
 
                     active = false;
                 }
