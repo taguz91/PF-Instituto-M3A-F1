@@ -690,14 +690,14 @@ public class FrmPersonaCTR {
         if (!Validar.esNumCasa(numCasa)) {
             guardar = false;
             frmPersona.getLblErrorCelular().setVisible(true);
-            if(!Validar.esNumeCasaLetras(numCasa)){
-                 guardar = false;
-            frmPersona.getLblErrorCelular().setVisible(true);
+            if (!Validar.esNumeCasaLetras(numCasa)) {
+                guardar = false;
+                frmPersona.getLblErrorCelular().setVisible(true);
             }
-             if(!Validar.esNumeCasaSoloNumeros(numCasa)){
-                 guardar = false;
-            frmPersona.getLblErrorCelular().setVisible(true);
-             }
+            if (!Validar.esNumeCasaSoloNumeros(numCasa)) {
+                guardar = false;
+                frmPersona.getLblErrorCelular().setVisible(true);
+            }
         } else {
             frmPersona.getLblErrorCelular().setVisible(false);
         }
