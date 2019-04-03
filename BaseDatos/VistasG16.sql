@@ -77,8 +77,7 @@ CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree 
 
 /*
   PERMISOS DE IMGRESO DE NOTAS EN UN CURSO
-*/
-CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+*/CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
 AS
 SELECT "IngresoNotas".nota_primer_inteciclo,
     "IngresoNotas".nota_examen_intecilo,
@@ -98,7 +97,9 @@ SELECT "IngresoNotas".nota_primer_inteciclo,
     "Personas".persona_primer_apellido,
     "Personas".persona_segundo_apellido,
     "Personas".persona_primer_nombre,
-    "Personas".persona_segundo_nombre
+    "Personas".persona_segundo_nombre,
+    "PeriodoLectivo".prd_lectivo_activo,
+    "PeriodoLectivo".prd_lectivo_estado
    FROM ((((("IngresoNotas"
      JOIN "Cursos" ON (("IngresoNotas".id_curso = "Cursos".id_curso)))
      JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)))

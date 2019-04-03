@@ -346,7 +346,7 @@ public class VtnNotasAlumnoCursoCTR {
                 isCellEditor(fila, 8);
 
                 estado = "Aprobado";
-                datos.setValueAt("Aprobado", fila, 11);
+                datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
 

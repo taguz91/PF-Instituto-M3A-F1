@@ -46,7 +46,11 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_primer_nombre,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".persona_segundo_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"ViewCursosPermisosNotas\"";
+                + "\"public\".\"ViewCursosPermisosNotas\""
+                + "WHERE\n"
+                + "prd_lectivo_activo = TRUE\n"
+                + "AND \n"
+                + "prd_lectivo_estado = TRUE";
 
         return selectFromView(SELECT);
     }
@@ -73,7 +77,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
 
             while (rs.next()) {
                 ingreso.setIdIngresoNotas(rs.getInt("id_ingreso_notas"));
-                
+
                 ingreso.setNotaPrimerInterCiclo(rs.getBoolean("nota_primer_inteciclo"));
                 ingreso.setNotaExamenInteCiclo(rs.getBoolean("nota_examen_intecilo"));
                 ingreso.setNotaSegundoInterCiclo(rs.getBoolean("nota_segundo_inteciclo"));
