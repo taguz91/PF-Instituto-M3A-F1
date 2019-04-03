@@ -28,6 +28,7 @@ public class TableStyle extends JTable {
         dato = Double.parseDouble(this.getModel().getValueAt(rowIndex, 10).toString());
         if (dato >= 70){
             component.setBackground(Color.WHITE);
+            component.setForeground(Color.BLUE);
         }else{
             component.setForeground(Color.RED);
         }

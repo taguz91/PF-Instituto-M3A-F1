@@ -31,6 +31,14 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         return txtBuscar;
     }
 
+    public JButton getBtnReporteMallaAlumno() {
+        return btnReporteMallaAlumno;
+    }
+
+    public void setBtnReporteMallaAlumno(JButton btnReporteMallaAlumno) {
+        this.btnReporteMallaAlumno = btnReporteMallaAlumno;
+    }
+
     public JComboBox<String> getCmbCarreras() {
         return cmbCarreras;
     }
@@ -73,6 +81,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         btnIngNota = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         lblResultados = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnReporteMallaAlumno = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -109,6 +119,15 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
 
         lblResultados.setText("0 Resultados obtenidos.");
 
+        jLabel5.setText("Reporte:");
+
+        btnReporteMallaAlumno.setText("Malla de Alumno");
+        btnReporteMallaAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteMallaAlumnoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +135,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -133,7 +152,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 88, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -143,7 +162,10 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                             .addComponent(btnIngNota, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReporteMallaAlumno)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -166,17 +188,25 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados)
-                .addGap(7, 7, 7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblResultados)
+                    .addComponent(jLabel5)
+                    .addComponent(btnReporteMallaAlumno))
+                .addGap(2, 2, 2))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnReporteMallaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMallaAlumnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteMallaAlumnoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnIngNota;
+    private javax.swing.JButton btnReporteMallaAlumno;
     private javax.swing.JComboBox<String> cmbAlumnos;
     private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbEstado;
@@ -184,6 +214,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblMallaAlumno;

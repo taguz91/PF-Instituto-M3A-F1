@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -18,28 +20,22 @@ public class ResourceManager {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
     private static String JDBC_URL = "";
-    //Esta base de datos es la que entrera en pruebas del dia de mañana no modificar nada
 
-    //private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/Proyecto_Final";//BD Andres
-    //private static final String JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final"; //BD Andres
-    private static String USERNAME = "ROOT";
-    private static String PASSWORD = "ROOT";
+    private static String USERNAME = "";
+    private static String PASSWORD = "";
     private static Driver driver = null;
 
     private static Connection conn = null;
     private static Statement stmt = null;
     private static ResultSet rs = null;
+    private static Connection conex = null;
 
     public static synchronized Connection getConnection()
             throws SQLException {
 
-        Connection conex = null;
-
         if (driver == null) {
             try {
-                /*
-                    JAVA REFLECTION
-                 */
+
                 Class jdbcDriverClass = Class.forName(JDBC_DRIVER);
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver(driver);
@@ -55,8 +51,15 @@ public class ResourceManager {
         //JDBC_URL = Propiedades.loadIP();
         //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
         //JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
+
         JDBC_URL = "jdbc:postgresql://LocalHost:5432/BDIsta";
         conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+
+        if (conex == null) {
+            conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        }
+
 
         return conex;
 
@@ -117,6 +120,24 @@ public class ResourceManager {
                 System.out.println(e.getMessage());
             }
             return null;
+        }
+    }
+
+    public static void cerrarSesion() {
+
+        try {
+            conn.close();
+            conex.close();
+            stmt.close();
+            rs.close();
+
+            driver = null;
+            stmt = null;
+            conn = null;
+            conex = null;
+            rs = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
