@@ -1,84 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<parameter name="idDocente" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ciclo" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="paralelo" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="periodo" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="jornada" class="java.lang.String">
+	<property name="ireport.y" value="64"/>
+	<parameter name="curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-	"Alumnos".id_alumno,
-	p_alu.persona_identificacion,
-	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido || ' ' ||
-	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS ALUMNO,
-	
-	"Materias".materia_nombre, 
-	"Jornadas".nombre_jornada,
-	"Materias".materia_ciclo,
-	"Cursos".curso_paralelo,
-	"Carreras".carrera_nombre,
-	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre || ' ' ||
-	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as PROFESOR
-	
-FROM
-	"AlumnoCurso"
-	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
-	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
-	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
-	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
-	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
-	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
-	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
-	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
-	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
-	
-
-	WHERE 
-	 "Cursos".id_docente = 55
-	AND "PeriodoLectivo".prd_lectivo_nombre = $P{periodo}
-	AND "Cursos".curso_ciclo = $P{ciclo} 
-	AND "Cursos".curso_nombre = $P{paralelo} 
-	AND "Jornadas".nombre_jornada ='MATUTINA'  
-	
-ORDER BY
-ALUMNO ASC;]]>
+		<![CDATA[SELECT p.persona_primer_nombre || ' ' || p.persona_segundo_nombre || ' ' ||
+p.persona_primer_apellido || ' ' || p.persona_segundo_apellido AS alumno, c.curso_nombre
+,mat.materia_nombre,
+per.persona_primer_nombre || ' ' || per.persona_segundo_nombre || ' ' ||
+per.persona_primer_apellido || ' ' || per.persona_segundo_apellido AS docente
+FROM public."AlumnoCurso" ac, public."Alumnos" a, public."Personas" p, public."Cursos" c,
+public."Materias" mat, public."Docentes" doc, public."Personas" per
+WHERE ac.id_alumno = a.id_alumno
+AND p.id_persona = a.id_persona
+AND ac.id_curso = c.id_curso
+AND c.id_materia=mat.id_materia
+AND c.id_docente = doc.id_docente
+AND doc.id_persona=per.id_persona
+AND c.id_curso = $P{curso};]]>
 	</queryString>
-	<field name="id_alumno" class="java.lang.Integer"/>
-	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="alumno" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
-	<field name="nombre_jornada" class="java.lang.String"/>
-	<field name="materia_ciclo" class="java.lang.Integer"/>
-	<field name="curso_paralelo" class="java.lang.String"/>
-	<field name="carrera_nombre" class="java.lang.String"/>
-	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="profesor" class="java.lang.String"/>
+	<field name="docente" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="133" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="109" width="555" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Lista de Estudiantes]]></text>
-			</staticText>
+		<band height="121" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="99"/>
+				<imageExpression class="java.lang.String"><![CDATA[".\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
+			</image>
 			<staticText>
 				<reportElement x="0" y="79" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -86,125 +42,95 @@ ALUMNO ASC;]]>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
 			</staticText>
-			<image>
-				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression><![CDATA[".\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
-			</image>
+			<staticText>
+				<reportElement x="0" y="99" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Estudiantes]]></text>
+			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="348" y="40" width="207" height="20"/>
+				<reportElement x="358" y="41" width="197" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="102" splitType="Stretch">
+		<band height="76" splitType="Stretch">
+			<textField>
+				<reportElement x="65" y="10" width="434" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="50" width="115" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="30" width="434" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="13" y="14" width="52" height="20"/>
-				<textElement/>
-				<text><![CDATA[Carrera:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="13" y="34" width="52" height="20"/>
-				<textElement/>
-				<text><![CDATA[Materia:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="13" y="74" width="84" height="20"/>
-				<textElement/>
-				<text><![CDATA[Periodo Lectivo:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="433" y="34" width="32" height="20"/>
-				<textElement/>
-				<text><![CDATA[Ciclo:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="433" y="14" width="32" height="20"/>
-				<textElement/>
+				<reportElement x="13" y="50" width="52" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Curso:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="54" width="52" height="20"/>
-				<textElement/>
+				<reportElement x="13" y="10" width="52" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="30" width="52" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="65" y="14" width="368" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="65" y="34" width="368" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="97" y="74" width="261" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="65" y="54" width="368" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{profesor}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="465" y="14" width="90" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="465" y="34" width="90" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
-			<rectangle>
-				<reportElement x="35" y="0" width="477" height="20"/>
-			</rectangle>
+		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="35" y="0" width="30" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="65" y="0" width="434" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N#]]></text>
+				<text><![CDATA[Alumnos]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="65" y="0" width="447" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Alumno]]></text>
-			</staticText>
+			<line>
+				<reportElement x="65" y="20" width="434" height="1"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
-			<rectangle>
-				<reportElement x="35" y="0" width="477" height="20"/>
-			</rectangle>
+		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="65" y="0" width="447" height="20"/>
+				<reportElement x="65" y="0" width="434" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="35" y="0" width="30" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
-			</textField>
+			<line>
+				<reportElement x="65" y="20" width="434" height="1"/>
+			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
 	<pageFooter>
-		<band height="29" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="9" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<reportElement x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

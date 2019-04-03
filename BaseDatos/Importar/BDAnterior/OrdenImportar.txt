@@ -7,10 +7,13 @@
 5: Materias
 6: Periodo lectivo
 7: Personas
-8: Profesores
+8: Docentes
 9: Alumnos
 10: Materias docentes
 11: Materias Requisitos
+	11.1 Antes de migrar cursos debemos ejecutar un trigger especial / Ingreso notas
 12: Cursos
 13: Alumnos Carreras
 14: Alumnos Materias / Malla Alumno
+15: Ejecutar triggers de auditoria y eliminacion 
+16: Ejecutar triggers especiales

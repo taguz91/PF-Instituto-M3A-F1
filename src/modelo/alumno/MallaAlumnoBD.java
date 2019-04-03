@@ -248,6 +248,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     m.setNombre(rs.getString("materia_nombre"));
                     mll.setMateria(m);
                     AlumnoCarreraMD a = new AlumnoCarreraMD();
+                    a.setId(rs.getInt("id_almn_carrera"));
                     AlumnoMD al = new AlumnoMD();
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     al.setPrimerNombre(rs.getString("persona_primer_nombre"));

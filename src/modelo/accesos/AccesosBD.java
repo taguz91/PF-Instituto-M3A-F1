@@ -76,10 +76,41 @@ public class AccesosBD extends AccesosMD {
         try {
             while (rs.next()) {
                 AccesosMD acceso = new AccesosMD();
+                if (rs.wasNull()) {
 
+                }
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
                 acceso.setDescripcion(rs.getString("acc_descripcion"));
+                Lista.add(acceso);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return Lista;
+    }
+
+    public static List<AccesosMD> selectWhereLIKE(int idRol, String LIKE) {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Accesos\".acc_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"Accesos\"\n"
+                + "INNER JOIN \"public\".\"AccesosDelRol\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso\n"
+                + "WHERE \n"
+                + "\"AccesosDelRol\".id_rol = " + idRol + "\n"
+                + "AND \n"
+                + "\"Accesos\".acc_nombre ILIKE '%" + LIKE + "%'";
+
+        List<AccesosMD> Lista = new ArrayList<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                AccesosMD acceso = new AccesosMD();
+                acceso.setNombre(rs.getString("acc_nombre"));
                 Lista.add(acceso);
             }
             rs.close();

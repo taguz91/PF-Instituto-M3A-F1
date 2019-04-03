@@ -24,27 +24,35 @@ public class pgConect {
     ResultSet rs;
 
 
+<<<<<<< HEAD
     //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     String cadConexion = "jdbc:postgresql://localhost:5432/baseFinal";
+=======
+>>>>>>> e9e58db610795c66f5ce4aee1a28f33529aeec68
+
+    String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
+
+
+    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+
+    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+
+    //String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
+
 
     String pgUser = "postgres";
     String pgContra = "qwerty79";
 
-
-
-
-
 //    //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 //    String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
-//    
+//
 //    String pgUser = "postgres";
 //    String pgContra = "qwerty79";
     //String cadConexion = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
     /*String cadConexion = "jdbc:postgresql://localhost:5432/baseNueva";
     String pgUser = "postgres";
     String pgContra = "qwerty";*/
-
-
     public pgConect() {
 
         try {
@@ -55,7 +63,8 @@ public class pgConect {
         }
 
         try {
-            con = DriverManager.getConnection(cadConexion, pgUser, pgContra);
+            //con = DriverManager.getConnection(cadConexion, pgUser, pgContra);
+            con = ResourceManager.getConnection();
             System.out.println("Se Conecto DB.");
         } catch (SQLException ex) {
             Logger.getLogger(pgConect.class.getName()).log(Level.SEVERE, null, ex);

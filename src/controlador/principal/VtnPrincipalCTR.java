@@ -32,7 +32,9 @@ import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -44,6 +46,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
@@ -100,18 +103,27 @@ public class VtnPrincipalCTR {
     private final ImageIcon icono;
     private final Image ista;
     private final VtnBienvenida vtnBienvenida;
+    //Para hacer los accesos
+    private List<AccesosMD> accesos;
+    //Constantes de accesos, para las ventanas y menus
+    public final int ACCESOS_ALUMNOS = 0, ACCESOS_PERIODO_LECTIVO = 1,
+            ACCESOS_DOCENTES = 2, ACCESOS_PERSONAS = 3, ACCESOS_CARRERAS = 4,
+            ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
+            ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
-    String[][] accesos = {{"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
-    {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
-    {"Docentes", "Docentes-Ingresar", "Docentes-Editar", "Docentes-Eliminar", "Docentes-Materias-Docente", "Docentes-Estado"},
-    {"Personas", "Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"},
-    {"Carreras", "Carreras-Eliminar", "Carreras-Editar", "Carreras-Ingresar", "Carreras-Estado"},
-    {"Cursos", "Cursos-Editar", "Cursos-Ingresar"},
-    {"Materias", "Materias-Informacion", "Materias-Estado"},
-    {"AlumnosCarrera","AlumnosCarrera-Ingresar"},
-    {"AlumnosCursoPorPeriodo","AlumnosCursoPorPeriodo-Ingresar"},
-    {"AlumnosCurso","AlumnosCurso-Ingresar","AlumnosCurso-Eliminar","AlumnosCurso-Editar"},
-    {"DocenteMateria","DocenteMateria-Ingresar"}};
+    private final String[][] ACCESOS = {
+        {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
+        {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
+        {"Docentes", "Docentes-Ingresar", "Docentes-Editar", "Docentes-Eliminar", "Docentes-Materias-Docente", "Docentes-Estado"},
+        {"Personas", "Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"},
+        {"Carreras", "Carreras-Eliminar", "Carreras-Editar", "Carreras-Ingresar", "Carreras-Estado"},
+        {"Cursos", "Cursos-Editar", "Cursos-Ingresar"},
+        {"Materias", "Materias-Informacion", "Materias-Estado"},
+        {"AlumnosCarrera", "AlumnosCarrera-Ingresar"},
+        {"AlumnosCursoPorPeriodo", "AlumnosCursoPorPeriodo-Ingresar"},
+        {"AlumnosCurso", "AlumnosCurso-Ingresar", "AlumnosCurso-Eliminar", "AlumnosCurso-Editar"},
+        {"DocenteMateria", "DocenteMateria-Ingresar"}
+    };
 
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
@@ -147,6 +159,7 @@ public class VtnPrincipalCTR {
 //            System.out.println("No se maximiso");
 //        }
         //Iniciamos los shortcuts 
+
         iniciarAtajosTeclado();
 
         //Acciones de las ventanas de consulta
@@ -209,6 +222,37 @@ public class VtnPrincipalCTR {
 
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
+    }
+
+    private void iniciandoBtns() {
+        accesos = AccesosBD.SelectWhereACCESOROLidRol(rolSeleccionado.getId());
+        accesos.forEach(a -> {
+
+            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS][1])) {
+                vtnPrin.getBtnAlumno().setEnabled(true);
+                vtnPrin.getMnIgAlumno().setEnabled(true);
+            } else {
+                vtnPrin.getBtnAlumno().setEnabled(false);
+                vtnPrin.getMnIgAlumno().setEnabled(false);
+            }
+
+            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_PERIODO_LECTIVO][3])) {
+                vtnPrin.getBtnPrdLectivo().setEnabled(true);
+                vtnPrin.getMnIgPrdLectivo().setEnabled(true);
+            } else {
+                vtnPrin.getBtnPrdLectivo().setEnabled(false);
+                vtnPrin.getMnIgPrdLectivo().setEnabled(false);
+            }
+
+            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS_CARRERA][1])) {
+                vtnPrin.getBtnInscripcion().setEnabled(true);
+                vtnPrin.getMnIgInscripcion().setEnabled(true);
+            } else {
+                vtnPrin.getBtnInscripcion().setEnabled(false);
+                vtnPrin.getMnIgInscripcion().setEnabled(false);
+            }
+
+        });
     }
 
     public void abrirVtnPersona() {
@@ -618,6 +662,7 @@ public class VtnPrincipalCTR {
     }
 
     private void btnCerrarSesionActionPerformance(ActionEvent e) {
+        ResourceManager.cerrarSesion();
         vtnPrin.dispose();
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
         login.Init();

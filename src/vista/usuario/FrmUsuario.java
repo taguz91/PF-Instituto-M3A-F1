@@ -1,6 +1,7 @@
 package vista.usuario;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -47,6 +48,11 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         return cmbPersona;
     }
 
+    public JCheckBox getChxDefinido() {
+        return chxDefinido;
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

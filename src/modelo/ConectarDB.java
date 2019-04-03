@@ -19,7 +19,7 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
-    private String url = "";
+    private String url = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
 
     public ConectarDB(String user, String pass, String mensaje) {
         try {

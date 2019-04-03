@@ -99,14 +99,6 @@
                 <Property name="text" type="java.lang.String" value="Materia docentes"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Historial usuarios"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -134,6 +126,14 @@
                 <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Historial usuarios"/>
+              </Properties>
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -142,14 +142,14 @@
                 <Property name="text" type="java.lang.String" value="Notas"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
-                  </Properties>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtPrdIngrNotas">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
