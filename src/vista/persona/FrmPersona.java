@@ -627,6 +627,8 @@ public class FrmPersona extends javax.swing.JInternalFrame {
 
         btnCapturarFoto.setText("Capturar Foto");
         getContentPane().add(btnCapturarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 260, -1, -1));
+
+        jdfechaNacimiento.setDateFormatString("dd-MM-yyyy");
         getContentPane().add(jdfechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 90, 130, -1));
 
         pack();
