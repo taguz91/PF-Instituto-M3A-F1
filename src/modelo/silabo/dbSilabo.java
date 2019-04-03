@@ -58,6 +58,7 @@ public class dbSilabo extends Silabo {
     public boolean EliminarSilabo(int id) {
         String sql = "DELETE FROM public.\"Silabo\"\n"
                 + "	WHERE id_silabo=" + id + "";
+        System.out.println("<-------------------------------ancla");
         if (con.noQuery(sql) == null) {
             return true;
         } else {

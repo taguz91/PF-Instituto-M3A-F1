@@ -6,6 +6,7 @@
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -36,6 +37,8 @@ import javax.swing.DefaultListModel;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -231,7 +234,7 @@ public class ControladorSilaboCRUD {
                 public void actionPerformed(ActionEvent ae) {
 
                     //recuperarInfo(fila);
-                    iniciarSilabo(-1, setup.getCmbAsignatura().getSelectedItem().toString());
+                    iniciarSilabo(-1, silabos.getTblSilabos().getValueAt(fila, 0).toString());
                     mostrarUnidades(gestion.getCmbUnidad().getSelectedIndex());
                     silabos.getBtnNuevo().setEnabled(false);
                     silabos.getBtnEditar().setEnabled(false);
@@ -266,24 +269,36 @@ public class ControladorSilaboCRUD {
 
             });
 
-            silabos.getBtnImprimir().addActionListener(new ActionListener(){
+            silabos.getBtnImprimir().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     hacervisible();
                     silabos.getBtnEditar().setEnabled(false);
                     silabos.getBtnEliminar().setEnabled(false);
-                    silabos.getBtnImprimir().setEnabled(false); }
-                
+                    silabos.getBtnImprimir().setEnabled(false);
+                }
+
             }); //imprimirPrograma()
-                    
+
             //imprimirSilabo()
-            
             silabos.getBTNGENERAR().addActionListener(e -> impresion());
 
             silabos.getBtnEditar().addActionListener(as);
             silabos.getBtnEliminar().addActionListener(d -> eliminarSilabo(id_silabo));
             bibliografia.getBtnAtras().addActionListener(b -> bibliografia.setVisible(false));
             bibliografia.getBtnAtras().addActionListener(b -> gestion.setVisible(true));
+
+            bibliografia.getLstBibliografiaBase().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    if (bibliografia.getLstBibliografiaBase().getSelectedIndex() != -1 && bibliografia.getLstBibliografiaBase().getModel().getSize() > 0) {
+                        bibliografia.getBtnQuitarBibliografiaBase().setEnabled(true);
+                    }
+
+                }
+
+            });
 
             silabos.getTxtBuscar().addKeyListener(new KeyAdapter() {
                 @Override
@@ -318,7 +333,7 @@ public class ControladorSilaboCRUD {
             public void mouseClicked(MouseEvent me) {
                 agregarUnidad();
                 JOptionPane.showMessageDialog(null, "Nueva unidad agregada");
-
+                gestion.getCmbUnidad().setSelectedIndex(gestion.getCmbUnidad().getItemCount() - 1);
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -416,6 +431,50 @@ public class ControladorSilaboCRUD {
 
         };
 
+        gestion.getTblAsistidaDocente().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                gestion.getBtnQuitarAD().setEnabled(true);
+
+                //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
+            }
+
+        });
+
+        gestion.getTblAprendizajeColaborativo().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                gestion.getBtnQuitarAC().setEnabled(true);
+
+                //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
+            }
+
+        });
+
+        gestion.getTblPractica().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                gestion.getBtnQuitarP().setEnabled(true);
+
+                //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
+            }
+
+        });
+
+        gestion.getTblAutonoma().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                gestion.getBtnQuitarA().setEnabled(true);
+
+                //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
+            }
+
+        });
+
         gestion.getLstEstrategiasPredeterminadas().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
 
@@ -464,7 +523,7 @@ public class ControladorSilaboCRUD {
                 PlaceHolder holder = new PlaceHolder(gestion.getTxtNuevaEstrategia(), "Ingrese la nueva estrategia...");
                 gestion.getTxtNuevaEstrategia().setEnabled(true);
                 gestion.getLblGuardarEstrategia().setEnabled(true);
-
+                gestion.getLstEstrategiasPredeterminadas().requestFocusInWindow();
             }
 
         });
@@ -713,11 +772,16 @@ public class ControladorSilaboCRUD {
                     public void mouseClicked(MouseEvent me
                     ) {
 
-                        System.out.println("entra");
+                        if (!gestion.getTxtInstrumentoAD().getText().isEmpty() || !gestion.getTxtIndicadorAD().getText().isEmpty()) {
+                            System.out.println("entra");
 
-                        String[] infoE = {"Gestión de Docencia", "Asistido por el Docente"};
-                        agregarEvaluacion(infoE, 1);
-                        limpiarEvaluacionesAD();
+                            String[] infoE = {"Gestión de Docencia", "Asistido por el Docente"};
+                            agregarEvaluacion(infoE, 1);
+                            limpiarEvaluacionesAD();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Es neceario que especifique un indicador y un instrumento de evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
+
+                        }
 
                     }
                 }
@@ -742,11 +806,16 @@ public class ControladorSilaboCRUD {
                     @Override
                     public void mouseClicked(MouseEvent me
                     ) {
+                        if (!gestion.getTxtInstrumentoAC().getText().isEmpty() || !gestion.getTxtIndicadorAC().getText().isEmpty()) {
+                            String[] infoE = {"Gestión de Docencia", "Aprendizaje Colaborativo"};
 
-                        String[] infoE = {"Gestión de Docencia", "Aprendizaje Colaborativo"};
+                            agregarEvaluacion(infoE, 2);
+                            limpiarEvaluacionesAC();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Es neceario que especifique un indicador y un instrumento de evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
 
-                        agregarEvaluacion(infoE, 2);
-                        limpiarEvaluacionesAC();
+                        }
+
                     }
                 }
                 );
@@ -771,11 +840,16 @@ public class ControladorSilaboCRUD {
                     public void mouseClicked(MouseEvent me
                     ) {
 
-                        String[] infoE = {"Gestión de la Práctica", "Aprendizaje Colaborativo"};
+                        if (!gestion.getTxtInstrumentoP().getText().isEmpty() || !gestion.getTxtIndicadorP().getText().isEmpty()) {
+                            String[] infoE = {"Gestión de la Práctica", "Aprendizaje Colaborativo"};
 
-                        agregarEvaluacion(infoE, 3);
+                            agregarEvaluacion(infoE, 3);
 
-                        limpiarEvaluacionesP();
+                            limpiarEvaluacionesP();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Es neceario que especifique un indicador y un instrumento de evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
+
+                        }
 
                     }
                 }
@@ -801,10 +875,16 @@ public class ControladorSilaboCRUD {
                     public void mouseClicked(MouseEvent me
                     ) {
 
-                        String[] infoE = {"Gestión de Trabajo Autónomo", "Aprendizaje Colaborativo"};
-                        agregarEvaluacion(infoE, 4);
+                        if (!gestion.getTxtInstrumentoA().getText().isEmpty() || !gestion.getTxtIndicadorA().getText().isEmpty()) {
 
-                        limpiarEvaluacionesAD();
+                            String[] infoE = {"Gestión de Trabajo Autónomo", "Aprendizaje Colaborativo"};
+                            agregarEvaluacion(infoE, 4);
+
+                            limpiarEvaluacionesA();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Es neceario que especifique un indicador y un instrumento de evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
+
+                        }
                     }
                 }
                 );
@@ -842,6 +922,62 @@ public class ControladorSilaboCRUD {
 
         gestion.getBtnSiguiente()
                 .addActionListener(val);
+
+        gestion.getTxrContenidos().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+
+                if (gestion.getTxrContenidos().getText().isEmpty()) {
+                    gestion.getTxrContenidos().setBorder(new LineBorder(Color.red, 1));
+                } else {
+                    gestion.getTxrContenidos().setBorder(null);
+                }
+
+            }
+
+        });
+
+        gestion.getTxrObjetivos().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+
+                if (gestion.getTxrObjetivos().getText().isEmpty()) {
+                    gestion.getTxrObjetivos().setBorder(new LineBorder(Color.red, 1));
+                } else {
+                    gestion.getTxrObjetivos().setBorder(null);
+                }
+
+            }
+
+        });
+
+        gestion.getTxrResultados().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+
+                if (gestion.getTxrResultados().getText().isEmpty()) {
+                    gestion.getTxrResultados().setBorder(new LineBorder(Color.red, 1));
+                } else {
+                    gestion.getTxrResultados().setBorder(null);
+                }
+
+            }
+
+        });
+
+        gestion.getTxtTitulo().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+
+                if (gestion.getTxtTitulo().getText().isEmpty()) {
+                    gestion.getTxtTitulo().setBorder(new LineBorder(Color.red, 1));
+                } else {
+                    gestion.getTxtTitulo().setBorder(null);
+                }
+
+            }
+
+        });
 
         ChangeListener cl = new ChangeListener() {
             @Override
@@ -946,6 +1082,7 @@ public class ControladorSilaboCRUD {
 
                         fila = bibliografia.getTblBiblioteca().rowAtPoint(me.getPoint());
 
+                        bibliografia.getBtnAgregarBibliografiaBase().setEnabled(true);
                         System.out.println(fila);
                         //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
 
@@ -1089,6 +1226,7 @@ public class ControladorSilaboCRUD {
                     ) {
 
                         quitarBiblioBase();
+                        bibliografia.getBtnQuitarBibliografiaBase().setEnabled(false);
 
                     }
 
@@ -1106,13 +1244,11 @@ public class ControladorSilaboCRUD {
                             System.out.println(referenciasSilabo.size());
                             List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo);
 
-                            
-                               referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
+                            referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
 
-                                for (int i = 0; i < old.size(); i++) {
-                                    new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
-                                }
-                            
+                            for (int i = 0; i < old.size(); i++) {
+                                new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
+                            }
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
@@ -1149,7 +1285,40 @@ public class ControladorSilaboCRUD {
                 .addMouseListener(m2);
 
         gestion.getCmbUnidad()
-                .addActionListener(e -> mostrarUnidades(gestion.getCmbUnidad().getSelectedIndex()));
+                .addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+
+                         mostrarUnidades(gestion.getCmbUnidad().getSelectedIndex());
+                        
+                        if (gestion.getTxrContenidos().getText().isEmpty()) {
+                            gestion.getTxrContenidos().setBorder(new LineBorder(Color.red, 1));
+                        } else {
+                            gestion.getTxrContenidos().setBorder(null);
+                        }
+
+                        if (gestion.getTxrObjetivos().getText().isEmpty()) {
+                            gestion.getTxrObjetivos().setBorder(new LineBorder(Color.red, 1));
+                        } else {
+                            gestion.getTxrObjetivos().setBorder(null);
+                        }
+
+                        if (gestion.getTxrResultados().getText().isEmpty()) {
+                            gestion.getTxrResultados().setBorder(new LineBorder(Color.red, 1));
+                        } else {
+                            gestion.getTxrResultados().setBorder(null);
+                        }
+
+                        if (gestion.getTxtTitulo().getText().isEmpty()) {
+                            gestion.getTxtTitulo().setBorder(new LineBorder(Color.red, 1));
+                        } else {
+                            gestion.getTxtTitulo().setBorder(new JTextField().getBorder());
+                        }
+
+                       
+                    }
+                });
 
         gestion.getCmbUnidad()
                 .addActionListener(w -> validar());
@@ -1998,7 +2167,7 @@ public class ControladorSilaboCRUD {
     }
 
     public void eliminarSilabo(int aguja) {
-        
+
         silabos.getBtnEliminar().setEnabled(false);
         silabos.getBtnEditar().setEnabled(false);
         silabos.getBtnImprimir().setEnabled(false);
@@ -2026,7 +2195,7 @@ public class ControladorSilaboCRUD {
 
         gestion.getTxtInstrumentoAD().setText(null);
         gestion.getTxtIndicadorAD().setText(null);
-        gestion.getSpnValoracionAD().setValue(0);
+        gestion.getSpnValoracionAD().setValue(1);
 
     }
 
@@ -2034,7 +2203,7 @@ public class ControladorSilaboCRUD {
 
         gestion.getTxtInstrumentoAC().setText(null);
         gestion.getTxtIndicadorAC().setText(null);
-        gestion.getSpnValoracionAC().setValue(0);
+        gestion.getSpnValoracionAC().setValue(1);
 
     }
 
@@ -2042,7 +2211,7 @@ public class ControladorSilaboCRUD {
 
         gestion.getTxtInstrumentoP().setText(null);
         gestion.getTxtIndicadorP().setText(null);
-        gestion.getSpnValoracionP().setValue(0);
+        gestion.getSpnValoracionP().setValue(1);
 
     }
 
@@ -2050,7 +2219,7 @@ public class ControladorSilaboCRUD {
 
         gestion.getTxtInstrumentoA().setText(null);
         gestion.getTxtIndicadorA().setText(null);
-        gestion.getSpnValoracionA().setValue(0);
+        gestion.getSpnValoracionA().setValue(1);
 
     }
 

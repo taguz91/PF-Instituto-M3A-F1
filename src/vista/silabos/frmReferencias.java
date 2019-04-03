@@ -315,8 +315,10 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         });
 
         btnAgregarBibliografiaBase.setText("Agregar >>");
+        btnAgregarBibliografiaBase.setEnabled(false);
 
         btnQuitarBibliografiaBase.setText("<< Quitar");
+        btnQuitarBibliografiaBase.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
