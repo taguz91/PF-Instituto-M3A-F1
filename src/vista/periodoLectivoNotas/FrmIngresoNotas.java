@@ -2,6 +2,7 @@ package vista.periodoLectivoNotas;
 
 import com.toedter.calendar.JDateChooser;
 import datechooser.beans.DateChooserCombo;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -16,6 +17,9 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
      */
     public FrmIngresoNotas() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {

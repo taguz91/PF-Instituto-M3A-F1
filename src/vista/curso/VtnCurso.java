@@ -1,5 +1,6 @@
 package vista.curso;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,6 +19,9 @@ public class VtnCurso extends javax.swing.JInternalFrame {
      */
     public VtnCurso() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnListaAlumnos() {
