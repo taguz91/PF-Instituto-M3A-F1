@@ -5,6 +5,7 @@
  */
 package vista.notas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -21,6 +22,9 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
      */
     public VtnActivarNotas() {
         initComponents();
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {

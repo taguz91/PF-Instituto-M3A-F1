@@ -58,6 +58,7 @@ public class dbSilabo extends Silabo {
     public boolean EliminarSilabo(int id) {
         String sql = "DELETE FROM public.\"Silabo\"\n"
                 + "	WHERE id_silabo=" + id + "";
+        System.out.println("<-------------------------------ancla");
         if (con.noQuery(sql) == null) {
             return true;
         } else {
@@ -107,8 +108,8 @@ public class dbSilabo extends Silabo {
     public boolean insertarDatos() {
 
         String nSql = "INSERT INTO public.\"Silabo\"(\n"
-                + "	 id_materia, estado_silabo)\n"
-                + "	VALUES ( " + this.getIdMateria().getId() + ",'" + this.getEstadoSilabo() + "')";
+                + "	 id_materia, estado_silabo,id_prd_lectivo)\n"
+                + "	VALUES ( " + this.getIdMateria().getId() + ",'" + this.getEstadoSilabo() +"',"+3+ ")";
 
         if (con.noQuery(nSql) == null) {
             return true;

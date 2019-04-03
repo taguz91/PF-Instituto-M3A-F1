@@ -8,13 +8,15 @@
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct c.id_docente,p.persona_primer_apellido,p.persona_primer_nombre from "Cursos" c, "Docentes" d, "Personas" p
+		<![CDATA[select distinct c.id_docente,p.persona_primer_apellido,p.persona_segundo_apellido,p.persona_primer_nombre,p.persona_segundo_nombre from "Cursos" c, "Docentes" d, "Personas" p
 where c.id_docente=d.id_docente 
 and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 	</queryString>
 	<field name="id_docente" class="java.lang.Integer"/>
 	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
 	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,7 +34,7 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="58" y="0" width="184" height="20" uuid="7ad991b0-8fc0-4743-9ddf-fc72072a260a"/>
+				<reportElement x="0" y="0" width="113" height="20" uuid="7ad991b0-8fc0-4743-9ddf-fc72072a260a"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -41,7 +43,7 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="242" y="0" width="189" height="20" uuid="5e45dfd7-f55a-4820-bfbc-cf51fec9f3d4"/>
+				<reportElement x="228" y="0" width="107" height="20" uuid="5e45dfd7-f55a-4820-bfbc-cf51fec9f3d4"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
@@ -65,6 +67,14 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</rectangle>
+			<textField>
+				<reportElement x="119" y="0" width="105" height="20" uuid="a70a7c6a-93f7-4b1e-bc04-d79a605b666c"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="339" y="0" width="92" height="20" uuid="a751b31e-9be7-43c8-8b56-1ef8b7bf73d8"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
