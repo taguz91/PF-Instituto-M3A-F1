@@ -1,12 +1,15 @@
 package modelo.persona;
+import java.awt.Image;
 import java.time.LocalDate;
+import modelo.lugar.LugarBD;
+import modelo.lugar.LugarMD;
 /**
  *
  * @author ana96
  */
 
 public class DocenteMD extends PersonaMD{
-    private String codigo,docenteTipoTiempo, estado;
+    private String codigo,docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente,tipoIdenticacion;
     private int docenteCategoria,idDocente;
     private boolean docenteOtroTrabajo, docenteCapacitador;
     private LocalDate fechaInicioContratacion,fechaFinContratacion;
@@ -14,17 +17,21 @@ public class DocenteMD extends PersonaMD{
     public DocenteMD() {
     }
 
-    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador) {
+    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, String tituloDocente, String abreviaturaDocente, String tipoIdenticacion, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, boolean docenteCapacitador, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
         this.estado = estado;
+        this.tituloDocente = tituloDocente;
+        this.abreviaturaDocente = abreviaturaDocente;
+        this.tipoIdenticacion = tipoIdenticacion;
         this.docenteCategoria = docenteCategoria;
         this.idDocente = idDocente;
         this.docenteOtroTrabajo = docenteOtroTrabajo;
+        this.docenteCapacitador = docenteCapacitador;
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
-        this.docenteCapacitador=docenteCapacitador;
     }
+
 
     public String getCodigo() {
         return codigo;
@@ -96,6 +103,30 @@ public class DocenteMD extends PersonaMD{
 
     public void setDocenteCapacitador(boolean docenteCapacitador) {
         this.docenteCapacitador = docenteCapacitador;
+    }
+
+    public String getTituloDocente() {
+        return tituloDocente;
+    }
+
+    public void setTituloDocente(String tituloDocente) {
+        this.tituloDocente = tituloDocente;
+    }
+
+    public String getAbreviaturaDocente() {
+        return abreviaturaDocente;
+    }
+
+    public void setAbreviaturaDocente(String abreviaturaDocente) {
+        this.abreviaturaDocente = abreviaturaDocente;
+    }
+
+    public String getTipoIdenticacion() {
+        return tipoIdenticacion;
+    }
+
+    public void setTipoIdenticacion(String tipoIdenticacion) {
+        this.tipoIdenticacion = tipoIdenticacion;
     }
         
 }
