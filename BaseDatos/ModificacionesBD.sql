@@ -85,8 +85,13 @@ TABLESPACE pg_default;
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
 
+--Eliminando triggers
+DROP TRIGGER auditoria_silabo_elim ON public."Silabo";
+DROP FUNCTION silabo_elim;
 
+TRUNCATE TABLE public."Silabo" CASCADE;
 
+TRUNCATE TABLE public."EstrategiasAprendizaje" CASCADE;
 --Grupo Diego
 
 ALTER TABLE "Cursos" DROP "curso_permiso_ingreso_nt";
