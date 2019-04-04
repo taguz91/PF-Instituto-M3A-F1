@@ -84,7 +84,7 @@ public class VtnHistorialUserCTR {
                 b = vtnH.getTxtBuscar().getText().trim();
                 if (b.length() > 2) {
                     buscar(b);
-                }else if(b.length() == 0){
+                } else if (b.length() == 0) {
                     mdTbl.setRowCount(0);
                 }
             }
@@ -248,6 +248,33 @@ public class VtnHistorialUserCTR {
             vtnH.getCmbAccion().setSelectedIndex(0);
         }
         System.out.println("Se cargaron acciones");
+    }
+
+    private void cmbCombinados() {
+        if (posUser > 0 && posAcc > 0
+                && posFF == 0 && posFI == 0
+                && posTbl == 0) {
+            historial = his.cargarHistorialUserAccion(usuarios.get(posUser - 1),
+                    acciones.get(posAcc - 1));
+            llenarTbl(historial);
+        } else if (posUser > 0 && posTbl > 0
+                && posFF == 0 && posFI == 0
+                && posAcc == 0) {
+            historial = his.cargarHistorialUserTabla(usuarios.get(posUser - 1),
+                    tablas.get(posTbl - 1));
+            llenarTbl(historial);
+        } else if (posUser > 0 && posFI > 0
+                && posFF == 0 && posTbl == 0
+                && posAcc == 0) {
+            historial = his.cargarHistorialuserFecha(usuarios.get(posUser - 1),
+                    fechaIni.get(posFI - 1));
+            llenarTbl(historial);
+        } else if (posUser > 0 && posFI > 0 && posFF > 0
+                && posTbl == 0 && posAcc == 0) {
+            historial = his.cargarHistorialUserEntresFechas(usuarios.get(posUser - 1),
+                    fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
+            llenarTbl(historial);
+        }
     }
 
     private void llenarTbl(ArrayList<HistorialUsuarioMD> historial) {
