@@ -61,5 +61,16 @@ public class dbReferenciaSilabo extends ReferenciaSilabo {
         }
 
     }
+    
+    public boolean EliminarReferencia(int id, int silabo) {
+        String sql = "DELETE FROM public.\"ReferenciaSilabo\"\n"
+                + "	WHERE id_referencia=" + id + "AND id_silabo ="+silabo;
+        if (con.noQuery(sql) == null) {
+            return true;
+        } else {
+            System.out.println("ERROR");
+            return false;
+        }
+    }
 
 }

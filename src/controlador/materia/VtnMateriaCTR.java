@@ -131,7 +131,7 @@ public class VtnMateriaCTR {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId()); 
-            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt);
+            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin);
             info.iniciar();
         }
     }

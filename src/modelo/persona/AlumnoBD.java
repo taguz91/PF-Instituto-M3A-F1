@@ -123,24 +123,24 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public List<PersonaMD> filtrarPersona(String aguja) {
-        List<PersonaMD> lista = new ArrayList();
+    public PersonaMD filtrarPersona(String aguja) {
+        //List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
-                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true";
+                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
+        PersonaMD m = new PersonaMD();
         try {
             while (rs.next()) {
-                PersonaMD m = new PersonaMD();
                 m.setIdPersona(rs.getInt("id_persona"));
                 m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                lista.add(m);
+                //lista.add(m);
             }
             rs.close();
-            return lista;
+            return m;
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
             return null;

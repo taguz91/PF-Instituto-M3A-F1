@@ -248,6 +248,12 @@ public class VtnAlumnoCTR {
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
+                if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
+                    frmPersona.getCmbTipoId().setSelectedItem("CEDULA");
+                } else {
+                    frmPersona.getCmbTipoId().setSelectedItem("PASAPORTE");
+                }
+                frmPersona.getTxtIdentificacion().setText(persona.getIdentificacion());
                 vtnAlumno.dispose();
                 ctrPrin.cerradoJIF();
 

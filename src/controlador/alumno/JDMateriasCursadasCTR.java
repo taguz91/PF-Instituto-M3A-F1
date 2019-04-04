@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -25,15 +26,18 @@ public class JDMateriasCursadasCTR {
     private final MallaAlumnoBD mallaAlm;
     private final JDMateriasCursadas jd;
     private final String estado;
+    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<MallaAlumnoMD> materiasAlmn;
     DefaultTableModel mdTbl;
 
-    public JDMateriasCursadasCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno, MallaAlumnoBD mallaAlm, String estado) {
+    public JDMateriasCursadasCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno, 
+            MallaAlumnoBD mallaAlm, String estado, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.alumno = alumno;
         this.mallaAlm = mallaAlm;
         this.estado = estado;
+        this.ctrPrin = ctrPrin;
         this.jd = new JDMateriasCursadas(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
         
@@ -59,9 +63,7 @@ public class JDMateriasCursadasCTR {
             }
         });
         
-        eventoJDCerrar(jd);
-        vtnPrin.setEnabled(false);
-        
+        ctrPrin.eventoJDCerrar(jd);
     }
 
     private void cargarMateriasCursadas() {
@@ -90,16 +92,4 @@ public class JDMateriasCursadasCTR {
             jd.getLblNumMatricula().setText(materiasAlmn.get(pos).getMallaNumMatricula() + "");
         }
     }
-    
-        //Se desactivara la ventana al abrir un jdialog
-    private void eventoJDCerrar(JDialog jd) {
-        jd.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                vtnPrin.setEnabled(true);
-            }
-        });
-    }
-
-
 }

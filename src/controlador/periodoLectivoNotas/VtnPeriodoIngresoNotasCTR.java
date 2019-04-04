@@ -99,7 +99,7 @@ public class VtnPeriodoIngresoNotasCTR {
                 public void run() {
                     Effects.setLoadCursor(vista);
 
-                    cargarTabla = true;
+                    cargarTabla = false;
 
                     tablaPeriodoNotas.setRowCount(0);
                     lista
@@ -107,7 +107,9 @@ public class VtnPeriodoIngresoNotasCTR {
                             .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
                     Effects.setDefaultCursor(vista);
 
-                    cargarTabla = false;
+                    cargarTabla = true;
+
+                    vista.getLblResultados().setText(lista.size() + " Resultados");
 
                 }
             };
@@ -153,7 +155,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
         listaTemporal.forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
 
-        vista.getLblResultados().setText(listaTemporal.size() + " Registros");
+        vista.getLblResultados().setText(listaTemporal.size() + " Resultado");
 
     }
 

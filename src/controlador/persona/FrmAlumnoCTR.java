@@ -113,7 +113,7 @@ public class FrmAlumnoCTR {
                     }
                 } else {
                     if (!cedula.equals("")) {
-                        if(modelo.validaciones.Validar.esLetrasYNumeros(cedula) == true){
+                        if (modelo.validaciones.Validar.esLetrasYNumeros(cedula) == true) {
                             buscarCedula();
                         }
                     } else {
@@ -211,7 +211,7 @@ public class FrmAlumnoCTR {
                         e.consume();
                     }
                     habilitarGuardar();
-                } else{
+                } else {
                     String cedula = frmAlumno.getTxt_Cedula().getText();
                     char car = e.getKeyChar();
                     if (modelo.validaciones.Validar.esLetrasYNumeros(car + "") == false) {
@@ -333,8 +333,8 @@ public class FrmAlumnoCTR {
 
                 if (error == false) {
 
-                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-                    if (p.get(0).getIdentificacion() == null) {
+                    PersonaMD p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+                    if (p.getIdentificacion() == null) {
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {
@@ -342,22 +342,28 @@ public class FrmAlumnoCTR {
                             FrmPersona frmPersona = new FrmPersona();
                             FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
                             ctrPers.iniciar();
+                            frmPersona.getTxtIdentificacion().setText(cedula);
+                            if (modelo.validaciones.Validar.esNumeros(cedula) == true) {
+                                frmPersona.getCmbTipoId().setSelectedItem("CEDULA");
+                            } else {
+                                frmPersona.getCmbTipoId().setSelectedItem("PASAPORTE");
+                            }
                             frmAlumno.dispose();
                             ctrPrin.cerradoJIF();
                         }
                         cont = 0;
                     } else {
-                        AlumnoMD alumno = bdAlumno.buscarPersona(p.get(0).getIdPersona());
+                        AlumnoMD alumno = bdAlumno.buscarPersona(p.getIdPersona());
                         Integer idAlumno = alumno.getId_Alumno();
                         Font negrita = new Font("Tahoma", Font.BOLD, 13);
                         frmAlumno.getTxt_Nombre().setFont(negrita);
 //                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre()
 //                                + " " + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
-                        frmAlumno.getTxt_Nombre().setText(p.get(0).getPrimerNombre() + " " + p.get(0).getSegundoNombre() + " "
-                                + p.get(0).getPrimerApellido() + " " + p.get(0).getSegundoApellido());
+                        frmAlumno.getTxt_Nombre().setText(p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
+                                + p.getPrimerApellido() + " " + p.getSegundoApellido());
                         habilitarGuardar();
 //                        if (alumno.getTipo_Colegio() == null) {
-                        if(alumno.getId_Alumno() == 0){
+                        if (alumno.getId_Alumno() == 0) {
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             cont = 0;
@@ -561,9 +567,9 @@ public class FrmAlumnoCTR {
         //El alumno que nos pasamos lo llenamos en el formulario  
         Font negrita = new Font("Tahoma", Font.BOLD, 13);
         frmAlumno.getTxt_Nombre().setFont(negrita);
-        if(modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true){
+        if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
             frmAlumno.getCbx_Identificacion().setSelectedItem("CÉDULA");
-        } else{
+        } else {
             frmAlumno.getCbx_Identificacion().setSelectedItem("PASAPORTE");
         }
         frmAlumno.getTxt_Cedula().setText(persona.getIdentificacion());
@@ -614,12 +620,13 @@ public class FrmAlumnoCTR {
 
     //Se extraen los datos de los componentes insertado y los devuelve en un Objeto
     public AlumnoBD pasarDatos(AlumnoBD persona) {
-        List<PersonaMD> user = new ArrayList();
+        //List<PersonaMD> user = new ArrayList();
+        PersonaMD user = new PersonaMD();
         Integer sectorEco = null;
         user = persona.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
         SectorEconomicoMD sector = new SectorEconomicoMD();
-        persona.setIdPersona(user.get(0).getIdPersona());
-        persona.setIdentificacion(user.get(0).getIdentificacion());
+        persona.setIdPersona(user.getIdPersona());
+        persona.setIdentificacion(user.getIdentificacion());
         if (frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("|SELECCIONE|")
                 || frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("NINGUNO")) {
             sector.setId_SecEconomico(sectorEco);
