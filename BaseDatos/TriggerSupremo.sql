@@ -179,3 +179,21 @@ CREATE TRIGGER pasar_notas_malla
 AFTER UPDATE OF prd_lectivo_estado
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE pasar_notas();
+
+
+--Demostracion 
+
+--Malla de los alumnos que se eliminara 
+SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
+    malla_almn_ciclo, malla_almn_num_matricula,
+    malla_almn_nota1, malla_almn_nota2,
+    malla_almn_nota3, malla_almn_estado, malla_alm_observacion
+    FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
+    WHERE ac.id_carrera = 3
+    AND ma.id_almn_carrera = ac.id_almn_carrera
+    AND malla_almn_estado = 'M';
+
+
+UPDATE public."PeriodoLectivo"
+  SET  prd_lectivo_estado=false
+  WHERE id_prd_lectivo = 2;

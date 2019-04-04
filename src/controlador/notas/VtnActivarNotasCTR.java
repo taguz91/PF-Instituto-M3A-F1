@@ -102,6 +102,19 @@ public class VtnActivarNotasCTR {
     }
 
     //METODOS DE APOYO
+    private void setObj(int fila) {
+        if (fila != -1) {
+
+            modelo = new IngresoNotasBD();
+
+            modelo.setIdIngresoNotas(Integer.parseInt(vista.getTblCursoTipoNotas().getValueAt(fila, 1).toString()));
+
+            modelo.setNotaPrimerInterCiclo(Boolean.parseBoolean(vista.getTblCursoTipoNotas().getValueAt(fila, 7).toString()));
+
+        }
+
+    }
+
     private void cargarTabla() {
 
         if (cargarTabla) {
