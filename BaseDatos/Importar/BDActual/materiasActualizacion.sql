@@ -36,3 +36,36 @@ CREATE TABLE materias(
 Copy public.materias(codigo,carrera,objetivo,descripcion,objetivo_especifico,organizacion_curricular,campo)
 From 'C:\Backups Postgresql\BDActual\materiaDesP1.csv'
 delimiter AS ',' NULL AS '' CSV HEADER;
+
+CREATE OR REPLACE FUNCTION migrar_materias()
+RETURNS VOID AS $migrar_materias$
+DECLARE
+  materia INTEGER := 0;
+  reg RECORD;
+  c_materias CURSOR FOR SELECT codigo, carrera, objetivo, descripcion,
+  objetivo_especifico, organizacion_curricular,
+  campo FROM public.materias;
+BEGIN
+  OPEN c_materias;
+  FETCH c_materias INTO reg;
+  WHILE(FOUND) LOOP
+    SELECT id_materia INTO materia
+    FROM public."Materias"
+    WHERE materia_codigo = reg.codigo AND
+      id_carrera = reg.carrera;
+
+    UPDATE public."Materias"
+    	SET materia_objetivo=reg.objetivo, materia_descripcion=reg.descripcion,
+    		materia_objetivo_especifico=reg.objetivo_especifico,
+    		materia_organizacion_curricular=reg.organizacion_curricular,
+    		materia_campo_formacion=reg.campo
+    	WHERE id_materia = materia;
+
+    RAISE NOTICE 'Materia codigo %', materia;
+    FETCH c_materias INTO reg;
+  END LOOP;
+  RETURN;
+END;
+$migrar_materias$ LANGUAGE plpgsql;
+
+DROP TABLE public.materias;

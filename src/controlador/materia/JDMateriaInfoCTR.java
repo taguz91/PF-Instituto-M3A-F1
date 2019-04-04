@@ -1,5 +1,6 @@
 package controlador.materia;
 
+import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -21,15 +22,17 @@ public class JDMateriaInfoCTR {
     private final ConectarDB conecta;
     private final MateriaRequisitoBD matRe;
     private final MateriaMD m;
+    private final VtnPrincipalCTR ctrPrin;
 
     //Para las tablas 
     DefaultTableModel mdTblPre, mdTblCo;
 
-    public JDMateriaInfoCTR(VtnPrincipal vtnPrin, ConectarDB conecta, MateriaMD m) {
+    public JDMateriaInfoCTR(VtnPrincipal vtnPrin, ConectarDB conecta, MateriaMD m, 
+            VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.conecta = conecta;
         this.m = m;
-
+        this.ctrPrin = ctrPrin;
         this.vtnInfo = new JDMateriaInfo(vtnPrin, false);
         this.matRe = new MateriaRequisitoBD(conecta);
         vtnInfo.setLocationRelativeTo(vtnPrin);
@@ -56,6 +59,8 @@ public class JDMateriaInfoCTR {
         llenarTblCoRequisitos();
         llenarTblPreRequisitos();
         this.vtnInfo.setVisible(true);
+        
+        ctrPrin.eventoJDCerrar(vtnInfo);
     }
 
     private void llenarTblCoRequisitos() {

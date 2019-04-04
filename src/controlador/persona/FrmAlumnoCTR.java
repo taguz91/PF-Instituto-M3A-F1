@@ -333,8 +333,9 @@ public class FrmAlumnoCTR {
 
                 if (error == false) {
 
-                    PersonaMD p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
-                    if (p.getIdentificacion() == null) {
+
+                    List<PersonaMD> p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+                    if (p.isEmpty()) {
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {

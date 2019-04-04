@@ -79,6 +79,53 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
                 + "historial_fecha::date <= TO_DATE('" + fechaFin + "', 'DD/MM/YYYY');";
         return consultarTbl(sql);
     }
+    
+    public ArrayList<HistorialUsuarioMD> cargarHistorialuserFecha(String username,String fecha) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE historial_fecha::date = TO_DATE('" + fecha + "', 'DD/MM/YYYY') AND \n"
+                + "usu_username = '" + username + "' ;";
+        return consultarTbl(sql);
+    }
+    
+    public ArrayList<HistorialUsuarioMD> cargarHistorialUserTabla(String username, String tabla) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE usu_username = '" + username + "' AND \n"
+                + "historial_nombre_tabla = '" + tabla + "';";
+        return consultarTbl(sql);
+    }
+    
+    public ArrayList<HistorialUsuarioMD> cargarHistorialUserAccion(String username, String accion) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE usu_username = '" + username + "' AND \n"
+                + "historial_tipo_accion = '" + accion + "';";
+        return consultarTbl(sql);
+    }
+    
+    public ArrayList<HistorialUsuarioMD> cargarHistorialUserEntresFechas(String username, String fechaIni, String fechaFin) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE historial_fecha::date >= TO_DATE('" + fechaIni + "', 'DD/MM/YYYY') AND\n"
+                + "historial_fecha::date <= TO_DATE('" + fechaFin + "', 'DD/MM/YYYY') AND \n"
+                + "usu_username = '" + username + "' ;";
+        return consultarTbl(sql);
+    }
+    
+    public ArrayList<HistorialUsuarioMD> cargarHistorialUserTablaAccion(String username, String tabla, String accion) {
+        String sql = "SELECT id_historial_user, usu_username, historial_fecha, "
+                + "historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla\n"
+                + "FROM public.\"HistorialUsuarios\"\n"
+                + "WHERE usu_username = '" + username + "' AND \n"
+                + "historial_nombre_tabla = '" + tabla + "' ADN \n"
+                + "historial_tipo_accion = '" + accion + "' ;";
+        return consultarTbl(sql);
+    }
 
     private ArrayList<HistorialUsuarioMD> consultarTbl(String sql) {
         ArrayList<HistorialUsuarioMD> historial = new ArrayList();
