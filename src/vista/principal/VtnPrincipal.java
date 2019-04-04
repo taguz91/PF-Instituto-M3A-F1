@@ -255,6 +255,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtActivarNotas;
     }
 
+    public JLabel getLblIP() {
+        return lblIP;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -285,7 +289,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda = new javax.swing.JButton();
         lblEstado = new javax.swing.JLabel();
         btnConsola = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblIP = new javax.swing.JLabel();
         menuCrud = new javax.swing.JMenuBar();
         mnTipoNotas = new javax.swing.JMenu();
         mnCtPersona = new javax.swing.JMenuItem();
@@ -497,8 +501,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnConsola.setOpaque(true);
         btnConsola.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Console_20px.png"))); // NOI18N
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("35.193.226.187");
+        lblIP.setForeground(new java.awt.Color(255, 255, 255));
+        lblIP.setText("35.193.226.187");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -509,7 +513,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(lblIP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -521,7 +525,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnAyuda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -728,10 +732,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblIP;
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenuItem mnCtActivarNotas;
     private javax.swing.JMenuItem mnCtAlumno;
