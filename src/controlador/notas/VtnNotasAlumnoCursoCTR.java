@@ -573,7 +573,7 @@ public class VtnNotasAlumnoCursoCTR {
                     + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                     + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
                     + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\",\n"
+                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * 100)/\"Materias\".materia_total_horas as \"% Faltas\",\n"
                     + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
                     + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
                     + "	\n"
