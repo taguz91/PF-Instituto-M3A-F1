@@ -356,7 +356,7 @@ public class VtnNotasAlumnoCursoCTR {
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
-
+                
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
 
                 estado = "Reprobado";
