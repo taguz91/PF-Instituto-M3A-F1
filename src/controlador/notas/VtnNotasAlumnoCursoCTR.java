@@ -311,7 +311,6 @@ public class VtnNotasAlumnoCursoCTR {
         double notaSupletorio = 0;
         double notaFinal = 0;
         String estado = null;
-
         try {
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
             examenInterCiclo = validarNumero(datos.getValueAt(fila, 5).toString());
@@ -320,9 +319,8 @@ public class VtnNotasAlumnoCursoCTR {
             notaSupletorio = validarNumero(datos.getValueAt(fila, 9).toString());
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
-            notaFinal = notaFinalPrimerParcial;
-            datos.setValueAt(notaFinal, fila, 10);
-
+            notaFinal = notaInterCiclo + notaInterCiclo2 + examenInterCiclo + examenFinal;
+            datos.setValueAt(Math.round(notaFinal), fila, 10);
             if (notaInterCiclo > 30.0) {
                 notaInterCiclo = 30.0;
                 datos.setValueAt(notaInterCiclo, fila, 4);
@@ -340,18 +338,27 @@ public class VtnNotasAlumnoCursoCTR {
                 datos.setValueAt(examenFinal, fila, 9);
 
             } else if (notaFinal > 70 || notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
-
+                if (notaFinal >= 70) {
+                    notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + notaSupletorio;
+                    datos.setValueAt(Math.round(notaFinal), fila, 10);
+                    estado = "Aprobado";
+                    datos.setValueAt(estado, fila, 11);
+                    vista.getTblNotas().updateUI();
+                } else if(notaFinal < 70) {
+                    notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
+                    estado = "Reprobado";
+                    datos.setValueAt(estado, fila, 11);
+                    datos.setValueAt(Math.round(notaFinal), fila, 10);
+                }
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + notaSupletorio;
                 datos.setValueAt(Math.round(notaFinal), fila, 10);
-                isCellEditor(fila, 8);
-
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
 
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
-                isCellEditor(fila, 9);
+
                 estado = "Reprobado";
                 datos.setValueAt(estado, fila, 11);
                 datos.setValueAt(Math.round(notaFinal), fila, 10);
@@ -529,7 +536,7 @@ public class VtnNotasAlumnoCursoCTR {
                     obj.getNota2Parcial(),
                     obj.getNotaExamenFinal(),
                     obj.getNotaExamenSupletorio(),
-                    obj.getNotaFinal(),
+                    Math.round(obj.getNotaFinal()),
                     obj.getEstado(),
                     obj.getNumFalta(),
                     "%"
