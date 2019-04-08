@@ -37,7 +37,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -54,7 +53,6 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
-import modelo.persona.DocenteBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -744,7 +742,7 @@ public class VtnPrincipalCTR {
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
             if (c.equals("estaesunacontra")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta);
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
                 ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
