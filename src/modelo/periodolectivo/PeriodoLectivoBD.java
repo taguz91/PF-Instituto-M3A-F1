@@ -295,8 +295,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
                 + "FROM public.\"PeriodoLectivo\"\n"
-                + "WHERE prd_lectivo_activo = true AND prd_lectivo_estado = false\n"
-                + "ORDER BY prd_lectivo_fecha_inicio;";
+                + "WHERE prd_lectivo_activo = true \n"
+                + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
