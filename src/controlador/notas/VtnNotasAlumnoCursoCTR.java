@@ -370,9 +370,6 @@ public class VtnNotasAlumnoCursoCTR {
         return datos;
     }
 
-    private boolean isCellEditor(int row, int col) {
-        return false;
-    }
 
     private AlumnoCursoBD setObjFromTable(int fila) {
 
@@ -539,7 +536,7 @@ public class VtnNotasAlumnoCursoCTR {
                     Math.round(obj.getNotaFinal()),
                     obj.getEstado(),
                     obj.getNumFalta(),
-                    "%"
+                    (obj.getNumFalta()*100)/obj.getTotalHoras() + "%"
                 });
             } else {
                 listaNotas = null;
