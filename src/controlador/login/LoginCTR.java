@@ -83,7 +83,7 @@ public class LoginCTR {
 
     private void ingresoVeloz(String c) {
         if (c.equalsIgnoreCase("J")) {
-            vista.getTxtUsername().setText("JHONNY");
+            vista.getTxtUsername().setText("JOHNNY");
             vista.getTxtPassword().setText("ROOT");
         } else if (c.equalsIgnoreCase("R")) {
             vista.getTxtUsername().setText("ROOT");
