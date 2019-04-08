@@ -530,8 +530,8 @@ public class VtnPrincipalCTR {
             //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
             //Ocultamos el borde de internal de bienvenida
-            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
-            vtnBienvenida.setBorder(null);
+//            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
+//            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
