@@ -123,7 +123,8 @@ public class FrmAlumnoCarreraCTR {
             almnCarrera.setAlumno(alumnos.get(posAlm));
             almnCarrera.setCarrera(carreras.get(posCar - 1));
             if (almnCarrera.guardar()) {
-                iniciarMallaAlumno(almnCarrera.getAlumno().getId_Alumno(), almnCarrera.getCarrera().getId());
+                //Se cambiara a trigger directo en base de datos 
+                //iniciarMallaAlumno(almnCarrera.getId(), almnCarrera.getCarrera().getId());
             }
         }
     }

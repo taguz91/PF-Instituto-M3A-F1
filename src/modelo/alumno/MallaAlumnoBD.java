@@ -92,6 +92,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "	VALUES (" + idMateria + ", " + idAlumno + ", " + ciclo + ");";
 
         if (conecta.nosql(nsql) == null) {
+            System.out.println(nsql);
             System.out.println("Se guarda malla de un estidiante");
         }
     }
