@@ -32,9 +32,10 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
-                + "'" + getFechaRegistro() + "' );";
+                + " now() );";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Guardamos correctamente el alumno en la carrera");
+            
             return true;
         } else {
             return false;

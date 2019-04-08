@@ -88,11 +88,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     public void iniciarMalla(int idMateria, int idAlumno, int ciclo) {
         //Este inser deberia cambiar
         String nsql = "INSERT INTO public.\"MallaAlumno\"(\n"
-                + "	id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo)\n"
-                + "	VALUES ('" + idMateria + "-" + idAlumno + "' ," + idMateria + ", " + idAlumno + ", " + ciclo + ");";
+                + "	id_materia, id_almn_carrera, malla_almn_ciclo)\n"
+                + "	VALUES (" + idMateria + ", " + idAlumno + ", " + ciclo + ");";
 
         if (conecta.nosql(nsql) == null) {
-            //System.out.println("Se guarda malla de un estidiante");
+            System.out.println("Se guarda malla de un estidiante");
         }
     }
 
