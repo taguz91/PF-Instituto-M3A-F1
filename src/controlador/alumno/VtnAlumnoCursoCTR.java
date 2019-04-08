@@ -133,7 +133,8 @@ public class VtnAlumnoCursoCTR {
 
     private void cargarTblPorCurso() {
         if (posCur > 0) {
-            almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1));
+            almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1), 
+                    periodos.get(posPrd - 1).getId_PerioLectivo());
             llenatTbl(almns);
         }
     }
