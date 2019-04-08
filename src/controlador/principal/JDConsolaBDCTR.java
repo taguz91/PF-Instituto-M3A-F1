@@ -13,12 +13,14 @@ public class JDConsolaBDCTR {
     
     private final JDConsolaBD jd; 
     private final ConectarDB conecta;
+    private final VtnPrincipalCTR ctrPrin; 
     private int cont = 0;
 
-    public JDConsolaBDCTR(VtnPrincipal vtnPrin, ConectarDB conecta) {
+    public JDConsolaBDCTR(VtnPrincipal vtnPrin, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.jd = new JDConsolaBD(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
         jd.setVisible(true);
+        this.ctrPrin = ctrPrin;
         this.conecta = conecta;
     }
     
@@ -29,7 +31,7 @@ public class JDConsolaBDCTR {
         
         jd.getBtnEjecutar().addActionListener(e -> ejecutar());
         
-        jd.setModal(true);
+        ctrPrin.eventoJDCerrar(jd);
     }
     
     private void ejecutar(){
