@@ -1,6 +1,7 @@
 package modelo.alumno;
 
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;
 
 /**
@@ -21,6 +22,10 @@ public class AlumnoCursoMD {
     private double notaFinal;
     private String estado;
     private int numFalta;
+    private MateriaMD materia;
+    private int totalHoras;
+
+    
 
     public AlumnoCursoMD() {
     }
@@ -119,6 +124,15 @@ public class AlumnoCursoMD {
 
     public void setNumFalta(int numFalta) {
         this.numFalta = numFalta;
+    }
+    
+    public int getTotalHoras() {
+        return totalHoras;
+    }
+
+    public void setTotalHoras(int totalHoras) {
+        totalHoras = materia.getTotalHoras();
+        this.totalHoras = totalHoras;
     }
 
     @Override

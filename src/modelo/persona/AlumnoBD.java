@@ -20,10 +20,10 @@ public class AlumnoBD extends AlumnoMD {
 
     public boolean guardarAlumno(SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"
-                + "	 id_persona, id_sec_economico, alumno_codigo,alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
+                + "	 id_persona, id_sec_economico, alumno_codigo, alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
                 + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
                 + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
-                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', '" + getNivel_Academico() + "', " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";

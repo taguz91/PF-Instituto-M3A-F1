@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
@@ -123,18 +124,12 @@ public class FrmAlumnoCarreraCTR {
             almnCarrera.setAlumno(alumnos.get(posAlm));
             almnCarrera.setCarrera(carreras.get(posCar - 1));
             if (almnCarrera.guardar()) {
-                iniciarMallaAlumno(almnCarrera.getAlumno().getId_Alumno(), almnCarrera.getCarrera().getId());
+                JOptionPane.showMessageDialog(vtnPrin, "Se guardo correctamente los campos.");
+                frmAlmCarrera.dispose();
+                ctrPrin.cerradoJIF();
+                ctrPrin.abrirVtnAlumnoCarrera();
             }
         }
-    }
-
-    public void iniciarMallaAlumno(int idAlumno, int idCarrera) {
-        materias = mat.cargarMateriaPorCarrera(idCarrera);
-        System.out.println("Materias que se deben crear " + materias.size());
-
-        materias.forEach((m) -> {
-            malla.iniciarMalla(m.getId(), idAlumno, m.getCiclo());
-        });
     }
 
     public void buscarAlmns(String aguja) {

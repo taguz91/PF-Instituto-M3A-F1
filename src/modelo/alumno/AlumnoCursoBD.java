@@ -124,7 +124,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso) {
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso, int idPrd) {
         String sql = "SELECT DISTINCT c.curso_nombre,  \n"
                 + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_identificacion\n"
@@ -133,7 +133,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "c.curso_nombre = '" + curso + "' AND\n"
-                + "ac.id_curso = c.id_curso;";
+                + "c.id_prd_lectivo = " + idPrd + "  AND\n"
+                + "ac.id_curso = c.id_curso "
+                + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 
@@ -146,7 +148,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "c.id_prd_lectivo = " + idPrd + "  AND\n"
-                + "ac.id_curso = c.id_curso;";
+                + "ac.id_curso = c.id_curso "
+                + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 
