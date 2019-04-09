@@ -51,11 +51,7 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
     public JLabel getLblErrorCodigo() {
         return lblErrorCodigo;
     }
-
-    public JLabel getLblErrorFecha() {
-        return lblErrorFecha;
-    }
-
+    
     public JLabel getLblErrorNombre() {
         return lblErrorNombre;
     }
@@ -85,7 +81,6 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         cmbModalidad = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lblErrorFecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lblErrorNombre = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -108,35 +103,31 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setText("Coordinador:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, 20));
 
         lblErrorCodigo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCodigo.setText("Solo debe ingresar letras.");
-        jPanel1.add(lblErrorCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 170, -1));
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 90, -1));
+        jPanel1.add(lblErrorCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 260, -1));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 90, 25));
 
-        jPanel1.add(cmbModalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 170, -1));
+        jPanel1.add(cmbModalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 170, -1));
 
         jLabel5.setText("Modalidad:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, -1));
 
         jLabel1.setText("Código:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
-
-        lblErrorFecha.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorFecha.setText("Ingrese una fecha válida.");
-        jPanel1.add(lblErrorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
 
         jLabel3.setText("Fecha inicio:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         lblErrorNombre.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorNombre.setText("Solo debe ingresar letras.");
-        jPanel1.add(lblErrorNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 268, -1));
+        jPanel1.add(lblErrorNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 268, -1));
 
         jLabel7.setText("Nombre:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 31, 420, -1));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 31, 420, 25));
 
         tblDocentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -148,25 +139,25 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblDocentes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 420, 90));
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 310, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 420, 90));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 270, 25));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 30, -1));
-        jPanel1.add(jdFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 120, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 30, -1));
+        jPanel1.add(jdFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 120, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 260));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 290));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGuardar.setText("Guardar");
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 80, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 100, -1));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 440, 10));
 
         btnGuardarContinuar.setText("Guardar y continuar");
-        jPanel2.add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
+        jPanel2.add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 440, 50));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 450, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -188,7 +179,6 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private com.toedter.calendar.JDateChooser jdFechaInicio;
     private javax.swing.JLabel lblErrorCodigo;
-    private javax.swing.JLabel lblErrorFecha;
     private javax.swing.JLabel lblErrorNombre;
     private javax.swing.JTable tblDocentes;
     private javax.swing.JTextField txtBuscar;
