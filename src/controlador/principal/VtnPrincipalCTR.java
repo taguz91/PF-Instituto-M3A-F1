@@ -764,19 +764,33 @@ public class VtnPrincipalCTR {
             }
         }
     }
-    
+    /**
+     * Retornamos el icono del sistema
+     * @return icono ImageIcon
+     */
     public ImageIcon getIcono() {
         return icono;
     }
-    
+    /**
+     * Retornamos la imagen del icono. 
+     * @return ista Image 
+     */
     public Image getIsta() {
         return ista;
     }
     
+    /**
+     * Cambiamos el icono de un JInternalFrame. 
+     * @param jif JInternalFrame
+     */
     public void setIconJIFrame(JInternalFrame jif) {
         jif.setFrameIcon(icono);
     }
     
+    /**
+     * Se cambia el icono de un JDialog 
+     * @param jd JDialog
+     */
     public void setIconJDialog(JDialog jd) {
         jd.setIconImage(ista);
     }
@@ -789,7 +803,11 @@ public class VtnPrincipalCTR {
         
     }
 
-    //Para entrar en consola de unas
+    /**
+     * Iniciamos una ventana, con acceso directo a comandos
+     * NSQL para la base de datos. Proposito es realizar cambios
+     * importantes si no se tiene acceso a la base de datos. 
+     */
     private void iniciarConsola() {
         JPasswordField pass = new JPasswordField();
         int o = JOptionPane.showConfirmDialog(vtnPrin, pass, "Ingrese su contraseña",
