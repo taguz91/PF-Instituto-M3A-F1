@@ -71,7 +71,15 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MateriaRequisitoMD> requisitos;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
-
+    
+    /**
+     * Constructor del sistema. 
+     * Esta nos sirve para matricular un estudiante en una carrera. 
+     * @param vtnPrin VtnPrincipal: Vista principal del sistema. 
+     * @param frmAlmCurso FrmAlumnoCurso: 
+     * @param conecta ConectarBD: Nos ayuda a realizar consultas en la base de datos. 
+     * @param ctrPrin VtnPrincipalCTR: Controlador de ventana principal.
+     */
     public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCurso = frmAlmCurso;
@@ -93,7 +101,13 @@ public class FrmAlumnoCursoCTR {
         vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
         frmAlmCurso.show();
     }
-
+    
+    /**
+     * Inicia dependencias de la ventana. 
+     * Carga  combos. 
+     * Da formato a las tablas  
+     * Eventos de mouse. 
+     */
     public void iniciar() {
         //Cargamos el combo con los periodos 
         cargarCmbPrdLectivo();
@@ -161,7 +175,10 @@ public class FrmAlumnoCursoCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Alumno por curso");
     }
-
+    
+    /**
+     * Inicia la validaciones de la ventana. 
+     */
     private void inicarValidaciones() {
         frmAlmCurso.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCurso.getTxtBuscar(),
                 frmAlmCurso.getLblErrorBuscar(), frmAlmCurso.getBtnBuscar()));
@@ -169,7 +186,13 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getCmbPrdLectivo().addActionListener(new CmbValidar(frmAlmCurso.getCmbPrdLectivo(),
                 frmAlmCurso.getLblErrorPrdLectivo()));
     }
-
+    
+    /**
+     * Evento al dar click en guardar.
+     * Comprueba que todo el formulario este ingresado correctamente. 
+     * Si el formulario esta ingresado correctamente se inserta en la base
+     * de datos.
+     */
     private void guardar() {
         boolean guardar = true;
         if (cursosSelec.isEmpty()) {
@@ -211,19 +234,32 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
     }
-
+    
+    /**
+     * Ocultamos los errores en los formularios.
+     */
     private void ocultarErrores() {
         frmAlmCurso.getLblErrorBuscar().setVisible(false);
         frmAlmCurso.getLblErrorPrdLectivo().setVisible(false);
         frmAlmCurso.getBtnReprobadas().setVisible(false);
     }
-
+    
+    /**
+     * Estado de los buscadores comienzan en falso. 
+     * Inavilita el txt, el btn de buscar y el btn de
+     * materias cursadas.     
+     * @param estado 
+     */
     private void buscadoresEstado(boolean estado) {
         frmAlmCurso.getTxtBuscar().setEnabled(estado);
         frmAlmCurso.getBtnBuscar().setEnabled(estado);
         frmAlmCurso.getBtnMtCursadas().setEnabled(estado);
     }
-
+    
+    /**
+     * Consulta en base de datos todos los periodos activos, 
+     * para cargarlos en el combo de periodos.
+     */
     private void cargarCmbPrdLectivo() {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
@@ -235,6 +271,9 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
+    /**
+     * Al hacer click en un periodo se activan los buscadores.
+     */
     private void clickPrdLectivo() {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0) {
@@ -243,7 +282,12 @@ public class FrmAlumnoCursoCTR {
             buscadoresEstado(false);
         }
     }
-
+    
+    /**
+     * Se buscan los alumnos por cedula o nombre especificamente de una
+     * carrera, la carrera se obtiene del periodo previamente seleccionado.
+     * @param aguja 
+     */
     private void buscarAlumnos(String aguja) {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0 && Validar.esLetrasYNumeros(aguja)) {
@@ -253,8 +297,16 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
-    /*
-    *Esto se ejecutara al seleccionar un alumno 
+    /**
+     * Al seleccionar un alumno se realizan muchos procesos. 
+     * 1. Buscamos todas las materias en las que se encuentra matriculado. 
+     * 2. Si encuentra materias en las que esta matriculado se muestra una 
+     *    ventana con diferentes opciones: 
+     *      2.1 Ingresar otro alumno: Borra la tabla y los buscadores. 
+     *      2.2 Ingresar en otro curso: Sigue todo el proceso de matricula. 
+     *      2.3 Ver materias: Se abre una ventana en la que listan todas las materias que esta matriculado. 
+     *      2.4 Cancelar: Unicamente cierra la ventana.
+     * 3. Si no encuentra materias en las que esta matriculada se clasifican, los combos para cargar sus materias.
      */
     private void clickTblAlumnos() {
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
@@ -294,6 +346,18 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
+    /**
+     * En este metodo clasificamos todas las materias que se mostraran en el listado
+     * donde se pueden matricular.
+     * 1. Se buscan todas las materias que curso un alumno. Y se filtra 
+     *    el ultimo ciclo que curso el estudiante.
+     * 2. Se buscan las materias  que reprobo el estudiante. Y se cargan 
+     *    el ciclo menor en el que reprobo una materia.
+     * 3. De igual manera se filtran, las materias en las que esta matriculado, 
+     *    para borrarlas de la tabla.
+     * @param posAlmn Int: Poscion en el array del alumno seleccionado. 
+     * @param posPrd Int: Poscion en el array del periodo seleccionado.
+     */ 
     private void clasificarMaterias(int posAlmn, int posPrd) {
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
@@ -362,7 +426,7 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
         frmAlmCurso.getCmbCurso().removeAllItems();
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
