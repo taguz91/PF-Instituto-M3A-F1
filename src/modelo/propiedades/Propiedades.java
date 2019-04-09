@@ -36,7 +36,7 @@ public class Propiedades {
         archivo = new File(PATH);
     }
 
-    public static void setDefault() {
+    private static void setDefault() {
 
         config.setProperty("IP_ADRESS", "jdbc:postgresql://35.193.226.187:5432/BDinsta");
 

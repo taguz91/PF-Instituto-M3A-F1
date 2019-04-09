@@ -83,25 +83,25 @@ public class LoginCTR {
 
     private void ingresoVeloz(String c) {
         if (c.equalsIgnoreCase("J")) {
-            vista.getTxtUsername().setText("JHONNY");
+            vista.getTxtUsername().setText("JOHNNY");
             vista.getTxtPassword().setText("ROOT");
         } else if (c.equalsIgnoreCase("R")) {
             vista.getTxtUsername().setText("ROOT");
             vista.getTxtPassword().setText("ROOT");
-        } else if(c.equalsIgnoreCase("O")){
-            vista.getTxtUsername().setText("JOHNNY");
-            vista.getTxtPassword().setText("ROOT");
+        } else if(c.equalsIgnoreCase("P")){
+            vista.getTxtUsername().setText("postgres");
+            vista.getTxtPassword().setText("Holapostgres");
         }
     }
 
     //Metodos de Apoyo
     private void Login() {
-
-        modelo.setUsername(vista.getTxtUsername().getText());
-        modelo.setPassword(vista.getTxtPassword().getText());
-
+        
         USERNAME = vista.getTxtUsername().getText();
         PASSWORD = vista.getTxtPassword().getText();
+        
+        modelo.setUsername(vista.getTxtUsername().getText());
+        modelo.setPassword(vista.getTxtPassword().getText());
 
         try {
             List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
