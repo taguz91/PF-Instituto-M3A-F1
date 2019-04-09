@@ -302,7 +302,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
         int fila = getSelectedRow();
-        int Faltas = 0;
+        double Faltas = 0;
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
         double notaFinalPrimerParcial = 0;
@@ -312,7 +312,7 @@ public class VtnNotasAlumnoCursoCTR {
         double notaFinal = 0;
         String estado = null;
         try {
-            Faltas = (int) datos.getValueAt(fila, 13);
+            Faltas = validarNumero(datos.getValueAt(fila, 13).toString());
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
             examenInterCiclo = validarNumero(datos.getValueAt(fila, 5).toString());
             notaInterCiclo2 = validarNumero(datos.getValueAt(fila, 7).toString());
