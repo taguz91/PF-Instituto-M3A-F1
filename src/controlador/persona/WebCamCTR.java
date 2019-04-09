@@ -2,6 +2,9 @@ package controlador.persona;
 
 import com.github.sarxos.webcam.WebcamShutdownHook;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,6 +30,7 @@ public class WebCamCTR {
     private InputStream is;
     private FileInputStream fis;
     private Image foto = null;
+    private boolean camaraActiva = false; 
 
     public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipal vtnPrin) {
         this.frmPersona = frmPersona;
@@ -37,14 +41,37 @@ public class WebCamCTR {
     }
 
     public void iniciarCamara() {
-        vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
+        //vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
+        vtnWebCam.getBtnCapturarFoto().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                //Consulto los mouse listeners de el panel y le paso el evento
+                for(MouseListener ml: vtnWebCam.getPanelCam().getMouseListeners()){
+                    ml.mouseClicked(e);
+                }
+            }
+        });
+        
         vtnWebCam.getBtnGuardarFoto().addActionListener(e -> guardarFoto());
         vtnWebCam.getBtnCancelar().addActionListener(e -> cancelarFoto());
-
+        
+        //Evento de cama guardado  
+        vtnWebCam.getPanelCam().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                if (!camaraActiva) {
+                    camaraActiva = true;
+                }else{
+                    capturarFoto(); 
+                    camaraActiva = false;
+                }
+            }
+        }); 
+        
     }
-
+    
     public void capturarFoto() {
-        //System.out.println("Se dio click en capturar foto");
+        System.out.println("Se dio click en capturar foto");
         try {
             byte[] imagen = vtnWebCam.getPanelCam().getBytes();
             if (imagen != null) {
@@ -95,6 +122,9 @@ public class WebCamCTR {
         vtnWebCam.dispose();
         System.out.println("Se dio click en cancelar");
         //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
+    }
+    
+    private void clickCamara(){
         
     }
 
