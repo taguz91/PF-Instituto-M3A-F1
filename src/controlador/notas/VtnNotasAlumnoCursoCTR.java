@@ -519,7 +519,8 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void agregarFilas() {
-        tablaNotas.setRowCount(0);
+        try {
+             tablaNotas.setRowCount(0);
         for (AlumnoCursoBD obj : listaNotas) {
             if (vista.isVisible()) {
                 tablaNotas.addRow(new Object[]{
@@ -536,15 +537,22 @@ public class VtnNotasAlumnoCursoCTR {
                     Math.round(obj.getNotaFinal()),
                     obj.getEstado(),
                     obj.getNumFalta(),
-                    (obj.getNumFalta()*100)/obj.getTotalHoras() + "%"
+                    obj.getTotalHoras() +"%"
+                       
                 });
+           
             } else {
                 listaNotas = null;
                 listaPersonasDocentes = null;
+                   System.out.println(obj.getNumFalta()+"");
                 System.gc();
                 break;
             }
         }
+        } catch (Exception e) {
+          
+        }
+       
     }
 
     private void generarReporteCompleto() {

@@ -22,7 +22,6 @@ public class AlumnoCursoMD {
     private double notaFinal;
     private String estado;
     private int numFalta;
-    private MateriaMD materia;
     private int totalHoras;
 
     
@@ -131,7 +130,6 @@ public class AlumnoCursoMD {
     }
 
     public void setTotalHoras(int totalHoras) {
-        totalHoras = materia.getTotalHoras();
         this.totalHoras = totalHoras;
     }
 
