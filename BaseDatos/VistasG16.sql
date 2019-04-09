@@ -32,6 +32,37 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
+CREATE OR REPLACE FUNCTION actualizar_vista_usuarios_persona()
+RETURNS TRIGGER AS $actualizar_vista_usuarios_persona$
+BEGIN
+ REFRESH MATERIALIZED VIEW "Usuarios_Persona";
+ RETURN NEW;
+END;
+$actualizar_vista_usuarios_persona$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER actualizar_on_personas
+AFTER INSERT OR UPDATE
+ON public."Personas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vista_usuarios_persona();
+ 
+ CREATE TRIGGER actualizar_on_usuarios
+AFTER INSERT OR UPDATE
+ON public."Usuarios" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vista_usuarios_persona();
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 /*
 
   ALUMNO CURSO
@@ -89,6 +120,23 @@ CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree 
   "id_persona" "pg_catalog"."int4_ops" ASC NULLS LAST,
   "alumno_codigo" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
+
+CREATE OR REPLACE FUNCTION actualizar_vista_AlumnoCurso()
+RETURNS TRIGGER AS $actualizar_vista_AlumnoCurso$
+BEGIN
+ REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
+ RETURN NEW;
+END;
+$actualizar_vista_AlumnoCurso$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER actualizar_vistas_AlumnoCurso
+AFTER INSERT OR UPDATE
+ON public."AlumnoCurso" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vista_AlumnoCurso();
+
+
+
 
 
 
