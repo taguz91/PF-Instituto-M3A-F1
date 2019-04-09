@@ -57,10 +57,25 @@ SELECT "AlumnoCurso".id_almn_curso,
     "Personas".persona_primer_nombre,
     "Personas".persona_segundo_nombre,
     "Personas".id_persona,
-    "Alumnos".alumno_codigo
-   FROM (("AlumnoCurso"
+    "Alumnos".alumno_codigo,
+    "AlumnoCurso".almn_curso_fecha_registro,
+    "Cursos".id_materia,
+    "Cursos".id_prd_lectivo,
+    "Cursos".id_docente,
+    "Cursos".id_jornada,
+    "Cursos".curso_nombre,
+    "Cursos".curso_capacidad,
+    "Cursos".curso_ciclo,
+    "Cursos".curso_paralelo,
+    "PeriodoLectivo".id_carrera,
+    "PeriodoLectivo".prd_lectivo_nombre,
+    "PeriodoLectivo".prd_lectivo_estado,
+    "PeriodoLectivo".prd_lectivo_activo
+   FROM (((("AlumnoCurso"
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
-     JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
+     JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)))
+     JOIN "Cursos" ON (("AlumnoCurso".id_curso = "Cursos".id_curso)))
+     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)));
 
 ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
@@ -74,6 +89,9 @@ CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree 
   "id_persona" "pg_catalog"."int4_ops" ASC NULLS LAST,
   "alumno_codigo" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
+
+
+
 
 /*
   PERMISOS DE IMGRESO DE NOTAS EN UN CURSO
