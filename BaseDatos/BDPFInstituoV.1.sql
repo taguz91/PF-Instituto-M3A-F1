@@ -462,7 +462,8 @@ CREATE TABLE "Silabo" (
 	id_silabo serial NOT NULL,
 	id_materia integer NOT NULL,
   id_prd_lectivo integer NOT NULL,
-  estado_silabo character varying (50) NOT NULL,
+  --estado_silabo character varying (50) NOT NULL,
+	estado_silabo integer NOT NULL,
 
 	PRIMARY KEY(id_silabo),
 
