@@ -302,7 +302,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     private TableModel calcularNotaFinal(TableModel datos) {
         int fila = getSelectedRow();
-
+        int Faltas = 0;
         double notaInterCiclo = 0;
         double examenInterCiclo = 0;
         double notaFinalPrimerParcial = 0;
@@ -312,6 +312,7 @@ public class VtnNotasAlumnoCursoCTR {
         double notaFinal = 0;
         String estado = null;
         try {
+            Faltas = (int) datos.getValueAt(fila, 13);
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
             examenInterCiclo = validarNumero(datos.getValueAt(fila, 5).toString());
             notaInterCiclo2 = validarNumero(datos.getValueAt(fila, 7).toString());
@@ -337,7 +338,7 @@ public class VtnNotasAlumnoCursoCTR {
                 examenFinal = 25.0;
                 datos.setValueAt(examenFinal, fila, 9);
 
-            } else if (notaFinal > 70 || notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
+            } else if (notaFinal > 70 || notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0 || Faltas < 25) {
                 if (notaFinal >= 70) {
                     notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + notaSupletorio;
                     datos.setValueAt(Math.round(notaFinal), fila, 10);
@@ -355,7 +356,7 @@ public class VtnNotasAlumnoCursoCTR {
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
-            } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0) {
+            } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0 || Faltas >= 25) {
                 
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
 
@@ -519,7 +520,8 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void agregarFilas() {
-        tablaNotas.setRowCount(0);
+        try {
+             tablaNotas.setRowCount(0);
         for (AlumnoCursoBD obj : listaNotas) {
             if (vista.isVisible()) {
                 tablaNotas.addRow(new Object[]{
@@ -536,15 +538,22 @@ public class VtnNotasAlumnoCursoCTR {
                     Math.round(obj.getNotaFinal()),
                     obj.getEstado(),
                     obj.getNumFalta(),
-                    (obj.getNumFalta()*100)/obj.getTotalHoras() + "%"
+                    obj.getTotalHoras() +"%"
+                       
                 });
+           
             } else {
                 listaNotas = null;
                 listaPersonasDocentes = null;
+                   System.out.println(obj.getNumFalta()+"");
                 System.gc();
                 break;
             }
         }
+        } catch (Exception e) {
+          
+        }
+       
     }
 
     private void generarReporteCompleto() {
