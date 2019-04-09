@@ -101,22 +101,31 @@ public class FrmAlumnoCTR {
                             if (modelo.validaciones.Validar.esCedula(cedula) == false) {
                                 frmAlumno.getLbl_ErrCedula().setText("Ingrese una cédula válida");
                                 frmAlumno.getLbl_ErrCedula().setVisible(true);
+                                reiniciarComponentes(frmAlumno);
+                                cont = 0;
                             } else {
+                                frmAlumno.getLbl_ErrCedula().setVisible(false);
                                 buscarCedula();
                             }
                         } else if (cedula.length() < 10) {
                             frmAlumno.getLbl_ErrCedula().setText("La cédula lleva 10 números");
                             frmAlumno.getLbl_ErrCedula().setVisible(true);
+                            reiniciarComponentes(frmAlumno);
+                            cont = 0;
                         }
                     } else {
+                        frmAlumno.getLbl_ErrCedula().setVisible(false);
                         cont = 0;
                     }
                 } else {
                     if (!cedula.equals("")) {
                         if (modelo.validaciones.Validar.esLetrasYNumeros(cedula) == true) {
+                            frmAlumno.getLbl_ErrCedula().setVisible(false);
                             buscarCedula();
                         }
                     } else {
+                        frmAlumno.getLbl_ErrCedula().setText("El pasaporte contiene solo letras y números");
+                        frmAlumno.getLbl_ErrCedula().setVisible(true);
                         cont = 0;
                     }
                 }
@@ -362,7 +371,6 @@ public class FrmAlumnoCTR {
                         frmAlumno.getTxt_Nombre().setText(p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                                 + p.getPrimerApellido() + " " + p.getSegundoApellido());
                         habilitarGuardar();
-//                        if (alumno.getTipo_Colegio() == null) {
                         if (alumno.getId_Alumno() == 0) {
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
@@ -397,7 +405,6 @@ public class FrmAlumnoCTR {
                         }
                     }
                 } else {
-                    //JOptionPane.showMessageDialog(null, "Advertencia!! Revise su Cédula");
                     cont = 0;
                 }
             } else {
@@ -481,6 +488,24 @@ public class FrmAlumnoCTR {
 
     //La visibilidad de los errores permanecen ocultos
     public void iniciarComponentes() {
+        frmAlumno.getCbx_Identificacion().setToolTipText("Seleccione un Tipo de Identificación");
+        frmAlumno.getTxt_Cedula().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
+        frmAlumno.getTxt_Nombre().setToolTipText("El nombre se filtrará automáticamente");
+        frmAlumno.getCmBx_TipoColegio().setToolTipText("Seleccione el Tipo de la Institución a la que cursó");
+        frmAlumno.getCmBx_TipoBachillerato().setToolTipText("Seleccione el Tipo de Bachillerato que cursó");
+        frmAlumno.getCmBx_NvAcademico().setToolTipText("Seleccione hasta que Nivel Académico alcanzó");
+        frmAlumno.getTxt_TlSuperior().setToolTipText("Ingrese el Título de Bachiller");
+        frmAlumno.getTxt_Ocupacion().setToolTipText("Ingrese si tiene una Ocupación");
+        frmAlumno.getSpnr_Anio().setToolTipText("Ingrese el Año en el consiguió el Título de Bachiller");
+        frmAlumno.getCmBx_SecEconomico().setToolTipText("Seleccione un Sector si trabaja, sino seleccione \"Ninguno\"");
+        frmAlumno.getCmBx_ForPadre().setToolTipText("Seleccione el Nivel de Formación del Padre");
+        frmAlumno.getCmBx_ForMadre().setToolTipText("Seleccione el Nivel de Formación de la Madre");
+        frmAlumno.getTxt_NomContacto().setToolTipText("Ingrese el Nombre de un Contacto confiable y a disposición");
+        frmAlumno.getCmBx_Parentesco().setToolTipText("Seleccione el Parentesco con respecto al usuario ingresado");
+        frmAlumno.getTxt_ConEmergency().setToolTipText("Ingrese el Número telefónico del Contacto");
+        frmAlumno.getBtn_Guardar().setToolTipText("Se habilitará después que los campos con \"*\" esten llenos");
+        frmAlumno.getBtn_Buscar().setToolTipText("Se abrirá una Ventana con todos los Estudiantes");
+        
         frmAlumno.getLbl_ErrCedula().setVisible(false);
         frmAlumno.getLbl_ErrTipColegio().setVisible(false);
         frmAlumno.getLbl_ErrTipBachillerato().setVisible(false);
@@ -599,7 +624,7 @@ public class FrmAlumnoCTR {
 
     //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
-        frmAlumno.getTxt_Cedula().setText("");
+        //frmAlumno.getTxt_Cedula().setText("");
         frmAlumno.getTxt_Nombre().setText("");
         frmAlumno.getCmBx_TipoColegio().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_TipoBachillerato().setSelectedItem("|SELECCIONE|");
