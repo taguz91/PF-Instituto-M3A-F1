@@ -364,13 +364,15 @@ public class FrmAlumnoCursoCTR {
         cicloCursado = 0;
         //Si no esta matriculado miramos la materias que a cursado 
         materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
-        if (mallaAlm != null) {
+        if (materiasAlmn != null) {
             for (int i = 0; i < materiasAlmn.size(); i++) {
+                System.out.println("Ciclo: "+materiasAlmn.get(i).getMallaCiclo());
                 if (materiasAlmn.get(i).getMallaCiclo() > cicloCursado) {
                     cicloCursado = materiasAlmn.get(i).getMallaCiclo();
                 }
             }
         }
+        System.out.println("--");
         //Se leasigna el mismo valor si es que no tiene un ciclo reprobado
         cicloReprobado = cicloCursado;
         //Esto lo usamos para saber desde que ciclo cargar el combo de cursos
@@ -395,6 +397,7 @@ public class FrmAlumnoCursoCTR {
                 }
             });
         } else {
+            cicloReprobado++;
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
@@ -449,6 +452,8 @@ public class FrmAlumnoCursoCTR {
      * @param cicloReprobado Int: Ciclo minimo en el que reprobo.
      */
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
+        System.out.println("Ciclo cursado: "+cicloCursado);
+        System.out.println("Ciclo reprobado: "+cicloReprobado);
         frmAlmCurso.getCmbCurso().removeAllItems();
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
                 cicloCursado);
