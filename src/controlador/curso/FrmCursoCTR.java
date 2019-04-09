@@ -97,7 +97,7 @@ public class FrmCursoCTR {
     }
 
     private void cargarCmbPrdLectivo() {
-        periodos = prd.cargarPeriodos();
+        periodos = prd.cargarPrdParaCmbFrm();
         if (periodos != null) {
             frmCurso.getCbxPeriodoLectivo().removeAllItems();
             frmCurso.getCbxPeriodoLectivo().addItem("Seleccione");

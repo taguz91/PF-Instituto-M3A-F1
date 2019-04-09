@@ -56,7 +56,15 @@ public class VtnMateriaCTR {
     private ArrayList<CarreraMD> carreras;
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
-
+    
+    /**
+     * Iniciamos las dependencias de base de datos.
+     * @param vtnPrin
+     * @param vtnMateria
+     * @param conecta
+     * @param ctrPrin
+     * @param permisos 
+     */
     public VtnMateriaCTR(VtnPrincipal vtnPrin, VtnMateria vtnMateria,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
@@ -73,7 +81,11 @@ public class VtnMateriaCTR {
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
     }
-
+    
+    /**
+     * Iniciamos dependencias: 
+     * Eventos de botones y formato de la tabla
+     */
     public void iniciar() {
         vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
@@ -100,7 +112,7 @@ public class VtnMateriaCTR {
 
         materias = materia.cargarMaterias();
         cargarTblMaterias();
-        cargarCmbFiltrar();
+        cargarCmbCarreras();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
         
@@ -126,7 +138,11 @@ public class VtnMateriaCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes");
     }
-
+    
+    /**
+     * Informacion de la materia, nos indican sus materias de co y pre
+     * requisitos.
+     */
     private void infoMateria() {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
@@ -135,7 +151,10 @@ public class VtnMateriaCTR {
             info.iniciar();
         }
     }
-
+    
+    /**
+     * BUscador
+     */
     public void buscar() {
         String buscar = vtnMateria.getTxtBuscar().getText().trim();
         if (buscar.length() > 2) {
@@ -151,8 +170,8 @@ public class VtnMateriaCTR {
 
     }
 
-    public void cargarCmbFiltrar() {
-        carreras = carrerBD.cargarCarreras();
+    public void cargarCmbCarreras() {
+        carreras = carrerBD.cargarCarrerasCmb();
         //Cargamos el combo 
         vtnMateria.getCmbCarreras().removeAllItems();
         vtnMateria.getCmbCarreras().addItem("Seleccione una carrera");

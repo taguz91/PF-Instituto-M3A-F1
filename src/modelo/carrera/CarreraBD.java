@@ -99,39 +99,6 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-
-    public CarreraMD buscarParaReferencia(int idCarrera) {
-        CarreraMD carrera = new CarreraMD();
-        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
-                + " carrera_codigo\n"
-                + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
-
-        ResultSet rs = conecta.sql(sql);
-
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    carrera.setId(rs.getInt("id_carrera"));
-                    DocenteMD docen = null;
-                    if (!rs.wasNull()) {
-                        docen = doc.buscarDocenteParaReferencia(rs.getInt("id_docente_coordinador"));
-                    }
-                    carrera.setCoordinador(docen);
-                    carrera.setNombre(rs.getString("carrera_nombre"));
-                    carrera.setCodigo(rs.getString("carrera_codigo"));
-
-                }
-                return carrera;
-            } else {
-                System.out.println("No se pudo consultar una carreras");
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
     
     /**
      * Consultamos todas la carreras activas.
