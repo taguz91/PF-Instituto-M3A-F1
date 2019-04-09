@@ -170,7 +170,7 @@ public class VtnAlumnoCarreraCTR {
      * Cargamos todas las carreras que esten abiertas en la institucion. 
      */
     private void cargarCmbCarreras() {
-        carreras = carr.cargarCarreras();
+        carreras = carr.cargarCarrerasCmb();
         if (carreras != null) {
             vtnAlmCar.getCmbCarrera().removeAllItems();
             vtnAlmCar.getCmbCarrera().addItem("Todos");

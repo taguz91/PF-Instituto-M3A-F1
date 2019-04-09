@@ -261,7 +261,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-
+    
     public PeriodoLectivoMD buscarPerido(int idPeriodo) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"

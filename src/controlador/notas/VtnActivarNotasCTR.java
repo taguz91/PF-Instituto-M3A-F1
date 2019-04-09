@@ -211,27 +211,33 @@ public class VtnActivarNotasCTR {
     }
 
     private TableModel Validaciones(TableModel datos) {
+        int fila = getSelectedRow();
+        
         String aporte1 = null;
         String aporte2 = null;
         String examenInterciclo = null;
         String examenFinal = null;
         String examenSupletorio = null;
 
-        int fila = getSelectedRow();
-        aporte1 = (String) datos.getValueAt(fila, 7);
+        try {
+             aporte1 = (String) datos.getValueAt(fila, 7);
+             examenInterciclo = (String) datos.getValueAt(fila, 8);
 
         if (aporte1.equalsIgnoreCase("true") || aporte1.equalsIgnoreCase("false") || aporte1.equalsIgnoreCase("t") || aporte1.equalsIgnoreCase("f")) {
-            if (aporte1.startsWith("t")) {
+            /*if (aporte1.startsWith("t")) {
                 JOptionPane.showMessageDialog(vista, "Correcto  if 2");
                 datos.setValueAt("true", fila, 7);
             }else if ( aporte1.equalsIgnoreCase("f")){
                  JOptionPane.showMessageDialog(vista, "Correcto if 3");
                 datos.setValueAt("false", fila, 7);
                 
-            }
+            }*/
             JOptionPane.showMessageDialog(vista, "Correcto");
             datos.setValueAt(aporte1.toLowerCase(), fila, 7);
 
+        } else if (examenInterciclo.equalsIgnoreCase("true") || examenInterciclo.equalsIgnoreCase("false") || examenInterciclo.equalsIgnoreCase("t") || examenInterciclo.equalsIgnoreCase("f")) {
+            JOptionPane.showMessageDialog(vista, "Correcto");
+            datos.setValueAt(examenInterciclo.toLowerCase(), fila, 8);
         } else {
             JOptionPane.showMessageDialog(vista, "Datos Incorrectos....\n"
                     + "Ingrese nuevamente");
@@ -240,6 +246,10 @@ public class VtnActivarNotasCTR {
             cargarTabla(listaNotasActivadas);
 
         }
+        } catch (Exception e) {
+             System.out.println(e.getMessage());
+        }
+       
 
         return datos;
 

@@ -225,7 +225,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCmbPrdLectio() {
-        periodos = prd.cargarPeriodos();
+        periodos = prd.cargarPrdParaCmbVtn();
         vtnCurso.getCmbPeriodoLectivo().removeAllItems();
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");

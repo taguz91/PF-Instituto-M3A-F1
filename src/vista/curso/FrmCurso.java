@@ -148,91 +148,91 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(454, 361));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Curso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Curso"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbxPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
-        jPanel1.add(cbxPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, -1));
+        jPanel1.add(cbxPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 440, -1));
 
         lblPeriodoLectivo.setText("Período Lectivo:");
         jPanel1.add(lblPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         lblCiclo.setText("Ciclo:");
-        jPanel1.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel1.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 20));
 
         cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "1", "2", "3", "4", "5", "6" }));
-        jPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        jPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
 
         lblParalelo.setText("Paralelo:");
-        jPanel1.add(lblParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 50, -1));
+        jPanel1.add(lblParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 70, 20));
 
         cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "A", "B", "C", "D", "E", "F" }));
-        jPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
+        jPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
 
         lblJornada.setText("Jornada:");
-        jPanel1.add(lblJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jPanel1.add(lblJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, 20));
 
         lblCapacidad.setText("Capacidad:");
-        jPanel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 70, -1));
-        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 30, -1));
+        jPanel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 90, -1));
+        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 30, -1));
 
         cbxJornada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "MATUTINO", "VESPERTINO", "NOCTURNO" }));
-        jPanel1.add(cbxJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 350, -1));
+        jPanel1.add(cbxJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 370, -1));
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
-        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 386, -1));
+        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 386, -1));
 
         lblErrorJornada.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorJornada.setText("Debe seleccionar una jornada.");
-        jPanel1.add(lblErrorJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 386, -1));
+        jPanel1.add(lblErrorJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 386, -1));
 
         lblErrorCiclo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCiclo.setText("Debe seleccionar un ciclo.");
-        jPanel1.add(lblErrorCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 125, -1));
+        jPanel1.add(lblErrorCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 200, -1));
 
         lblErrorParalelo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorParalelo.setText("Debe seleccionar un paralelo.");
-        jPanel1.add(lblErrorParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 149, -1));
+        jPanel1.add(lblErrorParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 250, -1));
 
         lblErrorCapacidad.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCapacidad.setText("Campo obligatorio.");
-        jPanel1.add(lblErrorCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 92, -1));
+        jPanel1.add(lblErrorCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 150, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 420, 160));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 470, 230));
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Guardar y salir.");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
 
-        pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clase", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+        pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDocete.setText("Docente:");
-        pnlClase.add(lblDocete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, -1));
+        pnlClase.add(lblDocete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 100, -1));
 
         cbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
-        pnlClase.add(cbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 340, -1));
+        pnlClase.add(cbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, -1));
 
         cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
-        pnlClase.add(cbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 340, -1));
+        pnlClase.add(cbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 340, -1));
 
         lblMateria.setText("Materia:");
-        pnlClase.add(lblMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, -1));
+        pnlClase.add(lblMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
 
         lblErrorMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorMateria.setText("Debe seleccionar una materia.");
-        pnlClase.add(lblErrorMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 390, -1));
+        pnlClase.add(lblErrorMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 390, -1));
 
         lblErrorDocente.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorDocente.setText("Debe seleccionar un docente.");
-        pnlClase.add(lblErrorDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 390, -1));
+        pnlClase.add(lblErrorDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 390, -1));
 
-        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 420, 100));
+        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, 120));
 
         btnGuardarContinuar.setText("Guardar y continuar ingresando");
         btnGuardarContinuar.setToolTipText("Guardar y continuar ingresando en el mismo curso.");
-        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, -1, -1));
+        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, -1));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
         getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 390, 15));
