@@ -212,14 +212,14 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
                 + "materia_nombre\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
-                + "public.\"Personas\" p, public.\"Materias\" m, public.\"Carreras\" c\n"
+                + "public.\"Personas\" p, public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
                 + "a.id_alumno = ac.id_alumno AND \n"
-                + "c.id_carrera = ac.id_carrera AND"
-                + "p.id_persona = a.id_persona AND\n"
+                + "c.id_carrera = ac.id_carrera AND \n"
+                + "p.id_persona = a.id_persona AND \n"
                 + "m.id_materia = ma.id_materia AND (\n"
-                + "	persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
-                + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + "	persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' \n"
+                + "	OR persona_identificacion ILIKE '%" + aguja + "%' \n"
                 + ") AND persona_activa = true;";
         return consultaMallasTbl(sql);
     }
