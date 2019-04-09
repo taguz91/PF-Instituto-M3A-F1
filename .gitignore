@@ -3,7 +3,7 @@
 #Proyecto ejecutable 
 /dist
 #Codigo compilado
-/build
+/build/
 
 #Foto creada temporalmente
 foto.png

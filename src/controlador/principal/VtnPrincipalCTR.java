@@ -127,7 +127,16 @@ public class VtnPrincipalCTR {
         {"AlumnosCurso", "AlumnosCurso-Ingresar", "AlumnosCurso-Eliminar", "AlumnosCurso-Editar"},
         {"DocenteMateria", "DocenteMateria-Ingresar"}
     };
-
+    
+    /**
+     * Construnctor principal del sistema. 
+     * @param vtnPrin VtnPrincipal: Ventana principal del sistema
+     * @param rolSeleccionado RolBD: Rol seleccionado. 
+     * @param usuario UsuarioBD: Usuario que se conecto. 
+     * @param conecta ConectarDB: Coneccion a la base de datos G23
+     * @param icono ImagenIcon: Icono del sistema. 
+     * @param ista Imagen: Imagen del icono del sistema. 
+     */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
         this.vtnPrin = vtnPrin;
@@ -148,7 +157,11 @@ public class VtnPrincipalCTR {
         vtnPrin.setVisible(true);
         InitPermisos();
     }
-
+    
+    /**
+     * Inicia dependencias de la aplicacion.
+     * Eventos, Atajos de teclado y animaciones.
+     */
     public void iniciar() {
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
@@ -509,7 +522,12 @@ public class VtnPrincipalCTR {
         VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
         vtnNotas.Init();
     }
-
+    
+    /**
+     * Se ejecuta al seleccionar un estilo en el menu de opciones.
+     * Obtendra el nombre del estilo elejido y actualizara la ventana,
+     * para mostrarlo.
+     */
     private void estiloVtn() {
         String estilo = "Windows";
 
@@ -537,7 +555,13 @@ public class VtnPrincipalCTR {
             System.out.println(e.getMessage());
         }
     }
-
+    
+    /**
+     * Al crear una ventana, se la inicia con este envento, 
+     * para contronlar de que no existan mas de 5 ventanas. 
+     * @param internal JInternalFrame
+     * @see errorNumVentanas()
+     */
     public void eventoInternal(JInternalFrame internal) {
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -577,28 +601,55 @@ public class VtnPrincipalCTR {
             numVtns = 0;
         }
     }
-
+    
+    /**
+     * Se envia el nombre de la ventana que se abre para 
+     * que se escriba en la barra de estado de la aplicacion.
+     * @param vtn String 
+     */
     public void estadoCargaVtn(String vtn) {
         vtnPrin.getLblEstado().setText("Inciando la ventana de " + vtn + ". Por favor espere la información se cargara en breve.");
     }
-
+    
+    /**
+     * Al terminar de cargar la ventana, se envia el nombre 
+     * de la ventana que cargo para mostrarla en la barra de estado.
+     * @param vtn  String
+     */
     public void estadoCargaVtnFin(String vtn) {
         vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error reportarlo a M3A.");
     }
-
+    
+    /**
+     * Al abrir un formulario se envia el nombre del formulario
+     * para actualizar la barra de estado. 
+     * @param frm String
+     */
     public void estadoCargaFrm(String frm) {
         vtnPrin.getLblEstado().setText("Inciando el formulario de " + frm + " ...");
     }
-
+    
+    /**
+     * Al terminar de iniciarse un formulario se envia el nombre
+     * del formulario, para actualizar la barra de estado. 
+     * @param frm String
+     */
     public void estadoCargaFrmFin(String frm) {
         vtnPrin.getLblEstado().setText("Formulario de " + frm + " iniciado.");
     }
-
+    
+    /**
+     * Si se abren mas de 5 ventanas salta este error
+     */
     private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
     }
-
+    
+    /**
+     * Se inician los atajos de teclado para formularios.
+     * @author: Johnny Garcia
+     */
     private void iniciarAtajosTeclado() {
         vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
