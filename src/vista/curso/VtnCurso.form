@@ -197,6 +197,7 @@
     <Component class="javax.swing.JButton" name="btnListaAlumnos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lista de Alumnos"/>
+        <Property name="toolTipText" type="java.lang.String" value="Seleccione una fila para generar el reporte"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">

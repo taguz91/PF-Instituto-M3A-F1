@@ -31,36 +31,6 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   "persona_primer_apellido" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
-
-CREATE OR REPLACE FUNCTION actualizar_vista_usuarios_persona()
-RETURNS TRIGGER AS $actualizar_vista_usuarios_persona$
-BEGIN
- REFRESH MATERIALIZED VIEW "Usuarios_Persona";
- RETURN NEW;
-END;
-$actualizar_vista_usuarios_persona$ LANGUAGE plpgsql;
-
-
-CREATE TRIGGER actualizar_on_personas
-AFTER INSERT OR UPDATE
-ON public."Personas" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vista_usuarios_persona();
- 
- CREATE TRIGGER actualizar_on_usuarios
-AFTER INSERT OR UPDATE
-ON public."Usuarios" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vista_usuarios_persona();
- 
-
-
- 
- 
- 
- 
- 
- 
- 
- 
  
  
 /*
@@ -121,29 +91,11 @@ CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree 
   "alumno_codigo" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
-CREATE OR REPLACE FUNCTION actualizar_vista_AlumnoCurso()
-RETURNS TRIGGER AS $actualizar_vista_AlumnoCurso$
-BEGIN
- REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
- RETURN NEW;
-END;
-$actualizar_vista_AlumnoCurso$ LANGUAGE plpgsql;
-
-
-CREATE TRIGGER actualizar_vistas_AlumnoCurso
-AFTER INSERT OR UPDATE
-ON public."AlumnoCurso" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vista_AlumnoCurso();
-
-
-
-
-
-
-
 /*
   PERMISOS DE IMGRESO DE NOTAS EN UN CURSO
-*/CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+*/
+
+CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
 AS
 SELECT "IngresoNotas".nota_primer_inteciclo,
     "IngresoNotas".nota_examen_intecilo,
@@ -217,5 +169,75 @@ CREATE UNIQUE INDEX "viewperiodoingresonotas" ON "public"."ViewPeriodoIngresoNot
   "id_tipo_nota" "pg_catalog"."int4_ops" ASC NULLS LAST,
   "id_perd_ingr_notas" "pg_catalog"."int4_ops" ASC NULLS LAST
 );
+
+//TRIGGERS
+
+CREATE OR REPLACE FUNCTION actualizar_vistas()
+RETURNS TRIGGER AS $actualizar_vistas$
+BEGIN
+ REFRESH MATERIALIZED VIEW "Usuarios_Persona";
+ REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
+ REFRESH MATERIALIZED VIEW "ViewCursosPermisosNotas";
+ REFRESH MATERIALIZED VIEW "ViewPeriodoIngresoNotas";
+ 
+ RETURN NEW;
+END;
+$actualizar_vistas$ LANGUAGE plpgsql;
+
+CREATE TRIGGER actualizar_usuarios
+AFTER INSERT OR UPDATE
+ON public."Usuarios" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_personas
+AFTER INSERT OR UPDATE
+ON public."Personas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+
+
+CREATE TRIGGER actualizar_AlumnoCurso
+AFTER INSERT OR UPDATE
+ON public."AlumnoCurso" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_Alumnos
+AFTER INSERT OR UPDATE
+ON public."Alumnos" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_Cursos
+AFTER INSERT OR UPDATE
+ON public."Cursos" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_periodoLectivo
+AFTER INSERT OR UPDATE
+ON public."PeriodoLectivo" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_ingresonotas
+AFTER INSERT OR UPDATE
+ON public."IngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_materias
+AFTER INSERT OR UPDATE
+ON public."Materias" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_docentes
+AFTER INSERT OR UPDATE
+ON public."Docentes" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_periodoingresonotas
+AFTER INSERT OR UPDATE
+ON public."PeriodoIngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_tipodenota
+AFTER INSERT OR UPDATE
+ON public."TipoDeNota" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
 
 

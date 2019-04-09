@@ -221,7 +221,7 @@ public class VtnActivarNotasCTR {
 
         try {
              aporte1 = (String) datos.getValueAt(fila, 7);
-             examenInterciclo = (String) datos.getValueAt(fila, 9);
+             examenInterciclo = (String) datos.getValueAt(fila, 8);
 
         if (aporte1.equalsIgnoreCase("true") || aporte1.equalsIgnoreCase("false") || aporte1.equalsIgnoreCase("t") || aporte1.equalsIgnoreCase("f")) {
             /*if (aporte1.startsWith("t")) {
@@ -237,7 +237,7 @@ public class VtnActivarNotasCTR {
 
         } else if (examenInterciclo.equalsIgnoreCase("true") || examenInterciclo.equalsIgnoreCase("false") || examenInterciclo.equalsIgnoreCase("t") || examenInterciclo.equalsIgnoreCase("f")) {
             JOptionPane.showMessageDialog(vista, "Correcto");
-            datos.setValueAt(aporte1.toLowerCase(), fila, 9);
+            datos.setValueAt(examenInterciclo.toLowerCase(), fila, 8);
         } else {
             JOptionPane.showMessageDialog(vista, "Datos Incorrectos....\n"
                     + "Ingrese nuevamente");

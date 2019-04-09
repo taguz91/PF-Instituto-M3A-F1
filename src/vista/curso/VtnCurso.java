@@ -121,6 +121,7 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         cmbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnListaAlumnos.setText("Lista de Alumnos");
+        btnListaAlumnos.setToolTipText("Seleccione una fila para generar el reporte");
 
         jLabel4.setText("Reportes:");
 
