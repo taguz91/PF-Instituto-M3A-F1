@@ -194,7 +194,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnImprimir))
                             .addComponent(cmbDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 152, Short.MAX_VALUE))
+                        .addGap(0, 205, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
