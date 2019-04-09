@@ -19,8 +19,8 @@ public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-    //private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-    private static String JDBC_URL = "jdbc:postgresql://localhost:5432/pfinstituto";
+    private static String JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
+    //private static String JDBC_URL = "jdbc:postgresql://localhost:5432/pfinstituto";
     private static String USERNAME = "ROOT";
     private static String PASSWORD = "ROOT";
     private static Driver driver = null;
@@ -51,13 +51,6 @@ public class ResourceManager {
         JDBC_URL = Propiedades.loadIP();
 
         //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-        //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDinsta";
-        //JDBC_URL = "jdbc:postgresql://localhost:5432/BDinsta";
-        JDBC_URL = "jdbc:postgresql://localhost:5432/BDFinal";
-
-        //JDBC_URL = "jdbc:postgresql://LocalHost:5432/BD_Final";
-
-        //JDBC_URL = "jdbc:postgresql://localhost:5432/baseFinal";
         //USERNAME = "postgres";
         //PASSWORD = "qwerty79";
 
