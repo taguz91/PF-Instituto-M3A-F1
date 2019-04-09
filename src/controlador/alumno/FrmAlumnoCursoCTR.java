@@ -415,7 +415,7 @@ public class FrmAlumnoCursoCTR {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
             //Mostramos las materias que curso
-            JDMateriasCursadasCTR jdCtr = new JDMateriasCursadasCTR(vtnPrin, alumnosCarrera.get(posAlm),
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
                     mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
         } else {
@@ -580,7 +580,10 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Al seleccionar una materia se puede pasar al panel de materias seleccionadas.
+     */
     private void pasarUnaMateria() {
         int posMat = frmAlmCurso.getTblMateriasPen().getSelectedRow();
         if (posMat >= 0) {
@@ -593,7 +596,10 @@ public class FrmAlumnoCursoCTR {
             llenarTblMatSelec(cursosSelec);
         }
     }
-
+    
+    /**
+     * Se pasan todas las materias de la tabla pendientes a seleccionada.
+     */
     private void pasarTodasMaterias() {
         //Pasamos todos las materias que nos quedan en la tabla cursos 
         //La rrellenamos en cursos seleccionados
@@ -603,7 +609,11 @@ public class FrmAlumnoCursoCTR {
         llenarTblMatPen(cursosPen);
         llenarTblMatSelec(cursosSelec);
     }
-
+    
+    /**
+     * Se regresa una materia seleccionada a la tabla de 
+     * materias pendientes.
+     */
     private void regresarUnaMateria() {
         int posMat = frmAlmCurso.getTblMateriasSelec().getSelectedRow();
         if (posMat >= 0) {
@@ -616,7 +626,11 @@ public class FrmAlumnoCursoCTR {
             llenarTblMatSelec(cursosSelec);
         }
     }
-
+    
+    /**
+     * Se regresan todas las materias, a la tabla de
+     * materias pendientes.
+     */
     private void regresarTodasMaterias() {
         cursosSelec.forEach(c -> cursosPen.add(c));
         //Reiniciamos el array para borrar todos los datos
@@ -624,7 +638,10 @@ public class FrmAlumnoCursoCTR {
         llenarTblMatPen(cursosPen);
         llenarTblMatSelec(cursosSelec);
     }
-
+    
+    /**
+     * Se muestran las materias reprobadas de un alumno
+     */
     private void clickMateriasReprobadas() {
         mostrarInformacion("R");
     }

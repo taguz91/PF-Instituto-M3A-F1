@@ -40,7 +40,15 @@ public class VtnAlumnoCarreraCTR {
 
     private final CarreraBD carr;
     private ArrayList<CarreraMD> carreras;
-
+    
+    /**
+     * Se visualizan todos los alumnos por carrera respectivamente.
+     * @param vtnPrin
+     * @param vtnAlmCar
+     * @param conecta
+     * @param permisos
+     * @param ctrPrin 
+     */
     public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar,
             ConectarDB conecta, RolMD permisos, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -58,7 +66,13 @@ public class VtnAlumnoCarreraCTR {
         vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
         vtnAlmCar.show();
     }
-
+    
+    /**
+     * Iniciamos las dependencias de la ventana.
+     * Eventos
+     * Formato de tabla 
+     * Llamamos metodos
+     */
     public void iniciar() {
         cargarCmbCarreras();
 
@@ -97,12 +111,20 @@ public class VtnAlumnoCarreraCTR {
         //ctrPrin.carga.detener();
     }
     
+    /**
+     * Abrimos el formulario de ingreso y cerramos esta ventana,
+     */
     private void abrirFrmAlumnoCarrera(){
         ctrPrin.abrirFrmInscripcion();
         vtnAlmCar.dispose();
         ctrPrin.cerradoJIF();
     }
-
+    
+    /**
+     * Buscamos y rellenamos la tabla, unicamente se buscara
+     * si ingreso letras o numeros, no seran adminitods caracteres especiales.
+     * @param b 
+     */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
             almnsCarr = almnCar.buscar(b);
@@ -111,12 +133,20 @@ public class VtnAlumnoCarreraCTR {
             System.out.println("No ingrese caracteres especiales");
         }
     }
-
+    
+    /**
+     * Se cargan todos los alumnos por carrera por defecto.
+     * Y se llenaran en la tabla.
+     */
     private void cargarAlmnsCarrera() {
         almnsCarr = almnCar.cargarAlumnoCarrera();
         llenarTblAlmnCarreras(almnsCarr);
     }
-
+    
+    /**
+     * Llenamos la tabla, con los alumnos que nos pasen.
+     * @param almns 
+     */
     private void llenarTblAlmnCarreras(ArrayList<AlumnoCarreraMD> almns) {
         mdTbl.setRowCount(0);
         if (almns != null) {
@@ -135,7 +165,10 @@ public class VtnAlumnoCarreraCTR {
             vtnAlmCar.getLblResultados().setText(almns.size() + " Resultados obtenidos.");
         }
     }
-
+    
+    /**
+     * Cargamos todas las carreras que esten abiertas en la institucion. 
+     */
     private void cargarCmbCarreras() {
         carreras = carr.cargarCarreras();
         if (carreras != null) {
@@ -146,7 +179,12 @@ public class VtnAlumnoCarreraCTR {
             });
         }
     }
-
+    
+    /**
+     * Evento al hacer click en el combo de carreras, si se selecciona
+     * una carrera se consultaran los alumnos de esta carrera y se
+     * llenara la tabla.
+     */
     private void clickCmbCarreras() {
         int posCar = vtnAlmCar.getCmbCarrera().getSelectedIndex();
         if (posCar > 0) {
