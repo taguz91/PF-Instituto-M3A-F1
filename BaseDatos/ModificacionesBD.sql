@@ -101,4 +101,4 @@ ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_fecha_registro" DATE def
 
 --Modificaciones -- 09/04/2019
 
-ALTER TABLE public."Silabo" ALTER COLUMN "estado_silabo" TYPE integer;
+ALTER TABLE public."Silabo" ALTER COLUMN "estado_silabo"::integer TYPE integer;
