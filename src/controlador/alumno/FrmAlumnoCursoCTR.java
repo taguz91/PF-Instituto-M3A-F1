@@ -355,6 +355,7 @@ public class FrmAlumnoCursoCTR {
      *    el ciclo menor en el que reprobo una materia.
      * 3. De igual manera se filtran, las materias en las que esta matriculado, 
      *    para borrarlas de la tabla.
+     * 4. Al clasificar todo se carga el combo de ciclos.
      * @param posAlmn Int: Poscion en el array del alumno seleccionado. 
      * @param posPrd Int: Poscion en el array del periodo seleccionado.
      */ 
@@ -381,7 +382,8 @@ public class FrmAlumnoCursoCTR {
         System.out.println("Se encuentra matriculado en " + mallaMatriculadas.size());
 
         //Buscamos todas las materias en las que ya a cursado  para borrarlas de la tabla
-        mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+        //mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+        mallaCursadas = materiasAlmn; 
         System.out.println("Ah cursado " + mallaCursadas.size());
 
         if (mallaPerdidas.size() > 0) {
@@ -398,8 +400,16 @@ public class FrmAlumnoCursoCTR {
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
-    /*Me consulta las materias por el estado que se le pase 
-      en una ventana emergente
+    /**
+     * Me consulta las materias por el estado que se le pase,
+     * en una ventana emergente.
+     * @param estado String: Estado de la materia
+     * Estados: 
+     *  C: Cursado 
+     *  P: Pendiente 
+     *  M: Matriculado
+     *  A: Anulado/Retirado 
+     *  R: Reprobado
      */
     private void mostrarInformacion(String estado) {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
@@ -412,7 +422,12 @@ public class FrmAlumnoCursoCTR {
             JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
         }
     }
-
+    
+    /**
+     * Llenamos la tabla de alumnos, con el listado que se le pase. 
+     * @param alumnos ArrayList<AlumnoCarreraMD>: Alumnos devueltos luego de consultarlos
+     * en una base de datos.
+     */
     private void llenarTblAlumnos(ArrayList<AlumnoCarreraMD> alumnos) {
         mdAlm.setRowCount(0);
         if (alumnos != null) {
@@ -427,6 +442,12 @@ public class FrmAlumnoCursoCTR {
         }
     }
     
+    /**
+     * Buscamos los cursos de un periodo en especifico.
+     * @param posPrd
+     * @param cicloCursado Int: Ciclo maximo que curso un estudiante. 
+     * @param cicloReprobado Int: Ciclo minimo en el que reprobo.
+     */
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
         frmAlmCurso.getCmbCurso().removeAllItems();
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
@@ -438,7 +459,12 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Buscamos las materias que abrieron en este curso, y
+     * periodo lectivo seleccionado. 
+     * Estas materias se cargan en la tabla de materias pendientes.
+     */
     private void cargarMaterias() {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
@@ -453,7 +479,11 @@ public class FrmAlumnoCursoCTR {
             mdMatPen.setRowCount(0);
         }
     }
-
+    
+    /**
+     * Se llena la tabla con las materias,excluyendo las que ya se matriculo.
+     * @param cursos 
+     */
     private void llenarTblMatPen(ArrayList<CursoMD> cursos) {
         mdMatPen.setRowCount(0);
         if (cursos != null) {
@@ -494,7 +524,13 @@ public class FrmAlumnoCursoCTR {
             }
         }
     }
-
+    
+    /**
+     * Comprobamos que haya cursado los requisitos, de cada curso en el que se
+     * puede matricular.
+     * @param cursos ArrayList<CursoMD>: Cursos ya depurados, unicamente los cursos
+     * que tiene materias que puede tomar.
+     */
     private void llenarTblConRequisitosPasados(ArrayList<CursoMD> cursos) {
         MallaAlumnoMD requisito;
         //Si se quiere matricular en un ciclo inferior o igual a 3 debemos revisar si
@@ -529,7 +565,12 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Llenamos la tabla con las materias que se selecciono.
+     * Esta tabla es usada en el registro. 
+     * @param cursosSelec ArrayList<CursoMD>: Cursos con las materias seleccionadas.
+     */
     private void llenarTblMatSelec(ArrayList<CursoMD> cursosSelec) {
         mdMatSelec.setRowCount(0);
         if (cursosSelec != null) {
