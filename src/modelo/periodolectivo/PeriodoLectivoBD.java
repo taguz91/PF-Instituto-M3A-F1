@@ -261,7 +261,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-
+    
     public PeriodoLectivoMD buscarPerido(int idPeriodo) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
@@ -290,13 +290,42 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-
-    public ArrayList<PeriodoLectivoMD> cargarPrdParaCmb() {
-        ArrayList<PeriodoLectivoMD> prds = new ArrayList();
+    
+    /**
+     * Consultamos todos los peridoos para poder filtrar en una ventana. 
+     * Unicamente indicamos que el periodo no este eliminado.
+     * @return periodos ArrayList: 
+     */
+    public ArrayList<PeriodoLectivoMD> cargarPrdParaCmbVtn() {
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
                 + "FROM public.\"PeriodoLectivo\"\n"
                 + "WHERE prd_lectivo_activo = true \n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
+        return consultarParaCmb(sql); 
+    }
+    
+    /**
+     * Se consultan los periodos de la base de datos.
+     * Restringuiendo los que ya fueron cerrados y los 
+     * eliminados.
+     * @return periodos ArrayList 
+     */
+    public ArrayList<PeriodoLectivoMD> cargarPrdParaCmbFrm() {
+        String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
+                + "FROM public.\"PeriodoLectivo\"\n"
+                + "WHERE prd_lectivo_activo = true  AND prd_lectivo_estado = true \n"
+                + "ORDER BY prd_lectivo_fecha_inicio DESC;";
+        return consultarParaCmb(sql);
+    }
+    
+    /**
+     * Consulta para combo, unicamente se busca:
+     * id, id_carrera, nombre del periodo
+     * @param sql
+     * @return periodos ArrayList 
+     */
+    private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
+        ArrayList<PeriodoLectivoMD> prds = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -317,7 +346,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-
+    
     public String Meses(LocalDate fecha) {
         String nueva_Fecha = "";
         String nuevo_Mes = "";

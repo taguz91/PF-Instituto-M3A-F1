@@ -101,7 +101,6 @@ public class FrmCarreraCTR {
 
     private void ocultarErrores() {
         frmCarrera.getLblErrorCodigo().setVisible(false);
-        frmCarrera.getLblErrorFecha().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
     

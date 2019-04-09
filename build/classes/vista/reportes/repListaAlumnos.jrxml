@@ -2,25 +2,28 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="64"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT p.persona_primer_nombre || ' ' || p.persona_segundo_nombre || ' ' ||
-p.persona_primer_apellido || ' ' || p.persona_segundo_apellido AS alumno, c.curso_nombre
+		<![CDATA[SELECT p.persona_primer_apellido || ' ' || p.persona_segundo_apellido || ' ' ||
+p.persona_primer_nombre || ' ' || p.persona_segundo_nombre AS alumno, c.curso_nombre
 ,mat.materia_nombre,
 per.persona_primer_nombre || ' ' || per.persona_segundo_nombre || ' ' ||
-per.persona_primer_apellido || ' ' || per.persona_segundo_apellido AS docente
+per.persona_primer_apellido || ' ' || per.persona_segundo_apellido AS docente, p.persona_identificacion,
+p.persona_telefono,p.persona_celular,pl.prd_lectivo_nombre
 FROM public."AlumnoCurso" ac, public."Alumnos" a, public."Personas" p, public."Cursos" c,
-public."Materias" mat, public."Docentes" doc, public."Personas" per
+public."Materias" mat, public."Docentes" doc, public."Personas" per, public."PeriodoLectivo" pl
 WHERE ac.id_alumno = a.id_alumno
 AND p.id_persona = a.id_persona
 AND ac.id_curso = c.id_curso
 AND c.id_materia=mat.id_materia
 AND c.id_docente = doc.id_docente
 AND doc.id_persona=per.id_persona
-AND c.id_curso = $P{curso};]]>
+AND c.id_prd_lectivo=pl.id_prd_lectivo
+AND c.id_curso = $P{curso}
+order by p.persona_primer_apellido;]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
