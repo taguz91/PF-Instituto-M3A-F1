@@ -121,6 +121,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="txtBuscar">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Se busca por nombre o cedula."/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
