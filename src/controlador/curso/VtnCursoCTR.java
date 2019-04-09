@@ -236,7 +236,7 @@ public class VtnCursoCTR {
     }
   public void reporteListaAlumnos() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repListaAlumnos.jasper";
+        String path = "./src/vista/reportes/repListaAlumno.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
