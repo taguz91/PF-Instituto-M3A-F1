@@ -12,9 +12,6 @@ import modelo.alumno.AlumnoCarreraBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.alumno.MallaAlumnoBD;
-import modelo.materia.MateriaBD;
-import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.validaciones.TxtVBuscador;
@@ -43,14 +40,14 @@ public class FrmAlumnoCarreraCTR {
 
     private final CarreraBD carr;
     private ArrayList<CarreraMD> carreras;
-
-    private final MateriaBD mat;
-    private ArrayList<MateriaMD> materias;
-    //Para guardar la malla
-    private final MallaAlumnoBD malla;
-
-    private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
-
+    
+    /**
+     * Iniciamos todos los modelos de base de datos.
+     * @param vtnPrin VtnPrincipal: ventana del sistema. Necesaria para usar la barra de estado.
+     * @param frmAlmCarrera FrmAlumnoCarrera: El formulario que se mostrara
+     * @param conecta ConectarBD: Conexion a la base de datos.
+     * @param ctrPrin VtnPrincipalCTR: Controlador principal del sitema, contiene metodos para todos.
+     */
     public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
@@ -61,18 +58,22 @@ public class FrmAlumnoCarreraCTR {
         ctrPrin.estadoCargaFrm("Alumno por carrera");
         ctrPrin.setIconJIFrame(frmAlmCarrera);
         this.almnCarrera = new AlumnoCarreraBD(conecta);
-        this.mat = new MateriaBD(conecta);
-        this.malla = new MallaAlumnoBD(conecta);
         this.almn = new AlumnoBD(conecta);
         this.carr = new CarreraBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmAlmCarrera);
         frmAlmCarrera.show();
     }
-
+    
+    /**
+     * Iniciamos dependencias.
+     * Estilizamos tabla 
+     * Cargamos combos
+     * Buscador 
+     * Eventos de botones
+     */
     public void iniciar() {
         ocultarErrores();
-        cargarCmbModalidad();
         cargarCmbCarreras();
 
         String[] titulo = {"Cédula", "Nombre"};
@@ -102,12 +103,19 @@ public class FrmAlumnoCarreraCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Alumno por carrera");
     }
-
+    
+    /**
+     * Oculta los errores del formulario.
+     */
     public void ocultarErrores() {
         //Ocultamos el error  
         frmAlmCarrera.getLblError().setVisible(false);
     }
-
+    
+    /**
+     * Comprueba que el formulario este correcto.
+     * Si todo el formulario esta lleno correctamente se insertara en base de datos.
+     */
     private void guardar() {
         boolean guardar = true;
         int posAlm = frmAlmCarrera.getTblAlumnos().getSelectedRow();
@@ -131,7 +139,12 @@ public class FrmAlumnoCarreraCTR {
             }
         }
     }
-
+    
+    /**
+     * Busca los alumnos de, pero antes comprueba que lo que se ingresa sea unicamente letras y numeros.
+     * Para que no exista ningun inyeccion. 
+     * @param aguja String: Se puede enviar la cedula o el nombre
+     */
     public void buscarAlmns(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             alumnos = almn.buscarAlumnos(aguja);
@@ -148,7 +161,11 @@ public class FrmAlumnoCarreraCTR {
             }
         }
     }
-
+    
+    /**
+     * Busca en base de datos todas las carreras que no estan eliminadas,
+     * para cargarlas en el combo.
+     */
     private void cargarCmbCarreras() {
         carreras = carr.cargarCarreras();
         if (carreras != null) {
@@ -160,11 +177,4 @@ public class FrmAlumnoCarreraCTR {
         }
     }
 
-    private void cargarCmbModalidad() {
-        frmAlmCarrera.getCmbModalidad().removeAllItems();
-        frmAlmCarrera.getCmbModalidad().addItem("Seleccione");
-        for (String m : MODALIDADES) {
-            frmAlmCarrera.getCmbModalidad().addItem(m);
-        }
-    }
 }

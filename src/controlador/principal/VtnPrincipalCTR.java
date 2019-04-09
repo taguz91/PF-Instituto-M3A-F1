@@ -53,7 +53,6 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
-import modelo.persona.DocenteBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
