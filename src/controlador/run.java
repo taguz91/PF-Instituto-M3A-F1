@@ -29,18 +29,18 @@ public class run {
         //Linux Lite: Metal  Nimbus  CDE/Motif  GTK+
         //Unicamente usaremos los estilos de Windows o Nimbus / Correspondientes a Windows y Mac 
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.print(info.getName()+"  ");
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }else if("Nimbus".equals(info.getName())){
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                System.out.print(info.getName()+"  ");
+//                if ("Windows".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    //break;
+//                }else if("Nimbus".equals(info.getName())){
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    //break;
+//                }
+//            }
             //Estilo predeterminado en el dispositivo
-            //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

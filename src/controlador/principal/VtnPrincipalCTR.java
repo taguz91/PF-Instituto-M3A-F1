@@ -53,7 +53,6 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
-import modelo.persona.DocenteBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
@@ -130,6 +129,15 @@ public class VtnPrincipalCTR {
         {"DocenteMateria", "DocenteMateria-Ingresar"}
     };
     
+    /**
+     * Construnctor principal del sistema. 
+     * @param vtnPrin VtnPrincipal: Ventana principal del sistema
+     * @param rolSeleccionado RolBD: Rol seleccionado. 
+     * @param usuario UsuarioBD: Usuario que se conecto. 
+     * @param conecta ConectarDB: Coneccion a la base de datos G23
+     * @param icono ImagenIcon: Icono del sistema. 
+     * @param ista Imagen: Imagen del icono del sistema. 
+     */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
         this.vtnPrin = vtnPrin;
@@ -151,6 +159,10 @@ public class VtnPrincipalCTR {
         InitPermisos();
     }
     
+    /**
+     * Inicia dependencias de la aplicacion.
+     * Eventos, Atajos de teclado y animaciones.
+     */
     public void iniciar() {
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
@@ -518,6 +530,11 @@ public class VtnPrincipalCTR {
         vtnNotas.Init();
     }
     
+    /**
+     * Se ejecuta al seleccionar un estilo en el menu de opciones.
+     * Obtendra el nombre del estilo elejido y actualizara la ventana,
+     * para mostrarlo.
+     */
     private void estiloVtn() {
         String estilo = "Windows";
         
@@ -546,6 +563,12 @@ public class VtnPrincipalCTR {
         }
     }
     
+    /**
+     * Al crear una ventana, se la inicia con este envento, 
+     * para contronlar de que no existan mas de 5 ventanas. 
+     * @param internal JInternalFrame
+     * @see errorNumVentanas()
+     */
     public void eventoInternal(JInternalFrame internal) {
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -586,27 +609,54 @@ public class VtnPrincipalCTR {
         }
     }
     
+    /**
+     * Se envia el nombre de la ventana que se abre para 
+     * que se escriba en la barra de estado de la aplicacion.
+     * @param vtn String 
+     */
     public void estadoCargaVtn(String vtn) {
         vtnPrin.getLblEstado().setText("Inciando la ventana de " + vtn + ". Por favor espere la información se cargara en breve.");
     }
     
+    /**
+     * Al terminar de cargar la ventana, se envia el nombre 
+     * de la ventana que cargo para mostrarla en la barra de estado.
+     * @param vtn  String
+     */
     public void estadoCargaVtnFin(String vtn) {
         vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error reportarlo a M3A.");
     }
     
+    /**
+     * Al abrir un formulario se envia el nombre del formulario
+     * para actualizar la barra de estado. 
+     * @param frm String
+     */
     public void estadoCargaFrm(String frm) {
         vtnPrin.getLblEstado().setText("Inciando el formulario de " + frm + " ...");
     }
     
+    /**
+     * Al terminar de iniciarse un formulario se envia el nombre
+     * del formulario, para actualizar la barra de estado. 
+     * @param frm String
+     */
     public void estadoCargaFrmFin(String frm) {
         vtnPrin.getLblEstado().setText("Formulario de " + frm + " iniciado.");
     }
     
+    /**
+     * Si se abren mas de 5 ventanas salta este error
+     */
     private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
     }
-    
+
+    /**
+     * Se inician los atajos de teclado para formularios.
+     * @author: Johnny Garcia
+     */
     private void iniciarAtajosTeclado() {
         vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
@@ -713,19 +763,33 @@ public class VtnPrincipalCTR {
             }
         }
     }
-    
+    /**
+     * Retornamos el icono del sistema
+     * @return icono ImageIcon
+     */
     public ImageIcon getIcono() {
         return icono;
     }
-    
+    /**
+     * Retornamos la imagen del icono. 
+     * @return ista Image 
+     */
     public Image getIsta() {
         return ista;
     }
     
+    /**
+     * Cambiamos el icono de un JInternalFrame. 
+     * @param jif JInternalFrame
+     */
     public void setIconJIFrame(JInternalFrame jif) {
         jif.setFrameIcon(icono);
     }
     
+    /**
+     * Se cambia el icono de un JDialog 
+     * @param jd JDialog
+     */
     public void setIconJDialog(JDialog jd) {
         jd.setIconImage(ista);
     }
@@ -738,7 +802,11 @@ public class VtnPrincipalCTR {
         
     }
 
-    //Para entrar en consola de unas
+    /**
+     * Iniciamos una ventana, con acceso directo a comandos
+     * NSQL para la base de datos. Proposito es realizar cambios
+     * importantes si no se tiene acceso a la base de datos. 
+     */
     private void iniciarConsola() {
         JPasswordField pass = new JPasswordField();
         int o = JOptionPane.showConfirmDialog(vtnPrin, pass, "Ingrese su contraseña",
