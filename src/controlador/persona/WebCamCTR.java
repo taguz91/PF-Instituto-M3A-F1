@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import com.github.sarxos.webcam.WebcamShutdownHook;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -79,7 +80,8 @@ public class WebCamCTR {
             cancelarFoto();
             ctrFrmPersona.pasarFoto(is);
             //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
-            vtnWebCam.getPanelCam().disable();
+            WebcamShutdownHook WebcamShutdownHook;
+            vtnWebCam.getPanelCam().isACTIVARCAMARA();
 //            [shutdown-hook-1] INFO com.github.sarxos.webcam.WebcamShutdownHook - Automatic Integrated Camera 0 deallocation
 //            [shutdown-hook-1] INFO com.github.sarxos.webcam.Webcam - Disposing webcam Integrated Camera 0
 //            
@@ -93,7 +95,7 @@ public class WebCamCTR {
         vtnWebCam.dispose();
         System.out.println("Se dio click en cancelar");
         //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
-        vtnWebCam.getPanelCam().disable();
+        
     }
 
 }
