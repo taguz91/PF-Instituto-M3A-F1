@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8450188-fb6b-41f8-a086-99fc8481dc37">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT id_historial_user, usu_username, historial_nombre_tabla, 
 historial_tipo_accion, historial_fecha
 FROM public."HistorialUsuarios";]]>
@@ -44,33 +44,33 @@ FROM public."HistorialUsuarios";]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="786eeeec-1949-496e-b716-58f4b2bbdea7"/>
+				<reportElement mode="Opaque" x="0" y="0" width="149" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="786eeeec-1949-496e-b716-58f4b2bbdea7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Usuario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="270" y="0" width="78" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="56702372-cd54-4a7e-bc76-4e6ef77a97e7"/>
+				<reportElement mode="Opaque" x="300" y="0" width="94" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="56702372-cd54-4a7e-bc76-4e6ef77a97e7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Accion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="120" y="0" width="150" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="9de3f7bb-3c29-417c-8350-215f2c77dddd"/>
+				<reportElement mode="Opaque" x="150" y="0" width="150" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="9de3f7bb-3c29-417c-8350-215f2c77dddd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tabla]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="348" y="0" width="207" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="69050d97-2662-429b-b289-314fd97fc5a0"/>
+				<reportElement mode="Opaque" x="395" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="69050d97-2662-429b-b289-314fd97fc5a0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="false"/>
 				</textElement>
@@ -79,33 +79,28 @@ FROM public."HistorialUsuarios";]]>
 			<line>
 				<reportElement x="0" y="20" width="555" height="1" uuid="5effb9ec-8478-4656-b89a-0f401089875f"/>
 			</line>
+			<line>
+				<reportElement x="394" y="0" width="1" height="20" uuid="ac468dcc-43ba-4885-974c-e4e785bee2c1"/>
+			</line>
+			<line>
+				<reportElement x="300" y="0" width="1" height="20" uuid="e22a9417-4bd0-438b-9590-21a48eeca9f7"/>
+			</line>
+			<line>
+				<reportElement x="149" y="0" width="1" height="20" uuid="4ac3e844-669e-4c0f-a783-b2ef988bc36c"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="120" height="20" uuid="e5d1ac83-4bee-4677-b017-03036c5be2ce"/>
+				<reportElement x="0" y="0" width="149" height="20" uuid="e5d1ac83-4bee-4677-b017-03036c5be2ce"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usu_username}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="0" width="150" height="20" uuid="180cb88e-f40b-4e79-b724-f2e44c3f99dd"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{historial_nombre_tabla}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="270" y="0" width="78" height="20" uuid="c2d6aa87-d6cc-49f5-a3a9-9493e7b6ff6d"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{historial_tipo_accion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="348" y="0" width="207" height="20" uuid="93dd16c3-17fd-4753-80af-8f8e066f106b"/>
+				<reportElement x="395" y="0" width="160" height="20" uuid="93dd16c3-17fd-4753-80af-8f8e066f106b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
@@ -114,6 +109,20 @@ FROM public."HistorialUsuarios";]]>
 			<line>
 				<reportElement x="0" y="20" width="555" height="1" uuid="a30b2e92-5cd1-467f-a23d-6ab599829d80"/>
 			</line>
+			<textField>
+				<reportElement x="300" y="0" width="94" height="20" uuid="c2d6aa87-d6cc-49f5-a3a9-9493e7b6ff6d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historial_tipo_accion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="150" height="20" uuid="180cb88e-f40b-4e79-b724-f2e44c3f99dd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historial_nombre_tabla}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -126,9 +135,19 @@ FROM public."HistorialUsuarios";]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="88" height="20" uuid="10acb941-0595-4a7f-aa45-8013bcbce91c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="88" y="0" width="37" height="20" uuid="09ff6e98-da15-4f9b-9e9a-0485ab9c8ad1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

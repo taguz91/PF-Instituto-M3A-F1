@@ -451,12 +451,15 @@ cmbCombinados();
         vtnH.getLblResultados().setText(historial.size() + " Resultados obtenidos.");
     }
     
+    /**
+     * El reporte sera llamado con la ultima query ejecutada.
+     */
     private void llamaReporteHistorialUser() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repPersona.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
+        String path = "./src/vista/reportes/repHistorialUser.jasper";
         try {
+            System.out.println("Cargando reporte");
+            vtnH.setCursor(new Cursor(3)); 
             //Map parametro = new HashMap();
             //parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
@@ -464,6 +467,8 @@ cmbCombinados();
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle("Reporte de Historial Usuario");
+            System.out.println("Reporte cargado");
+            vtnH.setCursor(new Cursor(0)); 
 
         } catch (JRException ex) {
             System.out.println("No se pudo realizar el reporte.");
