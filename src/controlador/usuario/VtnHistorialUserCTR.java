@@ -1,16 +1,28 @@
 package controlador.usuario;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.HistorialUsuarioBD;
 import modelo.usuario.HistorialUsuarioMD;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 
@@ -100,6 +112,8 @@ public class VtnHistorialUserCTR {
             }
         });
         vtnH.getBtnBuscar().addActionListener(e -> buscar(vtnH.getTxtBuscar().getText().trim()));
+        //Accion para el reporte  
+        vtnH.getBtnReporte().addActionListener(e -> llamaReporteHistorialUser());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Historial usuarios.");
@@ -435,6 +449,25 @@ cmbCombinados();
             vtnH.getLblResultados().setText(historial.size() + " Resultados obtenidos.");
         }
         vtnH.getLblResultados().setText(historial.size() + " Resultados obtenidos.");
+    }
+    
+    private void llamaReporteHistorialUser() {
+        JasperReport jr;
+        String path = "./src/vista/reportes/repPersona.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            //Map parametro = new HashMap();
+            //parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Historial Usuario");
+
+        } catch (JRException ex) {
+            System.out.println("No se pudo realizar el reporte.");
+        }
     }
 
 }
