@@ -161,7 +161,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username DESC";
+                + "\"public\".\"Usuarios_Persona\".usu_username";
 
         List<UsuarioMD> lista = selectFromView(SELECT);
 
@@ -208,7 +208,6 @@ public class UsuarioBD extends UsuarioMD {
                 + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';"
                 + "";
 
-        System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
 

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConectarDB;
+import modelo.alumno.MallaAlumnoMD;
+import modelo.materia.MateriaMD;
 
 public class AlumnoBD extends AlumnoMD {
 
@@ -20,10 +22,10 @@ public class AlumnoBD extends AlumnoMD {
 
     public boolean guardarAlumno(SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"
-                + "	 id_persona, id_sec_economico, alumno_codigo,alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
+                + "	 id_persona, id_sec_economico, alumno_codigo, alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
                 + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
                 + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
-                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + ", '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', '" + getNivel_Academico() + "', " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
@@ -65,11 +67,13 @@ public class AlumnoBD extends AlumnoMD {
 
     public List<PersonaMD> llenarTabla() {
         List<PersonaMD> lista = new ArrayList();
-        String sql = "SELECT p.id_persona, p.persona_identificacion, "
+        String sql = "SELECT p.id_persona, p.persona_identificacion,"
                 + " p.persona_primer_nombre, p.persona_segundo_nombre,"
                 + " p.persona_primer_apellido, p.persona_segundo_apellido,"
                 + " p.persona_correo"
-                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona) WHERE a.alumno_activo = true AND p.persona_activa = true;";
+                + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)"
+                + " WHERE a.alumno_activo = 'true' AND p.persona_activa = 'true'"
+                + " ORDER BY p.persona_primer_apellido ASC;";
         //Esto estaba mal WHERE alumno_activo = 'true'
         ResultSet rs = conecta.sql(sql);
         try {
@@ -123,24 +127,24 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
-    public List<PersonaMD> filtrarPersona(String aguja) {
-        List<PersonaMD> lista = new ArrayList();
+    public PersonaMD filtrarPersona(String aguja) {
+        //List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
-                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true";
+                + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true;";
         ResultSet rs = conecta.sql(sql);
+        PersonaMD m = new PersonaMD();
         try {
             while (rs.next()) {
-                PersonaMD m = new PersonaMD();
                 m.setIdPersona(rs.getInt("id_persona"));
                 m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                lista.add(m);
+                //lista.add(m);
             }
             rs.close();
-            return lista;
+            return m;
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -421,6 +425,63 @@ public class AlumnoBD extends AlumnoMD {
         } catch (SQLException e) {
             System.out.println("No se pudo consultar alumnos");
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public List<AlumnoMD> filtrarRetirados(){
+        String nsql = "SELECT DISTINCT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre,\n" +
+                    "p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo, a.id_alumno\n" +
+                    "FROM ((public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)) JOIN public.\"AlumnosCarrera\" c USING(id_alumno))\n" +
+                    "JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n" +
+                    "WHERE malla_almn_estado LIKE 'R' AND a.alumno_activo = 'true' AND p.persona_activa = 'true' "
+                    + "ORDER BY p.persona_primer_apellido ASC;";
+        List<AlumnoMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(nsql);
+        try {
+            while (rs.next()) {
+                AlumnoMD m = new AlumnoMD();
+                m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
+                m.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                m.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                m.setCorreo(rs.getString("persona_correo"));
+                m.setId_Alumno(rs.getInt("id_alumno"));
+                lista.add(m);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public List<MallaAlumnoMD> consultarMaterias(int ID){
+        System.out.println(ID);
+        System.out.println("HOLA");
+        String nsql = "SELECT m.materia_nombre, d.malla_almn_estado FROM ((public.\"Alumnos\" a JOIN public.\"AlumnosCarrera\" c USING(id_alumno)) \n" +
+                        "JOIN public.\"MallaAlumno\" d USING(id_almn_carrera)) JOIN public.\"Materias\" m USING(id_materia)\n" +
+                        "WHERE a.id_persona = " + ID + " AND malla_almn_estado LIKE 'R';";
+        List<MallaAlumnoMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(nsql);
+        try {
+            while (rs.next()) {
+                MallaAlumnoMD m = new MallaAlumnoMD();
+                MateriaMD mat = new MateriaMD();
+                mat.setNombre(rs.getString("materia_nombre"));
+                m.setMateria(mat);
+                m.setEstado(rs.getString("malla_almn_estado"));
+                lista.add(m);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
             return null;
         }
     }

@@ -225,7 +225,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCmbPrdLectio() {
-        periodos = prd.cargarPeriodos();
+        periodos = prd.cargarPrdParaCmbVtn();
         vtnCurso.getCmbPeriodoLectivo().removeAllItems();
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
@@ -236,7 +236,7 @@ public class VtnCursoCTR {
     }
   public void reporteListaAlumnos() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repListaAlumnos.jasper";
+        String path = "./src/vista/reportes/repListaAlumno.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {

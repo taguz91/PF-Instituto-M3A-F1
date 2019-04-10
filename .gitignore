@@ -1,5 +1,9 @@
 #Archivos privados
 /nbproject/private/
+#Proyecto ejecutable 
+/dist
+#Codigo compilado
+/build/
 
 #Foto creada temporalmente
 foto.png

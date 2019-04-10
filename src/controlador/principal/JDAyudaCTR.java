@@ -15,6 +15,7 @@ public class JDAyudaCTR {
     private final JDAyuda vtnAyuda;
     private final PnlAyuda pnlAyuda;
     private JLabel lbl;
+    private final VtnPrincipalCTR ctrPrin;
 
     String[][] G23 = {{"Busqueda en ventanas", "Se buscará automaticamente, posterior al ingreso de mas de 3 caracteres."},
     {"Validaciones", "Si al ingresar texto se remarca el cuadro de color rojo, es a causa del ingreso  un caracter no válido."},
@@ -50,21 +51,22 @@ public class JDAyudaCTR {
         this.vtnAyuda = new JDAyuda(vtnPrin, false);
         this.vtnAyuda.setIconImage(ctrPrin.getIsta()); 
         this.pnlAyuda = new PnlAyuda();
+        this.ctrPrin = ctrPrin;
         //Mostramos la ventana 
         this.vtnAyuda.setLocationRelativeTo(vtnPrin);
         this.vtnAyuda.setVisible(true);
-
     }
 
     public void iniciar() {
         CambioPnlCTR.cambioPnl(vtnAyuda.getPnlContenedor(), pnlAyuda);
         lbl = pnlAyuda.getLblMensaje();
-        vtnAyuda.setModal(true);
         //Para cambiar a diferentes mensajes 
         vtnAyuda.getBtnAyudaG16().addActionListener(e -> clickG16());
         vtnAyuda.getBtnAyudaG23().addActionListener(e -> clickG23());
         //Por defecto incian las indicaciones del grupo 23 
         clickG23();
+        
+        ctrPrin.eventoJDCerrar(vtnAyuda);
     }
     
     private void clickG23(){

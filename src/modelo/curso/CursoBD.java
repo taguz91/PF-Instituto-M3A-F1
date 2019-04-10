@@ -181,14 +181,16 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<String> cargarNombreCursos() {
         String sql = "SELECT DISTINCT curso_nombre\n"
-                + "FROM public.\"Cursos\";";
+                + "FROM public.\"Cursos\" "
+                + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
 
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo) {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\" "
-                + "WHERE id_prd_lectivo = " + idPrdLectivo + ";";
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
 
@@ -341,17 +343,17 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectParaleloWhere(int idDocente, int ciclo) {
+    public static List<String> selectParaleloWhere(int idDocente, int ciclo, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
-                + "\"Cursos\".curso_paralelo\n"
+                + "\"public\".\"Cursos\".curso_paralelo\n"
                 + "FROM\n"
-                + "\"Cursos\"\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "\"public\".\"Cursos\"\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE AND\n"
-                + "\"Cursos\".curso_ciclo = " + ciclo + "";
+                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
+                + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo + "";
 
         List<String> lista = new ArrayList<>();
 
@@ -372,18 +374,16 @@ public class CursoBD extends CursoMD {
         return lista;
     }
 
-    public static List<Integer> selectCicloWhere(int idDocente) {
+    public static List<Integer> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
-        String SELECT = "SELECT \n"
-                + "DISTINCT\n"
-                + "\"Cursos\".curso_ciclo\n"
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"public\".\"Cursos\".curso_ciclo\n"
                 + "FROM\n"
-                + "\"Cursos\"\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "\"public\".\"Cursos\"\n"
                 + "WHERE\n"
-                + "\"Cursos\".id_docente = " + idDocente + "\n"
+                + "\"public\".\"Cursos\".id_docente = " + idDocente + "\n"
                 + "AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE";
+                + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
 
         List<Integer> lista = new ArrayList<>();
 
@@ -402,17 +402,16 @@ public class CursoBD extends CursoMD {
         return lista;
     }
 
-    public static int selectIdCursoWhere(String paralelo, int ciclo, String nombreJornada, int idDocente, String nombrePeriodo) {
+    public static int selectIdCursoWhere(String paralelo, int ciclo, String nombreJornada, int idDocente, int idPeriodoLectivo) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Cursos\".id_curso\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
                 + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
-                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = '" + idPeriodoLectivo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
                 + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
                 + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'";

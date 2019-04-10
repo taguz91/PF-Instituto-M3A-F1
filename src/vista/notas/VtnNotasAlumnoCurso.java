@@ -109,22 +109,20 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         lbl_jornada.setText("Jornada:");
 
-        cmbDocente.setEnabled(false);
-
         tblNotas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1   /30", "Exámen Interciclo /15", "Total Interciclo /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas"
+                "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1   /30", "Exámen Interciclo /15", "Total Interciclo /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas", "Estado Asistencia"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, false, true, true, true, false, true, true, false
+                false, false, false, false, true, true, false, true, true, true, false, true, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,6 +142,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(1).setPreferredWidth(100);
             tblNotas.getColumnModel().getColumn(2).setPreferredWidth(150);
             tblNotas.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblNotas.getColumnModel().getColumn(13).setPreferredWidth(90);
         }
 
         btnImprimir.setText("Imprimir");
@@ -193,7 +192,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnImprimir))
                             .addComponent(cmbDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 132, Short.MAX_VALUE))
+                        .addGap(0, 205, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );

@@ -162,6 +162,34 @@ public class FrmPersonaCTR {
         });
     }
 
+    //Devuelve un boolean para verificar si existen errores en el formulario
+    public boolean confirmaError() {
+        boolean error = false;
+        if (frmPersona.getLblErrorCallePrin().isVisible() == false
+                && frmPersona.getLblErrorCalleSec().isVisible() == false
+                && frmPersona.getLblErrorCanton().isVisible() == false
+                && frmPersona.getLblErrorCantonReside().isVisible() == false
+                && frmPersona.getLblErrorCarnetConadis().isVisible() == false
+                && frmPersona.getLblErrorCelular().isVisible() == false
+                && frmPersona.getLblErrorCodigoPostal().isVisible() == false
+                && frmPersona.getLblErrorCorreo().isVisible() == false
+                && frmPersona.getLblErrorEstadoCivil().isVisible() == false
+                && frmPersona.getLblErrorEtnia().isVisible() == false
+                && frmPersona.getLblErrorFecNac().isVisible() == false
+                && frmPersona.getLblErrorGenero().isVisible() == false
+                && frmPersona.getLblErrorIdentificacion().isVisible() == false 
+                
+                
+                
+                
+                ) {
+            error = false;
+        } else {
+            error = true;
+        }
+        return error;
+    }
+    
     //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
     // una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
     public void buscarIdentificacion() {
@@ -1029,7 +1057,7 @@ public class FrmPersonaCTR {
     //Metodos para los combos de residencia y ciudades natales
     private void cargarPaises() {
         paises = lug.buscarPaises();
-        paises = ponerPrimeroPais(paises, "ECUADOR");
+        paises = reordenarArray(paises, "ECUADOR");
         frmPersona.getCmbNacionalidad().removeAllItems();
         frmPersona.getCmbNacionalidad().addItem("SELECCIONE");
         //Cargamos el otro combo de paises 
@@ -1042,16 +1070,16 @@ public class FrmPersonaCTR {
     }
 
     //Reordenamos paises para que ecuador este primero  
-    private ArrayList<LugarMD> ponerPrimeroPais(ArrayList<LugarMD> lugares, String pais) {
+    private ArrayList<LugarMD> reordenarArray(ArrayList<LugarMD> lugares, String primerItem) {
         ArrayList<LugarMD> lugaresOrdenados = new ArrayList();
         lugares.forEach((l) -> {
-            if (l.getNombre().equalsIgnoreCase(pais)) {
+            if (l.getNombre().equalsIgnoreCase(primerItem)) {
                 lugaresOrdenados.add(l);
             }
         });
 
         lugares.forEach((l) -> {
-            if (!l.getNombre().equalsIgnoreCase(pais)) {
+            if (!l.getNombre().equalsIgnoreCase(primerItem)) {
                 lugaresOrdenados.add(l);
             }
         });
@@ -1063,6 +1091,7 @@ public class FrmPersonaCTR {
         if (posNac > 0) {
             frmPersona.getLblErrorProvincia().setVisible(false);
             distritos = lug.buscarPorReferencia(paises.get(posNac - 1).getId());
+            distritos = reordenarArray(distritos, "PROVINCIA DEL AZUAY");
             cargarCmbLugares(frmPersona.getCmbProvincia(), distritos);
         } else {
             frmPersona.getLblErrorProvincia().setVisible(true);
@@ -1085,6 +1114,7 @@ public class FrmPersonaCTR {
         if (posPaisRe > 0) {
             frmPersona.getLblErrorPaisReside().setVisible(false);
             provincias = lug.buscarPorReferencia(paises.get(posPaisRe - 1).getId());
+            provincias = reordenarArray(provincias, "PROVINCIA DEL AZUAY");
             cargarCmbLugares(frmPersona.getCmbProvinciaReside(), provincias);
         } else {
             frmPersona.getLblErrorPaisReside().setVisible(true);
