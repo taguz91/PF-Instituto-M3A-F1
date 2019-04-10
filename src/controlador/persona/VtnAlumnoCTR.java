@@ -30,6 +30,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
+import vista.persona.VtnMatRetiradas;
 import vista.principal.VtnPrincipal;
 
 public class VtnAlumnoCTR {
@@ -137,12 +138,7 @@ public class VtnAlumnoCTR {
             VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
             VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno);
             materias.iniciarVentana();
-            
         }
-    }
-    
-    public void filtrarAlumRetirados(){
-        
     }
     
     public void iniciarComponentes(){
