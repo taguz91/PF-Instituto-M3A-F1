@@ -164,7 +164,7 @@ public class FrmPersonaCTR {
 
     //Devuelve un boolean para verificar si existen errores en el formulario
     public boolean confirmaError() {
-        boolean error = false;
+        //boolean error = false;
         if (frmPersona.getLblErrorCallePrin().isVisible() == false
                 && frmPersona.getLblErrorCalleSec().isVisible() == false
                 && frmPersona.getLblErrorCanton().isVisible() == false
@@ -196,11 +196,10 @@ public class FrmPersonaCTR {
                 && frmPersona.getLblErrorTelefono().isVisible() == false
                 && frmPersona.getLblErrorTipoResidencia().isVisible() == false
                 && frmPersona.getLblErrorTipoSangre().isVisible() == false) {
-            error = false;
+            return false;
         } else {
-            error = true;
+            return  true;
         }
-        return error;
     }
 
     //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
@@ -663,7 +662,7 @@ public class FrmPersonaCTR {
 //            frmPersona.getLblErrorTelefono().setVisible(false);
 //        }
         callePrin = frmPersona.getTxtCallePrincipal().getText().trim().toUpperCase();
-        if (!Validar.esLetras(callePrin)) {
+        if (!Validar.esDireccion(callePrin)) {
             frmPersona.getLblErrorCallePrin().setVisible(true);
             guardar = false;
         } else {
@@ -681,9 +680,7 @@ public class FrmPersonaCTR {
 //        }
         // Lugares en donde reside y vive 
         LugarMD lugarNac = null, lugarRes = null;
-        //Esto igual deberiamos hacerlo de otra manera.
         //Aqui preguntamos siempre que sea mayor a la posicion 0 porque 
-        //Ahi esta el texto seleccione  
         //Tambien que siempre sea menor iguala al numero de resultados que 
         //tenga porque el ultimo siempre sera otro.
         //Si es otro se guardaria el aterior y no pasara
@@ -968,7 +965,7 @@ public class FrmPersonaCTR {
                 frmPersona.getCmbCanton().setSelectedItem(ciudad);
             }
         }
-        int nvlLugarRes = 0;
+        int nvlLugarRes;
         System.out.println("Nivel de lugar residencia  " + per.getLugarResidencia().getNivel());
         if (per.getLugarResidencia().getNivel() == null) {
             nvlLugarRes = 0;

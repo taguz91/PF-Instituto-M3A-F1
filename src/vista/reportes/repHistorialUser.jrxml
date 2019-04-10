@@ -4,9 +4,11 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="consulta" class="java.lang.String">
-		<defaultValueExpression><![CDATA[SELECT id_historial_user, usu_username, historial_nombre_tabla, 
-historial_tipo_accion, historial_fecha
-FROM public."HistorialUsuarios";]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[SELECT id_historial_user, usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla
+FROM public."HistorialUsuarios"
+WHERE date_part('year', historial_fecha) = date_part('year', now())
+AND date_part('month', historial_fecha) = date_part('month', now())
+AND date_part('day', historial_fecha) = date_part('day', now());]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[$P!{consulta}]]>
