@@ -314,7 +314,7 @@ public class PersonaBD extends PersonaMD {
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_fecha_nacimiento, persona_activa\n"
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true';";
+                + "FROM public.\"Personas\" WHERE persona_activa = 'true' ORDER BY persona_primer_apellido ASC;";
         return consultarParaTabla(sql);
     }
 
@@ -806,6 +806,13 @@ public class PersonaBD extends PersonaMD {
         }
 
         return lista;
+    }
+    
+    public List<PersonaMD> filtrarEliminados(){
+        String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n" +
+                        "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n" +
+                        "WHERE persona_activa = 'false' ORDER BY persona_primer_apellido ASC;";
+        return consultarParaTabla(nsql);
     }
 
     public static PersonaMD selectNombresApellidosWhere(int idAlumno) {

@@ -177,21 +177,34 @@ public class FrmPersonaCTR {
                 && frmPersona.getLblErrorEtnia().isVisible() == false
                 && frmPersona.getLblErrorFecNac().isVisible() == false
                 && frmPersona.getLblErrorGenero().isVisible() == false
-                && frmPersona.getLblErrorIdentificacion().isVisible() == false 
-                
-                
-                
-                
-                ) {
+                && frmPersona.getLblErrorIdentificacion().isVisible() == false
+                && frmPersona.getLblErrorIdioma().isVisible() == false
+                && frmPersona.getLblErrorNacionalidad().isVisible() == false
+                && frmPersona.getLblErrorPaisReside().isVisible() == false
+                && frmPersona.getLblErrorPaisReside().isVisible() == false
+                && frmPersona.getLblErrorParroquiaReside().isVisible() == false
+                && frmPersona.getLblErrorPorcentaje().isVisible() == false
+                && frmPersona.getLblErrorPriApellido().isVisible() == false
+                && frmPersona.getLblErrorPriNombre().isVisible() == false
+                && frmPersona.getLblErrorProvincia().isVisible() == false
+                && frmPersona.getLblErrorProvinciaReside().isVisible() == false
+                && frmPersona.getLblErrorReferencia().isVisible() == false
+                && frmPersona.getLblErrorSector().isVisible() == false
+                && frmPersona.getLblErrorSegApellido().isVisible() == false
+                && frmPersona.getLblErrorSegNombre().isVisible() == false
+                && frmPersona.getLblErrorSexo().isVisible() == false
+                && frmPersona.getLblErrorTelefono().isVisible() == false
+                && frmPersona.getLblErrorTipoResidencia().isVisible() == false
+                && frmPersona.getLblErrorTipoSangre().isVisible() == false) {
             error = false;
         } else {
             error = true;
         }
         return error;
     }
-    
+
     //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
-    // una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
+    //una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
     public void buscarIdentificacion() {
         errorCedula = false;
         String cedula = frmPersona.getTxtIdentificacion().getText();
@@ -461,24 +474,28 @@ public class FrmPersonaCTR {
         TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
 
-        if (TipoId.equals("SELECCIONE") == false
-                && Identificacion.equals("") == false
-                && PriNombre.equals("") == false
-                && PriApellido.equals("") == false
-                && EstadoCivil.equals("SELECCIONE") == false
-                && IdiomaRaiz.equals("SELECCIONE") == false
-                && Sexo.equals("SELECCIONE") == false
-                && Genero.equals("SELECCIONE") == false
-                && TipoSangre.equals("SELECCIONE") == false
-                && Etnia.equals("SELECCIONE") == false
-                //      && FechaNaci.equals("") == false
-                && TipoResidencia.equals("SELECCIONE") == false
-                && CallePrin.equals("") == false) {
+        if (confirmaError() == false) {
+            if (TipoId.equals("SELECCIONE") == false
+                    && Identificacion.equals("") == false
+                    && PriNombre.equals("") == false
+                    && PriApellido.equals("") == false
+                    && EstadoCivil.equals("SELECCIONE") == false
+                    && IdiomaRaiz.equals("SELECCIONE") == false
+                    && Sexo.equals("SELECCIONE") == false
+                    && Genero.equals("SELECCIONE") == false
+                    && TipoSangre.equals("SELECCIONE") == false
+                    && Etnia.equals("SELECCIONE") == false
+                    //      && FechaNaci.equals("") == false
+                    && TipoResidencia.equals("SELECCIONE") == false
+                    && CallePrin.equals("") == false) {
 //            if (Discapacidad == false && TipoDiscapacidad.equals("SELECCIONE") == false
 //                    && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
 //                frmPersona.getBtnGuardarPersona().setEnabled(true);
 //            }
-            frmPersona.getBtnGuardarPersona().setEnabled(true);
+                frmPersona.getBtnGuardarPersona().setEnabled(true);
+            } else {
+                frmPersona.getBtnGuardarPersona().setEnabled(false);
+            }
         } else {
             frmPersona.getBtnGuardarPersona().setEnabled(false);
         }
