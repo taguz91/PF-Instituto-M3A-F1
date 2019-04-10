@@ -542,8 +542,6 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void validarCombos() {
 
-        System.out.println("----------------> " + vista.getCmbAsignatura().getItemCount());
-
         if (vista.getCmbAsignatura().getItemCount() > 0) {
             vista.getBtnVerNotas().setEnabled(true);
         } else {
