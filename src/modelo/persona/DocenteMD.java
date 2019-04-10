@@ -1,18 +1,20 @@
 package modelo.persona;
+
 import java.awt.Image;
 import java.time.LocalDate;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
+
 /**
  *
  * @author ana96
  */
+public class DocenteMD extends PersonaMD {
 
-public class DocenteMD extends PersonaMD{
-    private String codigo,docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente,tipoIdenticacion;
-    private int docenteCategoria,idDocente;
+    private String codigo, docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente, tipoIdenticacion;
+    private int docenteCategoria, idDocente;
     private boolean docenteOtroTrabajo, docenteCapacitador;
-    private LocalDate fechaInicioContratacion,fechaFinContratacion;
+    private LocalDate fechaInicioContratacion, fechaFinContratacion;
 
     public DocenteMD() {
     }
@@ -31,7 +33,6 @@ public class DocenteMD extends PersonaMD{
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
     }
-
 
     public String getCodigo() {
         return codigo;
@@ -128,5 +129,10 @@ public class DocenteMD extends PersonaMD{
     public void setTipoIdenticacion(String tipoIdenticacion) {
         this.tipoIdenticacion = tipoIdenticacion;
     }
-        
+
+    @Override
+    public String toString() {
+        return super.toString() + " DocenteMD{" + "codigo=" + codigo + ", docenteTipoTiempo=" + docenteTipoTiempo + ", estado=" + estado + ", tituloDocente=" + tituloDocente + ", abreviaturaDocente=" + abreviaturaDocente + ", tipoIdenticacion=" + tipoIdenticacion + ", docenteCategoria=" + docenteCategoria + ", idDocente=" + idDocente + ", docenteOtroTrabajo=" + docenteOtroTrabajo + ", docenteCapacitador=" + docenteCapacitador + ", fechaInicioContratacion=" + fechaInicioContratacion + ", fechaFinContratacion=" + fechaFinContratacion + '}';
+    }
+
 }
