@@ -60,11 +60,11 @@
               </Group>
               <EmptySpace pref="35" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSeleccionDocumento" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="BTNGENERAR" alignment="1" max="32767" attributes="0"/>
-                      <Component id="CHBPROGRAMA" max="32767" attributes="0"/>
-                      <Component id="CHBSILABO" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGenerar" alignment="1" max="32767" attributes="0"/>
+                      <Component id="chbProgramaAnalitico" max="32767" attributes="0"/>
+                      <Component id="chbSilabo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -77,11 +77,11 @@
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblSeleccionDocumento" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="CHBPROGRAMA" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbProgramaAnalitico" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Component id="CHBSILABO" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbSilabo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -104,7 +104,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="BTNGENERAR" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGenerar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="242" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -170,13 +170,11 @@
     <Component class="javax.swing.JButton" name="btnEditar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnNuevo">
@@ -190,28 +188,27 @@
     <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="BTNGENERAR">
+    <Component class="javax.swing.JButton" name="btnGenerar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Generar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="CHBSILABO">
+    <Component class="javax.swing.JCheckBox" name="chbSilabo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Silabo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="CHBPROGRAMA">
+    <Component class="javax.swing.JCheckBox" name="chbProgramaAnalitico">
       <Properties>
         <Property name="text" type="java.lang.String" value="Programa Anal&#xed;tico"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHBPROGRAMAActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbProgramaAnaliticoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblSeleccionDocumento">
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccione el documento:"/>
       </Properties>
