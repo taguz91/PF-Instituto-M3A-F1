@@ -3,47 +3,57 @@ package controlador.alumno;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.estilo.TblEstilo;
-import vista.alumno.JDMateriasCursadas;
+import vista.alumno.JDMateriasInformacion;
 import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDMateriasCursadasCTR {
+public class JDMateriasInformacionCTR {
 
     private final VtnPrincipal vtnPrin;
     private final AlumnoCarreraMD alumno;
     private final MallaAlumnoBD mallaAlm;
-    private final JDMateriasCursadas jd;
+    private final JDMateriasInformacion jd;
     private final String estado;
     private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<MallaAlumnoMD> materiasAlmn;
-    DefaultTableModel mdTbl;
-
-    public JDMateriasCursadasCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno, 
+    private DefaultTableModel mdTbl;
+    
+    /**
+     * Dialogo en la que nos muestra informacion de las materias de un estudiante.     
+     * @param vtnPrin 
+     * @param alumno
+     * @param mallaAlm
+     * @param estado Estado por el cual cargaran las materias.
+     * @param ctrPrin 
+     */
+    public JDMateriasInformacionCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno, 
             MallaAlumnoBD mallaAlm, String estado, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.alumno = alumno;
         this.mallaAlm = mallaAlm;
         this.estado = estado;
         this.ctrPrin = ctrPrin;
-        this.jd = new JDMateriasCursadas(vtnPrin, false);
+        this.jd = new JDMateriasInformacion(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
         
         jd.setVisible(true);
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias de la ventana.
+     * Eventos.
+     * Formato de la tabla.
+     */
     public void iniciar() {
         String[] titulo = {"Materia"};
         String[][] datos = {};
@@ -54,7 +64,7 @@ public class JDMateriasCursadasCTR {
         jd.getLblAlumno().setText(alumno.getAlumno().getPrimerNombre() + " "
                 + alumno.getAlumno().getPrimerApellido());
         
-        cargarMateriasCursadas();
+        cargarMateriasEstado();
 
         jd.getTblMaterias().addMouseListener(new MouseAdapter() {
             @Override
@@ -65,12 +75,20 @@ public class JDMateriasCursadasCTR {
         
         ctrPrin.eventoJDCerrar(jd);
     }
-
-    private void cargarMateriasCursadas() {
+    
+    /**
+     * Consulta en la base de datos, en la tabla de malla. Las
+     * materias con el estado pasado por filtro.
+     */
+    private void cargarMateriasEstado() {
         materiasAlmn = mallaAlm.cargarMallaAlumnoPorEstado(alumno.getId(), estado);
         llenarTbl(materiasAlmn);
     }
-
+    
+    /**
+     * Lenamos la tabla con la informacion obtenida.
+     * @param materiasAlmn 
+     */
     private void llenarTbl(ArrayList<MallaAlumnoMD> materiasAlmn) {
         mdTbl.setRowCount(0);
         if (materiasAlmn != null) {
@@ -80,11 +98,14 @@ public class JDMateriasCursadasCTR {
             });
         }
     }
-
+    
+    /**
+     * Al hacer click en una de las materias se carga toda la informacion referente
+     * a la misma.
+     */
     private void clickTbl() {
         int pos = jd.getTblMaterias().getSelectedRow();
         if (pos >= 0) {
-            //jd.getLblCarrera().setText(alumno.getCarrera().getNombre());
             jd.getLblCiclo().setText(materiasAlmn.get(pos).getMallaCiclo() + "");
             jd.getLblNota1().setText(materiasAlmn.get(pos).getNota1() + "");
             jd.getLblNota2().setText(materiasAlmn.get(pos).getNota2() + "");

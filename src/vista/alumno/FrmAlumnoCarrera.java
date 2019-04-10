@@ -95,6 +95,8 @@ public class FrmAlumnoCarrera extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        txtBuscar.setToolTipText("Se busca por nombre o cedula.");
+
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
         btnGuardar.setText("Guardar");

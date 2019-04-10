@@ -176,7 +176,7 @@ public class VtnDocenteMateriaCTR {
 
     private void llenarCmbCarrera() {
         vtnDm.getCmbCarrera().removeAllItems();
-        carreras = car.cargarCarreras();
+        carreras = car.cargarCarrerasCmb();
         if (carreras != null) {
             vtnDm.getCmbCarrera().addItem("Todas");
             carreras.forEach(c -> {

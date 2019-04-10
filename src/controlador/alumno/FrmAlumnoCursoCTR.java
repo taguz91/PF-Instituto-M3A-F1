@@ -71,7 +71,15 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MateriaRequisitoMD> requisitos;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
-
+    
+    /**
+     * Constructor del sistema. 
+     * Esta nos sirve para matricular un estudiante en una carrera. 
+     * @param vtnPrin VtnPrincipal: Vista principal del sistema. 
+     * @param frmAlmCurso FrmAlumnoCurso: 
+     * @param conecta ConectarBD: Nos ayuda a realizar consultas en la base de datos. 
+     * @param ctrPrin VtnPrincipalCTR: Controlador de ventana principal.
+     */
     public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCurso = frmAlmCurso;
@@ -93,7 +101,13 @@ public class FrmAlumnoCursoCTR {
         vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
         frmAlmCurso.show();
     }
-
+    
+    /**
+     * Inicia dependencias de la ventana. 
+     * Carga  combos. 
+     * Da formato a las tablas  
+     * Eventos de mouse. 
+     */
     public void iniciar() {
         //Cargamos el combo con los periodos 
         cargarCmbPrdLectivo();
@@ -161,7 +175,10 @@ public class FrmAlumnoCursoCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Alumno por curso");
     }
-
+    
+    /**
+     * Inicia la validaciones de la ventana. 
+     */
     private void inicarValidaciones() {
         frmAlmCurso.getTxtBuscar().addKeyListener(new TxtVBuscador(frmAlmCurso.getTxtBuscar(),
                 frmAlmCurso.getLblErrorBuscar(), frmAlmCurso.getBtnBuscar()));
@@ -169,7 +186,13 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getCmbPrdLectivo().addActionListener(new CmbValidar(frmAlmCurso.getCmbPrdLectivo(),
                 frmAlmCurso.getLblErrorPrdLectivo()));
     }
-
+    
+    /**
+     * Evento al dar click en guardar.
+     * Comprueba que todo el formulario este ingresado correctamente. 
+     * Si el formulario esta ingresado correctamente se inserta en la base
+     * de datos.
+     */
     private void guardar() {
         boolean guardar = true;
         if (cursosSelec.isEmpty()) {
@@ -211,19 +234,32 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
     }
-
+    
+    /**
+     * Ocultamos los errores en los formularios.
+     */
     private void ocultarErrores() {
         frmAlmCurso.getLblErrorBuscar().setVisible(false);
         frmAlmCurso.getLblErrorPrdLectivo().setVisible(false);
         frmAlmCurso.getBtnReprobadas().setVisible(false);
     }
-
+    
+    /**
+     * Estado de los buscadores comienzan en falso. 
+     * Inavilita el txt, el btn de buscar y el btn de
+     * materias cursadas.     
+     * @param estado 
+     */
     private void buscadoresEstado(boolean estado) {
         frmAlmCurso.getTxtBuscar().setEnabled(estado);
         frmAlmCurso.getBtnBuscar().setEnabled(estado);
         frmAlmCurso.getBtnMtCursadas().setEnabled(estado);
     }
-
+    
+    /**
+     * Consulta en base de datos todos los periodos activos, 
+     * para cargarlos en el combo de periodos.
+     */
     private void cargarCmbPrdLectivo() {
         periodos = prd.cargarPeriodos();
         if (periodos != null) {
@@ -235,6 +271,9 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
+    /**
+     * Al hacer click en un periodo se activan los buscadores.
+     */
     private void clickPrdLectivo() {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0) {
@@ -243,7 +282,12 @@ public class FrmAlumnoCursoCTR {
             buscadoresEstado(false);
         }
     }
-
+    
+    /**
+     * Se buscan los alumnos por cedula o nombre especificamente de una
+     * carrera, la carrera se obtiene del periodo previamente seleccionado.
+     * @param aguja 
+     */
     private void buscarAlumnos(String aguja) {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0 && Validar.esLetrasYNumeros(aguja)) {
@@ -253,8 +297,16 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
-    /*
-    *Esto se ejecutara al seleccionar un alumno 
+    /**
+     * Al seleccionar un alumno se realizan muchos procesos. 
+     * 1. Buscamos todas las materias en las que se encuentra matriculado. 
+     * 2. Si encuentra materias en las que esta matriculado se muestra una 
+     *    ventana con diferentes opciones: 
+     *      2.1 Ingresar otro alumno: Borra la tabla y los buscadores. 
+     *      2.2 Ingresar en otro curso: Sigue todo el proceso de matricula. 
+     *      2.3 Ver materias: Se abre una ventana en la que listan todas las materias que esta matriculado. 
+     *      2.4 Cancelar: Unicamente cierra la ventana.
+     * 3. Si no encuentra materias en las que esta matriculada se clasifican, los combos para cargar sus materias.
      */
     private void clickTblAlumnos() {
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
@@ -294,18 +346,33 @@ public class FrmAlumnoCursoCTR {
         }
     }
 
+    /**
+     * En este metodo clasificamos todas las materias que se mostraran en el listado
+     * donde se pueden matricular.
+     * 1. Se buscan todas las materias que curso un alumno. Y se filtra 
+     *    el ultimo ciclo que curso el estudiante.
+     * 2. Se buscan las materias  que reprobo el estudiante. Y se cargan 
+     *    el ciclo menor en el que reprobo una materia.
+     * 3. De igual manera se filtran, las materias en las que esta matriculado, 
+     *    para borrarlas de la tabla.
+     * 4. Al clasificar todo se carga el combo de ciclos.
+     * @param posAlmn Int: Poscion en el array del alumno seleccionado. 
+     * @param posPrd Int: Poscion en el array del periodo seleccionado.
+     */ 
     private void clasificarMaterias(int posAlmn, int posPrd) {
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
         //Si no esta matriculado miramos la materias que a cursado 
         materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
-        if (mallaAlm != null) {
+        if (materiasAlmn != null) {
             for (int i = 0; i < materiasAlmn.size(); i++) {
+                System.out.println("Ciclo: "+materiasAlmn.get(i).getMallaCiclo());
                 if (materiasAlmn.get(i).getMallaCiclo() > cicloCursado) {
                     cicloCursado = materiasAlmn.get(i).getMallaCiclo();
                 }
             }
         }
+        System.out.println("--");
         //Se leasigna el mismo valor si es que no tiene un ciclo reprobado
         cicloReprobado = cicloCursado;
         //Esto lo usamos para saber desde que ciclo cargar el combo de cursos
@@ -317,7 +384,8 @@ public class FrmAlumnoCursoCTR {
         System.out.println("Se encuentra matriculado en " + mallaMatriculadas.size());
 
         //Buscamos todas las materias en las que ya a cursado  para borrarlas de la tabla
-        mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+        //mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+        mallaCursadas = materiasAlmn; 
         System.out.println("Ah cursado " + mallaCursadas.size());
 
         if (mallaPerdidas.size() > 0) {
@@ -329,26 +397,40 @@ public class FrmAlumnoCursoCTR {
                 }
             });
         } else {
+            cicloReprobado++;
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
-    /*Me consulta las materias por el estado que se le pase 
-      en una ventana emergente
+    /**
+     * Me consulta las materias por el estado que se le pase,
+     * en una ventana emergente.
+     * @param estado String: Estado de la materia
+     * Estados: 
+     *  C: Cursado 
+     *  P: Pendiente 
+     *  M: Matriculado
+     *  A: Anulado/Retirado 
+     *  R: Reprobado
      */
     private void mostrarInformacion(String estado) {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
             //Mostramos las materias que curso
-            JDMateriasCursadasCTR jdCtr = new JDMateriasCursadasCTR(vtnPrin, alumnosCarrera.get(posAlm),
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
                     mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
         }
     }
-
+    
+    /**
+     * Llenamos la tabla de alumnos, con el listado que se le pase. 
+     * @param alumnos ArrayList<AlumnoCarreraMD>: Alumnos devueltos luego de consultarlos
+     * en una base de datos.
+     */
     private void llenarTblAlumnos(ArrayList<AlumnoCarreraMD> alumnos) {
         mdAlm.setRowCount(0);
         if (alumnos != null) {
@@ -362,8 +444,16 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Buscamos los cursos de un periodo en especifico.
+     * @param posPrd
+     * @param cicloCursado Int: Ciclo maximo que curso un estudiante. 
+     * @param cicloReprobado Int: Ciclo minimo en el que reprobo.
+     */
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
+        System.out.println("Ciclo cursado: "+cicloCursado);
+        System.out.println("Ciclo reprobado: "+cicloReprobado);
         frmAlmCurso.getCmbCurso().removeAllItems();
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
                 cicloCursado);
@@ -374,7 +464,12 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Buscamos las materias que abrieron en este curso, y
+     * periodo lectivo seleccionado. 
+     * Estas materias se cargan en la tabla de materias pendientes.
+     */
     private void cargarMaterias() {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
@@ -389,7 +484,11 @@ public class FrmAlumnoCursoCTR {
             mdMatPen.setRowCount(0);
         }
     }
-
+    
+    /**
+     * Se llena la tabla con las materias,excluyendo las que ya se matriculo.
+     * @param cursos 
+     */
     private void llenarTblMatPen(ArrayList<CursoMD> cursos) {
         mdMatPen.setRowCount(0);
         if (cursos != null) {
@@ -430,7 +529,13 @@ public class FrmAlumnoCursoCTR {
             }
         }
     }
-
+    
+    /**
+     * Comprobamos que haya cursado los requisitos, de cada curso en el que se
+     * puede matricular.
+     * @param cursos ArrayList<CursoMD>: Cursos ya depurados, unicamente los cursos
+     * que tiene materias que puede tomar.
+     */
     private void llenarTblConRequisitosPasados(ArrayList<CursoMD> cursos) {
         MallaAlumnoMD requisito;
         //Si se quiere matricular en un ciclo inferior o igual a 3 debemos revisar si
@@ -465,7 +570,12 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Llenamos la tabla con las materias que se selecciono.
+     * Esta tabla es usada en el registro. 
+     * @param cursosSelec ArrayList<CursoMD>: Cursos con las materias seleccionadas.
+     */
     private void llenarTblMatSelec(ArrayList<CursoMD> cursosSelec) {
         mdMatSelec.setRowCount(0);
         if (cursosSelec != null) {
@@ -475,7 +585,10 @@ public class FrmAlumnoCursoCTR {
             });
         }
     }
-
+    
+    /**
+     * Al seleccionar una materia se puede pasar al panel de materias seleccionadas.
+     */
     private void pasarUnaMateria() {
         int posMat = frmAlmCurso.getTblMateriasPen().getSelectedRow();
         if (posMat >= 0) {
@@ -488,7 +601,10 @@ public class FrmAlumnoCursoCTR {
             llenarTblMatSelec(cursosSelec);
         }
     }
-
+    
+    /**
+     * Se pasan todas las materias de la tabla pendientes a seleccionada.
+     */
     private void pasarTodasMaterias() {
         //Pasamos todos las materias que nos quedan en la tabla cursos 
         //La rrellenamos en cursos seleccionados
@@ -498,7 +614,11 @@ public class FrmAlumnoCursoCTR {
         llenarTblMatPen(cursosPen);
         llenarTblMatSelec(cursosSelec);
     }
-
+    
+    /**
+     * Se regresa una materia seleccionada a la tabla de 
+     * materias pendientes.
+     */
     private void regresarUnaMateria() {
         int posMat = frmAlmCurso.getTblMateriasSelec().getSelectedRow();
         if (posMat >= 0) {
@@ -511,7 +631,11 @@ public class FrmAlumnoCursoCTR {
             llenarTblMatSelec(cursosSelec);
         }
     }
-
+    
+    /**
+     * Se regresan todas las materias, a la tabla de
+     * materias pendientes.
+     */
     private void regresarTodasMaterias() {
         cursosSelec.forEach(c -> cursosPen.add(c));
         //Reiniciamos el array para borrar todos los datos
@@ -519,7 +643,10 @@ public class FrmAlumnoCursoCTR {
         llenarTblMatPen(cursosPen);
         llenarTblMatSelec(cursosSelec);
     }
-
+    
+    /**
+     * Se muestran las materias reprobadas de un alumno
+     */
     private void clickMateriasReprobadas() {
         mostrarInformacion("R");
     }

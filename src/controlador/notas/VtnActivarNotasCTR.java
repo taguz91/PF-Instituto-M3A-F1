@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.IngresoNotasMD;
@@ -52,8 +53,12 @@ public class VtnActivarNotasCTR {
     //INIT
     public void Init() {
         tablaActivarNotas = (DefaultTableModel) vista.getTblCursoTipoNotas().getModel();
+
         InitEventos();
-        cargarTabla();
+
+        listaNotasActivadas = IngresoNotasBD.selectAll();
+
+        cargarTabla(listaNotasActivadas);
 
         try {
             vista.show();
@@ -79,7 +84,7 @@ public class VtnActivarNotasCTR {
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
 
                     active = true;
-
+                    vista.getTblCursoTipoNotas().setModel(Validaciones(tablaActivarNotas));
                     active = false;
                 }
 
@@ -137,7 +142,7 @@ public class VtnActivarNotasCTR {
         return valorBool;
     }
 
-    private void cargarTabla() {
+    private void cargarTabla(List<IngresoNotasBD> lista) {
 
         if (cargarTabla) {
             thread = new Thread() {
@@ -149,12 +154,12 @@ public class VtnActivarNotasCTR {
                     desktop.getLblEstado().setText("CARGANDO...");
 
                     tablaActivarNotas.setRowCount(0);
-                    listaNotasActivadas = IngresoNotasBD.selectAll();
-                    listaNotasActivadas
+
+                    lista
                             .stream()
                             .forEach(VtnActivarNotasCTR::agregarFila);
 
-                    vista.getLblResultados().setText(listaNotasActivadas.size() + " Resultados");
+                    vista.getLblResultados().setText(lista.size() + " Resultados");
 
                     cargarTabla = true;
 
@@ -205,6 +210,55 @@ public class VtnActivarNotasCTR {
         });
     }
 
+    private TableModel Validaciones(TableModel datos) {
+        int fila = getSelectedRow();
+        
+        String aporte1 = null;
+        String aporte2 = null;
+        String examenInterciclo = null;
+        String examenFinal = null;
+        String examenSupletorio = null;
+
+        try {
+             aporte1 = (String) datos.getValueAt(fila, 7);
+             examenInterciclo = (String) datos.getValueAt(fila, 8);
+
+        if (aporte1.equalsIgnoreCase("true") || aporte1.equalsIgnoreCase("false") || aporte1.equalsIgnoreCase("t") || aporte1.equalsIgnoreCase("f")) {
+            /*if (aporte1.startsWith("t")) {
+                JOptionPane.showMessageDialog(vista, "Correcto  if 2");
+                datos.setValueAt("true", fila, 7);
+            }else if ( aporte1.equalsIgnoreCase("f")){
+                 JOptionPane.showMessageDialog(vista, "Correcto if 3");
+                datos.setValueAt("false", fila, 7);
+                
+            }*/
+            JOptionPane.showMessageDialog(vista, "Correcto");
+            datos.setValueAt(aporte1.toLowerCase(), fila, 7);
+
+        } else if (examenInterciclo.equalsIgnoreCase("true") || examenInterciclo.equalsIgnoreCase("false") || examenInterciclo.equalsIgnoreCase("t") || examenInterciclo.equalsIgnoreCase("f")) {
+            JOptionPane.showMessageDialog(vista, "Correcto");
+            datos.setValueAt(examenInterciclo.toLowerCase(), fila, 8);
+        } else {
+            JOptionPane.showMessageDialog(vista, "Datos Incorrectos....\n"
+                    + "Ingrese nuevamente");
+
+            //System.out.println("---->"+listaNotasActivadas.size());
+            cargarTabla(listaNotasActivadas);
+
+        }
+        } catch (Exception e) {
+             System.out.println(e.getMessage());
+        }
+       
+
+        return datos;
+
+    }
+
+    private int getSelectedRow() {
+        return vista.getTblCursoTipoNotas().getSelectedRow();
+    }
+
     //EVENTOS
     private void txtBuscarOnKeyReleased(KeyEvent e) {
 
@@ -212,7 +266,7 @@ public class VtnActivarNotasCTR {
 
     private void btnActualizar(ActionEvent e) {
 
-        cargarTabla();
+        cargarTabla(IngresoNotasBD.selectAll());
 
     }
 }

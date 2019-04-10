@@ -1,6 +1,10 @@
 package controlador.persona;
 
+import com.github.sarxos.webcam.WebcamShutdownHook;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -26,6 +30,7 @@ public class WebCamCTR {
     private InputStream is;
     private FileInputStream fis;
     private Image foto = null;
+    private boolean camaraActiva = false; 
 
     public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipal vtnPrin) {
         this.frmPersona = frmPersona;
@@ -36,13 +41,37 @@ public class WebCamCTR {
     }
 
     public void iniciarCamara() {
-        vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
+        //vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
+        vtnWebCam.getBtnCapturarFoto().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                //Consulto los mouse listeners de el panel y le paso el evento
+                for(MouseListener ml: vtnWebCam.getPanelCam().getMouseListeners()){
+                    ml.mouseClicked(e);
+                }
+            }
+        });
+        
         vtnWebCam.getBtnGuardarFoto().addActionListener(e -> guardarFoto());
         vtnWebCam.getBtnCancelar().addActionListener(e -> cancelarFoto());
+        
+        //Evento de cama guardado  
+        vtnWebCam.getPanelCam().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                if (!camaraActiva) {
+                    camaraActiva = true;
+                }else{
+                    capturarFoto(); 
+                    camaraActiva = false;
+                }
+            }
+        }); 
+        
     }
-
+    
     public void capturarFoto() {
-        //System.out.println("Se dio click en capturar foto");
+        System.out.println("Se dio click en capturar foto");
         try {
             byte[] imagen = vtnWebCam.getPanelCam().getBytes();
             if (imagen != null) {
@@ -60,11 +89,11 @@ public class WebCamCTR {
                     vtnWebCam.getPanelCam().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
                 } else {
                     JOptionPane.showMessageDialog(vtnWebCam, "Primero debe actiavar la camara, \ndandole click al recuado idicado.");
-                    vtnWebCam.getPanelCam().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 76, 113),2));
+                    vtnWebCam.getPanelCam().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 76, 113), 2));
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Este es un error al tomar una foto "+ex.getMessage());
+            System.out.println("Este es un error al tomar una foto " + ex.getMessage());
         }
     }
 
@@ -77,7 +106,12 @@ public class WebCamCTR {
             frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
             cancelarFoto();
             ctrFrmPersona.pasarFoto(is);
-
+            //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
+            WebcamShutdownHook WebcamShutdownHook;
+            vtnWebCam.getPanelCam().isACTIVARCAMARA();
+//            [shutdown-hook-1] INFO com.github.sarxos.webcam.WebcamShutdownHook - Automatic Integrated Camera 0 deallocation
+//            [shutdown-hook-1] INFO com.github.sarxos.webcam.Webcam - Disposing webcam Integrated Camera 0
+//            
         } else {
             JOptionPane.showMessageDialog(vtnWebCam, "Aun no se a tomado una foto.");
         }
@@ -87,6 +121,11 @@ public class WebCamCTR {
     private void cancelarFoto() {
         vtnWebCam.dispose();
         System.out.println("Se dio click en cancelar");
+        //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
+    }
+    
+    private void clickCamara(){
+        
     }
 
 }

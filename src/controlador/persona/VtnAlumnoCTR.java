@@ -30,8 +30,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
-import vista.persona.VtnDocente;
-import vista.persona.VtnMatRetiradas;
 import vista.principal.VtnPrincipal;
 
 public class VtnAlumnoCTR {

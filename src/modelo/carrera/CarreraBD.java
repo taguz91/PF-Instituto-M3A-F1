@@ -99,42 +99,12 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-
-    public CarreraMD buscarParaReferencia(int idCarrera) {
-        CarreraMD carrera = new CarreraMD();
-        String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,"
-                + " carrera_codigo\n"
-                + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
-
-        ResultSet rs = conecta.sql(sql);
-
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    carrera.setId(rs.getInt("id_carrera"));
-                    DocenteMD docen = null;
-                    if (!rs.wasNull()) {
-                        docen = doc.buscarDocenteParaReferencia(rs.getInt("id_docente_coordinador"));
-                    }
-                    carrera.setCoordinador(docen);
-                    carrera.setNombre(rs.getString("carrera_nombre"));
-                    carrera.setCodigo(rs.getString("carrera_codigo"));
-
-                }
-                return carrera;
-            } else {
-                System.out.println("No se pudo consultar una carreras");
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
+    
+    /**
+     * Consultamos todas la carreras activas.
+     * @return 
+     */
     public ArrayList<CarreraMD> cargarCarreras() {
-        ArrayList<CarreraMD> carreras = new ArrayList();
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
                 + "carrera_modalidad, (\n"
@@ -149,51 +119,15 @@ public class CarreraBD extends CarreraMD {
                 + "FROM public.\"Carreras\" c\n"
                 + "WHERE carrera_activo = TRUE\n"
                 + "ORDER BY carrera_fecha_inicio;";
-
-        ResultSet rs = conecta.sql(sql);
-
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    CarreraMD carrera = new CarreraMD();
-
-                    carrera.setId(rs.getInt("id_carrera"));
-                    DocenteMD docen = new DocenteMD();
-                    String nombreC = rs.getString(7);
-                    if (nombreC != null) {
-                        String nombres[] = nombreC.split(" ");
-                        docen.setPrimerNombre(nombres[0]);
-                        docen.setSegundoNombre(nombres[1]);
-                        docen.setPrimerApellido(nombres[2]);
-                        docen.setSegundoApellido(nombres[3]);
-                        //El ultimo es la identificacion  
-                        docen.setIdentificacion(nombres[4]);
-                    }
-
-                    carrera.setCoordinador(docen);
-                    carrera.setNombre(rs.getString("carrera_nombre"));
-
-                    carrera.setCodigo(rs.getString("carrera_codigo"));
-                    carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
-
-                    carrera.setModalidad(rs.getString("carrera_modalidad"));
-
-                    carreras.add(carrera);
-                }
-                return carreras;
-            } else {
-                System.out.println("No se pudo consultar una carreras");
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return consultarCarrerasTbl(sql); 
     }
-
+    
+    /**
+     * Buscamos las carreras, por nombre o codigo.
+     * @param aguja
+     * @return 
+     */
     public ArrayList<CarreraMD> buscarCarrera(String aguja) {
-        ArrayList<CarreraMD> carreras = new ArrayList();
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
                 + "carrera_modalidad, (\n"
@@ -209,11 +143,20 @@ public class CarreraBD extends CarreraMD {
                 + "	carrera_codigo ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%'\n"
                 + ")ORDER BY carrera_fecha_inicio;";
-
+        return consultarCarrerasTbl(sql); 
+    }
+    
+    /**
+     * Consulatamos carrera para tabla
+     * @param sql
+     * @return 
+     */
+    private ArrayList<CarreraMD> consultarCarrerasTbl(String sql) {
+        ArrayList<CarreraMD> carreras = new ArrayList();
         ResultSet rs = conecta.sql(sql);
 
-        try {
-            if (rs != null) {
+        if (rs != null) {
+            try {
                 while (rs.next()) {
                     CarreraMD carrera = new CarreraMD();
 
@@ -227,16 +170,48 @@ public class CarreraBD extends CarreraMD {
                         docen.setPrimerApellido(nombres[2]);
                         docen.setSegundoApellido(nombres[3]);
                     }
-
                     carrera.setCoordinador(docen);
+                    
                     carrera.setNombre(rs.getString("carrera_nombre"));
-
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
-
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
 
                     carreras.add(carrera);
+                }
+                return carreras;
+            } catch (SQLException e) {
+                System.out.println("No se pudo consultar carreras");
+                System.out.println(e.getMessage());
+                return null;
+            }
+        } else {
+            System.out.println("No se pudo consultar una carreras");
+            return null;
+        }
+
+    }
+
+    /**
+     * Consultamos los nombres de las carreras activas para un combo.
+     *
+     * @return
+     */
+    public ArrayList<CarreraMD> cargarCarrerasCmb() {
+        ArrayList<CarreraMD> carreras = new ArrayList();
+        String sql = "SELECT id_carrera, carrera_nombre,\n"
+                + "carrera_codigo \n"
+                + "FROM public.\"Carreras\" \n"
+                + "WHERE carrera_activo = TRUE\n"
+                + "ORDER BY carrera_fecha_inicio DESC;";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CarreraMD carrera = new CarreraMD();
+                    carrera.setId(rs.getInt("id_carrera"));
+                    carrera.setNombre(rs.getString("carrera_nombre"));
+                    carrera.setCodigo(rs.getString("carrera_codigo"));
 
                     carreras.add(carrera);
                 }
