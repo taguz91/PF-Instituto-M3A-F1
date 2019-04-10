@@ -21,7 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.table.TableCellRenderer;
+
 
 /**
  *
@@ -87,11 +87,11 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.lblNuevaEstrategia = lblNuevaEstrategia;
     }
 
-    public JList<String> getLstEstrategiasPredeterminadas() {
+    public JList getLstEstrategiasPredeterminadas() {
         return lstEstrategiasPredeterminadas;
     }
 
-    public void setLstEstrategiasPredeterminadas(JList<String> lstEstrategiasPredeterminadas) {
+    public void setLstEstrategiasPredeterminadas(JList lstEstrategiasPredeterminadas) {
         this.lstEstrategiasPredeterminadas = lstEstrategiasPredeterminadas;
     }
 
@@ -946,7 +946,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         spnHorasAutonomas = new javax.swing.JSpinner();
         spnHorasDocencia = new javax.swing.JSpinner();
         scrEstrategiasPredeterminadas = new javax.swing.JScrollPane();
-        lstEstrategiasPredeterminadas = new javax.swing.JList<>();
+        lstEstrategiasPredeterminadas = new javax.swing.JList();
         lblNuevaEstrategia = new javax.swing.JLabel();
         lblEstrategiasPredeterminadas = new javax.swing.JLabel();
         lblEliminarUnidad = new javax.swing.JLabel();
@@ -1140,6 +1140,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlPractica.add(lblInstrumentoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
         spnValoracionP.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
+        spnValoracionP.setToolTipText("");
         pnlPractica.add(spnValoracionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionP.setText("Valoración");
@@ -1331,7 +1332,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
         lblEliminarUnidad.setToolTipText("Eliminar Unidad");
-        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 20, -1));
+        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
         lblGuardarEstrategia.setToolTipText("Guardar Nueva Estrategia");
@@ -1340,7 +1341,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarUnidad.setToolTipText("Agregar Unidad");
-        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 20, -1));
+        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
@@ -1478,7 +1479,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblValoracionAC;
     private javax.swing.JLabel lblValoracionAD;
     private javax.swing.JLabel lblValoracionP;
-    private javax.swing.JList<String> lstEstrategiasPredeterminadas;
+    private javax.swing.JList lstEstrategiasPredeterminadas;
     private javax.swing.JPanel pnlAprendizajeColaborativo;
     private javax.swing.JPanel pnlAsistidaDocente;
     private javax.swing.JPanel pnlAutonoma;

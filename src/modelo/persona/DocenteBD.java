@@ -3,6 +3,8 @@ package modelo.persona;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -529,6 +531,56 @@ public class DocenteBD extends DocenteMD {
         }
 
         return idDocente;
+    }
+
+    public static HashMap<String, DocenteMD> selectAll() {
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"ViewDocentes\".id_docente,\n"
+                + "\"public\".\"ViewDocentes\".id_persona,\n"
+                + "\"public\".\"ViewDocentes\".docente_codigo,\n"
+                + "\"public\".\"ViewDocentes\".docente_activo,\n"
+                + "\"public\".\"ViewDocentes\".persona_identificacion,\n"
+                + "\"public\".\"ViewDocentes\".persona_primer_apellido,\n"
+                + "\"public\".\"ViewDocentes\".persona_segundo_apellido,\n"
+                + "\"public\".\"ViewDocentes\".persona_primer_nombre,\n"
+                + "\"public\".\"ViewDocentes\".persona_segundo_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"ViewDocentes\"\n"
+                + "ORDER BY persona_primer_apellido";
+        System.out.println(SELECT);
+
+        HashMap<String, DocenteMD> lista = new HashMap<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+
+                DocenteMD docente = new DocenteMD();
+
+                docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdPersona(rs.getInt("id_persona"));
+                docente.setCodigo(rs.getString("docente_codigo"));
+                docente.setIdentificacion(rs.getString("persona_identificacion"));
+                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                String key = docente.getIdentificacion() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido();
+
+                lista.put(key, docente);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+
     }
 
 }

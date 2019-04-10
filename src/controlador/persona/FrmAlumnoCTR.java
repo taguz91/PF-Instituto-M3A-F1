@@ -53,6 +53,14 @@ public class FrmAlumnoCTR {
     private final SectorEconomicoBD sectorE;
 
     //Para cargar los sectores economico  
+    /**
+     * 
+     * @param vtnPrin
+     * @param frmAlumno
+     * @param conecta
+     * @param ctrPrin
+     * @param permisos 
+     */
     public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
         this.frmAlumno = frmAlumno;
@@ -82,7 +90,7 @@ public class FrmAlumnoCTR {
         ActionListener Cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmAlumno.setVisible(false);
+                frmAlumno.dispose();
             }
         };
 
@@ -533,13 +541,14 @@ public class FrmAlumnoCTR {
         frmAlumno.getSpnr_Anio().setModel(s);
         frmAlumno.getSpnr_Anio().setValue(1980);
     }
-
-    //Inicia los Sectores extraídos de la Lista en el Combo box
+    
+    /**
+     * Inicia los Sectores extraídos de la Lista en el Combo box
+     */
     public void iniciarSectores() {
         for (int i = 0; i < Sectores.size(); i++) {
             frmAlumno.getCmBx_SecEconomico().addItem(Sectores.get(i).getDescrip_SecEconomico().toUpperCase());
         }
-        frmAlumno.getCmBx_SecEconomico().addItem("NINGUNO");
     }
 
     //Guarda o Edita al Alumno insertado dependiendo el boolean
@@ -652,12 +661,7 @@ public class FrmAlumnoCTR {
         SectorEconomicoMD sector = new SectorEconomicoMD();
         persona.setIdPersona(user.getIdPersona());
         persona.setIdentificacion(user.getIdentificacion());
-        if (frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("|SELECCIONE|")
-                || frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString().equals("NINGUNO")) {
-            sector.setId_SecEconomico(sectorEco);
-        } else {
-            sector.setId_SecEconomico(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico());
-        }
+        sector.setId_SecEconomico(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico());
         persona.setSectorEconomico(sector);
         persona.setTipo_Colegio(frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString());
         persona.setTipo_Bachillerato(frmAlumno.getCmBx_TipoBachillerato().getSelectedItem().toString());

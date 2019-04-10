@@ -261,7 +261,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
+
     public PeriodoLectivoMD buscarPerido(int idPeriodo) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
@@ -290,25 +290,26 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
+
     /**
-     * Consultamos todos los peridoos para poder filtrar en una ventana. 
+     * Consultamos todos los peridoos para poder filtrar en una ventana.
      * Unicamente indicamos que el periodo no este eliminado.
-     * @return periodos ArrayList: 
+     *
+     * @return periodos ArrayList:
      */
     public ArrayList<PeriodoLectivoMD> cargarPrdParaCmbVtn() {
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
                 + "FROM public.\"PeriodoLectivo\"\n"
                 + "WHERE prd_lectivo_activo = true \n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-        return consultarParaCmb(sql); 
+        return consultarParaCmb(sql);
     }
-    
+
     /**
-     * Se consultan los periodos de la base de datos.
-     * Restringuiendo los que ya fueron cerrados y los 
-     * eliminados.
-     * @return periodos ArrayList 
+     * Se consultan los periodos de la base de datos. Restringuiendo los que ya
+     * fueron cerrados y los eliminados.
+     *
+     * @return periodos ArrayList
      */
     public ArrayList<PeriodoLectivoMD> cargarPrdParaCmbFrm() {
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre\n"
@@ -317,12 +318,13 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
         return consultarParaCmb(sql);
     }
-    
+
     /**
-     * Consulta para combo, unicamente se busca:
-     * id, id_carrera, nombre del periodo
+     * Consulta para combo, unicamente se busca: id, id_carrera, nombre del
+     * periodo
+     *
      * @param sql
-     * @return periodos ArrayList 
+     * @return periodos ArrayList
      */
     private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
@@ -346,7 +348,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
+
     public String Meses(LocalDate fecha) {
         String nueva_Fecha = "";
         String nuevo_Mes = "";
@@ -390,12 +392,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
         return nueva_Fecha = nuevo_Mes + "/" + fecha.getYear();
     }
-    
-    public String alumnosMatriculados(int ID){
+
+    public String alumnosMatriculados(int ID) {
         System.out.println("ID: " + ID);
-        String sql = "SELECT COUNT(*) AS numeroAlumnos FROM (public.\"Carreras\" c JOIN public.\"AlumnosCarrera\" a\n" +
-"					  USING(id_carrera)) JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n" +
-"							WHERE c.id_carrera = " + ID + " AND m.malla_almn_estado LIKE 'M';";
+        String sql = "SELECT COUNT(*) AS numeroAlumnos FROM (public.\"Carreras\" c JOIN public.\"AlumnosCarrera\" a\n"
+                + "					  USING(id_carrera)) JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n"
+                + "							WHERE c.id_carrera = " + ID + " AND m.malla_almn_estado LIKE 'M';";
         ResultSet rs = conecta.sql(sql);
         String count = "";
         try {
@@ -411,29 +413,45 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
-    public static List<String> selectPeriodoWhereUsername(String username) {
-        String SELECT = "SELECT\n"
-                + "DISTINCT \"PeriodoLectivo\".prd_lectivo_nombre\n"
+    public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
+        String SELECT = "SELECT DISTINCT\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
+                + "\"public\".\"Carreras\".carrera_nombre,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_fin\n"
                 + "FROM\n"
-                + "\"Usuarios\"\n"
-                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'"
-                + "AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado IS TRUE";
-        List<String> lista = new ArrayList<>();
+                + "\"public\".\"PeriodoLectivo\"\n"
+                + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                + "WHERE \"public\".\"Docentes\".id_docente = " + idDocente;
+
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
             while (rs.next()) {
 
-                String paralelo = rs.getString("prd_lectivo_nombre");
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
 
-                lista.add(paralelo);
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                periodo.setCarrera(carrera);
+
+                periodo.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                periodo.setActivo_PerLectivo(rs.getBoolean("prd_lectivo_activo"));
+                periodo.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                periodo.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+
+                lista.add(periodo);
 
             }
             rs.close();
@@ -505,4 +523,5 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
         return lista;
     }
+
 }

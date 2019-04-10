@@ -278,7 +278,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
                 + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
+                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "' AND\n"
+                + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
         System.out.println(SELECT);

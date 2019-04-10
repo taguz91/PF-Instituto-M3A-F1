@@ -1,4 +1,3 @@
-
 package modelo.periodolectivo;
 
 import java.time.LocalDate;
@@ -6,13 +5,13 @@ import modelo.carrera.CarreraMD;
 import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoMD {
-    
+
     private int id_PerioLectivo;
     private String nombre_PerLectivo, observacion_PerLectivo;
     private boolean activo_PerLectivo, estado_PerLectivo;
     private LocalDate fecha_Inicio, fecha_Fin;
     //Debemos arreglar esot 
-    private CarreraMD carrera; 
+    private CarreraMD carrera;
 
     public PeriodoLectivoMD() {
     }
@@ -91,5 +90,10 @@ public class PeriodoLectivoMD {
     public void setEstado_PerLectivo(boolean estado_PerLectivo) {
         this.estado_PerLectivo = estado_PerLectivo;
     }
-    
+
+    @Override
+    public String toString() {
+        return "PeriodoLectivoMD{" + "id_PerioLectivo=" + id_PerioLectivo + ", nombre_PerLectivo=" + nombre_PerLectivo + ", observacion_PerLectivo=" + observacion_PerLectivo + ", activo_PerLectivo=" + activo_PerLectivo + ", estado_PerLectivo=" + estado_PerLectivo + ", fecha_Inicio=" + fecha_Inicio + ", fecha_Fin=" + fecha_Fin + ", carrera=" + carrera + '}';
+    }
+
 }

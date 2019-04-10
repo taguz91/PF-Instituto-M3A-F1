@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
-import java.io.File;
 import static java.lang.Thread.sleep;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
@@ -28,14 +28,13 @@ import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
 import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
-import modelo.persona.PersonaBD;
-import modelo.persona.PersonaMD;
+import modelo.persona.DocenteMD;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.IngresoNotasMD;
 import modelo.usuario.UsuarioBD;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -61,7 +60,8 @@ public class VtnNotasAlumnoCursoCTR {
     private final ConectarDB conexion;
 
     //LISTAS
-    private List<PersonaMD> listaPersonasDocentes;
+    private HashMap<String, DocenteMD> listaPersonasDocentes;
+    private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
 
     //TABLA
@@ -69,6 +69,7 @@ public class VtnNotasAlumnoCursoCTR {
 
     //Variable para busqueda
     private int idDocente = 0;
+    private int idPeriodoLectivo = 0;
     private boolean cargarTabla = true;
     private int idCurso = -1;
 
@@ -97,8 +98,7 @@ public class VtnNotasAlumnoCursoCTR {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
 
         //RELLENADO DE LISTAS
-        listaPersonasDocentes = PersonaBD.selectWhereUsername(usuario.getUsername());
-        idDocente = DocenteBD.selectIdDocenteWhereUsername(usuario.getUsername());
+        listaPersonasDocentes = DocenteBD.selectAll();
         //RELLENADO DE COMBOS Y LABELS
         thread = new Thread() {
             @Override
@@ -114,18 +114,19 @@ public class VtnNotasAlumnoCursoCTR {
                     cargarComboParalelo();
                     cargarComboJornadas();
                     cargarComboMaterias();
-                    desktop.getLblEstado().setText("COMPLETADO");
-                    activarColumnas();
-                    try {
-                        sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    desktop.getLblEstado().setText("");
+//                    desktop.getLblEstado().setText("COMPLETADO");
+//                    activarColumnas();
+//                    try {
+//                        sleep(500);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    desktop.getLblEstado().setText("");
                     Effects.setDefaultCursor(vista);
-                    vista.getBtnVerNotas().setEnabled(true);
-                    vista.getBtnImprimir().setEnabled(true);
+//                    vista.getBtnVerNotas().setEnabled(true);
+//                    vista.getBtnImprimir().setEnabled(true);
 
+                    InitEventos();
                 } catch (NullPointerException e) {
                     Effects.setDefaultCursor(vista);
                     JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
@@ -136,7 +137,6 @@ public class VtnNotasAlumnoCursoCTR {
         };
         thread.start();
         //TABLA
-        InitEventos();
         try {
             desktop.getDpnlPrincipal().add(vista);
             vista.show();
@@ -149,21 +149,25 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void InitEventos() {
 
-        vista.getCmbPeriodoLectivo().addActionListener(e -> rellenarLblCarrera());
+        vista.getCmbDocente().addActionListener(e -> rellenarCmbPeriodos(e));
+
+        vista.getCmbPeriodoLectivo().addActionListener(e -> {
+            rellenarLblCarrera();
+            cargarComboCiclo();
+            cargarComboParalelo();
+        });
 
         vista.getCmbCiclo().addActionListener(e -> {
             cargarComboParalelo();
             cargarComboMaterias();
         });
 
-        vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
-
         vista.getCmbParalelo().addActionListener(e -> cargarComboMaterias());
 
         vista.getCmbJornada().addActionListener(e -> cargarComboMaterias());
 
+        vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
-
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -239,8 +243,7 @@ public class VtnNotasAlumnoCursoCTR {
         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, nombrePeriodo);
-
+        //idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, nombrePeriodo);
         IngresoNotasMD ingreso = IngresoNotasBD.selectFromViewActivos(idCurso);
 
         if (ingreso.isNotaPrimerInterCiclo()) {
@@ -274,8 +277,6 @@ public class VtnNotasAlumnoCursoCTR {
 
             case 12:
                 if (!valor.matches("^[0-9]*")) {
-
-                    System.out.println("-----");
 
                     valor = String.valueOf(listaNotas.get(fila).getNumFalta());
                     tablaNotas.setValueAt(valor, fila, 12);
@@ -345,7 +346,7 @@ public class VtnNotasAlumnoCursoCTR {
                     estado = "Aprobado";
                     datos.setValueAt(estado, fila, 11);
                     vista.getTblNotas().updateUI();
-                } else if(notaFinal < 70) {
+                } else if (notaFinal < 70) {
                     notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
                     estado = "Reprobado";
                     datos.setValueAt(estado, fila, 11);
@@ -357,7 +358,7 @@ public class VtnNotasAlumnoCursoCTR {
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0 || Faltas >= 25) {
-                
+
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
 
                 estado = "Reprobado";
@@ -370,7 +371,6 @@ public class VtnNotasAlumnoCursoCTR {
         }
         return datos;
     }
-
 
     private AlumnoCursoBD setObjFromTable(int fila) {
 
@@ -407,53 +407,117 @@ public class VtnNotasAlumnoCursoCTR {
 
     }
 
+    private void setIdDocente(String key) {
+        listaPersonasDocentes
+                .entrySet()
+                .stream()
+                .filter((entry) -> (entry.getKey().equals(key)))
+                .collect(Collectors.toList())
+                .forEach(entry -> {
+                    idDocente = entry.getValue().getIdDocente();
+                });
+
+    }
+
+    private String getCmbDonceteKey() {
+        return vista.getCmbDocente().getSelectedItem().toString();
+    }
+
+    private void setIdPeriodoLectivo() {
+        String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+
+        listaPeriodos
+                .stream()
+                .filter(item -> item.getNombre_PerLectivo().equals(periodo))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                    idPeriodoLectivo = obj.getId_PerioLectivo();
+                });
+    }
+
     private void cargarComboDocente() {
 
-        listaPersonasDocentes
-                .stream()
-                .forEach(obj -> {
+        listaPersonasDocentes.entrySet().forEach((entry) -> {
+            String key = entry.getKey();
+            DocenteMD value = entry.getValue();
 
-                    vista.getCmbDocente().addItem(obj.getIdentificacion() + " " + obj.getPrimerNombre() + " " + obj.getSegundoNombre() + " " + obj.getPrimerApellido() + " " + obj.getSegundoApellido());
-                });
+            vista.getCmbDocente().addItem(key);
+
+        });
 
     }
 
     private void cargarComboPeriodos() {
-        PeriodoLectivoBD.selectPeriodoWhereUsername(usuario.getUsername())
-                .stream()
-                .forEach(vista.getCmbPeriodoLectivo()::addItem);
+        vista.getCmbPeriodoLectivo().removeAllItems();
+        vista.getLblCarrera().setText("");
 
+        setIdDocente(getCmbDonceteKey());
+
+        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(idDocente);
+        listaPeriodos
+                .stream()
+                .forEach(obj -> {
+
+                    vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
+                });
     }
 
     private void rellenarLblCarrera() {
-        vista.getLblCarrera().setText(CarreraBD.selectCarreraWherePerdLectivo(vista.getCmbPeriodoLectivo().getSelectedItem().toString()));
+        try {
+            vista.getLblCarrera().setText(CarreraBD.selectCarreraWherePerdLectivo(vista.getCmbPeriodoLectivo().getSelectedItem().toString()));
+
+        } catch (NullPointerException e) {
+        }
 
     }
 
     private void cargarComboCiclo() {
-        CursoBD.selectCicloWhere(idDocente)
-                .stream()
-                .forEach(obj -> {
-                    vista.getCmbCiclo().addItem(obj.toString());
-                });
+
+        try {
+            vista.getCmbCiclo().removeAllItems();
+            setIdDocente(getCmbDonceteKey());
+            setIdPeriodoLectivo();
+            CursoBD.selectCicloWhere(idDocente, idPeriodoLectivo)
+                    .stream()
+                    .forEach(obj -> {
+                        vista.getCmbCiclo().addItem(obj + "");
+                    });
+        } catch (NullPointerException e) {
+        }
 
     }
 
     private void cargarComboParalelo() {
-        vista.getCmbParalelo().removeAllItems();
-        vista.getCmbAsignatura().removeAllItems();
 
-        int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-        CursoBD.selectParaleloWhere(idDocente, ciclo)
-                .stream()
-                .forEach(vista.getCmbParalelo()::addItem);
+        try {
+            vista.getCmbParalelo().removeAllItems();
+            vista.getCmbAsignatura().removeAllItems();
+            setIdDocente(getCmbDonceteKey());
+            setIdPeriodoLectivo();
+
+            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+            CursoBD.selectParaleloWhere(idDocente, ciclo, idPeriodoLectivo)
+                    .stream()
+                    .forEach(vista.getCmbParalelo()::addItem);
+
+        } catch (NullPointerException e) {
+        }
 
     }
 
     private void cargarComboJornadas() {
-        JornadaBD.selectJornadasWhereIdDocenteAndNombPrd(idDocente, vista.getCmbPeriodoLectivo().getSelectedItem().toString())
-                .stream()
-                .forEach(vista.getCmbJornada()::addItem);
+
+        try {
+            vista.getCmbJornada().removeAllItems();
+            setIdDocente(getCmbDonceteKey());
+            setIdPeriodoLectivo();
+
+            JornadaBD.selectJornadasWhere(idDocente, idPeriodoLectivo)
+                    .stream()
+                    .forEach(vista.getCmbJornada()::addItem);
+
+        } catch (NullPointerException e) {
+        }
 
     }
 
@@ -469,10 +533,22 @@ public class VtnNotasAlumnoCursoCTR {
                     .stream()
                     .forEach(vista.getCmbAsignatura()::addItem);
 
+            validarCombos();
         } catch (NullPointerException e) {
             vista.getCmbAsignatura().removeAllItems();
         }
 
+    }
+
+    private void validarCombos() {
+
+        System.out.println("----------------> " + vista.getCmbAsignatura().getItemCount());
+
+        if (vista.getCmbAsignatura().getItemCount() > 0) {
+            vista.getBtnVerNotas().setEnabled(true);
+        } else {
+            vista.getBtnVerNotas().setEnabled(false);
+        }
     }
 
     private void cargarTabla() {
@@ -521,39 +597,39 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void agregarFilas() {
         try {
-             tablaNotas.setRowCount(0);
-        for (AlumnoCursoBD obj : listaNotas) {
-            if (vista.isVisible()) {
-                tablaNotas.addRow(new Object[]{
-                    tablaNotas.getDataVector().size() + 1,
-                    obj.getAlumno().getIdentificacion(),
-                    obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                    obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                    obj.getNota1Parcial(),
-                    obj.getNotaExamenInter(),
-                    obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                    obj.getNota2Parcial(),
-                    obj.getNotaExamenFinal(),
-                    obj.getNotaExamenSupletorio(),
-                    Math.round(obj.getNotaFinal()),
-                    obj.getEstado(),
-                    obj.getNumFalta(),
-                    obj.getTotalHoras() +"%"
-                       
-                });
-           
-            } else {
-                listaNotas = null;
-                listaPersonasDocentes = null;
-                   System.out.println(obj.getNumFalta()+"");
-                System.gc();
-                break;
+            tablaNotas.setRowCount(0);
+            for (AlumnoCursoBD obj : listaNotas) {
+                if (vista.isVisible()) {
+                    tablaNotas.addRow(new Object[]{
+                        tablaNotas.getDataVector().size() + 1,
+                        obj.getAlumno().getIdentificacion(),
+                        obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                        obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                        obj.getNota1Parcial(),
+                        obj.getNotaExamenInter(),
+                        obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                        obj.getNota2Parcial(),
+                        obj.getNotaExamenFinal(),
+                        obj.getNotaExamenSupletorio(),
+                        Math.round(obj.getNotaFinal()),
+                        obj.getEstado(),
+                        obj.getNumFalta(),
+                        obj.getTotalHoras() + "%"
+
+                    });
+
+                } else {
+                    listaNotas = null;
+                    listaPersonasDocentes = null;
+                    System.out.println(obj.getNumFalta() + "");
+                    System.gc();
+                    break;
+                }
             }
-        }
         } catch (Exception e) {
-          
+
         }
-       
+
     }
 
     private void generarReporteCompleto() {
@@ -1061,5 +1137,9 @@ public class VtnNotasAlumnoCursoCTR {
             setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
 
         }
+    }
+
+    private void rellenarCmbPeriodos(ActionEvent e) {
+        cargarComboPeriodos();
     }
 }

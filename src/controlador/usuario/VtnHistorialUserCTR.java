@@ -39,7 +39,13 @@ public class VtnHistorialUserCTR {
     private int posTbl, posAcc, posUser, posFI, posFF;
     //Para el buscador
     private String b;
-
+    
+    /**
+     * Iniciamos las clases de base de datos.
+     * @param conecta
+     * @param vtnPrin
+     * @param ctrPrin 
+     */
     public VtnHistorialUserCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {
         this.conecta = conecta;
         this.vtnPrin = vtnPrin;
@@ -54,7 +60,11 @@ public class VtnHistorialUserCTR {
         this.his = new HistorialUsuarioBD(conecta);
         ctrPrin.setIconJIFrame(vtnH);
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias.
+     * Tabla, buscadores y cargamos combos
+     */
     public void iniciar() {
         cargarCmbAcciones();
         cargarCmbUsuarios();
@@ -94,7 +104,13 @@ public class VtnHistorialUserCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Historial usuarios.");
     }
-
+    
+    /**
+     * Buscamos en la base de datos unicamente se aceptan numeros y letras. 
+     * El buscador tiene una combinacion de nombre accion y cargan todos las 
+     * acciones que realizo esa persona y en que tablas.
+     * @param b String
+     */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
             historial = his.buscar(b);
@@ -103,57 +119,80 @@ public class VtnHistorialUserCTR {
             mdTbl.setRowCount(0);
         }
     }
-
+    
+    /**
+     * Al dar click cargamos el historial de la fecha iniciada, 
+     * y cargamos el combo de fecha fin con fehcas posteriores a la elegida. 
+     */
     private void clickFechaIni() {
         posFI = vtnH.getCmbFechaIni().getSelectedIndex();
-        if (posFI > 0) {
-            historial = his.cargarHistorialFecha(fechaIni.get(posFI - 1));
-            llenarTbl(historial);
+//        if (posFI > 0) {
+//            historial = his.cargarHistorialFecha(fechaIni.get(posFI - 1));
+//            llenarTbl(historial);
+//            llenarCmbFechaFin();
+//        } else {
+//            cargarHistorialHoy();
+//        }
+if (posFI > 0) {
             llenarCmbFechaFin();
-        } else {
-            cargarHistorialHoy();
-        }
+        }else{
+    vtnH.getCmbFechaFin().removeAllItems();
+}
+cmbCombinados();
     }
-
+    
+    /**
+     * Se carga el historial, entre fechas, al seleccionar una fecha fin.
+     */
     private void clickFechaFin() {
         posFF = vtnH.getCmbFechaFin().getSelectedIndex();
-        if (posFF > 0) {
-            historial = his.cargarHistorialEntresFechas(fechaIni.get(posFI - 1),
-                    fechaFin.get(posFF - 1));
-            llenarTbl(historial);
-        } else {
-            clickFechaIni();
-        }
+//        if (posFF > 0) {
+//            historial = his.cargarHistorialEntreFechas(fechaIni.get(posFI - 1),
+//                    fechaFin.get(posFF - 1));
+//            llenarTbl(historial);
+//        } else {
+//            clickFechaIni();
+//        }
+cmbCombinados();
     }
-
+    
+    /**
+     * Cargan las acciones de un usuario.
+     */
     private void clickCmbUsers() {
         posUser = vtnH.getCmbUsers().getSelectedIndex();
-        if (posUser > 0) {
-            historial = his.cargarHistorialUser(usuarios.get(posUser - 1));
-            llenarTbl(historial);
-        } else {
-            cargarHistorialHoy();
-        }
+//        if (posUser > 0) {
+//            historial = his.cargarHistorialUser(usuarios.get(posUser - 1));
+//            llenarTbl(historial);
+//        } else {
+//            cargarHistorialHoy();
+//        }
+cmbCombinados();
     }
-
+    
+    /**
+     * Cargamos el combo por acciones.
+     */
     private void clickCmbAccion() {
         posAcc = vtnH.getCmbAccion().getSelectedIndex();
-        if (posAcc > 0) {
-            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1));
-            llenarTbl(historial);
-        } else {
-            cargarHistorialHoy();
-        }
+//        if (posAcc > 0) {
+//            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1));
+//            llenarTbl(historial);
+//        } else {
+//            cargarHistorialHoy();
+//        }
+cmbCombinados();
     }
 
     private void clickCmbTbl() {
         posTbl = vtnH.getCmbTablas().getSelectedIndex();
-        if (posTbl > 0) {
-            historial = his.cargarHistorialTbl(tablas.get(posTbl - 1));
-            llenarTbl(historial);
-        } else {
-            cargarHistorialHoy();
-        }
+//        if (posTbl > 0) {
+//            historial = his.cargarHistorialTbl(tablas.get(posTbl - 1));
+//            llenarTbl(historial);
+//        } else {
+//            cargarHistorialHoy();
+//        }
+cmbCombinados();
     }
 
     private void cargarHistorialHoy() {
@@ -251,30 +290,138 @@ public class VtnHistorialUserCTR {
     }
 
     private void cmbCombinados() {
-        if (posUser > 0 && posAcc > 0
-                && posFF == 0 && posFI == 0
-                && posTbl == 0) {
-            historial = his.cargarHistorialUserAccion(usuarios.get(posUser - 1),
+        //Iniciamos el array
+        historial = new ArrayList();
+        
+        if (posUser > 0 && posFI > 0 && posFF > 0
+                && posTbl > 0 && posAcc > 0) {
+            //Consultamos una combinacion completa
+            historial = his.cargarHistorialUserTablaAccionEntreFechas(usuarios.get(posUser - 1), 
+                    tablas.get(posTbl - 1), acciones.get(posAcc - 1), fechaIni.get(posFI - 1), 
+                    fechaFin.get(posFF - 1));
+        }else if(posUser > 0 && posFI > 0
+                && posAcc > 0 && posTbl > 0
+                && posFF == 0){
+            //Consultamos por usuario tabla accion y fecha
+            historial = his.cargarHistorialUserTablaAccionPorFecha(usuarios.get(posUser - 1), 
+                    tablas.get(posTbl - 1), acciones.get(posAcc - 1), fechaIni.get(posFI - 1)); 
+        }else if(posUser > 0 && posAcc > 0 
+                && posTbl > 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por usuario tabla y accion
+            historial = his.cargarHistorialUserTablaAccion(usuarios.get(posUser - 1), 
+                    tablas.get(posTbl - 1), acciones.get(posAcc - 1));
+        }else if(posUser > 0 && posTbl > 0 
+                && posAcc == 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por usuario por tabla
+            historial = his.cargarHistorialUserTabla(usuarios.get(posUser - 1), tablas.get(posTbl - 1)); 
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc == 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por usuario
+            historial = his.cargarHistorialUser(usuarios.get(posUser - 1));
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc > 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por usuario y accion
+            historial = his.cargarHistorialUserAccion(usuarios.get(posUser - 1), acciones.get(posAcc - 1)); 
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc == 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos por usuario y fecha 
+            historial = his.cargarHistorialUserPorFecha(usuarios.get(posUser - 1), fechaIni.get(posFI - 1)); 
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc == 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos por usuario y fecha de inicio y fin 
+            historial = his.cargarHistorialUserEntreFechas(usuarios.get(posUser - 1), 
+                    fechaIni.get(posFI - 1), fechaFin.get(posFF - 1)); 
+        }else if(posUser > 0 && posTbl > 0 
+                && posAcc == 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos por usuario tabla y fecha inicio
+            historial = his.cargarHistorialUserTablaPorFecha(usuarios.get(posUser - 1), 
+                    tablas.get(posTbl - 1), fechaIni.get(posFI - 1)); 
+        }else if(posUser > 0 && posTbl > 0 
+                && posAcc == 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos por usuario tabla entre fechas
+            historial = his.cargarHistorialUserTablaEntreFechas(usuarios.get(posUser - 1), 
+                    tablas.get(posTbl - 1), fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc > 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos  por usuario y accion
+            historial = his.cargarHistorialUserAccion(usuarios.get(posUser - 1), 
                     acciones.get(posAcc - 1));
-            llenarTbl(historial);
-        } else if (posUser > 0 && posTbl > 0
-                && posFF == 0 && posFI == 0
-                && posAcc == 0) {
-            historial = his.cargarHistorialUserTabla(usuarios.get(posUser - 1),
-                    tablas.get(posTbl - 1));
-            llenarTbl(historial);
-        } else if (posUser > 0 && posFI > 0
-                && posFF == 0 && posTbl == 0
-                && posAcc == 0) {
-            historial = his.cargarHistorialuserFecha(usuarios.get(posUser - 1),
-                    fechaIni.get(posFI - 1));
-            llenarTbl(historial);
-        } else if (posUser > 0 && posFI > 0 && posFF > 0
-                && posTbl == 0 && posAcc == 0) {
-            historial = his.cargarHistorialUserEntresFechas(usuarios.get(posUser - 1),
-                    fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
-            llenarTbl(historial);
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc > 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos por usuario accion y fecha inicio
+            historial = his.cargarHistorialUserAccionPorFecha(usuarios.get(posUser - 1), 
+                    acciones.get(posAcc - 1), fechaIni.get(posFI - 1));
+        }else if(posUser > 0 && posTbl == 0 
+                && posAcc > 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos por usuario accion entre fechas
+            historial = his.cargarHistorialUserAccionEntreFechas(usuarios.get(posUser - 1), 
+                    acciones.get(posAcc - 1), fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
+        }else if(posUser == 0 && posTbl > 0 
+                && posAcc == 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por tabla 
+            historial = his.cargarHistorialAccion(acciones.get(posAcc -1));
+        }else if(posUser == 0 && posTbl > 0 
+                && posAcc > 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por tabla y accion
+            historial = his.cargarHistorialTblAccion(tablas.get(posTbl - 1), acciones.get(posAcc - 1));
+        }else if(posUser == 0 && posTbl > 0 
+                && posAcc > 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos por tabla accion y fecha
+            historial = his.cargarHistorialTblAccionPoFecha(tablas.get(posTbl - 1), 
+                    acciones.get(posAcc - 1), fechaIni.get(posFI - 1));
+        }else if(posUser == 0 && posTbl > 0 
+                && posAcc > 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos por tabla accion y entre fechas
+            historial = his.cargarHistorialTblAccionEntreFecha(tablas.get(posTbl - 1), 
+                    acciones.get(posAcc - 1), fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
+        }else if(posUser == 0 && posTbl == 0 
+                && posAcc > 0 && posFI == 0
+                && posFF == 0){
+            //Consultamos por accion
+            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1)); 
+        }else if(posUser == 0 && posTbl == 0 
+                && posAcc > 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos por accion y fecha
+            historial = his.cargarHistorialAccionPorFecha(acciones.get(posAcc - 1), fechaIni.get(posFI - 1)); 
+        }else if(posUser == 0 && posTbl == 0 
+                && posAcc > 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos por accion  y entre fechas
+            historial = his.cargarHistorialAccionEntreFechas(acciones.get(posAcc - 1), 
+                    fechaIni.get(posFI - 1), fechaFin.get(posFF - 1)); 
+        }else if(posUser == 0 && posTbl == 0 
+                && posAcc == 0 && posFI > 0
+                && posFF == 0){
+            //Consultamos historial por fecha
+            historial = his.cargarHistorialFecha(fechaIni.get(posFI - 1));
+        }else if(posUser == 0 && posTbl == 0 
+                && posAcc == 0 && posFI > 0
+                && posFF > 0){
+            //Consultamos historial entre fechas
+            historial = his.cargarHistorialEntreFechas(fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
+        }else{
+            cargarHistorialHoy();
         }
+        
+        
+        
+        llenarTbl(historial);
     }
 
     private void llenarTbl(ArrayList<HistorialUsuarioMD> historial) {

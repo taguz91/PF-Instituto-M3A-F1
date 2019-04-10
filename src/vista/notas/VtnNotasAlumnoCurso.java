@@ -109,8 +109,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         lbl_jornada.setText("Jornada:");
 
-        cmbDocente.setEnabled(false);
-
         tblNotas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
