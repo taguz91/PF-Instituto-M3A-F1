@@ -675,7 +675,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 0:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        ReportesCTR.generarReporteMenos70(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                      //  ReportesCTR.generarReporteMenos70(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -683,7 +683,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 1:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        ReportesCTR.generarReporteEntre70_80(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                       // ReportesCTR.generarReporteEntre70_80(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -691,7 +691,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 2:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        ReportesCTR.generarReporteEntre80_90(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        //ReportesCTR.generarReporteEntre80_90(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -699,14 +699,14 @@ public class VtnNotasAlumnoCursoCTR {
                     case 3:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        ReportesCTR.generarReporteEntre90_100(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                       // ReportesCTR.generarReporteEntre90_100(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
 
                     case 4:
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        ReportesCTR.generarReporteCompleto(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                       // ReportesCTR.generarReporteCompleto(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
                         break;
 
