@@ -20,6 +20,10 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnRequisitos() {
+        return btnRequisitos;
+    }
+
     public JButton getBtnReporteMaterias() {
         return btnReporteMaterias;
     }
@@ -78,6 +82,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cmbCiclo = new javax.swing.JComboBox<>();
         btnInfo = new javax.swing.JButton();
+        btnRequisitos = new javax.swing.JButton();
         btnReporteMaterias = new javax.swing.JButton();
 
         setClosable(true);
@@ -111,7 +116,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
         );
 
         jLabel2.setText("Filtrar:");
@@ -125,6 +130,8 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         cmbCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnInfo.setText("Información");
+
+        btnRequisitos.setText("Requisitos");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,7 +147,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(8, 8, 8)
-                        .addComponent(cmbCarreras, 0, 238, Short.MAX_VALUE)))
+                        .addComponent(cmbCarreras, 0, 193, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
@@ -152,6 +159,8 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRequisitos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInfo)
                         .addContainerGap())))
         );
@@ -165,7 +174,9 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnInfo))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInfo)
+                        .addComponent(btnRequisitos)))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -189,7 +200,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnReporteMaterias)))
                 .addContainerGap())
@@ -215,6 +226,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnReporteMaterias;
+    private javax.swing.JButton btnRequisitos;
     private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbCiclo;
     private javax.swing.JLabel jLabel1;

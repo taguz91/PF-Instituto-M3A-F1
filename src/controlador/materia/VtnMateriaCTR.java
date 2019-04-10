@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -31,6 +32,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.materia.FrmRequisitos;
 import vista.materia.VtnMateria;
 import vista.principal.VtnPrincipal;
 
@@ -87,6 +89,7 @@ public class VtnMateriaCTR {
      * Eventos de botones y formato de la tabla
      */
     public void iniciar() {
+        vtnMateria.getBtnRequisitos().addActionListener(e -> abrirFrmRequisito());
         vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
@@ -277,4 +280,15 @@ public class VtnMateriaCTR {
             vtnMateria.getBtnReporteMaterias().setEnabled(false);
         }
     }
+  
+  public void abrirFrmRequisito(){
+      if (true) {
+       
+   FrmRequisitos frmreq = new FrmRequisitos();
+   VtnRequisitosCTR vtnreq =  new VtnRequisitosCTR(conecta, ctrPrin, vtnPrin, frmreq, materia, materia);     
+      } else {
+      JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
+      }
+  }
+  
 }
