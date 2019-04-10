@@ -170,6 +170,29 @@ CREATE UNIQUE INDEX "viewperiodoingresonotas" ON "public"."ViewPeriodoIngresoNot
   "id_perd_ingr_notas" "pg_catalog"."int4_ops" ASC NULLS LAST
 );
 
+
+//vista docentes
+
+CREATE MATERIALIZED VIEW "public"."ViewDocentes" AS  SELECT "Docentes".id_docente,
+    "Docentes".id_persona,
+    "Docentes".docente_codigo,
+    "Docentes".docente_activo,
+    "Personas".persona_identificacion,
+    "Personas".persona_primer_apellido,
+    "Personas".persona_segundo_apellido,
+    "Personas".persona_primer_nombre,
+    "Personas".persona_segundo_nombre
+   FROM ("Docentes"
+     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
+
+ALTER MATERIALIZED VIEW "public"."ViewDocentes" OWNER TO "ROOT";
+
+
+
+
+
+
+
 //TRIGGERS
 
 CREATE OR REPLACE FUNCTION actualizar_vistas()
@@ -179,6 +202,7 @@ BEGIN
  REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
  REFRESH MATERIALIZED VIEW "ViewCursosPermisosNotas";
  REFRESH MATERIALIZED VIEW "ViewPeriodoIngresoNotas";
+ REFRESH MATERIALIZED VIEW "ViewDocentes";
  
  RETURN NEW;
 END;
