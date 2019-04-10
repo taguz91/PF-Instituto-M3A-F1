@@ -50,7 +50,8 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "WHERE\n"
                 + "prd_lectivo_activo = TRUE\n"
                 + "AND \n"
-                + "prd_lectivo_estado = TRUE";
+                + "prd_lectivo_estado = TRUE\n"
+                + "ORDER BY id_ingreso_notas";
 
         return selectFromView(SELECT);
     }
@@ -67,7 +68,8 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "FROM\n"
                 + "\"public\".\"ViewCursosPermisosNotas\"\n"
                 + "WHERE\n"
-                + "\"ViewCursosPermisosNotas\".id_curso = " + idCurso + "";
+                + "\"ViewCursosPermisosNotas\".id_curso = " + idCurso + "\n"
+                + "ORDER BY id_ingreso_notas";
 
         IngresoNotasMD ingreso = new IngresoNotasMD();
 
@@ -156,6 +158,8 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "WHERE\n"
                 + "id_ingreso_notas = " + PK + ";\n"
                 + "";
+
+        System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
     }

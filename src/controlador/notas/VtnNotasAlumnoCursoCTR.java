@@ -116,18 +116,15 @@ public class VtnNotasAlumnoCursoCTR {
                     cargarComboParalelo();
                     cargarComboJornadas();
                     cargarComboMaterias();
-//                    desktop.getLblEstado().setText("COMPLETADO");
-//                    activarColumnas();
-//                    try {
-//                        sleep(500);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    desktop.getLblEstado().setText("");
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    activarColumnas();
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    desktop.getLblEstado().setText("");
                     Effects.setDefaultCursor(vista);
-//                    vista.getBtnVerNotas().setEnabled(true);
-//                    vista.getBtnImprimir().setEnabled(true);
-
                     InitEventos();
                 } catch (NullPointerException e) {
                     Effects.setDefaultCursor(vista);
@@ -543,8 +540,6 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void validarCombos() {
-
-        System.out.println("----------------> " + vista.getCmbAsignatura().getItemCount());
 
         if (vista.getCmbAsignatura().getItemCount() > 0) {
             vista.getBtnVerNotas().setEnabled(true);

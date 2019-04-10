@@ -241,7 +241,6 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
 
-        controladorSilabo();
         carga.start();
 
         //Esto es para la consola 

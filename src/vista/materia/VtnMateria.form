@@ -38,7 +38,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="lblResultados" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Component id="lblResultados" min="-2" pref="215" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnReporteMaterias" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -79,7 +79,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane1" alignment="0" pref="289" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="0" pref="279" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -123,7 +123,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="cmbCarreras" pref="238" max="32767" attributes="0"/>
+                          <Component id="cmbCarreras" pref="193" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -138,6 +138,8 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="btnBuscar" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnRequisitos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnInfo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -156,7 +158,10 @@
                       </Group>
                       <Component id="txtBuscar" min="-2" max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnInfo" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnRequisitos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -227,6 +232,11 @@
         <Component class="javax.swing.JButton" name="btnInfo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Informaci&#xf3;n"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnRequisitos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Requisitos"/>
           </Properties>
         </Component>
       </SubComponents>
