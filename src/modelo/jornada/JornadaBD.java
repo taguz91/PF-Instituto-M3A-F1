@@ -91,7 +91,7 @@ public class JornadaBD extends JornadaMD {
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
-
+        
         List<String> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
