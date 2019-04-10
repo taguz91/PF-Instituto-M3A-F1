@@ -106,12 +106,8 @@ public class WebCamCTR {
             frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
             cancelarFoto();
             ctrFrmPersona.pasarFoto(is);
-            //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
             WebcamShutdownHook WebcamShutdownHook;
             vtnWebCam.getPanelCam().isACTIVARCAMARA();
-//            [shutdown-hook-1] INFO com.github.sarxos.webcam.WebcamShutdownHook - Automatic Integrated Camera 0 deallocation
-//            [shutdown-hook-1] INFO com.github.sarxos.webcam.Webcam - Disposing webcam Integrated Camera 0
-//            
         } else {
             JOptionPane.showMessageDialog(vtnWebCam, "Aun no se a tomado una foto.");
         }
@@ -121,7 +117,6 @@ public class WebCamCTR {
     private void cancelarFoto() {
         vtnWebCam.dispose();
         System.out.println("Se dio click en cancelar");
-        //vtnWebCam.getPanelCam().setACTIVARCAMARA(false);
     }
     
     private void clickCamara(){
