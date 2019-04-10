@@ -162,6 +162,34 @@ public class FrmPersonaCTR {
         });
     }
 
+    //Devuelve un boolean para verificar si existen errores en el formulario
+    public boolean confirmaError() {
+        boolean error = false;
+        if (frmPersona.getLblErrorCallePrin().isVisible() == false
+                && frmPersona.getLblErrorCalleSec().isVisible() == false
+                && frmPersona.getLblErrorCanton().isVisible() == false
+                && frmPersona.getLblErrorCantonReside().isVisible() == false
+                && frmPersona.getLblErrorCarnetConadis().isVisible() == false
+                && frmPersona.getLblErrorCelular().isVisible() == false
+                && frmPersona.getLblErrorCodigoPostal().isVisible() == false
+                && frmPersona.getLblErrorCorreo().isVisible() == false
+                && frmPersona.getLblErrorEstadoCivil().isVisible() == false
+                && frmPersona.getLblErrorEtnia().isVisible() == false
+                && frmPersona.getLblErrorFecNac().isVisible() == false
+                && frmPersona.getLblErrorGenero().isVisible() == false
+                && frmPersona.getLblErrorIdentificacion().isVisible() == false 
+                
+                
+                
+                
+                ) {
+            error = false;
+        } else {
+            error = true;
+        }
+        return error;
+    }
+    
     //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
     // una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
     public void buscarIdentificacion() {
