@@ -1,4 +1,3 @@
-
 package controlador.materia;
 
 import controlador.principal.VtnPrincipalCTR;
@@ -15,18 +14,17 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnRequisitosCTR {
 
-   private final ConectarDB conecta;
+    private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
-    
-    
+
     private final VtnPrincipal vtnPrin;
     private final FrmRequisitos frmreq;
     private final MateriaBD materiabd;
-    
+
     //objeto Materia
     MateriaMD materia;
     //ArrayList de Materias
-    
+
     private ArrayList<MateriaMD> materias;
 
     public VtnRequisitosCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, FrmRequisitos frmreq, MateriaBD materiabd, MateriaMD materia) {
@@ -39,19 +37,26 @@ public class VtnRequisitosCTR {
         //agregar la ventana
         vtnPrin.getDpnlPrincipal().add(frmreq);
         frmreq.show();
+        System.out.println(materiabd);
+        System.out.println(materia.getNombre());
     }
-    
-    
-    
-    
-    
 
-    
-    
-    
-   
-    
-    
-    
-    
+    public void iniciar() {
+        frmreq.getLblNombreMateria().setText(materia.getNombre());
+        cargarComboMaterias();
+
+    }
+
+    private void cargarComboMaterias() {
+        materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
+        frmreq.getCmbrequisitos().removeAllItems();
+        frmreq.getCmbrequisitos().addItem("Seleccione");
+
+        materias.forEach(m -> {
+            frmreq.getCmbrequisitos().addItem(m.getNombre());
+
+        });
+
+    }
+
 }
