@@ -204,7 +204,7 @@ public class FrmPersonaCTR {
     }
 
     //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
-    // una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
+    //una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
     public void buscarIdentificacion() {
         errorCedula = false;
         String cedula = frmPersona.getTxtIdentificacion().getText();

@@ -15,7 +15,7 @@ public class Validar {
     //Para validar letras y caracteres como // 
     public static boolean esDireccion(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
-        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñ/\\-\\s]+");
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍ.ÓÚÑñ/\\-\\s]+");
     }
 
     //Validamos un txt de un buscador 
