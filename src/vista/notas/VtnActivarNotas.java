@@ -104,6 +104,8 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCursoTipoNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblCursoTipoNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblCursoTipoNotas);
         if (tblCursoTipoNotas.getColumnModel().getColumnCount() > 0) {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setResizable(false);

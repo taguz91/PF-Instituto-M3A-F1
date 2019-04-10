@@ -258,7 +258,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JLabel getLblIP() {
         return lblIP;
     }
-    
+
+    public JButton getBtnCambiarRol() {
+        return btnCambiarRol;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -283,6 +287,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnDocenteMateria = new javax.swing.JButton();
         btnIngresarSilabo = new javax.swing.JButton();
         btnConsultarSilabo = new javax.swing.JButton();
+        btnCambiarRol = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnEstado = new javax.swing.JLabel();
@@ -398,6 +403,17 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnConsultarSilabo.setToolTipText("Consultar Silabo");
         btnConsultarSilabo.setFocusPainted(false);
 
+        btnCambiarRol.setBackground(new java.awt.Color(51, 51, 51));
+        btnCambiarRol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Sign_Out_20px_1.png"))); // NOI18N
+        btnCambiarRol.setToolTipText("Cerrar Sesión");
+        btnCambiarRol.setBorder(null);
+        btnCambiarRol.setBorderPainted(false);
+        btnCambiarRol.setContentAreaFilled(false);
+        btnCambiarRol.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCambiarRol.setFocusPainted(false);
+        btnCambiarRol.setOpaque(true);
+        btnCambiarRol.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Sign_Out_20px.png"))); // NOI18N
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -427,7 +443,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addComponent(btnCambiarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -446,7 +464,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDocenteMateria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCambiarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -716,6 +735,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnAyuda;
+    private javax.swing.JButton btnCambiarRol;
     private javax.swing.JButton btnCarrera;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConsola;
