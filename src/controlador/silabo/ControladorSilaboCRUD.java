@@ -139,15 +139,16 @@ public class ControladorSilaboCRUD {
 
     boolean vineta_;
 
-    DefaultListModel<String> model3 = new DefaultListModel<>();
+    DefaultListModel<String> modelo3 = new DefaultListModel();
 
+    
     private List<EstrategiasUnidad> estrategiasUnidad;
 
-    DefaultListModel model = new DefaultListModel();
+    DefaultListModel modelo2 = new DefaultListModel();
 
     List<EstrategiasAprendizaje> estrategiasAprendizaje;
 
-    JList list = new JList();
+    JList lista = new JList();
 
     boolean[] check = new boolean[0];
 
@@ -188,10 +189,10 @@ public class ControladorSilaboCRUD {
         this.gestion = new frmGestionSilabo();
         this.bibliografia = new frmReferencias();
         silabos.setVisible(true);
-        silabos.getBTNGENERAR().setVisible(false);
-        silabos.getCHBPROGRAMA().setVisible(false);
-        silabos.getCHBSILABO().setVisible(false);
-        silabos.getjLabel1().setVisible(false);
+        silabos.getBtnGenerar().setVisible(false);
+        silabos.getChbProgramaAnalitico().setVisible(false);
+        silabos.getChbSilabo().setVisible(false);
+        silabos.getLblSeleccionDocumento().setVisible(false);
         iniciarControlador();
 
     }
@@ -204,7 +205,7 @@ public class ControladorSilaboCRUD {
 
         if (setup != null) {
             cargarCombo1();
-
+            
             ActionListener a1 = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
@@ -285,7 +286,7 @@ public class ControladorSilaboCRUD {
             }); //imprimirPrograma()
 
             //imprimirSilabo()
-            silabos.getBTNGENERAR().addActionListener(e -> impresion());
+            silabos.getBtnGenerar().addActionListener(e -> impresion());
 
             silabos.getBtnEditar().addActionListener(as);
             silabos.getBtnEliminar().addActionListener(d -> eliminarSilabo(id_silabo));
@@ -314,18 +315,18 @@ public class ControladorSilaboCRUD {
 
             silabos.getCmbCarrera().addActionListener(as1 -> cargarMateriasSilabo());
 
-            silabos.getCHBPROGRAMA().addMouseListener(new MouseAdapter() {
+            silabos.getChbProgramaAnalitico().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    silabos.getCHBSILABO().setSelected(false);
+                    silabos.getChbSilabo().setSelected(false);
                 }
 
             });
 
-            silabos.getCHBSILABO().addMouseListener(new MouseAdapter() {
+            silabos.getChbSilabo().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    silabos.getCHBPROGRAMA().setSelected(false);
+                    silabos.getChbProgramaAnalitico().setSelected(false);
                 }
 
             });
@@ -483,24 +484,24 @@ public class ControladorSilaboCRUD {
             public void mouseClicked(MouseEvent event) {
 
                 check = new boolean[gestion.getLstEstrategiasPredeterminadas().getModel().getSize()];
-                list = gestion.getLstEstrategiasPredeterminadas();
+                lista = gestion.getLstEstrategiasPredeterminadas();
                 // Get index of item clicked
-                int index = list.locationToIndex(event.getPoint());
-                CheckListItem item = (CheckListItem) list.getModel().getElementAt(index);
+                int index = lista.locationToIndex(event.getPoint());
+                CheckListItem item = (CheckListItem) lista.getModel().getElementAt(index);
                 // Toggle selected state
                 item.setSelected(!item.isSelected());
                 // Repaint cell
-                list.repaint(list.getCellBounds(index, index));
+                lista.repaint(lista.getCellBounds(index, index));
 
                 estrategiasUnidad.removeIf(w -> w.getIdUnidad().getIdUnidad() == gestion.getCmbUnidad().getSelectedIndex());
 
                 for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-                    CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i);
+                    CheckListItem item2 = (CheckListItem) lista.getModel().getElementAt(i);
                     check[i] = item2.isSelected();
 
                     if (item2.isSelected()) {
                         //estrategiasUnidad.add(new EstrategiasUnidad());
-                        estrategiasUnidad.add(new EstrategiasUnidad(new dbEstrategiasAprendizaje().retornaEstrategia(model.get(i).toString()), unidades.get(gestion.getCmbUnidad().getSelectedIndex())));
+                        estrategiasUnidad.add(new EstrategiasUnidad(new dbEstrategiasAprendizaje().retornaEstrategia(modelo2.get(i).toString()), unidades.get(gestion.getCmbUnidad().getSelectedIndex())));
                         /*List<EstrategiasUnidad> auxiliar = new ArrayList<>();
                         for (int k = 0; k < estrategiasUnidad.size(); k++) {
                             //System.out.println(k);
@@ -589,22 +590,7 @@ public class ControladorSilaboCRUD {
 
         });
 
-        gestion.getDchFechaFin().addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                LocalDate fechaFin = gestion.getDchFechaFin().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-                int j = gestion.getCmbUnidad().getSelectedIndex();
-                if (unidades.get(j).getFechaInicioUnidad().isBefore(fechaFin)) {
-                    unidades.get(j).setFechaFinUnidad(fechaFin);
-                } else {
-                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
-
-                    gestion.getDchFechaFin().setDate(Date.from(unidades.get(j).getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
-                }
-            }
-
-        });
+       
 
         gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
@@ -1230,8 +1216,7 @@ public class ControladorSilaboCRUD {
                     ) {
 
                         quitarBiblioBase();
-                        bibliografia.getBtnQuitarBibliografiaBase().setEnabled(false);
-
+                       
                     }
 
                 }
@@ -1245,14 +1230,14 @@ public class ControladorSilaboCRUD {
 
                         if (editar) {
 
-                            /*System.out.println(referenciasSilabo.size());
+                            System.out.println(referenciasSilabo.size());
                             List<Referencias> old = new dbReferencias().retornaReferencia(id_silabo);
 
                             referenciasSilabo.removeIf(c -> Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(0).getIdReferencia()) || Objects.equals(c.getIdReferencia().getIdReferencia(), old.get(1).getIdReferencia()));
 
                             for (int i = 0; i < old.size(); i++) {
                                 new dbReferencias().EliminarReferencia(old.get(i).getIdReferencia());
-                            }*/
+                            }
 
                             new dbSilabo().EliminarSilabo(id_silabo);
 
@@ -1345,22 +1330,22 @@ public class ControladorSilaboCRUD {
     }
 
     public void hacervisible() {
-        silabos.getBTNGENERAR().setVisible(true);
-        silabos.getCHBPROGRAMA().setVisible(true);
-        silabos.getCHBSILABO().setVisible(true);
-        silabos.getjLabel1().setVisible(true);
+        silabos.getBtnGenerar().setVisible(true);
+        silabos.getChbProgramaAnalitico().setVisible(true);
+        silabos.getChbSilabo().setVisible(true);
+        silabos.getLblSeleccionDocumento().setVisible(true);
     }
 
     public void impresion() {
         // opciones_de_impresion impresion=new opciones_de_impresion();
 
-        if (silabos.getCHBPROGRAMA().isSelected() == true) {
+        if (silabos.getChbProgramaAnalitico().isSelected() == true) {
             imprimirPrograma();
-            silabos.getCHBPROGRAMA().setSelected(false);
-        } else if (silabos.getCHBSILABO().isSelected() == true) {
+            silabos.getChbProgramaAnalitico().setSelected(false);
+        } else if (silabos.getChbSilabo().isSelected() == true) {
             imprimirSilabo();
-            silabos.getCHBSILABO().setSelected(false);
-        } else if (silabos.getCHBPROGRAMA().isSelected() == false && silabos.getCHBSILABO().isSelected() == false) {
+            silabos.getChbSilabo().setSelected(false);
+        } else if (silabos.getChbSilabo().isSelected() == false && silabos.getChbSilabo().isSelected() == false) {
             JOptionPane.showMessageDialog(null, "DEBE SELECIONAR UNA OPCION");
         }
         //silabos.getCHBPROGRAMA().checked=false;
@@ -1412,14 +1397,14 @@ public class ControladorSilaboCRUD {
 
         //String[] labels = {"a", "b", "c", "d", "e"};
         //JCheckBox[] ch = new JCheckBox[labels.length];
-        model = new DefaultListModel();
+        modelo2 = new DefaultListModel();
         estrategiasAprendizaje = new dbEstrategiasAprendizaje().mostrarEstrategias();
 
         gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
-        gestion.getLstEstrategiasPredeterminadas().setModel(model);
+        gestion.getLstEstrategiasPredeterminadas().setModel(modelo2);
         /*for (int i = 0; i < labels.length; i++) {
             //ch[i]=new JCheckBox("CheckBox"+i);
-            model.addElement(new frmPruebas.CheckListItem("CheckBox" + i));
+            modelo2.addElement(new frmPruebas.CheckListItem("CheckBox" + i));
         }*/
 
         //String []lista_est=new String[estrategiasAprendizaje.size()];
@@ -1427,17 +1412,18 @@ public class ControladorSilaboCRUD {
             lista_est[i]=estrategiasAprendizaje.get(i).getDescripcionEstrategia();
         }*/
         for (int i = 0; i < estrategiasAprendizaje.size(); i++) {
-            model.addElement(new CheckListItem(estrategiasAprendizaje.get(i).getDescripcionEstrategia()));
+            modelo2.addElement(new CheckListItem(estrategiasAprendizaje.get(i).getDescripcionEstrategia()));
 
         }
+        
 
         if (p == 0) {
 
             if (check.length > 0) {
-                CheckListItem nuevo = (CheckListItem) list.getModel().getElementAt(0);
+                CheckListItem nuevo = (CheckListItem) lista.getModel().getElementAt(0);
                 nuevo.setSelected(true);
                 for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize() - 1; i++) {
-                    CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i + 1);
+                    CheckListItem item2 = (CheckListItem) lista.getModel().getElementAt(i + 1);
                     item2.setSelected(check[i]);
                 }
 
@@ -1449,9 +1435,9 @@ public class ControladorSilaboCRUD {
             }
 
             for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-                CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i);
+                CheckListItem item2 = (CheckListItem) lista.getModel().getElementAt(i);
                 for (int j = 0; j < estrategiasUnidad.size(); j++) {
-                    if (estrategiasUnidad.get(j).getIdUnidad().getIdUnidad() == gestion.getCmbUnidad().getSelectedIndex() && model.get(i).toString().equals(estrategiasUnidad.get(j).getIdEstrategia().getDescripcionEstrategia())) {
+                    if (estrategiasUnidad.get(j).getIdUnidad().getIdUnidad() == gestion.getCmbUnidad().getSelectedIndex() && modelo2.get(i).toString().equals(estrategiasUnidad.get(j).getIdEstrategia().getDescripcionEstrategia())) {
                         item2.setSelected(true);
                     }
                 }
@@ -1464,9 +1450,9 @@ public class ControladorSilaboCRUD {
             }
 
             for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-                CheckListItem item2 = (CheckListItem) list.getModel().getElementAt(i);
+                CheckListItem item2 = (CheckListItem) lista.getModel().getElementAt(i);
                 for (int j = 0; j < auxiliar.size(); j++) {
-                    if (model.get(i).toString().equals(auxiliar.get(j).getIdEstrategia().getDescripcionEstrategia())) {
+                    if (modelo2.get(i).toString().equals(auxiliar.get(j).getIdEstrategia().getDescripcionEstrategia())) {
                         item2.setSelected(true);
                     }
                 }
@@ -1596,7 +1582,7 @@ public class ControladorSilaboCRUD {
             for (int i = 0; i < n_unidades; i++) {
                 gestion.getCmbUnidad().addItem("Unidad " + (i + 1));
             }
-            list = gestion.getLstEstrategiasPredeterminadas();
+            lista = gestion.getLstEstrategiasPredeterminadas();
             estrategiasUnidad = new dbEstrategiasUnidad().cargarEstrategiasU(id_silabo);
 
             evaluaciones = new dbEvaluacionSilabo().recuperarEvaluaciones(id_silabo);
@@ -1946,13 +1932,13 @@ public class ControladorSilaboCRUD {
             }
         }
 
-        model3 = new DefaultListModel<>();
+        modelo3 = new DefaultListModel<>();
 
         b.forEach((s) -> {
-            model3.addElement(s);
+            modelo3.addElement(s);
         });
 
-        bibliografia.getLstBibliografiaBase().setModel(model3);
+        bibliografia.getLstBibliografiaBase().setModel(modelo3);
 
         for (int a = 0; a < referenciasSilabo.size(); a++) {
             System.out.println("--" + referenciasSilabo.get(a).getIdReferencia().getDescripcionReferencia());
@@ -1963,11 +1949,11 @@ public class ControladorSilaboCRUD {
 
         if (bibliografia.getLstBibliografiaBase().getSelectedIndex() != -1) {
 
-            String s = model3.getElementAt(bibliografia.getLstBibliografiaBase().getSelectedIndex()).substring(2);
+            String s = modelo3.getElementAt(bibliografia.getLstBibliografiaBase().getSelectedIndex()).substring(2);
 
             referenciasSilabo.removeIf(p -> p.getIdReferencia().getDescripcionReferencia().equals(s));
 
-            model3.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
+            modelo3.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
 
             System.out.println("quito");
         }
@@ -2161,12 +2147,12 @@ public class ControladorSilaboCRUD {
 
         }
 
-        model3 = new DefaultListModel<>();
+        modelo3 = new DefaultListModel<>();
         b.forEach((s) -> {
-            model3.addElement(s);
+            modelo3.addElement(s);
         });
 
-        bibliografia.getLstBibliografiaBase().setModel(model3);
+        bibliografia.getLstBibliografiaBase().setModel(modelo3);
 
     }
 

@@ -77,23 +77,24 @@ public class VtnCursoCTR {
         //Inicializamos el curso  
         curso = new CursoBD(conecta);
     }
-
+    
     public void iniciar() {
         vtnCurso.getBtnListaAlumnos().setEnabled(false);
         cargarCmbPrdLectio();
+        cargarNombreCursos();
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
+        String titulo[] = {"id", "Periodo", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        TblEstilo.formatoTbl(vtnCurso.getTblCurso());
         vtnCurso.getTblCurso().setModel(mdTbl);
+        //Formato de la tabla
+        TblEstilo.formatoTbl(vtnCurso.getTblCurso());
         TblEstilo.ocualtarID(vtnCurso.getTblCurso());
         //le pasamos un tamaño a las columnas
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 3, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 4, 60);
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 70);
-
-        cargarNombreCursos();
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 70);
+        //cargarNombreCursos();
         cargarCursos();
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
@@ -106,6 +107,8 @@ public class VtnCursoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnCurso.getTxtBuscar().getText().trim();
+                System.out.println(e.getKeyCode());
+                //10 ENter - 32 Espacio - 8 Borrar
                 if (b.length() > 2) {
                     buscar(b);
                 } else if (b.length() == 0) {
@@ -129,16 +132,21 @@ public class VtnCursoCTR {
         });
 
 
-          vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
-        //ctrPrin.carga.detener();
+        vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
     }
-
+    
+    /**T
+     * Abrimos el formulario para ingresar un curso
+     */
     public void abrirFrmCurso() {
         ctrPrin.abrirFrmCurso();
         vtnCurso.dispose();
         ctrPrin.cerradoJIF();
     }
-
+    
+    /**
+     * Al seleccionar un curso se puede editar.
+     */
     private void editarCurso() {
         int fila = vtnCurso.getTblCurso().getSelectedRow();
         if (fila >= 0) {
@@ -152,7 +160,11 @@ public class VtnCursoCTR {
             ctrPrin.cerradoJIF();
         }
     }
-
+    
+    /**
+     * Buscamos unicamente por nombre y cedula
+     * @param b 
+     */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
             cursos = curso.buscarCursos(b);
@@ -161,9 +173,13 @@ public class VtnCursoCTR {
             System.out.println("No ingrese caracteres especiales");
         }
     }
-
+    
+    /**
+     * Cargamos todos los cursos que existen en el isntituto, incluyendo
+     * el periodo lectivo en el que se abrieron
+     */
     public void cargarCursos() {
-        //Cargamos los cursos y llenamos la tabla
+        System.out.println("Se cargaron cursos");
         cursos = curso.cargarCursos();
         llenarTbl(cursos);
     }
@@ -175,6 +191,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCursosPorPeriodo() {
+        vtnCurso.getTxtBuscar().setText("");
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
         if (posPrd > 0) {
             //Cargamos el combo de cursos por el periodo  
@@ -189,6 +206,7 @@ public class VtnCursoCTR {
     }
 
     private void cargarCursosPorNombre() {
+        vtnCurso.getTxtBuscar().setText("");
         int posNom = vtnCurso.getCmbCurso().getSelectedIndex();
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
         if (posNom == 0) {
@@ -209,6 +227,7 @@ public class VtnCursoCTR {
             cursos.forEach((c) -> {
                 Object valores[] = {
                     c.getId_curso(),
+                    c.getId_prd_lectivo().getNombre_PerLectivo(),
                     c.getId_materia().getNombre(),
                     c.getId_docente().getPrimerNombre() + " "
                     + c.getId_docente().getPrimerApellido(),
