@@ -461,12 +461,10 @@ public class AlumnoBD extends AlumnoMD {
     }
     
     public List<MallaAlumnoMD> consultarMaterias(int ID){
-        System.out.println(ID);
-        System.out.println("HOLA");
+        List<MallaAlumnoMD> lista = new ArrayList();
         String nsql = "SELECT m.materia_nombre, d.malla_almn_estado FROM ((public.\"Alumnos\" a JOIN public.\"AlumnosCarrera\" c USING(id_alumno)) \n" +
                         "JOIN public.\"MallaAlumno\" d USING(id_almn_carrera)) JOIN public.\"Materias\" m USING(id_materia)\n" +
                         "WHERE a.id_persona = " + ID + " AND malla_almn_estado LIKE 'R';";
-        List<MallaAlumnoMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(nsql);
         try {
             while (rs.next()) {

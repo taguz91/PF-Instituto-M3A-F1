@@ -136,7 +136,7 @@ public class VtnAlumnoCTR {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
         } else{
             VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
-            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno);
+            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno, conecta);
             materias.iniciarVentana();
         }
     }
