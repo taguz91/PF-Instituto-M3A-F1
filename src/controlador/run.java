@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
+import javax.swing.UIManager;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
@@ -15,35 +16,32 @@ public class run {
 
     public static void main(String[] args) {
 
-        estiloWindows();
-        SplashCTR ctrSplash = new SplashCTR();
-        ctrSplash.iniciar();
-
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
-        login.Init();
-
-    }
-
-    public static void estiloWindows() {
-        //Estilo encontrados 
-        //Linux Lite: Metal  Nimbus  CDE/Motif  GTK+
-        //Unicamente usaremos los estilos de Windows o Nimbus / Correspondientes a Windows y Mac 
         try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                System.out.print(info.getName()+"  ");
-//                if ("Windows".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    //break;
-//                }else if("Nimbus".equals(info.getName())){
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    //break;
-//                }
-//            }
-            //Estilo predeterminado en el dispositivo
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(run.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
+        
+        
+        
+//        SplashCTR ctrSplash = new SplashCTR();
+//        ctrSplash.iniciar();
+
+        java.awt.EventQueue.invokeLater(() -> {
+
+            LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+            login.Init();
+
+        });
+
     }
 
 }
