@@ -146,7 +146,7 @@ AND date_part('day', historial_fecha) = date_part('day', now());]]></defaultValu
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="88" y="0" width="37" height="20" uuid="09ff6e98-da15-4f9b-9e9a-0485ab9c8ad1"/>
+				<reportElement x="100" y="0" width="37" height="20" uuid="09ff6e98-da15-4f9b-9e9a-0485ab9c8ad1"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
