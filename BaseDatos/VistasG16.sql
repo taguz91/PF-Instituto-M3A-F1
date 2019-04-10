@@ -171,7 +171,11 @@ CREATE UNIQUE INDEX "viewperiodoingresonotas" ON "public"."ViewPeriodoIngresoNot
 );
 
 
-//vista docentes
+/*
+
+vista docentes
+
+*/
 
 CREATE MATERIALIZED VIEW "public"."ViewDocentes" AS  SELECT "Docentes".id_docente,
     "Docentes".id_persona,
