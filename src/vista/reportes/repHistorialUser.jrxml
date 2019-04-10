@@ -3,10 +3,13 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString>
-		<![CDATA[SELECT id_historial_user, usu_username, historial_nombre_tabla, 
+	<parameter name="consulta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[SELECT id_historial_user, usu_username, historial_nombre_tabla, 
 historial_tipo_accion, historial_fecha
-FROM public."HistorialUsuarios";]]>
+FROM public."HistorialUsuarios";]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{consulta}]]>
 	</queryString>
 	<field name="id_historial_user" class="java.lang.Integer"/>
 	<field name="usu_username" class="java.lang.String"/>
