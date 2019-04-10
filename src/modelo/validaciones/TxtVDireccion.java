@@ -45,6 +45,7 @@ public class TxtVDireccion extends KeyAdapter {
                 if (!Validar.esDireccion(ingreso)) {
                     txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                     if (lbl != null) {
+                        System.out.println("Entro");
                         lbl.setVisible(true);
                     }
                 } else {
