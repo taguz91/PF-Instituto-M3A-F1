@@ -36,6 +36,7 @@ public class VtnActivarNotasCTR {
 
     //TABLA
     private static DefaultTableModel tablaActivarNotas;
+    private boolean valido = false;
 
     //LISTA
     private List<IngresoNotasBD> listaNotasActivadas;
@@ -75,6 +76,21 @@ public class VtnActivarNotasCTR {
 
     private void InitEventos() {
 
+        vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                if (ke.getKeyCode() == 10) {
+                    
+                    setObj(getSelectedRow());
+                    if (modelo.editar(modelo.getIdIngresoNotas())) {
+                        vista.getLblDatosCorrectos().setText("Datos actualizados correctamente");
+                    } else {
+                        vista.getLblDatosIncorrectos().setText("Ocurrió un error, revise la información");
+                    }
+                }
+            }
+        });
+
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -86,6 +102,7 @@ public class VtnActivarNotasCTR {
                     active = true;
                     vista.getTblCursoTipoNotas().setModel(Validaciones(tablaActivarNotas));
                     active = false;
+
                 }
 
             }
@@ -108,6 +125,20 @@ public class VtnActivarNotasCTR {
                 if (e.getKeyCode() == 10) {
                     setObj(vista.getTblCursoTipoNotas().getSelectedRow());
                     System.out.println(modelo);
+                }
+            }
+        });
+
+        tablaActivarNotas.addTableModelListener(new TableModelListener() {
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+                    active = true;
+                    tablaActivarNotas = (DefaultTableModel) Validaciones(tablaActivarNotas);
+                    //vista.getTblCursoTipoNotas().setModel(tablaActivarNotas);
+                    //active = false;
                 }
             }
         });
@@ -196,7 +227,7 @@ public class VtnActivarNotasCTR {
     private static void agregarFila(IngresoNotasMD obj) {
         tablaActivarNotas.addRow(new Object[]{
             tablaActivarNotas.getDataVector().size() + 1,
-            obj.getCurso().getId_curso(),
+            obj.getIdIngresoNotas(),
             obj.getCurso().getId_prd_lectivo().getNombre_PerLectivo(),
             obj.getCurso().getCurso_nombre(),
             obj.getCurso().getId_materia().getNombre(),
@@ -212,46 +243,64 @@ public class VtnActivarNotasCTR {
 
     private TableModel Validaciones(TableModel datos) {
         int fila = getSelectedRow();
-        
+        int columna = vista.getTblCursoTipoNotas().getSelectedColumn();
+
         String aporte1 = null;
         String aporte2 = null;
         String examenInterciclo = null;
         String examenFinal = null;
         String examenSupletorio = null;
+        if (fila != -1) {
 
-        try {
-             aporte1 = (String) datos.getValueAt(fila, 7);
-             examenInterciclo = (String) datos.getValueAt(fila, 8);
+            try {
+                aporte1 = Validar(String.valueOf(datos.getValueAt(fila, 7)));
+                System.out.println("---->" + aporte1);
+                examenInterciclo = Validar(String.valueOf(datos.getValueAt(fila, 8)));
+                aporte2 = Validar(String.valueOf(datos.getValueAt(fila, 9)));
+                examenFinal = Validar(String.valueOf(datos.getValueAt(fila, 10)));
+                examenSupletorio = Validar(String.valueOf(datos.getValueAt(fila, 11)));
 
-        if (aporte1.equalsIgnoreCase("true") || aporte1.equalsIgnoreCase("false") || aporte1.equalsIgnoreCase("t") || aporte1.equalsIgnoreCase("f")) {
-            /*if (aporte1.startsWith("t")) {
-                JOptionPane.showMessageDialog(vista, "Correcto  if 2");
-                datos.setValueAt("true", fila, 7);
-            }else if ( aporte1.equalsIgnoreCase("f")){
-                 JOptionPane.showMessageDialog(vista, "Correcto if 3");
-                datos.setValueAt("false", fila, 7);
-                
-            }*/
-            JOptionPane.showMessageDialog(vista, "Correcto");
-            datos.setValueAt(aporte1.toLowerCase(), fila, 7);
+                switch (columna) {
+                    case 7:
+                        datos.setValueAt(aporte1, fila, columna);
+                        break;
+                    case 8:
+                        datos.setValueAt(examenInterciclo, fila, columna);
+                        break;
+                    case 9:
+                        datos.setValueAt(aporte2, fila, columna);
+                        break;
+                    case 10:
+                        datos.setValueAt(examenFinal, fila, columna);
+                        break;
+                    case 11:
+                        datos.setValueAt(examenSupletorio, fila, columna);
+                        break;
+                    default:
+                        break;
+                }
 
-        } else if (examenInterciclo.equalsIgnoreCase("true") || examenInterciclo.equalsIgnoreCase("false") || examenInterciclo.equalsIgnoreCase("t") || examenInterciclo.equalsIgnoreCase("f")) {
-            JOptionPane.showMessageDialog(vista, "Correcto");
-            datos.setValueAt(examenInterciclo.toLowerCase(), fila, 8);
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return datos;
+
+    }
+
+    private String Validar(String valor) {
+        valor = valor.toLowerCase();
+        if (valor.equalsIgnoreCase("true") || valor.equalsIgnoreCase("false") || valor.equalsIgnoreCase("t") || valor.equalsIgnoreCase("f")) {
+            return valor;
         } else {
-            JOptionPane.showMessageDialog(vista, "Datos Incorrectos....\n"
-                    + "Ingrese nuevamente");
+            JOptionPane.showMessageDialog(vista, "Dato Incorrecto " + valor + " ....\n"
+                    + "Ingrese nuevamente el valor ");
 
             //System.out.println("---->"+listaNotasActivadas.size());
             cargarTabla(listaNotasActivadas);
-
+            return "false";
         }
-        } catch (Exception e) {
-             System.out.println(e.getMessage());
-        }
-       
-
-        return datos;
 
     }
 
@@ -265,8 +314,10 @@ public class VtnActivarNotasCTR {
     }
 
     private void btnActualizar(ActionEvent e) {
-
-        cargarTabla(IngresoNotasBD.selectAll());
+        listaNotasActivadas = null;
+        System.gc();
+        listaNotasActivadas = IngresoNotasBD.selectAll();
+        cargarTabla(listaNotasActivadas);
 
     }
 }

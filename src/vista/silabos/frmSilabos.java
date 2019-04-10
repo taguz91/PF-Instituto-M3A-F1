@@ -133,10 +133,10 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
-        BTNGENERAR = new javax.swing.JButton();
-        CHBSILABO = new javax.swing.JCheckBox();
-        CHBPROGRAMA = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
+        btnGenerar = new javax.swing.JButton();
+        chbSilabo = new javax.swing.JCheckBox();
+        chbProgramaAnalitico = new javax.swing.JCheckBox();
+        lblSeleccionDocumento = new javax.swing.JLabel();
         cmbCarrera = new javax.swing.JComboBox<>();
         lblCarrera = new javax.swing.JLabel();
 
@@ -181,10 +181,8 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         lblBuscar.setText("Buscar:");
 
         btnEditar.setText("Editar");
-        btnEditar.setEnabled(false);
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -194,20 +192,19 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         });
 
         btnImprimir.setText("Imprimir");
-        btnImprimir.setEnabled(false);
 
-        BTNGENERAR.setText("Generar");
+        btnGenerar.setText("Generar");
 
-        CHBSILABO.setText("Silabo");
+        chbSilabo.setText("Silabo");
 
-        CHBPROGRAMA.setText("Programa Analítico");
-        CHBPROGRAMA.addActionListener(new java.awt.event.ActionListener() {
+        chbProgramaAnalitico.setText("Programa Analítico");
+        chbProgramaAnalitico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CHBPROGRAMAActionPerformed(evt);
+                chbProgramaAnaliticoActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Seleccione el documento:");
+        lblSeleccionDocumento.setText("Seleccione el documento:");
 
         lblCarrera.setText("Carrera:");
 
@@ -242,11 +239,11 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                                     .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                    .addComponent(lblSeleccionDocumento)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(BTNGENERAR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CHBPROGRAMA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CHBSILABO)))
+                        .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chbSilabo)))
                 .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
@@ -255,11 +252,11 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblSeleccionDocumento)
                         .addGap(14, 14, 14)
-                        .addComponent(CHBPROGRAMA)
+                        .addComponent(chbProgramaAnalitico)
                         .addGap(6, 6, 6)
-                        .addComponent(CHBSILABO))
+                        .addComponent(chbSilabo))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblBuscar)
@@ -276,7 +273,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(BTNGENERAR)
+                        .addComponent(btnGenerar)
                         .addContainerGap(242, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -291,41 +288,43 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void CHBPROGRAMAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHBPROGRAMAActionPerformed
+    private void chbProgramaAnaliticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbProgramaAnaliticoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CHBPROGRAMAActionPerformed
+    }//GEN-LAST:event_chbProgramaAnaliticoActionPerformed
 
-    public JButton getBTNGENERAR() {
-        return BTNGENERAR;
+    public JButton getBtnGenerar() {
+        return btnGenerar;
     }
 
-    public void setBTNGENERAR(JButton BTNGENERAR) {
-        this.BTNGENERAR = BTNGENERAR;
+    public void setBtnGenerar(JButton btnGenerar) {
+        this.btnGenerar = btnGenerar;
     }
 
-    public JCheckBox getCHBPROGRAMA() {
-        return CHBPROGRAMA;
+    public JCheckBox getChbProgramaAnalitico() {
+        return chbProgramaAnalitico;
     }
 
-    public JLabel getjLabel1() {
-        return jLabel1;
+    public void setChbProgramaAnalitico(JCheckBox chbProgramaAnalitico) {
+        this.chbProgramaAnalitico = chbProgramaAnalitico;
     }
 
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
+    public JCheckBox getChbSilabo() {
+        return chbSilabo;
     }
 
-    public void setCHBPROGRAMA(JCheckBox CHBPROGRAMA) {
-        this.CHBPROGRAMA = CHBPROGRAMA;
+    public void setChbSilabo(JCheckBox chbSilabo) {
+        this.chbSilabo = chbSilabo;
     }
 
-    public JCheckBox getCHBSILABO() {
-        return CHBSILABO;
+    public JLabel getLblSeleccionDocumento() {
+        return lblSeleccionDocumento;
     }
 
-    public void setCHBSILABO(JCheckBox CHBSILABO) {
-        this.CHBSILABO = CHBSILABO;
+    public void setLblSeleccionDocumento(JLabel lblSeleccionDocumento) {
+        this.lblSeleccionDocumento = lblSeleccionDocumento;
     }
+
+    
 
     /**
      * @param args the command line arguments
@@ -364,17 +363,17 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BTNGENERAR;
-    private javax.swing.JCheckBox CHBPROGRAMA;
-    private javax.swing.JCheckBox CHBSILABO;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JCheckBox chbProgramaAnalitico;
+    private javax.swing.JCheckBox chbSilabo;
     private javax.swing.JComboBox<String> cmbCarrera;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCarrera;
+    private javax.swing.JLabel lblSeleccionDocumento;
     private javax.swing.JScrollPane srcSilabos;
     private javax.swing.JTable tblSilabos;
     private javax.swing.JTextField txtBuscar;

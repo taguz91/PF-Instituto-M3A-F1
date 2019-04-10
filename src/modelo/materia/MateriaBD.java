@@ -267,8 +267,8 @@ public class MateriaBD extends MateriaMD {
             m.setId(rs.getInt("id_materia"));
             //Aqui cargamos la carrera el id de la carrera
             //Deberiamos buscar carrera
-            CarreraMD carrera = new CarreraMD(); 
-            carrera.setId(rs.getInt("id_carrera"));                    
+            CarreraMD carrera = new CarreraMD();
+            carrera.setId(rs.getInt("id_carrera"));
             m.setCarrera(carrera);
             EjeFormacionMD eje = new EjeFormacionMD();
             eje.setId(rs.getInt("id_eje"));
@@ -327,7 +327,7 @@ public class MateriaBD extends MateriaMD {
 
     public static List<String> selectWhere(int idDocente, int ciclo, String paralelo, String jornada) {
 
-        String SELECT = "SELECT\n"
+        String SELECT = "SELECT DISTINCT\n"
                 + "\"Materias\".materia_nombre\n"
                 + "FROM\n"
                 + "\"Cursos\"\n"
