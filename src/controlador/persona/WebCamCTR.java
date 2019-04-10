@@ -1,4 +1,4 @@
-package controlador.persona;
+ package controlador.persona;
 
 import com.github.sarxos.webcam.WebcamShutdownHook;
 import java.awt.Image;

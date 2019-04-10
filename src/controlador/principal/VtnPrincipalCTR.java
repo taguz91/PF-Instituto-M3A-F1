@@ -26,6 +26,7 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.VtnRolCTR;
@@ -234,8 +235,11 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
-        
-        controladorSilabo();
+
+
+        vtnPrin.getMnCtSilabos().addActionListener(al->controladorSilabo());
+        vtnPrin.getBtnConsultarSilabo().addActionListener(al->controladorSilabo());
+
         carga.start();
 
         //Esto es para la consola 
@@ -517,9 +521,11 @@ public class VtnPrincipalCTR {
     }
     
     private void controladorSilabo() {
-        
-        ControladorSilabos c = new ControladorSilabos(usuario, vtnPrin);
-        
+
+
+        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+
+
         c.iniciarControlador();
         
     }

@@ -26,6 +26,22 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
     }
 
+    public JComboBox<String> getCmbPeriodo() {
+        return cmbPeriodo;
+    }
+
+    public void setCmbPeriodo(JComboBox<String> cmbPeriodo) {
+        this.cmbPeriodo = cmbPeriodo;
+    }
+
+    public JLabel getLblPeriodo() {
+        return lblPeriodo;
+    }
+
+    public void setLblPeriodo(JLabel lblPeriodo) {
+        this.lblPeriodo = lblPeriodo;
+    }
+
     
     
     
@@ -118,12 +134,14 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
         lblAsignatura = new javax.swing.JLabel();
         lblConfiguracion = new javax.swing.JLabel();
         lblCarrera = new javax.swing.JLabel();
-        cmbCarrera = new javax.swing.JComboBox<>();
         btnSiguiente = new javax.swing.JButton();
-        cmbAsignatura = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         lblUnidades = new javax.swing.JLabel();
         spnUnidades = new javax.swing.JSpinner();
+        lblPeriodo = new javax.swing.JLabel();
+        cmbCarrera = new javax.swing.JComboBox<>();
+        cmbAsignatura = new javax.swing.JComboBox<>();
+        cmbPeriodo = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -150,55 +168,69 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
 
         spnUnidades.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
+        lblPeriodo.setText("Periodo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblConfiguracion)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(lblUnidades)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblAsignatura, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblCarrera))
-                            .addGap(57, 57, 57)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cmbAsignatura, javax.swing.GroupLayout.Alignment.LEADING, 0, 318, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnSiguiente)
-                                    .addGap(20, 20, 20)
-                                    .addComponent(btnCancelar))
-                                .addComponent(cmbCarrera, javax.swing.GroupLayout.Alignment.LEADING, 0, 318, Short.MAX_VALUE)))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblUnidades)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(spnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPeriodo)
+                                    .addComponent(lblAsignatura)
+                                    .addComponent(lblCarrera))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(176, 176, 176)
+                                        .addComponent(btnSiguiente)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(btnCancelar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cmbCarrera, 0, 336, Short.MAX_VALUE)
+                                            .addComponent(cmbAsignatura, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cmbPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(lblConfiguracion)))
+                .addGap(52, 52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(lblConfiguracion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCarrera))
+                    .addComponent(lblCarrera)
+                    .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAsignatura))
+                    .addComponent(lblPeriodo)
+                    .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAsignatura)
+                    .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUnidades)
                     .addComponent(spnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSiguiente)
                     .addComponent(btnCancelar))
-                .addGap(28, 28, 28))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,9 +283,11 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbAsignatura;
     private javax.swing.JComboBox<String> cmbCarrera;
+    private javax.swing.JComboBox<String> cmbPeriodo;
     private javax.swing.JLabel lblAsignatura;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblConfiguracion;
+    private javax.swing.JLabel lblPeriodo;
     private javax.swing.JLabel lblUnidades;
     private javax.swing.JSpinner spnUnidades;
     // End of variables declaration//GEN-END:variables
