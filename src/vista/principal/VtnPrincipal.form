@@ -378,7 +378,9 @@
                   <Component id="btnIngresarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="165" max="32767" attributes="0"/>
+                  <EmptySpace pref="124" max="32767" attributes="0"/>
+                  <Component id="btnCambiarRol" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnCerrarSesion" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -400,6 +402,7 @@
                       <Component id="btnDocenteMateria" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnCambiarRol" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -540,6 +543,30 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Consultar Silabo"/>
             <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCambiarRol">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Sign_Out_20px_1.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Cerrar Sesi&#xf3;n"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Mano"/>
+            </Property>
+            <Property name="focusPainted" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Sign_Out_20px.png"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>
