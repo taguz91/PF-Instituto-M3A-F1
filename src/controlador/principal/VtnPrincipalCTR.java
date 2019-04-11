@@ -27,6 +27,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.VtnRolCTR;
@@ -49,6 +50,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
+import modelo.ConexionBD;
 import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
@@ -237,9 +239,9 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
 
-        vtnPrin.getMnCtSilabos().addActionListener(al->controladorSilabo());
-        vtnPrin.getBtnConsultarSilabo().addActionListener(al->controladorSilabo());
-
+        vtnPrin.getMnCtSilabos().addActionListener(al->controladorCRUD());
+        vtnPrin.getBtnConsultarSilabo().addActionListener(al->controladorCRUD());
+        vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
         carga.start();
 
         //Esto es para la consola 
@@ -520,10 +522,20 @@ public class VtnPrincipalCTR {
         }
     }
     
-    private void controladorSilabo() {
+    private void controladorCRUD() {
 
 
         ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+
+
+        c.iniciarControlador();
+        
+    }
+    
+    private void controladorIngreso() {
+
+
+        ControladorSilaboC c = new ControladorSilaboC(vtnPrin,usuario,new ConexionBD() );
 
 
         c.iniciarControlador();

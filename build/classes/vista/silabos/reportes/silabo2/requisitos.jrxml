@@ -9,11 +9,12 @@
 	</queryString>
 	<field name="id_materia" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="40" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="273" height="20" uuid="b419127e-7635-4f62-a47b-8d2e20bbc884"/>
 				<box>
@@ -56,12 +57,22 @@
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="273" height="16" uuid="317a3503-eb97-414f-bca6-85253440aee6"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id_materia}==null?"N/A":""]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="71" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="181" height="70" uuid="33b04a28-ccde-4c43-947a-f2f1106b868c"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="181" height="70" isPrintWhenDetailOverflows="true" uuid="33b04a28-ccde-4c43-947a-f2f1106b868c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

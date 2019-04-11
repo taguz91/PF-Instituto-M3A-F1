@@ -6,10 +6,13 @@
 package modelo.evaluacionSilabo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
@@ -56,6 +59,40 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
             Logger.getLogger(EvaluacionSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+     public static List<EvaluacionSilaboMD> recuperarEvaluaciones(ConexionBD conexion,int aguja) {
+         List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
+        try {
+            
+            PreparedStatement st = conexion.getCon().prepareStatement( "SELECT indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
+                    + "FROM \"EvaluacionSilabo\",\"Silabo\",\"UnidadSilabo\"\n"
+                    + "WHERE \"EvaluacionSilabo\".id_unidad=\"UnidadSilabo\".id_unidad\n"
+                    + "AND \"UnidadSilabo\".id_silabo=\"Silabo\".id_silabo\n"
+                    + "AND \"Silabo\".id_silabo="+aguja+"");
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                EvaluacionSilaboMD e = new EvaluacionSilaboMD();
+                e.setIndicador(rs.getString(1));
+                e.getIdTipoActividad().setIdTipoActividad(rs.getInt(2));
+                e.setInstrumento(rs.getString(3));
+                e.setValoracion(rs.getDouble(4));
+                e.setFechaEnvio(rs.getDate(5).toLocalDate());
+                e.setFechaPresentacion(rs.getDate(6).toLocalDate());
+                e.getIdUnidad().setNumeroUnidad(rs.getInt(7));
+                //e.getIdUnidad().;
+
+                evaluaciones.add(e);
+            }
+           
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbEvaluacionSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return evaluaciones;
     }
 
 }

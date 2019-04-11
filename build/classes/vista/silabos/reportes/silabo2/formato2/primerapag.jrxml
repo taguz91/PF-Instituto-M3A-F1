@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ca20592-755c-4f93-9ad6-db236b9afe9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="672"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
@@ -244,7 +244,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<text><![CDATA[ Ciclo/semestre:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="286" y="234" width="263" height="37" uuid="3a5a21fa-c624-4148-a3a6-a4a39f667f07"/>
+				<reportElement x="284" y="234" width="263" height="37" uuid="3a5a21fa-c624-4148-a3a6-a4a39f667f07"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
