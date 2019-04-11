@@ -5,7 +5,7 @@
  */
 package modelo.propiedades;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ public class Propiedades {
 
     static {
         config = new Properties();
-        PATH = Effects.getProjectPath() + PATH;
+        PATH = Middlewares.getProjectPath() + PATH;
         archivo = new File(PATH);
     }
 

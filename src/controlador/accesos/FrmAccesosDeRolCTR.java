@@ -5,7 +5,7 @@
  */
 package controlador.accesos;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -59,7 +59,7 @@ public class FrmAccesosDeRolCTR {
         tablaPermisos = (DefaultTableModel) vista.getTabPermisos().getModel();
         tablaPermDados = (DefaultTableModel) vista.getTabPermDados().getModel();
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitFuncion();
 

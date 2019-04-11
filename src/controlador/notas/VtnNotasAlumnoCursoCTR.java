@@ -1,6 +1,6 @@
 package controlador.notas;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -103,7 +103,7 @@ public class VtnNotasAlumnoCursoCTR {
         thread = new Thread() {
             @Override
             public void run() {
-                Effects.setLoadCursor(vista);
+                Middlewares.setLoadCursor(vista);
                 desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
 
                 try {
@@ -121,10 +121,10 @@ public class VtnNotasAlumnoCursoCTR {
                         Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     desktop.getLblEstado().setText("");
-                    Effects.setDefaultCursor(vista);
+                    Middlewares.setDefaultCursor(vista);
                     InitEventos();
                 } catch (NullPointerException e) {
-                    Effects.setDefaultCursor(vista);
+                    Middlewares.setDefaultCursor(vista);
                     JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
 
@@ -560,7 +560,7 @@ public class VtnNotasAlumnoCursoCTR {
 
                     cargarTabla = false;
 
-                    Effects.setLoadCursor(vista);
+                    Middlewares.setLoadCursor(vista);
 
                     try {
 
@@ -577,7 +577,7 @@ public class VtnNotasAlumnoCursoCTR {
                         agregarFilas();
 
                         desktop.getLblEstado().setText("");
-                        Effects.setDefaultCursor(vista);
+                        Middlewares.setDefaultCursor(vista);
                     } catch (NullPointerException e) {
                         System.out.println(e);
                     }
@@ -673,7 +673,7 @@ public class VtnNotasAlumnoCursoCTR {
         thread = new Thread() {
             @Override
             public void run() {
-                Effects.setLoadCursor(vista);
+                Middlewares.setLoadCursor(vista);
 
                 ReportesCTR reportes = new ReportesCTR(vista, idDocente);
 
@@ -681,7 +681,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 0:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        reportes.generarReporteMenos70(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteMenos70();
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -689,7 +689,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 1:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        // ReportesCTR.generarReporteEntre70_80(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteEntre70_80();
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -697,7 +697,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 2:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        //ReportesCTR.generarReporteEntre80_90(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteEntre80_90();
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -705,7 +705,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 3:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        // ReportesCTR.generarReporteEntre90_100(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteEntre90_100();
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -726,7 +726,7 @@ public class VtnNotasAlumnoCursoCTR {
                     Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 desktop.getLblEstado().setText("");
-                Effects.setDefaultCursor(vista);
+                Middlewares.setDefaultCursor(vista);
                 vista.getBtnVerNotas().setEnabled(true);
 
             }
