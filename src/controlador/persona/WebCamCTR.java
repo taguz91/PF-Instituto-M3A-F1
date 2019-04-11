@@ -106,8 +106,6 @@ public class WebCamCTR {
             frmPersona.getLblFoto().setIcon(new ImageIcon(foto_Nueva));
             cancelarFoto();
             ctrFrmPersona.pasarFoto(is);
-//            WebcamShutdownHook WebcamShutdownHook;
-//            vtnWebCam.getPanelCam().isACTIVARCAMARA();
         } else {
             JOptionPane.showMessageDialog(vtnWebCam, "Aun no se a tomado una foto.");
         }
