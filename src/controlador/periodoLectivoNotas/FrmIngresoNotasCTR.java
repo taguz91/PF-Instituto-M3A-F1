@@ -1,7 +1,7 @@
 package controlador.periodoLectivoNotas;
 
 import com.toedter.calendar.JDateChooser;
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.time.LocalDate;
@@ -135,7 +135,7 @@ public class FrmIngresoNotasCTR {
     private void agregar() {
         if (modelo.insertar()) {
             JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS");
-            Effects.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS", 2);
+            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS", 2);
             vista.dispose();
         } else {
             JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");

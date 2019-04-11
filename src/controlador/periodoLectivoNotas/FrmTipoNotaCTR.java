@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyVetoException;
@@ -48,7 +48,7 @@ public class FrmTipoNotaCTR {
 
         InitEventos();
         try {
-            Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
             desktop.getDpnlPrincipal().add(vista);
             vista.show();
             vista.setSelected(true);
@@ -90,7 +90,7 @@ public class FrmTipoNotaCTR {
 
     private void agregar() {
         if (modelo.insertar()) {
-            Effects.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL NUEVO TIPO DE NOTA", 3);
+            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL NUEVO TIPO DE NOTA", 3);
 
             JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL NUEVO TIPO DE NOTA");
 
