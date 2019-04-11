@@ -163,7 +163,7 @@ public class VtnPrincipalCTR {
         //Le pasamos el icono  
         vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
-        InitPermisos();
+        //InitPermisos();
     }
 
     /**

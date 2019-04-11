@@ -118,7 +118,6 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
-
         return selectFromView(SELECT);
     }
 
