@@ -38,9 +38,7 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   ALUMNO CURSO
 
 */
-CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso"
-AS
-SELECT "AlumnoCurso".id_almn_curso,
+CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -71,14 +69,18 @@ SELECT "AlumnoCurso".id_almn_curso,
     "PeriodoLectivo".id_carrera,
     "PeriodoLectivo".prd_lectivo_nombre,
     "PeriodoLectivo".prd_lectivo_estado,
-    "PeriodoLectivo".prd_lectivo_activo
-   FROM (((("AlumnoCurso"
+    "PeriodoLectivo".prd_lectivo_activo,
+    "Jornadas".nombre_jornada,
+    "Materias".materia_nombre
+   FROM (((((("AlumnoCurso"
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)))
      JOIN "Cursos" ON (("AlumnoCurso".id_curso = "Cursos".id_curso)))
-     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)));
+     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
+     JOIN "Jornadas" ON (("Cursos".id_jornada = "Jornadas".id_jornada)))
+     JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)));
 
-ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
+ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
 CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree (
   "id_almn_curso" "pg_catalog"."int4_ops" ASC NULLS LAST,
