@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -97,7 +97,7 @@ public class VtnPeriodoIngresoNotasCTR {
             thread = new Thread() {
                 @Override
                 public void run() {
-                    Effects.setLoadCursor(vista);
+                    Middlewares.setLoadCursor(vista);
 
                     cargarTabla = false;
 
@@ -105,7 +105,7 @@ public class VtnPeriodoIngresoNotasCTR {
                     lista
                             .stream()
                             .forEach(VtnPeriodoIngresoNotasCTR::agregarFila);
-                    Effects.setDefaultCursor(vista);
+                    Middlewares.setDefaultCursor(vista);
 
                     cargarTabla = true;
 

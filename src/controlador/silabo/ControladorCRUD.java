@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
@@ -81,9 +82,10 @@ public class ControladorCRUD {
 
         // Boton EDITAR Silabo
         crud.getBtnEditar().addActionListener((ActionEvent ae) -> {
+            
             crud.dispose();
             
-            ControladorSilaboU csu = new ControladorSilaboU(silabo,principal);
+            ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(),principal,conexion);
             
             
             csu.iniciarControlador();
@@ -100,9 +102,16 @@ public class ControladorCRUD {
         
         crud.getBtnImprimir().addActionListener((ActionEvent ae) -> {
             opcionesImpresion(true);
-            ControladorSilaboR csr = new ControladorSilaboR(silabo);
+            
+            
+            ControladorSilaboR csr = new ControladorSilaboR(crud,seleccionarSilabo(),conexion,principal);
             
             csr.iniciarControlador();
+            
+            
+            
+            
+            
         });
         
         crud.getTxtBuscar().addKeyListener(new KeyAdapter(){
@@ -114,6 +123,9 @@ public class ControladorCRUD {
             }
            
         });
+        
+        crud.getCmbCarrera().addActionListener(al -> cargarSilabosDocente());
+        
         
         cargarComboCarreras();
         
@@ -138,7 +150,8 @@ public class ControladorCRUD {
 
         modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
 
-        String [] parametros= {crud.getCmbCarrera().getSelectedItem().toString(),crud.getTxtBuscar().getText()};
+        String [] parametros= {crud.getCmbCarrera().getSelectedItem().toString(),crud.getTxtBuscar().getText(),String.valueOf(usuario.getPersona().getIdPersona())};
+        //
         
         silabosDocente=SilaboBD.consultar(conexion,parametros);
         
@@ -165,6 +178,17 @@ public class ControladorCRUD {
         }
 
         crud.getTblSilabos().setModel(modeloTabla);
+    }
+    
+    public SilaboMD seleccionarSilabo(){
+        
+            int seleccion = crud.getTblSilabos().getSelectedRow();
+            
+           Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
+                    filter(s -> s.getIdMateria().getNombre().equals(crud.getTblSilabos().getValueAt(seleccion, 0))).
+                    findFirst();
+           
+           return silaboSeleccionado.get();
     }
     
     public void opcionesImpresion(boolean estado){

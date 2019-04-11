@@ -24,6 +24,7 @@ public class ReferenciaSilaboMD {
     public ReferenciaSilaboMD() {
         
         this.idReferencia=new ReferenciasMD();
+        
     }
 
     public ReferenciaSilaboMD( ReferenciasMD idReferencia, SilaboMD idSilabo) {

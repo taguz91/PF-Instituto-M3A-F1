@@ -5,10 +5,9 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="ID_CARR" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select p.persona_primer_apellido,p.persona_primer_nombre from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
+		<![CDATA[select concat(p.persona_primer_apellido,' ',p.persona_primer_nombre) as docente_coordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
 	</queryString>
-	<field name="persona_primer_apellido" class="java.lang.String"/>
-	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="docente_coordinador" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -41,15 +40,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="228" splitType="Stretch">
-			<textField>
-				<reportElement x="143" y="0" width="134" height="227" uuid="57c51a50-305f-4189-831c-9775cb7f8dde"/>
-				<box>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
-			</textField>
+		<band height="171" splitType="Stretch">
 			<line>
 				<reportElement x="27" y="108" width="176" height="1" uuid="c6db6f92-7915-4e67-9e6f-29ff64285e3d"/>
 				<graphicElement>
@@ -57,12 +48,16 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="141" height="227" uuid="3722e8c1-657a-4b03-9d60-d379bce40dcf"/>
+				<reportElement x="0" y="0" width="277" height="171" uuid="82c80997-a265-4d0c-a0ca-657dc2082a02"/>
 				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{docente_coordinador}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
