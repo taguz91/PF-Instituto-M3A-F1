@@ -379,6 +379,7 @@ public class FrmAlumnoCTR {
                         frmAlumno.getTxt_Nombre().setText(p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                                 + p.getPrimerApellido() + " " + p.getSegundoApellido());
                         habilitarGuardar();
+                        reiniciarComponentes(frmAlumno);
                         if (alumno.getId_Alumno() == 0) {
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
@@ -626,7 +627,7 @@ public class FrmAlumnoCTR {
     //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
         //frmAlumno.getTxt_Cedula().setText("");
-        frmAlumno.getTxt_Nombre().setText("");
+        //frmAlumno.getTxt_Nombre().setText("");
         frmAlumno.getCmBx_TipoColegio().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_TipoBachillerato().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_NvAcademico().setSelectedItem("|SELECCIONE|");

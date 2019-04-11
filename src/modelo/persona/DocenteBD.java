@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -580,6 +581,45 @@ public class DocenteBD extends DocenteMD {
         }
         return lista;
 
+    }
+
+    public static Map<String, DocenteMD> selectDocentes() {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Docentes\".id_docente,\n"
+                + "\"public\".\"Docentes\".docente_codigo\n"
+                + "FROM\n"
+                + "\"public\".\"Docentes\"\n"
+                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE \n"
+                + "docente_activo IS TRUE";
+
+        Map<String, DocenteMD> lista = new HashMap<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                
+                DocenteMD docente = new DocenteMD();
+                docente.setIdDocente(rs.getInt(""));
+                docente.setPrimerApellido(rs.getString(""));
+                docente.setSegundoApellido(rs.getString(""));
+                docente.setPrimerNombre(rs.getString(""));
+                docente.setSegundoNombre(rs.getString(""));
+                
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lista;
     }
 
 }

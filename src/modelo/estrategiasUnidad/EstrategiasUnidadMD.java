@@ -6,6 +6,7 @@
 package modelo.estrategiasUnidad;
 
 
+import modelo.estrategiasAprendizaje.EstrategiasAprendizajeBD;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -21,6 +22,8 @@ public class EstrategiasUnidadMD {
     private UnidadSilaboMD idUnidad;
 
     public EstrategiasUnidadMD() {
+         this.idEstrategia = new EstrategiasAprendizajeMD();
+        this.idUnidad = new UnidadSilaboMD();
     }
 
     public EstrategiasUnidadMD( EstrategiasAprendizajeMD idEstrategia, UnidadSilaboMD idUnidad) {
