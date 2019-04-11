@@ -352,6 +352,8 @@ public class FrmAlumnoCTR {
 
                     PersonaMD p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
                     if (p.getIdentificacion() == null) {
+                        reiniciarComponentes(frmAlumno);
+                        iniciarComponentes();
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {
@@ -379,8 +381,9 @@ public class FrmAlumnoCTR {
                         frmAlumno.getTxt_Nombre().setText(p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                                 + p.getPrimerApellido() + " " + p.getSegundoApellido());
                         habilitarGuardar();
-                        reiniciarComponentes(frmAlumno);
                         if (alumno.getId_Alumno() == 0) {
+                            reiniciarComponentes(frmAlumno);
+                            iniciarComponentes();
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             cont = 0;
