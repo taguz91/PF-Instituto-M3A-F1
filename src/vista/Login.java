@@ -40,6 +40,10 @@ public class Login extends javax.swing.JFrame {
         return btnIngSU;
     }
 
+    public JLabel getLblBtnHover() {
+        return lblBtnHover;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -58,6 +62,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnIngSU = new javax.swing.JButton();
         btnIngresar = new javax.swing.JButton();
+        lblBtnHover = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ISTA - Login");
@@ -157,16 +162,30 @@ public class Login extends javax.swing.JFrame {
 
         btnIngSU.setText("ISU");
 
+        btnIngresar.setBackground(new java.awt.Color(47, 76, 113));
+        btnIngresar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
+        btnIngresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(139, 195, 74), 2));
+        btnIngresar.setBorderPainted(false);
+        btnIngresar.setContentAreaFilled(false);
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnIngresar.setFocusPainted(false);
+        btnIngresar.setOpaque(true);
+
+        lblBtnHover.setBackground(new java.awt.Color(235, 192, 36));
+        lblBtnHover.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblBtnHover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
                 .addComponent(btnIngSU)
                 .addContainerGap())
         );
@@ -175,9 +194,11 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIngSU)
-                    .addComponent(btnIngresar))
-                .addContainerGap())
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngSU))
+                .addGap(0, 0, 0)
+                .addComponent(lblBtnHover, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,6 +232,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAvisos;
+    private javax.swing.JLabel lblBtnHover;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;

@@ -48,6 +48,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
     public JComboBox getCmbPrdLectivos() {
         return cmbPrdLectivos;
     }
+
+    public JButton getBtnMaterias() {
+        return btnMaterias;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,6 +68,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cmbCursos = new javax.swing.JComboBox();
+        btnMaterias = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -96,6 +101,9 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Cursos:");
 
+        btnMaterias.setText("Materias");
+        btnMaterias.setToolTipText("Informacion de las materias que cursa en este curso.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,6 +135,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnMaterias)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnIngresar)))))
                 .addContainerGap())
         );
@@ -138,7 +148,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(btnbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblbuscar)
-                        .addComponent(btnIngresar))
+                        .addComponent(btnIngresar)
+                        .addComponent(btnMaterias))
                     .addComponent(txtbuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -159,6 +170,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnMaterias;
     private javax.swing.JButton btnbuscar;
     private javax.swing.JComboBox cmbCursos;
     private javax.swing.JComboBox cmbPrdLectivos;

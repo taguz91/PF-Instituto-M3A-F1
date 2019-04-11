@@ -623,12 +623,12 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         lblErrorPriNombre.setText("Sólo debe ingresar letras.");
         getContentPane().add(lblErrorPriNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 240, -1));
 
-        btnCapturarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_20px.png"))); // NOI18N
+        btnCapturarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Webcam_25px.png"))); // NOI18N
         btnCapturarFoto.setToolTipText("Abrir camara.");
         btnCapturarFoto.setBorderPainted(false);
         btnCapturarFoto.setContentAreaFilled(false);
-        btnCapturarFoto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_School_Director_20px.png"))); // NOI18N
-        getContentPane().add(btnCapturarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 250, 40, -1));
+        btnCapturarFoto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Web_Camera_25px.png"))); // NOI18N
+        getContentPane().add(btnCapturarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 240, 40, 40));
         getContentPane().add(jdfechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 130, -1));
 
         pack();
