@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
@@ -539,7 +540,7 @@ public class VtnNotasAlumnoCursoCTR {
         }
     }
 
-    private void cargarTabla() {
+    private void cargarTabla(List<AlumnoCursoBD> lista) {
         new Thread(() -> {
 
             cargarTabla = false;
@@ -615,7 +616,7 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            cargarTabla();
+            cargarTabla(listaNotas);
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
