@@ -548,7 +548,6 @@ public class DocenteBD extends DocenteMD {
                 + "FROM\n"
                 + "\"public\".\"ViewDocentes\"\n"
                 + "ORDER BY persona_primer_apellido";
-        System.out.println(SELECT);
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
 
