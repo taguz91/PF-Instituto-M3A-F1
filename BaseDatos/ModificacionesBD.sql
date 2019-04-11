@@ -95,3 +95,12 @@ TRUNCATE TABLE public."EstrategiasAprendizaje" CASCADE;
 --Grupo Diego
 
 ALTER TABLE "Cursos" DROP "curso_permiso_ingreso_nt";
+
+--Agregamos un nuevo campo
+ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_fecha_registro" DATE default now();
+
+--Modificaciones -- 09/04/2019
+
+ALTER TABLE public."Silabo" DROP COLUMN estado_silabo;
+
+ALTER TABLE public."Silabo" ADD COLUMN "estado_silabo" integer;

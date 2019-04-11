@@ -26,16 +26,19 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.VtnRolCTR;
+import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -52,7 +55,7 @@ import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
-import modelo.persona.DocenteBD;
+import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -85,6 +88,7 @@ import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
+import vista.usuario.VtnSelectRol;
 import vista.usuario.VtnUsuario;
 
 /**
@@ -128,6 +132,16 @@ public class VtnPrincipalCTR {
         {"DocenteMateria", "DocenteMateria-Ingresar"}
     };
 
+    /**
+     * Construnctor principal del sistema.
+     *
+     * @param vtnPrin VtnPrincipal: Ventana principal del sistema
+     * @param rolSeleccionado RolBD: Rol seleccionado.
+     * @param usuario UsuarioBD: Usuario que se conecto.
+     * @param conecta ConectarDB: Coneccion a la base de datos G23
+     * @param icono ImagenIcon: Icono del sistema.
+     * @param ista Imagen: Imagen del icono del sistema.
+     */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
         this.vtnPrin = vtnPrin;
@@ -149,6 +163,10 @@ public class VtnPrincipalCTR {
         InitPermisos();
     }
 
+    /**
+     * Inicia dependencias de la aplicacion. Eventos, Atajos de teclado y
+     * animaciones.
+     */
     public void iniciar() {
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
@@ -221,11 +239,18 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
-        controladorSilabo();
+        vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
+
         carga.start();
 
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
+
+        /*
+            SET DIRECCION IP
+         */
+        vtnPrin.getLblIP().setText(Propiedades.loadIP());
+
     }
 
     private void iniciandoBtns() {
@@ -411,7 +436,6 @@ public class VtnPrincipalCTR {
 
     public void abrirFrmDocente() {
         FrmDocente frmDocente = new FrmDocente();
-        DocenteBD docente = new DocenteBD(conecta);
         eventoInternal(frmDocente);
         if (numVtns < 5) {
             frmDocente.getBtnRegistrarPersona().setVisible(false);
@@ -499,7 +523,9 @@ public class VtnPrincipalCTR {
 
     private void controladorSilabo() {
 
-        ControladorSilabos c = new ControladorSilabos(usuario, vtnPrin);
+
+        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+
 
         c.iniciarControlador();
 
@@ -511,6 +537,10 @@ public class VtnPrincipalCTR {
         vtnNotas.Init();
     }
 
+    /**
+     * Se ejecuta al seleccionar un estilo en el menu de opciones. Obtendra el
+     * nombre del estilo elejido y actualizara la ventana, para mostrarlo.
+     */
     private void estiloVtn() {
         String estilo = "Windows";
 
@@ -531,14 +561,21 @@ public class VtnPrincipalCTR {
             //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
             //Ocultamos el borde de internal de bienvenida
-            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
-            vtnBienvenida.setBorder(null);
+//            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
+//            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Al crear una ventana, se la inicia con este envento, para contronlar de
+     * que no existan mas de 5 ventanas.
+     *
+     * @param internal JInternalFrame
+     * @see errorNumVentanas()
+     */
     public void eventoInternal(JInternalFrame internal) {
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -557,6 +594,21 @@ public class VtnPrincipalCTR {
         });
     }
 
+    //Se desactivara la ventana al abrir un jdialog
+    public void eventoJDCerrar(JDialog jd) {
+        jd.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                vtnPrin.setEnabled(true);
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                vtnPrin.setEnabled(false);
+            }
+        });
+    }
+
     public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
@@ -564,27 +616,59 @@ public class VtnPrincipalCTR {
         }
     }
 
+    /**
+     * Se envia el nombre de la ventana que se abre para que se escriba en la
+     * barra de estado de la aplicacion.
+     *
+     * @param vtn String
+     */
     public void estadoCargaVtn(String vtn) {
         vtnPrin.getLblEstado().setText("Inciando la ventana de " + vtn + ". Por favor espere la información se cargara en breve.");
     }
 
+    /**
+     * Al terminar de cargar la ventana, se envia el nombre de la ventana que
+     * cargo para mostrarla en la barra de estado.
+     *
+     * @param vtn String
+     */
     public void estadoCargaVtnFin(String vtn) {
         vtnPrin.getLblEstado().setText("Termino de iniciarse la ventana de " + vtn + ", cualquier error reportarlo a M3A.");
     }
 
+    /**
+     * Al abrir un formulario se envia el nombre del formulario para actualizar
+     * la barra de estado.
+     *
+     * @param frm String
+     */
     public void estadoCargaFrm(String frm) {
         vtnPrin.getLblEstado().setText("Inciando el formulario de " + frm + " ...");
     }
 
+    /**
+     * Al terminar de iniciarse un formulario se envia el nombre del formulario,
+     * para actualizar la barra de estado.
+     *
+     * @param frm String
+     */
     public void estadoCargaFrmFin(String frm) {
         vtnPrin.getLblEstado().setText("Formulario de " + frm + " iniciado.");
     }
 
+    /**
+     * Si se abren mas de 5 ventanas salta este error
+     */
     private void errorNumVentanas() {
         JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
                 "Error Ventana", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Se inician los atajos de teclado para formularios.
+     *
+     * @author: Johnny Garcia
+     */
     private void iniciarAtajosTeclado() {
         vtnPrin.getMnCtAlumno().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
@@ -618,7 +702,7 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtDocenteMateria().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtUsuarios().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 
@@ -655,8 +739,7 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-        
-        
+
     }
 
     public int getNumVtns() {
@@ -693,18 +776,38 @@ public class VtnPrincipalCTR {
         }
     }
 
+    /**
+     * Retornamos el icono del sistema
+     *
+     * @return icono ImageIcon
+     */
     public ImageIcon getIcono() {
         return icono;
     }
 
+    /**
+     * Retornamos la imagen del icono.
+     *
+     * @return ista Image
+     */
     public Image getIsta() {
         return ista;
     }
 
+    /**
+     * Cambiamos el icono de un JInternalFrame.
+     *
+     * @param jif JInternalFrame
+     */
     public void setIconJIFrame(JInternalFrame jif) {
         jif.setFrameIcon(icono);
     }
 
+    /**
+     * Se cambia el icono de un JDialog
+     *
+     * @param jd JDialog
+     */
     public void setIconJDialog(JDialog jd) {
         jd.setIconImage(ista);
     }
@@ -717,7 +820,11 @@ public class VtnPrincipalCTR {
 
     }
 
-    //Para entrar en consola de unas
+    /**
+     * Iniciamos una ventana, con acceso directo a comandos NSQL para la base de
+     * datos. Proposito es realizar cambios importantes si no se tiene acceso a
+     * la base de datos.
+     */
     private void iniciarConsola() {
         JPasswordField pass = new JPasswordField();
         int o = JOptionPane.showConfirmDialog(vtnPrin, pass, "Ingrese su contraseña",
@@ -729,7 +836,7 @@ public class VtnPrincipalCTR {
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
             if (c.equals("estaesunacontra")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta);
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
                 ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
@@ -747,5 +854,13 @@ public class VtnPrincipalCTR {
 
         VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), rolSeleccionado, conecta);
         vtn.Init();
+    }
+
+    private void btnCambiarRol(ActionEvent e) {
+
+        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), usuario, conecta, icono, ista);
+        vtn.Init();
+        vtnPrin.setVisible(false);
+        System.gc();
     }
 }

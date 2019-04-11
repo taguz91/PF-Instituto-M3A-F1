@@ -30,7 +30,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
-import vista.persona.VtnDocente;
+import vista.persona.VtnMatRetiradas;
 import vista.principal.VtnPrincipal;
 
 public class VtnAlumnoCTR {
@@ -44,6 +44,7 @@ public class VtnAlumnoCTR {
     private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
+    public static AlumnoMD mdAlumno;
 
     public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -81,11 +82,12 @@ public class VtnAlumnoCTR {
         ActionListener Cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vtnAlumno.setVisible(false);
+                vtnAlumno.dispose();
             }
 
         };
 
+        iniciarComponentes(); //Inicia los componentes
         ocultarAtributo(); //Oculta la Columna del Id de Persona
         llenarTabla(); //LLena la tabla con los datos de los Alumnos registrados
         //Asignación de eventos a los componentes de la Ventana
@@ -93,11 +95,25 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
+        vtnAlumno.getBtn_Materias().addActionListener(e -> abrirVtnMaterias());
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         //Validacion del buscador  
         vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(),
                 vtnAlumno.getBtnBuscar()));
+        
+        vtnAlumno.getChBx_Alumnos().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if(vtnAlumno.getChBx_Alumnos().isSelected() == true){
+                   vtnAlumno.getBtn_Materias().setVisible(true);
+                   llenarRetirados();
+               } else{
+                   vtnAlumno.getBtn_Materias().setVisible(false);
+                   llenarTabla();
+               }
+            }
+        });
 
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
@@ -111,6 +127,22 @@ public class VtnAlumnoCTR {
         ctrPrin.abrirFrmAlumno();
         vtnAlumno.dispose();
         ctrPrin.cerradoJIF();
+    }
+    
+    public void abrirVtnMaterias(){
+        //AlumnoMD al = capturarFila();
+        mdAlumno = capturarFila();
+        if(mdAlumno == null){
+            JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
+        } else{
+            VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
+            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno, conecta);
+            materias.iniciarVentana();
+        }
+    }
+    
+    public void iniciarComponentes(){
+        vtnAlumno.getBtn_Materias().setVisible(false);
     }
 
     //Oculta la columna del Id de Persona
@@ -126,6 +158,27 @@ public class VtnAlumnoCTR {
             modelo_Tabla.removeRow(i);
         }
         List<PersonaMD> lista = bdAlumno.llenarTabla();
+        int columnas = modelo_Tabla.getColumnCount();
+        for (int i = 0; i < lista.size(); i++) {
+            modelo_Tabla.addRow(new Object[columnas]);
+            vtnAlumno.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
+            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
+            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
+                    + " " + lista.get(i).getSegundoNombre(), i, 2);
+            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
+                    + " " + lista.get(i).getSegundoApellido(), i, 3);
+            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
+        }
+        vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
+    }
+    
+    public void llenarRetirados(){
+        DefaultTableModel modelo_Tabla;
+        modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
+        for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
+            modelo_Tabla.removeRow(i);
+        }
+        List<AlumnoMD> lista = bdAlumno.filtrarRetirados();
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);

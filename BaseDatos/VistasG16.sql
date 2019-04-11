@@ -31,7 +31,8 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   "persona_primer_apellido" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "persona_primer_nombre" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
-
+ 
+ 
 /*
 
   ALUMNO CURSO
@@ -57,10 +58,25 @@ SELECT "AlumnoCurso".id_almn_curso,
     "Personas".persona_primer_nombre,
     "Personas".persona_segundo_nombre,
     "Personas".id_persona,
-    "Alumnos".alumno_codigo
-   FROM (("AlumnoCurso"
+    "Alumnos".alumno_codigo,
+    "AlumnoCurso".almn_curso_fecha_registro,
+    "Cursos".id_materia,
+    "Cursos".id_prd_lectivo,
+    "Cursos".id_docente,
+    "Cursos".id_jornada,
+    "Cursos".curso_nombre,
+    "Cursos".curso_capacidad,
+    "Cursos".curso_ciclo,
+    "Cursos".curso_paralelo,
+    "PeriodoLectivo".id_carrera,
+    "PeriodoLectivo".prd_lectivo_nombre,
+    "PeriodoLectivo".prd_lectivo_estado,
+    "PeriodoLectivo".prd_lectivo_activo
+   FROM (((("AlumnoCurso"
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
-     JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)));
+     JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)))
+     JOIN "Cursos" ON (("AlumnoCurso".id_curso = "Cursos".id_curso)))
+     JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)));
 
 ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
@@ -77,7 +93,9 @@ CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree 
 
 /*
   PERMISOS DE IMGRESO DE NOTAS EN UN CURSO
-*/CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
+*/
+
+CREATE MATERIALIZED VIEW "public"."ViewCursosPermisosNotas"
 AS
 SELECT "IngresoNotas".nota_primer_inteciclo,
     "IngresoNotas".nota_examen_intecilo,
@@ -151,5 +169,103 @@ CREATE UNIQUE INDEX "viewperiodoingresonotas" ON "public"."ViewPeriodoIngresoNot
   "id_tipo_nota" "pg_catalog"."int4_ops" ASC NULLS LAST,
   "id_perd_ingr_notas" "pg_catalog"."int4_ops" ASC NULLS LAST
 );
+
+
+/*
+
+vista docentes
+
+*/
+
+CREATE MATERIALIZED VIEW "public"."ViewDocentes" AS  SELECT "Docentes".id_docente,
+    "Docentes".id_persona,
+    "Docentes".docente_codigo,
+    "Docentes".docente_activo,
+    "Personas".persona_identificacion,
+    "Personas".persona_primer_apellido,
+    "Personas".persona_segundo_apellido,
+    "Personas".persona_primer_nombre,
+    "Personas".persona_segundo_nombre
+   FROM ("Docentes"
+     JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
+
+ALTER MATERIALIZED VIEW "public"."ViewDocentes" OWNER TO "ROOT";
+
+
+
+
+
+
+
+//TRIGGERS
+
+CREATE OR REPLACE FUNCTION actualizar_vistas()
+RETURNS TRIGGER AS $actualizar_vistas$
+BEGIN
+ REFRESH MATERIALIZED VIEW "Usuarios_Persona";
+ REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
+ REFRESH MATERIALIZED VIEW "ViewCursosPermisosNotas";
+ REFRESH MATERIALIZED VIEW "ViewPeriodoIngresoNotas";
+ REFRESH MATERIALIZED VIEW "ViewDocentes";
+ 
+ RETURN NEW;
+END;
+$actualizar_vistas$ LANGUAGE plpgsql;
+
+CREATE TRIGGER actualizar_usuarios
+AFTER INSERT OR UPDATE
+ON public."Usuarios" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_personas
+AFTER INSERT OR UPDATE
+ON public."Personas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+
+
+CREATE TRIGGER actualizar_AlumnoCurso
+AFTER INSERT OR UPDATE
+ON public."AlumnoCurso" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_Alumnos
+AFTER INSERT OR UPDATE
+ON public."Alumnos" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_Cursos
+AFTER INSERT OR UPDATE
+ON public."Cursos" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_periodoLectivo
+AFTER INSERT OR UPDATE
+ON public."PeriodoLectivo" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_ingresonotas
+AFTER INSERT OR UPDATE
+ON public."IngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_materias
+AFTER INSERT OR UPDATE
+ON public."Materias" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_docentes
+AFTER INSERT OR UPDATE
+ON public."Docentes" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_periodoingresonotas
+AFTER INSERT OR UPDATE
+ON public."PeriodoIngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_tipodenota
+AFTER INSERT OR UPDATE
+ON public."TipoDeNota" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
 
 

@@ -173,13 +173,21 @@ public class FrmPrdLectivoCTR {
 
         LocalDate fechaActual = LocalDate.now();
         Date fechaHoy = Date.from(fechaActual.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        
+        frmPrdLectivo.getJdc_FechaInicio().setDateFormatString("dd/MM/yyyy");
+        frmPrdLectivo.getJdc_FechaFin().setDateFormatString("dd/MM/yyyy");
         frmPrdLectivo.getJdc_FechaInicio().setDate(fechaHoy);
         frmPrdLectivo.getJdc_FechaFin().setDate(fechaHoy);
     }
 
     //Inicializa ocultos los labels de error 
     public void iniciarComponentes() {
+        frmPrdLectivo.getCbx_Carreras().setToolTipText("Seleccione una Carrera para generar el Nombre del Período");
+        frmPrdLectivo.getTxt_Nombre().setToolTipText("El nombre se genera si selecciona una Carrera");
+        frmPrdLectivo.getJdc_FechaInicio().setToolTipText("Seleccione la Fecha de Inicio del Período Lectivo");
+        frmPrdLectivo.getJdc_FechaFin().setToolTipText("Seleccione la Fecha de Terminación del Período Lectivo");
+        frmPrdLectivo.getTxtObservacion().setToolTipText("Ingrese una Observación de este Período Lectivo");
+        frmPrdLectivo.getBtn_Guardar().setToolTipText("Se habilitará después que los campos con \"*\" esten llenos");
+        
         frmPrdLectivo.getLbl_ErrCarrera().setVisible(false);
         frmPrdLectivo.getLbl_ErrNombre().setVisible(false);
         frmPrdLectivo.getLbl_ErrFecInicio().setVisible(false);

@@ -3,6 +3,8 @@ package controlador.persona;
 import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -10,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,6 +75,19 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
+        vtnPersona.getChBx_PerEliminada().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               if(vtnPersona.getChBx_PerEliminada().isSelected() == true){
+                   filtrarEliminados();
+               } else{
+                   cargarTipoPersona();
+               }
+            }
+            
+        });
+        
+        
         vtnPersona.getBtnReportePersona().setEnabled(false);
         cargarCmbTipoPersonas();
         //Inicializamos el error para que no se vea  
@@ -154,6 +170,24 @@ public class VtnPersonaCTR {
                 break;
         }
 
+    }
+    
+    public void filtrarEliminados(){
+        List<PersonaMD> personas = new ArrayList<>();
+        personas = dbp.filtrarEliminados();
+        mdTbl.setRowCount(0);
+        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(3));
+        if (personas != null) {
+            personas.forEach((p) -> {
+                Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
+                    p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
+                    + p.getPrimerApellido() + " " + p.getSegundoApellido(),
+                    p.getFechaNacimiento()};
+                mdTbl.addRow(valores);
+            });
+        }
+        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
     //carge de la lista de modelo a la tabla

@@ -208,7 +208,6 @@ public class UsuarioBD extends UsuarioMD {
                 + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';"
                 + "";
 
-        System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
 

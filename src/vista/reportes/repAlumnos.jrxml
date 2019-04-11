@@ -19,7 +19,7 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 		<band height="144" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA[".\\src\\vista\\reportes\\ISTA.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="99" width="555" height="20"/>

@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -22,6 +23,7 @@ import vista.alumno.VtnAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
 /**
+ * Aqui se visualiza el listado de alumnos por curso.
  *
  * @author Johnny
  */
@@ -47,6 +49,15 @@ public class VtnAlumnoCursoCTR {
     private final CursoBD cur;
     private ArrayList<String> cursos;
 
+    /**
+     * En el constructor se inician todas las dependencias de base de datos.
+     *
+     * @param vtnPrin
+     * @param vtnAlmnCurso
+     * @param conecta
+     * @param ctrPrin
+     * @param permisos
+     */
     public VtnAlumnoCursoCTR(VtnPrincipal vtnPrin, VtnAlumnoCurso vtnAlmnCurso,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
@@ -68,6 +79,9 @@ public class VtnAlumnoCursoCTR {
         vtnAlmnCurso.show();
     }
 
+    /**
+     * Iniciamos todas las dependencias de la ventana
+     */
     public void iniciar() {
         String titulo[] = {"Cédula", "Alumno", "Curso"};
         String datos[][] = {};
@@ -99,11 +113,19 @@ public class VtnAlumnoCursoCTR {
         //Acciones en los combos  
         vtnAlmnCurso.getCmbPrdLectivos().addActionListener(e -> clickCmbPrd());
         vtnAlmnCurso.getCmbCursos().addActionListener(e -> clickCmbCurso());
+        //Le damos la accion al boton  
+        vtnAlmnCurso.getBtnMaterias().addActionListener(e -> materiasCurso());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por curso");
     }
 
+    /**
+     * Se busca los alumnos, unicamente busca si se ingresa letras o numero no
+     * permiten caracteres especiales.
+     *
+     * @param b String
+     */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
             almns = alc.buscarAlumnosCursosTbl(b);
@@ -113,17 +135,26 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    /**
+     * Abrimos el formulario para la matricula de un estudiante.
+     */
     public void abrirFrmCurso() {
         ctrPrin.abrirFrmMatricula();
         vtnAlmnCurso.dispose();
         ctrPrin.cerradoJIF();
     }
 
+    /**
+     * Cargamos todos los alumnos que estan matriculados en un curso.
+     */
     private void cargarAlumnosCurso() {
         almns = alc.cargarAlumnosCursosTbl();
         llenatTbl(almns);
     }
 
+    /**
+     * Cargamos la informacion por periodo lectivo.
+     */
     private void cargarTblPorPrd() {
         if (posPrd > 0) {
             almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getId_PerioLectivo());
@@ -131,13 +162,22 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    /**
+     * Cargamos la informacion por curso y periodo lectivo
+     */
     private void cargarTblPorCurso() {
         if (posCur > 0) {
-            almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1));
+            almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1),
+                    periodos.get(posPrd - 1).getId_PerioLectivo());
             llenatTbl(almns);
         }
     }
 
+    /**
+     * Llenamos la tabla, con la informacion requerida.
+     *
+     * @param almns ArrayList<AlumnoCursMD>: Alumnos que se cargaran en la tabla
+     */
     private void llenatTbl(ArrayList<AlumnoCursoMD> almns) {
         mdTbl.setRowCount(0);
         if (almns != null) {
@@ -152,8 +192,11 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    /**
+     * Cargamos las carrerar en el combo para los filtros.
+     */
     private void cargarCmbPrds() {
-        periodos = prd.cargarPrdParaCmb();
+        periodos = prd.cargarPrdParaCmbVtn();
         vtnAlmnCurso.getCmbPrdLectivos().removeAllItems();
         if (!periodos.isEmpty()) {
             vtnAlmnCurso.getCmbPrdLectivos().addItem("Todos");
@@ -186,6 +229,16 @@ public class VtnAlumnoCursoCTR {
             }
         } else {
             vtnAlmnCurso.getCmbCursos().removeAllItems();
+        }
+    }
+
+    private void materiasCurso() {
+        int posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
+        if (posFila >= 0) {
+            JDMateriasCursoCTR ctrM = new JDMateriasCursoCTR(almns.get(posFila), vtnPrin, ctrPrin, conecta);
+            ctrM.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un alumno primero.");
         }
     }
 

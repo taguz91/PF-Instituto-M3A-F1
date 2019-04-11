@@ -81,20 +81,17 @@ public class JornadaBD extends JornadaMD {
         }
     }
 
-    public static List<String> selectJornadasWhereIdDocenteAndNombPrd(int idDocente, String nombrePeriodo) {
+    public static List<String> selectJornadasWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
-                + "\"Jornadas\".nombre_jornada\n"
+                + "\"public\".\"Jornadas\".nombre_jornada\n"
                 + "FROM\n"
-                + "\"Cursos\"\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "\"public\".\"Cursos\"\n"
+                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
                 + "WHERE\n"
-                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE";
-
+                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
+        
         List<String> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);

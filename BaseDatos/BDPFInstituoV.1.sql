@@ -170,6 +170,7 @@ CREATE TABLE "AlumnoCurso"(
   "id_almn_curso" serial NOT NULL,
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
+  "almn_curso_fecha_registro" DATE default now();
   "almn_curso_nt_1_parcial" numeric(6, 2) DEFAULT '0',
   "almn_curso_nt_examen_interciclo" numeric(6, 2) DEFAULT '0',
   "almn_curso_nt_2_parcial" numeric(6, 2) DEFAULT '0',
@@ -241,7 +242,7 @@ CREATE TABLE "DocentesMateria"(
 
 
 CREATE TABLE "Usuarios"(
-  "id_usuario" serial NOT NULL, 
+  "id_usuario" serial NOT NULL,
 	"usu_username" VARCHAR(50) NOT NULL,
 	"usu_password" bytea NOT NULL,
 	"usu_estado" BOOLEAN DEFAULT TRUE,
@@ -461,7 +462,8 @@ CREATE TABLE "Silabo" (
 	id_silabo serial NOT NULL,
 	id_materia integer NOT NULL,
   id_prd_lectivo integer NOT NULL,
-  estado_silabo character varying (50) NOT NULL,
+  --estado_silabo character varying (50) NOT NULL,
+	estado_silabo integer NOT NULL,
 
 	PRIMARY KEY(id_silabo),
 

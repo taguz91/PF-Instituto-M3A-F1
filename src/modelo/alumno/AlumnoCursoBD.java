@@ -124,7 +124,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso) {
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCursoTbl(String curso, int idPrd) {
         String sql = "SELECT DISTINCT c.curso_nombre,  \n"
                 + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_identificacion\n"
@@ -133,7 +133,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "c.curso_nombre = '" + curso + "' AND\n"
-                + "ac.id_curso = c.id_curso;";
+                + "c.id_prd_lectivo = " + idPrd + "  AND\n"
+                + "ac.id_curso = c.id_curso "
+                + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 
@@ -146,7 +148,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "c.id_prd_lectivo = " + idPrd + "  AND\n"
-                + "ac.id_curso = c.id_curso;";
+                + "ac.id_curso = c.id_curso "
+                + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
 
@@ -259,7 +262,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"ViewAlumnoCurso\".persona_primer_nombre,\n"
                 + "\"public\".\"ViewAlumnoCurso\".persona_segundo_nombre,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_persona,\n"
-                + "\"public\".\"ViewAlumnoCurso\".alumno_codigo\n"
+                + "\"public\".\"ViewAlumnoCurso\".alumno_codigo,"
+                + "(\"public\".\"ViewAlumnoCurso\".almn_curso_num_faltas * 100)/\"Materias\".materia_total_horas\n"
                 + "FROM\n"
                 + "\"public\".\"ViewAlumnoCurso\"\n"
                 + "INNER JOIN \"Cursos\" ON \"ViewAlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
@@ -274,10 +278,10 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
                 + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'\n"
+                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "' AND\n"
+                + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
-        System.out.println(SELECT);
 
         return selectFromView(SELECT);
 
