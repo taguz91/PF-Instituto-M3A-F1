@@ -2,10 +2,13 @@ package controlador.login;
 
 import controlador.principal.VtnPrincipalCTR;
 import controlador.usuario.VtnSelectRolCTR;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
@@ -41,6 +44,9 @@ public class LoginCTR {
 
     //Inits
     public void Init() {
+        btnHover();
+        //Ocultamos el boton que ya no se usa
+        vista.getBtnIngSU().setEnabled(false);
         vista.getLblAvisos().setText("");
 
         InitEventos();
@@ -158,6 +164,23 @@ public class LoginCTR {
 
     private void btnIngSUActionPerformance(ActionEvent e) {
         LoginGenerico();
+    }
+
+    /**
+     * Animacion de hover en el boton
+     */
+    private void btnHover() {
+        vista.getBtnIngresar().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                vista.getLblBtnHover().setBackground(new Color(139, 195, 74));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                vista.getLblBtnHover().setBackground(new Color(235, 192, 36));
+            }
+        });
     }
 
 }

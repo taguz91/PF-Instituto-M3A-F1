@@ -28,6 +28,7 @@ public class VtnMatReprobadasCTR {
         this.vtnAlumnoCtr = vtnAlumnoCtr;
         this.vtnAlumno = vtnAlumno;
         this.conecta = conecta;
+        vtnMaterias.setTitle("Materias Ausentes");
         vtnMaterias.setLocationRelativeTo(null);
         vtnMaterias.setVisible(true);
     }
@@ -67,7 +68,9 @@ public class VtnMatReprobadasCTR {
         for (int i = 0; i < malla.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
             vtnMaterias.getTbl_Materias().setValueAt(malla.get(i).getMateria().getNombre(), i, 0);
-            vtnMaterias.getTbl_Materias().setValueAt(malla.get(i).getEstado(), i, 1);
+            if(malla.get(i).getEstado().equals("A")){
+                vtnMaterias.getTbl_Materias().setValueAt("AUSENTE", i, 1);
+            }
         }
     }
 }
