@@ -97,6 +97,8 @@ public class VtnCarreraCTR {
                 String b = vtnCarrera.getTxtBuscar().getText().trim();
                 if (b.length() > 2) {
                     buscar(b);
+                }else if(b.length() == 0){
+                    cargarCarreras();
                 }
             }
         });
