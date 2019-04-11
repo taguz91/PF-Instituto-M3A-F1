@@ -1,6 +1,6 @@
 package controlador.notas;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -21,7 +21,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
@@ -34,15 +33,6 @@ import modelo.persona.DocenteMD;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.IngresoNotasMD;
 import modelo.usuario.UsuarioBD;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.notas.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -75,12 +65,9 @@ public class VtnNotasAlumnoCursoCTR {
 
     //PARA LA EDICION DE LAS COLUMNAS
     private final boolean[] canEdit = new boolean[]{
-        false, false, false, false, false, false, false, false, false, false, false, true, true, false
-    //false, false, false, false, true, true, false, true, true, true, false, true, true, false
+        false, false, false, false, false, false, false, false, false, false, false, true, true, false, true
+    //false, false, false, false, true, true, false, true, true, true, false, true, true, false, true
     };
-
-    //Thread
-    Thread thread = null;
 
     public VtnNotasAlumnoCursoCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, ConectarDB conexion) {
         this.desktop = desktop;
@@ -96,16 +83,15 @@ public class VtnNotasAlumnoCursoCTR {
      */
     public void Init() {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
+        new Thread(() -> {
+            //RELLENADO DE LISTAS
+            listaPersonasDocentes = DocenteBD.selectAll();
+            //RELLENADO DE COMBOS Y LABELS
 
-        //RELLENADO DE LISTAS
-        listaPersonasDocentes = DocenteBD.selectAll();
-        //RELLENADO DE COMBOS Y LABELS
-        thread = new Thread() {
-            @Override
-            public void run() {
-                Effects.setLoadCursor(vista);
-                desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
+            Middlewares.setLoadCursor(vista);
+            desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
 
+            new Thread(() -> {
                 try {
                     cargarComboDocente();
                     cargarComboPeriodos();
@@ -114,28 +100,25 @@ public class VtnNotasAlumnoCursoCTR {
                     cargarComboParalelo();
                     cargarComboJornadas();
                     cargarComboMaterias();
-//                    desktop.getLblEstado().setText("COMPLETADO");
-//                    activarColumnas();
-//                    try {
-//                        sleep(500);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    desktop.getLblEstado().setText("");
-                    Effects.setDefaultCursor(vista);
-//                    vista.getBtnVerNotas().setEnabled(true);
-//                    vista.getBtnImprimir().setEnabled(true);
-
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    desktop.getLblEstado().setText("");
+                    Middlewares.setDefaultCursor(vista);
                     InitEventos();
                 } catch (NullPointerException e) {
-                    Effects.setDefaultCursor(vista);
+                    Middlewares.setDefaultCursor(vista);
                     JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
 
-            }
+                activarColumnas();
+            }).start();
 
-        };
-        thread.start();
+        }).start();
+
         //TABLA
         try {
             desktop.getDpnlPrincipal().add(vista);
@@ -167,11 +150,15 @@ public class VtnNotasAlumnoCursoCTR {
         vista.getCmbJornada().addActionListener(e -> cargarComboMaterias());
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
+
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                tblNotasOnKeyTyped(e);
+                if (e.getKeyCode() == 10) {
+                    setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
+                }
             }
         });
 
@@ -204,10 +191,11 @@ public class VtnNotasAlumnoCursoCTR {
     private DefaultTableModel setTablaFromTabla(JTable table) {
         DefaultTableModel tabla = new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1  /30", "Exámen Interciclo  /15", "Total Interciclo  /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio  /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas"
-                }) {
+                    "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1   /30", "Exámen Interciclo /15", "Total Interciclo /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas", "Estado Asistencia"
+                }
+        ) {
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
 
             @Override
@@ -240,10 +228,9 @@ public class VtnNotasAlumnoCursoCTR {
     private void activarColumnas() {
         String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        //idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, nombrePeriodo);
+        idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, idPeriodoLectivo);
         IngresoNotasMD ingreso = IngresoNotasBD.selectFromViewActivos(idCurso);
 
         if (ingreso.isNotaPrimerInterCiclo()) {
@@ -322,7 +309,9 @@ public class VtnNotasAlumnoCursoCTR {
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
             notaFinal = notaInterCiclo + notaInterCiclo2 + examenInterCiclo + examenFinal;
+
             datos.setValueAt(Math.round(notaFinal), fila, 10);
+
             if (notaInterCiclo > 30.0) {
                 notaInterCiclo = 30.0;
                 datos.setValueAt(notaInterCiclo, fila, 4);
@@ -357,6 +346,7 @@ public class VtnNotasAlumnoCursoCTR {
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
+
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0 || Faltas >= 25) {
 
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
@@ -542,8 +532,6 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void validarCombos() {
 
-        System.out.println("----------------> " + vista.getCmbAsignatura().getItemCount());
-
         if (vista.getCmbAsignatura().getItemCount() > 0) {
             vista.getBtnVerNotas().setEnabled(true);
         } else {
@@ -552,46 +540,35 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarTabla() {
-        if (cargarTabla == true) {
+        new Thread(() -> {
 
-            thread = new Thread() {
-                @Override
-                public void run() {
+            cargarTabla = false;
 
-                    cargarTabla = false;
+            Middlewares.setLoadCursor(vista);
 
-                    Effects.setLoadCursor(vista);
+            try {
 
-                    try {
+                desktop.getLblEstado().setText("CARGANDO NOTAS");
 
-                        desktop.getLblEstado().setText("CARGANDO NOTAS");
+                String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+                String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+                String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-                        String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-                        String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-                        String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-                        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-                        Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+                listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                agregarFilas();
 
-                        listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                desktop.getLblEstado().setText("");
+                Middlewares.setDefaultCursor(vista);
 
-                        agregarFilas();
+            } catch (NullPointerException e) {
+                System.out.println(e);
+            }
+            cargarTabla = true;
+            vista.getBtnImprimir().setEnabled(true);
 
-                        desktop.getLblEstado().setText("");
-                        Effects.setDefaultCursor(vista);
-                    } catch (NullPointerException e) {
-                        System.out.println(e);
-                    }
-                    cargarTabla = true;
-                }
-            };
-            thread.start();
-        } else {
-            JOptionPane.showMessageDialog(vista, "ESPERE!! CARGAR DE NOTAS EN PROCESO");
-        }
-
-        for (int i = 0; i < tablaNotas.getDataVector().size(); i++) {
-            tablaNotas.isCellEditable(i, 4);
-        }
+        }).start();
 
     }
 
@@ -614,532 +591,110 @@ public class VtnNotasAlumnoCursoCTR {
                         Math.round(obj.getNotaFinal()),
                         obj.getEstado(),
                         obj.getNumFalta(),
-                        obj.getTotalHoras() + "%"
+                        obj.getTotalHoras() + "%",
+                        obj.getAsistencia()
 
                     });
 
                 } else {
                     listaNotas = null;
                     listaPersonasDocentes = null;
-                    System.out.println(obj.getNumFalta() + "");
                     System.gc();
                     break;
                 }
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
 
         }
 
-    }
-
-    private void generarReporteCompleto() {
-        try {
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteCompleto.jrxml";
-            String QUERY = "SELECT\n"
-                    + "	\"Alumnos\".id_alumno,\n"
-                    + "	p_alu.persona_identificacion,\n"
-                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
-                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_supletorio, 1) AS \"SUPLETORIO\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nota_final, 0) AS \"NOTA FINAL\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
-                    + "	\"Materias\".materia_nombre, \n"
-                    + "	\"Jornadas\".nombre_jornada,\n"
-                    + "	\"Materias\".materia_ciclo,\n"
-                    + "	\"Cursos\".curso_paralelo,\n"
-                    + "	\"Carreras\".carrera_nombre,\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
-                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * 100)/\"Materias\".materia_total_horas as \"% Faltas\",\n"
-                    + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
-                    + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
-                    + "	\n"
-                    + "FROM\n"
-                    + "	\"AlumnoCurso\"\n"
-                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
-                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
-                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
-                    + "  INNER JOIN \"Docentes\" doc_coor ON doc_coor.id_docente = \"public\".\"Carreras\".id_docente_coordinador\n"
-                    + "  INNER JOIN \"Personas\" per_coor ON per_coor.id_persona = doc_coor.id_persona"
-                    + "	WHERE\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_estado = TRUE \n"
-                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
-                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
-                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
-                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
-                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
-                    + "ORDER BY\n"
-                    + "	p_alu.persona_primer_apellido ASC;";
-
-            System.out.println(QUERY);
-
-            JasperDesign jd = JRXmlLoader.load(path);
-
-            JRDesignQuery newQuery = new JRDesignQuery();
-
-            newQuery.setText(QUERY);
-
-            jd.setQuery(newQuery);
-
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteCompleto.jasper"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (JRException | NullPointerException q) {
-            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void generarReporteMenos70() {
-        try {
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasMenor70.jrxml";
-            String QUERY = "SELECT\n"
-                    + "	\"Alumnos\".id_alumno,\n"
-                    + "	p_alu.persona_identificacion,\n"
-                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
-                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_supletorio, 1) AS \"SUPLETORIO\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nota_final, 0) AS \"NOTA FINAL\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
-                    + "	\"Materias\".materia_nombre, \n"
-                    + "	\"Jornadas\".nombre_jornada,\n"
-                    + "	\"Materias\".materia_ciclo,\n"
-                    + "	\"Cursos\".curso_paralelo,\n"
-                    + "	\"Carreras\".carrera_nombre,\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
-                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\",\n"
-                    + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
-                    + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
-                    + "	\n"
-                    + "FROM\n"
-                    + "	\"AlumnoCurso\"\n"
-                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
-                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
-                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
-                    + "  INNER JOIN \"Docentes\" doc_coor ON doc_coor.id_docente = \"public\".\"Carreras\".id_docente_coordinador\n"
-                    + "  INNER JOIN \"Personas\" per_coor ON per_coor.id_persona = doc_coor.id_persona\n"
-                    + "	\n"
-                    + "\n"
-                    + "	WHERE\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_estado = TRUE \n"
-                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
-                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
-                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
-                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
-                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final < 70\n"
-                    + "ORDER BY\n"
-                    + "	p_alu.persona_primer_apellido ASC;";
-
-            System.out.println(QUERY);
-
-            JasperDesign jd = JRXmlLoader.load(path);
-
-            JRDesignQuery newQuery = new JRDesignQuery();
-
-            newQuery.setText(QUERY);
-
-            jd.setQuery(newQuery);
-
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasMenor70.jasper"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (JRException | NullPointerException q) {
-            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void generarReporteEntre70_80() {
-        try {
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre70y80.jrxml";
-            String QUERY = "SELECT\n"
-                    + "	\"Alumnos\".id_alumno,\n"
-                    + "	p_alu.persona_identificacion,\n"
-                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
-                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_supletorio, 1) AS \"SUPLETORIO\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nota_final, 0) AS \"NOTA FINAL\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
-                    + "	\"Materias\".materia_nombre, \n"
-                    + "	\"Jornadas\".nombre_jornada,\n"
-                    + "	\"Materias\".materia_ciclo,\n"
-                    + "	\"Cursos\".curso_paralelo,\n"
-                    + "	\"Carreras\".carrera_nombre,\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
-                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\",\n"
-                    + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
-                    + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
-                    + "	\n"
-                    + "FROM\n"
-                    + "	\"AlumnoCurso\"\n"
-                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
-                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
-                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
-                    + "  INNER JOIN \"Docentes\" doc_coor ON doc_coor.id_docente = \"public\".\"Carreras\".id_docente_coordinador\n"
-                    + "  INNER JOIN \"Personas\" per_coor ON per_coor.id_persona = doc_coor.id_persona\n"
-                    + "	\n"
-                    + "\n"
-                    + "	WHERE\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_estado = TRUE \n"
-                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
-                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
-                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
-                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
-                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final >=70 \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final <81 \n"
-                    + "ORDER BY\n"
-                    + "	p_alu.persona_primer_apellido ASC;";
-
-            System.out.println(QUERY);
-
-            JasperDesign jd = JRXmlLoader.load(path);
-
-            JRDesignQuery newQuery = new JRDesignQuery();
-
-            newQuery.setText(QUERY);
-
-            jd.setQuery(newQuery);
-
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre70y80.jasper"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (JRException | NullPointerException q) {
-            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void generarReporteEntre80_90() {
-        try {
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre80y90.jrxml";
-            String QUERY = "SELECT\n"
-                    + "	\"Alumnos\".id_alumno,\n"
-                    + "	p_alu.persona_identificacion,\n"
-                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
-                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_supletorio, 1) AS \"SUPLETORIO\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nota_final, 0) AS \"NOTA FINAL\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
-                    + "	\"Materias\".materia_nombre, \n"
-                    + "	\"Jornadas\".nombre_jornada,\n"
-                    + "	\"Materias\".materia_ciclo,\n"
-                    + "	\"Cursos\".curso_paralelo,\n"
-                    + "	\"Carreras\".carrera_nombre,\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
-                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\",\n"
-                    + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
-                    + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
-                    + "	\n"
-                    + "FROM\n"
-                    + "	\"AlumnoCurso\"\n"
-                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
-                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
-                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
-                    + "  INNER JOIN \"Docentes\" doc_coor ON doc_coor.id_docente = \"public\".\"Carreras\".id_docente_coordinador\n"
-                    + "  INNER JOIN \"Personas\" per_coor ON per_coor.id_persona = doc_coor.id_persona\n"
-                    + "	\n"
-                    + "\n"
-                    + "	WHERE\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_estado = TRUE \n"
-                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
-                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
-                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
-                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
-                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final >=80 \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final <91 \n"
-                    + "ORDER BY\n"
-                    + "	p_alu.persona_primer_apellido ASC;";
-
-            System.out.println(QUERY);
-
-            JasperDesign jd = JRXmlLoader.load(path);
-
-            JRDesignQuery newQuery = new JRDesignQuery();
-
-            newQuery.setText(QUERY);
-
-            jd.setQuery(newQuery);
-
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre80y90.jasper"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (JRException | NullPointerException q) {
-            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void generarReporteEntre90_100() {
-        try {
-            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteNotasEntre90y100.jrxml";
-            String QUERY = "SELECT\n"
-                    + "	\"Alumnos\".id_alumno,\n"
-                    + "	p_alu.persona_identificacion,\n"
-                    + "	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as \"APELLIDOS\",\n"
-                    + "	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS \"NOMBRES\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_1_parcial, 1) AS \"APORTE 1\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_interciclo, 1) AS \"INTERCICLO\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_2_parcial, 1) AS \"APORTE 2\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_final, 1) AS \"EXAMEN FINAL\",\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nt_examen_supletorio, 1) AS \"SUPLETORIO\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_asistencia,\n"
-                    + "	ROUND(\"AlumnoCurso\".almn_curso_nota_final, 0) AS \"NOTA FINAL\",\n"
-                    + "	\"AlumnoCurso\".almn_curso_estado,\n"
-                    + "	\"AlumnoCurso\".almn_curso_num_faltas,\n"
-                    + "	\"Materias\".materia_nombre, \n"
-                    + "	\"Jornadas\".nombre_jornada,\n"
-                    + "	\"Materias\".materia_ciclo,\n"
-                    + "	\"Cursos\".curso_paralelo,\n"
-                    + "	\"Carreras\".carrera_nombre,\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                    + "	\"Personas\".persona_primer_nombre || ' ' ||\"Personas\".persona_segundo_nombre as \"NOMBRE_PROF\",\n"
-                    + "	\"Personas\".persona_primer_apellido || ' ' ||\"Personas\".persona_segundo_apellido as \"APELLIDO_PROF\",\n"
-                    + "	(\"AlumnoCurso\".almn_curso_num_faltas * \"Materias\".materia_total_horas)/100 as \"% Faltas\",\n"
-                    + "  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as \"APELLIDOS_COORDINADOR\",\n"
-                    + "  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS \"NOMBRES_COORDINADOR\"\n"
-                    + "	\n"
-                    + "FROM\n"
-                    + "	\"AlumnoCurso\"\n"
-                    + "	INNER JOIN \"Cursos\" ON \"AlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                    + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                    + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                    + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                    + "	INNER JOIN \"Alumnos\" ON \"AlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                    + "	INNER JOIN \"Personas\" p_alu ON \"Alumnos\".id_persona = p_alu.id_persona\n"
-                    + "	INNER JOIN \"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                    + "	INNER JOIN \"Carreras\" ON \"public\".\"Carreras\".id_carrera = \"public\".\"Materias\".id_carrera\n"
-                    + "	INNER JOIN \"Personas\" ON \"public\".\"Personas\".id_persona= \"public\".\"Docentes\".id_persona\n"
-                    + "  INNER JOIN \"Docentes\" doc_coor ON doc_coor.id_docente = \"public\".\"Carreras\".id_docente_coordinador\n"
-                    + "  INNER JOIN \"Personas\" per_coor ON per_coor.id_persona = doc_coor.id_persona\n"
-                    + "	\n"
-                    + "\n"
-                    + "	WHERE\n"
-                    + "	\"PeriodoLectivo\".prd_lectivo_estado = TRUE \n"
-                    + "	AND \"Cursos\".id_docente = " + idDocente + "\n"
-                    + "	AND \"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' \n"
-                    + "	AND \"Cursos\".curso_ciclo = " + ciclo + " \n"
-                    + "	AND \"Cursos\".curso_paralelo = '" + paralelo + "' \n"
-                    + "	AND \"Jornadas\".nombre_jornada = '" + nombreJornada + "' \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final >=90 \n"
-                    + "	AND \"AlumnoCurso\".almn_curso_nota_final <101\n"
-                    + "ORDER BY\n"
-                    + "	p_alu.persona_primer_apellido ASC;";
-
-            System.out.println(QUERY);
-
-            JasperDesign jd = JRXmlLoader.load(path);
-
-            JRDesignQuery newQuery = new JRDesignQuery();
-
-            newQuery.setText(QUERY);
-
-            jd.setQuery(newQuery);
-
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/notas/Reportes/ReporteNotasEntre90y100.jasper"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, ResourceManager.getConnection());
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (JRException | NullPointerException q) {
-            Logger.getLogger(VtnNotasAlumnoCurso.class.getName()).log(Level.SEVERE, null, q);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
     /*
         PROCESADORES DE EVENTOS
      */
-    private void btnImprimir(ActionEvent e) {
-
-        int r = JOptionPane.showOptionDialog(vista,
-                "Reporte de Notas por Curso\n"
-                + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
-                    "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
-
-        thread = new Thread() {
-            @Override
-            public void run() {
-                Effects.setLoadCursor(vista);
-
-                switch (r) {
-                    case 0:
-
-                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        generarReporteMenos70();
-                        desktop.getLblEstado().setText("COMPLETADO");
-
-                        break;
-
-                    case 1:
-
-                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        generarReporteEntre70_80();
-                        desktop.getLblEstado().setText("COMPLETADO");
-
-                        break;
-
-                    case 2:
-
-                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        generarReporteEntre80_90();
-                        desktop.getLblEstado().setText("COMPLETADO");
-
-                        break;
-
-                    case 3:
-
-                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        generarReporteEntre90_100();
-                        desktop.getLblEstado().setText("COMPLETADO");
-
-                        break;
-
-                    case 4:
-                        desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                        generarReporteCompleto();
-                        desktop.getLblEstado().setText("COMPLETADO");
-                        break;
-
-                    default:
-                        break;
-                }
-
-                try {
-                    sleep(5000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                desktop.getLblEstado().setText("");
-                Effects.setDefaultCursor(vista);
-                vista.getBtnVerNotas().setEnabled(true);
-
-            }
-
-        };
-        thread.start();
-
-    }
-
     private void btnVerNotas(ActionEvent e) {
-
-        cargarTabla();
-
-    }
-
-    private void tblNotasOnKeyTyped(KeyEvent e) {
-        if (e.getKeyCode() == 10) {
-
-            setObjFromTable(vista.getTblNotas().getSelectedRow()).editar();
-
+        if (cargarTabla) {
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
+
     }
 
     private void rellenarCmbPeriodos(ActionEvent e) {
         cargarComboPeriodos();
     }
+
+    private void btnImprimir(ActionEvent e) {
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vista,
+                    "Reporte de Notas por Curso\n"
+                    + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
+                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+
+            Middlewares.setLoadCursor(vista);
+
+            ReportesCTR reportes = new ReportesCTR(vista, idDocente);
+
+            switch (r) {
+                case 0:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteMenos70();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 1:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre70_80();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 2:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre80_90();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 3:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre90_100();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 4:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteCompleto();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    break;
+
+                default:
+                    break;
+            }
+
+            try {
+                sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            desktop.getLblEstado().setText("");
+            Middlewares.setDefaultCursor(vista);
+            vista.getBtnVerNotas().setEnabled(true);
+        }).start();
+
+    }
+
 }

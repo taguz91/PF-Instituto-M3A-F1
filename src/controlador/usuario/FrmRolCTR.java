@@ -1,6 +1,6 @@
 package controlador.usuario;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -36,7 +36,7 @@ public class FrmRolCTR {
 
         InitEventos();
         
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
         
         if (Funcion.equals("Editar")) {
             vista.setTitle("Editar Un Rol");

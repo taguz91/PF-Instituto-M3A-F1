@@ -58,6 +58,8 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="btnMaterias" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnIngresar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -76,6 +78,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblbuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMaterias" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="txtbuscar" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -163,6 +166,12 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnMaterias">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Materias"/>
+        <Property name="toolTipText" type="java.lang.String" value="Informacion de las materias que cursa en este curso."/>
       </Properties>
     </Component>
   </SubComponents>

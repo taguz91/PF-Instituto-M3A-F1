@@ -7,6 +7,7 @@ package vista.notas;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,6 +27,32 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
         this.setFrameIcon(icon);
     }
+
+    public JComboBox<String> getCmbPeriodoLectivo() {
+        return cmbPeriodoLectivo;
+    }
+
+    public void setCmbPeriodoLectivo(JComboBox<String> cmbPeriodoLectivo) {
+        this.cmbPeriodoLectivo = cmbPeriodoLectivo;
+    }
+
+    public JLabel getLblDatosCorrectos() {
+        return lblDatosCorrectos;
+    }
+
+    public void setLblDatosCorrectos(JLabel lblDatosCorrectos) {
+        this.lblDatosCorrectos = lblDatosCorrectos;
+    }
+
+    public JLabel getLblDatosIncorrectos() {
+        return lblDatosIncorrectos;
+    }
+
+    public void setLblDatosIncorrectos(JLabel lblDatosIncorrectos) {
+        this.lblDatosIncorrectos = lblDatosIncorrectos;
+    }
+    
+    
 
     public JButton getBtnActualizar() {
         return btnActualizar;
@@ -76,6 +103,10 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         tblCursoTipoNotas = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         lblBuscar = new javax.swing.JLabel();
+        lblDatosIncorrectos = new javax.swing.JLabel();
+        lblDatosCorrectos = new javax.swing.JLabel();
+        cmbPeriodoLectivo = new javax.swing.JComboBox<>();
+        lblPeriodoLectivo = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -104,6 +135,8 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCursoTipoNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblCursoTipoNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblCursoTipoNotas);
         if (tblCursoTipoNotas.getColumnModel().getColumnCount() > 0) {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setResizable(false);
@@ -118,6 +151,14 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
 
         lblBuscar.setText("Buscar:");
 
+        lblDatosIncorrectos.setForeground(new java.awt.Color(153, 0, 0));
+
+        lblDatosCorrectos.setForeground(new java.awt.Color(0, 102, 0));
+
+        cmbPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblPeriodoLectivo.setText("Período Lectivo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,18 +167,29 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPeriodoLectivo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(164, 164, 164))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(164, 164, 164))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +200,19 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                     .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPeriodoLectivo))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -160,8 +222,12 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JComboBox<String> cmbPeriodoLectivo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblDatosCorrectos;
+    private javax.swing.JLabel lblDatosIncorrectos;
+    private javax.swing.JLabel lblPeriodoLectivo;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblCursoTipoNotas;
     private javax.swing.JTextField txtBuscar;

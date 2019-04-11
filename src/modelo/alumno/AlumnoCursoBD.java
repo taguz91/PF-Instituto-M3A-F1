@@ -282,7 +282,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
-        System.out.println(SELECT);
 
         return selectFromView(SELECT);
 

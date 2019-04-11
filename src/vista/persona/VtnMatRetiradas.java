@@ -63,7 +63,7 @@ public class VtnMatRetiradas extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(Tbl_Materias);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 93, 436, 89));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 93, 436, 100));
 
         jLabel1.setText("Cédula");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 16, -1, -1));
@@ -74,7 +74,7 @@ public class VtnMatRetiradas extends javax.swing.JDialog {
         getContentPane().add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 53, 379, -1));
 
         Btn_Salir.setText("Salir");
-        getContentPane().add(Btn_Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(191, 195, 78, -1));
+        getContentPane().add(Btn_Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 78, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

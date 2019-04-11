@@ -5,7 +5,7 @@
  */
 package controlador.usuario;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.accesos.FrmAccesosDeRolCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
@@ -53,7 +53,7 @@ public class VtnRolCTR {
     //Inits
     public void Init() {
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
         vista.setTitle("Lista de Roles");
 
