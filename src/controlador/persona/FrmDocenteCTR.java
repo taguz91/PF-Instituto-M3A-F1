@@ -48,8 +48,8 @@ public class FrmDocenteCTR {
     private final VtnPrincipalCTR ctrPrin;
     private DocenteMD d;
     private TxtVCedula valCe;
-
     private ArrayList<String> info = new ArrayList();
+    private String cedula;
 
     // private DocenteBD per;
     //Para verificar si existe la persona tipo docente  
@@ -81,6 +81,8 @@ public class FrmDocenteCTR {
         FrmPersona frmPersona = new FrmPersona();
         FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
         ctrFrmPersona.iniciar();
+        frmPersona.getCmbTipoId().setSelectedItem(frmDocente.getCmbTipoIdentificacion().getSelectedItem());
+        frmPersona.getTxtIdentificacion().setText(cedula);
         frmDocente.dispose();
     }
 
@@ -266,10 +268,10 @@ public class FrmDocenteCTR {
     public void buscarCedula() {
         boolean buscar = true;
         frmDocente.getTxtIdentificacion().setVisible(true);
-        int tipoIdentifi;
+        //int tipoIdentifi;
         String cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
-        tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
-        if (frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString().equals("CÉDULA")) {
+       // tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
+        if (frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString().equals("CEDULA")) {
             if (!Validar.esCedula(cedula)) {
                 guardar = false;
                 frmDocente.getLblError().setVisible(true);
@@ -301,9 +303,9 @@ public class FrmDocenteCTR {
                             if (p == null) {
                                 JOptionPane.showMessageDialog(null, "No existe la persona");
                                 frmDocente.getBtnRegistrarPersona().setVisible(true);
+                                this.cedula=frmDocente.getTxtIdentificacion().getText();
                                 inhabilitarComponentesDocente();
                                 reiniciarComponentes(frmDocente);
-
                             } else {
                                 System.out.println("Existe persona");
                                 habilitarComponentesDocente();
