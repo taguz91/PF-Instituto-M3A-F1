@@ -567,6 +567,8 @@ public class VtnNotasAlumnoCursoCTR {
                 Middlewares.setLoadCursor(vista);
 
                 try {
+                    
+                    tablaNotas.setRowCount(0);
 
                     desktop.getLblEstado().setText("CARGANDO NOTAS");
                     String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
