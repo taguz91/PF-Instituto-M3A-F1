@@ -558,71 +558,55 @@ public class VtnNotasAlumnoCursoCTR {
         }
     }
 
-    private void cargarTabla(List<AlumnoCursoBD> lista) {
+    private void cargarTabla() {
         new Thread(() -> {
-            
+
             if (cargarTabla) {
                 cargarTabla = false;
 
-            Middlewares.setLoadCursor(vista);
+                Middlewares.setLoadCursor(vista);
 
-            try {
+                try {
 
-                desktop.getLblEstado().setText("CARGANDO NOTAS");
+                    desktop.getLblEstado().setText("CARGANDO NOTAS");
+                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+                    listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                    listaNotas.stream().forEach(obj -> {
+                        tablaNotas.addRow(new Object[]{
+                            tablaNotas.getDataVector().size() + 1,
+                            obj.getAlumno().getIdentificacion(),
+                            obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                            obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                            obj.getNota1Parcial(),
+                            obj.getNotaExamenInter(),
+                            obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                            obj.getNota2Parcial(),
+                            obj.getNotaExamenFinal(),
+                            obj.getNotaExamenSupletorio(),
+                            Math.round(obj.getNotaFinal()),
+                            obj.getEstado(),
+                            obj.getNumFalta(),
+                            obj.getTotalHoras() + "%",
+                            obj.getAsistencia()
 
-                String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-                String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-                String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-                String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-                Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-                lista.stream().forEach(VtnNotasAlumnoCursoCTR::agregarFilas);
-                
+                        });
+                    });
 
-                desktop.getLblEstado().setText("");
-                Middlewares.setDefaultCursor(vista);
+                    desktop.getLblEstado().setText("");
+                    Middlewares.setDefaultCursor(vista);
 
-            } catch (NullPointerException e) {
-                System.out.println(e);
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+                cargarTabla = true;
+                vista.getBtnImprimir().setEnabled(true);
             }
-            cargarTabla = true;
-            vista.getBtnImprimir().setEnabled(true);
-            }
-            
 
         }).start();
-
-    }
-
-    private static void agregarFilas(AlumnoCursoBD obj) {
-        try {
-            tablaNotas.setRowCount(0);
-
-            tablaNotas.addRow(new Object[]{
-                tablaNotas.getDataVector().size() + 1,
-                obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                obj.getNota1Parcial(),
-                obj.getNotaExamenInter(),
-                obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                obj.getNota2Parcial(),
-                obj.getNotaExamenFinal(),
-                obj.getNotaExamenSupletorio(),
-                Math.round(obj.getNotaFinal()),
-                obj.getEstado(),
-                obj.getNumFalta(),
-                obj.getTotalHoras() + "%",
-                obj.getAsistencia()
-
-            });
-
-            System.gc();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Error en agregar filas");
-
-        }
 
     }
 
@@ -631,7 +615,8 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            cargarTabla(listaNotas);
+
+            cargarTabla();
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
