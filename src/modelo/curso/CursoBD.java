@@ -489,19 +489,23 @@ public class CursoBD extends CursoMD {
                 + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = '" + idPeriodoLectivo + "' AND\n"
+                + "\"public\".\"Cursos\".id_prd_lectivo = '" + idPeriodoLectivo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
                 + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
                 + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'";
 
         ResultSet rs = ResourceManager.Query(SELECT);
+
         int idCurso = -1;
+
         try {
             while (rs.next()) {
                 idCurso = rs.getInt("id_curso");
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
+
         return idCurso;
     }
 

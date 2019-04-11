@@ -22,28 +22,24 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.notas.VtnNotasAlumnoCurso;
-import vista.principal.VtnPrincipal;
 
 public class ReportesCTR {
 
-    private final VtnPrincipal desktop;
     private final VtnNotasAlumnoCurso vista;
 
-    Thread thread = null;
+    private final int idDocente;
 
-    public ReportesCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista) {
-        this.desktop = desktop;
+    public ReportesCTR(VtnNotasAlumnoCurso vista, int idDocente) {
         this.vista = vista;
+        this.idDocente = idDocente;
     }
 
-
-
-    public void generarReporteCompleto(int idDocente,String nombrePeriodo, int ciclo,String paralelo, String nombreJornada ) {
+    public void generarReporteCompleto() {
         try {
-//            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-//            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
-//            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-//            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+            String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
 
             String path = Effects.getProjectPath() + "src\\vista\\notas\\Reportes\\ReporteCompleto.jrxml";
             String QUERY = "SELECT\n"
@@ -96,6 +92,7 @@ public class ReportesCTR {
                     + "	p_alu.persona_primer_apellido ASC;";
 
             System.out.println(QUERY);
+            System.out.println("------------------------------->");
 
             JasperDesign jd = JRXmlLoader.load(path);
 
@@ -118,7 +115,7 @@ public class ReportesCTR {
         }
     }
 
-    public void generarReporteMenos70(int idDocente,String nombrePeriodo, int ciclo,String paralelo, String nombreJornada) {
+    public void generarReporteMenos70(int idDocente, String nombrePeriodo, int ciclo, String paralelo, String nombreJornada) {
         try {
 //            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 //            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
@@ -201,7 +198,7 @@ public class ReportesCTR {
         }
     }
 
-    public void generarReporteEntre70_80(int idDocente,String nombrePeriodo, int ciclo,String paralelo, String nombreJornada) {
+    public void generarReporteEntre70_80(int idDocente, String nombrePeriodo, int ciclo, String paralelo, String nombreJornada) {
         try {
 //            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 //            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
@@ -285,7 +282,7 @@ public class ReportesCTR {
         }
     }
 
-    public void generarReporteEntre80_90(int idDocente,String nombrePeriodo, int ciclo,String paralelo, String nombreJornada) {
+    public void generarReporteEntre80_90(int idDocente, String nombrePeriodo, int ciclo, String paralelo, String nombreJornada) {
         try {
 //            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 //            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
@@ -369,7 +366,7 @@ public class ReportesCTR {
         }
     }
 
-    public void generarReporteEntre90_100(int idDocente,String nombrePeriodo, int ciclo,String paralelo, String nombreJornada) {
+    public void generarReporteEntre90_100(int idDocente, String nombrePeriodo, int ciclo, String paralelo, String nombreJornada) {
         try {
 //            String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 //            String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
@@ -453,6 +450,5 @@ public class ReportesCTR {
         }
 
     }
-    
-  
+
 }
