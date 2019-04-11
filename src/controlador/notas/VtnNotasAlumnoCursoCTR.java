@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import static java.lang.Thread.sleep;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,6 +82,7 @@ public class VtnNotasAlumnoCursoCTR {
      */
     public void Init() {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
+
         new Thread(() -> {
             //RELLENADO DE LISTAS
             listaPersonasDocentes = DocenteBD.selectAll();
@@ -221,7 +221,7 @@ public class VtnNotasAlumnoCursoCTR {
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
-            
+
         };
         table.setModel(tabla);
 
@@ -271,9 +271,9 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void setValorEnTabla() {
         int columna = vista.getTblNotas().getSelectedColumn();
-        
+
         int fila = vista.getTblNotas().getSelectedRow();
-        
+
         String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
 
         switch (columna) {
@@ -305,6 +305,7 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private TableModel calcularNotaFinal(TableModel datos) {
+
         int fila = getSelectedRow();
         double Faltas = 0;
         double notaInterCiclo = 0;
@@ -315,6 +316,7 @@ public class VtnNotasAlumnoCursoCTR {
         double notaSupletorio = 0;
         double notaFinal = 0;
         String estado = null;
+
         try {
             Faltas = validarNumero(datos.getValueAt(fila, 13).toString());
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());

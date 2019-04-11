@@ -198,16 +198,16 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public boolean editar(String Pk) {
-        String UPDATE = "UPDATE  " + TABLA
-                + " SET "
-                + "\n usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),"
-                + "\n id_persona = " + getPersona() + ""
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = '" + Pk + "';"
-                + "\n"
-                + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';"
+        String UPDATE = "UPDATE  " + TABLA + "\n"
+                + " SET \n"
+                + "usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),\n"
+                + "id_persona = " + getPersona().getIdPersona() + "\n"
+                + " WHERE \n"
+                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "";
 
+        System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
 
