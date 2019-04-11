@@ -1,30 +1,7 @@
 package controlador.notas;
 
 import controlador.Libraries.Middlewares;
-import controlador.carrera.VtnCarreraCTR;
-import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import static java.lang.Thread.sleep;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import modelo.ResourceManager;
-import modelo.alumno.AlumnoCursoBD;
-import modelo.persona.DocenteBD;
-import modelo.persona.DocenteMD;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
+
 import vista.notas.VtnNotasAlumnoCurso;
 
 public class ReportesCTR {
@@ -161,7 +138,7 @@ public class ReportesCTR {
 
         String path = "./src/vista/notas/Reportes/ReporteNotasMenor70.jasper";
 
-       Middlewares.generarReporte(path, QUERY, "Reporte Menor de 70");
+        Middlewares.generarReporte(path, QUERY, "Reporte Menor de 70");
     }
 
     public void generarReporteEntre70_80() {
@@ -227,7 +204,7 @@ public class ReportesCTR {
         System.out.println(QUERY);
         String path = "./src/vista/notas/Reportes/ReporteNotasEntre70y80.jasper";
 
-       Middlewares.generarReporte(path, QUERY, "Reporte Entre 70 y 80");
+        Middlewares.generarReporte(path, QUERY, "Reporte Entre 70 y 80");
     }
 
     public void generarReporteEntre80_90() {
@@ -293,7 +270,7 @@ public class ReportesCTR {
         System.out.println(QUERY);
         String path = "./src/vista/notas/Reportes/ReporteNotasEntre80y90.jasper";
 
-       Middlewares.generarReporte(path, QUERY, "Reporte Entre 80 y 90");
+        Middlewares.generarReporte(path, QUERY, "Reporte Entre 80 y 90");
     }
 
     public void generarReporteEntre90_100() {
@@ -359,7 +336,7 @@ public class ReportesCTR {
         System.out.println(QUERY);
         String path = "./src/vista/notas/Reportes/ReporteNotasEntre90y100.jasper";
 
-       Middlewares.generarReporte(path, QUERY, "Reporte Entre 90 y 100");
+        Middlewares.generarReporte(path, QUERY, "Reporte Entre 90 y 100");
 
     }
 

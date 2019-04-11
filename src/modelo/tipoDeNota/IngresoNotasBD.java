@@ -23,7 +23,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
     public IngresoNotasBD() {
     }
 
-    public static List<IngresoNotasBD> selectAll() {
+    public static List<IngresoNotasBD> selectAll(String periodoLectivo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".nota_primer_inteciclo,\n"
@@ -51,6 +51,8 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 + "prd_lectivo_activo = TRUE\n"
                 + "AND \n"
                 + "prd_lectivo_estado = TRUE\n"
+                + "AND\n"
+                + "prd_lectivo_nombre = '" + periodoLectivo + "'\n"
                 + "ORDER BY id_ingreso_notas";
 
         return selectFromView(SELECT);
@@ -98,6 +100,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
     }
 
     private static List<IngresoNotasBD> selectFromView(String QUERY) {
+        System.out.println(QUERY);
         ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
         List<IngresoNotasBD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(QUERY);

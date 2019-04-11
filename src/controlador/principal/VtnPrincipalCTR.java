@@ -56,6 +56,7 @@ import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
+import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -523,9 +524,7 @@ public class VtnPrincipalCTR {
 
     private void controladorSilabo() {
 
-
         ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
-
 
         c.iniciarControlador();
 
@@ -852,7 +851,7 @@ public class VtnPrincipalCTR {
 
     private void btnActivarNotas(ActionEvent e) {
 
-        VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), rolSeleccionado, conecta);
+        VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), new IngresoNotasBD(), rolSeleccionado);
         vtn.Init();
     }
 

@@ -2,6 +2,7 @@ package controlador.Libraries;
 
 import java.awt.Cursor;
 import java.io.File;
+import static java.lang.Thread.sleep;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,6 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Middlewares {
 
-    private static Thread thread = null;
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
 
@@ -51,25 +51,6 @@ public class Middlewares {
     public static String getProjectPath() {
         String path = new File(".").getAbsolutePath();
         return path.substring(0, path.length() - 1);
-    }
-
-    public static void setTextInLabel(JLabel label, String text, long time) {
-        thread = new Thread() {
-            @Override
-            public void run() {
-
-                label.setText(text);
-
-                try {
-                    sleep(time * 1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                label.setText("");
-            }
-        };
-        thread.start();
     }
 
     public static void setLoadCursor(JComponent view) {
@@ -106,6 +87,20 @@ public class Middlewares {
         } catch (JRException | SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public static void setTextInLabel(JLabel component, String text, int time) {
+
+        new Thread(() -> {
+            try {
+                component.setText(text);
+                sleep(time * 1000);
+                component.setText("");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
+
     }
 
 }

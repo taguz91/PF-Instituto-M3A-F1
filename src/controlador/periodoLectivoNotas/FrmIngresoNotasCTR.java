@@ -135,7 +135,7 @@ public class FrmIngresoNotasCTR {
     private void agregar() {
         if (modelo.insertar()) {
             JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS");
-            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS", 2);
+
             vista.dispose();
         } else {
             JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
