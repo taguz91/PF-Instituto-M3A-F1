@@ -542,8 +542,9 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void cargarTabla(List<AlumnoCursoBD> lista) {
         new Thread(() -> {
-
-            cargarTabla = false;
+            
+            if (cargarTabla) {
+                cargarTabla = false;
 
             Middlewares.setLoadCursor(vista);
 
@@ -567,6 +568,8 @@ public class VtnNotasAlumnoCursoCTR {
             }
             cargarTabla = true;
             vista.getBtnImprimir().setEnabled(true);
+            }
+            
 
         }).start();
 
