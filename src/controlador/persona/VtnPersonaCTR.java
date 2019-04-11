@@ -75,16 +75,20 @@ public class VtnPersonaCTR {
     }
 
     public void iniciar() {
+        
         vtnPersona.getChBx_PerEliminada().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
                if(vtnPersona.getChBx_PerEliminada().isSelected() == true){
                    filtrarEliminados();
+                   vtnPersona.getBtnEditar().setEnabled(false);
+                   vtnPersona.getBtnEliminar().setEnabled(false);
                } else{
                    cargarTipoPersona();
+                   vtnPersona.getBtnEditar().setEnabled(true);
+                   vtnPersona.getBtnEliminar().setEnabled(true);
                }
             }
-            
         });
         
         
