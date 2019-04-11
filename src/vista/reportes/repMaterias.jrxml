@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.9487171000000014"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="507c11fe-0b5a-48b5-b8f0-3104abd00d87">
+	<property name="ireport.zoom" value="1.24184264611831"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="carrera" class="java.lang.String">
@@ -38,144 +38,144 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 	<title>
 		<band height="167" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="139" width="555" height="20"/>
+				<reportElement x="0" y="139" width="555" height="20" uuid="f681db09-1c12-43f9-861e-6d809c4e005d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="79" width="555" height="20"/>
+				<reportElement x="0" y="79" width="555" height="20" uuid="fc203821-d269-40a3-8781-98671af7a947"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="109" width="555" height="20"/>
+				<reportElement x="0" y="109" width="555" height="20" uuid="84d0240a-b273-4c9e-88df-34b5ca5061a4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de Materias]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="99" uuid="193d6215-61c8-4e88-b3ac-b16cfecf3375"/>
+				<imageExpression><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="348" y="42" width="207" height="20"/>
+				<reportElement x="348" y="42" width="207" height="20" uuid="480dce1d-5cda-47ec-aef8-6a28317c1a12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="36" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="0" width="36" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="28e908fb-11fb-420d-a4a8-cee8215999e7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="334" y="0" width="49" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="334" y="0" width="49" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="942fe7c5-7987-4ef1-b07b-5ebd23140b96"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Docencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="383" y="0" width="36" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="383" y="0" width="36" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="6272af25-f060-4698-8ad6-e01411254bab"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Prática]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="36" y="0" width="273" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="36" y="0" width="273" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="01c7940c-6010-47af-815a-b90486e9fcd4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Materia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="419" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="419" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="aa9b3857-0377-4542-b8d1-ee70b72bec60"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Autónomas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="528" y="0" width="27" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="528" y="0" width="27" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="a94e24e2-1a3c-4a01-836e-522a060de9f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="475" y="0" width="53" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="475" y="0" width="53" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="75826a16-17f4-4cad-b027-ba0303c570f0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Presencial]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="309" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="309" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="dcf45042-2800-4e72-8a1b-865340ca02f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ciclo]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="25524415-f876-470d-af19-e2c8e94e2187"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="36" y="0" width="273" height="20"/>
+				<reportElement x="36" y="0" width="273" height="20" uuid="ff189f95-e1b8-4870-ace3-ce05aa45b9f8"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="309" y="0" width="25" height="20"/>
+				<reportElement x="309" y="0" width="25" height="20" uuid="75981d2f-ccc7-48bb-bab6-53c2df5e66d5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_ciclo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="36" height="20"/>
+				<reportElement x="0" y="0" width="36" height="20" uuid="02db158f-3aae-4c84-a5d0-3fe03f406224"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_codigo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="334" y="0" width="49" height="20"/>
+				<reportElement x="334" y="0" width="49" height="20" uuid="eacfea76-edc0-4465-8fab-2165805aaa12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="383" y="0" width="36" height="20"/>
+				<reportElement x="383" y="0" width="36" height="20" uuid="cc5ce16c-e605-44df-a527-7d039bfcc93e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_practicas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_horas_practicas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="419" y="0" width="56" height="20"/>
+				<reportElement x="419" y="0" width="56" height="20" uuid="388651ec-85d4-4de9-b873-86536aa81e22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_auto_estudio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_horas_auto_estudio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="475" y="0" width="53" height="20"/>
+				<reportElement x="475" y="0" width="53" height="20" uuid="0b3a93e2-0b3d-4510-a6c7-1072172504f3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_presencial}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_horas_presencial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="528" y="0" width="27" height="20"/>
+				<reportElement x="528" y="0" width="27" height="20" uuid="a34f5ed4-800d-481f-aebf-2239887486dc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_total_horas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_total_horas}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="728ffe83-2233-4e5c-b631-db6714f80791"/>
 			</line>
 		</band>
 	</detail>
@@ -185,25 +185,24 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="0" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<reportElement x="455" y="0" width="100" height="20" uuid="c27cbb47-122e-4493-b872-104b2f69666c"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="21">
 			<staticText>
-				<reportElement mode="Opaque" x="419" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="439" y="0" width="89" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="db7edf41-2ae3-45ce-b9fc-a8264a43c96e"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Horas Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="519" y="0" width="36" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{materia_total_horas_3}]]></textFieldExpression>
+				<reportElement x="528" y="0" width="27" height="20" uuid="4cb8f1e2-d165-4795-86a3-7711daff1c9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{materia_total_horas_3}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
