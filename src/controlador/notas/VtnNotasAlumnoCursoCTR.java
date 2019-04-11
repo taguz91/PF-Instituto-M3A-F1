@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
@@ -51,10 +52,10 @@ public class VtnNotasAlumnoCursoCTR {
     //LISTAS
     private HashMap<String, DocenteMD> listaPersonasDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
-    private List<AlumnoCursoBD> listaNotas;
+    private static List<AlumnoCursoBD> listaNotas;
 
     //TABLA
-    private DefaultTableModel tablaNotas;
+    private static DefaultTableModel tablaNotas;
 
     //Variable para busqueda
     private int idDocente = 0;
@@ -557,10 +558,11 @@ public class VtnNotasAlumnoCursoCTR {
         }
     }
 
-    private void cargarTabla() {
+    private void cargarTabla(List<AlumnoCursoBD> lista) {
         new Thread(() -> {
-
-            cargarTabla = false;
+            
+            if (cargarTabla) {
+                cargarTabla = false;
 
             Middlewares.setLoadCursor(vista);
 
@@ -573,9 +575,8 @@ public class VtnNotasAlumnoCursoCTR {
                 String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
                 String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
                 Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-
-                listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
-                agregarFilas();
+                lista.stream().forEach(VtnNotasAlumnoCursoCTR::agregarFilas);
+                
 
                 desktop.getLblEstado().setText("");
                 Middlewares.setDefaultCursor(vista);
@@ -585,44 +586,41 @@ public class VtnNotasAlumnoCursoCTR {
             }
             cargarTabla = true;
             vista.getBtnImprimir().setEnabled(true);
+            }
+            
 
         }).start();
 
     }
 
-    private void agregarFilas() {
+    private static void agregarFilas(AlumnoCursoBD obj) {
         try {
             tablaNotas.setRowCount(0);
-            for (AlumnoCursoBD obj : listaNotas) {
-                if (vista.isVisible()) {
-                    tablaNotas.addRow(new Object[]{
-                        tablaNotas.getDataVector().size() + 1,
-                        obj.getAlumno().getIdentificacion(),
-                        obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                        obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                        obj.getNota1Parcial(),
-                        obj.getNotaExamenInter(),
-                        obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                        obj.getNota2Parcial(),
-                        obj.getNotaExamenFinal(),
-                        obj.getNotaExamenSupletorio(),
-                        Math.round(obj.getNotaFinal()),
-                        obj.getEstado(),
-                        obj.getNumFalta(),
-                        obj.getTotalHoras() + "%",
-                        obj.getAsistencia()
 
-                    });
+            tablaNotas.addRow(new Object[]{
+                tablaNotas.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                obj.getNota1Parcial(),
+                obj.getNotaExamenInter(),
+                obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                obj.getNota2Parcial(),
+                obj.getNotaExamenFinal(),
+                obj.getNotaExamenSupletorio(),
+                Math.round(obj.getNotaFinal()),
+                obj.getEstado(),
+                obj.getNumFalta(),
+                obj.getTotalHoras() + "%",
+                obj.getAsistencia()
 
-                } else {
-                    listaNotas = null;
-                    listaPersonasDocentes = null;
-                    System.gc();
-                    break;
-                }
-            }
+            });
+
+            System.gc();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("Error en agregar filas");
 
         }
 
@@ -633,7 +631,7 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            cargarTabla();
+            cargarTabla(listaNotas);
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
