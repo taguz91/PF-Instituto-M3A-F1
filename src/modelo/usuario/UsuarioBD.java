@@ -26,15 +26,14 @@ public class UsuarioBD extends UsuarioMD {
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA
-                + " (usu_username, usu_password, id_persona)"
+        String INSERT = "INSERT INTO " + TABLA + "\n"
+                + " (usu_username, usu_password, id_persona)\n"
                 + " VALUES ("
-                + " '" + getUsername() + "',"
-                + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + getPersona().getIdPersona() + ""
-                + " );"
+                + " '" + getUsername() + "',\n"
+                + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), \n"
+                + " " + getPersona().getIdPersona() + "\n"
+                + " );\n"
                 + "CREATE ROLE \"" + getUsername() + "\" CREATEROLE LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
-                + "\n"
                 + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
                 + " ";
 
