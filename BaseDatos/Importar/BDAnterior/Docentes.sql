@@ -60,3 +60,11 @@ WHERE persona_identificacion = pro_id
 ) FROM public.profesores;
 
 DROP TABLE public."profesores";
+
+UPDATE public."Docentes"
+	SET docente_tipo_tiempo = 'TIEMPO COMPLETO'
+	WHERE docente_tipo_tiempo = 'C';
+
+UPDATE public."Docentes"
+	SET docente_tipo_tiempo='MEDIO TIEMPO'
+	WHERE docente_tipo_tiempo = 'M';

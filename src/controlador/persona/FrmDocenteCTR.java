@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;

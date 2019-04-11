@@ -127,7 +127,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "WHERE d.id_docente = dm.id_docente AND \n"
                 + "p.id_persona = d.id_persona AND \n"
                 + "m.id_materia = dm.id_materia AND \n"
-                + "c.id_carrera = m.id_carrera \n"
+                + "c.id_carrera = m.id_carrera AND \n"
                 + "docente_mat_activo = true AND (\n"
                 + "	materia_nombre ILIKE '%"+aguja+"%' OR \n"
                 + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%'\n"

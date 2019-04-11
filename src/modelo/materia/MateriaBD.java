@@ -29,7 +29,7 @@ public class MateriaBD extends MateriaMD {
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
-                + "materia_total_horas\n"
+                + "materia_total_horas, m.id_carrera\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE materia_activa = 'true' AND c.id_carrera = m.id_carrera "
                 + "AND carrera_activo = true;";
@@ -42,7 +42,7 @@ public class MateriaBD extends MateriaMD {
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
-                + "materia_total_horas\n"
+                + "materia_total_horas, m.id_carrera\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE materia_activa = 'true' "
                 + "AND m.id_carrera= " + idcarrera + " AND c.id_carrera = m.id_carrera "
@@ -56,7 +56,7 @@ public class MateriaBD extends MateriaMD {
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
-                + "materia_total_horas\n"
+                + "materia_total_horas, m.id_carrera\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE materia_activa = 'true' "
                 + "AND m.id_carrera= " + idcarrera + " "
@@ -218,7 +218,7 @@ public class MateriaBD extends MateriaMD {
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
-                + "materia_total_horas\n"
+                + "materia_total_horas, m.id_carrera\n"
                 + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE materia_activa = 'true' AND ("
                 + "materia_codigo ILIKE '%" + aguja + "%' "
@@ -237,6 +237,8 @@ public class MateriaBD extends MateriaMD {
                 while (rs.next()) {
                     m = new MateriaMD();
                     m.setId(rs.getInt("id_materia"));
+                    CarreraMD cr = new CarreraMD();
+                    cr.setId(rs.getInt("id_carrera"));
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
@@ -245,6 +247,38 @@ public class MateriaBD extends MateriaMD {
                     m.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
                     m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
                     m.setTotalHoras(rs.getInt("materia_total_horas"));
+                    lista.add(m);
+                }
+                return lista;
+            } else {
+                System.out.println("No se pudo consultar materias para tabla");
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar materias para tabla");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<MateriaMD> cargarMateriasCarreraCmb(int idCarrera) {
+        String sql = "SELECT id_materia, materia_codigo,"
+                + " materia_nombre \n"
+                + "FROM public.\"Materias\" m \n"
+                + "WHERE materia_activa = 'true' "
+                + "AND m.id_carrera= " + idCarrera + " \n"
+                + "AND carrera_activo = true;";
+        ArrayList<MateriaMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                MateriaMD m;
+                while (rs.next()) {
+                    m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    m.setCodigo(rs.getString("materia_codigo"));
+                    m.setNombre(rs.getString("materia_nombre"));
                     lista.add(m);
                 }
                 return lista;

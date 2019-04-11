@@ -166,10 +166,12 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
-        String sql = "SELECT id_curso, id_materia, \n"
-                + "curso_capacidad, curso_ciclo\n"
-                + "FROM public.\"Cursos\" "
-                + "WHERE curso_nombre = '" + nombre + "' AND id_prd_lectivo = " + idPrdLectivo + ";";
+        String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
+                + "curso_capacidad, curso_ciclo \n"
+                + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
+                + "WHERE curso_nombre = '"+nombre+"' AND\n"
+                + "m.id_materia = c.id_materia AND\n"
+                + "id_prd_lectivo = "+idPrdLectivo+";";
         ArrayList<CursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -177,7 +179,9 @@ public class CursoBD extends CursoMD {
                 while (rs.next()) {
                     CursoMD c = new CursoMD();
                     c.setId_curso(rs.getInt("id_curso"));
-                    MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
+                    MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
                     c.setId_materia(m);
                     c.setCurso_capacidad(rs.getInt("curso_capacidad"));
                     c.setCurso_ciclo(rs.getInt("curso_ciclo"));
@@ -189,7 +193,64 @@ public class CursoBD extends CursoMD {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos. ");
+            System.out.println("No pudimos consultar cursos por periodo lectivo");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Consultamos todas las materias que a tomado un estudiante en un curso
+     * especifico
+     *
+     * @param cedula
+     * @param nomCurso
+     * @return
+     */
+    public ArrayList<CursoMD> buscarCursosPorAlumno(String cedula, String nomCurso) {
+        String sql = "SELECT id_curso, c.id_materia, c.id_docente, materia_nombre,\n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido\n"
+                + "FROM public.\"Cursos\" c, public.\"Materias\" m, public.\"Docentes\" d, \n"
+                + "public.\"Personas\" p\n"
+                + "WHERE curso_nombre = '" + nomCurso + "' AND \n"
+                + "id_curso IN (\n"
+                + "	SELECT id_curso \n"
+                + "	FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a,\n"
+                + "	public.\"Personas\" p \n"
+                + "	WHERE persona_identificacion = '" + cedula + "' AND\n"
+                + "	a.id_persona = p.id_persona AND \n"
+                + "	ac.id_alumno = a.id_alumno) AND\n"
+                + "m.id_materia = c.id_materia AND\n"
+                + "d.id_docente = c.id_docente AND\n"
+                + "p.id_persona = d.id_persona;\n";
+        ArrayList<CursoMD> cursos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CursoMD c = new CursoMD();
+                    c.setId_curso(rs.getInt("id_curso"));
+                    MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    c.setId_materia(m);
+                    DocenteMD dc = new DocenteMD();
+                    dc.setIdDocente(rs.getInt("id_docente"));
+                    dc.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    dc.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    dc.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    dc.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    c.setId_docente(dc);
+
+                    cursos.add(c);
+                }
+                return cursos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos por alumno. ");
             System.out.println(e.getMessage());
             return null;
         }
