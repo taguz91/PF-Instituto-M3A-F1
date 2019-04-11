@@ -157,9 +157,11 @@ public class ReportesCTR {
                 + "	AND \"AlumnoCurso\".almn_curso_nota_final < 70\n"
                 + "ORDER BY\n"
                 + "	p_alu.persona_primer_apellido ASC;";
+        System.out.println(QUERY);
 
-        String path = "";
+        String path = "./src/vista/notas/Reportes/ReporteNotasMenor70.jasper";
 
+       Middlewares.generarReporte(path, QUERY, "Reporte Menor de 70");
     }
 
     public void generarReporteEntre70_80() {
@@ -223,7 +225,9 @@ public class ReportesCTR {
                 + "	p_alu.persona_primer_apellido ASC;";
 
         System.out.println(QUERY);
-        String path = "";
+        String path = "./src/vista/notas/Reportes/ReporteNotasEntre70y80.jasper";
+
+       Middlewares.generarReporte(path, QUERY, "Reporte Entre 70 y 80");
     }
 
     public void generarReporteEntre80_90() {
@@ -287,7 +291,9 @@ public class ReportesCTR {
                 + "	p_alu.persona_primer_apellido ASC;";
 
         System.out.println(QUERY);
-        String path = "";
+        String path = "./src/vista/notas/Reportes/ReporteNotasEntre80y90.jasper";
+
+       Middlewares.generarReporte(path, QUERY, "Reporte Entre 80 y 90");
     }
 
     public void generarReporteEntre90_100() {
@@ -351,8 +357,9 @@ public class ReportesCTR {
                 + "	p_alu.persona_primer_apellido ASC;";
 
         System.out.println(QUERY);
+        String path = "./src/vista/notas/Reportes/ReporteNotasEntre90y100.jasper";
 
-        String path = "";
+       Middlewares.generarReporte(path, QUERY, "Reporte Entre 90 y 100");
 
     }
 
