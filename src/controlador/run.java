@@ -2,6 +2,7 @@ package controlador;
 
 import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
+import javax.swing.UIManager;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
 

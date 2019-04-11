@@ -51,8 +51,6 @@ import vista.principal.VtnPrincipal;
  * @author Alejandro
  */
 public class VtnNotasAlumnoCursoCTR {
-    
-    
 
     private final VtnPrincipal desktop;
     private final VtnNotasAlumnoCurso vista;
@@ -77,8 +75,8 @@ public class VtnNotasAlumnoCursoCTR {
 
     //PARA LA EDICION DE LAS COLUMNAS
     private final boolean[] canEdit = new boolean[]{
-        false, false, false, false, false, false, false, false, false, false, false, true, true, false
-    //false, false, false, false, true, true, false, true, true, true, false, true, true, false
+        false, false, false, false, false, false, false, false, false, false, false, true, true, false, true
+    //false, false, false, false, true, true, false, true, true, true, false, true, true, false, true
     };
 
     //Thread
@@ -117,7 +115,6 @@ public class VtnNotasAlumnoCursoCTR {
                     cargarComboJornadas();
                     cargarComboMaterias();
                     desktop.getLblEstado().setText("COMPLETADO");
-                    activarColumnas();
                     try {
                         sleep(500);
                     } catch (InterruptedException ex) {
@@ -131,6 +128,7 @@ public class VtnNotasAlumnoCursoCTR {
                     JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
 
+                activarColumnas();
             }
 
         };
@@ -166,6 +164,8 @@ public class VtnNotasAlumnoCursoCTR {
         vista.getCmbJornada().addActionListener(e -> cargarComboMaterias());
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
             @Override
@@ -203,10 +203,11 @@ public class VtnNotasAlumnoCursoCTR {
     private DefaultTableModel setTablaFromTabla(JTable table) {
         DefaultTableModel tabla = new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1  /30", "Exámen Interciclo  /15", "Total Interciclo  /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio  /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas"
-                }) {
+                    "N°", "Cédula", "Apellidos", "Nombres", "Aporte 1   /30", "Exámen Interciclo /15", "Total Interciclo /45", "Aporte 2  /30", "Exámen Final  /25", "Supletorio /25", "Nota Final", "Estado", "Nro. Faltas", "% Faltas", "Estado Asistencia"
+                }
+        ) {
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
 
             @Override
@@ -239,10 +240,9 @@ public class VtnNotasAlumnoCursoCTR {
     private void activarColumnas() {
         String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        //idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, nombrePeriodo);
+        idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, idPeriodoLectivo);
         IngresoNotasMD ingreso = IngresoNotasBD.selectFromViewActivos(idCurso);
 
         if (ingreso.isNotaPrimerInterCiclo()) {
@@ -321,7 +321,9 @@ public class VtnNotasAlumnoCursoCTR {
             notaFinalPrimerParcial = notaInterCiclo + examenInterCiclo;
             datos.setValueAt(notaFinalPrimerParcial, fila, 6);
             notaFinal = notaInterCiclo + notaInterCiclo2 + examenInterCiclo + examenFinal;
+
             datos.setValueAt(Math.round(notaFinal), fila, 10);
+
             if (notaInterCiclo > 30.0) {
                 notaInterCiclo = 30.0;
                 datos.setValueAt(notaInterCiclo, fila, 4);
@@ -356,6 +358,7 @@ public class VtnNotasAlumnoCursoCTR {
                 estado = "Aprobado";
                 datos.setValueAt(estado, fila, 11);
                 vista.getTblNotas().updateUI();
+
             } else if (notaFinal < 70 && notaInterCiclo > 0.0 && notaInterCiclo2 > 0.0 && examenFinal > 0.0 || Faltas >= 25) {
 
                 notaFinal = notaFinalPrimerParcial + notaInterCiclo2 + examenFinal;
@@ -579,6 +582,7 @@ public class VtnNotasAlumnoCursoCTR {
                         System.out.println(e);
                     }
                     cargarTabla = true;
+                    vista.getBtnImprimir().setEnabled(true);
                 }
             };
             thread.start();
@@ -611,7 +615,8 @@ public class VtnNotasAlumnoCursoCTR {
                         Math.round(obj.getNotaFinal()),
                         obj.getEstado(),
                         obj.getNumFalta(),
-                        obj.getTotalHoras() + "%"
+                        obj.getTotalHoras() + "%",
+                        obj.getAsistencia()
 
                     });
 
@@ -651,12 +656,11 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void btnImprimir(ActionEvent e) {
-        
+
         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-
         int r = JOptionPane.showOptionDialog(vista,
                 "Reporte de Notas por Curso\n"
                 + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
@@ -671,11 +675,13 @@ public class VtnNotasAlumnoCursoCTR {
             public void run() {
                 Effects.setLoadCursor(vista);
 
+                ReportesCTR reportes = new ReportesCTR(vista, idDocente);
+
                 switch (r) {
                     case 0:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                      //  ReportesCTR.generarReporteMenos70(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteMenos70(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -683,7 +689,7 @@ public class VtnNotasAlumnoCursoCTR {
                     case 1:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                       // ReportesCTR.generarReporteEntre70_80(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        // ReportesCTR.generarReporteEntre70_80(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
@@ -699,14 +705,14 @@ public class VtnNotasAlumnoCursoCTR {
                     case 3:
 
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                       // ReportesCTR.generarReporteEntre90_100(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        // ReportesCTR.generarReporteEntre90_100(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
                         desktop.getLblEstado().setText("COMPLETADO");
 
                         break;
 
                     case 4:
                         desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                       // ReportesCTR.generarReporteCompleto(idDocente, nombrePeriodo, idCurso, paralelo, nombreJornada);
+                        reportes.generarReporteCompleto();
                         desktop.getLblEstado().setText("COMPLETADO");
                         break;
 

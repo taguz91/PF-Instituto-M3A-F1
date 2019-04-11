@@ -135,7 +135,7 @@ public class VtnDocenteMateriaCTR {
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-            materias = mat.cargarMateriaPorCarrera(idCar);
+            materias = mat.cargarMateriasCarreraCmb(idCar);
             llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);

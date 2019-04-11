@@ -164,7 +164,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true(\n"
+                + "prd_lectivo_activo = true AND(\n"
                 + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
