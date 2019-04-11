@@ -366,13 +366,11 @@ public class FrmAlumnoCursoCTR {
         materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
         if (materiasAlmn != null) {
             for (int i = 0; i < materiasAlmn.size(); i++) {
-                System.out.println("Ciclo: "+materiasAlmn.get(i).getMallaCiclo());
                 if (materiasAlmn.get(i).getMallaCiclo() > cicloCursado) {
                     cicloCursado = materiasAlmn.get(i).getMallaCiclo();
                 }
             }
         }
-        System.out.println("--");
         //Se leasigna el mismo valor si es que no tiene un ciclo reprobado
         cicloReprobado = cicloCursado;
         //Esto lo usamos para saber desde que ciclo cargar el combo de cursos
