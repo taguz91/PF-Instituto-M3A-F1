@@ -2,6 +2,9 @@ package controlador.Libraries;
 
 import java.awt.Cursor;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
@@ -9,12 +12,19 @@ import javax.swing.JDesktopPane;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import modelo.ResourceManager;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author MrRainx
  */
-public class Effects {
+public class Middlewares {
 
     private static Thread thread = null;
     private static final Cursor LOAD_CURSOR;
@@ -53,7 +63,7 @@ public class Effects {
                 try {
                     sleep(time * 1000);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Effects.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 label.setText("");
@@ -68,6 +78,34 @@ public class Effects {
 
     public static void setDefaultCursor(JComponent view) {
         view.setCursor(DEFAULT_CURSOR);
+    }
+
+    /**
+     *
+     * @param path direccion del reporte
+     * @param QUERY Sentencia SQL con la que se generara el reporte
+     * @param tituloVentana Titulo de la ventana del ReporViewer
+     */
+    public static void generarReporte(String path, String QUERY, String tituloVentana) {
+        try {
+
+            Map parameter = new HashMap();
+
+            parameter.put("consulta", QUERY);
+
+            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
+
+            JasperPrint print = JasperFillManager.fillReport(jasper, parameter, ResourceManager.getConnection());
+
+            JasperViewer view = new JasperViewer(print, false);
+
+            view.setVisible(true);
+
+            view.setTitle(tituloVentana);
+
+        } catch (JRException | SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

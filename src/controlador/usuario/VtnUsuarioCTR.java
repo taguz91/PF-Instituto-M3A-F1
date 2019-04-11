@@ -1,6 +1,6 @@
 package controlador.usuario;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -63,7 +63,7 @@ public class VtnUsuarioCTR {
         listaUsuarios = UsuarioBD.SelectAll();
         cargarTabla(listaUsuarios);
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitPermisos();
         InitEventos();
@@ -133,7 +133,7 @@ public class VtnUsuarioCTR {
                 public void run() {
                     cargaTabla = false;
 
-                    Effects.setLoadCursor(vista);
+                    Middlewares.setLoadCursor(vista);
 
                     desktop.getLblEstado().setText("CARGANDO USUARIOS");
                     tablaUsuarios.setRowCount(0);
@@ -149,7 +149,7 @@ public class VtnUsuarioCTR {
                     }
                     desktop.getLblEstado().setText("");
 
-                    Effects.setDefaultCursor(vista);
+                    Middlewares.setDefaultCursor(vista);
 
                     cargaTabla = true;
                 }
