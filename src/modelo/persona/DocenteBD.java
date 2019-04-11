@@ -481,7 +481,7 @@ public class DocenteBD extends DocenteMD {
     public boolean eliminarDocente(DocenteMD a, int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = false, docente_observacion = '" + a.getEstado()
-                + "' WHERE id_persona = " + aguja + ";";
+                + "' WHERE id_docente = " + aguja + ";";
         System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -494,7 +494,7 @@ public class DocenteBD extends DocenteMD {
     public boolean activarDocente(int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = true\n"
-                + " WHERE id_persona = " + aguja + ";";
+                + " WHERE id_docente = " + aguja + ";";
         System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             return true;
