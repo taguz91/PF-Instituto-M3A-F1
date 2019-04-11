@@ -195,7 +195,21 @@ public class VtnNotasAlumnoCursoCTR {
                 }
         ) {
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                String.class,
+                Object.class
             };
 
             @Override
@@ -207,7 +221,7 @@ public class VtnNotasAlumnoCursoCTR {
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
-
+            
         };
         table.setModel(tabla);
 
@@ -257,7 +271,9 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void setValorEnTabla() {
         int columna = vista.getTblNotas().getSelectedColumn();
+        
         int fila = vista.getTblNotas().getSelectedRow();
+        
         String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
 
         switch (columna) {
