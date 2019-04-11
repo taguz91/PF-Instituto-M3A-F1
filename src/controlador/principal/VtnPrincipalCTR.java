@@ -242,14 +242,13 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
-<<<<<<< HEAD
+
         vtnPrin.getMnCtSilabos().addActionListener(al->controladorCRUD());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al->controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
-=======
+
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
 
->>>>>>> 1282a10db888abca2549b35372ccdca75f37e362
         carga.start();
 
         //Esto es para la consola 
@@ -529,20 +528,16 @@ public class VtnPrincipalCTR {
             ctrFrm.iniciar();
         }
     }
-<<<<<<< HEAD
-    
-    private void controladorCRUD() {
-=======
->>>>>>> 1282a10db888abca2549b35372ccdca75f37e362
 
-    private void controladorSilabo() {
+
+    private void controladorCRUD() {
 
         ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
 
         c.iniciarControlador();
 
     }
-<<<<<<< HEAD
+
     
     private void controladorIngreso() {
 
@@ -554,9 +549,7 @@ public class VtnPrincipalCTR {
         
     }
     
-=======
 
->>>>>>> 1282a10db888abca2549b35372ccdca75f37e362
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
 
         VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
