@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
@@ -76,7 +77,7 @@ public class VtnRolCTR {
     }
 
     private void InitPermisos() {
-        vista.getBtnBuscar().addActionListener(e -> btnBuscarActionPerformance(e));
+
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
         vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
 
@@ -86,7 +87,9 @@ public class VtnRolCTR {
         vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-
+        
+        vista.getTxtBuscar().addCaretListener(txtBuscar());
+        
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
             if (obj.getNombre().equals("ROLES-Agregar")) {
@@ -112,6 +115,10 @@ public class VtnRolCTR {
     private void cargarTabla() {
         if (cargarTabla) {
             new Thread(() -> {
+                
+                tabla.setRowCount(0);
+                
+                vista.getTxtBuscar().setEnabled(false);
 
                 Middlewares.setLoadCursor(vista);
 
@@ -126,7 +133,9 @@ public class VtnRolCTR {
                 cargarTabla = true;
 
                 Middlewares.setDefaultCursor(vista);
-                
+
+                vista.getTxtBuscar().setEnabled(true);
+
             }).start();
 
         } else {
@@ -161,32 +170,14 @@ public class VtnRolCTR {
 
     }
 
-    private void borrarFilas() {
-
-        int filas = tabla.getDataVector().size();
-
-        if (filas > 0) {
-            for (int i = 0; i < filas; i++) {
-                tabla.removeRow(0);
-            }
-        }
-    }
-
     private void getObjFromRow(int fila) {
 
-        modelo.setId((Integer) vista.getTabRoles().getValueAt(fila, 0));
-        modelo.setNombre((String) vista.getTabRoles().getValueAt(fila, 1));
+        modelo.setId((Integer) vista.getTabRoles().getValueAt(fila, 1));
+        modelo.setNombre((String) vista.getTabRoles().getValueAt(fila, 2));
 
-    }
-
-    //Procesadores de Eventos
-    private void btnBuscarActionPerformance(ActionEvent e) {
-        borrarFilas();
-        cargarTablaFilter(vista.getTxtBuscar().getText());
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {
-        borrarFilas();
         cargarTabla();
     }
 
@@ -247,7 +238,6 @@ public class VtnRolCTR {
 
                 JOptionPane.showMessageDialog(null, "ROL ELIMINADO");
 
-                borrarFilas();
                 cargarTabla();
 
             } else {
@@ -268,8 +258,8 @@ public class VtnRolCTR {
 
         if (fila != -1) {
             getObjFromRow(fila);
-            FrmAccesosDeRolCTR permisos = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Consultar");
-            permisos.Init();
+            FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Consultar");
+            permisosVtn.Init();
 
         } else {
             JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
@@ -288,14 +278,18 @@ public class VtnRolCTR {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDEN EDITAR LOS PERMISOS DEL ROL: " + " 'ROOT'");
             } else {
 
-                FrmAccesosDeRolCTR permisos = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Editar");
-                permisos.Init();
+                FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Editar");
+                permisosVtn.Init();
 
             }
 
         } else {
             JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
         }
+    }
+
+    private CaretListener txtBuscar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
