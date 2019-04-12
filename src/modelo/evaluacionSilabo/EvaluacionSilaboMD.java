@@ -37,6 +37,10 @@ public class EvaluacionSilaboMD {
     private UnidadSilaboMD idUnidad;
 
     public EvaluacionSilaboMD() {
+        
+       
+        this.idTipoActividad = new TipoActividadMD();
+        this.idUnidad = new UnidadSilaboMD();
     }
     
     

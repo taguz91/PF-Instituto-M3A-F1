@@ -3,59 +3,11 @@
 	<property name="ireport.zoom" value="1.2100000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="consulta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-	"Alumnos".id_alumno,
-	p_alu.persona_identificacion,
-	p_alu.persona_primer_apellido || ' ' ||p_alu.persona_segundo_apellido as "APELLIDOS",
-	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
-	ROUND("AlumnoCurso".almn_curso_nt_1_parcial, 1) AS "APORTE 1",
-	ROUND("AlumnoCurso".almn_curso_nt_examen_interciclo, 1) AS "INTERCICLO",
-	ROUND("AlumnoCurso".almn_curso_nt_2_parcial, 1) AS "APORTE 2",
-	ROUND("AlumnoCurso".almn_curso_nt_examen_final, 1) AS "EXAMEN FINAL",
-	ROUND("AlumnoCurso".almn_curso_nt_examen_supletorio, 1) AS "SUPLETORIO",
-	"AlumnoCurso".almn_curso_asistencia,
-	ROUND("AlumnoCurso".almn_curso_nota_final, 1) AS "NOTA FINAL",
-	"AlumnoCurso".almn_curso_estado,
-	"AlumnoCurso".almn_curso_num_faltas,
-	"Materias".materia_nombre, 
-	"Jornadas".nombre_jornada,
-	"Materias".materia_ciclo,
-	"Cursos".curso_paralelo,
-	"Carreras".carrera_nombre,
-	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' ||"Personas".persona_segundo_nombre as "NOMBRE_PROF",
-	"Personas".persona_primer_apellido || ' ' ||"Personas".persona_segundo_apellido as "APELLIDO_PROF",
-	("AlumnoCurso".almn_curso_num_faltas * "Materias".materia_total_horas)/100 as "% Faltas",
-  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido as "APELLIDOS_COORDINADOR",
-  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "NOMBRES_COORDINADOR"
-	
-FROM
-	"AlumnoCurso"
-	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
-	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
-	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
-	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
-	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
-	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
-	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
-	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
-	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
-  INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
-  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
-	
-
-	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = TRUE 
-	AND "Cursos".id_docente = 55 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
-	AND "Cursos".curso_ciclo = 4 
-	AND "Cursos".curso_paralelo = 'A' 
-	AND "Jornadas".nombre_jornada = 'MATUTINA' 
-	AND "AlumnoCurso".almn_curso_nota_final >=70 
-	AND "AlumnoCurso".almn_curso_nota_final <81 
-ORDER BY
-	p_alu.persona_primer_apellido ASC;]]>
+		<![CDATA[$P!{consulta}]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>

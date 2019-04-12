@@ -14,6 +14,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.IngresoNotasMD;
 import modelo.usuario.RolBD;
@@ -31,24 +33,21 @@ public class VtnActivarNotasCTR {
     private IngresoNotasBD modelo;
     private final RolBD permisos;
 
-    //Conexion
-    private final ConectarDB conexion;
-
     //TABLA
     private static DefaultTableModel tablaActivarNotas;
-    private boolean valido = false;
 
     //LISTA
     private List<IngresoNotasBD> listaNotasActivadas;
+    private List<PeriodoLectivoMD> listaPeriodos;
 
     private boolean cargarTabla = true;
-    private Thread thread;
+    private String itemCombo;
 
-    public VtnActivarNotasCTR(VtnPrincipal desktop, VtnActivarNotas vista, RolBD permisos, ConectarDB conexion) {
+    public VtnActivarNotasCTR(VtnPrincipal desktop, VtnActivarNotas vista, IngresoNotasBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
+        this.modelo = modelo;
         this.permisos = permisos;
-        this.conexion = conexion;
     }
 
     //INIT
@@ -57,16 +56,18 @@ public class VtnActivarNotasCTR {
 
         InitEventos();
 
-        listaNotasActivadas = IngresoNotasBD.selectAll();
-
-        cargarTabla(listaNotasActivadas);
+        new Thread(() -> {
+            Middlewares.setLoadCursor(vista);
+            listaPeriodos = PeriodoLectivoBD.SelectAll();
+            cargarComboPeriodos();
+            setSelectedItemInCombo();
+            Middlewares.setDefaultCursor(vista);
+        }).start();
 
         try {
             vista.show();
             desktop.getDpnlPrincipal().add(vista);
-
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-
             vista.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,12 +81,12 @@ public class VtnActivarNotasCTR {
             @Override
             public void keyReleased(KeyEvent ke) {
                 if (ke.getKeyCode() == 10) {
-                    
+
                     setObj(getSelectedRow());
                     if (modelo.editar(modelo.getIdIngresoNotas())) {
-                        vista.getLblDatosCorrectos().setText("Datos actualizados correctamente");
+                        Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
                     } else {
-                        vista.getLblDatosIncorrectos().setText("Ocurrió un error, revise la información");
+                        Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrió un error, revise la información", 2);
                     }
                 }
             }
@@ -143,6 +144,8 @@ public class VtnActivarNotasCTR {
             }
         });
 
+        vista.getCmbPeriodoLectivo().addActionListener(e -> cmbPeriodos(e));
+
     }
 
     //METODOS DE APOYO
@@ -163,6 +166,13 @@ public class VtnActivarNotasCTR {
 
     }
 
+    private void setSelectedItemInCombo() {
+        try {
+            itemCombo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+        } catch (NullPointerException e) {
+        }
+    }
+
     private boolean validarValor(String valor) {
         boolean valorBool = false;
         try {
@@ -174,54 +184,39 @@ public class VtnActivarNotasCTR {
     }
 
     private void cargarTabla(List<IngresoNotasBD> lista) {
+        new Thread(() -> {
+            if (cargarTabla) {
 
-        if (cargarTabla) {
-            thread = new Thread() {
-                @Override
-                public void run() {
-                    Middlewares.setLoadCursor(vista);
-                    cargarTabla = false;
+                Middlewares.setLoadCursor(vista);
 
-                    desktop.getLblEstado().setText("CARGANDO...");
+                cargarTabla = false;
 
-                    tablaActivarNotas.setRowCount(0);
+                desktop.getLblEstado().setText("CARGANDO...");
 
-                    lista
-                            .stream()
-                            .forEach(VtnActivarNotasCTR::agregarFila);
+                tablaActivarNotas.setRowCount(0);
 
-                    vista.getLblResultados().setText(lista.size() + " Resultados");
+                lista.stream().forEach(VtnActivarNotasCTR::agregarFila);
 
-                    cargarTabla = true;
+                vista.getLblResultados().setText(lista.size() + " Resultados");
 
-                    Middlewares.setDefaultCursor(vista);
+                cargarTabla = true;
 
-                    desktop.getLblEstado().setText("COMPLETADO");
+                Middlewares.setDefaultCursor(vista);
 
-                    try {
-                        sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                Middlewares.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
+            }
 
-                    desktop.getLblEstado().setText("");
-                    stopThread(this);
-                }
-
-            };
-            thread.start();
-
-        } else {
-
-            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!!");
-
-        }
+        }).start();
 
     }
 
-    private static void stopThread(Thread thread) {
-        thread = null;
-        System.gc();
+    private void cargarComboPeriodos() {
+        vista.getCmbPeriodoLectivo().removeAllItems();
+        listaPeriodos
+                .stream()
+                .forEach(obj -> {
+                    vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
+                });
     }
 
     private static void agregarFila(IngresoNotasMD obj) {
@@ -314,10 +309,28 @@ public class VtnActivarNotasCTR {
     }
 
     private void btnActualizar(ActionEvent e) {
-        listaNotasActivadas = null;
-        System.gc();
-        listaNotasActivadas = IngresoNotasBD.selectAll();
-        cargarTabla(listaNotasActivadas);
+
+        if (cargarTabla) {
+
+            listaNotasActivadas = null;
+
+            System.gc();
+            setSelectedItemInCombo();
+            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
+
+            cargarTabla(listaNotasActivadas);
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!!");
+        }
+
+    }
+
+    private void cmbPeriodos(ActionEvent e) {
+        new Thread(() -> {
+            setSelectedItemInCombo();
+            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
+            cargarTabla(listaNotasActivadas);
+        }).start();
 
     }
 }

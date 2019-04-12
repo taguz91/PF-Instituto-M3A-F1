@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -262,12 +263,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
-    
     public boolean activarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa = 'true'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
-        System.out.println("Cedula "+identificacion);
+        System.out.println("Cedula " + identificacion);
         if (conecta.nosql(sql) == null) {
             return true;
         } else {
@@ -391,8 +391,8 @@ public class PersonaBD extends PersonaMD {
 
         return consultarPor(sql);
     }
-    
-   public PersonaMD buscarPersonaNoActiva(String identificacion) {
+
+    public PersonaMD buscarPersonaNoActiva(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
@@ -411,8 +411,8 @@ public class PersonaBD extends PersonaMD {
 
         return consultarPor(sql);
     }
-   
-      public PersonaMD existePersona(String identificacion) {
+
+    public PersonaMD existePersona(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
@@ -807,7 +807,7 @@ public class PersonaBD extends PersonaMD {
 
         return lista;
     }
-    
+
     public List<PersonaMD> filtrarEliminados(){
         String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n" +
                         "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n" +

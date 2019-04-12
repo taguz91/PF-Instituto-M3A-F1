@@ -26,15 +26,14 @@ public class UsuarioBD extends UsuarioMD {
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA
-                + " (usu_username, usu_password, id_persona)"
+        String INSERT = "INSERT INTO " + TABLA + "\n"
+                + " (usu_username, usu_password, id_persona)\n"
                 + " VALUES ("
-                + " '" + getUsername() + "',"
-                + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), "
-                + " " + getPersona().getIdPersona() + ""
-                + " );"
+                + " '" + getUsername() + "',\n"
+                + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), \n"
+                + " " + getPersona().getIdPersona() + "\n"
+                + " );\n"
                 + "CREATE ROLE \"" + getUsername() + "\" CREATEROLE LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
-                + "\n"
                 + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
                 + " ";
 
@@ -119,7 +118,6 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
                 + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
-
         return selectFromView(SELECT);
     }
 
@@ -198,16 +196,16 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public boolean editar(String Pk) {
-        String UPDATE = "UPDATE  " + TABLA
-                + " SET "
-                + "\n usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),"
-                + "\n id_persona = " + getPersona() + ""
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = '" + Pk + "';"
-                + "\n"
-                + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';"
+        String UPDATE = "UPDATE  " + TABLA + "\n"
+                + " SET \n"
+                + "usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),\n"
+                + "id_persona = " + getPersona().getIdPersona() + "\n"
+                + " WHERE \n"
+                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "";
 
+        System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
 

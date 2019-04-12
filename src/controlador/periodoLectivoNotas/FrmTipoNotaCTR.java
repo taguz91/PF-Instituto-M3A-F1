@@ -90,8 +90,6 @@ public class FrmTipoNotaCTR {
 
     private void agregar() {
         if (modelo.insertar()) {
-            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HA AGREGADO EL NUEVO TIPO DE NOTA", 3);
-
             JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL NUEVO TIPO DE NOTA");
 
             vtnPadre.cargarTabla();

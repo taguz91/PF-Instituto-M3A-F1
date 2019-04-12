@@ -194,9 +194,9 @@ ENSEÑANZA]]></text>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="194" splitType="Stretch">
+		<band height="329" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="84" height="194" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
+				<reportElement x="0" y="0" width="84" height="329" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -207,7 +207,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{objetivo_especifico_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="407" y="0" width="22" height="194" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
+				<reportElement x="407" y="0" width="22" height="329" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -219,7 +219,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="359" y="0" width="25" height="194" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
+				<reportElement x="359" y="0" width="25" height="329" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -231,7 +231,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_docencia_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="0" width="23" height="194" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
+				<reportElement x="384" y="0" width="23" height="329" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -243,7 +243,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="84" y="0" width="94" height="194" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
+				<reportElement x="84" y="0" width="94" height="329" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -254,7 +254,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="178" y="0" width="24" height="194" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
+				<reportElement x="178" y="0" width="24" height="329" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -266,7 +266,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="202" y="0" width="24" height="194" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
+				<reportElement x="202" y="0" width="24" height="329" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -292,7 +292,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="429" y="0" width="125" height="193" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
+				<reportElement x="429" y="0" width="125" height="328" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
 				<subreportParameter name="id_u">
 					<subreportParameterExpression><![CDATA[$F{id_unidad}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -300,7 +300,7 @@ ENSEÑANZA]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="226" y="52" width="133" height="142" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
+				<reportElement x="226" y="52" width="133" height="277" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -319,7 +319,7 @@ ENSEÑANZA]]></text>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="226" y="0" width="104" height="33" uuid="9be90bcb-e3e0-4697-94c8-f81523587be6"/>
@@ -332,13 +332,13 @@ ENSEÑANZA]]></text>
 				<text><![CDATA[UNIDAD DIDÁCTICA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="429" y="193" width="125" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
+				<reportElement x="430" y="328" width="125" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="554" y="0" width="1" height="194" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
+				<reportElement x="554" y="0" width="1" height="329" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>

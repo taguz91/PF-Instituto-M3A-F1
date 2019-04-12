@@ -451,6 +451,7 @@ public class ControladorSilaboCRUD {
             @Override
             public void mouseClicked(MouseEvent me) {
 
+                
                 gestion.getBtnQuitarAC().setEnabled(true);
 
                 //System.out.println(bibliografia.getTblBiblioteca().getModel().getValueAt(fila, 0).toString());
