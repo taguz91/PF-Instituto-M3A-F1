@@ -256,7 +256,7 @@ public class VtnPrincipalCTR {
         /*
             SET DIRECCION IP
          */
-        vtnPrin.getLblIP().setText(Propiedades.loadIP());
+        vtnPrin.getLblIP().setText(Propiedades.getPropertie("ip"));
 
     }
 

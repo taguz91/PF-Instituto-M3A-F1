@@ -47,17 +47,9 @@ public class ResourceManager {
             }
 
         }
-        JDBC_URL = Propiedades.loadIP();
-
-        System.out.println("------------------->" + JDBC_URL);
-
-        //JDBC_URL = "jdbc:postgresql://35.193.226.187:5432/BDpruebas";
-        //USERNAME = "postgres";
-        //PASSWORD = "qwerty79";
-        System.out.println(USERNAME);
-        System.out.println(PASSWORD);
 
         if (conex == null) {
+            JDBC_URL = generarURL();
             conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         }
 
@@ -155,6 +147,15 @@ public class ResourceManager {
         } catch (SQLException ex) {
             Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private static String generarURL() {
+
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
 }
