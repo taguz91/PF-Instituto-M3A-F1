@@ -1,5 +1,6 @@
 package controlador.Libraries;
 
+import java.awt.Container;
 import java.awt.Cursor;
 import java.io.File;
 import static java.lang.Thread.sleep;
@@ -10,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import modelo.ResourceManager;
@@ -35,29 +35,19 @@ public class Middlewares {
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
     }
 
-    public static void centerFrame(JInternalFrame view, JDesktopPane desktop) {
-
-        int deskWidth = (desktop.getWidth() / 2) - (view.getWidth() / 2);
-        int deskHeight = (desktop.getHeight() / 2) - (view.getHeight() / 2);
-
-        if (desktop.getHeight() < 500) {
-            deskHeight = 0;
-        }
-
-        view.setLocation(deskWidth, deskHeight);
-
-    }
-
-    public static String getProjectPath() {
-        String path = new File(".").getAbsolutePath();
-        return path.substring(0, path.length() - 1);
-    }
-
     public static void setLoadCursor(JComponent view) {
         view.setCursor(LOAD_CURSOR);
     }
 
     public static void setDefaultCursor(JComponent view) {
+        view.setCursor(DEFAULT_CURSOR);
+    }
+
+    public static void setLoadCursorInWindow(Container view) {
+        view.setCursor(LOAD_CURSOR);
+    }
+
+    public static void setDefaultCursorInWindow(Container view) {
         view.setCursor(DEFAULT_CURSOR);
     }
 
@@ -80,9 +70,9 @@ public class Middlewares {
 
             JasperViewer view = new JasperViewer(print, false);
 
-            view.setVisible(true);
-
             view.setTitle(tituloVentana);
+
+            view.setVisible(true);
 
         } catch (JRException | SQLException ex) {
             System.out.println(ex.getMessage());
@@ -103,4 +93,19 @@ public class Middlewares {
 
     }
 
+    public static void centerFrame(JInternalFrame view, JDesktopPane desktop) {
+
+        int deskWidth = (desktop.getWidth() / 2) - (view.getWidth() / 2);
+        int deskHeight = (desktop.getHeight() / 2) - (view.getHeight() / 2);
+
+        if (desktop.getHeight() < 500) {
+            deskHeight = 0;
+        }
+        view.setLocation(deskWidth, deskHeight);
+    }
+
+    public static String getProjectPath() {
+        String path = new File(".").getAbsolutePath();
+        return path.substring(0, path.length() - 1);
+    }
 }

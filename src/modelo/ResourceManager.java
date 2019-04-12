@@ -49,6 +49,7 @@ public class ResourceManager {
         }
 
         if (conex == null) {
+            System.out.println("CONEXION");
             JDBC_URL = generarURL();
             conex = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         }

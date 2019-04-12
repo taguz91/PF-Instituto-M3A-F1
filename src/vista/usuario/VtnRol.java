@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.usuario;
 
 import javax.swing.ImageIcon;
@@ -109,10 +104,27 @@ public class VtnRol extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código Rol", "Nombre Rol"
+                "No.", "ID", "Nombre Rol"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabRoles.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabRoles);
+        if (tabRoles.getColumnModel().getColumnCount() > 0) {
+            tabRoles.getColumnModel().getColumn(0).setMinWidth(50);
+            tabRoles.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tabRoles.getColumnModel().getColumn(0).setMaxWidth(50);
+            tabRoles.getColumnModel().getColumn(1).setMinWidth(50);
+            tabRoles.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tabRoles.getColumnModel().getColumn(1).setMaxWidth(50);
+        }
 
         lblResultados.setText("0 Resultados Obtenidos");
 
@@ -133,11 +145,11 @@ public class VtnRol extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -146,7 +158,7 @@ public class VtnRol extends javax.swing.JInternalFrame {
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))

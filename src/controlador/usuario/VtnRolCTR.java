@@ -12,6 +12,7 @@ import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,17 +38,19 @@ public class VtnRolCTR {
 
     private final RolBD modelo;
 
-    private final RolBD rol;
+    private final RolBD permisos;
 
     private List<RolMD> listaRoles;
 
-    private static DefaultTableModel modelT;
+    private static DefaultTableModel tabla;
+
+    private boolean cargarTabla = true;
 
     public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo, RolBD rol) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
-        this.rol = rol;
+        this.permisos = rol;
     }
 
     //Inits
@@ -57,19 +60,17 @@ public class VtnRolCTR {
 
         vista.setTitle("Lista de Roles");
 
-        modelT = (DefaultTableModel) vista.getTabRoles().getModel();
+        tabla = (DefaultTableModel) vista.getTabRoles().getModel();
 
         InitPermisos();
         cargarTabla();
 
-        vista.show();
-        desktop.getDpnlPrincipal().add(vista);
-
         try {
             vista.setSelected(true);
+            vista.show();
+            desktop.getDpnlPrincipal().add(vista);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(VtnRolCTR.class.getName()).
-                    log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
 
     }
@@ -86,7 +87,7 @@ public class VtnRolCTR {
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
 
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(rol.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
             if (obj.getNombre().equals("ROLES-Agregar")) {
                 vista.getBtnIngresar().setEnabled(true);
@@ -109,18 +110,35 @@ public class VtnRolCTR {
 
     //Metodos de Apoyo
     private void cargarTabla() {
+        if (cargarTabla) {
+            new Thread(() -> {
 
-        listaRoles = RolBD.SelectAll();
+                Middlewares.setLoadCursor(vista);
 
-        listaRoles.stream().forEach(VtnRolCTR::insertarFila);
+                cargarTabla = false;
 
-        vista.getLblResultados().setText(listaRoles.size() + " Resultados Obtenidos");
+                listaRoles = RolBD.SelectAll();
+
+                listaRoles.stream().forEach(VtnRolCTR::agregarFila);
+
+                vista.getLblResultados().setText(listaRoles.size() + " Resultados Obtenidos");
+
+                cargarTabla = true;
+
+                Middlewares.setDefaultCursor(vista);
+                
+            }).start();
+
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!!");
+        }
 
     }
 
-    private static void insertarFila(RolMD obj) {
+    private static void agregarFila(RolMD obj) {
 
-        modelT.addRow(new Object[]{
+        tabla.addRow(new Object[]{
+            tabla.getDataVector().size() + 1,
             obj.getId(),
             obj.getNombre()
         });
@@ -128,22 +146,28 @@ public class VtnRolCTR {
     }
 
     private void cargarTablaFilter(String Aguja) {
+        if (cargarTabla) {
+            JOptionPane.showMessageDialog(vista, "ESPERE QUE TERMINE LA CARGA PENDIENTE!!");
+        } else {
+            List<RolMD> lista = listaRoles
+                    .stream()
+                    .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
+                    .collect(Collectors.toList());
 
-        listaRoles = RolBD.SelectWhereNombreLike(Aguja);
+            lista.forEach(VtnRolCTR::agregarFila);
 
-        listaRoles.stream().forEach(VtnRolCTR::insertarFila);
-
-        vista.getLblResultados().setText(listaRoles.size() + " Resultados Obtenidos");
+            vista.getLblResultados().setText(lista.size() + " Resultados Obtenidos");
+        }
 
     }
 
     private void borrarFilas() {
 
-        int filas = modelT.getDataVector().size();
+        int filas = tabla.getDataVector().size();
 
         if (filas > 0) {
             for (int i = 0; i < filas; i++) {
-                modelT.removeRow(0);
+                tabla.removeRow(0);
             }
         }
     }
