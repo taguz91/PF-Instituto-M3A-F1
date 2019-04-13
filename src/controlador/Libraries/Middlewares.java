@@ -57,7 +57,7 @@ public class Middlewares {
      * @param QUERY Sentencia SQL con la que se generara el reporte
      * @param tituloVentana Titulo de la ventana del ReporViewer
      */
-    public static void generarReporte(String path, String QUERY, String tituloVentana) {
+    public static void generarReporteDefault(String path, String QUERY, String tituloVentana) {
         try {
 
             Map parameter = new HashMap();
@@ -67,6 +67,30 @@ public class Middlewares {
             JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
 
             JasperPrint print = JasperFillManager.fillReport(jasper, parameter, ResourceManager.getConnection());
+
+            JasperViewer view = new JasperViewer(print, false);
+
+            view.setTitle(tituloVentana);
+
+            view.setVisible(true);
+
+        } catch (JRException | SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param path direccion del reporte
+     * @param tituloVentana Titulo de la ventana del ReporViewer
+     * @param parametros
+     */
+    public static void generarReporte(String path,String tituloVentana, Map parametros) {
+        try {
+
+            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
+
+            JasperPrint print = JasperFillManager.fillReport(jasper, parametros, ResourceManager.getConnection());
 
             JasperViewer view = new JasperViewer(print, false);
 
