@@ -50,6 +50,8 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
+    
+    
 
     public static List<SilaboMD> consultar(ConexionBD conexion, String[] clave) {
 
@@ -99,7 +101,7 @@ public class SilaboBD extends SilaboMD {
         return silabos;
     }
 
-    public void eliminar() {
+    /*public void eliminar() {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
@@ -113,7 +115,7 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }*/
 
     public void actualizar() {
 
@@ -155,6 +157,25 @@ public class SilaboBD extends SilaboMD {
         }
 
         return silabo;
+    }
+    
+   
+    
+    public void eliminar(SilaboMD s) {
+
+        try {
+             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setInt(1, s.getIdSilabo());
+            
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
