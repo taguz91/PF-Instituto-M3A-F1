@@ -6,7 +6,10 @@
 package modelo.referenciasSilabo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
@@ -57,6 +60,37 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
             Logger.getLogger(ReferenciaSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public static List<ReferenciaSilaboMD> recuperarReferencias(ConexionBD conexion,int aguja) {
+
+        List<ReferenciaSilaboMD> referencias = new ArrayList<>();
+        try {
+            
+             PreparedStatement st = conexion.getCon().prepareStatement( "SELECT \"ReferenciaSilabo\".id_referencia, \"Referencias\".tipo_referencia, \"Referencias\".descripcion_referencia, \"Referencias\".existe_en_biblioteca FROM \"ReferenciaSilabo\",\"Referencias\"\n"
+                    + "WHERE id_silabo="+aguja+"\n"
+                    + "AND \"Referencias\".id_referencia=\"ReferenciaSilabo\".id_referencia");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                ReferenciaSilaboMD r = new ReferenciaSilaboMD();
+                r.getIdReferencia().setIdReferencia(rs.getInt(1));
+                r.getIdReferencia().setTipoReferencia(rs.getString(2));
+                r.getIdReferencia().setDescripcionReferencia(rs.getString(3));
+                r.getIdReferencia().setExisteEnBiblioteca(rs.getBoolean(4));
+
+                //e.getIdUnidad().;
+
+                referencias.add(r);
+            }
+            
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbReferenciaSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+        return referencias;
     }
 
 }

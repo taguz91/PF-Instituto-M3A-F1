@@ -188,7 +188,7 @@ public class VtnDocenteCTR {
                     frmDoc.getBtnRegistrarPersona().setVisible(false);
                     //Le pasamos la persona de nuestro lista justo la persona seleccionada
                     ctrFrm.habilitarComponentesDocente();
-
+                    frmDoc.getBtnGuardar().setEnabled(true);
                     ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                     //vtnDocente.getTblDocente().setVisible(false);
                     vtnDocente.dispose();
@@ -225,7 +225,7 @@ public class VtnDocenteCTR {
     public void eliminarDocente() {
         DocenteMD docentemd = new DocenteMD();
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        System.out.println(posFila + " metodo editar de vtnDocenteCTR");
+        System.out.println(posFila + " metodo eliminar de vtnDocenteCTR");
         if (posFila >= 0) {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar un Docente? ", " Eliminar Docente ", dialog);
@@ -233,7 +233,7 @@ public class VtnDocenteCTR {
                 String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este Docente?");
                 if (observacion != null) {
                     docentemd.setEstado(observacion.toUpperCase());
-                    if (docente.eliminarDocente(docentemd, docentesMD.get(0).getIdPersona()) == true) {
+                    if (docente.eliminarDocente(docentemd, docentesMD.get(0).getIdDocente()) == true) {
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                         cargarDocentes();
 

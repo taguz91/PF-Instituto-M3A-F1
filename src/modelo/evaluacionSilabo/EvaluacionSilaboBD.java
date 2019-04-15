@@ -6,10 +6,13 @@
 package modelo.evaluacionSilabo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
@@ -30,10 +33,12 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         this.conexion = conexion;
     }
 
-    public EvaluacionSilaboBD(ConexionBD conexion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
-        super(indicador, instrumento, valoracion, fechaEnvio, fechaPresentacion, idTipoActividad, idUnidad);
+    public EvaluacionSilaboBD(ConexionBD conexion, Integer idEvaluacion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
+        super(idEvaluacion, indicador, instrumento, valoracion, fechaEnvio, fechaPresentacion, idTipoActividad, idUnidad);
         this.conexion = conexion;
     }
+
+    
 
     public void insertar(EvaluacionSilaboMD e) {
 
@@ -56,6 +61,41 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
             Logger.getLogger(EvaluacionSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+     public static List<EvaluacionSilaboMD> recuperarEvaluaciones(ConexionBD conexion,int aguja) {
+         List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
+        try {
+            
+            PreparedStatement st = conexion.getCon().prepareStatement( "SELECT id_evaluacion,indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
+                    + "FROM \"EvaluacionSilabo\",\"Silabo\",\"UnidadSilabo\"\n"
+                    + "WHERE \"EvaluacionSilabo\".id_unidad=\"UnidadSilabo\".id_unidad\n"
+                    + "AND \"UnidadSilabo\".id_silabo=\"Silabo\".id_silabo\n"
+                    + "AND \"Silabo\".id_silabo="+aguja+"");
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                EvaluacionSilaboMD e = new EvaluacionSilaboMD();
+                e.setIdEvaluacion(rs.getInt(1));
+                e.setIndicador(rs.getString(2));
+                e.getIdTipoActividad().setIdTipoActividad(rs.getInt(3));
+                e.setInstrumento(rs.getString(4));
+                e.setValoracion(rs.getDouble(5));
+                e.setFechaEnvio(rs.getDate(6).toLocalDate());
+                e.setFechaPresentacion(rs.getDate(7).toLocalDate());
+                e.getIdUnidad().setNumeroUnidad(rs.getInt(8));
+                //e.getIdUnidad().;
+
+                evaluaciones.add(e);
+            }
+           
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbEvaluacionSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return evaluaciones;
     }
 
 }

@@ -19,8 +19,22 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
-
     public ConectarDB(String user, String pass, String mensaje) {
+        try {
+            //Cargamos el driver
+            Class.forName("org.postgresql.Driver");
+            //Nos conectamos
+
+            ct = ResourceManager.getConnection();
+            //ct = DriverManager.getConnection(url, user, pass);
+            System.out.println("Nos conectamos. Desde: " + mensaje);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
+        }
+    }
+
+    public ConectarDB(String mensaje) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
@@ -65,7 +79,7 @@ public class ConectarDB {
         try {
             //Iniciamos la variable para las transacciones
 //            if (st == null) {
-                st = ct.createStatement();
+            st = ct.createStatement();
 //            }
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);

@@ -5,20 +5,17 @@
  */
 package modelo.propiedades;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.AbstractMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.effect.Effect;
-import javax.swing.JOptionPane;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -26,19 +23,21 @@ import javax.swing.JOptionPane;
  */
 public class Propiedades {
 
-    private static Properties config;
+    private static final Properties config;
     private static String PATH = "configuracion.properties";
-    private static File archivo;
+    private static final File archivo;
 
     static {
         config = new Properties();
-        PATH = Effects.getProjectPath() + PATH;
+        PATH = Middlewares.getProjectPath() + PATH;
         archivo = new File(PATH);
     }
 
     private static void setDefault() {
 
-        config.setProperty("IP_ADRESS", "jdbc:postgresql://35.193.226.187:5432/BDinsta");
+        config.setProperty("ip", "35.193.226.187");
+        config.setProperty("port", "5432");
+        config.setProperty("database", "BDinsta");
 
         try {
             config.store(new FileWriter(archivo), "comentario");
@@ -47,32 +46,43 @@ public class Propiedades {
         }
     }
 
-    public static String loadIP() {
+    public static Map<Object, Object> loadProperties() {
         if (archivo.exists()) {
             try {
                 config.load(new FileReader(archivo));
+                if (config.size() != 3) {
+                    setDefault();
+                    config.load(new FileReader(archivo));
+                }
             } catch (FileNotFoundException ex) {
+                setDefault();
                 Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
+                setDefault();
                 Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
             }
-            String IP = config.getProperty("IP_ADRESS");
-
-            if (IP == null) {
-                System.out.println(IP);
-                setDefault();
-                System.out.println(IP);
-                loadIP();
-            } else {
-                return IP;
-            }
-
         } else {
             setDefault();
-            loadIP();
+            Map<Object, Object> properties = loadProperties();
+            return properties;
         }
 
-        return null;
+        return config;
+    }
+
+    public static String getPropertie(String propertie) {
+        String IP = "";
+
+        Map<Object, Object> map = loadProperties().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(propertie.toLowerCase()))
+                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            IP = (String) entry.getValue();
+        }
+
+        return IP;
     }
 
 }

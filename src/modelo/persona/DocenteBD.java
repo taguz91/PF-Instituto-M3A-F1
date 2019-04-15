@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -483,7 +483,7 @@ public class DocenteBD extends DocenteMD {
     public boolean eliminarDocente(DocenteMD a, int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = false, docente_observacion = '" + a.getEstado()
-                + "' WHERE id_persona = " + aguja + ";";
+                + "' WHERE id_docente = " + aguja + ";";
         System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -496,7 +496,7 @@ public class DocenteBD extends DocenteMD {
     public boolean activarDocente(int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = true\n"
-                + " WHERE id_persona = " + aguja + ";";
+                + " WHERE id_docente = " + aguja + ";";
         System.out.println(nsql);
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -548,7 +548,6 @@ public class DocenteBD extends DocenteMD {
                 + "FROM\n"
                 + "\"public\".\"ViewDocentes\"\n"
                 + "ORDER BY persona_primer_apellido";
-        System.out.println(SELECT);
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
 
@@ -581,6 +580,53 @@ public class DocenteBD extends DocenteMD {
         }
         return lista;
 
+    }
+
+    public static Map<String, DocenteMD> selectDocentes() {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Docentes\".id_docente,\n"
+                + "\"public\".\"Docentes\".docente_codigo\n"
+                + "FROM\n"
+                + "\"public\".\"Docentes\"\n"
+                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE \n"
+                + "docente_activo IS TRUE";
+
+        Map<String, DocenteMD> lista = new HashMap<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                DocenteMD docente = new DocenteMD();
+                docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdentificacion(rs.getString("persona_identificacion"));
+                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                docente.setIdPersona(rs.getInt("id_persona"));
+
+                docente.setCodigo(rs.getString("docente_codigo"));
+
+                String key = docente.getIdentificacion() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre();
+
+                lista.put(key, docente);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lista;
     }
 
 }

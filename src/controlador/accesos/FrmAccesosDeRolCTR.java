@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.accesos;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -57,9 +52,10 @@ public class FrmAccesosDeRolCTR {
     public void Init() {
 
         tablaPermisos = (DefaultTableModel) vista.getTabPermisos().getModel();
+
         tablaPermDados = (DefaultTableModel) vista.getTabPermDados().getModel();
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitFuncion();
 
@@ -165,7 +161,7 @@ public class FrmAccesosDeRolCTR {
         tabla.setRowCount(0);
 
         lista.stream()
-                .filter(item -> item.getNombre().contains(Aguja))
+                .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
                 .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
@@ -329,21 +325,28 @@ public class FrmAccesosDeRolCTR {
     }
 
     private void btnGuardar(ActionEvent e) {
+        new Thread(() -> {
+            Middlewares.setLoadCursor(vista);
+            listaBorrar.stream().forEach(obj -> {
+                modelo.eliminarWhere(rol.getId(), obj.getIdAcceso());
+            });
 
-        listaBorrar.stream().forEach(obj -> {
-            modelo.eliminarWhere(rol.getId(), obj.getIdAcceso());
-        });
+            listaPermDados
+                    .stream()
+                    .forEach(obj -> {
+                        modelo.setIdRol(rol.getId());
+                        modelo.setIdAcceso(obj.getIdAccesos());
+                        modelo.insertar();
+                    });
 
-        listaPermDados
-                .stream()
-                .forEach(obj -> {
-                    modelo.setIdRol(rol.getId());
-                    modelo.setIdAcceso(obj.getIdAccesos());
-                    modelo.insertar();
-                });
+            vista.dispose();
+            JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
 
-        vista.dispose();
-        JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
+            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase(), 2);
+
+            Middlewares.setDefaultCursor(vista);
+
+        }).start();
     }
 
 }

@@ -1,11 +1,12 @@
 package controlador.usuario;
 
-import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,7 +64,7 @@ public class VtnUsuarioCTR {
         listaUsuarios = UsuarioBD.SelectAll();
         cargarTabla(listaUsuarios);
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitPermisos();
         InitEventos();
@@ -127,37 +128,44 @@ public class VtnUsuarioCTR {
      */
     public void cargarTabla(List<UsuarioMD> lista) {
 
-        if (cargaTabla == true) {
-            thread = new Thread() {
-                @Override
-                public void run() {
+        if (cargaTabla) {
+            new Thread(() -> {
+                try {
+                    tablaUsuarios.setRowCount(0);
+
+                    vista.getTxtBuscar().setEnabled(false);
+
                     cargaTabla = false;
 
-                    Effects.setLoadCursor(vista);
+                    Middlewares.setLoadCursor(vista);
 
                     desktop.getLblEstado().setText("CARGANDO USUARIOS");
-                    tablaUsuarios.setRowCount(0);
 
                     lista.stream()
                             .forEach(VtnUsuarioCTR::agregarFila);
                     vista.getLblResultados().setText(lista.size() + " Registros");
 
-                    try {
-                        sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VtnUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    desktop.getLblEstado().setText("");
+                    Middlewares.setDefaultCursor(vista);
 
-                    Effects.setDefaultCursor(vista);
+                    sleep(500);
 
                     cargaTabla = true;
+
+                    Middlewares.setTextInLabel(desktop.getLblEstado(), "CARGA COMPLETA", 2);
+
+                    vista.getTxtBuscar().setEnabled(true);
+
+                    System.out.println("");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(VtnUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            };
-            thread.start();
+
+            }).start();
+
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA DE UNA TABLA PENDIENTE");
         }
+
     }
 
     private void cargarTablaFilter(String Aguja) {
@@ -316,11 +324,7 @@ public class VtnUsuarioCTR {
 
     private void txtBuscarKeyReleased(KeyEvent e) {
 
-        if (cargaTabla == true) {
-            cargarTablaFilter(vista.getTxtBuscar().getText());
-        } else {
-            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE");
-        }
+        cargarTablaFilter(vista.getTxtBuscar().getText());
 
     }
 }

@@ -8,20 +8,21 @@
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct c.id_docente,p.persona_primer_apellido,p.persona_segundo_apellido,p.persona_primer_nombre,p.persona_segundo_nombre from "Cursos" c, "Docentes" d, "Personas" p
-where c.id_docente=d.id_docente 
-and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
+		<![CDATA[select distinct k.id_docente,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' '
+									,p.persona_segundo_nombre) as nombre_docente,
+concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) as curso from  "Cursos" c join "Jornadas" 
+a on c.id_jornada=a.id_jornada join "Docentes" k on k.id_docente=c.id_docente
+join "Personas" p  on k.id_persona=p.id_persona 
+where    c.id_materia=$P!{parameter1} ]]>
 	</queryString>
 	<field name="id_docente" class="java.lang.Integer"/>
-	<field name="persona_primer_apellido" class="java.lang.String"/>
-	<field name="persona_segundo_apellido" class="java.lang.String"/>
-	<field name="persona_primer_nombre" class="java.lang.String"/>
-	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="nombre_docente" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<staticText>
 				<reportElement x="29" y="1" width="167" height="20" forecolor="#006699" uuid="2c34e51b-8957-4809-be39-f8f979076391"/>
 				<textElement>
@@ -29,52 +30,42 @@ and d.id_persona=p.id_persona and id_materia=$P!{parameter1}]]>
 				</textElement>
 				<text><![CDATA[3.1. Profesor Responsable]]></text>
 			</staticText>
+			<line>
+				<reportElement x="-1" y="23" width="534" height="1" uuid="62ced5ee-6ad6-4ee9-b7ee-42778251d56d"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="113" height="20" uuid="7ad991b0-8fc0-4743-9ddf-fc72072a260a"/>
+				<reportElement x="0" y="0" width="406" height="20" uuid="437d6874-44fe-4f33-a7b7-a45468e22ee7"/>
 				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre_docente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="228" y="0" width="107" height="20" uuid="5e45dfd7-f55a-4820-bfbc-cf51fec9f3d4"/>
+				<reportElement x="406" y="0" width="127" height="20" uuid="b4b740dd-b4ed-4255-8740-61207b45fada"/>
 				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement x="431" y="0" width="107" height="20" uuid="06427b45-dd2d-498b-9d51-9103a9fc0833"/>
-				<subreportParameter name="id_profe">
-					<subreportParameterExpression><![CDATA[$F{id_docente}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="id_materia">
-					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cursos.jasper"]]></subreportExpression>
-			</subreport>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="431" height="20" uuid="6f1321ac-1021-4891-8b78-80e40c2b3ab2"/>
-				<graphicElement>
-					<pen lineWidth="0.75"/>
-				</graphicElement>
-			</rectangle>
-			<textField>
-				<reportElement x="119" y="0" width="105" height="20" uuid="a70a7c6a-93f7-4b1e-bc04-d79a605b666c"/>
-				<textFieldExpression><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="339" y="0" width="92" height="20" uuid="a751b31e-9be7-43c8-8b56-1ef8b7bf73d8"/>
-				<textFieldExpression><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="1">
+			<line>
+				<reportElement x="0" y="0" width="534" height="1" uuid="46497e5a-19b7-4e8d-81dd-3dbab6242472"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
 </jasperReport>

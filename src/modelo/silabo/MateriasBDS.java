@@ -39,7 +39,7 @@ public class MateriasBDS extends MateriaMD {
         List<MateriaMD> materias = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_practicas, m.materia_horas_auto_estudio, m.materia_horas_presencial \n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
                     + "FROM \"Materias\" AS m\n"
                     + "JOIN \"Cursos\" AS crs ON m.id_materia=crs.id_materia\n"
                     + "JOIN \"Docentes\" AS d ON d.id_docente=crs.id_docente\n"
@@ -50,7 +50,7 @@ public class MateriasBDS extends MateriaMD {
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
                     + "AND pr.prd_lectivo_fecha_fin > current_date\n"
                     + "EXCEPT\n"
-                    + "SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_practicas, m.materia_horas_auto_estudio, m.materia_horas_presencial \n"
+                    + "SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
                     + "FROM \"Materias\" AS m\n"
                     + "JOIN \"Cursos\" AS crs ON m.id_materia=crs.id_materia\n"
                     + "JOIN \"Docentes\" AS d ON d.id_docente=crs.id_docente\n"

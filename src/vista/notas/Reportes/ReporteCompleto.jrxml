@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.5937424601000143"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/Reportes/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_ciclo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_paralelo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombre_jornada" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -46,15 +61,12 @@ FROM
 	INNER JOIN "Personas" ON "public"."Personas".id_persona= "public"."Docentes".id_persona
   INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
   INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
-	
-
 	WHERE
-	"PeriodoLectivo".prd_lectivo_estado = TRUE 
-	AND "Cursos".id_docente = 55 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'SDS   MAYO/2019   OCTUBRE/2019' 
-	AND "Cursos".curso_ciclo = 4 
-	AND "Cursos".curso_paralelo = 'A' 
-	AND "Jornadas".nombre_jornada = 'MATUTINA' 
+	"Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "Cursos".curso_ciclo = $P{curso_ciclo} 
+	AND "Cursos".curso_paralelo = $P{curso_paralelo} 
+	AND "Jornadas".nombre_jornada =  $P{nombre_jornada}
 ORDER BY
 	p_alu.persona_primer_apellido ASC;]]>
 	</queryString>
@@ -86,7 +98,7 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="224" splitType="Stretch">
+		<band height="216" splitType="Stretch">
 			<staticText>
 				<reportElement x="203" y="80" width="97" height="20"/>
 				<textElement>
@@ -104,12 +116,12 @@ ORDER BY
 			<textField>
 				<reportElement x="1249" y="80" width="164" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="313" y="80" width="223" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1046" y="80" width="56" height="20"/>
@@ -121,7 +133,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1132" y="80" width="117" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="704" y="60" width="199" height="20"/>
@@ -140,7 +152,7 @@ ORDER BY
 			<textField>
 				<reportElement x="272" y="112" width="366" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="203" y="147" width="41" height="20"/>
@@ -152,7 +164,7 @@ ORDER BY
 			<textField>
 				<reportElement x="257" y="147" width="37" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_ciclo}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_ciclo}.toString()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="329" y="147" width="52" height="20"/>
@@ -164,7 +176,7 @@ ORDER BY
 			<textField>
 				<reportElement x="393" y="147" width="37" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1046" y="112" width="72" height="20"/>
@@ -176,7 +188,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1132" y="112" width="300" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1046" y="147" width="56" height="20"/>
@@ -188,161 +200,161 @@ ORDER BY
 			<textField>
 				<reportElement x="1118" y="147" width="214" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="207" width="1520" height="1"/>
 			</line>
 			<image>
 				<reportElement x="41" y="57" width="147" height="124"/>
-				<imageExpression class="java.lang.String"><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="25" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="1070" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1070" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ASISTENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1270" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1270" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ESTADO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="49" y="41" width="74" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="49" y="1" width="74" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1370" y="41" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1370" y="1" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nro FALTAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="516" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="516" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APORTE 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="123" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="123" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="945" y="41" width="125" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="945" y="1" width="125" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[EXAMEN SUPLETORIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="223" y="41" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="223" y="1" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="379" y="41" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="379" y="1" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="845" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="845" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[EXAMEN FINAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="616" y="41" width="129" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="616" y="1" width="129" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[EXAMEN INTERCICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="745" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="745" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APORTE 2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1170" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1170" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[NOTA FINAL]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="49" y="41" width="74" height="20"/>
+				<reportElement mode="Transparent" x="49" y="1" width="74" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="379" y="41" width="136" height="20"/>
+				<reportElement mode="Transparent" x="379" y="1" width="136" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="223" y="41" width="156" height="20"/>
+				<reportElement mode="Transparent" x="223" y="1" width="156" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="123" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="123" y="1" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="515" y="41" width="101" height="20"/>
+				<reportElement mode="Transparent" x="515" y="1" width="101" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="616" y="41" width="129" height="20"/>
+				<reportElement mode="Transparent" x="616" y="1" width="129" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="845" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="845" y="1" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="945" y="41" width="125" height="20"/>
+				<reportElement mode="Transparent" x="945" y="1" width="125" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1070" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="1070" y="1" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1170" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="1170" y="1" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1270" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="1270" y="1" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1370" y="41" width="68" height="20"/>
+				<reportElement mode="Transparent" x="1370" y="1" width="68" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="745" y="41" width="100" height="20"/>
+				<reportElement mode="Transparent" x="745" y="1" width="100" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement mode="Opaque" x="1438" y="41" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1438" y="1" width="68" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[% FALTAS]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="1438" y="41" width="68" height="20"/>
+				<reportElement mode="Transparent" x="1438" y="1" width="68" height="20"/>
 			</rectangle>
 		</band>
 	</columnHeader>
@@ -351,57 +363,57 @@ ORDER BY
 			<textField>
 				<reportElement x="1270" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1070" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_asistencia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{almn_curso_asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="123" y="0" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="516" y="0" width="100" height="20" backcolor="#CCFFCC"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APORTE 1}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APORTE 1}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="945" y="0" width="125" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{SUPLETORIO}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SUPLETORIO}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="845" y="0" width="100" height="20" backcolor="#F4F492"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{EXAMEN FINAL}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXAMEN FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="223" y="0" width="156" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="616" y="0" width="129" height="20" backcolor="#F4F492"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERCICLO}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{INTERCICLO}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="379" y="0" width="137" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="1170" y="0" width="100" height="20" backcolor="#FFCC99"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="745" y="0" width="100" height="20" backcolor="#CCFFCC"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APORTE 2}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APORTE 2}.toString()]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="223" y="0" width="156" height="20"/>
@@ -439,7 +451,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1438" y="0" width="68" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}.toString()+"%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{% Faltas}.toString()+"%"]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="1438" y="0" width="68" height="20"/>
@@ -447,7 +459,7 @@ ORDER BY
 			<textField>
 				<reportElement x="1370" y="0" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_num_faltas}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{almn_curso_num_faltas}.toString()]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="1370" y="0" width="68" height="20"/>
@@ -458,7 +470,7 @@ ORDER BY
 			<textField>
 				<reportElement x="49" y="0" width="74" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -466,57 +478,72 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="16" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="260" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<textField>
-				<reportElement x="331" y="218" width="117" height="20"/>
+				<reportElement x="313" y="135" width="117" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="448" y="218" width="144" height="20"/>
+				<reportElement x="430" y="135" width="144" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="424" y="238" width="100" height="20"/>
+				<reportElement x="406" y="155" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="331" y="202" width="261" height="1"/>
+				<reportElement x="313" y="119" width="261" height="1"/>
 			</line>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1354" y="218" width="166" height="20"/>
+				<reportElement x="1336" y="111" width="166" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="980" y="218" width="146" height="20"/>
+				<reportElement x="962" y="135" width="146" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="865" y="218" width="115" height="20"/>
+				<reportElement x="847" y="135" width="115" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="865" y="201" width="261" height="1"/>
+				<reportElement x="847" y="118" width="261" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="951" y="238" width="100" height="20"/>
+				<reportElement x="933" y="155" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="1217" y="0" width="221" height="39"/>
+				<reportElement x="1070" y="0" width="200" height="29"/>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_ciclo">
+					<subreportParameterExpression><![CDATA[$P{curso_ciclo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_paralelo">
+					<subreportParameterExpression><![CDATA[$P{curso_paralelo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombre_jornada">
+					<subreportParameterExpression><![CDATA[$P{nombre_jornada}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ReporteCompleto_PromedioCurso.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReporteCompleto_PromedioCurso.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
