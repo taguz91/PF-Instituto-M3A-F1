@@ -320,7 +320,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
                 alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
                 alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-                System.out.println(rs.getDouble("almn_curso_nota_final"));
                 lista.add(alumnoCurso);
             }
 
