@@ -18,6 +18,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
         this.setFrameIcon(icon);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -243,7 +243,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     public static List<AlumnoCursoBD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente, String nombrePeriodo) {
 
-        String SELECT = "SELECT\n"
+        String SELECT = "SELECT DISTINCT \n"
                 + "\"public\".\"ViewAlumnoCurso\".id_almn_curso,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_alumno,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_curso,\n"
@@ -282,6 +282,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
+
+        System.out.println(SELECT);
+
         return selectFromView(SELECT);
 
     }
