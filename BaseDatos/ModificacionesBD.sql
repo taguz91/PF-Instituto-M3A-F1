@@ -141,3 +141,7 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 --Columnas aumentadas para la eliminacion logica de curso y alumno curso
 ALTER TABLE public."Cursos" ADD COLUMN "curso_activo" boolean default 'true';
 ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_activo" boolean default 'true';
+--Para reaccinar un docente a un curso
+ALTER TABLE public."Docentes" ADD COLUMN "docente_en_funcion" boolean default 'true';
+--Agregamos un llave compuesta
+ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
