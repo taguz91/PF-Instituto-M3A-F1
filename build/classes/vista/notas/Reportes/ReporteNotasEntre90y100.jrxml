@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<<<<<<< HEAD
+	<property name="ireport.zoom" value="1.100000000000001"/>
+	<property name="ireport.x" value="12"/>
+=======
 	<property name="ireport.zoom" value="1.0000000000000009"/>
 	<property name="ireport.x" value="304"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 	<property name="ireport.y" value="0"/>
 	<parameter name="consulta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -75,7 +80,11 @@
 				<text><![CDATA[Paralelo:]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="52" y="0" width="1412" height="45" forecolor="#0066CC"/>
+=======
 				<reportElement x="52" y="0" width="1412" height="45" forecolor="#006699"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
@@ -87,7 +96,11 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="633" y="47" width="331" height="20"/>
+=======
 				<reportElement x="583" y="45" width="331" height="20"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
@@ -201,17 +214,29 @@
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="531" y="0" width="100" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="631" y="0" width="162" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="793" y="0" width="140" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 			</textField>
 			<rectangle>
@@ -225,7 +250,11 @@
 			</rectangle>
 			<textField>
 				<reportElement mode="Opaque" x="933" y="0" width="100" height="20" backcolor="#FFCC99"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<rectangle>
@@ -233,7 +262,11 @@
 			</rectangle>
 			<textField>
 				<reportElement x="431" y="0" width="100" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
 			</textField>
 			<rectangle>
