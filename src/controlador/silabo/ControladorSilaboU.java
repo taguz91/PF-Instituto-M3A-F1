@@ -91,6 +91,9 @@ public class ControladorSilaboU {
     private DefaultListModel modeloBase;
 
     private ConexionBD conexion;
+    
+    private static Integer idEvaluacionSig=0;
+    private Integer idEvaluacion;
 
     public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal, ConexionBD conexion) {
         this.silabo = silabo;
@@ -596,7 +599,7 @@ public class ControladorSilaboU {
                         && gestion.getDchFechaEnvioAD().getDate() != null
                         && gestion.getDchFechaPresentacionAD().getDate() != null) {
                     String[] infoE = {"Gestión de Docencia", "Asistido por el Docente"};
-                    
+                    agregarEvaluacion(seleccionarTipoActividad(infoE), seleccionarUnidad(), 1);
                     limpiarEvaluacionesAD();
                 } else {
                     JOptionPane.showMessageDialog(null, "Es neceario que especifique todos campos requeridos para la evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -616,7 +619,7 @@ public class ControladorSilaboU {
                         && gestion.getDchFechaEnvioAC().getDate() != null
                         && gestion.getDchFechaPresentacionAC().getDate() != null) {
                     String[] infoE = {"Gestión de Docencia", "Aprendizaje Colaborativo"};
-                 
+                    agregarEvaluacion(seleccionarTipoActividad(infoE), seleccionarUnidad(), 2);
                     limpiarEvaluacionesAC();
                 } else {
                     JOptionPane.showMessageDialog(null, "Es neceario que especifique todos campos requeridos para la evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -636,7 +639,7 @@ public class ControladorSilaboU {
                         && gestion.getDchFechaEnvioP().getDate() != null
                         && gestion.getDchFechaPresentacionP().getDate() != null) {
                     String[] infoE = {"Gestión de la Práctica", "Aprendizaje Colaborativo"};
-                    
+                    agregarEvaluacion(seleccionarTipoActividad(infoE), seleccionarUnidad(), 3);
                     limpiarEvaluacionesP();
                 } else {
                     JOptionPane.showMessageDialog(null, "Es neceario que especifique todos campos requeridos para la evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -656,7 +659,7 @@ public class ControladorSilaboU {
                         && gestion.getDchFechaEnvioA().getDate() != null
                         && gestion.getDchFechaPresentacionA().getDate() != null) {
                     String[] infoE = {"Gestión de Trabajo Autónomo", "Aprendizaje Colaborativo"};
-                    
+                    agregarEvaluacion(seleccionarTipoActividad(infoE), seleccionarUnidad(), 4);
                     limpiarEvaluacionesA();
                 } else {
                     JOptionPane.showMessageDialog(null, "Es neceario que especifique todos campos requeridos para la evaluación", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -707,12 +710,12 @@ public class ControladorSilaboU {
 
         });
 
-        gestion.getBtnQuitarAD().addActionListener(new ActionListener() {
+         gestion.getBtnQuitarAD().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAD((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                gestion.getBtnQuitarAD().setEnabled(false);
             }
 
         });
@@ -722,7 +725,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAC((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
-
+                gestion.getBtnQuitarAC().setEnabled(false);
             }
 
         });
@@ -732,7 +735,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionP((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
-
+                gestion.getBtnQuitarP().setEnabled(false);
             }
 
         });
@@ -742,7 +745,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionA((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
-
+                gestion.getBtnQuitarA().setEnabled(false);
             }
 
         });
@@ -1038,6 +1041,65 @@ public class ControladorSilaboU {
         return tipoSeleccionado.get();
 
     }
+    
+    public void agregarEvaluacion(TipoActividadMD tipo, UnidadSilaboMD unidad, int p) {
+
+        switch (p) {
+            case 1:
+
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAD().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 2:
+
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAC().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 3:
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionP().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 4:
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionA().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder el valor de 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+                break;
+        }
+    }
 
     public void cargarEvaluaciones(DefaultTableModel modeloTabla, int p) {
 
@@ -1240,25 +1302,28 @@ public class ControladorSilaboU {
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAsistidaDocente().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAprendizajeColaborativo().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblPractica().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAutonoma().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
