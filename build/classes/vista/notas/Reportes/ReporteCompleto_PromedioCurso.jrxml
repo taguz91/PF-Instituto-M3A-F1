@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCompleto_PromedioCurso" language="groovy" pageWidth="250" pageHeight="555" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="030ea9e1-dfff-4979-87e5-9d01f501c507">
-	<property name="ireport.zoom" value="3.797498335832447"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCompleto_PromedioCurso" language="groovy" pageWidth="250" pageHeight="555" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
@@ -40,22 +40,22 @@ WHERE
 	<detail>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="7724c668-1449-461d-96e0-a48a1c5b139d"/>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[PROMEDIO ]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#FFFFCC" uuid="6946611f-558b-4549-bff8-38e81b86ce61"/>
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#FFFFCC"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROMEDIO CURSO}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="9ed83951-6ad3-4223-85b2-3f94c11f29d4"/>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="100" y="0" width="100" height="20" uuid="8cd5b641-0b44-4351-9456-afda82c4de6a"/>
+				<reportElement mode="Transparent" x="100" y="0" width="100" height="20"/>
 			</rectangle>
 		</band>
 	</detail>
