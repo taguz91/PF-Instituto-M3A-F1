@@ -33,10 +33,12 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         this.conexion = conexion;
     }
 
-    public EvaluacionSilaboBD(ConexionBD conexion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
-        super(indicador, instrumento, valoracion, fechaEnvio, fechaPresentacion, idTipoActividad, idUnidad);
+    public EvaluacionSilaboBD(ConexionBD conexion, Integer idEvaluacion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
+        super(idEvaluacion, indicador, instrumento, valoracion, fechaEnvio, fechaPresentacion, idTipoActividad, idUnidad);
         this.conexion = conexion;
     }
+
+    
 
     public void insertar(EvaluacionSilaboMD e) {
 
@@ -65,7 +67,7 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
          List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
         try {
             
-            PreparedStatement st = conexion.getCon().prepareStatement( "SELECT indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
+            PreparedStatement st = conexion.getCon().prepareStatement( "SELECT id_evaluacion,indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
                     + "FROM \"EvaluacionSilabo\",\"Silabo\",\"UnidadSilabo\"\n"
                     + "WHERE \"EvaluacionSilabo\".id_unidad=\"UnidadSilabo\".id_unidad\n"
                     + "AND \"UnidadSilabo\".id_silabo=\"Silabo\".id_silabo\n"
@@ -74,13 +76,14 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
             
             while (rs.next()) {
                 EvaluacionSilaboMD e = new EvaluacionSilaboMD();
-                e.setIndicador(rs.getString(1));
-                e.getIdTipoActividad().setIdTipoActividad(rs.getInt(2));
-                e.setInstrumento(rs.getString(3));
-                e.setValoracion(rs.getDouble(4));
-                e.setFechaEnvio(rs.getDate(5).toLocalDate());
-                e.setFechaPresentacion(rs.getDate(6).toLocalDate());
-                e.getIdUnidad().setNumeroUnidad(rs.getInt(7));
+                e.setIdEvaluacion(rs.getInt(1));
+                e.setIndicador(rs.getString(2));
+                e.getIdTipoActividad().setIdTipoActividad(rs.getInt(3));
+                e.setInstrumento(rs.getString(4));
+                e.setValoracion(rs.getDouble(5));
+                e.setFechaEnvio(rs.getDate(6).toLocalDate());
+                e.setFechaPresentacion(rs.getDate(7).toLocalDate());
+                e.getIdUnidad().setNumeroUnidad(rs.getInt(8));
                 //e.getIdUnidad().;
 
                 evaluaciones.add(e);
