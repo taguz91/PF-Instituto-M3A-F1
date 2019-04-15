@@ -73,6 +73,15 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         return btnBuscar;
     }
 
+    public JLabel getLblEstado() {
+        return lblEstado;
+    }
+
+    public void setLblEstado(JLabel lblEstado) {
+        this.lblEstado = lblEstado;
+    }
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,8 +106,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         btnVerNotas = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblResultados = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -163,9 +172,10 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnBuscar.setText("Buscar");
 
-        jLabel1.setText("0 Resultados");
+        lblResultados.setText("0 Resultados");
 
-        jLabel2.setText("0 Resultados");
+        lblEstado.setForeground(new java.awt.Color(153, 255, 153));
+        lblEstado.setText("Estado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,9 +225,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addComponent(btnBuscar)
                                 .addGap(0, 103, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -251,8 +261,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblResultados)
+                    .addComponent(lblEstado))
                 .addContainerGap())
         );
 
@@ -269,10 +279,10 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbJornada;
     private javax.swing.JComboBox<String> cmbPeriodoLectivo;
     private javax.swing.JComboBox<String> cmb_paralelo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCarrera;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblResultados;
     private javax.swing.JLabel lbl_asignatura;
     private javax.swing.JLabel lbl_carrera;
     private javax.swing.JLabel lbl_ciclo;
