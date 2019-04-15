@@ -14,7 +14,8 @@ import modelo.persona.AlumnoMD;
 public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private final ConectarDB conecta;
-
+    private String sql;
+    
     public MallaAlumnoBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
@@ -86,11 +87,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
-        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
-                + "materia_nombre\n"
+                + "materia_nombre, persona_identificacion\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m, public.\"Carreras\" c\n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
@@ -102,11 +103,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallasPorEstudiante(int idAlumno) {
-        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
-                + "materia_nombre\n"
+                + "materia_nombre, persona_identificacion\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
@@ -118,11 +119,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallaAlumnoPorEstado(int idAlumno, String estado) {
-        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
-                + "materia_nombre\n"
+                + "materia_nombre, persona_identificacion\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m\n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
@@ -206,11 +207,11 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
-        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
-                + "materia_nombre\n"
+                + "materia_nombre, persona_identificacion\n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a,\n"
                 + "public.\"Personas\" p, public.\"Materias\" m, public.\"Carreras\" c \n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
@@ -239,6 +240,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     AlumnoCarreraMD a = new AlumnoCarreraMD();
                     a.setId(rs.getInt("id_almn_carrera"));
                     AlumnoMD al = new AlumnoMD();
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     al.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
@@ -263,5 +265,9 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public String getSql() {
+        return sql;
     }
 }
