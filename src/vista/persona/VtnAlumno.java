@@ -2,6 +2,7 @@ package vista.persona;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -63,12 +64,13 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         this.Btn_Materias = Btn_Materias;
     }
 
-    public JCheckBox getChBx_Alumnos() {
-        return ChBx_Alumnos;
+
+    public JComboBox<String> getCbx_Filtrar() {
+        return Cbx_Filtrar;
     }
 
-    public void setChBx_Alumnos(JCheckBox ChBx_Alumnos) {
-        this.ChBx_Alumnos = ChBx_Alumnos;
+    public void setCbx_Filtrar(JComboBox<String> Cbx_Filtrar) {
+        this.Cbx_Filtrar = Cbx_Filtrar;
     }
 
     
@@ -92,20 +94,27 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnReporteAlumnos = new javax.swing.JButton();
-        ChBx_Alumnos = new javax.swing.JCheckBox();
         Btn_Materias = new javax.swing.JButton();
+        Cbx_Filtrar = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Alumnos");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Buscar:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 17, -1, -1));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 14, 336, -1));
 
         btnIngresar.setText("Ingresar");
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 14, 80, -1));
 
         btnEditar.setText("Editar");
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 14, 80, -1));
 
         btnEliminar.setText("Eliminar");
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(451, 14, 80, -1));
 
         tblAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,11 +134,16 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblAlumno);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 91, 693, 238));
+
         lblResultados.setText("0 Resultados obtenidos.");
+        getContentPane().add(lblResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 336, 170, -1));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 14, 30, -1));
 
         jLabel2.setText("Reportes:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(563, 340, -1, -1));
 
         btnReporteAlumnos.setText("Alumnos");
         btnReporteAlumnos.addActionListener(new java.awt.event.ActionListener() {
@@ -137,82 +151,16 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
                 btnReporteAlumnosActionPerformed(evt);
             }
         });
-
-        ChBx_Alumnos.setText("Alumnos Retirados");
-        ChBx_Alumnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChBx_AlumnosActionPerformed(evt);
-            }
-        });
+        getContentPane().add(btnReporteAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 336, -1, -1));
 
         Btn_Materias.setText("Mostrar Materias Reprobadas");
+        getContentPane().add(Btn_Materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 336, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Btn_Materias)
-                        .addGap(101, 101, 101)
-                        .addComponent(jLabel2)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnReporteAlumnos))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ChBx_Alumnos)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(2, 2, 2)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnIngresar)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar)
-                        .addComponent(ChBx_Alumnos)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReporteAlumnos)
-                            .addComponent(jLabel2)
-                            .addComponent(Btn_Materias))
-                        .addContainerGap())))
-        );
+        Cbx_Filtrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|FILTRAR|", "ALUMNOS ELMINADOS", "ALUMNOS RETIRADOS" }));
+        getContentPane().add(Cbx_Filtrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 51, -1, -1));
+
+        jLabel3.setText("Filtrar:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 54, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,14 +169,10 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReporteAlumnosActionPerformed
 
-    private void ChBx_AlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChBx_AlumnosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ChBx_AlumnosActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Materias;
-    private javax.swing.JCheckBox ChBx_Alumnos;
+    private javax.swing.JComboBox<String> Cbx_Filtrar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
@@ -236,6 +180,7 @@ public class VtnAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnReporteAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblAlumno;

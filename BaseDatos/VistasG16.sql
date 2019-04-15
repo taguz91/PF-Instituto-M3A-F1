@@ -38,7 +38,7 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   ALUMNO CURSO
 
 */
-CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
+CREATE MATERIALIZED VIEW  "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -80,7 +80,7 @@ CREATE OR REPLACE VIEW "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_al
      JOIN "Jornadas" ON (("Cursos".id_jornada = "Jornadas".id_jornada)))
      JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)));
 
-ALTER TABLE "public"."ViewAlumnoCurso" OWNER TO "permisos";
+ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
 CREATE UNIQUE INDEX "viewalumnocurso" ON "public"."ViewAlumnoCurso" USING btree (
   "id_almn_curso" "pg_catalog"."int4_ops" ASC NULLS LAST,

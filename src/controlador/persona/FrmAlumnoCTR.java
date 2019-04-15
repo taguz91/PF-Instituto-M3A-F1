@@ -54,10 +54,10 @@ public class FrmAlumnoCTR {
 
     //Para cargar los sectores economico  
     /**
-     * 
-     * @param vtnPrin
-     * @param frmAlumno
-     * @param conecta
+     * Este es el Constructor del Formulario Alumno
+     * @param vtnPrin. Se debe insertar la Ventana Principal para su uso
+     * @param frmAlumno. Se debe insertar el Formulario del Alumno para su uso
+     * @param conecta. Se debe insertar un objeto de la Clase Conecta
      * @param ctrPrin
      * @param permisos 
      */
