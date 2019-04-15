@@ -269,5 +269,10 @@ ON public."PeriodoIngresoNotas" FOR EACH ROW
 AFTER INSERT OR UPDATE
 ON public."TipoDeNota" FOR EACH ROW
  EXECUTE PROCEDURE actualizar_vistas();
+ 
+ CREATE TRIGGER actualizar_mMallaAlumno
+AFTER INSERT OR UPDATE
+ON public."MallaAlumno" FOR EACH ROW
+ EXECUTE PROCEDURE actualizar_vistas();
 
 

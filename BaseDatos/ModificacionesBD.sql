@@ -137,3 +137,7 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk2"
 FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
+--Columnas aumentadas para la eliminacion logica de curso y alumno curso
+ALTER TABLE public."Cursos" ADD COLUMN "curso_activo" boolean default 'true';
+ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_activo" boolean default 'true';
