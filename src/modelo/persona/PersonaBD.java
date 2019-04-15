@@ -35,6 +35,7 @@ public class PersonaBD extends PersonaMD {
         this.lugar = new LugarBD(conecta);
     }
 
+    
     public void insertarPersona() {
 
         //Aqui id_persona ya no va porque es autoincrementable
