@@ -159,6 +159,13 @@ public class VtnNotasAlumnoCursoCTR {
             }
             
 });
+        vista.getTblNotas().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SelectTextInRow(e);
+            }
+            
+        });
 
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
             @Override
@@ -700,6 +707,15 @@ public class VtnNotasAlumnoCursoCTR {
             System.out.println("Column Name: " + colName);
             System.out.println("Selected Column: " + selectedColumnIdx);
         }
+    }
+    
+    public void SelectTextInRow(MouseEvent e){
+    
+         if (!vista.getTblNotas().isEditing() && vista.getTblNotas().editCellAt(vista.getTblNotas().getSelectedRow(), 
+                        vista.getTblNotas().getSelectedColumn())) {
+                    vista.getTblNotas().getEditorComponent().requestFocusInWindow();
+                }
+    
     }
     
     
