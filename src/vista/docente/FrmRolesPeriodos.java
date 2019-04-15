@@ -7,23 +7,32 @@ package vista.docente;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 /**
  *
  * @author arman
  */
-public class FrmRolesDocente extends javax.swing.JInternalFrame {
+public class FrmRolesPeriodos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form FrmRolesDocente
      */
-    public FrmRolesDocente() {
+    public FrmRolesPeriodos() {
         initComponents();
     }
 
     public void setTxtNombreRol(JTextField txtNombreRol) {
         this.txtNombreRol = txtNombreRol;
+    }
+
+    public JLabel getLbl_error_roles() {
+        return lbl_error_roles;
+    }
+
+    public void setLbl_error_roles(JLabel lbl_error_roles) {
+        this.lbl_error_roles = lbl_error_roles;
     }
 
     public JButton getBtnGuardar() {
@@ -52,6 +61,7 @@ public class FrmRolesDocente extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbPeriodoLectivo = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
+        lbl_error_roles = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -78,6 +88,9 @@ public class FrmRolesDocente extends javax.swing.JInternalFrame {
             }
         });
 
+        lbl_error_roles.setForeground(new java.awt.Color(255, 51, 0));
+        lbl_error_roles.setText("ingrese solo letras");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,7 +103,10 @@ public class FrmRolesDocente extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_error_roles, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -105,8 +121,10 @@ public class FrmRolesDocente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGuardar)
+                    .addComponent(lbl_error_roles))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,6 +144,7 @@ public class FrmRolesDocente extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbPeriodoLectivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lbl_error_roles;
     private javax.swing.JTextField txtNombreRol;
     // End of variables declaration//GEN-END:variables
 }
