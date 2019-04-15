@@ -546,7 +546,7 @@ public class VtnPrincipalCTR {
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
 
-        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario, conecta);
+        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario);
         vtnNotas.Init();
     }
 
