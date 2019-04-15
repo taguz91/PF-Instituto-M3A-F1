@@ -2,6 +2,8 @@ package controlador.Libraries;
 
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import static java.lang.Thread.sleep;
 import java.sql.SQLException;
@@ -78,14 +80,14 @@ public class Middlewares {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      *
      * @param path direccion del reporte
      * @param tituloVentana Titulo de la ventana del ReporViewer
      * @param parametros
      */
-    public static void generarReporte(String path,String tituloVentana, Map parametros) {
+    public static void generarReporte(String path, String tituloVentana, Map parametros) {
         try {
 
             JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
@@ -132,4 +134,29 @@ public class Middlewares {
         String path = new File(".").getAbsolutePath();
         return path.substring(0, path.length() - 1);
     }
+
+    public static void placeHolder(JLabel component, String placeholderText) {
+
+        component.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+                if (component.getText().equalsIgnoreCase(placeholderText)) {
+                    component.setText("");
+                }
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (placeholderText.equalsIgnoreCase(component.getText())) {
+                    //AGREGAR COLORES
+                }
+            }
+        });
+
+    }
+    
+    
+
 }
