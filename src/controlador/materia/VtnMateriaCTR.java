@@ -119,12 +119,12 @@ public class VtnMateriaCTR {
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
 
-        vtnMateria.getCmbCarreras().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                validarBotonesReportes();
-            }
-        });
+//        vtnMateria.getCmbCarreras().addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                validarBotonesReportes();
+//            }
+//        });
         vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
         //Iniciamos el buscador  
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
@@ -185,6 +185,7 @@ public class VtnMateriaCTR {
 
     private void filtrarPorCarrera() {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
+        validarBotonesReportes();
         if (pos > 0) {
             materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
             //Cargamos los ciclos de una carrera
@@ -275,7 +276,7 @@ public class VtnMateriaCTR {
 
     public void validarBotonesReportes() {
         int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
-        if (selecTabl >= 0) {
+        if (selecTabl > 0) {
             vtnMateria.getBtnReporteMaterias().setEnabled(true);
         } else {
             vtnMateria.getBtnReporteMaterias().setEnabled(false);

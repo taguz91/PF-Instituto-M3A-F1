@@ -188,7 +188,7 @@ public class VtnDocenteCTR {
                     frmDoc.getBtnRegistrarPersona().setVisible(false);
                     //Le pasamos la persona de nuestro lista justo la persona seleccionada
                     ctrFrm.habilitarComponentesDocente();
-
+                    frmDoc.getBtnGuardar().setEnabled(true);
                     ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                     //vtnDocente.getTblDocente().setVisible(false);
                     vtnDocente.dispose();

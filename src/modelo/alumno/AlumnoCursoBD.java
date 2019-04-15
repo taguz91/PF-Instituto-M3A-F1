@@ -282,13 +282,11 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
-
         return selectFromView(SELECT);
 
     }
 
     private static List<AlumnoCursoBD> selectFromView(String QUERY) {
-        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewAlumnoCurso\" \n");
         List<AlumnoCursoBD> lista = new ArrayList();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
@@ -322,7 +320,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
                 alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
                 alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-
+                System.out.println(rs.getDouble("almn_curso_nota_final"));
                 lista.add(alumnoCurso);
             }
 

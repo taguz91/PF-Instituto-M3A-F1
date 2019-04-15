@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import static java.lang.Thread.sleep;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
@@ -52,10 +52,10 @@ public class VtnNotasAlumnoCursoCTR {
     //LISTAS
     private HashMap<String, DocenteMD> listaPersonasDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
-    private List<AlumnoCursoBD> listaNotas;
+    private static List<AlumnoCursoBD> listaNotas;
 
     //TABLA
-    private DefaultTableModel tablaNotas;
+    private static DefaultTableModel tablaNotas;
 
     //Variable para busqueda
     private int idDocente = 0;
@@ -83,6 +83,7 @@ public class VtnNotasAlumnoCursoCTR {
      */
     public void Init() {
         tablaNotas = setTablaFromTabla(vista.getTblNotas());
+
         new Thread(() -> {
             //RELLENADO DE LISTAS
             listaPersonasDocentes = DocenteBD.selectAll();
@@ -195,7 +196,21 @@ public class VtnNotasAlumnoCursoCTR {
                 }
         ) {
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                Object.class,
+                String.class,
+                Object.class
             };
 
             @Override
@@ -257,7 +272,9 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void setValorEnTabla() {
         int columna = vista.getTblNotas().getSelectedColumn();
+
         int fila = vista.getTblNotas().getSelectedRow();
+
         String valor = vista.getTblNotas().getValueAt(fila, columna).toString();
 
         switch (columna) {
@@ -289,6 +306,7 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private TableModel calcularNotaFinal(TableModel datos) {
+
         int fila = getSelectedRow();
         double Faltas = 0;
         double notaInterCiclo = 0;
@@ -299,6 +317,7 @@ public class VtnNotasAlumnoCursoCTR {
         double notaSupletorio = 0;
         double notaFinal = 0;
         String estado = null;
+
         try {
             Faltas = validarNumero(datos.getValueAt(fila, 13).toString());
             notaInterCiclo = validarNumero(datos.getValueAt(fila, 4).toString());
@@ -542,71 +561,54 @@ public class VtnNotasAlumnoCursoCTR {
     private void cargarTabla() {
         new Thread(() -> {
 
-            cargarTabla = false;
+            if (cargarTabla) {
+                cargarTabla = false;
 
-            Middlewares.setLoadCursor(vista);
+                Middlewares.setLoadCursor(vista);
 
-            try {
+                try {
 
-                desktop.getLblEstado().setText("CARGANDO NOTAS");
+                    tablaNotas.setRowCount(0);
 
-                String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-                String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-                String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-                String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-                Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+                    desktop.getLblEstado().setText("CARGANDO NOTAS");
+                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+                    listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+                    listaNotas.stream().forEach(obj -> {
+                        tablaNotas.addRow(new Object[]{
+                            tablaNotas.getDataVector().size() + 1,
+                            obj.getAlumno().getIdentificacion(),
+                            obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
+                            obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
+                            obj.getNota1Parcial(),
+                            obj.getNotaExamenInter(),
+                            obj.getNota1Parcial() + obj.getNotaExamenInter(),
+                            obj.getNota2Parcial(),
+                            obj.getNotaExamenFinal(),
+                            obj.getNotaExamenSupletorio(),
+                            Math.round(obj.getNotaFinal()),
+                            obj.getEstado(),
+                            obj.getNumFalta(),
+                            obj.getTotalHoras() + "%",
+                            obj.getAsistencia()
 
-                listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
-                agregarFilas();
-
-                desktop.getLblEstado().setText("");
-                Middlewares.setDefaultCursor(vista);
-
-            } catch (NullPointerException e) {
-                System.out.println(e);
-            }
-            cargarTabla = true;
-            vista.getBtnImprimir().setEnabled(true);
-
-        }).start();
-
-    }
-
-    private void agregarFilas() {
-        try {
-            tablaNotas.setRowCount(0);
-            for (AlumnoCursoBD obj : listaNotas) {
-                if (vista.isVisible()) {
-                    tablaNotas.addRow(new Object[]{
-                        tablaNotas.getDataVector().size() + 1,
-                        obj.getAlumno().getIdentificacion(),
-                        obj.getAlumno().getPrimerApellido() + " " + obj.getAlumno().getSegundoApellido(),
-                        obj.getAlumno().getPrimerNombre() + " " + obj.getAlumno().getSegundoNombre(),
-                        obj.getNota1Parcial(),
-                        obj.getNotaExamenInter(),
-                        obj.getNota1Parcial() + obj.getNotaExamenInter(),
-                        obj.getNota2Parcial(),
-                        obj.getNotaExamenFinal(),
-                        obj.getNotaExamenSupletorio(),
-                        Math.round(obj.getNotaFinal()),
-                        obj.getEstado(),
-                        obj.getNumFalta(),
-                        obj.getTotalHoras() + "%",
-                        obj.getAsistencia()
-
+                        });
                     });
 
-                } else {
-                    listaNotas = null;
-                    listaPersonasDocentes = null;
-                    System.gc();
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                    desktop.getLblEstado().setText("");
+                    Middlewares.setDefaultCursor(vista);
 
-        }
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+                cargarTabla = true;
+                vista.getBtnImprimir().setEnabled(true);
+            }
+
+        }).start();
 
     }
 
@@ -615,6 +617,7 @@ public class VtnNotasAlumnoCursoCTR {
      */
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
+
             cargarTabla();
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");

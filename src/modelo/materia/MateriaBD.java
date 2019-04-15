@@ -267,8 +267,7 @@ public class MateriaBD extends MateriaMD {
                 + " materia_nombre \n"
                 + "FROM public.\"Materias\" m \n"
                 + "WHERE materia_activa = 'true' "
-                + "AND m.id_carrera= " + idCarrera + " \n"
-                + "AND carrera_activo = true;";
+                + "AND m.id_carrera= " + idCarrera + ";";
         ArrayList<MateriaMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {

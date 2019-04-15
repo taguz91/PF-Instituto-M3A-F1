@@ -126,7 +126,9 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
         tblUsuario.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblUsuario);
         if (tblUsuario.getColumnModel().getColumnCount() > 0) {
-            tblUsuario.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tblUsuario.getColumnModel().getColumn(0).setMinWidth(50);
+            tblUsuario.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblUsuario.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         lblResultados.setText("0 Resultados obtenidos");
