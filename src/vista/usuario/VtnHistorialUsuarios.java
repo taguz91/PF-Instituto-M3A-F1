@@ -62,6 +62,16 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
     public JButton getBtnReporte() {
         return btnReporte;
     }
+
+    public JLabel getLblEstado() {
+        return lblEstado;
+    }
+
+    public void setLblEstado(JLabel lblEstado) {
+        this.lblEstado = lblEstado;
+    }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,6 +102,7 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
         tblHistorial = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         btnReporte = new javax.swing.JButton();
+        lblEstado = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -109,7 +120,7 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Tabla:");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
 
         jLabel6.setText("Inicio:");
 
@@ -212,6 +223,9 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
 
         btnReporte.setText("Reporte");
 
+        lblEstado.setForeground(new java.awt.Color(153, 255, 153));
+        lblEstado.setText("Estado");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -221,8 +235,10 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblResultados)
+                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(211, 211, 211)
                         .addComponent(btnReporte))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -232,8 +248,9 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblResultados)
-                    .addComponent(btnReporte))
+                    .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReporte)
+                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -277,6 +294,7 @@ public class VtnHistorialUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblHistorial;
     private javax.swing.JTextField txtBuscar;

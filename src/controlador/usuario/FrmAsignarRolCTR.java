@@ -128,7 +128,7 @@ public class FrmAsignarRolCTR {
 
         listaTemporal.forEach((rolMD) -> {
             rolesDados.stream()
-                    .filter((rolesDado) -> (rolMD.getNombre().equals(rolesDado.getNombre())))
+                    .filter((rolesDado) -> (rolMD.getNombre().toLowerCase().equals(rolesDado.getNombre().toLowerCase())))
                     .forEachOrdered((_item) -> {
                         rolesDisponibles.remove(rolMD);
                     });
@@ -220,9 +220,6 @@ public class FrmAsignarRolCTR {
 
         listaTemporal.stream()
                 .forEach(obj -> {
-
-                    System.out.println(obj.getId());
-
                     listaBorrar.add(new RolesDelUsuarioBD(0, obj.getId(), usuario.getUsername()));
                 });
 
@@ -319,10 +316,11 @@ public class FrmAsignarRolCTR {
     }
 
     private void btnCancelar(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        vista.dispose();
     }
 
     private void btnReset(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        moverTodos(rolesDisponibles, rolesDados, tablaDisponibles, tablaDados);
+        validacion();
     }
 }

@@ -103,6 +103,9 @@ public class ControladorSilaboC {
 
     private DefaultListModel modeloBase;
 
+    private static Integer idEvaluacionSig=0;
+    private Integer idEvaluacion;
+
     public ControladorSilaboC(VtnPrincipal principal, UsuarioBD usuario, ConexionBD conexion) {
         this.principal = principal;
         this.usuario = usuario;
@@ -294,6 +297,7 @@ public class ControladorSilaboC {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
                 unidadSeleccionada.setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
                 actualizarUnidad(unidadSeleccionada);
+            //Prueba CHACON
             }
 
         });
@@ -818,7 +822,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAD((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                gestion.getBtnQuitarAD().setEnabled(false);
             }
 
         });
@@ -828,7 +832,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAC((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
-
+                gestion.getBtnQuitarAC().setEnabled(false);
             }
 
         });
@@ -838,7 +842,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionP((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
-
+                gestion.getBtnQuitarP().setEnabled(false);
             }
 
         });
@@ -848,7 +852,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionA((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
-
+                gestion.getBtnQuitarA().setEnabled(false);
             }
 
         });
@@ -948,7 +952,8 @@ public class ControladorSilaboC {
 
                 gestion.dispose();
                 bibliografia.dispose();
-                principal.getBtnConsultarSilabo().doClick();
+
+                principal.getMnCtSilabos().doClick();
             }
 
         });
@@ -1129,7 +1134,9 @@ public class ControladorSilaboC {
             case 1:
 
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAD().getValue()))) {
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
 
                 } else {
@@ -1141,8 +1148,9 @@ public class ControladorSilaboC {
             case 2:
 
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAC().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
 
                 } else {
@@ -1153,8 +1161,9 @@ public class ControladorSilaboC {
                 break;
             case 3:
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionP().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
 
                 } else {
@@ -1165,8 +1174,9 @@ public class ControladorSilaboC {
                 break;
             case 4:
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionA().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
 
                 } else {
@@ -1256,12 +1266,15 @@ public class ControladorSilaboC {
                     emd.getInstrumento(),
                     emd.getValoracion(),
                     emd.getFechaEnvio(),
-                    emd.getFechaPresentacion()
+                    emd.getFechaPresentacion(),
+                    emd.getIdEvaluacion()
                 });
 
             }
 
         }
+        
+      
     }
 
     public void limpiarEvaluacionesAD() {
@@ -1398,25 +1411,28 @@ public class ControladorSilaboC {
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAsistidaDocente().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAprendizajeColaborativo().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblPractica().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAutonoma().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 

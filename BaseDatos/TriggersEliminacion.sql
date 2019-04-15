@@ -17,7 +17,16 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_materia);
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_materia);
 	END IF;
+	--Tambien eliminamos a lo que depende de esta materia
+	UPDATE public."Cursos"
+		SET curso_activo = new.materia_activa 
+		WHERE id_materia = old.id_materia;
 	RETURN NEW;
 END;
 $materia_elim$ LANGUAGE plpgsql;
@@ -48,6 +57,25 @@ BEFORE DELETE
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE curso_elim();
 
+--Eliminacion logica de un curso 
+CREATE OR REPLACE FUNCTION curso_elimlog()
+RETURNS TRIGGER AS $curso_elimlog$
+BEGIN
+	IF new.curso_activo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso);
+	END IF;
+	RETURN NEW;
+END;
+$curso_elimlog$ LANGUAGE plpgsql;
+
+CREATE TRIGGER auditoria_curso_elimlog
+BEFORE UPDATE OF curso_activo
+ON public."Cursos" FOR EACH ROW
+EXECUTE PROCEDURE curso_elimlog();
+
 --Docentes
 --Si se elimina un docente se deben eliminar muchas otras cosas mas
 CREATE OR REPLACE FUNCTION docente_elim()
@@ -58,8 +86,22 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_docente);
+	ELSE
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_docente);
 	END IF;
-		RETURN NEW;
+	--Tambien ocultamos todo lo que tenga que ver con docnete 
+	UPDATE public."DocentesMateria"
+		SET docente_mat_activo = new.docente_activo
+		WHERE id_docente = old.id_docente;
+
+	UPDATE public."Cursos"
+		SET curso_activo = new.docente_activo
+		WHERE id_docente = old.id_docente;
+		
+	RETURN NEW;
 END;
 $docente_elim$ LANGUAGE plpgsql;
 
@@ -216,7 +258,23 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_carrera);
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_carrera);
 	END IF;
+
+	--Actualizamos todo en loq ue interviene la carrera
+	UPDATE public."AlumnosCarrera"
+		SET almn_carrera_activo = new.carrera_activo
+		WHERE id_carrera = old.id_carrera; 
+	UPDATE public."PeriodoLectivo"
+		SET prd_lectivo_activo = new.carrera_activo
+		WHERE id_carrera = old.id_carrera;
+	UPDATE public."Materias"
+		SET materia_activa = new.carrera_activo
+		WHERE id_carrera = old.id_carrera; 
 	RETURN NEW;
 END;
 $carrera_elim$ LANGUAGE plpgsql;
@@ -235,7 +293,19 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_prd_lectivo);
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_prd_lectivo);
 	END IF;
+	--Actualizamos tambien lo que depende de este periodo  
+	UPDATE public."Cursos"
+		SET curso_activo = new.prd_lectivo_activo
+		WHERE id_prd_lectivo = old.id_prd_lectivo;
+	UPDATE public."RolesDocente"
+		SET rol_activo = new.prd_lectivo_activo
+		WHERE id_prd_lectivo = old.id_prd_lectivo;
 	RETURN NEW;
 END;
 $prd_lectivo_elim$ LANGUAGE plpgsql;
@@ -314,19 +384,25 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_persona);
-		--Eliminalos el docente o alumno que este registrado como esta persona
-		UPDATE public."Docentes"
-		SET docente_activo = 'False'
-		WHERE id_persona = old.id_persona;
-
-		UPDATE public."Alumnos"
-		SET alumno_activo = 'False'
-		WHERE id_persona = old.id_persona;
-
-		UPDATE public."Usuarios"
-		SET usu_estado = 'False'
-		WHERE id_persona = old.id_persona;
+	ELSE
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_persona);
 	END IF;
+	--Actualizamos tambien en docente, alumno y usuarios
+	UPDATE public."Usuarios"
+	SET usu_estado = new.persona_activa
+		WHERE id_persona = old.id_persona;
+
+	UPDATE public."Docentes"
+	SET docente_activo = new.persona_activa
+		WHERE id_persona = old.id_persona;
+
+	UPDATE public."Alumnos"
+	SET alumno_activo = new.persona_activa
+		WHERE id_persona = old.id_persona;
+
 	RETURN NEW;
 END;
 $persona_elim$ LANGUAGE plpgsql;
@@ -345,11 +421,21 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_alumno);
-		--Eliminamos tambien el alumno carrera
-		UPDATE public."AlumnosCarrera"
-		SET almn_carrera_activo = 'False'
-		WHERE id_alumno = old.id_alumno;
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_alumno);
 	END IF;
+	--Eliminamos tambien el alumno carrera
+	UPDATE public."AlumnosCarrera"
+	SET almn_carrera_activo = new.alumno_activo
+	WHERE id_alumno = old.id_alumno; 
+
+	UPDATE public."AlumnoCurso"
+	SET almn_carrera_activo = new.alumno_activo
+	WHERE id_alumno = old.id_alumno; 
+
 	RETURN NEW;
 END;
 $alumno_elim$ LANGUAGE plpgsql;
@@ -405,6 +491,25 @@ CREATE TRIGGER auditoria_almn_curso_elim
 BEFORE DELETE
 ON public."AlumnoCurso" FOR EACH ROW
 EXECUTE PROCEDURE almn_curso_elim();
+
+--Eliminacion logica de AlumnoCurso
+CREATE OR REPLACE FUNCTION almn_curso_elimlog()
+RETURNS TRIGGER AS $almn_curso_elimlog$
+BEGIN
+	IF new.almn_curso_activo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_almn_curso);
+	END IF;
+	RETURN NEW;
+END;
+$almn_curso_elimlog$ LANGUAGE plpgsql;
+
+CREATE TRIGGER auditoria_almn_curso_elimlog
+BEFORE UPDATE OF almn_curso_activo
+ON public."AlumnoCurso" FOR EACH ROW
+EXECUTE PROCEDURE almn_curso_elimlog();
 
 --MallaAlumno
 CREATE OR REPLACE FUNCTION malla_almn_elim()

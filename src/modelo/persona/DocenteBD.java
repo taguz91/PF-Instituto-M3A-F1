@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -605,14 +604,22 @@ public class DocenteBD extends DocenteMD {
 
         try {
             while (rs.next()) {
-                
+
                 DocenteMD docente = new DocenteMD();
-                docente.setIdDocente(rs.getInt(""));
-                docente.setPrimerApellido(rs.getString(""));
-                docente.setSegundoApellido(rs.getString(""));
-                docente.setPrimerNombre(rs.getString(""));
-                docente.setSegundoNombre(rs.getString(""));
-                
+                docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdentificacion(rs.getString("persona_identificacion"));
+                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                docente.setIdPersona(rs.getInt("id_persona"));
+
+                docente.setCodigo(rs.getString("docente_codigo"));
+
+                String key = docente.getIdentificacion() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre();
+
+                lista.put(key, docente);
             }
             rs.close();
         } catch (SQLException e) {

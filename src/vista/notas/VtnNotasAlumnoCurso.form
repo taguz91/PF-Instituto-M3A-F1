@@ -27,53 +27,63 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_periodolectivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_ciclo" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_carrera" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="cmbCiclo" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="lbl_paralelo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cmb_paralelo" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbl_periodolectivo" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="lbl_ciclo" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="lbl_carrera" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="cmbPeriodoLectivo" pref="300" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="lblCarrera" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                              <Component id="lbl_jornada" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lbl_asignatura" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_docente" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="cmbAsignatura" min="-2" pref="250" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cmbCiclo" min="-2" pref="80" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="lbl_paralelo" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="cmb_paralelo" min="-2" pref="80" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="cmbPeriodoLectivo" min="-2" pref="300" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblCarrera" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnVerNotas" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbl_jornada" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="lbl_asignatura" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="lbl_docente" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cmbAsignatura" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnVerNotas" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cmbJornada" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="cmbDocente" min="-2" pref="354" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtBuscar" min="-2" pref="172" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="103" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="cmbJornada" min="-2" pref="250" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblResultados" min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblEstado" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="cmbDocente" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="205" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -88,6 +98,8 @@
                   <Component id="lbl_docente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="cmbPeriodoLectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="cmbDocente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="btnBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -107,8 +119,13 @@
                   <Component id="cmbJornada" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="btnImprimir" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="352" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="386" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblResultados" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -343,6 +360,26 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Notas"/>
         <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtBuscar">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblResultados">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0 Resultados"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEstado">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="ff" red="99" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Estado"/>
       </Properties>
     </Component>
   </SubComponents>

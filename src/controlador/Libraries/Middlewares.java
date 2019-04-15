@@ -1,6 +1,9 @@
 package controlador.Libraries;
 
+import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import static java.lang.Thread.sleep;
 import java.sql.SQLException;
@@ -10,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import modelo.ResourceManager;
@@ -35,29 +37,19 @@ public class Middlewares {
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
     }
 
-    public static void centerFrame(JInternalFrame view, JDesktopPane desktop) {
-
-        int deskWidth = (desktop.getWidth() / 2) - (view.getWidth() / 2);
-        int deskHeight = (desktop.getHeight() / 2) - (view.getHeight() / 2);
-
-        if (desktop.getHeight() < 500) {
-            deskHeight = 0;
-        }
-
-        view.setLocation(deskWidth, deskHeight);
-
-    }
-
-    public static String getProjectPath() {
-        String path = new File(".").getAbsolutePath();
-        return path.substring(0, path.length() - 1);
-    }
-
     public static void setLoadCursor(JComponent view) {
         view.setCursor(LOAD_CURSOR);
     }
 
     public static void setDefaultCursor(JComponent view) {
+        view.setCursor(DEFAULT_CURSOR);
+    }
+
+    public static void setLoadCursorInWindow(Container view) {
+        view.setCursor(LOAD_CURSOR);
+    }
+
+    public static void setDefaultCursorInWindow(Container view) {
         view.setCursor(DEFAULT_CURSOR);
     }
 
@@ -67,7 +59,7 @@ public class Middlewares {
      * @param QUERY Sentencia SQL con la que se generara el reporte
      * @param tituloVentana Titulo de la ventana del ReporViewer
      */
-    public static void generarReporte(String path, String QUERY, String tituloVentana) {
+    public static void generarReporteDefault(String path, String QUERY, String tituloVentana) {
         try {
 
             Map parameter = new HashMap();
@@ -80,9 +72,33 @@ public class Middlewares {
 
             JasperViewer view = new JasperViewer(print, false);
 
+            view.setTitle(tituloVentana);
+
             view.setVisible(true);
 
+        } catch (JRException | SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     *
+     * @param path direccion del reporte
+     * @param tituloVentana Titulo de la ventana del ReporViewer
+     * @param parametros
+     */
+    public static void generarReporte(String path, String tituloVentana, Map parametros) {
+        try {
+
+            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
+
+            JasperPrint print = JasperFillManager.fillReport(jasper, parametros, ResourceManager.getConnection());
+
+            JasperViewer view = new JasperViewer(print, false);
+
             view.setTitle(tituloVentana);
+
+            view.setVisible(true);
 
         } catch (JRException | SQLException ex) {
             System.out.println(ex.getMessage());
@@ -102,5 +118,45 @@ public class Middlewares {
         }).start();
 
     }
+
+    public static void centerFrame(JInternalFrame view, JDesktopPane desktop) {
+
+        int deskWidth = (desktop.getWidth() / 2) - (view.getWidth() / 2);
+        int deskHeight = (desktop.getHeight() / 2) - (view.getHeight() / 2);
+
+        if (desktop.getHeight() < 500) {
+            deskHeight = 0;
+        }
+        view.setLocation(deskWidth, deskHeight);
+    }
+
+    public static String getProjectPath() {
+        String path = new File(".").getAbsolutePath();
+        return path.substring(0, path.length() - 1);
+    }
+
+    public static void placeHolder(JLabel component, String placeholderText) {
+
+        component.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+                if (component.getText().equalsIgnoreCase(placeholderText)) {
+                    component.setText("");
+                }
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (placeholderText.equalsIgnoreCase(component.getText())) {
+                    //AGREGAR COLORES
+                }
+            }
+        });
+
+    }
+    
+    
 
 }
