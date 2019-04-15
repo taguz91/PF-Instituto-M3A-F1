@@ -11,16 +11,12 @@ import modelo.periodolectivo.PeriodoLectivoMD;
  *
  * @author arman
  */
-public class RolDocenteMD extends PeriodoLectivoMD {
+public class RolDocenteMD {
     private int id_rol;
     private String nombre_rol;
+    private PeriodoLectivoMD periodo;
 
     public RolDocenteMD() {
-    }
-
-    public RolDocenteMD(int id_rol, String nombre_rol) {
-        this.id_rol = id_rol;
-        this.nombre_rol = nombre_rol;
     }
 
     public int getId_rol() {
@@ -37,6 +33,14 @@ public class RolDocenteMD extends PeriodoLectivoMD {
 
     public void setNombre_rol(String nombre_rol) {
         this.nombre_rol = nombre_rol;
+    }
+
+    public PeriodoLectivoMD getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(PeriodoLectivoMD periodo) {
+        this.periodo = periodo;
     }
 
     @Override

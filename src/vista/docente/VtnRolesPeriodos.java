@@ -14,12 +14,12 @@ import javax.swing.JTextField;
  *
  * @author arman
  */
-public class VtnRolesDocente extends javax.swing.JInternalFrame {
+public class VtnRolesPeriodos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VtnRolesDocente
      */
-    public VtnRolesDocente() {
+    public VtnRolesPeriodos() {
         initComponents();
     }
 
@@ -98,6 +98,9 @@ public class VtnRolesDocente extends javax.swing.JInternalFrame {
         tblAlumno = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Roles");
 
         jLabel1.setText("Buscar:");

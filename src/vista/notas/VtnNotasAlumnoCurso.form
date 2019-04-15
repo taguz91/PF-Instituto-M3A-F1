@@ -80,7 +80,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblResultados" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="lblEsado" min="-2" pref="223" max="-2" attributes="0"/>
+                              <Component id="lblEstado" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -124,7 +124,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblResultados" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblEsado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEstado" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -374,9 +374,12 @@
         <Property name="text" type="java.lang.String" value="0 Resultados"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblEsado">
+    <Component class="javax.swing.JLabel" name="lblEstado">
       <Properties>
-        <Property name="text" type="java.lang.String" value="0 Resultados"/>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="ff" red="99" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Estado"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -99,6 +99,14 @@
                 <Property name="text" type="java.lang.String" value="Materia docentes"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtRolesPeriodo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtRolesPeriodoActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -241,6 +249,11 @@
                   <Image iconType="3" name="/vista/img/icons8_Literature_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Materia docente"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
@@ -392,7 +405,9 @@
                   <Component id="btnIngresarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="112" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnIngresarRol" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace pref="60" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -412,6 +427,7 @@
                       <Component id="btnDocenteMateria" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnIngresarRol" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -527,6 +543,12 @@
               <Image iconType="3" name="/vista/img/ingreso_silabo.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Consultar Silabo"/>
+            <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnIngresarRol">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -656,7 +678,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="true"/>
@@ -677,7 +699,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
@@ -708,7 +730,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="btnAyuda" max="32767" attributes="0"/>
-              <Component id="btnConsola" pref="29" max="32767" attributes="0"/>
+              <Component id="btnConsola" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblIP" max="32767" attributes="0"/>
@@ -738,7 +760,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
@@ -764,7 +786,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
