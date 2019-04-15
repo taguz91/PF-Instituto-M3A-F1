@@ -5,6 +5,8 @@ import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
@@ -149,6 +151,14 @@ public class VtnNotasAlumnoCursoCTR {
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
+        
+        vista.getTblNotas().getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                SelectHeader(e);
+            }
+            
+});
 
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
             @Override
@@ -670,4 +680,27 @@ public class VtnNotasAlumnoCursoCTR {
         }).start();
 
     }
+    
+    public void SelectHeader(MouseEvent e) {
+
+        if (vista.getTblNotas().equals(e.getSource())) {
+
+            int colIdx = vista.getTblNotas().columnAtPoint(e.getPoint());
+            int rowIdx = vista.getTblNotas().rowAtPoint(e.getPoint());
+            Object obj = vista.getTblNotas().getModel().getValueAt(rowIdx, colIdx) ;//This gets the value in the cells
+           
+
+            System.out.println("Row: " + rowIdx + " " + "Colulmn: " + colIdx);
+        }
+        else if (vista.getTblNotas().getTableHeader().equals(e.getSource())) {
+
+            int selectedColumnIdx = vista.getTblNotas().getTableHeader().columnAtPoint(e.getPoint());
+            String colName = vista.getTblNotas().getColumnName(vista.getTblNotas().getTableHeader().columnAtPoint(e.getPoint()));
+
+            System.out.println("Column Name: " + colName);
+            System.out.println("Selected Column: " + selectedColumnIdx);
+        }
+    }
+    
+    
 }
