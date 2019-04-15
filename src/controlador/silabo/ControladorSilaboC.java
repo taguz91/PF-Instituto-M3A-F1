@@ -821,7 +821,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAD((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                gestion.getBtnAgregarAD().setEnabled(false);
             }
 
         });
@@ -831,7 +831,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAC((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
-
+                gestion.getBtnAgregarAC().setEnabled(false);
             }
 
         });
@@ -841,7 +841,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionP((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
-
+                gestion.getBtnAgregarP().setEnabled(false);
             }
 
         });
@@ -851,7 +851,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionA((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
-
+                gestion.getBtnAgregarA().setEnabled(false);
             }
 
         });
