@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<<<<<<< HEAD
+	<property name="ireport.zoom" value="2.5937424601000143"/>
+=======
 	<property name="ireport.zoom" value="0.8264462809917404"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -107,7 +111,11 @@ ORDER BY
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#0066CC"/>
+=======
 				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
@@ -136,7 +144,11 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="704" y="60" width="199" height="20"/>
+=======
 				<reportElement x="675" y="57" width="199" height="20"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
@@ -207,7 +219,11 @@ ORDER BY
 			</line>
 			<image>
 				<reportElement x="41" y="57" width="147" height="124"/>
+<<<<<<< HEAD
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+=======
 				<imageExpression class="java.lang.String"><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</image>
 		</band>
 	</title>
@@ -308,6 +324,10 @@ ORDER BY
 				<text><![CDATA[NOTA FINAL]]></text>
 			</staticText>
 			<rectangle>
+<<<<<<< HEAD
+				<reportElement mode="Transparent" x="49" y="1" width="74" height="20"/>
+			</rectangle>
+			<rectangle>
 				<reportElement mode="Transparent" x="379" y="1" width="136" height="20"/>
 			</rectangle>
 			<rectangle>
@@ -341,6 +361,41 @@ ORDER BY
 				<reportElement mode="Transparent" x="1370" y="1" width="68" height="20"/>
 			</rectangle>
 			<rectangle>
+=======
+				<reportElement mode="Transparent" x="379" y="1" width="136" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="1" width="156" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="123" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="515" y="1" width="101" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="616" y="1" width="129" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="845" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="945" y="1" width="125" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1070" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1170" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1270" y="1" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1370" y="1" width="68" height="20"/>
+			</rectangle>
+			<rectangle>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 				<reportElement mode="Transparent" x="745" y="1" width="100" height="20"/>
 			</rectangle>
 			<staticText>
@@ -352,9 +407,12 @@ ORDER BY
 			</staticText>
 			<rectangle>
 				<reportElement mode="Transparent" x="1438" y="1" width="68" height="20"/>
+<<<<<<< HEAD
+=======
 			</rectangle>
 			<rectangle>
 				<reportElement mode="Transparent" x="49" y="1" width="74" height="20"/>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</rectangle>
 		</band>
 	</columnHeader>
@@ -362,6 +420,60 @@ ORDER BY
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="1270" y="0" width="100" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1070" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{almn_curso_asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="516" y="0" width="100" height="20" backcolor="#CCFFCC"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{APORTE 1}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="945" y="0" width="125" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SUPLETORIO}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="845" y="0" width="100" height="20" backcolor="#F4F492"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{EXAMEN FINAL}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="156" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="616" y="0" width="129" height="20" backcolor="#F4F492"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{INTERCICLO}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="0" width="137" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1170" y="0" width="100" height="20" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="745" y="0" width="100" height="20" backcolor="#CCFFCC"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{APORTE 2}.toString()]]></textFieldExpression>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_estado}]]></textFieldExpression>
 			</textField>
@@ -414,6 +526,7 @@ ORDER BY
 				<reportElement mode="Opaque" x="745" y="0" width="100" height="20" backcolor="#CCFFCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{APORTE 2}.toString()]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="223" y="0" width="156" height="20"/>
@@ -450,8 +563,13 @@ ORDER BY
 			</rectangle>
 			<textField>
 				<reportElement x="1438" y="0" width="68" height="20"/>
+<<<<<<< HEAD
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{% Faltas}.toString()+"%"]]></textFieldExpression>
+=======
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}.toString()+"%"]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="1438" y="0" width="68" height="20"/>
@@ -463,11 +581,22 @@ ORDER BY
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="1370" y="0" width="68" height="20"/>
+<<<<<<< HEAD
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="49" y="0" width="74" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="49" y="0" width="74" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+=======
 			</rectangle>
 			<textField>
 				<reportElement x="49" y="0" width="74" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="49" y="0" width="74" height="20"/>
@@ -485,12 +614,20 @@ ORDER BY
 			<textField>
 				<reportElement x="313" y="135" width="117" height="20"/>
 				<textElement/>
+<<<<<<< HEAD
+				<textFieldExpression><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+=======
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<textField>
 				<reportElement x="430" y="135" width="144" height="20"/>
 				<textElement/>
+<<<<<<< HEAD
+				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+=======
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<staticText>
 				<reportElement x="406" y="155" width="100" height="20"/>
@@ -510,12 +647,20 @@ ORDER BY
 			<textField>
 				<reportElement x="962" y="135" width="146" height="20"/>
 				<textElement/>
+<<<<<<< HEAD
+				<textFieldExpression><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
+=======
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<textField>
 				<reportElement x="847" y="135" width="115" height="20"/>
 				<textElement/>
+<<<<<<< HEAD
+				<textFieldExpression><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
+=======
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
+>>>>>>> a402403eb6648b08212ca7589d1b455c3611a39e
 			</textField>
 			<line>
 				<reportElement x="847" y="118" width="261" height="1"/>
