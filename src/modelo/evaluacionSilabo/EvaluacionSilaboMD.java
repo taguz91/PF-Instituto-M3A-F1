@@ -46,7 +46,8 @@ public class EvaluacionSilaboMD {
     
     
 
-    public EvaluacionSilaboMD(String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
+    public EvaluacionSilaboMD(Integer idEvaluacion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
+        this.idEvaluacion =idEvaluacion;
         this.indicador = indicador;
         this.instrumento = instrumento;
         this.valoracion = valoracion;

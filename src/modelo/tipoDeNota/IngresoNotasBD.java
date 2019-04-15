@@ -87,9 +87,6 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 ingreso.setNotaSegundoInterCiclo(rs.getBoolean("nota_segundo_inteciclo"));
                 ingreso.setNotaExamenFinal(rs.getBoolean("nota_examen_final"));
                 ingreso.setNotaExamenDeRecuperacion(rs.getBoolean("nota_examen_de_recuperacion"));
-
-                System.out.println(ingreso);
-
             }
             rs.close();
         } catch (SQLException e) {

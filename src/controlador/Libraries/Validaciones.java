@@ -11,7 +11,7 @@ public class Validaciones {
     }
 
     public static boolean isDecimal(String Number) {
-        return Number.matches("^[0-9]*+[.]{0,1}+[0-9]{0,1}");
+        return Number.matches("^[0-9]*+[.]{0,1}+[0-9]*");
     }
 
 }
