@@ -243,8 +243,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     public static List<AlumnoCursoBD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente, String nombrePeriodo) {
 
-        String SELECT = "SELECT DISTINCT \n"
+        String SELECT = "SELECT \n"
                 + "\"public\".\"ViewAlumnoCurso\".id_almn_curso,\n"
+                + "\"public\".\"ViewAlumnoCurso\".alumno_codigo,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_alumno,\n"
                 + "\"public\".\"ViewAlumnoCurso\".id_curso,\n"
                 + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_1_parcial,\n"
@@ -261,27 +262,18 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"ViewAlumnoCurso\".persona_segundo_apellido,\n"
                 + "\"public\".\"ViewAlumnoCurso\".persona_primer_nombre,\n"
                 + "\"public\".\"ViewAlumnoCurso\".persona_segundo_nombre,\n"
-                + "\"public\".\"ViewAlumnoCurso\".id_persona,\n"
-                + "\"public\".\"ViewAlumnoCurso\".alumno_codigo,"
-                + "(\"public\".\"ViewAlumnoCurso\".almn_curso_num_faltas * 100)/\"Materias\".materia_total_horas\n"
+                + "\"public\".\"ViewAlumnoCurso\".id_persona\n"
                 + "FROM\n"
-                + "\"public\".\"ViewAlumnoCurso\"\n"
-                + "INNER JOIN \"Cursos\" ON \"ViewAlumnoCurso\".id_curso = \"Cursos\".id_curso\n"
-                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                + "INNER JOIN \"Alumnos\" ON \"ViewAlumnoCurso\".id_alumno = \"Alumnos\".id_alumno\n"
-                + "INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "WHERE"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado IS TRUE AND\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
-                + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "' AND\n"
-                + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
+                + "\"ViewAlumnoCurso\"\n"
+                + "WHERE\n"
+                + "\"public\".\"ViewAlumnoCurso\".id_docente = " + idDocente + " AND\n"
+                + "\"public\".\"ViewAlumnoCurso\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"public\".\"ViewAlumnoCurso\".curso_ciclo = " + ciclo + " AND\n"
+                + "\"public\".\"ViewAlumnoCurso\".curso_paralelo = '" + paralelo + "' AND\n"
+                + "\"public\".\"ViewAlumnoCurso\".nombre_jornada = '" + nombreJornada + "' AND\n"
+                + "\"public\".\"ViewAlumnoCurso\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Personas\".persona_primer_apellido ASC";
+                + "\"public\".\"ViewAlumnoCurso\".persona_primer_apellido ASC";
 
         System.out.println(SELECT);
 
