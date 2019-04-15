@@ -138,6 +138,7 @@ CREATE TABLE "Docentes"(
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
 	"docente_titulo" character varying(200),
 	"docente_abreviatura" character varying(20),
+	"docente_en_funcion" boolean NOT NULL DEFAULT 'true',
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
