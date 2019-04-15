@@ -72,7 +72,7 @@ public class FrmTipoNotaCTR {
 
         System.out.println("---->" + modelo.getNombre());
 
-        vista.getCmbTipoNota().setSelectedItem((Object) modelo.getNombre());
+        //vista.getCmbTipoNota().setSelectedItem((Object) modelo.getNombre());
         vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
         vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
     }
@@ -81,7 +81,7 @@ public class FrmTipoNotaCTR {
 
         modelo = new TipoDeNotaBD();
 
-        modelo.setNombre(vista.getCmbTipoNota().getSelectedItem().toString());
+       //modelo.setNombre(vista.getCmbTipoNota().getSelectedItem().toString());
 
         modelo.setValorMaximo(Double.parseDouble(vista.getTxtNotaMax().getText()));
         modelo.setValorMinimo(Double.parseDouble(vista.getTxtNotaMin().getText()));

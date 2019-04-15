@@ -306,10 +306,10 @@ public class VtnNotasAlumnoCursoCTR {
                         datos.setValueAt(conversor(aporte1), getSelectedRow(), getSelectedColum());
                         sumarColumnas();
                         if (setObjFromTable().editar()) {
-                            vista.getLblEsado().setText("EDITADO CORRECTAMENTE");
+                            vista.getLblEstado().setText("EDITADO CORRECTAMENTE");
 
                         } else {
-                            vista.getLblEsado().setText("ERROR");
+                            vista.getLblEstado().setText("ERROR");
                         }
                         refreshTabla();
                     } else {
