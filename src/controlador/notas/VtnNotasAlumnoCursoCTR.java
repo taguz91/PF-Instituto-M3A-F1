@@ -157,14 +157,14 @@ public class VtnNotasAlumnoCursoCTR {
             public void mousePressed(MouseEvent e) {
                 SelectHeader(e);
             }
-            
-});
+
+        });
         vista.getTblNotas().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 SelectTextInRow(e);
             }
-            
+
         });
 
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
@@ -324,7 +324,7 @@ public class VtnNotasAlumnoCursoCTR {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("------------------->");
+
             System.out.println(e.getMessage());
         }
     }
@@ -700,15 +700,14 @@ public class VtnNotasAlumnoCursoCTR {
 
         }
     }
-    
-    public void SelectTextInRow(MouseEvent e){
-    
-         if (!vista.getTblNotas().isEditing() && vista.getTblNotas().editCellAt(vista.getTblNotas().getSelectedRow(), 
-                        vista.getTblNotas().getSelectedColumn())) {
-                    vista.getTblNotas().getEditorComponent().requestFocusInWindow();
-                }
-    
+
+    public void SelectTextInRow(MouseEvent e) {
+
+        if (!vista.getTblNotas().isEditing() && vista.getTblNotas().editCellAt(vista.getTblNotas().getSelectedRow(),
+                vista.getTblNotas().getSelectedColumn())) {
+            vista.getTblNotas().getEditorComponent().requestFocusInWindow();
+        }
+
     }
-    
-    
+
 }
