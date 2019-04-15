@@ -1,6 +1,6 @@
 package controlador.login;
 
-import controlador.principal.VtnPrincipalCTR;
+import controlador.Libraries.Middlewares;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -16,7 +16,6 @@ import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
 import vista.Login;
-import vista.principal.VtnPrincipal;
 import vista.usuario.VtnSelectRol;
 
 /**
@@ -104,49 +103,52 @@ public class LoginCTR {
 
     //Metodos de Apoyo
     private void Login() {
+        new Thread(() -> {
 
-        USERNAME = vista.getTxtUsername().getText();
-        PASSWORD = vista.getTxtPassword().getText();
+            Middlewares.setLoadCursorInWindow(vista);
 
-        modelo.setUsername(vista.getTxtUsername().getText());
-        modelo.setPassword(vista.getTxtPassword().getText());
+            USERNAME = vista.getTxtUsername().getText();
+            PASSWORD = vista.getTxtPassword().getText();
 
-        try {
-            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+            modelo.setUsername(vista.getTxtUsername().getText());
+            modelo.setPassword(vista.getTxtPassword().getText());
 
-            if (!Lista.isEmpty()) {
+            try {
+                List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
-                modelo.setPersona(Lista.get(0).getPersona());
+                if (!Lista.isEmpty()) {
 
-                vista.dispose();
+                    modelo.setPersona(Lista.get(0).getPersona());
 
-                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, " LOGIN "), icono, ista);
+                    vista.dispose();
 
-                // VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("postgres", "qwerty79", " LOGIN "));
-                vtn.Init();
+                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
+                    vtn.Init();
 
-            } else {
+                } else {
+                    vista.getLblAvisos().setVisible(true);
+                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                }
+
+            } catch (NullPointerException e) {
                 vista.getLblAvisos().setVisible(true);
                 vista.getLblAvisos().setText("Revise la Informacion Ingresada");
             }
+            Middlewares.setDefaultCursorInWindow(vista);
 
-        } catch (NullPointerException e) {
-            vista.getLblAvisos().setVisible(true);
-            vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-        }
+        }).start();
 
     }
 
     private void LoginGenerico() {
 
-        USERNAME = "ROOT";
-        PASSWORD = "ROOT";
-        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-        //VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "LoginGenerico"), icono, ista);
-
-        ventanaPrincipal.iniciar();
-        vista.setVisible(false);
-
+//        USERNAME = "ROOT";
+//        PASSWORD = "ROOT";
+//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
+//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "LoginGenerico"), icono, ista);
+//
+//        ventanaPrincipal.iniciar();
+//        vista.setVisible(false);
     }
 
     //Procesadores de eventos
