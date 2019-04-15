@@ -138,6 +138,7 @@ CREATE TABLE "Docentes"(
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
 	"docente_titulo" character varying(200),
 	"docente_abreviatura" character varying(20),
+	"docente_en_funcion" boolean NOT NULL DEFAULT 'true',
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
@@ -162,6 +163,7 @@ CREATE TABLE "Cursos"(
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
   "curso_paralelo" character varying(5) NOT NULL DEFAULT 'NA',
+	"curso_activo" boolean NOT NULL default 'true',
   CONSTRAINT curso_pk PRIMARY KEY ("id_curso")
 ) WITH (OIDS = FALSE);
 
@@ -180,6 +182,7 @@ CREATE TABLE "AlumnoCurso"(
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
+	"almn_curso_activo" boolean DEFAULT 'true',
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 

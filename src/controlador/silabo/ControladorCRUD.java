@@ -88,13 +88,9 @@ public class ControladorCRUD {
 
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
-            if (respuesta == JOptionPane.YES_OPTION) {
+            
                 eliminarSilabo(seleccionarSilabo().getIdSilabo());
-                cargarSilabosDocente();
-                JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
-
-            }
+       
         });
 
         crud.getBtnImprimir().addActionListener((ActionEvent ae) -> {

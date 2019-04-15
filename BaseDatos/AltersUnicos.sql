@@ -13,3 +13,5 @@ ALTER TABLE public."AlumnoCurso" ADD UNIQUE(id_alumno, id_curso);
 ALTER TABLE public."MallaAlumno" ADD UNIQUE(id_materia, id_almn_carrera);
 --Un alumno solo puede estar en una carrera una vez 
 ALTER TABLE public."AlumnosCarrera" ADD UNIQUE(id_alumno, id_carrera);
+--No se puede asignar un docente a una materia mas de una vez 
+ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
