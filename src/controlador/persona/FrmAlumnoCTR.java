@@ -54,10 +54,10 @@ public class FrmAlumnoCTR {
 
     //Para cargar los sectores economico  
     /**
-     * 
-     * @param vtnPrin
-     * @param frmAlumno
-     * @param conecta
+     * Este es el Constructor del Formulario Alumno
+     * @param vtnPrin. Se debe insertar la Ventana Principal para su uso
+     * @param frmAlumno. Se debe insertar el Formulario del Alumno para su uso
+     * @param conecta. Se debe insertar un objeto de la Clase Conecta
      * @param ctrPrin
      * @param permisos 
      */
@@ -352,6 +352,8 @@ public class FrmAlumnoCTR {
 
                     PersonaMD p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
                     if (p.getIdentificacion() == null) {
+                        reiniciarComponentes(frmAlumno);
+                        iniciarComponentes();
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Usted no esta registrado en el Sistema ¿DESEA HACERLO? ", " Registrar Persona ", dialog);
                         if (result == 0) {
@@ -380,6 +382,8 @@ public class FrmAlumnoCTR {
                                 + p.getPrimerApellido() + " " + p.getSegundoApellido());
                         habilitarGuardar();
                         if (alumno.getId_Alumno() == 0) {
+                            reiniciarComponentes(frmAlumno);
+                            iniciarComponentes();
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             cont = 0;
@@ -626,7 +630,7 @@ public class FrmAlumnoCTR {
     //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
         //frmAlumno.getTxt_Cedula().setText("");
-        frmAlumno.getTxt_Nombre().setText("");
+        //frmAlumno.getTxt_Nombre().setText("");
         frmAlumno.getCmBx_TipoColegio().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_TipoBachillerato().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_NvAcademico().setSelectedItem("|SELECCIONE|");
