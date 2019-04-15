@@ -75,7 +75,7 @@ public class ReportesCTR {
 
         String path = "./src/vista/notas/Reportes/ReporteCompleto.jasper";
 
-        Map<String, Object> parametros = new HashMap();
+        Map parametros = new HashMap();
 
         parametros.put("id_docente", idDocente);
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
