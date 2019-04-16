@@ -7,8 +7,10 @@ package controlador.docente;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.docente.RolDocenteBD;
+import modelo.docente.RolDocenteMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.TxtVDireccion;
@@ -50,6 +52,7 @@ public class FrmRolPeriodoCTR {
         cargarCmbPrdLectivo();
         frmRolPer.getLbl_error_roles().setVisible(false);
         iniciarValidaciones();
+        frmRolPer.getBtnGuardar().addActionListener(e->insertarRolesPeriodos());
     }
 
     private void cargarCmbPrdLectivo() {
@@ -62,7 +65,21 @@ public class FrmRolPeriodoCTR {
             });
         }
     }
-    public void iniciarValidaciones(){
+
+    public void insertarRolesPeriodos() {
+        int posFila = frmRolPer.getCmbPeriodoLectivo().getSelectedIndex();
+        rolDoc.setPeriodo(periodos.get(posFila - 1));
+        rolDoc.setNombre_rol(frmRolPer.getTxtNombreRol().getText());
+
+        if (rolDoc.InsertarRol() == true) {
+            JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+            System.out.println(rolDoc.getPeriodo());
+        } else {
+            JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+        }
+    }
+
+    public void iniciarValidaciones() {
         frmRolPer.getTxtNombreRol().addKeyListener(new TxtVLetras(
                 frmRolPer.getTxtNombreRol(), frmRolPer.getLbl_error_roles()));
     }
