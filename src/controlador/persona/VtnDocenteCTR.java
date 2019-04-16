@@ -104,6 +104,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
+        vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -114,8 +115,8 @@ public class VtnDocenteCTR {
             }
         });
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
-        vtnDocente.getBtnBuscar()));
-       // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
+                vtnDocente.getBtnBuscar()));
+        // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
@@ -130,7 +131,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
-        
+
         docentesMD = docente.cargarDocentes();
         llenarTabla(docentesMD);
     }
@@ -294,7 +295,6 @@ public class VtnDocenteCTR {
         }
     }
 
-
     public void botonReporteMateria() {
         int s = JOptionPane.showOptionDialog(vtnDocente,
                 "Reporte de Materias del Docente\n"
@@ -374,16 +374,14 @@ public class VtnDocenteCTR {
         }
     }
 
-
     private void finContratacion() {
-         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-         if(posFila >= 0){
-             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR( conecta, vtnPrin, docentesMD.get(posFila));
-        vtn_fin_contratacion.iniciar();
-         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
-         }
-        
-        
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        if (posFila >= 0) {
+            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, docentesMD.get(posFila));
+            vtn_fin_contratacion.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+        }
+
     }
 }

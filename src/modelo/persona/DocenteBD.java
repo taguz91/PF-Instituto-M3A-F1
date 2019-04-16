@@ -332,6 +332,32 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
+//    public DocenteMD buscarDocente(String cedula) {
+//        DocenteMD d = null;
+//        String sql = "SELECT id_docente, id_persona, docente_codigo, "
+//                + "docente_otro_trabajo, docente_categoria, "
+//                + "docente_fecha_contrato,docente_fecha_fin, "
+//                + " docente_tipo_tiempo, docente_activo,"
+//                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura\n"
+//                + "FROM public.\"Docentes\" "
+//                + "WHERE docente_codigo = '" + cedula + "' and docente_activo =true;";
+//        //System.out.println(sql);
+//        ResultSet rs = conecta.sql(sql);
+//        try {
+//            if (rs != null) {
+//                while (rs.next()) {
+//                    d = obtenerDocente(rs);
+//                }
+//                return d;
+//            } else {
+//                return null;
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("No se pudo consultar docente " + cedula);
+//            return null;
+//        }
+//    }
+    
     public DocenteMD buscarDocenteParaReferencia(int idDocente) {
         DocenteMD d = new DocenteMD();
         String sql = "SELECT id_docente, id_persona, docente_codigo \n"

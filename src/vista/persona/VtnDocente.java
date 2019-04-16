@@ -56,6 +56,15 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         return lblResultados;
     }
 
+    public JButton getBtnFinContratacion() {
+        return btnFinContratacion;
+    }
+
+    public void setBtnFinContratacion(JButton btnFinContratacion) {
+        this.btnFinContratacion = btnFinContratacion;
+    }
+
+    
     public JTable getTblDocente() {
         return tblDocente;
     }
@@ -97,6 +106,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnReporteDocente = new javax.swing.JButton();
         btnReporteDocenteMateria = new javax.swing.JButton();
         cbxDocentesEliminados = new javax.swing.JCheckBox();
+        btnFinContratacion = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -150,6 +160,8 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
         cbxDocentesEliminados.setText("Ver Docentes Eliminados");
 
+        btnFinContratacion.setText("Fin de Contratación");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,6 +188,8 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFinContratacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,8 +209,9 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
-                        .addComponent(btnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addComponent(btnFinContratacion)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(cbxDocentesEliminados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,6 +237,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnFinContratacion;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteDocente;
     private javax.swing.JButton btnReporteDocenteMateria;
