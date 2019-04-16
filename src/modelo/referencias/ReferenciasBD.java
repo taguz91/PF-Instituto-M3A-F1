@@ -81,4 +81,40 @@ public class ReferenciasBD extends ReferenciasMD {
         }
 
     }
+
+    public void actualizar(ReferenciasMD r) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Referencias\"\n"
+                    + "	SET  descripcion_referencia=?\n"
+                    + "	WHERE id_referencia=?;");
+
+            st.setString(1, r.getDescripcionReferencia());
+            st.setInt(2, r.getIdReferencia());
+           
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciasBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+    public void eliminar(ReferenciasMD r) {
+
+        try {
+             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Referencias\"\n"
+                    + "	WHERE id_referencias=?");
+
+            st.setInt(1, r.getIdReferencia());
+            
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciasBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

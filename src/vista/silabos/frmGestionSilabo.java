@@ -1024,7 +1024,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación"
+                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
         ));
         tblAsistidaDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1045,6 +1045,9 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAsistidaDocente.getColumnModel().getColumn(4).setMinWidth(150);
             tblAsistidaDocente.getColumnModel().getColumn(4).setPreferredWidth(150);
             tblAsistidaDocente.getColumnModel().getColumn(4).setMaxWidth(150);
+            tblAsistidaDocente.getColumnModel().getColumn(5).setMinWidth(0);
+            tblAsistidaDocente.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblAsistidaDocente.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         pnlAsistidaDocente.add(scrAsistidaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
@@ -1091,7 +1094,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación"
+                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
         ));
         tblAprendizajeColaborativo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1112,6 +1115,9 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAprendizajeColaborativo.getColumnModel().getColumn(4).setMinWidth(150);
             tblAprendizajeColaborativo.getColumnModel().getColumn(4).setPreferredWidth(150);
             tblAprendizajeColaborativo.getColumnModel().getColumn(4).setMaxWidth(150);
+            tblAprendizajeColaborativo.getColumnModel().getColumn(5).setMinWidth(0);
+            tblAprendizajeColaborativo.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblAprendizajeColaborativo.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         pnlAprendizajeColaborativo.add(scrAprendizajeColaborativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
@@ -1159,7 +1165,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación"
+                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
         ));
         tblPractica.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1180,6 +1186,9 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblPractica.getColumnModel().getColumn(4).setMinWidth(150);
             tblPractica.getColumnModel().getColumn(4).setPreferredWidth(150);
             tblPractica.getColumnModel().getColumn(4).setMaxWidth(150);
+            tblPractica.getColumnModel().getColumn(5).setMinWidth(0);
+            tblPractica.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblPractica.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         pnlPractica.add(scrPractica, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
@@ -1226,7 +1235,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación"
+                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
         ));
         tblAutonoma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1247,6 +1256,9 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAutonoma.getColumnModel().getColumn(4).setMinWidth(150);
             tblAutonoma.getColumnModel().getColumn(4).setPreferredWidth(150);
             tblAutonoma.getColumnModel().getColumn(4).setMaxWidth(150);
+            tblAutonoma.getColumnModel().getColumn(5).setMinWidth(0);
+            tblAutonoma.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblAutonoma.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         pnlAutonoma.add(scrAutonoma, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));

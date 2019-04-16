@@ -104,3 +104,44 @@ ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_fecha_registro" DATE def
 ALTER TABLE public."Silabo" DROP COLUMN estado_silabo;
 
 ALTER TABLE public."Silabo" ADD COLUMN "estado_silabo" integer;
+
+
+--Modificaciones BD 16/4/2019
+
+CREATE TABLE "RolesPeriodo"(
+	"id_rol_prd" serial NOT NULL, 
+	"id_prd_lectivo" integer NOT NULL, 
+	"rol_prd" character varying(200) NOT NULL, 
+	"rol_activo" boolean DEFAULT 'true', 
+	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
+) WITH (OIDS = FALSE);
+
+CREATE TABLE "RolesDocente"(
+	"id_rol_docente" serial NOT NULL, 
+	"id_docente" integer NOT NULL,
+	"id_rol_prd" integer NOT NULL, 
+	"rol_docente_activo" boolean default 'true',  
+	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
+) WITH (OIDS = FALSE);
+
+--FK de roles por periodo lectivo
+ALTER TABLE "RolesPeriodo" ADD CONSTRAINT "rol_prd_fk1"
+FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+--FK de la tabla Roles DOcente
+ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk1"
+FOREIGN KEY ("id_rol_prd") REFERENCES "RolesPeriodo"("id_rol_prd")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk2"
+FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+--Columnas aumentadas para la eliminacion logica de curso y alumno curso
+ALTER TABLE public."Cursos" ADD COLUMN "curso_activo" boolean default 'true';
+ALTER TABLE public."AlumnoCurso" ADD COLUMN "almn_curso_activo" boolean default 'true';
+--Para reaccinar un docente a un curso
+ALTER TABLE public."Docentes" ADD COLUMN "docente_en_funcion" boolean default 'true';
+--Agregamos un llave compuesta
+ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);

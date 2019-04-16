@@ -54,7 +54,6 @@ import vista.silabos.frmGestionSilabo.CheckListItem;
 import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmReferencias;
 
-
 /**
  *
  * @author Andres Ullauri
@@ -66,10 +65,10 @@ public class ControladorSilaboU {
     private frmGestionSilabo gestion;
 
     private VtnPrincipal principal;
-    
+
     private frmReferencias bibliografia;
-    
-     private List<CarreraMD> carrerasDocente;
+
+    private List<CarreraMD> carrerasDocente;
 
     private List<PeriodoLectivoMD> periodosCarrera;
 
@@ -90,10 +89,15 @@ public class ControladorSilaboU {
     private List<ReferenciaSilaboMD> referenciasSilabo;
 
     private DefaultListModel modeloBase;
-    
+
     private ConexionBD conexion;
 
-    public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal,ConexionBD conexion) {
+    private static Integer idEvaluacionSig = 0;
+    private Integer idEvaluacion;
+    
+    private boolean retroceso=false;
+
+    public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal, ConexionBD conexion) {
         this.silabo = silabo;
         this.principal = principal;
         this.conexion = conexion;
@@ -111,22 +115,12 @@ public class ControladorSilaboU {
 
         gestion.setLocation((principal.getDpnlPrincipal().getSize().width - gestion.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - gestion.getSize().height) / 2);
-        
-      
-        
+
         iniciarSilabo(silabo);
-     
-        
+
     }
-    
-    
+
     public void iniciarSilabo(SilaboMD silabo) {
-
-        
-
-        
-
-       
 
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
 
@@ -134,7 +128,7 @@ public class ControladorSilaboU {
 
         estrategiasAprendizaje = new ArrayList<>();
 
-        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion,silabo.getIdSilabo());
+        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
 
         biblioteca = new ArrayList<>();
 
@@ -142,8 +136,7 @@ public class ControladorSilaboU {
 
         tiposActividad = TipoActividadBD.consultar(conexion);
 
-        
-           cargarReferencias(referenciasSilabo);
+        cargarReferencias(referenciasSilabo);
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
@@ -234,7 +227,7 @@ public class ControladorSilaboU {
                 gestion.getTxtNuevaEstrategia().setText("");
                 gestion.getTxtNuevaEstrategia().setEnabled(false);
                 gestion.getLblGuardarEstrategia().setEnabled(false);
-                
+
                 cargarEstrategias(seleccionarUnidad());
 
             }
@@ -377,7 +370,7 @@ public class ControladorSilaboU {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
 
-                if (gestion.getDchFechaEnvioAC().getDate() != null && gestion.getDchFechaPresentacionAC().getDate() != null ) {
+                if (gestion.getDchFechaEnvioAC().getDate() != null && gestion.getDchFechaPresentacionAC().getDate() != null) {
                     LocalDate fechaPresentacion = gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     LocalDate fechaEnvio = gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     if (fechaPresentacion.isBefore(fechaEnvio)) {
@@ -724,7 +717,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAD((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
+                gestion.getBtnQuitarAD().setEnabled(false);
             }
 
         });
@@ -734,7 +727,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionAC((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
-
+                gestion.getBtnQuitarAC().setEnabled(false);
             }
 
         });
@@ -744,7 +737,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionP((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
-
+                gestion.getBtnQuitarP().setEnabled(false);
             }
 
         });
@@ -754,7 +747,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 quitarEvaluacionA((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
-
+                gestion.getBtnQuitarA().setEnabled(false);
             }
 
         });
@@ -763,13 +756,19 @@ public class ControladorSilaboU {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                gestion.setVisible(false);
-                citarReferencias(silabo, bibliografia);
+               gestion.setVisible(false);
+
+                if (retroceso) {
+                    bibliografia.setVisible(true);
+                } else {
+                    citarReferencias(silabo, bibliografia);
+                    retroceso=true;
+                }
 
             }
 
         });
-        
+
         gestion.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -781,10 +780,9 @@ public class ControladorSilaboU {
 
         });
 
-        
         mostrarUnidad();
     }
-    
+
     public void citarReferencias(SilaboMD silabo, frmReferencias bibliografia) {
 
         principal.getDpnlPrincipal().add(bibliografia);
@@ -845,17 +843,18 @@ public class ControladorSilaboU {
             }
 
         });
-        
+
         bibliografia.getBtnFinalizar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                //
+                new SilaboBD(conexion).eliminar(silabo);
+                guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-
                 gestion.dispose();
                 bibliografia.dispose();
-                principal.getBtnConsultarSilabo().doClick();
+                principal.getMnCtSilabos().doClick();
+
             }
 
         });
@@ -1030,60 +1029,6 @@ public class ControladorSilaboU {
 
     }
 
-    public void agregarEvaluacion(TipoActividadMD tipo, UnidadSilaboMD unidad, int p) {
-
-        switch (p) {
-            case 1:
-
-                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAD().getValue()))) {
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
-                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                }
-
-                break;
-            case 2:
-
-                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAC().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
-                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                }
-
-                break;
-            case 3:
-                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionP().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
-                    cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                }
-
-                break;
-            case 4:
-                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionA().getValue()))) {
-
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
-                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder el valor de 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                }
-                break;
-        }
-    }
-
     public boolean validarLimiteEvaluaciones(double valor) {
 
         double total = 0;
@@ -1102,6 +1047,65 @@ public class ControladorSilaboU {
 
         return tipoSeleccionado.get();
 
+    }
+
+    public void agregarEvaluacion(TipoActividadMD tipo, UnidadSilaboMD unidad, int p) {
+
+        switch (p) {
+            case 1:
+
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAD().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 2:
+
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAC().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 3:
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionP().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder los 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                break;
+            case 4:
+                if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionA().getValue()))) {
+                    ++idEvaluacionSig;
+                    idEvaluacion = idEvaluacionSig;
+                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El total de evaluaciones no puede exceder el valor de 60 puntos", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+                break;
+        }
     }
 
     public void cargarEvaluaciones(DefaultTableModel modeloTabla, int p) {
@@ -1163,7 +1167,8 @@ public class ControladorSilaboU {
                     emd.getInstrumento(),
                     emd.getValoracion(),
                     emd.getFechaEnvio(),
-                    emd.getFechaPresentacion()
+                    emd.getFechaPresentacion(),
+                    emd.getIdEvaluacion()
                 });
 
             }
@@ -1261,7 +1266,10 @@ public class ControladorSilaboU {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
+                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            }
+
         });
 
         modeloBase = new DefaultListModel<>();
@@ -1273,16 +1281,18 @@ public class ControladorSilaboU {
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
     }
-    
-    public void agregarBibliografiaNoBase(){
-        
-        ReferenciasMD complementaria=new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
-        ReferenciasMD linkografia=new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
-       
-        referenciasSilabo.add(new ReferenciaSilaboMD(complementaria,silabo));
-        referenciasSilabo.add(new ReferenciaSilaboMD(linkografia,silabo));
+
+    public void agregarBibliografiaNoBase() {
+
+        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
         
         
+        ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
+        ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
+
+        referenciasSilabo.add(new ReferenciaSilaboMD(complementaria, silabo));
+        referenciasSilabo.add(new ReferenciaSilaboMD(linkografia, silabo));
+
     }
 
     public void quitarBibliografiaBase() {
@@ -1306,28 +1316,31 @@ public class ControladorSilaboU {
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAsistidaDocente().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAprendizajeColaborativo().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblPractica().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.remove(gestion.getTblAutonoma().getSelectedRow());
+        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
+
         cargarEvaluaciones(modeloTabla, p);
     }
-    
+
     public void cargarReferencias(List<ReferenciaSilaboMD> referenciasSilabo) {
 
         List<String> b = new ArrayList<>();
@@ -1357,7 +1370,78 @@ public class ControladorSilaboU {
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
     }
+
+    public void insertarUnidades() {
+
+        /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
+        
+
+        List<EstrategiasUnidadMD> estrategiasSilaboBD = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
+
     
-    
+
+        List<EvaluacionSilaboMD> evaluacionesSilaboBD = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
+
+       
+
+        List<ReferenciaSilaboMD> referenciasSilaboBD = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
+
+         */
+        for (UnidadSilaboMD umd : unidadesSilabo) {
+
+            umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
+            UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
+            ubd.insertar(umd);
+
+            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+
+                if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                    EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
+                    ebd.insertar(emd);
+                }
+
+            }
+
+            for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
+
+                if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                    EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
+                    esd.insertar(evd);
+                }
+
+            }
+        }
+    }
+
+    public void insertarReferencias() {
+
+        agregarBibliografiaNoBase();
+        
+        
+        for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
+            ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
+            rbd.insertar(referenciasSilabo.get(i));
+        }
+
+        ReferenciasBD r1 = new ReferenciasBD(conexion);
+        r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia());
+        ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
+        rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
+
+        ReferenciasBD r2 = new ReferenciasBD(conexion);
+        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
+        ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
+        rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
+
+    }
+
+    public void guardarSilabo() {
+
+        new SilaboBD(conexion).insertar(silabo);
+        insertarUnidades();
+
+        insertarReferencias();
+
+    }
 
 }

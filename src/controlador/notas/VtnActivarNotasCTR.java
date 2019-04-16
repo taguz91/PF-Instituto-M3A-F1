@@ -4,6 +4,8 @@ import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -128,6 +130,14 @@ public class VtnActivarNotasCTR {
                     System.out.println(modelo);
                 }
             }
+        });
+        
+        vista.getTblCursoTipoNotas().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SelectTextInRow(e);
+            }
+            
         });
 
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
@@ -331,6 +341,15 @@ public class VtnActivarNotasCTR {
             listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
             cargarTabla(listaNotasActivadas);
         }).start();
+
+    }
+    
+    public void SelectTextInRow(MouseEvent e) {
+
+        if (!vista.getTblCursoTipoNotas().isEditing() && vista.getTblCursoTipoNotas().editCellAt(vista.getTblCursoTipoNotas().getSelectedRow(),
+                vista.getTblCursoTipoNotas().getSelectedColumn())) {
+            vista.getTblCursoTipoNotas().getEditorComponent().requestFocusInWindow();
+        }
 
     }
 }

@@ -143,9 +143,10 @@ public class FrmCurso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setResizable(true);
         setTitle("Curso-Clase");
-        setMinimumSize(new java.awt.Dimension(454, 361));
-        setPreferredSize(new java.awt.Dimension(454, 361));
+        setMinimumSize(new java.awt.Dimension(500, 440));
+        setPreferredSize(new java.awt.Dimension(500, 440));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Curso"));

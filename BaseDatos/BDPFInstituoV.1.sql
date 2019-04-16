@@ -138,6 +138,7 @@ CREATE TABLE "Docentes"(
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
 	"docente_titulo" character varying(200),
 	"docente_abreviatura" character varying(20),
+	"docente_en_funcion" boolean NOT NULL DEFAULT 'true',
   CONSTRAINT docente_pk PRIMARY KEY ("id_docente")
 ) WITH (OIDS = false);
 
@@ -162,6 +163,7 @@ CREATE TABLE "Cursos"(
   "curso_capacidad" integer NOT NULL,
   "curso_ciclo" integer NOT NULL,
   "curso_paralelo" character varying(5) NOT NULL DEFAULT 'NA',
+	"curso_activo" boolean NOT NULL default 'true',
   CONSTRAINT curso_pk PRIMARY KEY ("id_curso")
 ) WITH (OIDS = FALSE);
 
@@ -180,6 +182,7 @@ CREATE TABLE "AlumnoCurso"(
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
+	"almn_curso_activo" boolean DEFAULT 'true',
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 
@@ -235,6 +238,39 @@ CREATE TABLE "DocentesMateria"(
 	"docente_mat_activo" BOOLEAN NOT NULL DEFAULT 'true',
 	CONSTRAINT docente_materia_pk PRIMARY  KEY ("id_docente_mat")
 ) WITH (OIDS = FALSE);
+
+--Modificaciones 15/4/2019
+
+CREATE TABLE "RolesPeriodo"(
+	"id_rol_prd" serial NOT NULL, 
+	"id_prd_lectivo" integer NOT NULL, 
+	"rol_prd" character varying(200) NOT NULL, 
+	"rol_activo" boolean DEFAULT 'true', 
+	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
+) WITH (OIDS = FALSE);
+
+CREATE TABLE "RolesDocente"(
+	"id_rol_docente" serial NOT NULL, 
+	"id_docente" integer NOT NULL,
+	"id_rol_prd" integer NOT NULL, 
+	"rol_docente_activo" boolean default 'true',  
+	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
+) WITH (OIDS = FALSE);
+
+--FK de roles por periodo lectivo
+ALTER TABLE "RolesPeriodo" ADD CONSTRAINT "rol_prd_fk1"
+FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+--FK de la tabla Roles DOcente
+ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk1"
+FOREIGN KEY ("id_rol_prd") REFERENCES "RolesPeriodo"("id_rol_prd")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk2"
+FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 /*
 	TABLAS GRUPO 16

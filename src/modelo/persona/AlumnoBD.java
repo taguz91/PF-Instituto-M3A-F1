@@ -184,6 +184,37 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
+    
+    /**
+     * Este método filtra en un Lista todos los Alumnos eliminados en la Base de Datos
+     * @return Retorna una Lista de la Clase PersonaMD con los datos filtrados
+     */
+    public List<PersonaMD> llenarEliminados(){
+        String nsql = "SELECT p.id_persona, p.persona_identificacion,\n" +
+"                p.persona_primer_nombre, p.persona_segundo_nombre,\n" +
+"                p.persona_primer_apellido, p.persona_segundo_apellido,\n" +
+"                p.persona_correo FROM public.\"Personas\" p JOIN public.\"Alumnos\" USING(id_persona)\n" +
+"				WHERE persona_activa = 'false';";
+        List<PersonaMD> lista = new ArrayList<PersonaMD>();
+        ResultSet rs = conecta.sql(nsql);
+        PersonaMD m = new PersonaMD();
+        try {
+            while (rs.next()) {
+                m.setIdPersona(rs.getInt("id_persona"));
+                m.setIdentificacion(rs.getString("persona_identificacion"));
+                m.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                m.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                lista.add(m);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
     /**
      * Este método extrae los datos personales y datos de Alumno de una Persona en específico
