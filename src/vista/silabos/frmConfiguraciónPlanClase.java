@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
  *
  * @author Daniel
  */
-public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
+public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmConfiguraciónPlanClase
@@ -97,8 +97,6 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
         btn_cancelar.setText("Cancelar");
 
         jLabel4.setText("Configuración Plan de Clase:");
-
-        Cmb_carreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

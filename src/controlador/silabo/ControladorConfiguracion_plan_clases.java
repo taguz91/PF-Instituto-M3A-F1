@@ -14,32 +14,38 @@ import vista.silabos.frmPlanClase;
 
 
 public class ControladorConfiguracion_plan_clases {
-    private List<CarreraMD> carrerasDocente;
-    private VtnPrincipal principal;
-    private UsuarioBD usuario;
-    private ConexionBD conexion;
-    private frmConfiguraciónPlanClase frmConPlanClase;
-    
-     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, frmConfiguraciónPlanClase frmConPlanClase) {
+   
+     private final UsuarioBD usuario;
+     private ConexionBD conexion;
+     private frmConfiguraciónPlanClase frm_cong_PlanClase;
+     private final VtnPrincipal vtnPrincipal;
+
+    public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
-        this.frmConPlanClase=frmConPlanClase;
-        iniciaControlador();
+        this.vtnPrincipal = vtnPrincipal;
+        this.conexion=new ConexionBD();
     }
-     
-     public void iniciaControlador(){
-         cargarComboCarreras();
-         
-     }
-     
-     public void cargarComboCarreras(){
-         List<CarreraMD> carreras;
-         carreras=new dbCarreras().buscarCarreras(usuario.getPersona().getIdPersona());
-         for (int i = 0; i < carreras.size(); i++) {
-             frmConPlanClase.getCmb_carreras().addItem(carreras.get(i).getNombre());
-         }
+     public void iniciarControlaador(){
+         conexion.conectar();
+         frm_cong_PlanClase=new frmConfiguraciónPlanClase();
+         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
+         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
+         frm_cong_PlanClase.show();
+          frm_cong_PlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - frm_cong_PlanClase.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - frm_cong_PlanClase.getSize().height) / 2);
+          
+          
+          cargarComboCarreras();
      }
      
 
     
-    
+    public List<CarreraMD> cargarComboCarreras(){
+        List<CarreraMD> carrerasDocentes=CarrerasBDS.consultar(conexion, usuario.getUsername());
+        carrerasDocentes.forEach((cmd) -> {
+            frm_cong_PlanClase.getCmb_carreras().addItem(cmd.getNombre());
+        });
+
+        return carrerasDocentes;
+    }
 }
