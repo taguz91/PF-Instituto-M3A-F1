@@ -101,7 +101,7 @@ public class FrmDocenteCTR {
 
             @Override
             public void focusLost(FocusEvent e) {
-                buscarCedula();
+                buscarCedula(frmDocente.getTxtIdentificacion().getText());
             }
         };
         FocusListener titulo = new FocusListener() {
@@ -163,7 +163,7 @@ public class FrmDocenteCTR {
         iniciarFechas();
         frmDocente.getTxtIdentificacion().addFocusListener(Buscar);
       //  frmDocente.getTxtIdentificacion().addKeyListener(cedula);
-        frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarCedula());
+        frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarCedula(frmDocente.getTxtIdentificacion().getText()));
         frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         frmDocente.getBtnRegistrarPersona().addActionListener(e -> abrirFrmPersona());
         frmDocente.getTxtAbreviaturaDocente().addActionListener(e -> camposNulos());
@@ -180,7 +180,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                buscarCedula();
+                buscarCedula(frmDocente.getTxtIdentificacion().getText());
             }
 
         });
@@ -265,11 +265,11 @@ public class FrmDocenteCTR {
         }
     }
     
-    public void buscarCedula() {
+    public void buscarCedula(String cedula) {
         boolean buscar = true;
         frmDocente.getTxtIdentificacion().setVisible(true);
         //int tipoIdentifi;
-        String cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
+     //   cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
        // tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
         if (frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString().equals("CEDULA")) {
             if (!Validar.esCedula(cedula)) {

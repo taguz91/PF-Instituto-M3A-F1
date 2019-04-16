@@ -312,7 +312,7 @@ public class VtnPrincipalCTR {
     public void abrirVtnDocente() {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
-        if (numVtns < 5) {
+        if (numVtns < 6) {
             VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente, conecta, this, rolSeleccionado);
             ctrVtnDocente.iniciar();
         } else {
