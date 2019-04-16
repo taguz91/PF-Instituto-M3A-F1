@@ -191,6 +191,7 @@ public class ControladorCRUD {
         if (reply == JOptionPane.YES_OPTION) {
             new SilaboBD(conexion).eliminar(seleccionarSilabo());
             JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
+            cargarSilabosDocente();
         }
 
     }
