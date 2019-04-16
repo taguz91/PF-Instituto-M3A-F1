@@ -31,10 +31,13 @@ public class ControladorConfiguracion_plan_clases {
          vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
          frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
          frm_cong_PlanClase.show();
+         
           frm_cong_PlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - frm_cong_PlanClase.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - frm_cong_PlanClase.getSize().height) / 2);
           
-          
+          frm_cong_PlanClase.getBtn_cancelar().addActionListener((e) -> {
+              frm_cong_PlanClase.dispose();
+          });
           cargarComboCarreras();
      }
      

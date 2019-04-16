@@ -84,11 +84,9 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
         Cmb_unidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        Cmb_silabos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel1.setText("Carrera:");
 
-        jLabel2.setText("Silabo:");
+        jLabel2.setText("Asignatura:");
 
         jLabel3.setText("Unidad:");
 
