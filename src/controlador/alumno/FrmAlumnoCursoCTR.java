@@ -513,7 +513,7 @@ public class FrmAlumnoCursoCTR {
             //Comprabamos que el curso en el que se quiere no estan vacios 
             if (!cursos.isEmpty()) {
                 //Revisamos el ciclo que es 
-                if (cursos.get(0).getCurso_ciclo() > 3) {
+                if (cursos.get(0).getCurso_ciclo() > 9) {
                     cursos.forEach(c -> {
                         Object[] valores = {c.getId_materia().getNombre()};
                         mdMatPen.addRow(valores);

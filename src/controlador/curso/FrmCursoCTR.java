@@ -23,8 +23,8 @@ import vista.principal.VtnPrincipal;
  * @author Johnny
  */
 public class FrmCursoCTR {
-    
-    private final VtnPrincipal vtnPrin; 
+
+    private final VtnPrincipal vtnPrin;
     private final FrmCurso frmCurso;
     private final CursoBD curso;
     private final ConectarDB conecta;
@@ -50,7 +50,7 @@ public class FrmCursoCTR {
         this.frmCurso = frmCurso;
         this.vtnPrin = vtnPrin;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;        
+        this.ctrPrin = ctrPrin;
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno por carrera");
@@ -60,7 +60,7 @@ public class FrmCursoCTR {
         this.prd = new PeriodoLectivoBD(conecta);
         this.mt = new MateriaBD(conecta);
         this.jd = new JornadaBD(conecta);
-        
+
         vtnPrin.getDpnlPrincipal().add(frmCurso);
         frmCurso.show();
     }
@@ -176,19 +176,25 @@ public class FrmCursoCTR {
     }
 
     public void guardarSeguirIngresando() {
-        guardar();
-        actualizarCmbMaterias();
-        actualizarCmbDocentes();
+        if (guardar()) {
+            actualizarCmbMaterias();
+            actualizarCmbDocentes();
+        } else {
+            System.out.println("Guardar y seguir");
+        }
     }
 
     public void guardarYSalir() {
-        guardar();
-        frmCurso.dispose();
-        ctrPrin.cerradoJIF();
-        ctrPrin.abrirVtnCurso();
+        if (guardar()) {
+            frmCurso.dispose();
+            ctrPrin.cerradoJIF();
+            ctrPrin.abrirVtnCurso();
+        } else {
+            System.out.println("No se pudo guardar.");
+        }
     }
 
-    private void guardar() {
+    private boolean guardar() {
         //Para validar todo 
         boolean guardar = true;
 
@@ -236,7 +242,7 @@ public class FrmCursoCTR {
                         paralelo);
                 if (existeCurso != null) {
                     guardar = false;
-                    frmCurso.getLblError().setText("Este curso ya tiene guardado: "+materias.get(posMat - 1).getNombre()+".");
+                    frmCurso.getLblError().setText("Este curso ya tiene guardado: " + materias.get(posMat - 1).getNombre() + ".");
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
@@ -260,7 +266,7 @@ public class FrmCursoCTR {
             if (!editando) {
                 //Guardamos persona  
                 curso.guardarCurso();
-                
+
             } else {
                 if (idCurso > 0) {
                     //Editamos curso
@@ -269,6 +275,7 @@ public class FrmCursoCTR {
                 }
             }
         }
+        return guardar;
     }
 
     public void editar(CursoMD c) {
