@@ -113,6 +113,7 @@ public class VtnDocenteMateriaCTR {
         int pos = vtnDm.getTblDocentesMateria().getSelectedRow(); 
         if (pos >= 0) {
             dm.eliminar(dms.get(pos).getId());
+            buscar(vtnDm.getTxtBuscar().getText().trim());
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila primero.");
         }

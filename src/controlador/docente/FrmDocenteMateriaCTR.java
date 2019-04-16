@@ -133,17 +133,26 @@ public class FrmDocenteMateriaCTR {
             if (docenMat != null) {
                 frmDM.getLblError().setText("Ya se asigno esta materia al docente.");
                 guardar = false;
+                if (!docenMat.isActivo()) {
+                    int r = JOptionPane.showConfirmDialog(null, "Ya se asigno esta materia pero se\n"
+                            + "encuentra eliminada, desea activala.");
+                    if (r == JOptionPane.YES_OPTION) {
+                        dm.activar(docenMat.getId());
+                        frmDM.dispose();
+                        ctrPrin.cerradoJIF();
+                        ctrPrin.abrirVtnDocenteMateria();
+                    }
+                }
             } else {
                 frmDM.getLblError().setText("");
             }
         }
-        guardar = false;
         if (guardar) {
             dm.setDocente(docentes.get(posDoc));
             dm.setMateria(materias.get(posMat - 1));
 
             dm.guardar();
-            
+
         }
         return guardar;
     }
