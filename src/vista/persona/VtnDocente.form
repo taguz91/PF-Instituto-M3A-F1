@@ -30,7 +30,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-<<<<<<< HEAD
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="cbxDocentesEliminados" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -38,10 +37,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblResultados" pref="137" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
-=======
-                      <Component id="lblResultados" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="348" max="-2" attributes="0"/>
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="btnReporteDocente" min="-2" max="-2" attributes="0"/>
@@ -55,8 +50,6 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnFinContratacion" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditar" min="-2" pref="80" max="-2" attributes="0"/>
@@ -82,20 +75,13 @@
                       <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFinContratacion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-<<<<<<< HEAD
               <EmptySpace pref="7" max="32767" attributes="0"/>
               <Component id="cbxDocentesEliminados" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="341" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-=======
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="321" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -212,15 +198,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteDocenteMateriaActionPerformed"/>
       </Events>
     </Component>
-<<<<<<< HEAD
     <Component class="javax.swing.JCheckBox" name="cbxDocentesEliminados">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Docentes Eliminados"/>
-=======
-    <Component class="javax.swing.JButton" name="btnFinContratacion">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Fin de Contrataci&#xf3;n"/>
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
       </Properties>
     </Component>
   </SubComponents>
