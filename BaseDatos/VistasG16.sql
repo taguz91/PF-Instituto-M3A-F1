@@ -270,7 +270,7 @@ AFTER INSERT OR UPDATE
 ON public."TipoDeNota" FOR EACH ROW
  EXECUTE PROCEDURE actualizar_vistas();
  
- CREATE TRIGGER actualizar_mMallaAlumno
+ CREATE TRIGGER actualizar_MallaAlumno
 AFTER INSERT OR UPDATE
 ON public."MallaAlumno" FOR EACH ROW
  EXECUTE PROCEDURE actualizar_vistas();

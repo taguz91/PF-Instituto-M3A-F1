@@ -97,5 +97,22 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         }
         return evaluaciones;
     }
+     
+     public void eliminar(EvaluacionSilaboMD e) {
+
+        try {
+             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"EvaluacionSilabo\"\n"
+                    + "	WHERE id_evaluacion=?");
+
+            st.setInt(1, e.getIdEvaluacion());
+            
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EvaluacionSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }
