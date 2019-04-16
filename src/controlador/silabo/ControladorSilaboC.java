@@ -159,7 +159,7 @@ public class ControladorSilaboC {
         configuracion.getCmbCarrera().setSelectedIndex(0);
 
     }
-
+     
     public List<CarreraMD> cargarComboCarreras() {
 
         List<CarreraMD> carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
