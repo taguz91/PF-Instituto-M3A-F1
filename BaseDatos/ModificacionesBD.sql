@@ -304,6 +304,9 @@ TABLESPACE pg_default;
 ALTER TABLE public."Estrategias_metodologias"
     OWNER to postgres;
 
+--Dos campos nuevos 
+ALTER TABLE public."Silabo" ADD COLUMN documento_silabo bytea; 
+ALTER TABLE public."Silabo" ADD COLUMN documento_analitico bytea; 
 
 
 --ALTERS G16 16/Abril/2019

@@ -517,6 +517,8 @@ CREATE TABLE "Silabo" (
 	id_materia integer NOT NULL,
   id_prd_lectivo integer NOT NULL,
 	estado_silabo integer NOT NULL,
+	documento_silabo bytea, 
+	documento_analitico bytea,
 
 	PRIMARY KEY(id_silabo),
 
