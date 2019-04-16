@@ -55,6 +55,14 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
+    
+    public void guardarFinContrato(int aguja){
+        String sql = "UPDATE public.\"Docentes\" SET\n"
+                + " id_sec_economico = "
+                + " WHERE id_persona = " + aguja + ";";
+    }
+    
+//    public void 
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();

@@ -294,7 +294,7 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Ocupacion().addKeyListener(ocupacion);
         frmAlumno.getTxt_NomContacto().addKeyListener(nombre_Contacto);
         frmAlumno.getTxt_ConEmergency().addKeyListener(num_Contacto);
-
+        frmAlumno.getTxt_Cedula().setEnabled(false);
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
@@ -367,7 +367,7 @@ public class FrmAlumnoCTR {
                             } else {
                                 frmPersona.getCmbTipoId().setSelectedItem("PASAPORTE");
                             }
-                            frmAlumno.dispose();
+                            //frmAlumno.dispose();
                             ctrPrin.cerradoJIF();
                         }
                         cont = 0;
@@ -528,7 +528,7 @@ public class FrmAlumnoCTR {
         frmAlumno.getLbl_ErrConEmergencia().setVisible(false);
         frmAlumno.getLbl_ErrTipoIdenti().setVisible(false);
         frmAlumno.getTxt_Nombre().setEnabled(false);
-        frmAlumno.getTxt_Cedula().setEnabled(false);
+        //frmAlumno.getTxt_Cedula().setEnabled(false);
         //frmAlumno.getBtn_Guardar().setEnabled(false);
     }
 

@@ -11,7 +11,7 @@ import modelo.lugar.LugarMD;
  */
 public class DocenteMD extends PersonaMD {
 
-    private String codigo, docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente, tipoIdenticacion;
+    private String codigo, docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente, tipoIdenticacion, observacion;
     private int docenteCategoria, idDocente;
     private boolean docenteOtroTrabajo, docenteCapacitador;
     private LocalDate fechaInicioContratacion, fechaFinContratacion;
@@ -19,7 +19,11 @@ public class DocenteMD extends PersonaMD {
     public DocenteMD() {
     }
 
-    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, String tituloDocente, String abreviaturaDocente, String tipoIdenticacion, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, boolean docenteCapacitador, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion) {
+    public DocenteMD(String codigo, String docenteTipoTiempo, String estado,
+            String tituloDocente, String abreviaturaDocente, String tipoIdenticacion,
+            int docenteCategoria, int idDocente, boolean docenteOtroTrabajo,
+            boolean docenteCapacitador, LocalDate fechaInicioContratacion,
+            LocalDate fechaFinContratacion, String observacion) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
         this.estado = estado;
@@ -32,6 +36,7 @@ public class DocenteMD extends PersonaMD {
         this.docenteCapacitador = docenteCapacitador;
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
+        this.observacion = observacion;
     }
 
     public String getCodigo() {
@@ -40,6 +45,14 @@ public class DocenteMD extends PersonaMD {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     public String getDocenteTipoTiempo() {

@@ -85,5 +85,21 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
         return lista;
     }
 
+     public void eliminar(EstrategiasUnidadMD e) {
+
+        try {
+             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"EstrategiasUnidad\"\n"
+                    + "	WHERE id_estrategia_unidad=?");
+
+            st.setInt(1, e.getIdEstrategiaUnidad());
+            
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }
