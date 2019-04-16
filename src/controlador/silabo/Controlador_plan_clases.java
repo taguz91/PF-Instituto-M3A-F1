@@ -37,11 +37,11 @@ public class Controlador_plan_clases {
          
      }
      
-     public List<CarreraMD> cargarComboCarreras(){
-         List<CarreraMD> carrerasDocente=CarrerasBDS.consultar(conexion, usuario.getUsername());
-         carrerasDocente.forEach((cmd)-> {
-             frmConfiguraciónPlanClase.
-         });
-     }
+//     public List<CarreraMD> cargarComboCarreras(){
+//         List<CarreraMD> carrerasDocente=CarrerasBDS.consultar(conexion, usuario.getUsername());
+////         carrerasDocente.forEach((cmd)-> {
+////             frmConfiguraciónPlanClase.
+////         });
+//     }
      
 }
