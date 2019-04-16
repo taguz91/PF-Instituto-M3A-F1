@@ -10,5 +10,7 @@ package controlador.silabo;
  * @author ANDRES BERMEO
  */
 public class Controlador_plan_clases {
-    
+     public void kjdchdjvcnv(){
+         System.out.println("");
+     }
 }
