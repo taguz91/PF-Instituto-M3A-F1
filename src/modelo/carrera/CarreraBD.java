@@ -3,6 +3,7 @@ package modelo.carrera;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -99,10 +100,11 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-    
+
     /**
      * Consultamos todas la carreras activas.
-     * @return 
+     *
+     * @return
      */
     public ArrayList<CarreraMD> cargarCarreras() {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
@@ -119,13 +121,14 @@ public class CarreraBD extends CarreraMD {
                 + "FROM public.\"Carreras\" c\n"
                 + "WHERE carrera_activo = TRUE\n"
                 + "ORDER BY carrera_fecha_inicio;";
-        return consultarCarrerasTbl(sql); 
+        return consultarCarrerasTbl(sql);
     }
-    
+
     /**
      * Buscamos las carreras, por nombre o codigo.
+     *
      * @param aguja
-     * @return 
+     * @return
      */
     public ArrayList<CarreraMD> buscarCarrera(String aguja) {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
@@ -143,13 +146,14 @@ public class CarreraBD extends CarreraMD {
                 + "	carrera_codigo ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%'\n"
                 + ")ORDER BY carrera_fecha_inicio;";
-        return consultarCarrerasTbl(sql); 
+        return consultarCarrerasTbl(sql);
     }
-    
+
     /**
      * Consulatamos carrera para tabla
+     *
      * @param sql
-     * @return 
+     * @return
      */
     private ArrayList<CarreraMD> consultarCarrerasTbl(String sql) {
         ArrayList<CarreraMD> carreras = new ArrayList();
@@ -171,7 +175,7 @@ public class CarreraBD extends CarreraMD {
                         docen.setSegundoApellido(nombres[3]);
                     }
                     carrera.setCoordinador(docen);
-                    
+
                     carrera.setNombre(rs.getString("carrera_nombre"));
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
@@ -254,6 +258,31 @@ public class CarreraBD extends CarreraMD {
             System.out.println(e.getMessage());
         }
         return carrera;
+    }
+
+    public static List<CarreraMD> selectIdNombreAll() {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Carreras\".id_carrera,\n"
+                + "\"public\".\"Carreras\".carrera_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"Carreras\"";
+
+        List<CarreraMD> lista = new ArrayList<>();
+        ResultSet rs = ResourceManager.Query(SELECT);
+        try {
+            while (rs.next()) {
+
+                CarreraMD carrera = new CarreraMD();
+
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                lista.add(carrera);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lista;
     }
 
 }

@@ -471,7 +471,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> buscar(String aguja) {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"
@@ -486,7 +486,7 @@ public class DocenteBD extends DocenteMD {
     }
 
         public ArrayList<DocenteMD> buscarEliminados(String aguja) {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+        String sql = "SELECT docente_codigo,id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"

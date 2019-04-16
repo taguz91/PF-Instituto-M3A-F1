@@ -132,7 +132,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
-        if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
+        if (vtnDocente.getCbxDocentesEliminados().isSelected()){
             docentesMD = docente.cargarDocentesEliminados();
             llenarTabla(docentesMD);
             vtnDocente.getBtnEditar().setText("Habilitar Docente");
@@ -172,7 +172,7 @@ public class VtnDocenteCTR {
 
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
+            if (vtnDocente.getCbxDocentesEliminados().isSelected()){
                 docentesMD = docente.buscarEliminados(aguja);
                 llenarTabla(docentesMD);
             } else {
