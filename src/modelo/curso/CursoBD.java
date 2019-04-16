@@ -139,6 +139,10 @@ public class CursoBD extends CursoMD {
         return consultarCursos(sql);
     }
     
+    /**
+     * Cargamos los cursos eliminados
+     * @return 
+     */
     public ArrayList<CursoMD> cargarCursosEliminados() {
         String sql = "SELECT id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
