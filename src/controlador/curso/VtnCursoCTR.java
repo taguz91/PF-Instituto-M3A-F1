@@ -296,11 +296,19 @@ public class VtnCursoCTR {
         if (posCur >= 0) {
             String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
             int num = curso.numAlumnos(cursos.get(posCur).getId_curso());
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere eliminar el curso " + nom + "\n"
-                    + "Se eliminaran todos los alumnos de este curso: " + num);
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere "
+                    + vtnCurso.getBtnEliminar().getText().toLowerCase() + " el curso " + nom + "\n"
+                    + "Se " + vtnCurso.getBtnEliminar().getText().toLowerCase()
+                    + "an todos los alumnos de este curso: " + num);
             if (r == JOptionPane.YES_OPTION) {
-                curso.eliminarCurso(cursos.get(posCur).getId_curso());
+                if (vtnCurso.getCbxEliminados().isSelected()) {
+                    curso.activarCurso(cursos.get(posCur).getId_curso());
+                } else {
+                    curso.eliminarCurso(cursos.get(posCur).getId_curso());
+                }
+                verCursosEliminados();
             }
+
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una final antes.");
         }
