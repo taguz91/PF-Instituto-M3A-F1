@@ -38,7 +38,9 @@ CREATE UNIQUE INDEX "usuariospersona" ON "public"."Usuarios_Persona" USING btree
   ALUMNO CURSO
 
 */
-CREATE MATERIALIZED VIEW  "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id_almn_curso,
+CREATE MATERIALIZED VIEW "public"."ViewAlumnoCurso"
+AS
+SELECT DISTINCT "AlumnoCurso".id_almn_curso,
     "AlumnoCurso".id_alumno,
     "AlumnoCurso".id_curso,
     "AlumnoCurso".almn_curso_nt_1_parcial,
@@ -71,14 +73,33 @@ CREATE MATERIALIZED VIEW  "public"."ViewAlumnoCurso" AS  SELECT "AlumnoCurso".id
     "PeriodoLectivo".prd_lectivo_estado,
     "PeriodoLectivo".prd_lectivo_activo,
     "Jornadas".nombre_jornada,
-    "Materias".materia_nombre
-   FROM (((((("AlumnoCurso"
+    "Materias".materia_nombre,
+    per_doc.persona_identificacion AS ident_docente,
+    per_doc.persona_primer_apellido AS pri_ape_docente,
+    per_doc.persona_segundo_apellido AS seg_ape_docente,
+    per_doc.persona_primer_nombre AS pri_nom_docente,
+    per_doc.persona_segundo_nombre AS seg_nom_docente,
+    "Carreras".carrera_nombre,
+    per_coor.persona_identificacion AS coor_ident,
+    per_coor.persona_primer_apellido AS coor_prim_apellido,
+    per_coor.persona_segundo_apellido AS coor_segn_apellido,
+    per_coor.persona_primer_nombre AS coor_prim_nombre,
+    per_coor.persona_segundo_nombre AS coor_segn_nombre,
+    "Carreras".id_docente_coordinador,
+    "Materias".materia_total_horas,
+    (("AlumnoCurso".almn_curso_num_faltas * 100) / "Materias".materia_total_horas) AS "PORCENTAJE_FALTAS"
+   FROM ((((((((((("AlumnoCurso"
      JOIN "Alumnos" ON (("AlumnoCurso".id_alumno = "Alumnos".id_alumno)))
      JOIN "Personas" ON (("Alumnos".id_persona = "Personas".id_persona)))
      JOIN "Cursos" ON (("AlumnoCurso".id_curso = "Cursos".id_curso)))
      JOIN "PeriodoLectivo" ON (("Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo)))
      JOIN "Jornadas" ON (("Cursos".id_jornada = "Jornadas".id_jornada)))
-     JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)));
+     JOIN "Materias" ON (("Cursos".id_materia = "Materias".id_materia)))
+     JOIN "Docentes" ON (("Docentes".id_docente = "Cursos".id_docente)))
+     JOIN "Personas" per_doc ON (("Docentes".id_persona = per_doc.id_persona)))
+     JOIN "Carreras" ON (("Carreras".id_carrera = "PeriodoLectivo".id_carrera)))
+     JOIN "Docentes" doc_coor ON ((doc_coor.id_docente = "Carreras".id_docente_coordinador)))
+     JOIN "Personas" per_coor ON ((per_coor.id_persona = doc_coor.id_persona)));
 
 ALTER MATERIALIZED VIEW "public"."ViewAlumnoCurso" OWNER TO "permisos";
 
@@ -198,81 +219,5 @@ ALTER MATERIALIZED VIEW "public"."ViewDocentes" OWNER TO "ROOT";
 
 
 
-
-//TRIGGERS
-
-CREATE OR REPLACE FUNCTION actualizar_vistas()
-RETURNS TRIGGER AS $actualizar_vistas$
-BEGIN
- REFRESH MATERIALIZED VIEW "Usuarios_Persona";
- REFRESH MATERIALIZED VIEW "ViewAlumnoCurso";
- REFRESH MATERIALIZED VIEW "ViewCursosPermisosNotas";
- REFRESH MATERIALIZED VIEW "ViewPeriodoIngresoNotas";
- REFRESH MATERIALIZED VIEW "ViewDocentes";
- 
- RETURN NEW;
-END;
-$actualizar_vistas$ LANGUAGE plpgsql;
-
-CREATE TRIGGER actualizar_usuarios
-AFTER INSERT OR UPDATE
-ON public."Usuarios" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_personas
-AFTER INSERT OR UPDATE
-ON public."Personas" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
-
-
-CREATE TRIGGER actualizar_AlumnoCurso
-AFTER INSERT OR UPDATE
-ON public."AlumnoCurso" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_Alumnos
-AFTER INSERT OR UPDATE
-ON public."Alumnos" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_Cursos
-AFTER INSERT OR UPDATE
-ON public."Cursos" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_periodoLectivo
-AFTER INSERT OR UPDATE
-ON public."PeriodoLectivo" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_ingresonotas
-AFTER INSERT OR UPDATE
-ON public."IngresoNotas" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_materias
-AFTER INSERT OR UPDATE
-ON public."Materias" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_docentes
-AFTER INSERT OR UPDATE
-ON public."Docentes" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_periodoingresonotas
-AFTER INSERT OR UPDATE
-ON public."PeriodoIngresoNotas" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_tipodenota
-AFTER INSERT OR UPDATE
-ON public."TipoDeNota" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
- 
- CREATE TRIGGER actualizar_mMallaAlumno
-AFTER INSERT OR UPDATE
-ON public."MallaAlumno" FOR EACH ROW
- EXECUTE PROCEDURE actualizar_vistas();
 
 
