@@ -76,12 +76,48 @@ public class CursoBD extends CursoMD {
     }
     
     public void eliminarCurso(int idCurso){
-        String nsql = ""; 
+        String nsql = "UPDATE public.\"Cursos\" "
+                + "SET curso_activo = false "
+                + "WHERE id_curso = "+idCurso+";";  
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
                     + "compruebe su conexion a internet.");
+        }
+    }
+    
+    public void activarCurso(int idCurso){
+        String nsql = "UPDATE public.\"Cursos\" "
+                + "SET curso_activo = true "
+                + "WHERE id_curso = "+idCurso+";";  
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se activo correctamente. ");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo activar,"
+                    + "compruebe su conexion a internet.");
+        }
+    }
+    
+    public int numAlumnos(int idCurso){
+        int num = 0; 
+        String sql = "SELECT count(id_curso) "
+                + "FROM public.\"AlumnoCurso\" "
+                + "WHERE id_curso ="+idCurso+";"; 
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                   num = rs.getInt(1);
+                }
+                return num;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos. ");
+            System.out.println(e.getMessage());
+            return 0;
         }
     }
 
@@ -99,7 +135,25 @@ public class CursoBD extends CursoMD {
                 + "p.id_persona = d.id_persona AND persona_activa = true AND\n"
                 + "docente_activo = true AND \n"
                 + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
-                + "prd_lectivo_activo = true;";
+                + "prd_lectivo_activo = true AND curso_activo = true;";
+        return consultarCursos(sql);
+    }
+    
+    public ArrayList<CursoMD> cargarCursosEliminados() {
+        String sql = "SELECT id_curso, materia_nombre, \n"
+                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, \n"
+                + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
+                + "prd_lectivo_nombre \n"
+                + "FROM public.\"Cursos\" c, public.\"Materias\" m, \n"
+                + "public.\"Docentes\" d, public.\"Personas\" p, \n"
+                + "public.\"PeriodoLectivo\" pl \n"
+                + "WHERE m.id_materia = c.id_materia AND \n"
+                + "d.id_docente = c.id_docente AND \n"
+                + "p.id_persona = d.id_persona AND persona_activa = true AND\n"
+                + "docente_activo = true AND \n"
+                + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
+                + "prd_lectivo_activo = true AND curso_activo = false;";
         return consultarCursos(sql);
     }
 
