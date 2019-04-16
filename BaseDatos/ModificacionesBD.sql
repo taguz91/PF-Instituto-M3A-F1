@@ -109,18 +109,18 @@ ALTER TABLE public."Silabo" ADD COLUMN "estado_silabo" integer;
 --Modificaciones BD 16/4/2019
 
 CREATE TABLE "RolesPeriodo"(
-	"id_rol_prd" serial NOT NULL, 
-	"id_prd_lectivo" integer NOT NULL, 
-	"rol_prd" character varying(200) NOT NULL, 
-	"rol_activo" boolean DEFAULT 'true', 
+	"id_rol_prd" serial NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"rol_prd" character varying(200) NOT NULL,
+	"rol_activo" boolean DEFAULT 'true',
 	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
 ) WITH (OIDS = FALSE);
 
 CREATE TABLE "RolesDocente"(
-	"id_rol_docente" serial NOT NULL, 
+	"id_rol_docente" serial NOT NULL,
 	"id_docente" integer NOT NULL,
-	"id_rol_prd" integer NOT NULL, 
-	"rol_docente_activo" boolean default 'true',  
+	"id_rol_prd" integer NOT NULL,
+	"rol_docente_activo" boolean default 'true',
 	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
 ) WITH (OIDS = FALSE);
 
@@ -147,13 +147,13 @@ ALTER TABLE public."Docentes" ADD COLUMN "docente_en_funcion" boolean default 't
 ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
 
 
---NUevas tablas GAndres 
+--NUevas tablas GAndres
 
---ELiminar tablas de KEVIN 
-DROP TABLE public."Plan_de_clases" CASCADE; 
-DROP TABLE public."Trabajo_autonomo" CASCADE; 
+--ELiminar tablas de KEVIN
+DROP TABLE public."Plan_de_clases" CASCADE;
+DROP TABLE public."Trabajo_autonomo" CASCADE;
 DROP TABLE public."Recursos_plan_clases" CASCADE;
-DROP TABLE public."Recursos" CASCADE; 
+DROP TABLE public."Recursos" CASCADE;
 
 DROP SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
 DROP SEQUENCE public."Recursos_id_recurso_seq";
@@ -309,9 +309,9 @@ TABLESPACE pg_default;
 ALTER TABLE public."Estrategias_metodologias"
     OWNER to postgres;
 
---Dos campos nuevos 
-ALTER TABLE public."Silabo" ADD COLUMN documento_silabo bytea; 
-ALTER TABLE public."Silabo" ADD COLUMN documento_analitico bytea; 
+--Dos campos nuevos
+ALTER TABLE public."Silabo" ADD COLUMN documento_silabo bytea;
+ALTER TABLE public."Silabo" ADD COLUMN documento_analitico bytea;
 
 
 --ALTERS G16 16/Abril/2019
@@ -321,3 +321,23 @@ ALTER TABLE "TipoDeNota" ADD COLUMN id_carrera integer;
 ALTER TABLE "TipoDeNota" ADD CONSTRAINT "carrera_TipoDeNota_fk"
     FOREIGN KEY ("id_carrera") REFERENCES "Carreras" ("id_carrera")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Reestructuracion de para matricula
+
+CREATE TABLE "Matricula"(
+	"id_matricula" serial NOT NULL,
+	"id_alumno" integer NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"matricula_fecha" TIMESTAMP DEFAULT now(),
+  "matricula_ficha" bytea,
+	"matricula_activa" boolean NOT NULL DEFAULT 'true',
+	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula")
+) WITH (OIDS = FALSE);
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk1"
+FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
+FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;

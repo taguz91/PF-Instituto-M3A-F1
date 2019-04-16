@@ -242,18 +242,18 @@ CREATE TABLE "DocentesMateria"(
 --Modificaciones 15/4/2019
 
 CREATE TABLE "RolesPeriodo"(
-	"id_rol_prd" serial NOT NULL, 
-	"id_prd_lectivo" integer NOT NULL, 
-	"rol_prd" character varying(200) NOT NULL, 
-	"rol_activo" boolean DEFAULT 'true', 
+	"id_rol_prd" serial NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"rol_prd" character varying(200) NOT NULL,
+	"rol_activo" boolean DEFAULT 'true',
 	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
 ) WITH (OIDS = FALSE);
 
 CREATE TABLE "RolesDocente"(
-	"id_rol_docente" serial NOT NULL, 
+	"id_rol_docente" serial NOT NULL,
 	"id_docente" integer NOT NULL,
-	"id_rol_prd" integer NOT NULL, 
-	"rol_docente_activo" boolean default 'true',  
+	"id_rol_prd" integer NOT NULL,
+	"rol_docente_activo" boolean default 'true',
 	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
 ) WITH (OIDS = FALSE);
 
@@ -274,12 +274,13 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 --Para matricula
 
 CREATE TABLE "Matricula"(
-	"id_matricula" serial NOT NULL,  
-	"id_alumno" integer NOT NULL, 
-	"id_prd_lectivo" integer NOT NULL, 
-	"matricula_fecha" TIMESTAMP DEFAULT now(), 
+	"id_matricula" serial NOT NULL,
+	"id_alumno" integer NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"matricula_fecha" TIMESTAMP DEFAULT now(),
+  "matricula_ficha" bytea,
 	"matricula_activa" boolean NOT NULL DEFAULT 'true',
-	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula") 
+	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula")
 ) WITH (OIDS = FALSE);
 
 ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk1"
@@ -289,6 +290,7 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
 /*
 	TABLAS GRUPO 16
 */
@@ -517,7 +519,7 @@ CREATE TABLE "Silabo" (
 	id_materia integer NOT NULL,
   id_prd_lectivo integer NOT NULL,
 	estado_silabo integer NOT NULL,
-	documento_silabo bytea, 
+	documento_silabo bytea,
 	documento_analitico bytea,
 
 	PRIMARY KEY(id_silabo),
