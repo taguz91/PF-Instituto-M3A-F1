@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
+import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -35,6 +36,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.docente.VtnFinContratacion;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
@@ -375,9 +377,8 @@ public class VtnDocenteCTR {
 
     private void finContratacion() {
          int posFila = vtnDocente.getTblDocente().getSelectedRow();
-         
          if(posFila >= 0){
-             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin, docentesMD.get(posFila));
+             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR( conecta, vtnPrin, docentesMD.get(posFila));
         vtn_fin_contratacion.iniciar();
          }else{
              JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
