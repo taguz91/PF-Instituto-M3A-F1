@@ -169,9 +169,9 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
                 + "curso_capacidad, curso_ciclo \n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
-                + "WHERE curso_nombre = '" + nombre + "' AND\n"
+                + "WHERE curso_nombre = '"+nombre+"' AND\n"
                 + "m.id_materia = c.id_materia AND\n"
-                + "id_prd_lectivo = " + idPrdLectivo + ";";
+                + "id_prd_lectivo = "+idPrdLectivo+";";
         ArrayList<CursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -373,17 +373,13 @@ public class CursoBD extends CursoMD {
         CursoMD c = new CursoMD();
         try {
             c.setId_curso(rs.getInt("id_curso"));
-            MateriaMD m = new MateriaMD();
-            m.setId(rs.getInt("id_materia"));
+            MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
             c.setId_materia(m);
-            PeriodoLectivoMD p = new PeriodoLectivoMD();
-            p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+            PeriodoLectivoMD p = prd.buscarPerido(rs.getInt("id_prd_lectivo"));
             c.setId_prd_lectivo(p);
-            DocenteMD d = new DocenteMD();
-            d.setIdDocente(rs.getInt("id_docente"));
+            DocenteMD d = doc.buscarDocenteParaReferencia(rs.getInt("id_docente"));
             c.setId_docente(d);
-            JornadaMD j = new JornadaMD();
-            j.setId(rs.getInt("id_jornada"));
+            JornadaMD j = jrd.buscarJornada(rs.getInt("id_jornada"));
             c.setCurso_jornada(j);
             c.setCurso_nombre(rs.getString("curso_nombre"));
             c.setCurso_capacidad(rs.getInt("curso_capacidad"));
