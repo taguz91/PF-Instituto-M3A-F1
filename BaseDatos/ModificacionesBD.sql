@@ -155,6 +155,11 @@ DROP TABLE public."Trabajo_autonomo" CASCADE;
 DROP TABLE public."Recursos_plan_clases" CASCADE;
 DROP TABLE public."Recursos" CASCADE; 
 
+DROP SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
+DROP SEQUENCE public."Recursos_id_recurso_seq";
+DROP SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
+DROP SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq";
+
 --Actualizamos las tablas 16/4/2019
 
 CREATE SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
