@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="2.143588810000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="362"/>
+	<property name="ireport.y" value="32"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/Reportes/"]]></defaultValueExpression>
 	</parameter>
@@ -48,6 +48,7 @@
 	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRE_PROF",
 	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDO_PROF",
 	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDOS_COORDINADOR",
+	"ViewAlumnoCurso"."PORCENTAJE_FALTAS",
 	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRES_COORDINADOR" 
 FROM
 	"ViewAlumnoCurso" 
@@ -83,6 +84,7 @@ ORDER BY
 	<field name="NOMBRE_PROF" class="java.lang.String"/>
 	<field name="APELLIDO_PROF" class="java.lang.String"/>
 	<field name="APELLIDOS_COORDINADOR" class="java.lang.String"/>
+	<field name="PORCENTAJE_FALTAS" class="java.lang.Integer"/>
 	<field name="NOMBRES_COORDINADOR" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>

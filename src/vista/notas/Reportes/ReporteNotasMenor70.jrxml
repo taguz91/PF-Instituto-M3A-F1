@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0000000000000078"/>
-	<property name="ireport.x" value="319"/>
-	<property name="ireport.y" value="96"/>
-	<parameter name="consulta" class="java.lang.String">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_ciclo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_paralelo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombre_jornada" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="materia_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[$P!{consulta}]]>
+		<![CDATA[SELECT
+	"ViewAlumnoCurso".id_alumno,
+	"ViewAlumnoCurso".persona_identificacion,
+	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDOS",
+	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRES",
+	ROUND( "ViewAlumnoCurso".almn_curso_nt_1_parcial, 1 ) AS "APORTE 1",
+	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_interciclo, 1 ) AS "INTERCICLO",
+	ROUND( "ViewAlumnoCurso".almn_curso_nt_2_parcial, 1 ) AS "APORTE 2",
+	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_final, 1 ) AS "EXAMEN FINAL",
+	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_supletorio, 1 ) AS "SUPLETORIO",
+	"ViewAlumnoCurso".almn_curso_asistencia,
+	ROUND( "ViewAlumnoCurso".almn_curso_nota_final, 0 ) AS "NOTA FINAL",
+	"ViewAlumnoCurso".almn_curso_estado,
+	"ViewAlumnoCurso".almn_curso_num_faltas,
+	"ViewAlumnoCurso".materia_nombre,
+	"ViewAlumnoCurso".nombre_jornada,
+	"ViewAlumnoCurso".curso_ciclo,
+	"ViewAlumnoCurso".curso_paralelo,
+	"ViewAlumnoCurso".carrera_nombre,
+	"ViewAlumnoCurso".prd_lectivo_nombre,
+	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRE_PROF",
+	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDO_PROF",
+	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDOS_COORDINADOR",
+	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRES_COORDINADOR" 
+FROM
+	"ViewAlumnoCurso" 
+WHERE
+	"public"."ViewAlumnoCurso".id_docente = $P{id_docente}
+	AND "public"."ViewAlumnoCurso".prd_lectivo_nombre =  $P{prd_lectivo_nombre}
+	AND "public"."ViewAlumnoCurso".curso_ciclo = $P{curso_ciclo}
+	AND "public"."ViewAlumnoCurso".curso_paralelo = $P{curso_paralelo}
+	AND "public"."ViewAlumnoCurso".nombre_jornada = $P{nombre_jornada}
+	AND "public"."ViewAlumnoCurso".materia_nombre = $P{materia_nombre}
+	AND "public"."ViewAlumnoCurso".almn_curso_nota_final < 70
+ORDER BY
+	"public"."ViewAlumnoCurso".persona_primer_apellido ASC]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
@@ -24,13 +74,12 @@
 	<field name="almn_curso_num_faltas" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
-	<field name="materia_ciclo" class="java.lang.Integer"/>
+	<field name="curso_ciclo" class="java.lang.Integer"/>
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
 	<field name="NOMBRE_PROF" class="java.lang.String"/>
 	<field name="APELLIDO_PROF" class="java.lang.String"/>
-	<field name="% Faltas" class="java.lang.Integer"/>
 	<field name="APELLIDOS_COORDINADOR" class="java.lang.String"/>
 	<field name="NOMBRES_COORDINADOR" class="java.lang.String"/>
 	<background>
@@ -139,7 +188,7 @@
 			<textField>
 				<reportElement x="245" y="146" width="25" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_ciclo}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_ciclo}.toString()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="203" width="1520" height="1"/>
