@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e00cc26e-57d3-4e10-9d65-aad696b6f723">
 	<property name="ireport.zoom" value="1.1000000000000092"/>
-	<property name="ireport.x" value="436"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/Reportes/"]]></defaultValueExpression>
@@ -57,7 +57,8 @@ WHERE
 	AND "public"."ViewAlumnoCurso".curso_ciclo =  $P{curso_ciclo}
 	AND "public"."ViewAlumnoCurso".curso_paralelo =  $P{curso_paralelo}
 	AND "public"."ViewAlumnoCurso".nombre_jornada = $P{nombre_jornada}
-	AND "public"."ViewAlumnoCurso".materia_nombre = $P{materia_nombre}]]>
+	AND "public"."ViewAlumnoCurso".materia_nombre = $P{materia_nombre}
+ORDER BY "ViewAlumnoCurso".persona_primer_apellido ASC]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
