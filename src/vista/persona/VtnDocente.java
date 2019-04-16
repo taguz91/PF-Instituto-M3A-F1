@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+
 /**
  *
  * @author Johnny
@@ -74,14 +75,6 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     
     
 
-    public JButton getBtnFinContratacion() {
-        return btnFinContratacion;
-    }
-
-    public void setBtnFinContratacion(JButton btnFinContratacion) {
-        this.btnFinContratacion = btnFinContratacion;
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,11 +96,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         btnReporteDocente = new javax.swing.JButton();
         btnReporteDocenteMateria = new javax.swing.JButton();
-<<<<<<< HEAD
         cbxDocentesEliminados = new javax.swing.JCheckBox();
-=======
-        btnFinContratacion = new javax.swing.JButton();
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 
         setClosable(true);
         setIconifiable(true);
@@ -159,11 +148,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
             }
         });
 
-<<<<<<< HEAD
         cbxDocentesEliminados.setText("Ver Docentes Eliminados");
-=======
-        btnFinContratacion.setText("Fin de Contratación");
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,17 +158,12 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-<<<<<<< HEAD
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cbxDocentesEliminados))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                         .addGap(294, 294, 294)
-=======
-                        .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(348, 348, 348)
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnReporteDocente)
@@ -196,8 +176,6 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFinContratacion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,18 +195,11 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
-<<<<<<< HEAD
                         .addComponent(btnEliminar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(cbxDocentesEliminados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                        .addComponent(btnEliminar)
-                        .addComponent(btnFinContratacion)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
->>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -245,13 +216,12 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     private void btnReporteDocenteMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteDocenteMateriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReporteDocenteMateriaActionPerformed
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnFinContratacion;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteDocente;
     private javax.swing.JButton btnReporteDocenteMateria;

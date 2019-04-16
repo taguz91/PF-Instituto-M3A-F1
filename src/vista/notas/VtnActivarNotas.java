@@ -93,8 +93,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public void setLblEstado(JLabel lblEstado) {
         this.lblEstado = lblEstado;
     }
-    
-    
+
     
 
     /**

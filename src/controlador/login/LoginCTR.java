@@ -33,8 +33,6 @@ public class LoginCTR {
     private final ImageIcon icono;
     private final Image ista;
 
-    private boolean cargar = true;
-
     public LoginCTR(Login vista, UsuarioBD modelo) {
         this.vista = vista;
         this.modelo = modelo;
@@ -105,43 +103,40 @@ public class LoginCTR {
 
     //Metodos de Apoyo
     private void Login() {
+        new Thread(() -> {
 
-        if (cargar) {
-            new Thread(() -> {
-                cargar = false;
-                Middlewares.setLoadCursorInWindow(vista);
+            Middlewares.setLoadCursorInWindow(vista);
 
-                USERNAME = vista.getTxtUsername().getText();
-                PASSWORD = vista.getTxtPassword().getText();
+            USERNAME = vista.getTxtUsername().getText();
+            PASSWORD = vista.getTxtPassword().getText();
 
-                modelo.setUsername(vista.getTxtUsername().getText());
-                modelo.setPassword(vista.getTxtPassword().getText());
+            modelo.setUsername(vista.getTxtUsername().getText());
+            modelo.setPassword(vista.getTxtPassword().getText());
 
-                try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+            try {
+                List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
-                    if (!Lista.isEmpty()) {
+                if (!Lista.isEmpty()) {
 
-                        modelo.setPersona(Lista.get(0).getPersona());
+                    modelo.setPersona(Lista.get(0).getPersona());
 
-                        vista.dispose();
+                    vista.dispose();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
-                        vtn.Init();
+                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
+                    vtn.Init();
 
-                    } else {
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    }
-
-                } catch (NullPointerException e) {
+                } else {
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
-                Middlewares.setDefaultCursorInWindow(vista);
-                cargar = true;
-            }).start();
-        }
+
+            } catch (NullPointerException e) {
+                vista.getLblAvisos().setVisible(true);
+                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+            }
+            Middlewares.setDefaultCursorInWindow(vista);
+
+        }).start();
 
     }
 

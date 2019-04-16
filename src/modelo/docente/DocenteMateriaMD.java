@@ -11,7 +11,6 @@ public class DocenteMateriaMD {
     private int id; 
     private DocenteMD docente; 
     private MateriaMD materia; 
-    private boolean activo;
 
     public int getId() {
         return id;
@@ -35,13 +34,5 @@ public class DocenteMateriaMD {
 
     public void setMateria(MateriaMD materia) {
         this.materia = materia;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
     }
 }
