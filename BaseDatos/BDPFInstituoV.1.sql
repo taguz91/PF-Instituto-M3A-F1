@@ -349,6 +349,7 @@ CREATE TABLE "TipoDeNota"(
 	"tipo_nota_valor_maximo" NUMERIC(6,2) NOT NULL,
 	"tipo_nota_fecha_creacion" DATE DEFAULT CURRENT_DATE,
 	"tipo_nota_estado" BOOLEAN DEFAULT TRUE,
+	"id_carrera" INTEGER NOT NULL,
 
 
 	CONSTRAINT tipo_de_nota_pk PRIMARY KEY("id_tipo_nota")
@@ -918,6 +919,11 @@ ALTER TABLE "RolesDelUsuario" ADD CONSTRAINT "usuarios_rolesUsuarios_fk"
 
 ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
     FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+--AGREGADA EL 16/Abril/2019
+ALTER TABLE "TipoDeNota" ADD CONSTRAINT "carrera_TipoDeNota_fk"
+    FOREIGN KEY ("id_carrera") REFERENCES "Carreras" ("id_carrera")
         ON DELETE CASCADE ON UPDATE CASCADE;
 
 --Tablas nuevas de G
