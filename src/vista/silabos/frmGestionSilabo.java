@@ -1165,7 +1165,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
+                "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación"
             }
         ));
         tblPractica.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1186,9 +1186,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblPractica.getColumnModel().getColumn(4).setMinWidth(150);
             tblPractica.getColumnModel().getColumn(4).setPreferredWidth(150);
             tblPractica.getColumnModel().getColumn(4).setMaxWidth(150);
-            tblPractica.getColumnModel().getColumn(5).setMinWidth(0);
-            tblPractica.getColumnModel().getColumn(5).setPreferredWidth(0);
-            tblPractica.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         pnlPractica.add(scrPractica, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));

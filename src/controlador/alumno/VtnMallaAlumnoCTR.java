@@ -179,8 +179,8 @@ public class VtnMallaAlumnoCTR {
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Malla alumnos");
 
-//        mallas = mallaAlm.cargarMallasTbl();
-//        llenarTbl(mallas);
+        mallas = mallaAlm.cargarMallasTbl();
+        llenarTbl(mallas);
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Malla alumnos");
@@ -356,15 +356,6 @@ public class VtnMallaAlumnoCTR {
         if (posCar > 0) {
             vtnMallaAlm.getCmbAlumnos().setEnabled(true);
             cargarCmbEstado();
-            
-            vtnPrin.setCursor(new Cursor(3));
-            ctrPrin.estadoCargaVtn("Malla alumnos");
-
-            mallas = mallaAlm.cargarMallaAlumnoPorCarrera(carreras.get(posCar - 1).getId());
-            llenarTbl(mallas);
-            //Cuando termina de cargar todo se le vuelve a su estado normal.
-            vtnPrin.setCursor(new Cursor(0));
-            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         } else {
             vtnMallaAlm.getCmbAlumnos().removeAllItems();
             vtnMallaAlm.getCmbAlumnos().setEnabled(false);

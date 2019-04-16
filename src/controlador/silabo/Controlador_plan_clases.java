@@ -1,0 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package controlador.silabo;
+
+/**
+ *
+ * @author ANDRES BERMEO
+ */
+public class Controlador_plan_clases {
+     public void kjdchdjvcnv(){
+         System.out.println("");
+     }
+}

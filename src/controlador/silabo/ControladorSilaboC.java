@@ -103,10 +103,8 @@ public class ControladorSilaboC {
 
     private DefaultListModel modeloBase;
 
-    private static Integer idEvaluacionSig = 0;
+    private static Integer idEvaluacionSig=0;
     private Integer idEvaluacion;
-    
-    private boolean retroceso=false;
 
     public ControladorSilaboC(VtnPrincipal principal, UsuarioBD usuario, ConexionBD conexion) {
         this.principal = principal;
@@ -203,8 +201,6 @@ public class ControladorSilaboC {
 
     public void iniciarSilabo(SilaboBD silabo, int numUnidades) {
 
-        configuracion.dispose();
-        
         carrerasDocente = new ArrayList<>();
 
         periodosCarrera = new ArrayList<>();
@@ -301,6 +297,7 @@ public class ControladorSilaboC {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
                 unidadSeleccionada.setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
                 actualizarUnidad(unidadSeleccionada);
+            //Prueba CHACON
             }
 
         });
@@ -865,13 +862,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 gestion.setVisible(false);
-
-                if (retroceso) {
-                    bibliografia.setVisible(true);
-                } else {
-                    citarReferencias(silabo, bibliografia);
-                    retroceso=true;
-                }
+                citarReferencias(silabo, bibliografia);
 
             }
 
@@ -959,7 +950,6 @@ public class ControladorSilaboC {
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
 
-                configuracion.dispose();
                 gestion.dispose();
                 bibliografia.dispose();
 
@@ -1283,7 +1273,8 @@ public class ControladorSilaboC {
             }
 
         }
-
+        
+      
     }
 
     public void limpiarEvaluacionesAD() {
