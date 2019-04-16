@@ -5,6 +5,12 @@
  */
 package vista.silabos;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTable;
+
 /**
  *
  * @author Daniel
@@ -18,6 +24,142 @@ public class frmEscogerHorario extends javax.swing.JFrame {
         initComponents();
     }
 
+    public JComboBox<String> getCmbxCarreraH() {
+        return CmbxCarreraH;
+    }
+
+    public void setCmbxCarreraH(JComboBox<String> CmbxCarreraH) {
+        this.CmbxCarreraH = CmbxCarreraH;
+    }
+
+    public JComboBox<String> getCmbxDocenteH() {
+        return CmbxDocenteH;
+    }
+
+    public void setCmbxDocenteH(JComboBox<String> CmbxDocenteH) {
+        this.CmbxDocenteH = CmbxDocenteH;
+    }
+
+    public JComboBox<String> getCmbxJornadaH() {
+        return CmbxJornadaH;
+    }
+
+    public void setCmbxJornadaH(JComboBox<String> CmbxJornadaH) {
+        this.CmbxJornadaH = CmbxJornadaH;
+    }
+
+    public JComboBox<String> getCmbxMateriaH() {
+        return CmbxMateriaH;
+    }
+
+    public void setCmbxMateriaH(JComboBox<String> CmbxMateriaH) {
+        this.CmbxMateriaH = CmbxMateriaH;
+    }
+
+    public JButton getBtnAgregarH() {
+        return btnAgregarH;
+    }
+
+    public void setBtnAgregarH(JButton btnAgregarH) {
+        this.btnAgregarH = btnAgregarH;
+    }
+
+    public JButton getBtnCancelarH() {
+        return btnCancelarH;
+    }
+
+    public void setBtnCancelarH(JButton btnCancelarH) {
+        this.btnCancelarH = btnCancelarH;
+    }
+
+    public JButton getBtnGuardarH() {
+        return btnGuardarH;
+    }
+
+    public void setBtnGuardarH(JButton btnGuardarH) {
+        this.btnGuardarH = btnGuardarH;
+    }
+
+    public JButton getBtnQuitarH() {
+        return btnQuitarH;
+    }
+
+    public void setBtnQuitarH(JButton btnQuitarH) {
+        this.btnQuitarH = btnQuitarH;
+    }
+
+    public JLabel getLbCarreraH() {
+        return lbCarreraH;
+    }
+
+    public void setLbCarreraH(JLabel lbCarreraH) {
+        this.lbCarreraH = lbCarreraH;
+    }
+
+    public JLabel getLbDiasH() {
+        return lbDiasH;
+    }
+
+    public void setLbDiasH(JLabel lbDiasH) {
+        this.lbDiasH = lbDiasH;
+    }
+
+    public JLabel getLbDocenteH() {
+        return lbDocenteH;
+    }
+
+    public void setLbDocenteH(JLabel lbDocenteH) {
+        this.lbDocenteH = lbDocenteH;
+    }
+
+    public JLabel getLbHorarioH() {
+        return lbHorarioH;
+    }
+
+    public void setLbHorarioH(JLabel lbHorarioH) {
+        this.lbHorarioH = lbHorarioH;
+    }
+
+    public JLabel getLbJornadaH() {
+        return lbJornadaH;
+    }
+
+    public void setLbJornadaH(JLabel lbJornadaH) {
+        this.lbJornadaH = lbJornadaH;
+    }
+
+    public JLabel getLbMateriaH() {
+        return lbMateriaH;
+    }
+
+    public void setLbMateriaH(JLabel lbMateriaH) {
+        this.lbMateriaH = lbMateriaH;
+    }
+
+    public JList<String> getListDiasH() {
+        return listDiasH;
+    }
+
+    public void setListDiasH(JList<String> listDiasH) {
+        this.listDiasH = listDiasH;
+    }
+
+    public JList<String> getListHorarioH() {
+        return listHorarioH;
+    }
+
+    public void setListHorarioH(JList<String> listHorarioH) {
+        this.listHorarioH = listHorarioH;
+    }
+
+    public JTable getTblHorarioArmadoH() {
+        return tblHorarioArmadoH;
+    }
+
+    public void setTblHorarioArmadoH(JTable tblHorarioArmadoH) {
+        this.tblHorarioArmadoH = tblHorarioArmadoH;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,60 +169,60 @@ public class frmEscogerHorario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        CmbxCarreraH = new javax.swing.JComboBox<>();
+        lbCarreraH = new javax.swing.JLabel();
+        lbDocenteH = new javax.swing.JLabel();
+        btnAgregarH = new javax.swing.JButton();
+        btnQuitarH = new javax.swing.JButton();
+        btnGuardarH = new javax.swing.JButton();
+        btnCancelarH = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        listHorarioH = new javax.swing.JList<>();
+        lbHorarioH = new javax.swing.JLabel();
+        lbDiasH = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        tblHorarioArmadoH = new javax.swing.JTable();
+        CmbxDocenteH = new javax.swing.JComboBox<>();
+        CmbxMateriaH = new javax.swing.JComboBox<>();
+        lbMateriaH = new javax.swing.JLabel();
+        CmbxJornadaH = new javax.swing.JComboBox<>();
+        lbJornadaH = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        listDiasH = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CmbxCarreraH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel1.setText("Carrera");
+        lbCarreraH.setText("Carrera");
 
-        jLabel2.setText("Docente:");
+        lbDocenteH.setText("Docente:");
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarH.setText("Agregar");
+        btnAgregarH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarHActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Quitar");
+        btnQuitarH.setText("Quitar");
 
-        jButton3.setText("Guardar");
+        btnGuardarH.setText("Guardar");
 
-        jButton4.setText("Cancelar");
+        btnCancelarH.setText("Cancelar");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listHorarioH.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listHorarioH);
 
-        jLabel3.setText("Horario:");
+        lbHorarioH.setText("Horario:");
 
-        jLabel4.setText("Dias:");
+        lbDiasH.setText("Dias:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHorarioArmadoH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -88,24 +230,24 @@ public class frmEscogerHorario extends javax.swing.JFrame {
                 "Hora", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(tblHorarioArmadoH);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CmbxDocenteH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CmbxMateriaH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel5.setText("Materia:");
+        lbMateriaH.setText("Materia:");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CmbxJornadaH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel6.setText("Jornada");
+        lbJornadaH.setText("Jornada");
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
+        listDiasH.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(listDiasH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,32 +261,32 @@ public class frmEscogerHorario extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
+                                    .addComponent(lbDiasH)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
+                                    .addComponent(lbHorarioH))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnAgregarH, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnQuitarH, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbMateriaH)
+                                    .addComponent(CmbxMateriaH, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbCarreraH)
+                                    .addComponent(CmbxCarreraH, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(lbJornadaH)
+                                    .addComponent(CmbxJornadaH, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbDocenteH)
+                                    .addComponent(CmbxDocenteH, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
+                        .addComponent(btnCancelarH)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnGuardarH, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,59 +295,59 @@ public class frmEscogerHorario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbCarreraH)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CmbxCarreraH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
+                            .addComponent(lbMateriaH)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(CmbxMateriaH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2))
+                                .addComponent(CmbxDocenteH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbDocenteH))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
+                            .addComponent(lbJornadaH)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(CmbxJornadaH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(214, 214, 214)
-                        .addComponent(jButton1)
+                        .addComponent(btnAgregarH)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnQuitarH)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
+                        .addComponent(lbHorarioH)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
+                                .addComponent(lbDiasH)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(jButton3))
+                            .addComponent(btnCancelarH)
+                            .addComponent(btnGuardarH))
                         .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarHActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarHActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,25 +385,25 @@ public class frmEscogerHorario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList3;
+    private javax.swing.JComboBox<String> CmbxCarreraH;
+    private javax.swing.JComboBox<String> CmbxDocenteH;
+    private javax.swing.JComboBox<String> CmbxJornadaH;
+    private javax.swing.JComboBox<String> CmbxMateriaH;
+    private javax.swing.JButton btnAgregarH;
+    private javax.swing.JButton btnCancelarH;
+    private javax.swing.JButton btnGuardarH;
+    private javax.swing.JButton btnQuitarH;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbCarreraH;
+    private javax.swing.JLabel lbDiasH;
+    private javax.swing.JLabel lbDocenteH;
+    private javax.swing.JLabel lbHorarioH;
+    private javax.swing.JLabel lbJornadaH;
+    private javax.swing.JLabel lbMateriaH;
+    private javax.swing.JList<String> listDiasH;
+    private javax.swing.JList<String> listHorarioH;
+    private javax.swing.JTable tblHorarioArmadoH;
     // End of variables declaration//GEN-END:variables
 }

@@ -121,6 +121,11 @@
                 <Property name="text" type="java.lang.String" value="Silabos"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -273,6 +278,14 @@
                 <Property name="text" type="java.lang.String" value="Silabo"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgPlandeClase">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+Q"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnOpciones">
@@ -361,7 +374,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel2" pref="33" max="32767" attributes="0"/>
-                  <Component id="pnlMenu" pref="0" max="32767" attributes="0"/>
+                  <Component id="pnlMenu" pref="33" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="dpnlPrincipal" max="32767" attributes="0"/>
