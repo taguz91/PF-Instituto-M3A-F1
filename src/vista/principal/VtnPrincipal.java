@@ -23,6 +23,22 @@ public class VtnPrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
+    public JMenuItem getMnCtPlandeClase() {
+        return mnCtPlandeClase;
+    }
+
+    public void setMnCtPlandeClase(JMenuItem mnCtPlandeClase) {
+        this.mnCtPlandeClase = mnCtPlandeClase;
+    }
+
+    public JMenuItem getMnIgPlandeClase() {
+        return mnIgPlandeClase;
+    }
+
+    public void setMnIgPlandeClase(JMenuItem mnIgPlandeClase) {
+        this.mnIgPlandeClase = mnIgPlandeClase;
+    }
+
     public JButton getBtnIngresarRol() {
         return btnIngresarRol;
     }
@@ -325,6 +341,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
+        mnCtPlandeClase = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
         mnCtHistorialUsers = new javax.swing.JMenuItem();
@@ -345,6 +362,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt = new javax.swing.JMenuItem();
         mnIgRolesPeriodo = new javax.swing.JMenuItem();
         mnIgSilabo = new javax.swing.JMenuItem();
+        mnIgPlandeClase = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
         mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
@@ -657,6 +675,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
+        mnCtPlandeClase.setText("Plan de Clase");
+        mnTipoNotas.add(mnCtPlandeClase);
+
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
         mnCtUsuarios.setText("Usuarios");
         mnTipoNotas.add(mnCtUsuarios);
@@ -733,6 +754,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgSilabo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/ingresar_silabo_menu.png"))); // NOI18N
         mnIgSilabo.setText("Silabo");
         mnIngresar.add(mnIgSilabo);
+
+        mnIgPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
+        mnIgPlandeClase.setText("Plan de Clase");
+        mnIngresar.add(mnIgPlandeClase);
 
         menuCrud.add(mnIngresar);
 
@@ -841,6 +866,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtNotas;
     private javax.swing.JMenuItem mnCtPersona;
+    private javax.swing.JMenuItem mnCtPlandeClase;
     private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRoles;
@@ -857,6 +883,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgInscripcion;
     private javax.swing.JMenuItem mnIgMatricula;
     private javax.swing.JMenuItem mnIgPersona;
+    private javax.swing.JMenuItem mnIgPlandeClase;
     private javax.swing.JMenuItem mnIgPrdLectivo;
     private javax.swing.JMenuItem mnIgRolesPeriodo;
     private javax.swing.JMenuItem mnIgSilabo;
