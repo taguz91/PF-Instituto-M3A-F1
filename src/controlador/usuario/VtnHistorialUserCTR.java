@@ -264,11 +264,9 @@ public class VtnHistorialUserCTR {
             vtnH.getCmbAccion().addItem("Seleccione");
             acciones.forEach(a -> {
                 vtnH.getCmbAccion().addItem(a);
-                System.out.println(a);
             });
             vtnH.getCmbAccion().setSelectedIndex(0);
         }
-        System.out.println("Se cargaron acciones");
     }
 
     private void cmbCombinados() {
@@ -404,10 +402,11 @@ public class VtnHistorialUserCTR {
         sql = his.getSql();
         llenarTbl(historial);
     }
-    
+
     /**
      * Llenamos la tabla
-     * @param historial 
+     *
+     * @param historial
      */
     private void llenarTbl(ArrayList<HistorialUsuarioMD> historial) {
         mdTbl.setRowCount(0);
