@@ -563,7 +563,7 @@ public class VtnPrincipalCTR {
         c.iniciarControlador();
 
     }
-
+    
     private void controladorIngreso() {
 
         ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());
