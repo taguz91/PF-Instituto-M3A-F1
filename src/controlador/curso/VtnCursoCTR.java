@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -282,6 +283,19 @@ public class VtnCursoCTR {
                 vtnCurso.getCmbCurso().addItem(n);
             });
             vtnCurso.getCmbCurso().setSelectedIndex(0);
+        }
+    }
+    
+    private void eliminarCurso(){
+        int posCur = vtnCurso.getTblCurso().getSelectedRow(); 
+        
+        if (posCur >= 0) {
+            String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
+            int num = curso.numAlumnos(cursos.get(posCur - 1).getId_curso());
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere eliminar el curso "+nom+"\n"
+                    + "Se eliminaran todos los alumnos de este curso: ");
+        }else{
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una final antes.");
         }
     }
         
