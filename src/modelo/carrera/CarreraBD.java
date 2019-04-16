@@ -278,6 +278,7 @@ public class CarreraBD extends CarreraMD {
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 lista.add(carrera);
             }
+            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
