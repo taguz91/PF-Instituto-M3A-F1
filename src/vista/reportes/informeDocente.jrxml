@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT m.materia_nombre, c.curso_nombre,p.prd_lectivo_nombre
+FROM ((public."Materias" m JOIN public."Cursos" c USING(id_materia)) 
+JOIN public."PeriodoLectivo" p USING(id_prd_lectivo))
+JOIN public."Docentes" d USING(id_docente) 
+WHERE p.id_prd_lectivo =  id_prd_lectivo   
+AND d.id_docente =   id_docente  
+AND m.materia_activa = true 
+AND p.prd_lectivo_activo = true;]]>
+	</queryString>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
