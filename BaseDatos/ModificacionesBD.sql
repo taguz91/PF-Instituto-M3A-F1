@@ -266,3 +266,13 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Trabajo_autonomo"
     OWNER to postgres;
+
+
+
+--ALTERS G16 16/Abril/2019
+
+ALTER TABLE "TipoDeNota" ADD COLUMN id_carrera integer;
+
+ALTER TABLE "TipoDeNota" ADD CONSTRAINT "carrera_TipoDeNota_fk"
+    FOREIGN KEY ("id_carrera") REFERENCES "Carreras" ("id_carrera")
+        ON DELETE CASCADE ON UPDATE CASCADE;
