@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -373,8 +374,15 @@ public class VtnDocenteCTR {
     }
 
     private void finContratacion() {
-       // VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin);
-      //  vtn_fin_contratacion.iniciar();
+         int posFila = vtnDocente.getTblDocente().getSelectedRow();
+         
+         if(posFila >= 0){
+             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin, docentesMD.get(posFila));
+        vtn_fin_contratacion.iniciar();
+         }else{
+             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+         }
+        
         
     }
 }
