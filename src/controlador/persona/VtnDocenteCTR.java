@@ -127,6 +127,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
+        
         docentesMD = docente.cargarDocentes();
         llenarTabla(docentesMD);
     }
