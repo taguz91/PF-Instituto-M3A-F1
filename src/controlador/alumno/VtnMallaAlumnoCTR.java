@@ -440,7 +440,7 @@ public class VtnMallaAlumnoCTR {
             Map parametro = new HashMap();
                 parametro.put("consulta", mallaAlm.getSql());
                 System.out.println(parametro);
-                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
                 JasperViewer view = new JasperViewer(print, false);
                 view.setVisible(true);
