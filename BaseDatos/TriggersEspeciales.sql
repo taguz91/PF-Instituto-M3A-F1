@@ -35,6 +35,37 @@ AFTER INSERT
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_ingreso_notas();
 
+--Al volver reactivar una persona se activa tambien en docente o alumno
+CREATE OR REPLACE FUNCTION persona_activada()
+RETURNS TRIGGER AS $persona_activada$
+BEGIN
+	IF new.persona_activa = TRUE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'UPDATE', TG_TABLE_NAME, old.id_persona);
+		--Eliminalos el docente o alumno que este registrado como esta persona
+		UPDATE public."Docentes"
+		SET docente_activo = 'True'
+		WHERE id_persona = old.id_persona;
+
+		UPDATE public."Alumnos"
+		SET alumno_activo = 'True'
+		WHERE id_persona = old.id_persona;
+
+		UPDATE public."Usuarios"
+		SET usu_estado = 'True'
+		WHERE id_persona = old.id_persona;
+	END IF;
+	RETURN NEW;
+END;
+$persona_activada$ LANGUAGE plpgsql;
+
+CREATE TRIGGER auditoria_persona_activa
+BEFORE UPDATE OF persona_activa
+ON public."Personas" FOR EACH ROW
+EXECUTE PROCEDURE persona_activada();
+
 --Iniciar malla al inscribir un alumno en un curso
 
 CREATE OR REPLACE FUNCTION iniciar_malla()

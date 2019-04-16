@@ -91,11 +91,9 @@ public class ControladorSilaboU {
     private DefaultListModel modeloBase;
 
     private ConexionBD conexion;
-
-    private static Integer idEvaluacionSig = 0;
-    private Integer idEvaluacion;
     
-    private boolean retroceso=false;
+    private static Integer idEvaluacionSig=0;
+    private Integer idEvaluacion;
 
     public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal, ConexionBD conexion) {
         this.silabo = silabo;
@@ -712,7 +710,7 @@ public class ControladorSilaboU {
 
         });
 
-        gestion.getBtnQuitarAD().addActionListener(new ActionListener() {
+         gestion.getBtnQuitarAD().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
@@ -756,14 +754,8 @@ public class ControladorSilaboU {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-               gestion.setVisible(false);
-
-                if (retroceso) {
-                    bibliografia.setVisible(true);
-                } else {
-                    citarReferencias(silabo, bibliografia);
-                    retroceso=true;
-                }
+                gestion.setVisible(false);
+                citarReferencias(silabo, bibliografia);
 
             }
 
@@ -849,7 +841,7 @@ public class ControladorSilaboU {
             public void actionPerformed(ActionEvent ae) {
 
                 new SilaboBD(conexion).eliminar(silabo);
-                guardarSilabo();
+
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
                 gestion.dispose();
                 bibliografia.dispose();
@@ -1029,6 +1021,7 @@ public class ControladorSilaboU {
 
     }
 
+   
     public boolean validarLimiteEvaluaciones(double valor) {
 
         double total = 0;
@@ -1048,7 +1041,7 @@ public class ControladorSilaboU {
         return tipoSeleccionado.get();
 
     }
-
+    
     public void agregarEvaluacion(TipoActividadMD tipo, UnidadSilaboMD unidad, int p) {
 
         switch (p) {
@@ -1167,8 +1160,7 @@ public class ControladorSilaboU {
                     emd.getInstrumento(),
                     emd.getValoracion(),
                     emd.getFechaEnvio(),
-                    emd.getFechaPresentacion(),
-                    emd.getIdEvaluacion()
+                    emd.getFechaPresentacion()
                 });
 
             }
@@ -1266,10 +1258,7 @@ public class ControladorSilaboU {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
-                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
-            }
-
+            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
         });
 
         modeloBase = new DefaultListModel<>();
@@ -1284,9 +1273,6 @@ public class ControladorSilaboU {
 
     public void agregarBibliografiaNoBase() {
 
-        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
-        
-        
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
@@ -1373,22 +1359,7 @@ public class ControladorSilaboU {
 
     public void insertarUnidades() {
 
-        /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
-        
-
-        List<EstrategiasUnidadMD> estrategiasSilaboBD = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
-
-    
-
-        List<EvaluacionSilaboMD> evaluacionesSilaboBD = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
-
-       
-
-        List<ReferenciaSilaboMD> referenciasSilaboBD = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
-
-         */
         for (UnidadSilaboMD umd : unidadesSilabo) {
-
             umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd);
@@ -1412,12 +1383,11 @@ public class ControladorSilaboU {
             }
         }
     }
-
+    
     public void insertarReferencias() {
 
         agregarBibliografiaNoBase();
-        
-        
+
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
             rbd.insertar(referenciasSilabo.get(i));
@@ -1428,19 +1398,10 @@ public class ControladorSilaboU {
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
-        ReferenciasBD r2 = new ReferenciasBD(conexion);
+        ReferenciasBD r2 = new ReferenciasBD(conexion);;
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
-
-    }
-
-    public void guardarSilabo() {
-
-        new SilaboBD(conexion).insertar(silabo);
-        insertarUnidades();
-
-        insertarReferencias();
 
     }
 

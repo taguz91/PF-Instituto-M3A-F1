@@ -92,23 +92,5 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
         
         return referencias;
     }
-    
-    
-     public void eliminar(ReferenciaSilaboMD r) {
-
-        try {
-             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"ReferenciaSilabo\"\n"
-                    + "	WHERE id_referencia_silabo=?");
-
-            st.setInt(1, r.getIdReferenciaSilabo());
-            
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ReferenciaSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
 }

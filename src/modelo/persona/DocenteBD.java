@@ -55,14 +55,6 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
-    
-    public void guardarFinContrato(int aguja){
-        String sql = "UPDATE public.\"Docentes\" SET\n"
-                + " id_sec_economico = "
-                + " WHERE id_persona = " + aguja + ";";
-    }
-    
-//    public void 
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
@@ -204,6 +196,17 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = true;";
         return consultarDocenteTbl(sql);
     }
+    
+        public ArrayList<DocenteMD> cargarDocentesEliminados() {
+        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = d.id_persona AND \n"
+                + "docente_activo = false;";
+        return consultarDocenteTbl(sql);
+    }
 
     public ArrayList<DocenteMD> cargarDocentesPorCarrera(int idCarrera) {
         ArrayList<DocenteMD> docentes = new ArrayList();
@@ -283,38 +286,6 @@ public class DocenteBD extends DocenteMD {
                 if (doc != null) {
                     docentes.add(doc);
                 }
-            }
-            rs.close();
-            return docentes;
-        } catch (SQLException ex) {
-            System.out.println("No se pudo consultar docentes");
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
-
-    public ArrayList<DocenteMD> cargarDocentesPorMateriaParaFrm(int idMateria) {
-        ArrayList<DocenteMD> docentes = new ArrayList();
-        String sql = "SELECT d.id_docente, d.id_persona, persona_primer_nombre, persona_segundo_nombre,\n"
-                + "persona_primer_apellido, persona_segundo_apellido, persona_identificacion \n"
-                + "FROM public.\"Docentes\" d, public.\"Personas\" p, public.\"DocentesMateria\" md\n"
-                + "WHERE id_materia = " + idMateria + " AND\n"
-                + "d.id_docente = md.id_docente AND\n"
-                + "p.id_persona = d.id_persona AND\n"
-                + "docente_activo = true;";
-        ResultSet rs = conecta.sql(sql);
-        try {
-            while (rs.next()) {
-                DocenteMD doc = new DocenteMD();
-                doc.setIdDocente(rs.getInt("id_docente"));
-                doc.setIdPersona(rs.getInt("id_persona"));
-                doc.setIdentificacion(rs.getString("persona_identificacion"));
-                doc.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                doc.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                doc.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                doc.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-
-                docentes.add(doc);
             }
             rs.close();
             return docentes;

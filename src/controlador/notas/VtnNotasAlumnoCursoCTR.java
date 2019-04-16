@@ -677,7 +677,6 @@ public class VtnNotasAlumnoCursoCTR {
     private void btnBuscar(ActionEvent e) {
         String busqueda = vista.getTxtBuscar().getText().toLowerCase();
         new Thread(() -> {
-            tablaNotas.setRowCount(0);
             listaPersonasDocentes
                     .entrySet()
                     .stream()

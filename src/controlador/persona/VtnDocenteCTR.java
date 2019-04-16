@@ -1,7 +1,6 @@
 package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
-import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -35,7 +34,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import vista.docente.VtnFinContratacion;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
@@ -63,7 +61,7 @@ public class VtnDocenteCTR {
 
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
-    private VtnFinContratacion vtnFinContratacion;
+
     private DefaultTableModel mdTbl;
     private PersonaMD perEditar;
     private final PersonaBD per;
@@ -113,11 +111,10 @@ public class VtnDocenteCTR {
             }
         });
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
-                vtnDocente.getBtnBuscar()));
-        // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
+        vtnDocente.getBtnBuscar()));
+       // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
-        vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -130,6 +127,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
+        
         docentesMD = docente.cargarDocentes();
         llenarTabla(docentesMD);
     }
@@ -293,6 +291,7 @@ public class VtnDocenteCTR {
         }
     }
 
+
     public void botonReporteMateria() {
         int s = JOptionPane.showOptionDialog(vtnDocente,
                 "Reporte de Materias del Docente\n"
@@ -370,11 +369,5 @@ public class VtnDocenteCTR {
             vtnDocente.getBtnReporteDocente().setEnabled(false);
             vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
         }
-    }
-
-    private void finContratacion() {
-       // VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin);
-      //  vtn_fin_contratacion.iniciar();
-        
     }
 }

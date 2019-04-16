@@ -67,13 +67,6 @@ public class MateriaBD extends MateriaMD {
     }
 
     //Cargar datos de materia por carrera ciclo para ver sus materias onli materias
-    /**
-     * Se cargan todas las materias de un carrera y
-     * un ciclo en especifico
-     * @param idcarrera
-     * @param ciclo
-     * @return 
-     */
     public ArrayList<MateriaMD> buscarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
         String sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre \n"
@@ -94,12 +87,12 @@ public class MateriaBD extends MateriaMD {
                 }
                 return lista;
             } else {
-                System.out.println("No se pudo buscar materias por carrera y ciclo");
+                System.out.println("No se pudo buscar materias para referencia");
                 return null;
             }
 
         } catch (SQLException ex) {
-            System.out.println("No se pudo buscar materias  por carrera y ciclo");
+            System.out.println("No se pudo buscar materias para referencia");
             System.out.println(ex.getMessage());
             return null;
         }
