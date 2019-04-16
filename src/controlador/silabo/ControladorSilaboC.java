@@ -301,7 +301,11 @@ public class ControladorSilaboC {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
                 unidadSeleccionada.setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
                 actualizarUnidad(unidadSeleccionada);
+<<<<<<< HEAD
                 //Prueba
+=======
+            //Prueba CHACON
+>>>>>>> 5505861661a155407b70ce0568a5786d22be450c
             }
 
         });
