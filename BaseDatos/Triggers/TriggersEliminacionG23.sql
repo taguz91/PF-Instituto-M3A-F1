@@ -285,7 +285,7 @@ BEGIN
 	WHERE id_alumno = old.id_alumno;
 
 	UPDATE public."AlumnoCurso"
-	SET almn_carrera_activo = new.alumno_activo
+	SET almn_curso_activo = new.alumno_activo
 	WHERE id_alumno = old.id_alumno;
 
 	RETURN NEW;
