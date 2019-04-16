@@ -56,10 +56,6 @@ public class DocenteBD extends DocenteMD {
 
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 171d4d5862b292e4e9c0e1da765d6cd611a44ee9
     public void guardarFinContrato(int aguja) {
         String sql = "UPDATE public.\"Docentes\" SET\n"
                 + "' docente_fecha_fin = '" + this.getFechaFinContratacion()
@@ -67,11 +63,7 @@ public class DocenteBD extends DocenteMD {
                 + " WHERE id_persona = " + aguja + ";";
     }
 
-//    public void 
-<<<<<<< HEAD
-=======
-    
->>>>>>> 171d4d5862b292e4e9c0e1da765d6cd611a44ee9
+//    public void
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
         DocenteMD d;
@@ -212,8 +204,8 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = true;";
         return consultarDocenteTbl(sql);
     }
-    
-        public ArrayList<DocenteMD> cargarDocentesEliminados() {
+
+    public ArrayList<DocenteMD> cargarDocentesEliminados() {
         String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
