@@ -50,11 +50,11 @@ public class frmCRUDHorarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Carrera", "Materia ", "Docente"
+                "Docente", "Jornada", "Hora de Inicio", "Hora de Fin", "Dias"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -63,9 +63,12 @@ public class frmCRUDHorarios extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(2).setMinWidth(200);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(170);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(170);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(170);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(170);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(170);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(170);
         }
 
         jLabel1.setText("Buscar");
@@ -88,7 +91,7 @@ public class frmCRUDHorarios extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
