@@ -38,6 +38,53 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         }
     }
 
+    public void eliminar(int idDocenMat) {
+        String nsql = "UPDATE public.\"DocentesMateria\""
+                + " SET docente_mat_activo = false\n"
+                + "WHERE id_docente_mat = " + idDocenMat + ";";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se elimino correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar, compruebe su conexion.");
+        }
+    }
+    
+    public void activar(int idDocenMat) {
+        String nsql = "UPDATE public.\"DocentesMateria\""
+                + " SET docente_mat_activo = true\n"
+                + "WHERE id_docente_mat = " + idDocenMat + ";";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se activo correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo activar, compruebe su conexion.");
+        }
+    }
+
+    public DocenteMateriaMD existeDocenteMateria(int idDocente, int idMateria) {
+        DocenteMateriaMD dm = null;
+        String sql = "SELECT id_docente_mat, docente_mat_activo\n"
+                + "	FROM public.\"DocentesMateria\" \n"
+                + "	WHERE id_docente = "+idDocente+" AND id_materia = "+idMateria+";";
+        ResultSet rs = conecta.sql(sql);
+        System.out.println(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    dm = new DocenteMateriaMD();
+                    dm.setId(rs.getInt("id_docente_mat"));
+                    dm.setActivo(rs.getBoolean("docente_mat_activo"));
+                }
+                return dm;
+            } catch (SQLException e) {
+                System.out.println("No se pudo consultar docente materia");
+                System.out.println(e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     public ArrayList<DocenteMateriaMD> cargarDocenteMateria() {
         String sql = "SELECT id_docente_mat, dm.id_docente, dm.id_materia, \n"
                 + "persona_primer_nombre, persona_primer_apellido, persona_identificacion,\n"
@@ -129,9 +176,9 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "m.id_materia = dm.id_materia AND \n"
                 + "c.id_carrera = m.id_carrera AND \n"
                 + "docente_mat_activo = true AND (\n"
-                + "	materia_nombre ILIKE '%"+aguja+"%' OR \n"
-                + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%'\n"
-                + "OR persona_identificacion ILIKE '%"+aguja+"%' ) \n"
+                + "	materia_nombre ILIKE '%" + aguja + "%' OR \n"
+                + "persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%'\n"
+                + "OR persona_identificacion ILIKE '%" + aguja + "%' ) \n"
                 + "AND carrera_activo = true AND persona_activa = true AND docente_activo = true;";
         return consultar(sql);
     }
@@ -154,24 +201,6 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 return null;
             }
         } else {
-            return null;
-        }
-    }
-
-    private DocenteMateriaMD obtenerDocenteMateria(ResultSet rs, DocenteMD d, MateriaMD m) {
-        DocenteMateriaMD dm = new DocenteMateriaMD();
-        try {
-            dm.setId(rs.getInt("id_docente_mat"));
-            if (d == null) {
-                d = doc.buscarDocenteParaReferencia(rs.getInt("id_docente"));
-            }
-            dm.setDocente(d);
-            if (m == null) {
-                m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
-            }
-            dm.setMateria(m);
-            return dm;
-        } catch (SQLException e) {
             return null;
         }
     }

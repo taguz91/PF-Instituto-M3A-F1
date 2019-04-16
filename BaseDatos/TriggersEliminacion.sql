@@ -17,7 +17,7 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_materia);
-	ELSE 
+	ELSE
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
@@ -25,7 +25,7 @@ BEGIN
 	END IF;
 	--Tambien eliminamos a lo que depende de esta materia
 	UPDATE public."Cursos"
-		SET curso_activo = new.materia_activa 
+		SET curso_activo = new.materia_activa
 		WHERE id_materia = old.id_materia;
 	RETURN NEW;
 END;
@@ -57,7 +57,7 @@ BEFORE DELETE
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE curso_elim();
 
---Eliminacion logica de un curso 
+--Eliminacion logica de un curso
 CREATE OR REPLACE FUNCTION curso_elimlog()
 RETURNS TRIGGER AS $curso_elimlog$
 BEGIN
@@ -92,7 +92,7 @@ BEGIN
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_docente);
 	END IF;
-	--Tambien ocultamos todo lo que tenga que ver con docnete 
+	--Tambien ocultamos todo lo que tenga que ver con docnete
 	UPDATE public."DocentesMateria"
 		SET docente_mat_activo = new.docente_activo
 		WHERE id_docente = old.id_docente;
@@ -100,7 +100,7 @@ BEGIN
 	UPDATE public."Cursos"
 		SET curso_activo = new.docente_activo
 		WHERE id_docente = old.id_docente;
-		
+
 	RETURN NEW;
 END;
 $docente_elim$ LANGUAGE plpgsql;
@@ -200,6 +200,11 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_docente_mat);
+	ELSE
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla)
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_docente_mat);
 	END IF;
 	RETURN NEW;
 END;
@@ -258,7 +263,7 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_carrera);
-	ELSE 
+	ELSE
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
@@ -268,13 +273,13 @@ BEGIN
 	--Actualizamos todo en loq ue interviene la carrera
 	UPDATE public."AlumnosCarrera"
 		SET almn_carrera_activo = new.carrera_activo
-		WHERE id_carrera = old.id_carrera; 
+		WHERE id_carrera = old.id_carrera;
 	UPDATE public."PeriodoLectivo"
 		SET prd_lectivo_activo = new.carrera_activo
 		WHERE id_carrera = old.id_carrera;
 	UPDATE public."Materias"
 		SET materia_activa = new.carrera_activo
-		WHERE id_carrera = old.id_carrera; 
+		WHERE id_carrera = old.id_carrera;
 	RETURN NEW;
 END;
 $carrera_elim$ LANGUAGE plpgsql;
@@ -293,13 +298,13 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_prd_lectivo);
-	ELSE 
+	ELSE
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_prd_lectivo);
 	END IF;
-	--Actualizamos tambien lo que depende de este periodo  
+	--Actualizamos tambien lo que depende de este periodo
 	UPDATE public."Cursos"
 		SET curso_activo = new.prd_lectivo_activo
 		WHERE id_prd_lectivo = old.id_prd_lectivo;
@@ -421,7 +426,7 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_alumno);
-	ELSE 
+	ELSE
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla)
@@ -430,11 +435,11 @@ BEGIN
 	--Eliminamos tambien el alumno carrera
 	UPDATE public."AlumnosCarrera"
 	SET almn_carrera_activo = new.alumno_activo
-	WHERE id_alumno = old.id_alumno; 
+	WHERE id_alumno = old.id_alumno;
 
 	UPDATE public."AlumnoCurso"
 	SET almn_carrera_activo = new.alumno_activo
-	WHERE id_alumno = old.id_alumno; 
+	WHERE id_alumno = old.id_alumno;
 
 	RETURN NEW;
 END;
