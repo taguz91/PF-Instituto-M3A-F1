@@ -18,7 +18,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author arman
  */
-public class VtnRolDocenteCTR {
+public class VtnRolPeriodosCTR {
     
     private final VtnPrincipal vtnPrin;
     private final VtnRolesPeriodos vtnRolPe;
@@ -29,7 +29,7 @@ public class VtnRolDocenteCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
 
-    public VtnRolDocenteCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolPe, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public VtnRolPeriodosCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolPe, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.vtnRolPe = vtnRolPe;
         this.conecta = conecta;

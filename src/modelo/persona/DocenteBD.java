@@ -75,6 +75,7 @@ public class DocenteBD extends DocenteMD {
             if (rs != null) {
                 while (rs.next()) {
                     d = new DocenteMD();
+                    d.setCodigo(rs.getString("docente_codigo"));
                     d.setIdDocente(rs.getInt("id_docente"));
                     d.setIdPersona(rs.getInt("id_persona"));
                     d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
@@ -198,7 +199,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> cargarDocentes() {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"
@@ -232,7 +233,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> cargarDocentesEliminados() {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"
@@ -520,7 +521,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public ArrayList<DocenteMD> buscar(String aguja) {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
                 + "persona_celular, persona_correo, persona_identificacion\n"
@@ -534,6 +535,20 @@ public class DocenteBD extends DocenteMD {
         return consultarDocenteTbl(sql);
     }
 
+        public ArrayList<DocenteMD> buscarEliminados(String aguja) {
+        String sql = "SELECT docente_codigo,id_docente, d.id_persona, docente_tipo_tiempo, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = d.id_persona AND \n"
+                + "docente_activo = false AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + ");";
+        return consultarDocenteTbl(sql);
+    }
     public DocenteMD buscarDocente(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "

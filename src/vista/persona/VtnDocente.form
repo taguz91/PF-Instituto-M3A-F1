@@ -35,13 +35,13 @@
                   </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblResultados" pref="137" max="32767" attributes="0"/>
+                      <Component id="lblResultados" pref="185" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="btnReporteDocente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnReporteDocenteMateria" pref="138" max="32767" attributes="0"/>
+                      <Component id="btnReporteDocenteMateria" pref="185" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" pref="38" max="-2" attributes="0"/>

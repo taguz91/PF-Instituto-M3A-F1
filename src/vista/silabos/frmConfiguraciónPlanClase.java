@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
  *
  * @author Daniel
  */
-public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
+public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmConfiguraciónPlanClase
@@ -30,13 +30,15 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
         this.Cmb_carreras = Cmb_carreras;
     }
 
-    public JComboBox<String> getCmb_silabos() {
-        return Cmb_silabos;
+    public JComboBox<String> getCmb_materias() {
+        return Cmb_materias;
     }
 
-    public void setCmb_silabos(JComboBox<String> Cmb_silabos) {
-        this.Cmb_silabos = Cmb_silabos;
+    public void setCmb_materias(JComboBox<String> Cmb_materias) {
+        this.Cmb_materias = Cmb_materias;
     }
+
+   
 
     public JComboBox<String> getCmb_unidades() {
         return Cmb_unidades;
@@ -71,7 +73,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
     private void initComponents() {
 
         Cmb_unidades = new javax.swing.JComboBox<>();
-        Cmb_silabos = new javax.swing.JComboBox<>();
+        Cmb_materias = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -84,11 +86,9 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
 
         Cmb_unidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        Cmb_silabos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel1.setText("Carrera:");
 
-        jLabel2.setText("Silabo:");
+        jLabel2.setText("Asignatura:");
 
         jLabel3.setText("Unidad:");
 
@@ -97,8 +97,6 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
         btn_cancelar.setText("Cancelar");
 
         jLabel4.setText("Configuración Plan de Clase:");
-
-        Cmb_carreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +116,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Cmb_silabos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Cmb_materias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Cmb_unidades, 0, 266, Short.MAX_VALUE)
                     .addComponent(Cmb_carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,7 +136,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
                     .addComponent(Cmb_carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Cmb_silabos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cmb_materias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +189,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Cmb_carreras;
-    private javax.swing.JComboBox<String> Cmb_silabos;
+    private javax.swing.JComboBox<String> Cmb_materias;
     private javax.swing.JComboBox<String> Cmb_unidades;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_siguiente;
