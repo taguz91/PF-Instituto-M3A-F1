@@ -70,6 +70,18 @@ public class CursoBD extends CursoMD {
                 + "	WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getCurso_nombre());
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + getCurso_nombre());
+        }
+    }
+    
+    public void eliminarCurso(int idCurso){
+        String nsql = ""; 
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
+                    + "compruebe su conexion a internet.");
         }
     }
 
