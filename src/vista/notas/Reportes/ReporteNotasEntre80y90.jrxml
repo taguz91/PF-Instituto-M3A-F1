@@ -3,7 +3,19 @@
 	<property name="ireport.zoom" value="1.0000000000000044"/>
 	<property name="ireport.x" value="308"/>
 	<property name="ireport.y" value="96"/>
-	<parameter name="consulta" class="java.lang.String">
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_ciclo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_paralelo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombre_jornada" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
