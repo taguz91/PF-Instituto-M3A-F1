@@ -114,8 +114,8 @@ public class VtnDocenteCTR {
             }
         });
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
-        vtnDocente.getBtnBuscar()));
-       // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
+                vtnDocente.getBtnBuscar()));
+        // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
@@ -130,7 +130,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
-        
+
         docentesMD = docente.cargarDocentes();
         llenarTabla(docentesMD);
     }
@@ -294,7 +294,6 @@ public class VtnDocenteCTR {
         }
     }
 
-
     public void botonReporteMateria() {
         int s = JOptionPane.showOptionDialog(vtnDocente,
                 "Reporte de Materias del Docente\n"
@@ -374,21 +373,15 @@ public class VtnDocenteCTR {
         }
     }
 
-
     private void finContratacion() {
-<<<<<<< HEAD
-        VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin, LocalDate.MIN);
-        vtn_fin_contratacion.iniciar();
-=======
-         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-         if(posFila >= 0){
-             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR( conecta, vtnPrin, docentesMD.get(posFila));
-        vtn_fin_contratacion.iniciar();
-         }else{
-             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
-         }
-        
->>>>>>> 171d4d5862b292e4e9c0e1da765d6cd611a44ee9
-        
+
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        if (posFila >= 0) {
+            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, docentesMD.get(posFila));
+            vtn_fin_contratacion.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+        }
+
     }
 }
