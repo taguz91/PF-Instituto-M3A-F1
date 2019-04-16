@@ -13,7 +13,7 @@ import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
-import controlador.docente.VtnRolDocenteCTR;
+import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -462,7 +462,7 @@ public class VtnPrincipalCTR {
         VtnRolesPeriodos vtnRolprd = new VtnRolesPeriodos();
         eventoInternal(vtnRolprd);
         if (numVtns < 5) {
-            VtnRolDocenteCTR vtnRol = new VtnRolDocenteCTR(vtnPrin, vtnRolprd, conecta, this);
+            VtnRolPeriodosCTR vtnRol = new VtnRolPeriodosCTR(vtnPrin, vtnRolprd, conecta, this);
             vtnRol.iniciar();
         } else {
             errorNumVentanas();
