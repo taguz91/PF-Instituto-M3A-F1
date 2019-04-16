@@ -99,6 +99,7 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Cursos");
+        setMinimumSize(new java.awt.Dimension(698, 437));
 
         jLabel1.setText("Buscar:");
 
