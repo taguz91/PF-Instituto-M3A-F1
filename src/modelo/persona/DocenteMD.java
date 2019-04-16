@@ -19,10 +19,10 @@ public class DocenteMD extends PersonaMD {
     public DocenteMD() {
     }
 
-    public DocenteMD(String codigo, String docenteTipoTiempo, String estado,
-            String tituloDocente, String abreviaturaDocente, String tipoIdenticacion,
-            int docenteCategoria, int idDocente, boolean docenteOtroTrabajo,
-            boolean docenteCapacitador, LocalDate fechaInicioContratacion,
+    public DocenteMD(String codigo, String docenteTipoTiempo, String estado, 
+            String tituloDocente, String abreviaturaDocente, String tipoIdenticacion, 
+            int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, 
+            boolean docenteCapacitador, LocalDate fechaInicioContratacion, 
             LocalDate fechaFinContratacion, String observacion) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
@@ -47,14 +47,6 @@ public class DocenteMD extends PersonaMD {
         this.codigo = codigo;
     }
 
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
     public String getDocenteTipoTiempo() {
         return docenteTipoTiempo;
     }
@@ -66,6 +58,16 @@ public class DocenteMD extends PersonaMD {
     public int getDocenteCategoria() {
         return docenteCategoria;
     }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+    
+    
 
     public void setDocenteCategoria(int docenteCategoria) {
         this.docenteCategoria = docenteCategoria;

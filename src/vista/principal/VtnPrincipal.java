@@ -23,6 +23,22 @@ public class VtnPrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
+    public JMenuItem getMnCtPlandeClase() {
+        return mnCtPlandeClase;
+    }
+
+    public void setMnCtPlandeClase(JMenuItem mnCtPlandeClase) {
+        this.mnCtPlandeClase = mnCtPlandeClase;
+    }
+
+    public JMenuItem getMnIgPlandeClase() {
+        return mnIgPlandeClase;
+    }
+
+    public void setMnIgPlandeClase(JMenuItem mnIgPlandeClase) {
+        this.mnIgPlandeClase = mnIgPlandeClase;
+    }
+
     public JButton getBtnIngresarRol() {
         return btnIngresarRol;
     }
@@ -325,6 +341,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
+        mnCtPlandeClase = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
         mnCtHistorialUsers = new javax.swing.JMenuItem();
@@ -345,6 +362,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt = new javax.swing.JMenuItem();
         mnIgRolesPeriodo = new javax.swing.JMenuItem();
         mnIgSilabo = new javax.swing.JMenuItem();
+        mnIgPlandeClase = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
         mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
@@ -409,7 +427,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnConsultarSilabo.setToolTipText("Consultar Silabo");
         btnConsultarSilabo.setFocusPainted(false);
 
-        btnIngresarRol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_25px.png"))); // NOI18N
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
@@ -476,7 +493,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         dpnlPrincipalLayout.setVerticalGroup(
             dpnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+            .addGap(0, 376, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(47, 76, 113));
@@ -504,8 +521,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(47, 76, 113));
@@ -543,7 +563,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCambiarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCambiarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(47, 76, 113));
@@ -579,8 +599,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblIP, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -592,8 +612,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
             .addComponent(btnAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnConsola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(lblIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mnTipoNotas.setText("Consultar");
@@ -642,7 +662,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
-        mnCtRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_20px.png"))); // NOI18N
         mnCtRolesPeriodo.setText("Roles Periodo");
         mnCtRolesPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -655,6 +674,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consultar_silabo_menu.png"))); // NOI18N
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
+
+        mnCtPlandeClase.setText("Plan de Clase");
+        mnTipoNotas.add(mnCtPlandeClase);
 
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
         mnCtUsuarios.setText("Usuarios");
@@ -725,7 +747,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt.setText("Materia docente");
         mnIngresar.add(mnIgDocenteMt);
 
-        mnIgRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_20px.png"))); // NOI18N
         mnIgRolesPeriodo.setText("Roles Periodo");
         mnIngresar.add(mnIgRolesPeriodo);
 
@@ -733,6 +754,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgSilabo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/ingresar_silabo_menu.png"))); // NOI18N
         mnIgSilabo.setText("Silabo");
         mnIngresar.add(mnIgSilabo);
+
+        mnIgPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
+        mnIgPlandeClase.setText("Plan de Clase");
+        mnIngresar.add(mnIgPlandeClase);
 
         menuCrud.add(mnIngresar);
 
@@ -777,14 +802,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(dpnlPrincipal)
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -841,6 +866,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtNotas;
     private javax.swing.JMenuItem mnCtPersona;
+    private javax.swing.JMenuItem mnCtPlandeClase;
     private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRoles;
@@ -857,6 +883,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgInscripcion;
     private javax.swing.JMenuItem mnIgMatricula;
     private javax.swing.JMenuItem mnIgPersona;
+    private javax.swing.JMenuItem mnIgPlandeClase;
     private javax.swing.JMenuItem mnIgPrdLectivo;
     private javax.swing.JMenuItem mnIgRolesPeriodo;
     private javax.swing.JMenuItem mnIgSilabo;

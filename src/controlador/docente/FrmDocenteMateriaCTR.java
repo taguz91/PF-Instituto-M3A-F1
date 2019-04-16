@@ -5,13 +5,11 @@ import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.docente.DocenteMateriaBD;
-import modelo.docente.DocenteMateriaMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
@@ -35,7 +33,6 @@ public class FrmDocenteMateriaCTR {
     private final VtnPrincipalCTR ctrPrin;
 
     private final DocenteMateriaBD dm;
-    private DocenteMateriaMD docenMat;
     private final DocenteBD doc;
     private final CarreraBD car;
     private final MateriaBD mat;
@@ -51,7 +48,7 @@ public class FrmDocenteMateriaCTR {
         this.vtnPrin = vtnPrin;
         this.frmDM = frmDM;
         this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
+        this.ctrPrin = ctrPrin;        
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Docente materia");
@@ -67,7 +64,7 @@ public class FrmDocenteMateriaCTR {
     }
 
     public void iniciar() {
-        frmDM.getLblError().setText("");
+        iniciarValidaciones();
         //Iniciamos la tabla
         String[] titulo = {"Cédula", "Docente"};
         String[][] datos = {};
@@ -96,7 +93,7 @@ public class FrmDocenteMateriaCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaFrmFin("Docente materia");
-        iniciarValidaciones();
+        
     }
 
     private void iniciarValidaciones() {
@@ -105,17 +102,15 @@ public class FrmDocenteMateriaCTR {
         frmDM.getCmbMateria().addActionListener(new CmbValidar(frmDM.getCmbMateria()));
         frmDM.getTxtBuscar().addKeyListener(new TxtVBuscador(frmDM.getTxtBuscar()));
     }
-
-    private void guardarYSalir() {
-        if (guardar()) {
-            frmDM.dispose();
-            ctrPrin.cerradoJIF();
-            ctrPrin.abrirVtnDocenteMateria();
-        }
-
+    
+    private void guardarYSalir(){
+        guardar();
+        frmDM.dispose();
+        ctrPrin.cerradoJIF();
+        ctrPrin.abrirVtnDocenteMateria();
     }
 
-    private boolean guardar() {
+    private void guardar() {
         boolean guardar = true;
         int posMat = frmDM.getCmbMateria().getSelectedIndex();
         int posDoc = frmDM.getTblDocentes().getSelectedRow();
@@ -127,34 +122,11 @@ public class FrmDocenteMateriaCTR {
         }
 
         if (guardar) {
-            docenMat = dm.existeDocenteMateria(docentes.get(posDoc).getIdDocente(),
-                    materias.get(posMat - 1).getId());
-            System.out.println("Entramos a comprobar");
-            if (docenMat != null) {
-                frmDM.getLblError().setText("Ya se asigno esta materia al docente.");
-                guardar = false;
-                if (!docenMat.isActivo()) {
-                    int r = JOptionPane.showConfirmDialog(null, "Ya se asigno esta materia pero se\n"
-                            + "encuentra eliminada, desea activala.");
-                    if (r == JOptionPane.YES_OPTION) {
-                        dm.activar(docenMat.getId());
-                        frmDM.dispose();
-                        ctrPrin.cerradoJIF();
-                        ctrPrin.abrirVtnDocenteMateria();
-                    }
-                }
-            } else {
-                frmDM.getLblError().setText("");
-            }
-        }
-        if (guardar) {
             dm.setDocente(docentes.get(posDoc));
             dm.setMateria(materias.get(posMat - 1));
 
             dm.guardar();
-
         }
-        return guardar;
     }
 
     //Buscador

@@ -30,18 +30,18 @@ public class VtnFinContratacionCTR {
     private final VtnFinContratacion vtnFinContratacion;
     private final VtnPrincipal vtnPrin;
     private static LocalDate fechaInicio;
+    private final DocenteMD docente;
     private boolean guardar = false;
 
-    public VtnFinContratacionCTR(VtnFinContratacion vtnFinContratacion,
-        ConectarDB conecta, VtnPrincipal vtnPrin, LocalDate fechaInicio) {
-        this.vtnFinContratacion = vtnFinContratacion;
+    public VtnFinContratacionCTR(
+            ConectarDB conecta, VtnPrincipal vtnPrin, DocenteMD docente) {
+        this.vtnFinContratacion = new VtnFinContratacion(vtnPrin, false);
         this.conecta = conecta;
         this.vtnPrin = vtnPrin;
-        this.fechaInicio = fechaInicio;
-        vtnPrin.getDpnlPrincipal().add(vtnFinContratacion);
-        vtnFinContratacion.setLocationRelativeTo(vtnPrin);
-        vtnFinContratacion.setVisible(true);
-        vtnFinContratacion.setTitle("Fin de Contrato");
+        this.docente = docente;
+        this.vtnFinContratacion.setLocationRelativeTo(vtnPrin);
+        this.vtnFinContratacion.setVisible(true);
+        this.vtnFinContratacion.setTitle("Fin de Contrato");
 
     }
 
@@ -98,12 +98,12 @@ public class VtnFinContratacionCTR {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         //Se lo pasa a un string para poder validarlo
         fechaFinContra = sdf.format(fecha);
-        
-        if(fechaInicio.isAfter(convertirDate(fecha)) == false && 
-                fechaInicio.isEqual(convertirDate(fecha)) == false){
+
+        if (fechaInicio.isAfter(convertirDate(fecha)) == false
+                && fechaInicio.isEqual(convertirDate(fecha)) == false) {
             guardar = true;
             vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
-        } else{
+        } else {
             guardar = false;
             vtnFinContratacion.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
             vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
@@ -111,12 +111,12 @@ public class VtnFinContratacionCTR {
 
         System.out.println("DIA " + fechaFinContra);
 
-        if(guardar == true){
+        if (guardar == true) {
             DocenteMD docente = new DocenteMD();
             docente.setObservacion(Observacion);
             docente.setFechaFinContratacion(convertirDate(fecha));
         }
-        
+
     }
 
     private void salir() {
