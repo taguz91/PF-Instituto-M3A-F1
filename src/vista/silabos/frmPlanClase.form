@@ -88,11 +88,11 @@
                                           <Component id="txtDuracion" min="-2" pref="60" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbUnidad" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="83" max="-2" attributes="0"/>
+                                          <Component id="txtUnidad" min="-2" pref="83" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lbCod_Asignatura1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbTituloUnidad" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="txtTituloUnidad" max="32767" attributes="0"/>
                                       </Group>
@@ -123,7 +123,7 @@
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lbObjetivoPC1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lbResultadosAprendizaje" min="-2" max="-2" attributes="0"/>
                                               <Component id="jScrollPane8" min="-2" pref="367" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -195,9 +195,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbCod_Asignatura1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbTituloUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtTituloUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jDateChooserFechaInicioPC" min="-2" max="-2" attributes="0"/>
@@ -221,7 +221,7 @@
                               <Component id="jScrollPane5" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="lbObjetivoPC1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbResultadosAprendizaje" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane8" min="-2" pref="94" max="-2" attributes="0"/>
                           </Group>
@@ -341,7 +341,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTituloUnidadActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbCod_Asignatura1">
+    <Component class="javax.swing.JLabel" name="lbTituloUnidad">
       <Properties>
         <Property name="text" type="java.lang.String" value="Titulo de la Unidad:"/>
       </Properties>
@@ -420,7 +420,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jlistEstrategiasPC1">
+        <Component class="javax.swing.JList" name="jlistIns_Evaluacion">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="5">
@@ -467,7 +467,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txrContenidosPC1">
+        <Component class="javax.swing.JTextArea" name="txrContenidosPC">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -482,7 +482,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txrObservacionesPc">
+        <Component class="javax.swing.JTextArea" name="txrTrabajoAutonomo">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -512,7 +512,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jlistEstrategiasPC2">
+        <Component class="javax.swing.JList" name="jlistEstrategiasPC">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="5">
@@ -537,7 +537,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txrObservacionesPc1">
+        <Component class="javax.swing.JTextArea" name="txrObservacionesPc">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -545,9 +545,9 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txtUnidad">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lbUnidad">
       <Properties>
         <Property name="text" type="java.lang.String" value="Unidad:"/>
       </Properties>
@@ -559,7 +559,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txrObjetivoPC1">
+        <Component class="javax.swing.JTextArea" name="txrResulatdosAprendizaje">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
@@ -569,7 +569,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="lbObjetivoPC1">
+    <Component class="javax.swing.JLabel" name="lbResultadosAprendizaje">
       <Properties>
         <Property name="text" type="java.lang.String" value="Resultados de Aprendizaje:"/>
       </Properties>

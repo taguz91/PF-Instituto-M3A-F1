@@ -1,5 +1,12 @@
 package vista.silabos;
 
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,6 +26,326 @@ public class frmPlanClase extends javax.swing.JFrame {
     public frmPlanClase() {
         initComponents();
        
+    }
+
+    public JButton getBtmnGuardarPc() {
+        return btmnGuardarPc;
+    }
+
+    public void setBtmnGuardarPc(JButton btmnGuardarPc) {
+        this.btmnGuardarPc = btmnGuardarPc;
+    }
+
+    public JButton getBtnCancelarPC() {
+        return btnCancelarPC;
+    }
+
+    public void setBtnCancelarPC(JButton btnCancelarPC) {
+        this.btnCancelarPC = btnCancelarPC;
+    }
+
+    public JDateChooser getjDateChooserFechaFinPC() {
+        return jDateChooserFechaFinPC;
+    }
+
+    public void setjDateChooserFechaFinPC(JDateChooser jDateChooserFechaFinPC) {
+        this.jDateChooserFechaFinPC = jDateChooserFechaFinPC;
+    }
+
+    public JDateChooser getjDateChooserFechaInicioPC() {
+        return jDateChooserFechaInicioPC;
+    }
+
+    public void setjDateChooserFechaInicioPC(JDateChooser jDateChooserFechaInicioPC) {
+        this.jDateChooserFechaInicioPC = jDateChooserFechaInicioPC;
+    }
+
+    public JList<String> getJlistEstrategiasPC() {
+        return jlistEstrategiasPC;
+    }
+
+    public void setJlistEstrategiasPC(JList<String> jlistEstrategiasPC) {
+        this.jlistEstrategiasPC = jlistEstrategiasPC;
+    }
+
+    public JList<String> getJlistIns_Evaluacion() {
+        return jlistIns_Evaluacion;
+    }
+
+    public void setJlistIns_Evaluacion(JList<String> jlistIns_Evaluacion) {
+        this.jlistIns_Evaluacion = jlistIns_Evaluacion;
+    }
+
+    public JList<String> getJlistRecursos() {
+        return jlistRecursos;
+    }
+
+    public void setJlistRecursos(JList<String> jlistRecursos) {
+        this.jlistRecursos = jlistRecursos;
+    }
+
+    public JLabel getLbAsignatura() {
+        return lbAsignatura;
+    }
+
+    public void setLbAsignatura(JLabel lbAsignatura) {
+        this.lbAsignatura = lbAsignatura;
+    }
+
+    public JLabel getLbCarrera() {
+        return lbCarrera;
+    }
+
+    public void setLbCarrera(JLabel lbCarrera) {
+        this.lbCarrera = lbCarrera;
+    }
+
+    public JLabel getLbCicloparalelo() {
+        return lbCicloparalelo;
+    }
+
+    public void setLbCicloparalelo(JLabel lbCicloparalelo) {
+        this.lbCicloparalelo = lbCicloparalelo;
+    }
+
+    public JLabel getLbCod_Asignatura() {
+        return lbCod_Asignatura;
+    }
+
+    public void setLbCod_Asignatura(JLabel lbCod_Asignatura) {
+        this.lbCod_Asignatura = lbCod_Asignatura;
+    }
+
+    public JLabel getLbContenidosPC() {
+        return lbContenidosPC;
+    }
+
+    public void setLbContenidosPC(JLabel lbContenidosPC) {
+        this.lbContenidosPC = lbContenidosPC;
+    }
+
+    public JLabel getLbDocente() {
+        return lbDocente;
+    }
+
+    public void setLbDocente(JLabel lbDocente) {
+        this.lbDocente = lbDocente;
+    }
+
+    public JLabel getLbDuracion() {
+        return lbDuracion;
+    }
+
+    public void setLbDuracion(JLabel lbDuracion) {
+        this.lbDuracion = lbDuracion;
+    }
+
+    public JLabel getLbEstrategiasPC() {
+        return lbEstrategiasPC;
+    }
+
+    public void setLbEstrategiasPC(JLabel lbEstrategiasPC) {
+        this.lbEstrategiasPC = lbEstrategiasPC;
+    }
+
+    public JLabel getLbFechaInicioPC() {
+        return lbFechaInicioPC;
+    }
+
+    public void setLbFechaInicioPC(JLabel lbFechaInicioPC) {
+        this.lbFechaInicioPC = lbFechaInicioPC;
+    }
+
+    public JLabel getLbFechafinPC() {
+        return lbFechafinPC;
+    }
+
+    public void setLbFechafinPC(JLabel lbFechafinPC) {
+        this.lbFechafinPC = lbFechafinPC;
+    }
+
+    public JLabel getLbIns_Evaluacion() {
+        return lbIns_Evaluacion;
+    }
+
+    public void setLbIns_Evaluacion(JLabel lbIns_Evaluacion) {
+        this.lbIns_Evaluacion = lbIns_Evaluacion;
+    }
+
+    public JLabel getLbNumeroPlandeClase() {
+        return lbNumeroPlandeClase;
+    }
+
+    public void setLbNumeroPlandeClase(JLabel lbNumeroPlandeClase) {
+        this.lbNumeroPlandeClase = lbNumeroPlandeClase;
+    }
+
+    public JLabel getLbObjetivoPC() {
+        return lbObjetivoPC;
+    }
+
+    public void setLbObjetivoPC(JLabel lbObjetivoPC) {
+        this.lbObjetivoPC = lbObjetivoPC;
+    }
+
+    public JLabel getLbObservacionesPC() {
+        return lbObservacionesPC;
+    }
+
+    public void setLbObservacionesPC(JLabel lbObservacionesPC) {
+        this.lbObservacionesPC = lbObservacionesPC;
+    }
+
+    public JLabel getLbPlandeClase() {
+        return lbPlandeClase;
+    }
+
+    public void setLbPlandeClase(JLabel lbPlandeClase) {
+        this.lbPlandeClase = lbPlandeClase;
+    }
+
+    public JLabel getLbRecursosPC() {
+        return lbRecursosPC;
+    }
+
+    public void setLbRecursosPC(JLabel lbRecursosPC) {
+        this.lbRecursosPC = lbRecursosPC;
+    }
+
+    public JLabel getLbResultadosAprendizaje() {
+        return lbResultadosAprendizaje;
+    }
+
+    public void setLbResultadosAprendizaje(JLabel lbResultadosAprendizaje) {
+        this.lbResultadosAprendizaje = lbResultadosAprendizaje;
+    }
+
+    public JLabel getLbTituloUnidad() {
+        return lbTituloUnidad;
+    }
+
+    public void setLbTituloUnidad(JLabel lbTituloUnidad) {
+        this.lbTituloUnidad = lbTituloUnidad;
+    }
+
+    public JLabel getLbTrabajoAutonomo() {
+        return lbTrabajoAutonomo;
+    }
+
+    public void setLbTrabajoAutonomo(JLabel lbTrabajoAutonomo) {
+        this.lbTrabajoAutonomo = lbTrabajoAutonomo;
+    }
+
+    public JLabel getLbUnidad() {
+        return lbUnidad;
+    }
+
+    public void setLbUnidad(JLabel lbUnidad) {
+        this.lbUnidad = lbUnidad;
+    }
+
+    public JTextArea getTxrContenidosPC() {
+        return txrContenidosPC;
+    }
+
+    public void setTxrContenidosPC(JTextArea txrContenidosPC) {
+        this.txrContenidosPC = txrContenidosPC;
+    }
+
+    public JTextArea getTxrObjetivoPC() {
+        return txrObjetivoPC;
+    }
+
+    public void setTxrObjetivoPC(JTextArea txrObjetivoPC) {
+        this.txrObjetivoPC = txrObjetivoPC;
+    }
+
+    public JTextArea getTxrObservacionesPc() {
+        return txrObservacionesPc;
+    }
+
+    public void setTxrObservacionesPc(JTextArea txrObservacionesPc) {
+        this.txrObservacionesPc = txrObservacionesPc;
+    }
+
+    public JTextArea getTxrResulatdosAprendizaje() {
+        return txrResulatdosAprendizaje;
+    }
+
+    public void setTxrResulatdosAprendizaje(JTextArea txrResulatdosAprendizaje) {
+        this.txrResulatdosAprendizaje = txrResulatdosAprendizaje;
+    }
+
+    public JTextArea getTxrTrabajoAutonomo() {
+        return txrTrabajoAutonomo;
+    }
+
+    public void setTxrTrabajoAutonomo(JTextArea txrTrabajoAutonomo) {
+        this.txrTrabajoAutonomo = txrTrabajoAutonomo;
+    }
+
+    public JTextField getTxtAsignatura() {
+        return txtAsignatura;
+    }
+
+    public void setTxtAsignatura(JTextField txtAsignatura) {
+        this.txtAsignatura = txtAsignatura;
+    }
+
+    public JTextField getTxtCarrera() {
+        return txtCarrera;
+    }
+
+    public void setTxtCarrera(JTextField txtCarrera) {
+        this.txtCarrera = txtCarrera;
+    }
+
+    public JTextField getTxtCicloParalelo() {
+        return txtCicloParalelo;
+    }
+
+    public void setTxtCicloParalelo(JTextField txtCicloParalelo) {
+        this.txtCicloParalelo = txtCicloParalelo;
+    }
+
+    public JTextField getTxtCod_Asignatura() {
+        return txtCod_Asignatura;
+    }
+
+    public void setTxtCod_Asignatura(JTextField txtCod_Asignatura) {
+        this.txtCod_Asignatura = txtCod_Asignatura;
+    }
+
+    public JTextField getTxtDocente() {
+        return txtDocente;
+    }
+
+    public void setTxtDocente(JTextField txtDocente) {
+        this.txtDocente = txtDocente;
+    }
+
+    public JTextField getTxtDuracion() {
+        return txtDuracion;
+    }
+
+    public void setTxtDuracion(JTextField txtDuracion) {
+        this.txtDuracion = txtDuracion;
+    }
+
+    public JTextField getTxtTituloUnidad() {
+        return txtTituloUnidad;
+    }
+
+    public void setTxtTituloUnidad(JTextField txtTituloUnidad) {
+        this.txtTituloUnidad = txtTituloUnidad;
+    }
+
+    public JTextField getTxtUnidad() {
+        return txtUnidad;
+    }
+
+    public void setTxtUnidad(JTextField txtUnidad) {
+        this.txtUnidad = txtUnidad;
     }
 
     /**
@@ -43,7 +370,7 @@ public class frmPlanClase extends javax.swing.JFrame {
         lbCod_Asignatura = new javax.swing.JLabel();
         txtCod_Asignatura = new javax.swing.JTextField();
         txtTituloUnidad = new javax.swing.JTextField();
-        lbCod_Asignatura1 = new javax.swing.JLabel();
+        lbTituloUnidad = new javax.swing.JLabel();
         jDateChooserFechaInicioPC = new com.toedter.calendar.JDateChooser();
         lbFechaInicioPC = new javax.swing.JLabel();
         lbDuracion = new javax.swing.JLabel();
@@ -56,28 +383,28 @@ public class frmPlanClase extends javax.swing.JFrame {
         jlistRecursos = new javax.swing.JList<>();
         lbEstrategiasPC = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlistEstrategiasPC1 = new javax.swing.JList<>();
+        jlistIns_Evaluacion = new javax.swing.JList<>();
         lbRecursosPC = new javax.swing.JLabel();
         lbIns_Evaluacion = new javax.swing.JLabel();
         jDateChooserFechaFinPC = new com.toedter.calendar.JDateChooser();
         lbFechafinPC = new javax.swing.JLabel();
         lbTrabajoAutonomo = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        txrContenidosPC1 = new javax.swing.JTextArea();
+        txrContenidosPC = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txrObservacionesPc = new javax.swing.JTextArea();
+        txrTrabajoAutonomo = new javax.swing.JTextArea();
         lbObservacionesPC = new javax.swing.JLabel();
         btmnGuardarPc = new javax.swing.JButton();
         btnCancelarPC = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jlistEstrategiasPC2 = new javax.swing.JList<>();
+        jlistEstrategiasPC = new javax.swing.JList<>();
         jScrollPane7 = new javax.swing.JScrollPane();
-        txrObservacionesPc1 = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        txrObservacionesPc = new javax.swing.JTextArea();
+        txtUnidad = new javax.swing.JTextField();
+        lbUnidad = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        txrObjetivoPC1 = new javax.swing.JTextArea();
-        lbObjetivoPC1 = new javax.swing.JLabel();
+        txrResulatdosAprendizaje = new javax.swing.JTextArea();
+        lbResultadosAprendizaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,7 +452,7 @@ public class frmPlanClase extends javax.swing.JFrame {
             }
         });
 
-        lbCod_Asignatura1.setText("Titulo de la Unidad:");
+        lbTituloUnidad.setText("Titulo de la Unidad:");
 
         lbFechaInicioPC.setText("Fecha de inicio:");
 
@@ -158,12 +485,12 @@ public class frmPlanClase extends javax.swing.JFrame {
 
         lbEstrategiasPC.setText("Estrategias:");
 
-        jlistEstrategiasPC1.setModel(new javax.swing.AbstractListModel<String>() {
+        jlistIns_Evaluacion.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jlistEstrategiasPC1);
+        jScrollPane4.setViewportView(jlistIns_Evaluacion);
 
         lbRecursosPC.setText("Recursos:");
 
@@ -173,13 +500,13 @@ public class frmPlanClase extends javax.swing.JFrame {
 
         lbTrabajoAutonomo.setText("Trabajo Autónomo");
 
-        txrContenidosPC1.setColumns(20);
-        txrContenidosPC1.setRows(5);
-        jScrollPane5.setViewportView(txrContenidosPC1);
+        txrContenidosPC.setColumns(20);
+        txrContenidosPC.setRows(5);
+        jScrollPane5.setViewportView(txrContenidosPC);
 
-        txrObservacionesPc.setColumns(20);
-        txrObservacionesPc.setRows(5);
-        jScrollPane2.setViewportView(txrObservacionesPc);
+        txrTrabajoAutonomo.setColumns(20);
+        txrTrabajoAutonomo.setRows(5);
+        jScrollPane2.setViewportView(txrTrabajoAutonomo);
 
         lbObservacionesPC.setText("Observaciones:");
 
@@ -187,26 +514,26 @@ public class frmPlanClase extends javax.swing.JFrame {
 
         btnCancelarPC.setText("Cancelar");
 
-        jlistEstrategiasPC2.setModel(new javax.swing.AbstractListModel<String>() {
+        jlistEstrategiasPC.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane6.setViewportView(jlistEstrategiasPC2);
+        jScrollPane6.setViewportView(jlistEstrategiasPC);
 
-        txrObservacionesPc1.setColumns(20);
-        txrObservacionesPc1.setRows(5);
-        jScrollPane7.setViewportView(txrObservacionesPc1);
+        txrObservacionesPc.setColumns(20);
+        txrObservacionesPc.setRows(5);
+        jScrollPane7.setViewportView(txrObservacionesPc);
 
-        jLabel1.setText("Unidad:");
+        lbUnidad.setText("Unidad:");
 
-        txrObjetivoPC1.setEditable(false);
-        txrObjetivoPC1.setColumns(20);
-        txrObjetivoPC1.setRows(5);
-        txrObjetivoPC1.setText("SADASD\nDASD\nASDASD\nASDAS\nDAS\nDAS\nDAS\nDA\nSD\nAS\nDAS\nD\nASD\nAS\nDAS\nDAS\nD\nAS\nDAS\nDA\nSD");
-        jScrollPane8.setViewportView(txrObjetivoPC1);
+        txrResulatdosAprendizaje.setEditable(false);
+        txrResulatdosAprendizaje.setColumns(20);
+        txrResulatdosAprendizaje.setRows(5);
+        txrResulatdosAprendizaje.setText("SADASD\nDASD\nASDASD\nASDAS\nDAS\nDAS\nDAS\nDA\nSD\nAS\nDAS\nD\nASD\nAS\nDAS\nDAS\nD\nAS\nDAS\nDA\nSD");
+        jScrollPane8.setViewportView(txrResulatdosAprendizaje);
 
-        lbObjetivoPC1.setText("Resultados de Aprendizaje:");
+        lbResultadosAprendizaje.setText("Resultados de Aprendizaje:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -268,11 +595,11 @@ public class frmPlanClase extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
+                                            .addComponent(lbUnidad)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(lbCod_Asignatura1)
+                                            .addComponent(lbTituloUnidad)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(txtTituloUnidad))))
                                 .addGroup(layout.createSequentialGroup()
@@ -295,7 +622,7 @@ public class frmPlanClase extends javax.swing.JFrame {
                                                 .addComponent(lbObjetivoPC))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lbObjetivoPC1)
+                                                .addComponent(lbResultadosAprendizaje)
                                                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,9 +673,9 @@ public class frmPlanClase extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbCod_Asignatura1)
+                                .addComponent(lbUnidad)
+                                .addComponent(txtUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbTituloUnidad)
                                 .addComponent(txtTituloUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jDateChooserFechaInicioPC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(23, 23, 23)
@@ -366,7 +693,7 @@ public class frmPlanClase extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lbObjetivoPC1)
+                                .addComponent(lbResultadosAprendizaje)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -464,7 +791,6 @@ public class frmPlanClase extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarPC;
     private com.toedter.calendar.JDateChooser jDateChooserFechaFinPC;
     private com.toedter.calendar.JDateChooser jDateChooserFechaInicioPC;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -473,15 +799,13 @@ public class frmPlanClase extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JList<String> jlistEstrategiasPC1;
-    private javax.swing.JList<String> jlistEstrategiasPC2;
+    private javax.swing.JList<String> jlistEstrategiasPC;
+    private javax.swing.JList<String> jlistIns_Evaluacion;
     private javax.swing.JList<String> jlistRecursos;
     private javax.swing.JLabel lbAsignatura;
     private javax.swing.JLabel lbCarrera;
     private javax.swing.JLabel lbCicloparalelo;
     private javax.swing.JLabel lbCod_Asignatura;
-    private javax.swing.JLabel lbCod_Asignatura1;
     private javax.swing.JLabel lbContenidosPC;
     private javax.swing.JLabel lbDocente;
     private javax.swing.JLabel lbDuracion;
@@ -491,16 +815,18 @@ public class frmPlanClase extends javax.swing.JFrame {
     private javax.swing.JLabel lbIns_Evaluacion;
     private javax.swing.JLabel lbNumeroPlandeClase;
     private javax.swing.JLabel lbObjetivoPC;
-    private javax.swing.JLabel lbObjetivoPC1;
     private javax.swing.JLabel lbObservacionesPC;
     private javax.swing.JLabel lbPlandeClase;
     private javax.swing.JLabel lbRecursosPC;
+    private javax.swing.JLabel lbResultadosAprendizaje;
+    private javax.swing.JLabel lbTituloUnidad;
     private javax.swing.JLabel lbTrabajoAutonomo;
-    private javax.swing.JTextArea txrContenidosPC1;
+    private javax.swing.JLabel lbUnidad;
+    private javax.swing.JTextArea txrContenidosPC;
     private javax.swing.JTextArea txrObjetivoPC;
-    private javax.swing.JTextArea txrObjetivoPC1;
     private javax.swing.JTextArea txrObservacionesPc;
-    private javax.swing.JTextArea txrObservacionesPc1;
+    private javax.swing.JTextArea txrResulatdosAprendizaje;
+    private javax.swing.JTextArea txrTrabajoAutonomo;
     private javax.swing.JTextField txtAsignatura;
     private javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtCicloParalelo;
@@ -508,5 +834,6 @@ public class frmPlanClase extends javax.swing.JFrame {
     private javax.swing.JTextField txtDocente;
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtTituloUnidad;
+    private javax.swing.JTextField txtUnidad;
     // End of variables declaration//GEN-END:variables
 }
