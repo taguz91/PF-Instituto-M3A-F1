@@ -157,14 +157,14 @@ public class VtnNotasAlumnoCursoCTR {
             public void mousePressed(MouseEvent e) {
                 SelectHeader(e);
             }
-            
-});
+
+        });
         vista.getTblNotas().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 SelectTextInRow(e);
             }
-            
+
         });
 
         vista.getTblNotas().addKeyListener(new KeyAdapter() {
@@ -306,10 +306,10 @@ public class VtnNotasAlumnoCursoCTR {
                         datos.setValueAt(conversor(aporte1), getSelectedRow(), getSelectedColum());
                         sumarColumnas();
                         if (setObjFromTable().editar()) {
-                            vista.getLblEsado().setText("EDITADO CORRECTAMENTE");
+                            vista.getLblEstado().setText("EDITADO CORRECTAMENTE");
 
                         } else {
-                            vista.getLblEsado().setText("ERROR");
+                            vista.getLblEstado().setText("ERROR");
                         }
                         refreshTabla();
                     } else {
@@ -324,7 +324,7 @@ public class VtnNotasAlumnoCursoCTR {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("------------------->");
+
             System.out.println(e.getMessage());
         }
     }
@@ -677,6 +677,7 @@ public class VtnNotasAlumnoCursoCTR {
     private void btnBuscar(ActionEvent e) {
         String busqueda = vista.getTxtBuscar().getText().toLowerCase();
         new Thread(() -> {
+            tablaNotas.setRowCount(0);
             listaPersonasDocentes
                     .entrySet()
                     .stream()
@@ -700,15 +701,14 @@ public class VtnNotasAlumnoCursoCTR {
 
         }
     }
-    
-    public void SelectTextInRow(MouseEvent e){
-    
-         if (!vista.getTblNotas().isEditing() && vista.getTblNotas().editCellAt(vista.getTblNotas().getSelectedRow(), 
-                        vista.getTblNotas().getSelectedColumn())) {
-                    vista.getTblNotas().getEditorComponent().requestFocusInWindow();
-                }
-    
+
+    public void SelectTextInRow(MouseEvent e) {
+
+        if (!vista.getTblNotas().isEditing() && vista.getTblNotas().editCellAt(vista.getTblNotas().getSelectedRow(),
+                vista.getTblNotas().getSelectedColumn())) {
+            vista.getTblNotas().getEditorComponent().requestFocusInWindow();
+        }
+
     }
-    
-    
+
 }

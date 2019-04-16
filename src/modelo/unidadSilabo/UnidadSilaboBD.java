@@ -105,4 +105,45 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         return unidades;
     }
 
+    public void actualizar(UnidadSilaboMD u) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"UnidadSilabo\"\n"
+                    + "	SET objetivo_especifico_unidad=?, resultados_aprendizaje_unidad=?, contenidos_unidad=?, fecha_inicio_unidad=?, fecha_fin_unidad=?, horas_docencia_unidad=?, horas_practica_unidad=?, horas_autonomo_unidad=?, titulo_unidad=?\n"
+                    + "	WHERE id_unidad=?");
+
+            st.setString(1, u.getObjetivoEspecificoUnidad());
+            st.setString(2, u.getResultadosAprendizajeUnidad());
+            st.setString(3, u.getContenidosUnidad());
+            st.setDate(4, java.sql.Date.valueOf(u.getFechaInicioUnidad()));
+            st.setDate(5, java.sql.Date.valueOf(u.getFechaFinUnidad()));
+            st.setInt(6, u.getHorasDocenciaUnidad());
+            st.setInt(7, u.getHorasPracticaUnidad());
+            st.setInt(8, u.getHorasAutonomoUnidad());
+            st.setString(9, u.getTituloUnidad());
+            st.setInt(10, u.getIdUnidad());
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void eliminar(UnidadSilaboMD u) {
+
+        try {
+             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"UnidadSilabo\"\n"
+                    + "	WHERE id_unidad=?");
+
+            st.setInt(1, u.getIdUnidad());
+            
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

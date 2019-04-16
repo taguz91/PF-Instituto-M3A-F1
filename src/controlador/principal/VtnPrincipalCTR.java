@@ -10,7 +10,9 @@ import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
+import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
+import controlador.docente.VtnRolDocenteCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -73,7 +75,9 @@ import vista.alumno.VtnAlumnoCurso;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
+import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnDocenteMateria;
+import vista.docente.VtnRolesPeriodos;
 import vista.materia.VtnMateria;
 import vista.notas.VtnActivarNotas;
 import vista.notas.VtnNotasAlumnoCurso;
@@ -192,7 +196,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
         vtnPrin.getMnRbtnWindows().addActionListener(e -> estiloVtn());
 
-        //Para abrir las ventanas 
+        //Para abrir las ventanas consulta
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
         vtnPrin.getMnCtCarrera().addActionListener(e -> abrirVtnCarrera());
@@ -205,8 +209,9 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
-
+        vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
+         
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -219,8 +224,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnInscripcion().addActionListener(e -> abrirFrmInscripcion());
         vtnPrin.getBtnMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getBtnDocenteMateria().addActionListener(e -> abrirFrmDocenteMateria());
-
-        //Para los menus  
+        vtnPrin.getBtnIngresarRol().addActionListener(e->abrirFrmRolesPeriodos());
+        //Para los menus  ingresar
         vtnPrin.getMnIgAlumno().addActionListener(e -> abrirFrmAlumno());
         vtnPrin.getMnIgCarrera().addActionListener(e -> abrirFrmCarrera());
         vtnPrin.getMnIgCurso().addActionListener(e -> abrirFrmCurso());
@@ -230,7 +235,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgInscripcion().addActionListener(e -> abrirFrmInscripcion());
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
-
+        vtnPrin.getMnIgRolesPeriodo().addActionListener(e-> abrirFrmRolesPeriodos());
+        
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
         vtnPrin.getMnCtRoles().addActionListener(e -> mnCtRoles(e));
@@ -436,6 +442,26 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, this);
             ctrFrmPersona.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+      public void abrirFrmRolesPeriodos() {
+          FrmRolesPeriodos frmRolPeriodo = new FrmRolesPeriodos();
+        eventoInternal(frmRolPeriodo);
+        if (numVtns < 5) {
+            FrmRolPeriodoCTR rol= new FrmRolPeriodoCTR(vtnPrin, frmRolPeriodo, conecta, this);
+            rol.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+      public void abrirVtnRolesPeriodos() {
+          VtnRolesPeriodos vtnRolprd = new VtnRolesPeriodos();
+        eventoInternal(vtnRolprd);
+        if (numVtns < 5) {
+            VtnRolDocenteCTR vtnRol= new VtnRolDocenteCTR(vtnPrin, vtnRolprd, conecta, this);
+            vtnRol.iniciar();
         } else {
             errorNumVentanas();
         }
