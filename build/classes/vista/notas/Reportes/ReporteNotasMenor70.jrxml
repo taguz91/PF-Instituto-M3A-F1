@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.0000000000000078"/>
 	<property name="ireport.x" value="319"/>
 	<property name="ireport.y" value="0"/>
+<<<<<<< HEAD
+	<parameter name="consulta" class="java.lang.String">
+=======
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -16,6 +19,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="nombre_jornada" class="java.lang.String">
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -127,7 +131,11 @@ ORDER BY
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699"/>
+=======
 				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="5ee3dcfb-7d89-47a1-a5e8-dc3a8e06a77b"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
@@ -138,7 +146,11 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
 			</textField>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="583" y="45" width="331" height="20"/>
+=======
 				<reportElement x="583" y="45" width="331" height="20" uuid="b43202ae-35a8-43d0-a282-06174be17eb1"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
@@ -243,6 +255,21 @@ ORDER BY
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
+<<<<<<< HEAD
+				<reportElement x="557" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="657" y="0" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="820" y="0" width="158" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+=======
 				<reportElement x="557" y="0" width="100" height="20" uuid="2e742b24-4c8a-4f91-86cd-6ee5081b1f05"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
@@ -256,6 +283,7 @@ ORDER BY
 				<reportElement x="820" y="0" width="158" height="20" uuid="f3152097-6f78-4029-b668-9c5217ae62ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="820" y="0" width="158" height="20" uuid="c108b0df-61f1-4708-a01b-992ce8148c09"/>
@@ -267,7 +295,11 @@ ORDER BY
 				<reportElement mode="Transparent" x="657" y="0" width="163" height="20" uuid="901401cf-baf2-4a97-a330-707f83dbdf0b"/>
 			</rectangle>
 			<textField>
+<<<<<<< HEAD
+				<reportElement mode="Opaque" x="978" y="0" width="100" height="20" backcolor="#FFCC99"/>
+=======
 				<reportElement mode="Opaque" x="978" y="0" width="100" height="20" backcolor="#FFCC99" uuid="627d4545-5b7c-4a91-a0bd-d06b3b4e07cf"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
 			</textField>
@@ -280,7 +312,11 @@ ORDER BY
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
 			</textField>
 			<rectangle>
+<<<<<<< HEAD
+				<reportElement mode="Transparent" x="457" y="0" width="100" height="20"/>
+=======
 				<reportElement mode="Transparent" x="457" y="0" width="100" height="20" uuid="c0c13874-b934-4d40-aedb-551265f7358c"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 			</rectangle>
 		</band>
 	</detail>

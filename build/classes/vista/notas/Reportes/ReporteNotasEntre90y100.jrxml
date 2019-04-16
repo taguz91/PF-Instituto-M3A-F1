@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0000000000000009"/>
+=======
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2b36fd84-0547-4c5a-9128-458213b6c0e4">
 	<property name="ireport.zoom" value="1.0"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 	<property name="ireport.x" value="304"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
@@ -121,7 +126,11 @@ ORDER BY
 				<text><![CDATA[Paralelo:]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="52" y="0" width="1412" height="45" forecolor="#006699"/>
+=======
 				<reportElement x="52" y="0" width="1412" height="45" forecolor="#006699" uuid="6dc4517e-7c2d-40b2-a41f-75d939cf8712"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
@@ -132,7 +141,11 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="583" y="45" width="331" height="20"/>
+=======
 				<reportElement x="583" y="45" width="331" height="20" uuid="1974d229-fcf6-4e24-97ee-b367e4bcf7b9"/>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
@@ -241,6 +254,21 @@ ORDER BY
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
+<<<<<<< HEAD
+				<reportElement x="531" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="631" y="0" width="162" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="793" y="0" width="140" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+=======
 				<reportElement x="531" y="0" width="100" height="20" uuid="a8c6ead6-e8f2-425e-8be2-30e643f59eeb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
@@ -254,6 +282,7 @@ ORDER BY
 				<reportElement x="793" y="0" width="140" height="20" uuid="648e9371-6e31-4bf9-8011-f2ea9f271379"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="793" y="0" width="140" height="20" uuid="065a4015-409a-4c11-81a8-8be38c9359d1"/>
@@ -265,17 +294,29 @@ ORDER BY
 				<reportElement mode="Transparent" x="531" y="0" width="100" height="20" uuid="b6dfac6c-fdfb-4d58-b2cd-c8e6bc46bea4"/>
 			</rectangle>
 			<textField>
+<<<<<<< HEAD
+				<reportElement mode="Opaque" x="933" y="0" width="100" height="20" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
+=======
 				<reportElement mode="Opaque" x="933" y="0" width="100" height="20" backcolor="#FFCC99" uuid="c965e5d3-3298-45d2-aa0e-45b91710b552"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="933" y="0" width="100" height="20" uuid="41fa620f-7b05-4446-88b3-f6174d9bb8c9"/>
 			</rectangle>
 			<textField>
+<<<<<<< HEAD
+				<reportElement x="431" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+=======
 				<reportElement x="431" y="0" width="100" height="20" uuid="dfcfe985-a189-4033-8bfe-3be339b85cc7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+>>>>>>> 316df54fe57c233b56a697d7621a4e13c4d0e102
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="431" y="0" width="100" height="20" uuid="ff176c82-c4cf-4913-b3fb-fd2606b8f32c"/>
