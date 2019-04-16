@@ -195,6 +195,25 @@ ALTER TABLE public."Plan_de_clases"
     OWNER to postgres;
 
 
+CREATE SEQUENCE public."Recursos_id_recurso_seq";
+
+ALTER SEQUENCE public."Recursos_id_recurso_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."Recursos"
+(
+    id_recurso integer NOT NULL DEFAULT nextval('"Recursos_id_recurso_seq"'::regclass),
+    nombre_recursos text COLLATE pg_catalog."default",
+    tipo_recurso character(1) COLLATE pg_catalog."default",
+    CONSTRAINT "Recursos_pkey" PRIMARY KEY (id_recurso)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Recursos"
+    OWNER to postgres;
 
 
 CREATE SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
@@ -226,23 +245,24 @@ ALTER TABLE public."Recursos_plan_clases"
     OWNER to postgres;
 
 
-
-CREATE SEQUENCE public."Recursos_id_recurso_seq";
-
-ALTER SEQUENCE public."Recursos_id_recurso_seq"
-    OWNER TO postgres;
-
-CREATE TABLE public."Recursos"
+CREATE TABLE public."Trabajo_autonomo"
 (
-    id_recurso integer NOT NULL DEFAULT nextval('"Recursos_id_recurso_seq"'::regclass),
-    nombre_recursos text COLLATE pg_catalog."default",
-    tipo_recurso character(1) COLLATE pg_catalog."default",
-    CONSTRAINT "Recursos_pkey" PRIMARY KEY (id_recurso)
+    id_evaluacion integer NOT NULL,
+    id_plan_clases integer NOT NULL,
+    CONSTRAINT "Trabajo_autonomo_pkey" PRIMARY KEY (id_evaluacion),
+    CONSTRAINT id_evaluacion FOREIGN KEY (id_evaluacion)
+        REFERENCES public."EvaluacionSilabo" (id_evaluacion) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
+        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 )
 WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Recursos"
+ALTER TABLE public."Trabajo_autonomo"
     OWNER to postgres;
