@@ -409,6 +409,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnConsultarSilabo.setToolTipText("Consultar Silabo");
         btnConsultarSilabo.setFocusPainted(false);
 
+        btnIngresarRol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_25px.png"))); // NOI18N
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
@@ -644,6 +645,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
+        mnCtRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_20px.png"))); // NOI18N
         mnCtRolesPeriodo.setText("Roles Periodo");
         mnCtRolesPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -726,6 +728,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt.setText("Materia docente");
         mnIngresar.add(mnIgDocenteMt);
 
+        mnIgRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_File_20px.png"))); // NOI18N
         mnIgRolesPeriodo.setText("Roles Periodo");
         mnIngresar.add(mnIgRolesPeriodo);
 
