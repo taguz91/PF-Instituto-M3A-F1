@@ -56,7 +56,10 @@ public class DocenteBD extends DocenteMD {
 
     }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 171d4d5862b292e4e9c0e1da765d6cd611a44ee9
     public void guardarFinContrato(int aguja) {
         String sql = "UPDATE public.\"Docentes\" SET\n"
                 + "' docente_fecha_fin = '" + this.getFechaFinContratacion()
@@ -65,7 +68,10 @@ public class DocenteBD extends DocenteMD {
     }
 
 //    public void 
+<<<<<<< HEAD
+=======
     
+>>>>>>> 171d4d5862b292e4e9c0e1da765d6cd611a44ee9
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
         DocenteMD d;

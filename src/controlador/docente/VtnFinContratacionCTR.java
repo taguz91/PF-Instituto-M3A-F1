@@ -5,8 +5,6 @@
  */
 package controlador.docente;
 
-import controlador.persona.VtnDocenteCTR;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -16,7 +14,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.validaciones.Validar;
 import vista.docente.VtnFinContratacion;

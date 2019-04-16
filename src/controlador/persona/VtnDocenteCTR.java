@@ -375,13 +375,14 @@ public class VtnDocenteCTR {
     }
 
     private void finContratacion() {
-        int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        if (posFila >= 0) {
-            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, docentesMD.get(posFila));
-            vtn_fin_contratacion.iniciar();
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
-        }
 
+         int posFila = vtnDocente.getTblDocente().getSelectedRow();
+         if(posFila >= 0){
+             VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR( conecta, vtnPrin, docentesMD.get(posFila));
+        vtn_fin_contratacion.iniciar();
+         }else{
+             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+         }
+        
     }
 }
