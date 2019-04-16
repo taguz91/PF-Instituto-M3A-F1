@@ -239,6 +239,7 @@ public class MateriaBD extends MateriaMD {
                     m.setId(rs.getInt("id_materia"));
                     CarreraMD cr = new CarreraMD();
                     cr.setId(rs.getInt("id_carrera"));
+                    m.setCarrera(cr);
                     m.setCodigo(rs.getString("materia_codigo"));
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCiclo(rs.getInt("materia_ciclo"));
