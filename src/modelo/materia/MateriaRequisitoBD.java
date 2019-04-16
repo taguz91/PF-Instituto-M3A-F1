@@ -17,8 +17,25 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
     public MateriaRequisitoBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.mat = new MateriaBD(conecta);
+       
+    }
+    
+    
+
+     public boolean insertarMateriaRequisito() {
+
+        String sql = "INSERT INTO public.\"MateriaRequisitos\"(\n"
+                + " id_materia, id_materia_requisito, tipo_requisito)\n"
+                + " VALUES (" + getMateria().getId() + "," + getMateriaRequisito().getId() + ", '" + getTipo() + "');";
+
+        if (conecta.nosql(sql) == null) {
+          return true;
+        } else {
+            return false;
+        }
     }
 
+     
     public ArrayList<MateriaRequisitoMD> buscarPreRequisitos(int idMateria) {
         String sql = "SELECT id_requisito, mr.id_materia_requisito, materia_nombre\n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
