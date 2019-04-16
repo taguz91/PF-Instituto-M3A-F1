@@ -70,6 +70,54 @@ public class CursoBD extends CursoMD {
                 + "	WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getCurso_nombre());
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + getCurso_nombre());
+        }
+    }
+    
+    public void eliminarCurso(int idCurso){
+        String nsql = "UPDATE public.\"Cursos\" "
+                + "SET curso_activo = false "
+                + "WHERE id_curso = "+idCurso+";";  
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
+                    + "compruebe su conexion a internet.");
+        }
+    }
+    
+    public void activarCurso(int idCurso){
+        String nsql = "UPDATE public.\"Cursos\" "
+                + "SET curso_activo = true "
+                + "WHERE id_curso = "+idCurso+";";  
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se activo correctamente. ");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo activar,"
+                    + "compruebe su conexion a internet.");
+        }
+    }
+    
+    public int numAlumnos(int idCurso){
+        int num = 0; 
+        String sql = "SELECT count(id_curso) "
+                + "FROM public.\"AlumnosCurso\" "
+                + "WHERE id_curso ="+idCurso+";"; 
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                   num = rs.getInt(1);
+                }
+                return num;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos. ");
+            System.out.println(e.getMessage());
+            return 0;
         }
     }
 

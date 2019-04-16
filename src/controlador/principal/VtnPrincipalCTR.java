@@ -30,6 +30,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
@@ -249,6 +250,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         vtnPrin.getMnCtSilabos().addActionListener(al -> controladorCRUD());
+        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
 
@@ -563,7 +565,10 @@ public class VtnPrincipalCTR {
         c.iniciarControlador();
 
     }
-
+    private void controladorCONFIGURACION_PLAN_DE_CLASES(){
+        ControladorConfiguracion_plan_clases cp=new ControladorConfiguracion_plan_clases(usuario, vtnPrin);
+        cp.iniciarControlaador();
+    }
     private void controladorIngreso() {
 
         ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());

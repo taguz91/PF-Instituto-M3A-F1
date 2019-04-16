@@ -11,7 +11,7 @@ package vista.silabos;
  *
  * @author Daniel
  */
-public class frmPlanClase extends javax.swing.JFrame {
+public class frmPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmPlanClase
