@@ -373,8 +373,8 @@ public class VtnDocenteCTR {
     }
 
     private void finContratacion() {
-        VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin);
-        vtn_fin_contratacion.iniciar();
+       // VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(vtnFinContratacion, conecta, vtnPrin);
+      //  vtn_fin_contratacion.iniciar();
         
     }
 }
