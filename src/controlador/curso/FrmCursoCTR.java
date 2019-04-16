@@ -115,14 +115,10 @@ public class FrmCursoCTR {
         frmCurso.getCbxMateria().setEnabled(true);
         int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
         int posCi = frmCurso.getCbxCiclo().getSelectedIndex();
-        if (posPr > 0 && posCi == 0) {
-            //Consultamos las materias para cargarlo co el combo materias
-            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
-            cargarCmbMaterias(materias);
-        } else if (posPr > 0 && posCi > 0) {
+        if (posPr > 0 && posCi > 0) {
             int ciclo = Integer.parseInt(frmCurso.getCbxCiclo().getSelectedItem().toString());
-
-            materias = mt.cargarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
+            materias = mt.buscarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
+            
             cargarCmbMaterias(materias);
         } else {
             frmCurso.getCbxMateria().removeAllItems();
@@ -135,7 +131,7 @@ public class FrmCursoCTR {
         int posMat = frmCurso.getCbxMateria().getSelectedIndex();
         frmCurso.getCbxDocente().setEnabled(true);
         if (posMat > 0) {
-            docentes = docen.cargarDocentesPorMateria(materias.get(posMat - 1).getId());
+            docentes = docen.cargarDocentesPorMateriaParaFrm(materias.get(posMat - 1).getId());
             cargarCmbDocente(docentes);
         } else {
             frmCurso.getCbxDocente().setEnabled(false);

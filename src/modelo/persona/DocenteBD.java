@@ -285,6 +285,38 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
+    public ArrayList<DocenteMD> cargarDocentesPorMateriaParaFrm(int idMateria) {
+        ArrayList<DocenteMD> docentes = new ArrayList();
+        String sql = "SELECT d.id_docente, d.id_persona, persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido, persona_identificacion \n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p, public.\"DocentesMateria\" md\n"
+                + "WHERE id_materia = " + idMateria + " AND\n"
+                + "d.id_docente = md.id_docente AND\n"
+                + "p.id_persona = d.id_persona AND\n"
+                + "docente_activo = true;";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                DocenteMD doc = new DocenteMD();
+                doc.setIdDocente(rs.getInt("id_docente"));
+                doc.setIdPersona(rs.getInt("id_persona"));
+                doc.setIdentificacion(rs.getString("persona_identificacion"));
+                doc.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                doc.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                doc.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                doc.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+
+                docentes.add(doc);
+            }
+            rs.close();
+            return docentes;
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar docentes");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
     public DocenteMD buscarDocente(int idDocente) {
         DocenteMD d = null;
         String sql = "SELECT id_docente, id_persona, docente_codigo, "

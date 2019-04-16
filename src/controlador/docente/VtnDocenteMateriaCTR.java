@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -95,13 +96,27 @@ public class VtnDocenteMateriaCTR {
         //Acciones de los botones
         vtnDm.getBtnBuscar().addActionListener(e -> buscar(vtnDm.getTxtBuscar().getText().trim()));
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
+        vtnDm.getBtnEliminar().addActionListener(e -> eliminar());
 
         cargarDocenteMaterias();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes materia");
     }
-
+    
+    /**
+     * Eliminamos el docente materia
+     * @param aguja 
+     */
+    
+    private void eliminar(){
+        int pos = vtnDm.getTblDocentesMateria().getSelectedRow(); 
+        if (pos >= 0) {
+            dm.eliminar(dms.get(pos).getId());
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila primero.");
+        }
+    }
     //Buscador
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
@@ -135,8 +150,8 @@ public class VtnDocenteMateriaCTR {
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-            materias = mat.cargarMateriasCarreraCmb(idCar);
-            llenarCmbMaterias(materias);
+//            materias = mat.cargarMateriasCarreraCmb(idCar);
+//            llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
 
