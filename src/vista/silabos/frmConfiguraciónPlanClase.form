@@ -39,7 +39,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="Cmb_silabos" max="32767" attributes="0"/>
+                  <Component id="Cmb_materias" max="32767" attributes="0"/>
                   <Component id="Cmb_unidades" pref="266" max="32767" attributes="0"/>
                   <Component id="Cmb_carreras" max="32767" attributes="0"/>
               </Group>
@@ -64,7 +64,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Cmb_silabos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Cmb_materias" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -98,7 +98,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="Cmb_silabos">
+    <Component class="javax.swing.JComboBox" name="Cmb_materias">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
