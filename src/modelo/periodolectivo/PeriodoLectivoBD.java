@@ -78,6 +78,26 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
+    public List<PeriodoLectivoMD> periodoDocente(String aguja){
+        String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n" +
+        "public.\"Docentes\" d USING(id_docente)\n" +
+        "WHERE d.docente_codigo LIKE '" + aguja + "';";
+        ResultSet rs = conecta.sql(sql);
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                lista.add(p);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
