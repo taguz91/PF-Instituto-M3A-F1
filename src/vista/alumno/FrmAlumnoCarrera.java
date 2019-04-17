@@ -67,6 +67,7 @@ public class FrmAlumnoCarrera extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setTitle("Formulario Matrícula");
 
         jLabel1.setText("Alumno:");

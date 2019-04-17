@@ -78,6 +78,26 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
+    public List<PeriodoLectivoMD> periodoDocente(String aguja){
+        String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n" +
+        "public.\"Docentes\" d USING(id_docente)\n" +
+        "WHERE d.docente_codigo LIKE '" + aguja + "';";
+        ResultSet rs = conecta.sql(sql);
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                lista.add(p);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
@@ -161,7 +181,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public List<PeriodoLectivoMD> capturarPeriodos(String aguja) {
         List<PeriodoLectivoMD> lista = new ArrayList();
         String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
-                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
+                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo, prd_lectivo_estado\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
                 + "prd_lectivo_activo = true AND(\n"
@@ -186,6 +206,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                 p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }
@@ -229,7 +250,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public ArrayList<PeriodoLectivoMD> cargarPeriodos() {
         ArrayList<PeriodoLectivoMD> lista = new ArrayList();
         String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
-                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo\n"
+                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo, prd_lectivo_estado\n"
                 + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
                 + "WHERE c.id_carrera = pl.id_carrera AND\n"
                 + "prd_lectivo_activo = true "
@@ -250,6 +271,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                 p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }

@@ -53,14 +53,27 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 
     public void iniciar() {
         docenteMD = dc.buscarDocente(cedula);
+        frmFinContrato.getBtnGuardar().setText("Siguiente");
+        frmFinContrato.getBtnAnterior().setEnabled(false);
+        
+        frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                int pos = frmFinContrato.getTpFrm().getSelectedIndex(); 
+                if (pos > 0) {
+                    frmFinContrato.getBtnAnterior().setEnabled(true);
+                }else{
+                    frmFinContrato.getBtnAnterior().setEnabled(false);
+                }
+            }
+        });
 
         iniciarFinContrato();
         iniciarPeriodosDocente();
     }
 
     public void iniciarPeriodosDocente() {
-
-        frmFinContrato.getBtnCancelar().addActionListener(e -> cancelarPeriodo());
+        frmFinContrato.getBtnAnterior().addActionListener(e -> pnlAnterior());
         frmFinContrato.getJcbPeriodos().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +93,8 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     public void listaPeriodos() {
         periodoBD = new PeriodoLectivoBD(conecta);
 
-        List<PeriodoLectivoMD> listaPeriodos = periodoBD.llenarTabla();
+        //List<PeriodoLectivoMD> listaPeriodos = periodoBD.llenarTabla();
+        List<PeriodoLectivoMD> listaPeriodos = periodoBD.periodoDocente(cedula);
         for (int i = 0; i < listaPeriodos.size(); i++) {
             frmFinContrato.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
 
@@ -111,18 +125,16 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 
     }
 
-    private void cancelarPeriodo() {
-        frmFinContrato.dispose();
-        System.out.println("Se dio clic en cancelar periodo docente");
-
+    private void pnlAnterior() {
+        frmFinContrato.getTpFrm().setSelectedIndex(0);
+        frmFinContrato.getBtnAnterior().setEnabled(false);
     }
 
     public void iniciarFinContrato() {
         frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
         frmFinContrato.getLblErrorObservacion().setVisible(false);
-        frmFinContrato.getBtnGuardar().setEnabled(false);
+        //frmFinContrato.getBtnGuardar().setEnabled(false);
         frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
-        frmFinContrato.getBtnCancelar().addActionListener(e -> salir());
 
         frmFinContrato.getTxtObservacion().addKeyListener(new KeyAdapter() {
 
@@ -151,6 +163,13 @@ public class JDFinContratacionCTR extends DependenciasCTR {
             }
         });
 
+        frmFinContrato.getCbx_Periodos().addMouseListener(new MouseAdapter() {
+            public void mouseClicked() {
+
+                habilitarGuardar();
+            }
+        });
+
         docenteMD = dc.buscarDocente(cedula);
     }
 
@@ -158,12 +177,14 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         String observacion;
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
-        if (observacion.equals("") == false || fecha != null) {
+        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+        if (observacion.equals("") == false || fecha != null || posPrd > 0) {
             if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
                     || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
                 frmFinContrato.getBtnGuardar().setEnabled(false);
             } else {
                 frmFinContrato.getBtnGuardar().setEnabled(true);
+                frmFinContrato.getBtnGuardar().setText("Guardar");
             }
         } else {
             frmFinContrato.getBtnGuardar().setEnabled(false);
@@ -172,15 +193,19 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     }
 
     private void guardarFinContratacion() {
-
-        String Observacion, fechaFinContra;
+        String Observacion = "", fechaFinContra = "";
         Date fecha;
 
         Observacion = frmFinContrato.getTxtObservacion().getText().trim().toUpperCase();
         fecha = frmFinContrato.getJdcFinContratacion().getDate();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        fechaFinContra = sdf.format(fecha);
+        if (!fechaFinContra.equals("")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            fechaFinContra = sdf.format(fecha);
+            validarFecha();
+            System.out.println("DIA " + fechaFinContra);
+        } else {
+            guardar = false;
+        }
 
 //        if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
 //                && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
@@ -191,9 +216,6 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 //            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
 //            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
 //        }
-        validarFecha();
-        System.out.println("DIA " + fechaFinContra);
-
         if (guardar == true) {
 //            DocenteMD docente = new DocenteMD();
 //            docente.setObservacion(Observacion);
@@ -202,10 +224,11 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 //            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
 //            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
 //            frmFinContrato.dispose();
-              frmFinContrato.getTpFrm().setSelectedIndex(2);
+            System.out.println("Se guarda enn base de datos");
+        } else {
+            frmFinContrato.getTpFrm().setSelectedIndex(1);
+            frmFinContrato.getBtnAnterior().setEnabled(true);
         }
-        
-        
 
     }
 
@@ -222,11 +245,6 @@ public class JDFinContratacionCTR extends DependenciasCTR {
             return false;
         }
 
-    }
-
-    private void salir() {
-        frmFinContrato.dispose();
-        System.out.println("Se dio click en cancelar Fin contratacion");
     }
 
     public LocalDate convertirDate(Date fecha) {

@@ -33,9 +33,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
     public JComboBox<String> getJcbPeriodos() {
         return Cbx_Periodos;
     }
-
-    public JButton getBtnCancelar() {
-        return btnCancelar;
+    public JButton getBtnAnterior() {
+        return btnAnterior;
     }
 
     public JButton getBtnGuardar() {
@@ -66,6 +65,9 @@ public class JDFinContratacion extends javax.swing.JDialog {
         return tpFrm;
     }
 
+    public JComboBox<String> getCbx_Periodos() {
+        return Cbx_Periodos;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,7 +80,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         tpFrm = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -99,7 +101,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         btnGuardar.setText("Guardar");
 
-        btnCancelar.setText("Cancelar");
+        btnAnterior.setText("Anterior");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,7 +109,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
+                .addComponent(btnAnterior)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap())
@@ -118,7 +120,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnCancelar)))
+                    .addComponent(btnAnterior)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -217,7 +219,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -231,8 +233,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tpFrm.addTab("Lista de Cursos", jPanel4);
@@ -267,7 +269,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Cbx_Periodos;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
