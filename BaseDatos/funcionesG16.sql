@@ -85,3 +85,24 @@ BEGIN
 	RETURN NEW;
 END;
 $roles_elim$ LANGUAGE plpgsql;
+
+
+--funciones para guardar en la tabla historial
+
+CREATE OR REPLACE FUNCTION actualiza_usuarios()
+RETURNS TRIGGER AS $actualiza_usuarios$
+BEGIN
+	IF new.usu_estado = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_usuario,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_usuario,inet_client_addr());
+	END IF;
+	RETURN NEW;
+END;
+$actualiza_usuarios$ LANGUAGE plpgsql;

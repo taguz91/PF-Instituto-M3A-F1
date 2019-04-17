@@ -13,36 +13,43 @@ import vista.principal.VtnPrincipal;
  *
  * @author MrRainx
  */
-public class FrmTipoNotaAgregar extends AbstracForm {
+public class FrmTipoNotaEditar extends AbstracForm {
 
-    public FrmTipoNotaAgregar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
+    protected Integer PK = null;
+
+    public FrmTipoNotaEditar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         super(desktop, vista, modelo, vtnPadre);
     }
 
     //INITS
-    public void InitAgregar() {
+    public void InitEditar() {
 
         Init();
-
-        vista.setTitle(StringUtils.capitalize("agregar nueva nota"));
-
+        PK = modelo.getIdTipoNota();
+        vista.setTitle(StringUtils.capitalize("editar tipo de nota"));
+        setObjInForm();
         activarFormulario(true);
+    }
 
+    private void setObjInForm() {
+        vista.getCmbCarrera().setSelectedItem(modelo.getCarrera().getNombre());
+        vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
+        vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
+        vista.getCmbTipoDeNota().setSelectedItem(modelo.getNombre());
     }
 
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
         if (validarFormulario()) {
-            if (setObj().insertar()) {
-                String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
+            if (setObj().editar(PK)) {
+                String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
                 Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
             }
         }
-
     }
 
 }

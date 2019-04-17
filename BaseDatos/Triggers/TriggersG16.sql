@@ -69,3 +69,10 @@ CREATE TRIGGER Elimina_Roles
 AFTER UPDATE OF rol_estado
 ON public."Roles" FOR EACH ROW
 EXECUTE PROCEDURE roles_elim();
+
+--trigger para grabar en el historial 
+
+CREATE TRIGGER up_date_usuarios
+AFTER UPDATE OF usu_estado
+ON public."Usuarios" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_usuarios();
