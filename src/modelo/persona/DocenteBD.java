@@ -235,8 +235,6 @@ public class DocenteBD extends DocenteMD {
     }
     
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
-        System.out.println("periodo " + idPeriodo);
-        System.out.println("docente " + idDocente);
         String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
                 + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
                 + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";

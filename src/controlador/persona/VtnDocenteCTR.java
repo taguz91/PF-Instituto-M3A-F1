@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
+import controlador.docente.JDFinContratacionCTR;
 import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -89,7 +90,7 @@ public class VtnDocenteCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
-        String[] titulo = {"Cedula","Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
+        String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -100,7 +101,7 @@ public class VtnDocenteCTR {
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 90);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 3, 230);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 4, 125);
-        cargarDocentes();   
+        cargarDocentes();
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
@@ -132,7 +133,7 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
-        if (vtnDocente.getCbxDocentesEliminados().isSelected()){
+        if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
             docentesMD = docente.cargarDocentesEliminados();
             llenarTabla(docentesMD);
             vtnDocente.getBtnEditar().setText("Habilitar Docente");
@@ -149,7 +150,7 @@ public class VtnDocenteCTR {
         mdTbl.setRowCount(0);
         if (docentesMD != null) {
             docentesMD.forEach(d -> {
-                Object[] valores = {d.getCodigo(),d.getPrimerApellido() + " "
+                Object[] valores = {d.getCodigo(), d.getPrimerApellido() + " "
                     + d.getSegundoApellido() + " " + d.getPrimerNombre()
                     + " " + d.getSegundoNombre(),
                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
@@ -172,7 +173,7 @@ public class VtnDocenteCTR {
 
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            if (vtnDocente.getCbxDocentesEliminados().isSelected()){
+            if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
                 docentesMD = docente.buscarEliminados(aguja);
                 llenarTabla(docentesMD);
             } else {
@@ -219,20 +220,20 @@ public class VtnDocenteCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
-        }else{
-          d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
-                  if (d != null) {
-                        int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
-                                "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
-                                JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
-                                new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
-                        if (seleccion == 1) {
-                           docente.activarDocente(docentesMD.get(posFila).getIdDocente());
-                           JOptionPane.showMessageDialog(null, "se activo el docnete");
-                        } else if (seleccion == 0) {
-                          
-                        }
-                  }
+        } else {
+            d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
+            if (d != null) {
+                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                        "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                        new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                if (seleccion == 1) {
+                    docente.activarDocente(docentesMD.get(posFila).getIdDocente());
+                    JOptionPane.showMessageDialog(null, "se activo el docnete");
+                } else if (seleccion == 0) {
+
+                }
+            }
         }
 
     }
@@ -409,8 +410,11 @@ public class VtnDocenteCTR {
 
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
-            vtn_fin_contratacion.iniciar();
+//            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+//            vtn_fin_contratacion.iniciar();
+            JDFinContratacionCTR ctr = new JDFinContratacionCTR(conecta, vtnPrin, ctrPrin,
+                    vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+            ctr.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }

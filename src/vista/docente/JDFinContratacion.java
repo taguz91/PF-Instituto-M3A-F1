@@ -5,6 +5,14 @@
  */
 package vista.docente;
 
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Lina
@@ -13,6 +21,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
     /**
      * Creates new form JDFinContratacion
+     *
      * @param parent
      * @param modal
      */
@@ -20,6 +29,43 @@ public class JDFinContratacion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+
+    public JComboBox<String> getJcbPeriodos() {
+        return Cbx_Periodos;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public JDateChooser getJdcFinContratacion() {
+        return jdcFinContratacion;
+    }
+
+    public JLabel getLblErrorFechaFinContratacion() {
+        return lblErrorFechaFinContratacion;
+    }
+
+    public JLabel getLblErrorObservacion() {
+        return lblErrorObservacion;
+    }
+
+    public JTable getTblMateriasCursos() {
+        return tblMateriasCursos;
+    }
+
+    public JTextField getTxtObservacion() {
+        return txtObservacion;
+    }
+
+    public JTabbedPane getTpFrm() {
+        return tpFrm;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,7 +80,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tpFrm = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jdcFinContratacion = new com.toedter.calendar.JDateChooser();
@@ -133,7 +179,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Fin Contrato", jPanel3);
+        tpFrm.addTab("Fin Contrato", jPanel3);
 
         jLabel3.setText("<html>Advertencia!! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
 
@@ -189,7 +235,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addGap(5, 5, 5))
         );
 
-        jTabbedPane1.addTab("Lista de Cursos", jPanel4);
+        tpFrm.addTab("Lista de Cursos", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +246,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1))
+                        .addComponent(tpFrm))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -211,7 +257,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tpFrm, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -232,11 +278,11 @@ public class JDFinContratacion extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private com.toedter.calendar.JDateChooser jdcFinContratacion;
     private javax.swing.JLabel lblErrorFechaFinContratacion;
     private javax.swing.JLabel lblErrorObservacion;
     private javax.swing.JTable tblMateriasCursos;
+    private javax.swing.JTabbedPane tpFrm;
     private javax.swing.JTextField txtObservacion;
     // End of variables declaration//GEN-END:variables
 }
