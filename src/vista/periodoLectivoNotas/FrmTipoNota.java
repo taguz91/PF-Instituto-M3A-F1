@@ -75,10 +75,10 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         lblNombre.setText("Nombre:");
 
         lblNotaMax.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNotaMax.setText("Nota Máxima:");
+        lblNotaMax.setText("Nota máxima:");
 
         lblNotaMin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNotaMin.setText("Nota Mínima:");
+        lblNotaMin.setText("Nota mínima:");
 
         btnCancelar.setText("Cancelar");
 
