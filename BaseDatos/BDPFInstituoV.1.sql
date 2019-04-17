@@ -278,7 +278,6 @@ CREATE TABLE "Matricula"(
 	"id_alumno" integer NOT NULL,
 	"id_prd_lectivo" integer NOT NULL,
 	"matricula_fecha" TIMESTAMP DEFAULT now(),
-  "matricula_ficha" bytea,
 	"matricula_activa" boolean NOT NULL DEFAULT 'true',
 	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula")
 ) WITH (OIDS = FALSE);

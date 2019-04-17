@@ -1,8 +1,13 @@
 package controlador.alumno;
 
+import controlador.principal.DependenciasCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoBD;
@@ -16,11 +21,8 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class FrmMallaActualizarCTR {
+public class FrmMallaActualizarCTR extends DependenciasCTR {
 
-    private final ConectarDB conecta;
-    private final VtnPrincipal vtnPrin;
-    private final VtnPrincipalCTR ctrPrin;
     //Formulario 
     private final FrmMallaActualizar frmMalla;
     //Malla alumno 
@@ -35,9 +37,7 @@ public class FrmMallaActualizarCTR {
 
     public FrmMallaActualizarCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
-        this.conecta = conecta;
-        this.vtnPrin = vtnPrin;
-        this.ctrPrin = ctrPrin;
+        super(conecta, vtnPrin, ctrPrin);
         this.malla = malla;
         this.ctrMalla = ctrMalla;
         this.bd = bd;
@@ -59,6 +59,7 @@ public class FrmMallaActualizarCTR {
 
         //Iniciamos el evento 
         //ctrPrin.eventoJDCerrar(frmMalla);
+        mostrarVtnMalla(frmMalla);
     }
 
     private void guardar() {
@@ -166,6 +167,17 @@ public class FrmMallaActualizarCTR {
         for (int n : numMatriculas) {
             frmMalla.getCmbNumMatricula().addItem(n + "");
         }
+    }
+
+    private void mostrarVtnMalla(JDialog vtn) {
+        vtn.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ctrMalla.actualizarVtn(malla);
+                frmMalla.dispose();
+            }
+
+        });
     }
 
 }

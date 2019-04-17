@@ -105,14 +105,17 @@ public class VtnAlumnoCTR {
                     case "ALUMNOS ELMINADOS":
                         llenarElimanados();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(false);
                         break;
                     case "ALUMNOS RETIRADOS":
                         llenarRetirados();
                         vtnAlumno.getBtn_Materias().setVisible(true);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                     default:
                         llenarTabla();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                 }
             }
@@ -387,11 +390,11 @@ public class VtnAlumnoCTR {
     //Muestra los reportes con todos los Alumnos registrados
     public void llamaReporteAlumno() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repAlumnos.jasper";
+        String path = "/vista/reportes/repAlumnos.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);

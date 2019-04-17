@@ -84,9 +84,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         Cmb_carreras = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Cmb_unidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Carrera:");
 

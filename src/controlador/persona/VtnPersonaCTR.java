@@ -283,14 +283,14 @@ public class VtnPersonaCTR {
 
     public void llamaReportePersona() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repPersona.jasper";
+        String path = "/vista/reportes/repPersona.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);

@@ -5,12 +5,17 @@
  */
 package controlador.docente;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
+import modelo.curso.CursoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaMD;
 import vista.docente.VtnFinContratacion;
@@ -48,6 +53,19 @@ public class VtnPeriodosDocenteCTR {
 
         vtnPeriodoDocente.getBntAceptar().addActionListener(e -> aceptar());
         vtnPeriodoDocente.getBtnCancelar().addActionListener(e -> cancelarPeriodo());
+        vtnPeriodoDocente.getCbx_Periodos().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String periodo = vtnPeriodoDocente.getCbx_Periodos().getSelectedItem().toString();
+                if(periodo.equals("NINGUNO") == true){
+                    JOptionPane.showConfirmDialog(null, "Este Docente no tiene ninguna materia asignada al no tener un Período Lectivo");
+                } else {
+                    llenarTabla(periodo);
+                }
+            }
+            
+        });
+        
         listaPeriodos();
     }
 
@@ -61,6 +79,24 @@ public class VtnPeriodosDocenteCTR {
         }
 
     }
+    
+    public void llenarTabla(String periodo){
+        System.out.println("Periodo " + periodo );
+        DocenteBD d = new DocenteBD(conecta);
+        PeriodoLectivoBD p = new PeriodoLectivoBD(conecta);
+        DefaultTableModel modelo_Tabla;
+        modelo_Tabla = (DefaultTableModel) vtnPeriodoDocente.getTblMateriasCursos().getModel();
+        for (int i = vtnPeriodoDocente.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
+            modelo_Tabla.removeRow(i);
+        }
+        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId_PerioLectivo(), docente.getIdDocente());
+        int columnas = modelo_Tabla.getColumnCount();
+        for (int i = 0; i < lista.size(); i++) {
+            modelo_Tabla.addRow(new Object[columnas]);
+            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
+            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
+        }
+    }
 
     private void aceptar() {
         vtnPeriodoDocente.getJcbPeriodos().getSelectedItem();
@@ -73,6 +109,7 @@ public class VtnPeriodosDocenteCTR {
 
     }
 }
+//
 //    public void llenarTabla() {
 //        DefaultTableModel modelo_Tabla;
 //        modelo_Tabla = (DefaultTableModel) vtnPeriodoDocente.getTblMateriasCursos().getModel();
