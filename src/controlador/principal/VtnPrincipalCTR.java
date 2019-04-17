@@ -766,6 +766,25 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtPrdIngrNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_G, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_J, ActionEvent.CTRL_MASK));
+        
 //        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
 //                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
@@ -796,8 +815,22 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgPrdIngrNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.ALT_MASK));
 //        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
 //                KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+        
+    
     }
 
     public int getNumVtns() {
