@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import controlador.carrera.VtnCarreraCTR;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -10,12 +11,17 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
@@ -24,6 +30,12 @@ import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.validaciones.TxtVCedula;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 
@@ -465,11 +477,13 @@ public class FrmDocenteCTR {
                     if (idDocente > 0) {
                         docente.editarDocente(idDocente);
                         JOptionPane.showMessageDialog(null, "Los Datos se han editado exitosamente");
+                        botonreporteDocente();
                         frmDocente.dispose();
                     }
                 } else {
                     docente.InsertarDocente();
                     JOptionPane.showMessageDialog(null, "Se han insertado los datos de forma correcta!");
+                    botonreporteDocente();
                     frmDocente.dispose();
                 }
             } else {
@@ -565,4 +579,44 @@ System.out.println("docente tipo timepo guardar docente "+doc.getDocenteTipoTiem
         frmDocente.getJdcFechaInicioContratacion().setDate(fechaHoy);
 
     }
+    
+     public void llamaReporteDocente() {
+        JasperReport jr;
+        String path = "/vista/reportes/repDocentes.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("cedulaverificacion",frmDocente.getTxtIdentificacion().getText());
+            System.out.println( "parametro del reporte"+parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Docente");
+            
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void botonreporteDocente(){
+     int s = JOptionPane.showOptionDialog(vtnPrin,
+                "Registro de persona \n"
+                + "¿Dessea Imprimir el Registro realizado ?", "REPORTE DOCENTES",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"SI", "NO"}, "NO");
+        switch (s) {
+            case 0:
+               llamaReporteDocente();
+                break;
+            case 1:
+                
+                break;
+            default:
+                break;
+    }
+     }
 }
