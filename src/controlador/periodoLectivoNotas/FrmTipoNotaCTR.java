@@ -1,11 +1,15 @@
 package controlador.periodoLectivoNotas;
 
 import controlador.Libraries.Middlewares;
+import controlador.Libraries.Validaciones;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -57,12 +61,24 @@ public class FrmTipoNotaCTR {
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
-        vista.getTxtNotaMin().addKeyListener(new KeyAdapter() {
+        String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
+        Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
+        Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
+        vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                txtNotaMinOnKeyReleased(e);
+            public void focusLost(FocusEvent e) {
+                validarValorMenor(e);
             }
         });
+        vista.getTxtNotaMax().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarValorMenor(e);
+            }
+        });
+
+        vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
+
     }
 
     //METODOS DE APOYO
@@ -73,12 +89,87 @@ public class FrmTipoNotaCTR {
         });
     }
 
+    private void validarValorMenor(FocusEvent e) {
+        if (!vista.getTxtNotaMax().getText().isEmpty() && !vista.getTxtNotaMin().getText().isEmpty()) {
+
+            double minimo = Double.valueOf(vista.getTxtNotaMin().getText());
+            double maximo = Double.valueOf(vista.getTxtNotaMax().getText());
+            if (minimo > maximo) {
+                JOptionPane.showMessageDialog(vista, "EL VALOR MINIMO NO PUEDE SER MAYOR AL VALOR MAXIMO!!");
+                vista.getTxtNotaMin().setText("");
+                vista.getTxtNotaMin().requestFocus();
+            } else if (minimo == maximo) {
+                JOptionPane.showMessageDialog(vista, "LOS VALORES NO PUEDEN SER IGUALES!!");
+                vista.getTxtNotaMin().setText("");
+                vista.getTxtNotaMin().requestFocus();
+            }
+
+        }
+    }
+
+    private boolean validarFormulario() {
+        if (!vista.getTxtTipoNota().getText().isEmpty()) {
+            if (!vista.getTxtNotaMax().getText().isEmpty()) {
+                if (!vista.getTxtNotaMin().getText().isEmpty()) {
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DEL NOMBRE DEL TIPO DE NOTA!!");
+        }
+
+        return false;
+    }
+
+    private TipoDeNotaBD setObj() {
+        modelo = new TipoDeNotaBD();
+
+        modelo.setNombre(vista.getTxtTipoNota().getText());
+        modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
+        modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
+
+        listaCarreras
+                .stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                    modelo.setIdCarrera(obj.getId());
+                });
+
+        return modelo;
+    }
+
     //EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
     }
 
-    private void txtNotaMinOnKeyReleased(KeyEvent e) {
-        
+    private void btnGuardar(ActionEvent e) {
+
+        if (validarFormulario()) {
+            if (Funcion.equalsIgnoreCase("AGREGAR")) {
+                if (setObj().insertar()) {
+                    String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
+                    JOptionPane.showMessageDialog(vista, MENSAJE);
+                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
+                }
+            } else {
+                if (setObj().editar(PK)) {
+                    String MENSAJE = "SE HA EDITADO EL TIPO DE NOTA";
+                    JOptionPane.showMessageDialog(vista, MENSAJE);
+                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
+                }
+            }
+        }
+
     }
+
 }
