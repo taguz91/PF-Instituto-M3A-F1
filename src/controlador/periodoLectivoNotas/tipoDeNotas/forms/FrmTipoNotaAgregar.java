@@ -14,7 +14,7 @@ import vista.principal.VtnPrincipal;
  * @author MrRainx
  */
 public class FrmTipoNotaAgregar extends AbstracForm {
-    
+
     public FrmTipoNotaAgregar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
         super(desktop, vista, modelo, vtnPadre, Funcion);
     }
@@ -22,6 +22,9 @@ public class FrmTipoNotaAgregar extends AbstracForm {
     //INITS
     public void InitAgregar() {
         vista.setTitle(StringUtils.capitalize("agregar nueva nota"));
+        if (COMPLETED) {
+            activarFormulario(true);
+        }
     }
 
     //EVENTOS
@@ -36,7 +39,7 @@ public class FrmTipoNotaAgregar extends AbstracForm {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
             }
         }
-        
+
     }
-    
+
 }

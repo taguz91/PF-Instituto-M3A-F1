@@ -3,6 +3,7 @@ package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import modelo.tipoDeNota.TipoDeNotaBD;
+import org.springframework.util.StringUtils;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
 
@@ -18,13 +19,20 @@ public class FrmTipoNotaAgregarEditar extends AbstracForm {
 
     //INITS
     public void InitEditar() {
-
+        vista.setTitle(StringUtils.capitalize("editar tipo de nota"));
+        if (COMPLETED) {
+            activarFormulario(true);
+        }
     }
-
+    
+    private void setObjInForm(){
+        
+    }
+    
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
 }

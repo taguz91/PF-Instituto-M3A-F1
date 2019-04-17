@@ -8,6 +8,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import modelo.carrera.CarreraBD;
@@ -42,6 +44,8 @@ public abstract class AbstracForm {
         "EXAMEN SUPLETORIO"
     };
 
+    protected boolean COMPLETED = false;
+
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
@@ -54,19 +58,20 @@ public abstract class AbstracForm {
     public void Init() {
         activarFormulario(false);
         new Thread(() -> {
-            listaCarreras = CarreraBD.selectIdNombreAll();
-            cargarComboCarreras();
-            cargarCmbNombreNota(carrerasTradicionales);
-            InitEventos();
+            try {
+                Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+                desktop.getDpnlPrincipal().add(vista);
+                vista.setSelected(true);
+                vista.show();
+            } catch (PropertyVetoException e) {
+                System.out.println(e.getMessage());
+            }
         }).start();
-        try {
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-            desktop.getDpnlPrincipal().add(vista);
-            vista.setSelected(true);
-            vista.show();
-        } catch (PropertyVetoException e) {
-            System.out.println(e.getMessage());
-        }
+        listaCarreras = CarreraBD.selectIdNombreAll();
+        cargarComboCarreras();
+        cargarCmbNombreNota(carrerasTradicionales);
+        InitEventos();
+        COMPLETED = true;
     }
 
     private void InitEventos() {
