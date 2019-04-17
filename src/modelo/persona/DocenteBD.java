@@ -59,14 +59,6 @@ public class DocenteBD extends DocenteMD {
 
     }
 
-    public void guardarFinContrato(int aguja) {
-        String sql = "UPDATE public.\"Docentes\" SET\n"
-                + "' docente_fecha_fin = '" + this.getFechaFinContratacion()
-                + "' docente_observacion = '" + this.getObservacion()
-                + " WHERE id_persona = " + aguja + ";";
-    }
-
-//    public void
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
         DocenteMD d;
@@ -231,7 +223,6 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
-
     public ArrayList<DocenteMD> cargarDocentesEliminados() {
         String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
@@ -242,7 +233,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = false;";
         return consultarDocenteTbl(sql);
     }
-
+    
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
         String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
                 + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
@@ -267,7 +258,6 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
-
     public ArrayList<DocenteMD> cargarDocentesPorCarrera(int idCarrera) {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "	\n"
@@ -381,7 +371,6 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
-
 //    public DocenteMD buscarDocente(String cedula) {
 //        DocenteMD d = null;
 //        String sql = "SELECT id_docente, id_persona, docente_codigo, "
@@ -615,7 +604,19 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-
+    
+    public boolean terminarContrato(int aguja){
+        String nsql = "UPDATE public.\"Docentes\" SET\n"
+                + " docente_en_funcion = false\n"
+                + " WHERE id_docente = " + aguja + ";";
+        if (conecta.nosql(nsql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
     public static Integer selectIdDocenteWhereUsername(String username) {
 
         String SELECT = "SELECT\n"
