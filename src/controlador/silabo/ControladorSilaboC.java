@@ -949,7 +949,7 @@ public class ControladorSilaboC {
 
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-
+                configuracion.dispose();
                 gestion.dispose();
                 bibliografia.dispose();
 

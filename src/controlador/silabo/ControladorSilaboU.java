@@ -851,6 +851,7 @@ public class ControladorSilaboU {
                 new SilaboBD(conexion).eliminar(silabo);
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+               
                 gestion.dispose();
                 bibliografia.dispose();
                 principal.getMnCtSilabos().doClick();
