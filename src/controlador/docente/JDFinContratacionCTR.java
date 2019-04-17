@@ -176,22 +176,41 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
         int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+        int pos = frmFinContrato.getTpFrm().getSelectedIndex();
         System.out.println(observacion);
         System.out.println(fecha);
-        if (observacion.equals("") == false && fecha != null && posPrd > 0) {
-            if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-                    || frmFinContrato.getLblErrorObservacion().isVisible() == true || posPrd == 0) {
+        frmFinContrato.getTpFrm().setSelectedIndex(1);
+        if (observacion.equals("") == false && fecha != null && frmFinContrato.getCbx_Periodos().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
+
+            if(pos == 0){
+                if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
+                    || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
                 //frmFinContrato.getBtnGuardar().setEnabled(false);
                 guardar = false;
-            } else {
-                System.out.println("Se puede guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                
+                } else {
+    //                System.out.println("Se puede guardar");
+    //                frmFinContrato.getBtnGuardar().setEnabled(true);
+    //                
+    //                frmFinContrato.getBtnGuardar().setText("Guardar");
+    //                guardar = true;
+
+                    frmFinContrato.getBtnGuardar().setEnabled(true);
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
+                }
+            } else if(pos == 1){
                 frmFinContrato.getBtnGuardar().setEnabled(true);
                 frmFinContrato.getBtnGuardar().setText("Guardar");
-                guardar = true;
+                
+            } else{
+                
             }
+            
+            
+            
         } else {
-            frmFinContrato.getBtnGuardar().setEnabled(false);
-            frmFinContrato.getBtnGuardar().setText("Siguiente");
+
         }
 
     }
@@ -232,6 +251,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         } else {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
+
         }
 
     }
