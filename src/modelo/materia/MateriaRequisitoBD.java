@@ -3,6 +3,7 @@ package modelo.materia;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 
 /**
@@ -17,29 +18,49 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
     public MateriaRequisitoBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.mat = new MateriaBD(conecta);
-       
-    }
-    
-    
 
-     public boolean insertarMateriaRequisito() {
+    }
+
+    public boolean insertarMateriaRequisito() {
 
         String sql = "INSERT INTO public.\"MateriaRequisitos\"(\n"
                 + " id_materia, id_materia_requisito, tipo_requisito)\n"
                 + " VALUES (" + getMateria().getId() + "," + getMateriaRequisito().getId() + ", '" + getTipo() + "');";
 
         if (conecta.nosql(sql) == null) {
-          return true;
+            return true;
         } else {
             return false;
         }
     }
 
-     
+    public void eliminar(int idRequisito) {
+        String nsql = "DELETE FROM public.\"MateriaRequisitos\" \n"
+                + "WHERE id_requisito= " + idRequisito + "";
+
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se elimino correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar.");
+        }
+    }
+
+    public void editar(int idRequisito) {
+        String nsql = "UPDATE public.\"MateriaRequisitos\" \n"
+                + "SET id_materia = " + getMateria().getId() + ", id_materia_requisito = " + getMateriaRequisito().getId() + ",\n"
+                + " tipo_requisito= '" + getTipo() + "'\n"
+                + "WHERE id_requisito = " + idRequisito + " ";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se edito correctamente. " + getMateria().getNombre());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo editar " + getMateria().getNombre());
+        }
+    }
+
     public ArrayList<MateriaRequisitoMD> buscarPreRequisitos(int idMateria) {
         String sql = "SELECT id_requisito, mr.id_materia_requisito, materia_nombre\n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
-                + "WHERE mr.id_materia = "+idMateria+" AND tipo_requisito = 'P' AND\n"
+                + "WHERE mr.id_materia = " + idMateria + " AND tipo_requisito = 'P' AND\n"
                 + "m.id_materia = id_materia_requisito;";
         return consultarMaterias(sql);
     }
@@ -47,7 +68,7 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
     public ArrayList<MateriaRequisitoMD> buscarCoRequisitos(int idMateria) {
         String sql = "SELECT id_requisito, mr.id_materia_requisito, materia_nombre\n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
-                + "WHERE mr.id_materia = "+idMateria+" AND tipo_requisito = 'C' AND\n"
+                + "WHERE mr.id_materia = " + idMateria + " AND tipo_requisito = 'C' AND\n"
                 + "m.id_materia = id_materia_requisito;";
         return consultarMaterias(sql);
     }
@@ -64,7 +85,7 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
                     mt.setId(rs.getInt("id_materia_requisito"));
                     mt.setNombre(rs.getString("materia_nombre"));
                     mtr.setMateriaRequisito(mt);
-                    
+
                     requisitos.add(mtr);
                 }
                 return requisitos;

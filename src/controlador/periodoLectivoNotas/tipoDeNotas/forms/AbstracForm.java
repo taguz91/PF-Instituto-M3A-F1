@@ -27,12 +27,8 @@ public abstract class AbstracForm {
     protected TipoDeNotaBD modelo;
     //Ventana Padre
     protected VtnTipoNotasCTR vtnPadre;
-    //(Agregar o Editar)
-    protected String Funcion;
     //listas
     protected List<CarreraMD> listaCarreras;
-
-    protected Integer PK = null;
 
     //Combo
     protected String[] carrerasTradicionales = {
@@ -42,38 +38,44 @@ public abstract class AbstracForm {
         "EXAMEN SUPLETORIO"
     };
 
-    public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
+    protected boolean COMPLETED = false;
+
+    public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
-        this.Funcion = Funcion;
     }
 
     //INITS
     public void Init() {
-        activarFormulario(false);
         new Thread(() -> {
-            listaCarreras = CarreraBD.selectIdNombreAll();
-            cargarComboCarreras();
-            cargarCmbNombreNota(carrerasTradicionales);
-            InitEventos();
+            try {
+                Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+                desktop.getDpnlPrincipal().add(vista);
+                vista.setSelected(true);
+                vista.show();
+            } catch (PropertyVetoException e) {
+                System.out.println(e.getMessage());
+            }
         }).start();
-        try {
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-            desktop.getDpnlPrincipal().add(vista);
-            vista.setSelected(true);
-            vista.show();
-        } catch (PropertyVetoException e) {
-            System.out.println(e.getMessage());
-        }
+        activarFormulario(false);
+        listaCarreras = CarreraBD.selectIdNombreAll();
+        cargarComboCarreras();
+        cargarCmbNombreNota(carrerasTradicionales);
+        InitEventos();
+        COMPLETED = true;
     }
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+
         String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
+
         vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -87,7 +89,10 @@ public abstract class AbstracForm {
             }
         });
 
-        vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
+        vista.getBtnGuardar().addActionListener(e -> {
+            btnGuardar(e);
+            vista.dispose();
+        });
     }
 
     //METODOS DE APOYO

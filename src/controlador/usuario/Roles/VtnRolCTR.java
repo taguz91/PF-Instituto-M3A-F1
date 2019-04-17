@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.usuario;
+package controlador.usuario.Roles;
 
+import controlador.usuario.Roles.forms.FrmRolCTR;
 import controlador.Libraries.Middlewares;
 import controlador.accesos.FrmAccesosDeRolCTR;
 import java.awt.event.ActionEvent;

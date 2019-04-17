@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.Interfaces;
+package controlador.usuario.Roles.forms;
 
 /**
  *
- * @author MrRainx
+ * @author Alejandro
  */
-public interface Iform<M> extends Icontroller {
-    public M setObj();
+public abstract class AbstractForm {
+    
 }

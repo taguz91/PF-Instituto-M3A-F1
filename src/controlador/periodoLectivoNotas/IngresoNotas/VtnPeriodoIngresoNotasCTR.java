@@ -1,5 +1,6 @@
-package controlador.periodoLectivoNotas;
+package controlador.periodoLectivoNotas.IngresoNotas;
 
+import controlador.periodoLectivoNotas.IngresoNotas.forms.FrmIngresoNotasCTR;
 import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
