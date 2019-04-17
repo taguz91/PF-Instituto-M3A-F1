@@ -33,7 +33,7 @@ public class Middlewares {
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
 
-    public static Color SUCCESS_COLOR = new Color(18, 237, 23);
+    public static Color SUCCESS_COLOR = new Color(12, 166, 15);
 
     public static Color ERROR_COLOR = new Color(204, 0, 0);
 
