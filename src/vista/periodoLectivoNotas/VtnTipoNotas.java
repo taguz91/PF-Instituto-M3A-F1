@@ -107,11 +107,11 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "ID", "Nombre ", "Valor Máximo", "Valor Mínimo", "Fecha Creación"
+                "No.", "ID", "Nombre ", "Carrera", "Valor Máximo", "Valor Mínimo", "Fecha Creación"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -121,14 +121,15 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
         tblTipoNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblTipoNotas);
         if (tblTipoNotas.getColumnModel().getColumnCount() > 0) {
-            tblTipoNotas.getColumnModel().getColumn(0).setResizable(false);
-            tblTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tblTipoNotas.getColumnModel().getColumn(1).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(0).setMinWidth(50);
+            tblTipoNotas.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblTipoNotas.getColumnModel().getColumn(1).setMinWidth(50);
             tblTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(1);
-            tblTipoNotas.getColumnModel().getColumn(2).setResizable(false);
-            tblTipoNotas.getColumnModel().getColumn(3).setResizable(false);
-            tblTipoNotas.getColumnModel().getColumn(4).setResizable(false);
-            tblTipoNotas.getColumnModel().getColumn(5).setResizable(false);
+            tblTipoNotas.getColumnModel().getColumn(1).setMaxWidth(50);
+            tblTipoNotas.getColumnModel().getColumn(4).setMinWidth(90);
+            tblTipoNotas.getColumnModel().getColumn(4).setMaxWidth(90);
+            tblTipoNotas.getColumnModel().getColumn(5).setMinWidth(90);
+            tblTipoNotas.getColumnModel().getColumn(5).setMaxWidth(90);
         }
 
         lblResultados.setText("0 Resultados Obtenidos");
@@ -146,7 +147,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,7 +156,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
