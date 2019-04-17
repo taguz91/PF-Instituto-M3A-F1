@@ -68,7 +68,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_estado = true"
+                + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -118,6 +118,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
+    
 
     public CarreraMD capturarIdCarrera(String aguja) {
         String sql = "SELECT id_carrera"

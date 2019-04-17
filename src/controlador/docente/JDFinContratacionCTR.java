@@ -129,6 +129,8 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     private void pnlAnterior() {
         frmFinContrato.getTpFrm().setSelectedIndex(0);
         frmFinContrato.getBtnAnterior().setEnabled(false);
+        frmFinContrato.getBtnGuardar().setEnabled(true);
+        frmFinContrato.getBtnGuardar().setText("Siguiente");
     }
 
     public void iniciarFinContrato() {
@@ -164,12 +166,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
             }
         });
 
-        frmFinContrato.getCbx_Periodos().addMouseListener(new MouseAdapter() {
-            public void mouseClicked() {
-
-                habilitarGuardar();
-            }
-        });
+        frmFinContrato.getCbx_Periodos().addActionListener(e -> habilitarGuardar());
 
         docenteMD = dc.buscarDocente(cedula);
     }
@@ -179,16 +176,22 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
         int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
-        if (observacion.equals("") == false || fecha != null || posPrd > 0) {
+        System.out.println(observacion);
+        System.out.println(fecha);
+        if (observacion.equals("") == false && fecha != null && posPrd > 0) {
             if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-                    || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
-                frmFinContrato.getBtnGuardar().setEnabled(false);
+                    || frmFinContrato.getLblErrorObservacion().isVisible() == true || posPrd == 0) {
+                //frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
             } else {
+                System.out.println("Se puede guardar");
                 frmFinContrato.getBtnGuardar().setEnabled(true);
                 frmFinContrato.getBtnGuardar().setText("Guardar");
+                guardar = true;
             }
         } else {
             frmFinContrato.getBtnGuardar().setEnabled(false);
+            frmFinContrato.getBtnGuardar().setText("Siguiente");
         }
 
     }
