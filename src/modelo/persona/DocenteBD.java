@@ -4,12 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modelo.ConectarDB;
 import modelo.ResourceManager;
+import modelo.carrera.CarreraMD;
+import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 public class DocenteBD extends DocenteMD {
 
@@ -56,14 +61,6 @@ public class DocenteBD extends DocenteMD {
 
     }
 
-    public void guardarFinContrato(int aguja) {
-        String sql = "UPDATE public.\"Docentes\" SET\n"
-                + "' docente_fecha_fin = '" + this.getFechaFinContratacion()
-                + "' docente_observacion = '" + this.getObservacion()
-                + " WHERE id_persona = " + aguja + ";";
-    }
-
-//    public void
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
         DocenteMD d;
@@ -205,17 +202,6 @@ public class DocenteBD extends DocenteMD {
         return consultarDocenteTbl(sql);
     }
 
-    public ArrayList<DocenteMD> cargarDocentesEliminados() {
-        String sql = "SELECT id_docente, d.id_persona, docente_tipo_tiempo, \n"
-                + "persona_primer_nombre, persona_segundo_nombre,\n"
-                + "persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_celular, persona_correo, persona_identificacion\n"
-                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
-                + "WHERE p.id_persona = d.id_persona AND \n"
-                + "docente_activo = false;";
-        return consultarDocenteTbl(sql);
-    }
-
     public ArrayList<DocenteMD> cargarDocentesPorCarrera(int idCarrera) {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "	\n"
@@ -330,32 +316,6 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-//    public DocenteMD buscarDocente(String cedula) {
-//        DocenteMD d = null;
-//        String sql = "SELECT id_docente, id_persona, docente_codigo, "
-//                + "docente_otro_trabajo, docente_categoria, "
-//                + "docente_fecha_contrato,docente_fecha_fin, "
-//                + " docente_tipo_tiempo, docente_activo,"
-//                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura\n"
-//                + "FROM public.\"Docentes\" "
-//                + "WHERE docente_codigo = '" + cedula + "' and docente_activo =true;";
-//        //System.out.println(sql);
-//        ResultSet rs = conecta.sql(sql);
-//        try {
-//            if (rs != null) {
-//                while (rs.next()) {
-//                    d = obtenerDocente(rs);
-//                }
-//                return d;
-//            } else {
-//                return null;
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("No se pudo consultar docente " + cedula);
-//            return null;
-//        }
-//    }
-    
     public DocenteMD buscarDocenteParaReferencia(int idDocente) {
         DocenteMD d = new DocenteMD();
         String sql = "SELECT id_docente, id_persona, docente_codigo \n"
@@ -550,7 +510,19 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-
+    
+    public boolean terminarContrato(int aguja){
+        String nsql = "UPDATE public.\"Docentes\" SET\n"
+                + " docente_en_funcion = false\n"
+                + " WHERE id_docente = " + aguja + ";";
+        if (conecta.nosql(nsql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
     public static Integer selectIdDocenteWhereUsername(String username) {
 
         String SELECT = "SELECT\n"
@@ -576,6 +548,31 @@ public class DocenteBD extends DocenteMD {
         }
 
         return idDocente;
+    }
+
+    public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
+        String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
+                + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
+                + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
+
+        ResultSet rs = conecta.sql(nsql); 
+        List<CursoMD> lista = new ArrayList<CursoMD>();
+        
+        try {
+            while (rs.next()) {
+                CursoMD c = new CursoMD();
+                MateriaMD m = new MateriaMD();
+                m.setNombre(rs.getString("materia_nombre"));
+                c.setId_materia(m);
+                c.setCurso_nombre(rs.getString("curso_nombre"));
+                lista.add(c);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public static HashMap<String, DocenteMD> selectAll() {
