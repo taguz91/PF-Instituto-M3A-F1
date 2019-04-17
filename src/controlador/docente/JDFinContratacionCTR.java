@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -55,14 +56,14 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         docenteMD = dc.buscarDocente(cedula);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
-        
+
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
-                int pos = frmFinContrato.getTpFrm().getSelectedIndex(); 
+            public void mouseClicked(MouseEvent e) {
+                int pos = frmFinContrato.getTpFrm().getSelectedIndex();
                 if (pos > 0) {
                     frmFinContrato.getBtnAnterior().setEnabled(true);
-                }else{
+                } else {
                     frmFinContrato.getBtnAnterior().setEnabled(false);
                 }
             }
