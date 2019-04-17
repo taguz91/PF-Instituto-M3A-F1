@@ -167,11 +167,11 @@ public class VtnMallaAlumnoCTR {
         });
         //Prueba cargando todos los datos 
         //Funciona de la patada
-        Instant iniBusqueda = Instant.now();
-        cargarMallas();
-        Instant terBusqueda = Instant.now();
-        System.out.println("El tiempo que tardó en buscar malla alumnos es: "
-                + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
+//        Instant iniBusqueda = Instant.now();
+//        cargarMallas();
+//        Instant terBusqueda = Instant.now();
+//        System.out.println("El tiempo que tardó en buscar malla alumnos es: "
+//                + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Malla alumnos");

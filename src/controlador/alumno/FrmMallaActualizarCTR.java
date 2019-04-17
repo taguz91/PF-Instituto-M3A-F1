@@ -4,6 +4,10 @@ import controlador.principal.DependenciasCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoBD;
@@ -55,6 +59,7 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
 
         //Iniciamos el evento 
         //ctrPrin.eventoJDCerrar(frmMalla);
+        mostrarVtnMalla(frmMalla);
     }
 
     private void guardar() {
@@ -162,6 +167,17 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
         for (int n : numMatriculas) {
             frmMalla.getCmbNumMatricula().addItem(n + "");
         }
+    }
+
+    private void mostrarVtnMalla(JDialog vtn) {
+        vtn.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ctrMalla.actualizarVtn(malla);
+                frmMalla.dispose();
+            }
+
+        });
     }
 
 }
