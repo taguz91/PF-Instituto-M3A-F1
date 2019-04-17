@@ -22,6 +22,15 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
     public frmConfiguraciónPlanClase() {
         initComponents();
     }
+
+    public JComboBox<String> getCmb_Cursos() {
+        return Cmb_Cursos;
+    }
+
+    public void setCmb_Cursos(JComboBox<String> Cmb_Cursos) {
+        this.Cmb_Cursos = Cmb_Cursos;
+    }
+    
       public JComboBox<String> getCmb_carreras() {
         return Cmb_carreras;
     }
@@ -83,12 +92,16 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         btn_cancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         Cmb_carreras = new javax.swing.JComboBox<>();
+        Cmb_Cursos = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
 
         jLabel1.setText("Carrera:");
 
-        jLabel2.setText("Silabos");
+        jLabel2.setText("Silabos:");
 
         jLabel3.setText("Unidad:");
 
@@ -97,6 +110,8 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         btn_cancelar.setText("Cancelar");
 
         jLabel4.setText("Configuración Plan de Clase:");
+
+        jLabel5.setText("Cursos:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,12 +128,14 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Cmb_silabos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Cmb_unidades, 0, 266, Short.MAX_VALUE)
-                    .addComponent(Cmb_carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Cmb_carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Cmb_Cursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
@@ -128,7 +145,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -138,6 +155,10 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cmb_silabos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Cmb_Cursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Cmb_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,6 +209,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Cmb_Cursos;
     private javax.swing.JComboBox<String> Cmb_carreras;
     private javax.swing.JComboBox<String> Cmb_silabos;
     private javax.swing.JComboBox<String> Cmb_unidades;
@@ -197,5 +219,6 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
