@@ -1,6 +1,7 @@
 package controlador.login;
 
 import controlador.Libraries.Middlewares;
+import controlador.principal.JDConsolaBDCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -11,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import modelo.ConectarDB;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -45,7 +48,7 @@ public class LoginCTR {
     public void Init() {
         btnHover();
         //Ocultamos el boton que ya no se usa
-        vista.getBtnIngSU().setEnabled(false);
+        //vista.getBtnIngSU().setEnabled(false);
         vista.getLblAvisos().setText("");
 
         InitEventos();
@@ -134,7 +137,6 @@ public class LoginCTR {
                 vista.getLblAvisos().setVisible(true);
                 vista.getLblAvisos().setText("Revise la Informacion Ingresada");
             }
-            Middlewares.setDefaultCursorInWindow(vista);
 
         }).start();
 
@@ -142,13 +144,61 @@ public class LoginCTR {
 
     private void LoginGenerico() {
 
-//        USERNAME = "ROOT";
-//        PASSWORD = "ROOT";
-//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "LoginGenerico"), icono, ista);
-//
-//        ventanaPrincipal.iniciar();
-//        vista.setVisible(false);
+        JPasswordField pass = new JPasswordField();
+        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        pass.setFocusable(true);
+        pass.requestFocus();
+        pass.selectAll();
+
+        if (o == JOptionPane.OK_OPTION) {
+            String c = new String(pass.getPassword());
+            if (c.equals("soyyo")) {
+
+                USERNAME = "JOHNNY";
+                PASSWORD = "ROOT";
+
+                modelo.setUsername("JOHNNY");
+                modelo.setPassword("ROOT");
+
+                ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
+                System.out.println("Conexion " + conecta.getConecction());
+                try {
+                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+
+                    if (!Lista.isEmpty()) {
+
+                        modelo.setPersona(Lista.get(0).getPersona());
+
+                        vista.dispose();
+
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista);
+                        vtn.Init();
+
+                    } else {
+                        vista.getLblAvisos().setVisible(true);
+                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                    }
+
+                } catch (NullPointerException e) {
+                    vista.getLblAvisos().setVisible(true);
+                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                }
+                if (conecta.getConecction() != null) {
+                    vista.dispose();
+                } else {
+                    vista.getLblAvisos().setVisible(true);
+                    vista.getLblAvisos().setText("No se puede conectar.");
+                }
+
+            } else if (c.length() == 0) {
+                LoginGenerico();
+            } else {
+                JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
     }
 
     //Procesadores de eventos

@@ -35,7 +35,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + " now() );";
         if (conecta.nosql(nsql) == null) {
             System.out.println("Guardamos correctamente el alumno en la carrera");
-            
+
             return true;
         } else {
             return false;
@@ -50,14 +50,28 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "public.\"Carreras\" c\n"
                 + "WHERE  a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND carrera_activo = true;";
+                + "c.id_carrera = ac.id_carrera AND carrera_activo = true \n"
+                + "AND almn_carrera_activo = true;";
         return consultarAlumnoCarrera(sql);
     }
-    
+
+    public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraEliminados() {
+        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_identificacion, carrera_codigo\n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
+                + "public.\"Carreras\" c\n"
+                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND \n"
+                + "c.id_carrera = ac.id_carrera AND almn_carrera_activo = false;";
+        return consultarAlumnoCarrera(sql);
+    }
+
     /**
      * Consultamos todos los alumnos filtrandolos por una carrera.
+     *
      * @param idCarrera
-     * @return 
+     * @return
      */
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
         String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
@@ -149,7 +163,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     al.setIdentificacion(rs.getString("persona_identificacion"));
-                    
+
                     ac.setCarrera(c);
                     ac.setAlumno(al);
 
@@ -166,11 +180,12 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             return null;
         }
     }
-    
+
     /**
      * Obtenemos el alumno consultado para cargarlo en una arraylist
+     *
      * @param rs
-     * @return 
+     * @return
      */
     private AlumnoCarreraMD obtenerAlumnoCarreraTbl(ResultSet rs) {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();
