@@ -822,6 +822,7 @@ public class FrmPersonaCTR {
             }
             frmPersona.dispose();
             ctrPrin.cerradoJIF();
+            
         } else {
             JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }
