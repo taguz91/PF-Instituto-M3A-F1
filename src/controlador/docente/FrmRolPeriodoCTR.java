@@ -9,11 +9,9 @@ import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.docente.RolDocenteBD;
-import modelo.docente.RolDocenteMD;
+import modelo.docente.RolPeriodoBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.validaciones.TxtVDireccion;
 import modelo.validaciones.TxtVLetras;
 import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnRolesPeriodos;
@@ -29,7 +27,7 @@ public class FrmRolPeriodoCTR {
     private final FrmRolesPeriodos frmRolPer;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
-    private final RolDocenteBD rolDoc;
+    private final RolPeriodoBD rolDoc;
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
 
@@ -38,7 +36,7 @@ public class FrmRolPeriodoCTR {
         this.frmRolPer = frmRolPer;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.rolDoc = new RolDocenteBD(conecta);
+        this.rolDoc = new RolPeriodoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmRolPer);
         frmRolPer.show();

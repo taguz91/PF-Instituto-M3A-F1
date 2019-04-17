@@ -188,7 +188,6 @@ public class VtnDocenteCTR {
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (!vtnDocente.getCbxDocentesEliminados().isSelected()) {
             if (posFila >= 0) {
-
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                         "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
@@ -228,7 +227,8 @@ public class VtnDocenteCTR {
                                 JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
                                 new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
                         if (seleccion == 1) {
-                           
+                           docente.activarDocente(docentesMD.get(posFila).getIdDocente());
+                           JOptionPane.showMessageDialog(null, "se activo el docnete");
                         } else if (seleccion == 0) {
                           
                         }
@@ -409,7 +409,7 @@ public class VtnDocenteCTR {
 
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, docentesMD.get(posFila));
+            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
             vtn_fin_contratacion.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");

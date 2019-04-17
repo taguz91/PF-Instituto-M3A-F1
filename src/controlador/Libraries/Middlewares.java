@@ -1,5 +1,6 @@
 package controlador.Libraries;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
@@ -31,6 +32,10 @@ public class Middlewares {
 
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
+
+    public static Color SUCCESS_COLOR = new Color(12, 166, 15);
+
+    public static Color ERROR_COLOR = new Color(204, 0, 0);
 
     static {
         LOAD_CURSOR = new Cursor(Cursor.WAIT_CURSOR);
@@ -156,7 +161,18 @@ public class Middlewares {
         });
 
     }
-    
-    
+
+    public static void setTextInLabelWithColor(JLabel component, String text, int time, Color color) {
+        new Thread(() -> {
+            try {
+                component.setForeground(color);
+                component.setText(text);
+                sleep(time * 1000);
+                component.setText("");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
+    }
 
 }

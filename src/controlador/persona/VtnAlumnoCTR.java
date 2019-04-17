@@ -105,14 +105,17 @@ public class VtnAlumnoCTR {
                     case "ALUMNOS ELMINADOS":
                         llenarElimanados();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(false);
                         break;
                     case "ALUMNOS RETIRADOS":
                         llenarRetirados();
                         vtnAlumno.getBtn_Materias().setVisible(true);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                     default:
                         llenarTabla();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                 }
             }
