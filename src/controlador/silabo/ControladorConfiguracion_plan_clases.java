@@ -98,6 +98,7 @@ public class ControladorConfiguracion_plan_clases {
         Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
         return silabounidad.get();
+
     
     }
     void materiaseleccionada(){
@@ -110,4 +111,5 @@ public class ControladorConfiguracion_plan_clases {
         
     
     }
+
 }

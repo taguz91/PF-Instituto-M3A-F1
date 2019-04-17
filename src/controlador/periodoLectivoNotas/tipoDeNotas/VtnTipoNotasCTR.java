@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package controlador.periodoLectivoNotas;
+package controlador.periodoLectivoNotas.tipoDeNotas;
 
+import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaAgregar;
 import controlador.Libraries.Middlewares;
+import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -69,9 +66,9 @@ public class VtnTipoNotasCTR {
 
     private void InitEventos() {
 
-        vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
-        vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnEditar().addActionListener(e -> btnEditar(e));
+        vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
+        vista.getBtnIngresar().addActionListener(e -> btnIngresar(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -108,7 +105,10 @@ public class VtnTipoNotasCTR {
                 .filter(item -> item.getNombre().toUpperCase().contains(Aguja)
                 || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
-                || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja))
+                || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
+                || item.getCarrera().getNombre().toUpperCase().contains(Aguja)
+                || item.getCarrera().getModalidad().contains(Aguja)
+                )
                 .collect(Collectors.toList());
 
         listaTemporal.forEach(obj -> {
@@ -124,6 +124,8 @@ public class VtnTipoNotasCTR {
             indice,
             obj.getIdTipoNota(),
             obj.getNombre(),
+            obj.getCarrera().getNombre(),
+            obj.getCarrera().getModalidad(),
             obj.getValorMinimo(),
             obj.getValorMaximo(),
             obj.getFechaCreacion()
@@ -132,9 +134,9 @@ public class VtnTipoNotasCTR {
 
     }
 
-    private void setModeloFromTabla(int fila) {
+    private void setModel(int fila) {
 
-        int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 0);
+        int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 1);
 
         listaTiposNotas
                 .stream()
@@ -147,15 +149,15 @@ public class VtnTipoNotasCTR {
     }
 
     //PROCESADORES DE EVENTOS
-    private void btnEditarActionPerformance(ActionEvent e) {
+    private void btnEditar(ActionEvent e) {
 
         int fila = vista.getTblTipoNotas().getSelectedRow();
 
         if (fila != -1) {
 
-            setModeloFromTabla(fila);
-            FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), modelo, this, "Editar");
-            form.Init();
+            setModel(fila);
+            FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);
+            form.InitEditar();
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA");
@@ -163,12 +165,12 @@ public class VtnTipoNotasCTR {
 
     }
 
-    private void btnEliminarActionPerformance(ActionEvent e) {
+    private void btnEliminar(ActionEvent e) {
 
         int fila = vista.getTblTipoNotas().getSelectedRow();
         if (fila != -1) {
 
-            setModeloFromTabla(fila);
+            setModel(fila);
 
             int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE ELIMINAR LA NOTA: " + modelo.getNombre());
 
@@ -197,21 +199,18 @@ public class VtnTipoNotasCTR {
 
     }
 
-    private void btnIngresarActionPerformance(ActionEvent e) {
+    private void btnIngresar(ActionEvent e) {
 
-        FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this, "Agregar");
-        form.Init();
+        FrmTipoNotaAgregar form = new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this);
+        form.InitAgregar();
 
     }
 
     private void txtBuscarOnKeyReleased(KeyEvent e) {
-
         cargarTablaFilter(vista.getTxtBuscar().getText().toUpperCase());
-
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {
-        tablaTiposNotas.setRowCount(0);
         cargarTabla();
     }
 }

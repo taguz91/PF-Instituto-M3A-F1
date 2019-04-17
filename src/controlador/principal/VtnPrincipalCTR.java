@@ -19,8 +19,8 @@ import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
-import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
-import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
+import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -34,7 +34,7 @@ import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
-import controlador.usuario.VtnRolCTR;
+import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -175,6 +175,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
+        InitPermisosTester();
     }
 
     /**
@@ -765,6 +766,25 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtPrdIngrNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_G, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_J, ActionEvent.CTRL_MASK));
+        
 //        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
 //                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
@@ -795,8 +815,22 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgPrdIngrNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.ALT_MASK));
 //        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
 //                KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+        
+    
     }
 
     public int getNumVtns() {
@@ -990,6 +1024,30 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtPersona().setEnabled(false);
             }
 
+        }
+    }
+
+    private void InitPermisosTester() {
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
+            vtnPrin.getMnIngresar().setEnabled(false);
+            vtnPrin.getPnlMenu().setVisible(false);
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtCarrera().setEnabled(false);
+            vtnPrin.getMnCtCurso().setEnabled(false);
+            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+            vtnPrin.getMnCtMateria().setEnabled(false);
+            vtnPrin.getMnCtInscripcion().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+            vtnPrin.getMnCtSilabos().setEnabled(false);
+            vtnPrin.getMnCtPlandeClase().setEnabled(false);
+            vtnPrin.getMnCtUsuarios().setEnabled(false);
+            vtnPrin.getMnCtRoles().setEnabled(false);
+            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+            vtnPrin.getMnNotas().setEnabled(false);
         }
     }
 

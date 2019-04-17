@@ -79,17 +79,17 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        lblFechaInicio.setText("Fecha Inicio");
+        lblFechaInicio.setText("Fecha inicio");
 
-        lblFechaCierre.setText("Fecha Cierre");
+        lblFechaCierre.setText("Fecha cierre");
 
         btnCancelar.setText("Cancelar");
 
         btnGuardar.setText("Guardar");
 
-        lblPeriodoLectivo.setText("Período Lectivo");
+        lblPeriodoLectivo.setText("Período lectivo");
 
-        lblTipoNota.setText("Tipo Nota");
+        lblTipoNota.setText("Tipo nota");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -5,7 +5,7 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Activar Notas Por Curso"/>
+    <Property name="title" type="java.lang.String" value="Activar notas por curso"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -160,7 +160,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Examen Interciclo"/>
+        <Property name="text" type="java.lang.String" value="Examen interciclo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -170,7 +170,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Examen Final"/>
+        <Property name="text" type="java.lang.String" value="Examen final"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">

@@ -290,6 +290,25 @@ ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+--Para retirar un alumno 
+CREATE TABLE "Retirados"(
+	"id_retirado" serial NOT NULL,
+	"id_malla_alumno" integer NOT NULL,
+	"id_almn_curso" integer NOT NULL,
+	"retiro_fecha" TIMESTAMP DEFAULT now(),
+	"retiro_observacion" text, 
+	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
+) WITH (OIDS = FALSE);
+
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk1"
+FOREIGN KEY ("id_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
+FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 /*
 	TABLAS GRUPO 16
 */
@@ -978,7 +997,21 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
+	
+--CREANDO TABLA SESION_NO_CLASE
 
+CREATE TABLE "SesionNoClase"(
+	"id_sesion_no_clase" serial NOT NULL,
+	"id_rol_docente" INTEGER NOT NULL,
+	"hora_inicio_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"hora_fin_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"dia_sesionnoclase" DATE NOT NULL,
+	CONSTRAINT pk_sesion_no_clase PRIMARY KEY("id_sesion_no_clase"),
+	CONSTRAINT fk_sesion_no_clase FOREIGN KEY ("id_rol_docente")
+        REFERENCES public."RolesDocente"("id_rol_docente") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)WITH(OIDS = FALSE);
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
