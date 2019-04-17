@@ -11,12 +11,12 @@ import modelo.periodolectivo.PeriodoLectivoMD;
  *
  * @author arman
  */
-public class RolDocenteMD {
+public class RolPeriodoMD {
     private int id_rol;
     private String nombre_rol;
     private PeriodoLectivoMD periodo;
 
-    public RolDocenteMD() {
+    public RolPeriodoMD() {
     }
 
     public int getId_rol() {
