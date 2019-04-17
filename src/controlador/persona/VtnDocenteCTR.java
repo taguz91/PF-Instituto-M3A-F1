@@ -409,7 +409,7 @@ public class VtnDocenteCTR {
 
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, posFila);
+            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
             vtn_fin_contratacion.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
