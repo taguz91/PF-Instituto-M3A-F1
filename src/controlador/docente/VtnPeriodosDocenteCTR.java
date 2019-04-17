@@ -57,7 +57,7 @@ public class VtnPeriodosDocenteCTR {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String periodo = vtnPeriodoDocente.getCbx_Periodos().getSelectedItem().toString();
-                if(periodo.equals("NINGUNO")){
+                if(periodo.equals("NINGUNO") == true){
                     JOptionPane.showConfirmDialog(null, "Este Docente no tiene ninguna materia asignada al no tener un Período Lectivo");
                 } else {
                     llenarTabla(periodo);
@@ -81,6 +81,7 @@ public class VtnPeriodosDocenteCTR {
     }
     
     public void llenarTabla(String periodo){
+        System.out.println("Periodo " + periodo );
         DocenteBD d = new DocenteBD(conecta);
         PeriodoLectivoBD p = new PeriodoLectivoBD(conecta);
         DefaultTableModel modelo_Tabla;
@@ -92,7 +93,7 @@ public class VtnPeriodosDocenteCTR {
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getId(), i, 0);
+            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
             vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
         }
     }
@@ -108,6 +109,7 @@ public class VtnPeriodosDocenteCTR {
 
     }
 }
+//
 //    public void llenarTabla() {
 //        DefaultTableModel modelo_Tabla;
 //        modelo_Tabla = (DefaultTableModel) vtnPeriodoDocente.getTblMateriasCursos().getModel();
