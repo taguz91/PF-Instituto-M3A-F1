@@ -103,8 +103,9 @@ public class ControladorSilaboC {
 
     private DefaultListModel modeloBase;
 
-    private static Integer idEvaluacionSig=0;
+    private static Integer idEvaluacionSig = 0;
     private Integer idEvaluacion;
+    private boolean retroceso = false;
 
     public ControladorSilaboC(VtnPrincipal principal, UsuarioBD usuario, ConexionBD conexion) {
         this.principal = principal;
@@ -159,7 +160,7 @@ public class ControladorSilaboC {
         configuracion.getCmbCarrera().setSelectedIndex(0);
 
     }
-     
+
     public List<CarreraMD> cargarComboCarreras() {
 
         List<CarreraMD> carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
@@ -297,7 +298,7 @@ public class ControladorSilaboC {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
                 unidadSeleccionada.setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
                 actualizarUnidad(unidadSeleccionada);
-            //Prueba CHACON
+                //Prueba CHACON
             }
 
         });
@@ -317,7 +318,7 @@ public class ControladorSilaboC {
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                 boolean existe = false;
+                boolean existe = false;
 
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
 
@@ -327,7 +328,7 @@ public class ControladorSilaboC {
 
                     if (e.getDescripcionEstrategia().toUpperCase().trim().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase().trim())) {
                         existe = true;
-                      JOptionPane.showMessageDialog(null, "La estrategia que intento ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);  
+                        JOptionPane.showMessageDialog(null, "La estrategia que intento ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
 
                 }
@@ -348,9 +349,7 @@ public class ControladorSilaboC {
                 gestion.getLblGuardarEstrategia().setEnabled(false);
 
                 cargarEstrategias(seleccionarUnidad());
-                
 
-               
             }
         });
 
@@ -875,9 +874,19 @@ public class ControladorSilaboC {
         gestion.getBtnSiguiente().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                
+                if (retroceso) {
+                    bibliografia.setVisible(true);
+                }
+                    if (validarCampos()) {
+                    gestion.setVisible(false);
+                    citarReferencias(silabo, bibliografia);
+                    retroceso = true;
 
-                gestion.setVisible(false);
-                citarReferencias(silabo, bibliografia);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No ha completado correctamente los campos necesarios", "Aviso", JOptionPane.ERROR_MESSAGE);
+                    retroceso=false;
+                }
 
             }
 
@@ -1288,8 +1297,7 @@ public class ControladorSilaboC {
             }
 
         }
-        
-      
+
     }
 
     public void limpiarEvaluacionesAD() {
@@ -1505,6 +1513,54 @@ public class ControladorSilaboC {
         insertarUnidades();
 
         insertarReferencias();
+
+    }
+
+    public boolean validarCampos() {
+
+        boolean control = true;
+
+        int contador = 0;
+
+        for (int i = 0; i < unidadesSilabo.size(); i++) {
+
+            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getFechaInicioUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getFechaFinUnidad() == null) {
+                control = false;
+            }
+
+            for (int j = 0; j < estrategiasSilabo.size(); j++) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                    contador++;
+                }
+            }
+
+            if (contador == 0) {
+                control = false;
+            }
+
+        }
+
+        return control;
 
     }
 
