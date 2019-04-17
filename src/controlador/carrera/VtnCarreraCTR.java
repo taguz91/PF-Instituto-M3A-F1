@@ -177,7 +177,7 @@ public class VtnCarreraCTR {
     public void llamaReporteAlumnoCarrera() {
 
         JasperReport jr;
-        String path = "./src/vista/reportes/repAlumnosCarrera.jasper";
+        String path = "/vista/reportes/repAlumnosCarrera.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
@@ -185,7 +185,7 @@ public class VtnCarreraCTR {
             Map parametro = new HashMap();
             parametro.put("alumnoCarrera", carreras.get(posFila).getId());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
