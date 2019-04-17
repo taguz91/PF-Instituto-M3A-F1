@@ -39,6 +39,9 @@ public class FrmIngresoNotasCTR {
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
         this.Funcion = Funcion;
+        
+        
+        
     }
 
     //INICIADORES
