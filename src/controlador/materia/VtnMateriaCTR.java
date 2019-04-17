@@ -235,14 +235,14 @@ public class VtnMateriaCTR {
     public void llamaReporteMaterias() {
 
         JasperReport jr;
-        String path = "./src/vista/reportes/repMaterias.jasper";
+        String path = "/vista/reportes/repMaterias.jasper";
         File dir = new File("./");
         System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("carrera", vtnMateria.getCmbCarreras().getSelectedItem());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
