@@ -216,7 +216,7 @@ public class VtnDocenteCTR {
                         } else {
                             frmDoc.getCmbTipoIdentificacion().setSelectedItem("PASAPORTE");
                             ctrFrm.habilitarComponentesDocente();
-                             frmDoc.getTxtIdentificacion().setEnabled(false);
+                            frmDoc.getTxtIdentificacion().setEnabled(false);
                         }
                         frmDoc.getCmbTipoIdentificacion().setEnabled(false);
 
@@ -233,7 +233,6 @@ public class VtnDocenteCTR {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
         } else {
-<<<<<<< HEAD
             if (posFila >= 0) {
                 d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
                 if (d != null) {
@@ -254,22 +253,6 @@ public class VtnDocenteCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
-
-=======
-            d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
-            if (d != null) {
-                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
-                        "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
-                        new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
-                if (seleccion == 1) {
-                    docente.activarDocente(docentesMD.get(posFila).getIdDocente());
-                    JOptionPane.showMessageDialog(null, "se activo el docnete");
-                } else if (seleccion == 0) {
-
-                }
-            }
->>>>>>> fca47ebaf9639eef4c68cdc4f8e9eb0003cfca98
         }
 
     }
