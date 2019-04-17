@@ -133,8 +133,9 @@ public class VtnFinContratacionCTR {
 //            DocenteMD docente = new DocenteMD();
 //            docente.setObservacion(Observacion);
 //            docente.setFechaFinContratacion(convertirDate(fecha));
+            
 
-            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docente);
+            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docentesMD);
             vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
             vtnFinContratacion.dispose();
         }
