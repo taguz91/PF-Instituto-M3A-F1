@@ -110,6 +110,7 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final ConectarDB conecta;
+    private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
@@ -150,13 +151,16 @@ public class VtnPrincipalCTR {
      * @param conecta ConectarDB: Coneccion a la base de datos G23
      * @param icono ImagenIcon: Icono del sistema.
      * @param ista Imagen: Imagen del icono del sistema.
+     * @param ctrSelecRol
      */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
-            UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
+            UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista,
+            VtnSelectRolCTR ctrSelecRol) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
+        this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
@@ -165,6 +169,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setIconImage(ista);
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        registroIngreso(vtnPrin);
         //carga.iniciar();
         //Le pasamos el icono  
         vtnPrin.setTitle("PF M3A");
@@ -565,10 +570,12 @@ public class VtnPrincipalCTR {
         c.iniciarControlador();
 
     }
-    private void controladorCONFIGURACION_PLAN_DE_CLASES(){
-        ControladorConfiguracion_plan_clases cp=new ControladorConfiguracion_plan_clases(usuario, vtnPrin);
+
+    private void controladorCONFIGURACION_PLAN_DE_CLASES() {
+        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin);
         cp.iniciarControlaador();
     }
+
     private void controladorIngreso() {
 
         ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());
@@ -807,6 +814,7 @@ public class VtnPrincipalCTR {
     }
 
     private void btnCerrarSesion(ActionEvent e) {
+        ctrSelecRol.cierreSesion();
         ResourceManager.cerrarSesion();
         vtnPrin.dispose();
         LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
@@ -900,7 +908,7 @@ public class VtnPrincipalCTR {
 
     private void btnCambiarRol(ActionEvent e) {
 
-        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), usuario, conecta, icono, ista);
+        VtnSelectRolCTR vtn = ctrSelecRol;
         vtn.Init();
         vtnPrin.setVisible(false);
         System.gc();
@@ -983,7 +991,16 @@ public class VtnPrincipalCTR {
             }
 
         }
+    }
 
+    private void registroIngreso(JFrame vtn) {
+        vtn.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ctrSelecRol.cierreSesion();
+            }
+
+        });
     }
 
 }

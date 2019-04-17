@@ -109,18 +109,18 @@ ALTER TABLE public."Silabo" ADD COLUMN "estado_silabo" integer;
 --Modificaciones BD 16/4/2019
 
 CREATE TABLE "RolesPeriodo"(
-	"id_rol_prd" serial NOT NULL, 
-	"id_prd_lectivo" integer NOT NULL, 
-	"rol_prd" character varying(200) NOT NULL, 
-	"rol_activo" boolean DEFAULT 'true', 
+	"id_rol_prd" serial NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"rol_prd" character varying(200) NOT NULL,
+	"rol_activo" boolean DEFAULT 'true',
 	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
 ) WITH (OIDS = FALSE);
 
 CREATE TABLE "RolesDocente"(
-	"id_rol_docente" serial NOT NULL, 
+	"id_rol_docente" serial NOT NULL,
 	"id_docente" integer NOT NULL,
-	"id_rol_prd" integer NOT NULL, 
-	"rol_docente_activo" boolean default 'true',  
+	"id_rol_prd" integer NOT NULL,
+	"rol_docente_activo" boolean default 'true',
 	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
 ) WITH (OIDS = FALSE);
 
@@ -147,8 +147,20 @@ ALTER TABLE public."Docentes" ADD COLUMN "docente_en_funcion" boolean default 't
 ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
 
 
---NUevas tablas GAndres 
+--NUevas tablas GAndres
 
+--ELiminar tablas de KEVIN
+DROP TABLE public."Plan_de_clases" CASCADE;
+DROP TABLE public."Trabajo_autonomo" CASCADE;
+DROP TABLE public."Recursos_plan_clases" CASCADE;
+DROP TABLE public."Recursos" CASCADE;
+
+DROP SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
+DROP SEQUENCE public."Recursos_id_recurso_seq";
+DROP SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
+DROP SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq";
+
+--Actualizamos las tablas 16/4/2019
 
 CREATE SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
 
@@ -159,26 +171,21 @@ ALTER SEQUENCE public."Plan_de_clases_id_plan_clases_seq"
 CREATE TABLE public."Plan_de_clases"
 (
     id_plan_clases integer NOT NULL DEFAULT nextval('"Plan_de_clases_id_plan_clases_seq"'::regclass),
-    id_prd_lecctivo integer NOT NULL,
     id_docente integer NOT NULL,
     id_curso integer NOT NULL,
     id_unidad integer NOT NULL,
     observaciones text COLLATE pg_catalog."default",
+    documento_plan_clases bytea,
     fecha_revision date,
     fecha_generacion date,
     fecha_cierre date,
-    estado numeric,
     CONSTRAINT "Plan_de_clases_pkey" PRIMARY KEY (id_plan_clases),
     CONSTRAINT id_curso FOREIGN KEY (id_curso)
         REFERENCES public."Cursos" (id_curso) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT id_docente FOREIGN KEY (id_docente)
+    CONSTRAINT "id_docente  integer" FOREIGN KEY (id_docente)
         REFERENCES public."Docentes" (id_docente) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT id_prd_lecctivo FOREIGN KEY (id_prd_lecctivo)
-        REFERENCES public."PeriodoLectivo" (id_prd_lectivo) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT id_unidad FOREIGN KEY (id_unidad)
@@ -192,56 +199,6 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public."Plan_de_clases"
-    OWNER to postgres;
-
-
-CREATE SEQUENCE public."Recursos_id_recurso_seq";
-
-ALTER SEQUENCE public."Recursos_id_recurso_seq"
-    OWNER TO postgres;
-
-CREATE TABLE public."Recursos"
-(
-    id_recurso integer NOT NULL DEFAULT nextval('"Recursos_id_recurso_seq"'::regclass),
-    nombre_recursos text COLLATE pg_catalog."default",
-    tipo_recurso character(1) COLLATE pg_catalog."default",
-    CONSTRAINT "Recursos_pkey" PRIMARY KEY (id_recurso)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE public."Recursos"
-    OWNER to postgres;
-
-
-CREATE SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
-
-ALTER SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq"
-    OWNER TO postgres;
-
-CREATE TABLE public."Recursos_plan_clases"
-(
-    id_recursos_plan_clases integer NOT NULL DEFAULT nextval('"Recursos_plan_clases_id_recursos_plan_clases_seq"'::regclass),
-    id_plan_clases integer NOT NULL,
-    id_recurso integer NOT NULL,
-    CONSTRAINT "Recursos_plan_clases_pkey" PRIMARY KEY (id_recursos_plan_clases),
-    CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
-        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT id_recurso FOREIGN KEY (id_recurso)
-        REFERENCES public."Recursos" (id_recurso) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE public."Recursos_plan_clases"
     OWNER to postgres;
 
 
@@ -269,6 +226,94 @@ ALTER TABLE public."Trabajo_autonomo"
 
 
 
+
+CREATE SEQUENCE public."Recursos_id_recurso_seq";
+
+ALTER SEQUENCE public."Recursos_id_recurso_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."Recursos"
+(
+    id_recurso integer NOT NULL DEFAULT nextval('"Recursos_id_recurso_seq"'::regclass),
+    nombre_recursos text COLLATE pg_catalog."default",
+    tipo_recurso character(1) COLLATE pg_catalog."default",
+    CONSTRAINT "Recursos_pkey" PRIMARY KEY (id_recurso)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Recursos"
+    OWNER to postgres;
+
+
+
+
+CREATE SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
+
+ALTER SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."Recursos_plan_clases"
+(
+    id_recursos_plan_clases integer NOT NULL DEFAULT nextval('"Recursos_plan_clases_id_recursos_plan_clases_seq"'::regclass),
+    id_plan_clases integer NOT NULL,
+    id_recurso integer NOT NULL,
+    CONSTRAINT "Recursos_plan_clases_pkey" PRIMARY KEY (id_recursos_plan_clases),
+    CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
+        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_recurso FOREIGN KEY (id_recurso)
+        REFERENCES public."Recursos" (id_recurso) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Recursos_plan_clases"
+    OWNER to postgres;
+
+
+CREATE SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq";
+
+ALTER SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq"
+    OWNER TO postgres;
+
+
+CREATE TABLE public."Estrategias_metodologias"
+(
+    id_estrategias_metodologias integer NOT NULL DEFAULT nextval('"Estrategias_metodologias_id_estrategias_metodologias_seq"'::regclass),
+    tipo_estrategias_metodologias text COLLATE pg_catalog."default",
+    id_plan_de_clases integer NOT NULL,
+    id_estrategias_unidad integer NOT NULL,
+    CONSTRAINT "Estrategias_metodologias_pkey" PRIMARY KEY (id_estrategias_metodologias),
+    CONSTRAINT id_estrategias_unidad FOREIGN KEY (id_estrategias_metodologias)
+        REFERENCES public."EstrategiasUnidad" (id_estrategia_unidad) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_plan_de_clases FOREIGN KEY (id_plan_de_clases)
+        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Estrategias_metodologias"
+    OWNER to postgres;
+
+--Dos campos nuevos
+ALTER TABLE public."Silabo" ADD COLUMN documento_silabo bytea;
+ALTER TABLE public."Silabo" ADD COLUMN documento_analitico bytea;
+
+
 --ALTERS G16 16/Abril/2019
 
 ALTER TABLE "TipoDeNota" ADD COLUMN id_carrera integer;
@@ -276,3 +321,23 @@ ALTER TABLE "TipoDeNota" ADD COLUMN id_carrera integer;
 ALTER TABLE "TipoDeNota" ADD CONSTRAINT "carrera_TipoDeNota_fk"
     FOREIGN KEY ("id_carrera") REFERENCES "Carreras" ("id_carrera")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Reestructuracion de para matricula
+
+CREATE TABLE "Matricula"(
+	"id_matricula" serial NOT NULL,
+	"id_alumno" integer NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"matricula_fecha" TIMESTAMP DEFAULT now(),
+  "matricula_ficha" bytea,
+	"matricula_activa" boolean NOT NULL DEFAULT 'true',
+	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula")
+) WITH (OIDS = FALSE);
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk1"
+FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
+FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;

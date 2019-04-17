@@ -8,6 +8,8 @@ import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.silabo.CarrerasBDS;
 import modelo.silabo.MateriasBDS;
+import modelo.silabo.SilaboBD;
+import modelo.silabo.SilaboMD;
 import modelo.silabo.dbCarreras;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
@@ -24,6 +26,7 @@ public class ControladorConfiguracion_plan_clases {
      private final VtnPrincipal vtnPrincipal;
      private List<CarreraMD> carrerasDocente;
      private List<MateriaMD> materiasDocente;
+       private List<SilaboMD> silabosDocente;
 
     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
@@ -43,15 +46,10 @@ public class ControladorConfiguracion_plan_clases {
           frm_cong_PlanClase.getBtn_cancelar().addActionListener((e) -> {
               frm_cong_PlanClase.dispose();
           });
-          carrerasDocente=cargarComboCarreras();
+          frm_cong_PlanClase.getCmb_carreras().addActionListener(a1 -> cargarSilabosDocentes());
+          cargarComboCarreras();
+          cargarSilabosDocentes();
           
-          frm_cong_PlanClase.getCmb_carreras().addActionListener((e) -> {
-              Optional<CarreraMD> carreraSeleccionada=carrerasDocente.stream().filter(c ->
-                      c.getNombre().equals(frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString())).
-                      findFirst();
-              materiasDocente=cargarComboMaterias(carreraSeleccionada.get().getId());
-          });
-          frm_cong_PlanClase.getCmb_carreras().setSelectedIndex(0);
      }
      
 
@@ -64,18 +62,17 @@ public class ControladorConfiguracion_plan_clases {
 
         return carrerasDocentes;
     }
-     public List<MateriaMD> cargarComboMaterias(int idMateria) {
-
-        frm_cong_PlanClase.getCmb_materias().removeAllItems();
-
-        String[] parametros = {usuario.getUsername(), String.valueOf(idMateria)};
-
-        List<MateriaMD> materiasDocente = MateriasBDS.consultar(conexion, parametros);
-
-        materiasDocente.forEach((cmd) -> {
-            frm_cong_PlanClase.getCmb_materias().addItem(cmd.getNombre());
-        });
-
-        return materiasDocente;
-    }
+     
+     public void cargarSilabosDocentes(){
+         String [] parametros={frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),String.valueOf(usuario.getPersona().getIdPersona())};
+         silabosDocente=SilaboBD.consultarSilabo1(conexion, parametros);
+         frm_cong_PlanClase.getCmb_silabos().removeAllItems();
+         for (SilaboMD smd : silabosDocente) {
+             String estado = null;
+            if (smd.getEstadoSilabo() == 0) {
+                estado = "Por aprobar";
+            }
+            frm_cong_PlanClase.getCmb_silabos().addItem(smd.getIdMateria().getNombre());
+         }
+     }
 }
