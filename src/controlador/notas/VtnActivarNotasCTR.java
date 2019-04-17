@@ -333,12 +333,12 @@ public class VtnActivarNotasCTR {
 
     }
 
-    public void SelectTextInRow(MouseEvent e) {
-
-        if (!vista.getTblCursoTipoNotas().isEditing() && vista.getTblCursoTipoNotas().editCellAt(vista.getTblCursoTipoNotas().getSelectedRow(),
-                vista.getTblCursoTipoNotas().getSelectedColumn())) {
-            vista.getTblCursoTipoNotas().getEditorComponent().requestFocusInWindow();
-        }
-
-    }
+//    public void SelectTextInRow(MouseEvent e) {
+//
+//        if (!vista.getTblCursoTipoNotas().isEditing() && vista.getTblCursoTipoNotas().editCellAt(vista.getTblCursoTipoNotas().getSelectedRow(),
+//                vista.getTblCursoTipoNotas().getSelectedColumn())) {
+//            vista.getTblCursoTipoNotas().getEditorComponent().requestFocusInWindow();
+//        }
+//
+//    }
 }
