@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
  *
@@ -55,6 +56,7 @@ public class RolPeriodoBD extends RolPeriodoMD {
     }
     public List<RolPeriodoMD> llenarTabla() {
         List<RolPeriodoMD> lista = new ArrayList();
+        
         String sql = "Select prd_lectivo_nombre, rol_prd from \n"
                 + "public.\"PeriodoLectivo\" join public.\"RolesPeriodo\"\n"
                 + "using (id_prd_lectivo);";
@@ -62,6 +64,9 @@ public class RolPeriodoBD extends RolPeriodoMD {
         try {
             while (rs.next()) {
                 RolPeriodoMD m = new RolPeriodoMD();
+        PeriodoLectivoMD perL = new PeriodoLectivoMD(); 
+perL.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+m.setPeriodo(perL);
                 //m.setPeriodo(perLec.getNombre_PerLectivo());
                 m.setNombre_rol(rs.getString("rol_prd"));
                 lista.add(m);
