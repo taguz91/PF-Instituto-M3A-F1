@@ -46,7 +46,7 @@ public class VtnFinContratacion extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jdcFinContratacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, 202, -1));
 
-        jLabel1.setText("Seleccoine la fecha de fin de contratación ");
+        jLabel1.setText("Fin de Contratación ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         jLabel2.setText("Ingrese una observación");
@@ -54,7 +54,7 @@ public class VtnFinContratacion extends javax.swing.JDialog {
         getContentPane().add(txtObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 202, 95));
 
         btnGuardar.setText("Guardar");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(141, 221, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
 
         btnCancelar.setText("Cancelar");
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 221, -1, -1));
@@ -65,7 +65,7 @@ public class VtnFinContratacion extends javax.swing.JDialog {
 
         lblErrorObservacion.setForeground(new java.awt.Color(255, 0, 0));
         lblErrorObservacion.setText("Debe ingresar una observación");
-        getContentPane().add(lblErrorObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 201, 165, -1));
+        getContentPane().add(lblErrorObservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 201, 200, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

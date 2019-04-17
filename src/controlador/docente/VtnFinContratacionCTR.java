@@ -38,7 +38,7 @@ public class VtnFinContratacionCTR {
     private DocenteBD docente;
     private DocenteMD docentesMD;
     private final String cedula;
-    private boolean guardar = false;
+    private boolean guardar = true;
 
     public VtnFinContratacionCTR(
             ConectarDB conecta, VtnPrincipal vtnPrin, String cedula) {
@@ -76,7 +76,13 @@ public class VtnFinContratacionCTR {
         
         vtnFinContratacion.getJdcFinContratacion().addMouseListener(new MouseAdapter(){
             public void mouseClicked(){
-                validarFecha();
+                if(validarFecha() == true){
+                    vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
+                } else{
+                    vtnFinContratacion.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
+                    vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
+                }
+                habilitarGuardar();
             }
         });
         docente = new DocenteBD(conecta);
@@ -130,7 +136,7 @@ public class VtnFinContratacionCTR {
 
             VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docente);
             vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-
+            vtnFinContratacion.dispose();
         }
 
     }
@@ -142,11 +148,10 @@ public class VtnFinContratacionCTR {
         if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
                 && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
 
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
+            
             return true;
         } else {
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
+            
             return false;
         }
 

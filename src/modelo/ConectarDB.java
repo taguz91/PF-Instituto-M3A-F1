@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -19,6 +18,23 @@ public class ConectarDB {
     private ResultSet rs;
 
     //BD En cloud
+    public ConectarDB(String user, String pass) {
+        try {
+            //Cargamos el driver
+            Class.forName("org.postgresql.Driver");
+            //Nos conectamos
+            String url = "jdbc:postgresql://35.193.226.187:5432/BDcierre";
+
+            ct = DriverManager.getConnection(url, user, pass);
+            //ct = DriverManager.getConnection(url, user, pass);
+            ResourceManager.setConecct(ct);
+            System.out.println("Nos conectamos. Desde:Como invitados " + user);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
+        }
+    }
+
     public ConectarDB(String user, String pass, String mensaje) {
         try {
             //Cargamos el driver
