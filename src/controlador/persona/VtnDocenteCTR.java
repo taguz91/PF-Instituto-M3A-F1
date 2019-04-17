@@ -233,7 +233,6 @@ public class VtnDocenteCTR {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
         } else {
-<<<<<<< HEAD
             if (posFila >= 0) {
                 d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
                 if (d != null) {
@@ -254,8 +253,6 @@ public class VtnDocenteCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
-
-=======
             d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
             if (d != null) {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
@@ -269,7 +266,6 @@ public class VtnDocenteCTR {
 
                 }
             }
->>>>>>> fca47ebaf9639eef4c68cdc4f8e9eb0003cfca98
         }
 
     }
