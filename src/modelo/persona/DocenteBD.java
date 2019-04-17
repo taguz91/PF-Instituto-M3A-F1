@@ -233,6 +233,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = false;";
         return consultarDocenteTbl(sql);
     }
+    
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
         String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
                 + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
@@ -641,31 +642,6 @@ public class DocenteBD extends DocenteMD {
         }
 
         return idDocente;
-    }
-
-    public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
-        String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
-                + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
-                + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
-
-        ResultSet rs = conecta.sql(nsql); 
-        List<CursoMD> lista = new ArrayList<CursoMD>();
-        
-        try {
-            while (rs.next()) {
-                CursoMD c = new CursoMD();
-                MateriaMD m = new MateriaMD();
-                m.setNombre(rs.getString("materia_nombre"));
-                c.setId_materia(m);
-                c.setCurso_nombre(rs.getString("curso_nombre"));
-                lista.add(c);
-            }
-            rs.close();
-            return lista;
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
     }
 
     public static HashMap<String, DocenteMD> selectAll() {
