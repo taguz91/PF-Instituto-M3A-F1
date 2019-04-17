@@ -101,7 +101,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtRolesPeriodo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
+                <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtRolesPeriodoActionPerformed"/>
@@ -120,7 +120,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+                <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
@@ -136,7 +136,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Roles usuarios"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
@@ -261,7 +261,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
+                <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
@@ -280,7 +280,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+Q"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+                <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgUsuarios1">
@@ -296,7 +296,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Roles usuarios"/>
               </Properties>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="mnNotas1">
@@ -309,17 +309,17 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mnIgPrdIngrNotas1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Periodos de ingreso de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnIgNotas1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
+                    <Property name="text" type="java.lang.String" value="Ingreso notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnIgActivarNotas1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Activar Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Activar ingreso de notas"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>

@@ -97,7 +97,7 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Período Ingreso Notas");
+        setTitle("Período ingreso notas");
         setPreferredSize(new java.awt.Dimension(700, 415));
 
         jLabel1.setText("Buscar");

@@ -114,7 +114,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Notas");
 
-        lbl_periodolectivo.setText("Período Lectivo:");
+        lbl_periodolectivo.setText("Período lectivo:");
 
         lbl_carrera.setText("Carrera:");
 

@@ -120,7 +120,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Activacion Notas");
+        setTitle("Activacion notas");
 
         btnActualizar.setText("Actualizar");
 
@@ -166,7 +166,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
 
         cmbPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblPeriodoLectivo.setText("Período Lectivo");
+        lblPeriodoLectivo.setText("Período lectivo");
 
         lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));

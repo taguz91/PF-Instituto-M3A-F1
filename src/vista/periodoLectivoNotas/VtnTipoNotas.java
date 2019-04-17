@@ -91,10 +91,8 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setTitle("Tipos de Notas");
-        setMinimumSize(new java.awt.Dimension(900, 415));
-        setPreferredSize(new java.awt.Dimension(900, 415));
+        setTitle("Tipos de notas");
+        setPreferredSize(new java.awt.Dimension(700, 415));
 
         jLabel1.setText("Buscar");
 
