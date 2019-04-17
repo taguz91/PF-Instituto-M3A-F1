@@ -136,7 +136,7 @@ public class VtnFinContratacionCTR {
 
             VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docente);
             vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-
+            vtnFinContratacion.dispose();
         }
 
     }
