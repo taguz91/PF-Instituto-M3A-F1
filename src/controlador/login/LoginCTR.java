@@ -1,7 +1,6 @@
 package controlador.login;
 
 import controlador.Libraries.Middlewares;
-import controlador.principal.JDConsolaBDCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
