@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.DependenciasCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,11 +17,8 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class FrmMallaActualizarCTR {
+public class FrmMallaActualizarCTR extends DependenciasCTR {
 
-    private final ConectarDB conecta;
-    private final VtnPrincipal vtnPrin;
-    private final VtnPrincipalCTR ctrPrin;
     //Formulario 
     private final FrmMallaActualizar frmMalla;
     //Malla alumno 
@@ -35,9 +33,7 @@ public class FrmMallaActualizarCTR {
 
     public FrmMallaActualizarCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
-        this.conecta = conecta;
-        this.vtnPrin = vtnPrin;
-        this.ctrPrin = ctrPrin;
+        super(conecta, vtnPrin, ctrPrin);
         this.malla = malla;
         this.ctrMalla = ctrMalla;
         this.bd = bd;
