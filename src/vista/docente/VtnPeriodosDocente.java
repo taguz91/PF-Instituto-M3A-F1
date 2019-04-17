@@ -7,6 +7,7 @@ package vista.docente;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 
 /**
  *
@@ -33,45 +34,49 @@ public class VtnPeriodosDocente extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jcbPeriodos = new javax.swing.JComboBox<>();
+        Cbx_Periodos = new javax.swing.JComboBox<>();
         bntAceptar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMateriasCursos = new javax.swing.JTable();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("<html>Advertencia !! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
+        jLabel1.setText("<html>Advertencia!! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, 400, 46));
 
         jLabel2.setText("Seleccione en que periodo desea dar de baja al docente");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 72, -1, -1));
 
-        jcbPeriodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno" }));
+        Cbx_Periodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "NINGUNO" }));
+        getContentPane().add(Cbx_Periodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 95, 200, -1));
 
         bntAceptar.setText("Aceptar");
+        getContentPane().add(bntAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 355, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jcbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntAceptar)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jcbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bntAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        tblMateriasCursos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Materia", "Curso"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblMateriasCursos);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 129, 400, 213));
+
+        btnCancelar.setText("Cancelar");
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -85,15 +90,40 @@ public class VtnPeriodosDocente extends javax.swing.JDialog {
     }
 
     public JComboBox<String> getJcbPeriodos() {
-        return jcbPeriodos;
+        return Cbx_Periodos;
     }
 
     /**
      * @param args the command line arguments
      */
     public void setJcbPeriodos(JComboBox<String> jcbPeriodos) {
-        this.jcbPeriodos = jcbPeriodos;
+        this.Cbx_Periodos = jcbPeriodos;
     }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
+    public JTable getTblMateriasCursos() {
+        return tblMateriasCursos;
+    }
+
+    public void setTblMateriasCursos(JTable tblMateriasCursos) {
+        this.tblMateriasCursos = tblMateriasCursos;
+    }
+
+    public JComboBox<String> getCbx_Periodos() {
+        return Cbx_Periodos;
+    }
+
+    public void setCbx_Periodos(JComboBox<String> Cbx_Periodos) {
+        this.Cbx_Periodos = Cbx_Periodos;
+    }
+    
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -135,9 +165,12 @@ public class VtnPeriodosDocente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Cbx_Periodos;
     private javax.swing.JButton bntAceptar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JComboBox<String> jcbPeriodos;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblMateriasCursos;
     // End of variables declaration//GEN-END:variables
 }

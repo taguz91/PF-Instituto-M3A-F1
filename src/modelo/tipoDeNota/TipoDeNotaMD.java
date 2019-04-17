@@ -14,14 +14,16 @@ public class TipoDeNotaMD {
     private double valorMaximo;
     private LocalDate fechaCreacion;
     private boolean estado;
+    private int idCarrera;
 
-    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado) {
+    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, int idCarrera) {
         this.idTipoNota = idTipoNota;
         this.nombre = nombre;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
+        this.idCarrera = idCarrera;
     }
 
     public TipoDeNotaMD() {
@@ -75,9 +77,17 @@ public class TipoDeNotaMD {
         this.estado = estado;
     }
 
+    public int getIdCarrera() {
+        return idCarrera;
+    }
+
+    public void setIdCarrera(int idCarrera) {
+        this.idCarrera = idCarrera;
+    }
+
     @Override
     public String toString() {
-        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + '}';
+        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", idCarrera=" + idCarrera + '}';
     }
 
 }
