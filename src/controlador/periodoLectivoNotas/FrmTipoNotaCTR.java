@@ -151,6 +151,7 @@ public class FrmTipoNotaCTR {
     private void btnGuardar(ActionEvent e) {
 
         if (validarFormulario()) {
+            
             if (Funcion.equalsIgnoreCase("AGREGAR")) {
                 if (setObj().insertar()) {
                     String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
