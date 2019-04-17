@@ -33,6 +33,7 @@ public class VtnRolPeriodosCTR {
 // para combo de periodo
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
+    private ArrayList<RolPeriodoMD> roles = new ArrayList();
 
     public VtnRolPeriodosCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolPe, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -54,6 +55,7 @@ public void iniciar(){
         vtnRolPe.getTblAlumno().setModel(mdTbl);
          //Pasamos el estilo a la tabla 
         TblEstilo.formatoTbl(vtnRolPe.getTblAlumno());
+        vtnRolPe.getTblAlumno().setModel(mdTbl);
 
     
     vtnRolPe.getBtnIngresar().addActionListener(e->abrirFRM());
@@ -70,18 +72,45 @@ private void abrirFRM(){
     vtnRolPe.dispose();
     ctrPrin.cerradoJIF();
     }
- public void llenarTabla() {
-        DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) vtnRolPe.getTblAlumno().getModel();
+// public void llenarTabla (ArrayList<RolPeriodoMD> roles) {
+//     
+////     mdTbl.setRowCount(0);
+////        if (roles != null) {
+////            roles.forEach((rol) -> {
+////                Object valores[] = {rol.getNombre_rol(),rol.getPeriodo()};
+////                mdTbl.addRow(valores);
+////            });
+////            vtnRolPe.getLblResultados().setText(roles.size() + " Resultados obtenidos.");
+////        } else {
+////            vtnRolPe.getLblResultados().setText("0 Resultados obtenidos.");
+////        }
+//        DefaultTableModel modelo_Tabla;
+//        modelo_Tabla = (DefaultTableModel) vtnRolPe.getTblAlumno().getModel();
+//        for (int i = vtnRolPe.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
+//            modelo_Tabla.removeRow(i);
+//        }
+//        List<RolPeriodoMD> lista = rolDoc.llenarTabla();
+//        int columnas = modelo_Tabla.getColumnCount();
+//        for (int i = 0; i < lista.size(); i++) {
+//            Object valores[] = {lista.get};
+//            modelo_Tabla.addRow(new Object[columnas]);
+//           // vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getPeriodo().getNombre_PerLectivo()), i, 0);
+//            vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getNombre_rol()), i, 1);
+//        }
+//        vtnRolPe.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
+//    }
+       public void llenarTabla() {
+        mdTbl = (DefaultTableModel) vtnRolPe.getTblAlumno().getModel();
         for (int i = vtnRolPe.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-            modelo_Tabla.removeRow(i);
+            mdTbl.removeRow(i);
         }
         List<RolPeriodoMD> lista = rolDoc.llenarTabla();
-        int columnas = modelo_Tabla.getColumnCount();
+        int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
-            modelo_Tabla.addRow(new Object[columnas]);
-           // vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getPeriodo().getNombre_PerLectivo()), i, 0);
-            vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getNombre_rol()), i, 1);
+            mdTbl.addRow(new Object[columnas]);
+            vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getPeriodo().getNombre_PerLectivo()), i, 0);
+             vtnRolPe.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getNombre_rol()), i, 1);
+          
         }
         vtnRolPe.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
