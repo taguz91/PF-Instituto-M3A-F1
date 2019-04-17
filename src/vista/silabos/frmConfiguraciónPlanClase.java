@@ -1,5 +1,8 @@
 package vista.silabos;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +14,7 @@ package vista.silabos;
  *
  * @author Daniel
  */
-public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
+public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmConfiguraciónPlanClase
@@ -19,7 +22,49 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
     public frmConfiguraciónPlanClase() {
         initComponents();
     }
+      public JComboBox<String> getCmb_carreras() {
+        return Cmb_carreras;
+    }
 
+    public void setCmb_carreras(JComboBox<String> Cmb_carreras) {
+        this.Cmb_carreras = Cmb_carreras;
+    }
+
+    public JComboBox<String> getCmb_silabos() {
+        return Cmb_silabos;
+    }
+
+    public void setCmb_silabos(JComboBox<String> Cmb_silabos) {
+        this.Cmb_silabos = Cmb_silabos;
+    }
+
+   
+
+   
+
+    public JComboBox<String> getCmb_unidades() {
+        return Cmb_unidades;
+    }
+
+    public void setCmb_unidades(JComboBox<String> Cmb_unidades) {
+        this.Cmb_unidades = Cmb_unidades;
+    }
+
+    public JButton getBtn_cancelar() {
+        return btn_cancelar;
+    }
+
+    public void setBtn_cancelar(JButton btn_cancelar) {
+        this.btn_cancelar = btn_cancelar;
+    }
+
+    public JButton getBtn_siguiente() {
+        return btn_siguiente;
+    }
+
+    public void setBtn_siguiente(JButton btn_siguiente) {
+        this.btn_siguiente = btn_siguiente;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,35 +74,31 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        Cmb_unidades = new javax.swing.JComboBox<>();
+        Cmb_silabos = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnSiguienteCPC = new javax.swing.JButton();
-        btnCPC = new javax.swing.JButton();
+        btn_siguiente = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        Cmb_carreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Cmb_unidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("Carrera:");
 
-        jLabel2.setText("Silabo:");
+        jLabel2.setText("Silabos");
 
         jLabel3.setText("Unidad:");
 
-        btnSiguienteCPC.setText("Siguiente");
+        btn_siguiente.setText("Siguiente");
 
-        btnCPC.setText("Cancelar");
+        btn_cancelar.setText("Cancelar");
 
         jLabel4.setText("Configuración Plan de Clase:");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,9 +106,9 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(236, Short.MAX_VALUE)
-                .addComponent(btnCPC)
+                .addComponent(btn_cancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSiguienteCPC)
+                .addComponent(btn_siguiente)
                 .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
@@ -77,9 +118,9 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, 266, Short.MAX_VALUE)
-                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Cmb_silabos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Cmb_unidades, 0, 266, Short.MAX_VALUE)
+                    .addComponent(Cmb_carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
@@ -94,25 +135,24 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Cmb_carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cmb_silabos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cmb_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSiguienteCPC)
-                    .addComponent(btnCPC))
+                    .addComponent(btn_siguiente)
+                    .addComponent(btn_cancelar))
                 .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     /**
      * @param args the command line arguments
      */
@@ -148,12 +188,13 @@ public class frmConfiguraciónPlanClase extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCPC;
-    private javax.swing.JButton btnSiguienteCPC;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> Cmb_carreras;
+    private javax.swing.JComboBox<String> Cmb_silabos;
+    private javax.swing.JComboBox<String> Cmb_unidades;
+    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

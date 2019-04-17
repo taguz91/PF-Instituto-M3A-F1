@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -57,7 +58,6 @@ public class VtnCursoCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
-   
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -77,7 +77,7 @@ public class VtnCursoCTR {
         //Inicializamos el curso  
         curso = new CursoBD(conecta);
     }
-    
+
     public void iniciar() {
         vtnCurso.getBtnListaAlumnos().setEnabled(false);
         cargarCmbPrdLectio();
@@ -98,6 +98,8 @@ public class VtnCursoCTR {
         cargarCursos();
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
+        vtnCurso.getBtnEliminar().addActionListener(e -> eliminarCurso());
+        vtnCurso.getCbxEliminados().addActionListener(e -> verCursosEliminados());
         //Le damos una accion al combo de periodos lectivos 
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
         //Le damos una accion al combo de cursos  
@@ -116,7 +118,7 @@ public class VtnCursoCTR {
                 }
             }
         });
-      
+
         vtnCurso.getBtnBuscar().addActionListener(e -> buscar(vtnCurso.getTxtBuscar().getText().trim()));
         //Validacion del buscador 
         vtnCurso.getBtnBuscar().addKeyListener(new TxtVBuscador(vtnCurso.getTxtBuscar(),
@@ -124,18 +126,18 @@ public class VtnCursoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Cursos");
-          vtnCurso.getTblCurso().addMouseListener(new MouseAdapter() {
+        vtnCurso.getTblCurso().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 validarBotonesReportes();
             }
         });
 
-
         vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
     }
-    
-    /**T
+
+    /**
+     * T
      * Abrimos el formulario para ingresar un curso
      */
     public void abrirFrmCurso() {
@@ -143,7 +145,7 @@ public class VtnCursoCTR {
         vtnCurso.dispose();
         ctrPrin.cerradoJIF();
     }
-    
+
     /**
      * Al seleccionar un curso se puede editar.
      */
@@ -160,10 +162,11 @@ public class VtnCursoCTR {
             ctrPrin.cerradoJIF();
         }
     }
-    
+
     /**
      * Buscamos unicamente por nombre y cedula
-     * @param b 
+     *
+     * @param b
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
@@ -173,10 +176,10 @@ public class VtnCursoCTR {
             System.out.println("No ingrese caracteres especiales");
         }
     }
-    
+
     /**
-     * Cargamos todos los cursos que existen en el isntituto, incluyendo
-     * el periodo lectivo en el que se abrieron
+     * Cargamos todos los cursos que existen en el isntituto, incluyendo el
+     * periodo lectivo en el que se abrieron
      */
     public void cargarCursos() {
         System.out.println("Se cargaron cursos");
@@ -253,16 +256,17 @@ public class VtnCursoCTR {
             });
         }
     }
-  public void reporteListaAlumnos() {
+
+    public void reporteListaAlumnos() {
         JasperReport jr;
         String path = "./src/vista/reportes/repListaAlumno.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-             int posFila = vtnCurso.getTblCurso().getSelectedRow();
+            int posFila = vtnCurso.getTblCurso().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("curso",cursos.get(posFila).getId_curso());
-           // parametro.put("jornada", jornada.get(posFila).getNombre());
+            parametro.put("curso", cursos.get(posFila).getId_curso());
+            // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
@@ -274,6 +278,7 @@ public class VtnCursoCTR {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void cargarCmbCursos(ArrayList<String> nombresC) {
         vtnCurso.getCmbCurso().removeAllItems();
         if (nombresC != null) {
@@ -284,7 +289,46 @@ public class VtnCursoCTR {
             vtnCurso.getCmbCurso().setSelectedIndex(0);
         }
     }
-        
+
+    private void eliminarCurso() {
+        int posCur = vtnCurso.getTblCurso().getSelectedRow();
+
+        if (posCur >= 0) {
+            String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
+            int num = curso.numAlumnos(cursos.get(posCur).getId_curso());
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere "
+                    + vtnCurso.getBtnEliminar().getText().toLowerCase() + " el curso " + nom + "\n"
+                    + "Se " + vtnCurso.getBtnEliminar().getText().toLowerCase()
+                    + "an todos los alumnos de este curso: " + num);
+            if (r == JOptionPane.YES_OPTION) {
+                if (vtnCurso.getCbxEliminados().isSelected()) {
+                    curso.activarCurso(cursos.get(posCur).getId_curso());
+                } else {
+                    curso.eliminarCurso(cursos.get(posCur).getId_curso());
+                }
+                verCursosEliminados();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una final antes.");
+        }
+    }
+
+    /**
+     * Cargamos los cursos que se eliminaron en la base
+     */
+    private void verCursosEliminados() {
+        if (vtnCurso.getCbxEliminados().isSelected()) {
+            cursos = curso.cargarCursosEliminados();
+            llenarTbl(cursos);
+            vtnCurso.getBtnEliminar().setText("Activar");
+        } else {
+            cursos = curso.cargarCursos();
+            llenarTbl(cursos);
+            vtnCurso.getBtnEliminar().setText("Eliminar");
+        }
+    }
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
@@ -305,7 +349,8 @@ public class VtnCursoCTR {
 //            }
         }
     }
-      public void validarBotonesReportes() {
+
+    public void validarBotonesReportes() {
         int selecTabl = vtnCurso.getTblCurso().getSelectedRow();
         if (selecTabl >= 0) {
             vtnCurso.getBtnListaAlumnos().setEnabled(true);
@@ -313,4 +358,4 @@ public class VtnCursoCTR {
             vtnCurso.getBtnListaAlumnos().setEnabled(false);
         }
     }
-   }
+}

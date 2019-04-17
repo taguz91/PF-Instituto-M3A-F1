@@ -25,6 +25,7 @@ public class TblEstilo {
         mdColum.getColumn(columna).setWidth(medida);
         mdColum.getColumn(columna).setMinWidth(medida);
         mdColum.getColumn(columna).setMaxWidth(medida);
+         mdColum.getColumn(columna).setMaxWidth(medida);
     }
 
     //Con este metodo ocultamos la primera columna de la tabla
