@@ -131,13 +131,13 @@ public class VtnActivarNotasCTR {
                 }
             }
         });
-        
+
         vista.getTblCursoTipoNotas().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 SelectTextInRow(e);
             }
-            
+
         });
 
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
@@ -343,7 +343,7 @@ public class VtnActivarNotasCTR {
         }).start();
 
     }
-    
+
     public void SelectTextInRow(MouseEvent e) {
 
         if (!vista.getTblCursoTipoNotas().isEditing() && vista.getTblCursoTipoNotas().editCellAt(vista.getTblCursoTipoNotas().getSelectedRow(),
