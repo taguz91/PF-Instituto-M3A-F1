@@ -139,6 +139,12 @@ public class VtnPrdLectivoCTR {
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
+            if(periodos.get(i).isEstado_PerLectivo() == true){
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
+            } else{
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
+            }
+            
         }
         if (periodos.isEmpty()) {
             vtnPrdLectivo.getLblResultados().setText("0 Resultados obtenidos.");
@@ -179,6 +185,11 @@ public class VtnPrdLectivoCTR {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
+                if(periodos.get(i).isEstado_PerLectivo() == true){
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
+                } else{
+                    vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
+                }
             }
             if (lista.isEmpty()) {
                 vtnPrdLectivo.getLblResultados().setText("0 Resultados obtenidos.");
