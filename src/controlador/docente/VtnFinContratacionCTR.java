@@ -5,18 +5,24 @@
  */
 package controlador.docente;
 
+import controlador.persona.VtnDocenteCTR;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.validaciones.Validar;
 import vista.docente.VtnFinContratacion;
+import vista.docente.VtnPeriodosDocente;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -29,16 +35,17 @@ public class VtnFinContratacionCTR {
     private PeriodoLectivoBD plBD;
     private final VtnFinContratacion vtnFinContratacion;
     private final VtnPrincipal vtnPrin;
-    private static LocalDate fechaInicio;
-    private final DocenteMD docente;
+    private DocenteBD docente;
+    private DocenteMD docentesMD;
+    private final String cedula;
     private boolean guardar = false;
 
     public VtnFinContratacionCTR(
-            ConectarDB conecta, VtnPrincipal vtnPrin, DocenteMD docente) {
+            ConectarDB conecta, VtnPrincipal vtnPrin, String cedula) {
         this.vtnFinContratacion = new VtnFinContratacion(vtnPrin, false);
         this.conecta = conecta;
         this.vtnPrin = vtnPrin;
-        this.docente = docente;
+        this.cedula = cedula;
         this.vtnFinContratacion.setLocationRelativeTo(vtnPrin);
         this.vtnFinContratacion.setVisible(true);
         this.vtnFinContratacion.setTitle("Fin de Contrato");
@@ -66,13 +73,21 @@ public class VtnFinContratacionCTR {
                 habilitarGuardar();
             }
         });
+        
+        vtnFinContratacion.getJdcFinContratacion().addMouseListener(new MouseAdapter(){
+            public void mouseClicked(){
+                validarFecha();
+            }
+        });
+        docente = new DocenteBD(conecta);
+        docentesMD = docente.buscarDocente(cedula);
     }
 
     public void habilitarGuardar() {
         String observacion;
         observacion = vtnFinContratacion.getTxtObservacion().getText();
         Date fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
-        if (observacion.equals("") == false || fecha == null) {
+        if (observacion.equals("") == false || fecha != null) {
             if (vtnFinContratacion.getLblErrorFechaFinContratacion().isVisible() == true
                     || vtnFinContratacion.getLblErrorObservacion().isVisible() == true) {
                 vtnFinContratacion.getBtnGuardar().setEnabled(false);
@@ -88,33 +103,51 @@ public class VtnFinContratacionCTR {
     private void guardarFinContratacion() {
 
         String Observacion, fechaFinContra;
-
         Date fecha;
 
         Observacion = vtnFinContratacion.getTxtObservacion().getText().trim().toUpperCase();
-
         fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        //Se lo pasa a un string para poder validarlo
         fechaFinContra = sdf.format(fecha);
 
-        if (fechaInicio.isAfter(convertirDate(fecha)) == false
-                && fechaInicio.isEqual(convertirDate(fecha)) == false) {
-            guardar = true;
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
-        } else {
-            guardar = false;
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
-            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
-        }
-
+//        if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
+//                && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
+//            guardar = true;
+//            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
+//        } else {
+//            guardar = false;
+//            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
+//            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
+//        }
+        validarFecha();
         System.out.println("DIA " + fechaFinContra);
 
         if (guardar == true) {
-            DocenteMD docente = new DocenteMD();
-            docente.setObservacion(Observacion);
-            docente.setFechaFinContratacion(convertirDate(fecha));
+//            DocenteMD docente = new DocenteMD();
+//            docente.setObservacion(Observacion);
+//            docente.setFechaFinContratacion(convertirDate(fecha));
+
+            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docente);
+            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
+
+        }
+
+    }
+
+    public boolean validarFecha() {
+        Date fecha;
+        fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
+
+        if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
+                && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
+
+            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
+            return true;
+        } else {
+            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
+            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
+            return false;
         }
 
     }

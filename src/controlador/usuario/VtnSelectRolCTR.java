@@ -4,9 +4,12 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import modelo.ConectarDB;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
@@ -31,7 +34,7 @@ public class VtnSelectRolCTR {
     private final ImageIcon icono;
     private final Image ista;
 
-    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, 
+    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario,
             ConectarDB conexion, ImageIcon icono, Image ista) {
         this.vista = vista;
         this.modelo = modelo;
@@ -40,6 +43,41 @@ public class VtnSelectRolCTR {
         this.icono = icono;
         this.ista = ista;
         vista.setIconImage(ista);
+
+        registroIngreso(vista);
+    }
+
+    private void registroIngreso(JFrame vtn) {
+        vtn.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                inicioSesion();
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cierreSesion();
+            }
+
+        });
+    }
+
+    public void inicioSesion() {
+        String nsql = "INSERT INTO public.\"HistorialUsuarios\"(\n"
+                + "	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
+                + "	VALUES ('" + usuario.getUsername() + "', now(), 'INICIO SESION', 'SISTEMA', 0);";
+        if (conexion.nosql(nsql) == null) {
+            System.out.println("Iniciamos como: " + usuario.getUsername());
+        }
+    }
+
+    public void cierreSesion() {
+        String nsql = " INSERT INTO public.\"HistorialUsuarios\"(\n"
+                + "  	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
+                + "  	VALUES ('" + usuario.getUsername() + "', now(), 'CIERRE SESION', 'SISTEMA', 0);";
+        if (conexion.nosql(nsql) == null) {
+            System.out.println("Salimos del sistema como: " + usuario.getUsername());
+        }
     }
 
     //Inits
@@ -57,6 +95,7 @@ public class VtnSelectRolCTR {
     private void InitEventos() {
         vista.getBtnSeleccionar().addActionListener(e -> ingresar());
         vista.getBtnCancelar().addActionListener(e -> {
+            cierreSesion();
             System.exit(0);
         });
         vista.getCmbRoles().addKeyListener(new KeyAdapter() {
@@ -71,6 +110,7 @@ public class VtnSelectRolCTR {
 
     //Metodos de Apoyo
     private void rellenarCombo() {
+        vista.getCmbRoles().removeAllItems();
         rolesDelUsuario.forEach(obj -> {
             vista.getCmbRoles().addItem(obj.getNombre());
         });
@@ -98,7 +138,7 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
         vtn.iniciar();
 
         vista.dispose();
