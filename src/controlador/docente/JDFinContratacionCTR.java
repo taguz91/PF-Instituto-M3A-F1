@@ -204,6 +204,8 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 //            frmFinContrato.dispose();
               frmFinContrato.getTpFrm().setSelectedIndex(2);
         }
+        
+        
 
     }
 
