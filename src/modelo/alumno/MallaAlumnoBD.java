@@ -3,6 +3,7 @@ package modelo.alumno;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;
@@ -15,7 +16,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private final ConectarDB conecta;
     private String sql;
-    
+
     public MallaAlumnoBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
@@ -47,6 +48,22 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         }
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se guardao correctamente la nota");
+        }
+    }
+
+    public boolean actualizarNota(int idMalla, double nota1, double nota2, double nota3, int numMatri, String estado) {
+        String nsql = "UPDATE public.\"MallaAlumno\"\n"
+                + "SET  malla_almn_nota1=" + nota1 + ", malla_almn_nota2=" + nota2 + ", "
+                + "malla_almn_nota3=" + nota3 + ", malla_almn_estado='" + estado + "', "
+                + "malla_almn_num_matricula = " + numMatri + "\n"
+                + "WHERE id_malla_alumno=" + idMalla + ";";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se actualizo la malla correctamente.");
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar malla, \n"
+                    + "compruebe su conexion a internet.");
+            return false;
         }
     }
 
@@ -87,7 +104,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
-         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
@@ -102,8 +119,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         return consultaMallasTbl(sql);
     }
 
-    public ArrayList<MallaAlumnoMD> cargarMallasPorEstudiante(int idAlumno) {
-         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+    public ArrayList<MallaAlumnoMD> cargarMallasPorEstudiante(int idAlumnoCarrera) {
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
@@ -114,12 +131,12 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "m.id_materia = ma.id_materia AND\n"
-                + "ac.id_almn_carrera = " + idAlumno + ";";
+                + "ac.id_almn_carrera = " + idAlumnoCarrera + ";";
         return consultaMallasTbl(sql);
     }
 
     public ArrayList<MallaAlumnoMD> cargarMallaAlumnoPorEstado(int idAlumno, String estado) {
-         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"
@@ -207,7 +224,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
-         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
                 + "malla_almn_estado, persona_primer_nombre, persona_segundo_nombre, "
                 + "persona_segundo_apellido, persona_primer_apellido,\n"

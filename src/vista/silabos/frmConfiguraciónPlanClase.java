@@ -30,13 +30,15 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         this.Cmb_carreras = Cmb_carreras;
     }
 
-    public JComboBox<String> getCmb_materias() {
-        return Cmb_materias;
+    public JComboBox<String> getCmb_silabos() {
+        return Cmb_silabos;
     }
 
-    public void setCmb_materias(JComboBox<String> Cmb_materias) {
-        this.Cmb_materias = Cmb_materias;
+    public void setCmb_silabos(JComboBox<String> Cmb_silabos) {
+        this.Cmb_silabos = Cmb_silabos;
     }
+
+   
 
    
 
@@ -73,7 +75,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         Cmb_unidades = new javax.swing.JComboBox<>();
-        Cmb_materias = new javax.swing.JComboBox<>();
+        Cmb_silabos = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -82,13 +84,11 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         Cmb_carreras = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Cmb_unidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Carrera:");
 
-        jLabel2.setText("Asignatura:");
+        jLabel2.setText("Silabos");
 
         jLabel3.setText("Unidad:");
 
@@ -116,7 +116,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Cmb_materias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Cmb_silabos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Cmb_unidades, 0, 266, Short.MAX_VALUE)
                     .addComponent(Cmb_carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -136,7 +136,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
                     .addComponent(Cmb_carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Cmb_materias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cmb_silabos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +189,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Cmb_carreras;
-    private javax.swing.JComboBox<String> Cmb_materias;
+    private javax.swing.JComboBox<String> Cmb_silabos;
     private javax.swing.JComboBox<String> Cmb_unidades;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_siguiente;

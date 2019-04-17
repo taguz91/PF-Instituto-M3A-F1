@@ -158,5 +158,13 @@ public class ResourceManager {
 
         return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
-
+    
+    /**
+     * Para logearme como invitado
+     * @param cn 
+     */
+    public static void setConecct(Connection cn){
+        ResourceManager.conn = cn;
+        ResourceManager.conex = cn;
+    }
 }

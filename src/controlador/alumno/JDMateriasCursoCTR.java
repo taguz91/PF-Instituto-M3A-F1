@@ -18,11 +18,11 @@ import vista.principal.VtnPrincipal;
 public class JDMateriasCursoCTR {
 
     private final JDMateriasCurso jdMat;
-    private final CursoBD cur;
+    private final ConectarDB conecta;
     private final VtnPrincipal vtnPrin;
     private final VtnPrincipalCTR ctrPrin;
+    private final CursoBD cur;
     private final AlumnoCursoMD almCurso;
-    private final ConectarDB conecta;
     //Guardaremos los cursos que consultamos
     private ArrayList<CursoMD> cursos;
     private DefaultTableModel mdTbl;

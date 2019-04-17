@@ -1,12 +1,17 @@
 package controlador.periodoLectivoNotas;
 
 import controlador.Libraries.Middlewares;
+import controlador.Libraries.Validaciones;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import modelo.carrera.CarreraBD;
+import modelo.carrera.CarreraMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -22,6 +27,8 @@ public class FrmTipoNotaCTR {
     private TipoDeNotaBD modelo;
     //Ventana Padre
     private VtnTipoNotasCTR vtnPadre;
+    //listas
+    private List<CarreraMD> listaCarreras;
     //(Agregar o Editar)
     private String Funcion;
 
@@ -35,98 +42,135 @@ public class FrmTipoNotaCTR {
         this.Funcion = Funcion;
     }
 
-    //INICIADORES
+    //INITS
     public void Init() {
-
-        if (Funcion.equals("Editar")) {
-            vista.setTitle("Editar");
-            setInfoEnTxts();
-            PK = modelo.getIdTipoNota();
-        } else {
-            vista.setTitle("Agregar");
-        }
-
-        InitEventos();
+        new Thread(() -> {
+            listaCarreras = CarreraBD.selectIdNombreAll();
+            cargarComboCarreras();
+            InitEventos();
+        }).start();
         try {
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
             desktop.getDpnlPrincipal().add(vista);
-            vista.show();
             vista.setSelected(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(FrmTipoNotaCTR.class.getName()).log(Level.SEVERE, null, ex);
+            vista.show();
+        } catch (PropertyVetoException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     private void InitEventos() {
-        vista.getTxtNotaMax().addKeyListener(new KeyAdapter() {
-
+        vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+        String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
+        Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
+        Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
+        vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarValorMenor(e);
+            }
+        });
+        vista.getTxtNotaMax().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarValorMenor(e);
+            }
         });
 
-        vista.getBtnGuardar().addActionListener(e -> btnGuadar(e));
-        vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+        vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
     }
 
     //METODOS DE APOYO
-    private void setInfoEnTxts() {
+    private void cargarComboCarreras() {
 
-        System.out.println("---->" + modelo.getNombre());
-
-        //vista.getCmbTipoNota().setSelectedItem((Object) modelo.getNombre());
-        vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
-        vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
+        listaCarreras.stream().forEach(obj -> {
+            vista.getCmbCarrera().addItem(obj.getNombre());
+        });
     }
 
-    private void setInfoEnModelo() {
+    private void validarValorMenor(FocusEvent e) {
+        if (!vista.getTxtNotaMax().getText().isEmpty() && !vista.getTxtNotaMin().getText().isEmpty()) {
 
+            double minimo = Double.valueOf(vista.getTxtNotaMin().getText());
+            double maximo = Double.valueOf(vista.getTxtNotaMax().getText());
+            if (minimo > maximo) {
+                JOptionPane.showMessageDialog(vista, "EL VALOR MINIMO NO PUEDE SER MAYOR AL VALOR MAXIMO!!");
+                vista.getTxtNotaMin().setText("");
+                vista.getTxtNotaMin().requestFocus();
+            } else if (minimo == maximo) {
+                JOptionPane.showMessageDialog(vista, "LOS VALORES NO PUEDEN SER IGUALES!!");
+                vista.getTxtNotaMin().setText("");
+                vista.getTxtNotaMin().requestFocus();
+            }
+
+        }
+    }
+
+    private boolean validarFormulario() {
+        if (!vista.getTxtTipoNota().getText().isEmpty()) {
+            if (!vista.getTxtNotaMax().getText().isEmpty()) {
+                if (!vista.getTxtNotaMin().getText().isEmpty()) {
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DEL NOMBRE DEL TIPO DE NOTA!!");
+        }
+
+        return false;
+    }
+
+    private TipoDeNotaBD setObj() {
         modelo = new TipoDeNotaBD();
 
-       //modelo.setNombre(vista.getCmbTipoNota().getSelectedItem().toString());
+        modelo.setNombre(vista.getTxtTipoNota().getText());
+        modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
+        modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
 
-        modelo.setValorMaximo(Double.parseDouble(vista.getTxtNotaMax().getText()));
-        modelo.setValorMinimo(Double.parseDouble(vista.getTxtNotaMin().getText()));
+        listaCarreras
+                .stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                    modelo.setIdCarrera(obj.getId());
+                });
 
-    }
-
-    private void agregar() {
-        if (modelo.insertar()) {
-            JOptionPane.showMessageDialog(vista, "SE HA AGREGADO EL NUEVO TIPO DE NOTA");
-
-            vtnPadre.cargarTabla();
-
-            vista.dispose();
-
-        } else {
-
-            JOptionPane.showMessageDialog(vista, "REVISE LA INFORMACION");
-
-        }
-    }
-
-    private void editar() {
-        if (modelo.editar(PK)) {
-            vtnPadre.cargarTabla();
-            JOptionPane.showMessageDialog(vista, "SE HA EDITADO CORRECTAMENTE");
-            vista.dispose();
-        } else {
-            JOptionPane.showMessageDialog(vista, "REVISE LA INFORMACION");
-        }
+        return modelo;
     }
 
     //EVENTOS
-    private void btnGuadar(ActionEvent e) {
+    private void btnCancelar(ActionEvent e) {
+        vista.dispose();
+    }
 
-        setInfoEnModelo();
+    private void btnGuardar(ActionEvent e) {
 
-        if (Funcion.equals("Agregar")) {
-            agregar();
-        } else {
-            editar();
+        if (validarFormulario()) {
+            
+            if (Funcion.equalsIgnoreCase("AGREGAR")) {
+                if (setObj().insertar()) {
+                    String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
+                    JOptionPane.showMessageDialog(vista, MENSAJE);
+                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
+                }
+            } else {
+                if (setObj().editar(PK)) {
+                    String MENSAJE = "SE HA EDITADO EL TIPO DE NOTA";
+                    JOptionPane.showMessageDialog(vista, MENSAJE);
+                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
+                }
+            }
         }
 
     }
 
-    private void btnCancelar(ActionEvent e) {
-        vista.dispose();
-    }
 }

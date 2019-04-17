@@ -59,6 +59,10 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         return lblResultados;
     }
 
+    public JButton getBtnActualizarNota() {
+        return btnActualizarNota;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +87,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         lblResultados = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnReporteMallaAlumno = new javax.swing.JButton();
+        btnActualizarNota = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -128,6 +133,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
             }
         });
 
+        btnActualizarNota.setText("Actualizar nota");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,14 +159,17 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 88, Short.MAX_VALUE)))
+                                .addGap(0, 15, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnIngNota, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnActualizarNota)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIngNota))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -176,7 +186,8 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(btnIngNota)
-                        .addComponent(btnBuscar))
+                        .addComponent(btnBuscar)
+                        .addComponent(btnActualizarNota))
                     .addComponent(txtBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -209,6 +220,7 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarNota;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnIngNota;
     private javax.swing.JButton btnReporteMallaAlumno;
