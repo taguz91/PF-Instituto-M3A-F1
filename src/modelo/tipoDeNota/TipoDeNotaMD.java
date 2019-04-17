@@ -1,6 +1,7 @@
 package modelo.tipoDeNota;
 
 import java.time.LocalDate;
+import modelo.carrera.CarreraMD;
 
 /**
  *
@@ -14,16 +15,16 @@ public class TipoDeNotaMD {
     private double valorMaximo;
     private LocalDate fechaCreacion;
     private boolean estado;
-    private int idCarrera;
+    private CarreraMD carrera;
 
-    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, int idCarrera) {
+    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, CarreraMD idCarrera) {
         this.idTipoNota = idTipoNota;
         this.nombre = nombre;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
-        this.idCarrera = idCarrera;
+        this.carrera = idCarrera;
     }
 
     public TipoDeNotaMD() {
@@ -77,17 +78,17 @@ public class TipoDeNotaMD {
         this.estado = estado;
     }
 
-    public int getIdCarrera() {
-        return idCarrera;
+    public CarreraMD getCarrera() {
+        return carrera;
     }
 
-    public void setIdCarrera(int idCarrera) {
-        this.idCarrera = idCarrera;
+    public void setCarrera(CarreraMD idCarrera) {
+        this.carrera = idCarrera;
     }
 
     @Override
     public String toString() {
-        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", idCarrera=" + idCarrera + '}';
+        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", Carrera=" + carrera + '}';
     }
 
 }

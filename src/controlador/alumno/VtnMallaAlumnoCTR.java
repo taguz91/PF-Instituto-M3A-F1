@@ -175,9 +175,17 @@ public class VtnMallaAlumnoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Malla alumnos");
+        InitPermisosTester();
     }
 
-    public void actualizarVtn(MallaAlumnoMD m){
+    private void InitPermisosTester() {
+        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+            vtnMallaAlm.getBtnIngNota().setEnabled(false);
+            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
+        }
+    }
+
+    public void actualizarVtn(MallaAlumnoMD m) {
         mallas = mallaAlm.cargarMallasPorEstudiante(m.getAlumnoCarrera().getId());
         llenarTbl(mallas);
         vtnMallaAlm.setVisible(true);
@@ -466,13 +474,13 @@ public class VtnMallaAlumnoCTR {
 //            }
 
             Map parametro = new HashMap();
-                parametro.put("consulta", mallaAlm.getSql());
-                System.out.println(parametro);
-                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-                JasperViewer view = new JasperViewer(print, false);
-                view.setVisible(true);
-                view.setTitle("Reporte de Malla de Alumno");
+            parametro.put("consulta", mallaAlm.getSql());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Malla de Alumno");
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
