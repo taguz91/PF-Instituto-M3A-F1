@@ -200,9 +200,9 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtTituloUnidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbTituloUnidad" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbTituloUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -306,8 +306,10 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
             <Property name="text" type="java.lang.String" value="SADASD&#xa;DASD&#xa;ASDASD&#xa;ASDAS&#xa;DAS&#xa;DAS&#xa;DAS&#xa;DA&#xa;SD&#xa;AS&#xa;DAS&#xa;D&#xa;ASD&#xa;AS&#xa;DAS&#xa;DAS&#xa;D&#xa;AS&#xa;DAS&#xa;DA&#xa;SD"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -499,7 +501,9 @@
         <Component class="javax.swing.JTextArea" name="txrContenidosPC">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -514,7 +518,9 @@
         <Component class="javax.swing.JTextArea" name="txrTrabajoAutonomo">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -544,7 +550,9 @@
         <Component class="javax.swing.JTextArea" name="txrObservacionesPc">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -567,8 +575,10 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
             <Property name="text" type="java.lang.String" value="SADASD&#xa;DASD&#xa;ASDASD&#xa;ASDAS&#xa;DAS&#xa;DAS&#xa;DAS&#xa;DA&#xa;SD&#xa;AS&#xa;DAS&#xa;D&#xa;ASD&#xa;AS&#xa;DAS&#xa;DAS&#xa;D&#xa;AS&#xa;DAS&#xa;DA&#xa;SD"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
