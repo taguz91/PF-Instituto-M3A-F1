@@ -699,7 +699,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
-        mnCtRolesPeriodo.setText("Roles Periodo");
+        mnCtRolesPeriodo.setText("Roles periodo");
         mnCtRolesPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnCtRolesPeriodoActionPerformed(evt);
@@ -712,7 +712,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
-        mnCtPlandeClase.setText("Plan de Clase");
+        mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
 
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
@@ -720,7 +720,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnCtUsuarios);
 
         mnCtRoles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
-        mnCtRoles.setText("Roles Usuarios");
+        mnCtRoles.setText("Roles usuarios");
         mnTipoNotas.add(mnCtRoles);
 
         mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
@@ -789,7 +789,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt.setText("Materia docente");
         mnIngresar.add(mnIgDocenteMt);
 
-        mnIgRolesPeriodo.setText("Roles Periodo");
+        mnIgRolesPeriodo.setText("Roles periodo");
         mnIngresar.add(mnIgRolesPeriodo);
 
         mnIgSilabo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
@@ -798,7 +798,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIngresar.add(mnIgSilabo);
 
         mnIgPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
-        mnIgPlandeClase.setText("Plan de Clase");
+        mnIgPlandeClase.setText("Plan de clase");
         mnIngresar.add(mnIgPlandeClase);
 
         mnIgUsuarios1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
@@ -806,19 +806,19 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIngresar.add(mnIgUsuarios1);
 
         mnIgRoles1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
-        mnIgRoles1.setText("Roles Usuarios");
+        mnIgRoles1.setText("Roles usuarios");
         mnIngresar.add(mnIgRoles1);
 
         mnNotas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas1.setText("Notas");
 
-        mnIgPrdIngrNotas1.setText("Periodos de Ingreso de Notas");
+        mnIgPrdIngrNotas1.setText("Periodos de ingreso de notas");
         mnNotas1.add(mnIgPrdIngrNotas1);
 
-        mnIgNotas1.setText("Ingreso Notas");
+        mnIgNotas1.setText("Ingreso notas");
         mnNotas1.add(mnIgNotas1);
 
-        mnIgActivarNotas1.setText("Activar Ingreso de Notas");
+        mnIgActivarNotas1.setText("Activar ingreso de notas");
         mnNotas1.add(mnIgActivarNotas1);
 
         mnIngresar.add(mnNotas1);

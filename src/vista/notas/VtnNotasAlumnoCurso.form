@@ -131,7 +131,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lbl_periodolectivo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Per&#xed;odo Lectivo:"/>
+        <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_carrera">
