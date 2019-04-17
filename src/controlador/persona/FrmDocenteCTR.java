@@ -101,29 +101,29 @@ public class FrmDocenteCTR {
 
             @Override
             public void focusLost(FocusEvent e) {
-                buscarCedula(frmDocente.getTxtIdentificacion().getText());
+                //buscarCedula(frmDocente.getTxtIdentificacion().getText());
             }
         };
         FocusListener titulo = new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-              cont++;
+                cont++;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                 campoTitulo();
+                campoTitulo();
             }
         };
-             FocusListener abreviatura = new FocusListener() {
+        FocusListener abreviatura = new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-              cont++;
+                cont++;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                 camposNulos();
+                camposNulos();
             }
         };
         KeyListener TITULO = new KeyListener() {
@@ -142,8 +142,8 @@ public class FrmDocenteCTR {
                 //validarComponentes(frmDocente.getTxtIdentificacion().getText());
             }
         };
-        
-           KeyListener ABREVIATURA = new KeyListener() {
+
+        KeyListener ABREVIATURA = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 camposNulos();
@@ -162,7 +162,7 @@ public class FrmDocenteCTR {
         iniciarComponentes();
         iniciarFechas();
         frmDocente.getTxtIdentificacion().addFocusListener(Buscar);
-      //  frmDocente.getTxtIdentificacion().addKeyListener(cedula);
+        //  frmDocente.getTxtIdentificacion().addKeyListener(cedula);
         frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarCedula(frmDocente.getTxtIdentificacion().getText()));
         frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         frmDocente.getBtnRegistrarPersona().addActionListener(e -> abrirFrmPersona());
@@ -171,7 +171,7 @@ public class FrmDocenteCTR {
         //Validacion de la cedula
         //frmDocente.getTxtIdentificacion().addKeyListener(new TxtVCedula(frmDocente.getTxtIdentificacion(),
         //    frmDocente.getLblError()));
-    
+
         frmDocente.getTxtTituloDocente().addKeyListener(TITULO);
         frmDocente.getTxtAbreviaturaDocente().addKeyListener(ABREVIATURA);
         frmDocente.getTxtTituloDocente().addFocusListener(titulo);
@@ -180,7 +180,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                buscarCedula(frmDocente.getTxtIdentificacion().getText());
+             //   buscarCedula(frmDocente.getTxtIdentificacion().getText());
             }
 
         });
@@ -188,7 +188,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtTituloDocente().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-               campoTitulo();
+                campoTitulo();
             }
 
         });
@@ -239,7 +239,7 @@ public class FrmDocenteCTR {
 
     private void camposNulos() {
 
-        if (frmDocente.getTxtAbreviaturaDocente().getText().equals("")  ){
+        if (frmDocente.getTxtAbreviaturaDocente().getText().equals("")) {
             frmDocente.getBtnGuardar().setEnabled(false);
             frmDocente.getLblAbreviaturaDocente().setVisible(true);
             frmDocente.getLblAbreviaturaDocente().setBackground(Color.red);
@@ -252,8 +252,8 @@ public class FrmDocenteCTR {
 
     }
 
-    public void campoTitulo(){
-            if (frmDocente.getTxtTituloDocente().getText().equals("")) {
+    public void campoTitulo() {
+        if (frmDocente.getTxtTituloDocente().getText().equals("")) {
             frmDocente.getBtnGuardar().setEnabled(false);
             frmDocente.getLblTituloDocente().setVisible(true);
             frmDocente.getLblDatoTitulo().setForeground(Color.red);
@@ -264,13 +264,13 @@ public class FrmDocenteCTR {
             frmDocente.getBtnGuardar().setEnabled(true);
         }
     }
-    
+
     public void buscarCedula(String cedula) {
         boolean buscar = true;
         frmDocente.getTxtIdentificacion().setVisible(true);
         //int tipoIdentifi;
-     //   cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
-       // tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
+        //   cedula = frmDocente.getTxtIdentificacion().getText().trim().toUpperCase();
+        // tipoIdentifi = frmDocente.getCmbTipoIdentificacion().getSelectedIndex();
         if (frmDocente.getCmbTipoIdentificacion().getSelectedItem().toString().equals("CEDULA")) {
             if (!Validar.esCedula(cedula)) {
                 guardar = false;
@@ -303,21 +303,22 @@ public class FrmDocenteCTR {
                             if (p == null) {
                                 JOptionPane.showMessageDialog(null, "No existe la persona");
                                 frmDocente.getBtnRegistrarPersona().setVisible(true);
-                                this.cedula=frmDocente.getTxtIdentificacion().getText();
+                                this.cedula = frmDocente.getTxtIdentificacion().getText();
                                 inhabilitarComponentesDocente();
                                 reiniciarComponentes(frmDocente);
                             } else {
                                 System.out.println("Existe persona");
                                 habilitarComponentesDocente();
                                 idDocente = p.getIdPersona();
-                                
+                                frmDocente.getLblDatosPersona().setText("Nuevo registro: [ " + p.getIdentificacion() + " ] " + p.getNombreCompleto());
+
                             }
                         } else {
                             System.out.println("Si existe el docente");
                             habilitarComponentesDocente();
                             frmDocente.getBtnRegistrarPersona().setVisible(false);
                             editar(d);
-                            frmDocente.getLblDatosPersona().setText("[ " + d.getIdDocente() + " ] " + d.getPrimerApellido() + " " + d.getSegundoApellido() + " " + d.getPrimerNombre());
+                            frmDocente.getLblDatosPersona().setText("[ " + d.getCodigo() + " ] " + d.getNombreCompleto());
                         }
                     }
 
@@ -409,7 +410,7 @@ public class FrmDocenteCTR {
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
         docenteTipoTiempo = frmDocente.getCmbTipoTiempo().getSelectedItem().toString();
-        System.out.println("docente tipo timepo guardar docente "+docenteTipoTiempo);
+        System.out.println("docente tipo timepo guardar docente " + docenteTipoTiempo);
         if (frmDocente.getCbxDocenteCapacitador().isSelected()) {
             docenteCapacitador = true;
         } else {
@@ -479,10 +480,11 @@ public class FrmDocenteCTR {
     }
 
     public void editar(DocenteMD doc) {
-        frmDocente.getCmbTipoIdentificacion().setEnabled(false);
+        
+       // frmDocente.getCmbTipoIdentificacion().setEnabled(false);
         editar = true;
         idDocente = doc.getIdDocente();
-        frmDocente.getLblDatosPersona().setText("[ " + doc.getIdDocente() + " ] " + doc.getPrimerApellido() + " " + doc.getSegundoApellido() + " " + doc.getPrimerNombre());
+        frmDocente.getLblDatosPersona().setText("[ " + doc.getCodigo() + " ] " + doc.getNombreCompleto());
 
         if (doc.getFechaInicioContratacion() != null) {
             Calendar calendar_Inicio = Calendar.getInstance();
@@ -504,7 +506,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
-System.out.println("docente tipo timepo guardar docente "+doc.getDocenteTipoTiempo());
+        System.out.println("docente tipo timepo guardar docente " + doc.getDocenteTipoTiempo());
         frmDocente.getCbxDocenteCapacitador().setSelected(doc.isDocenteCapacitador());
         frmDocente.getCbxOtroTrabajo().setSelected(doc.isDocenteOtroTrabajo());
         frmDocente.getTxtTituloDocente().setText(doc.getTituloDocente());

@@ -106,16 +106,19 @@ public class VtnAlumnoCTR {
                         llenarElimanados();
                         vtnAlumno.getBtn_Materias().setVisible(false);
                         vtnAlumno.getBtnEliminar().setEnabled(false);
+                        vtnAlumno.getBtnEditar().setEnabled(false);
                         break;
                     case "ALUMNOS RETIRADOS":
                         llenarRetirados();
                         vtnAlumno.getBtn_Materias().setVisible(true);
                         vtnAlumno.getBtnEliminar().setEnabled(true);
+                        vtnAlumno.getBtnEditar().setEnabled(true);
                         break;
                     default:
                         llenarTabla();
                         vtnAlumno.getBtn_Materias().setVisible(false);
                         vtnAlumno.getBtnEliminar().setEnabled(true);
+                        vtnAlumno.getBtnEditar().setEnabled(true);
                         break;
                 }
             }

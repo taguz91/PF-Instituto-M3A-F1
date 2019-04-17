@@ -89,18 +89,18 @@ public class VtnDocenteCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
-        String[] titulo = {"Cedula","Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
+        String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDocente.getTblDocente().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDocente.getTblDocente());
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 85);
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 1, 240);
+        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 1, 250);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 90);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 3, 230);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 4, 125);
-        cargarDocentes();   
+        cargarDocentes();
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
@@ -132,10 +132,10 @@ public class VtnDocenteCTR {
     }
 
     private void cargarDocentes() {
-        if (vtnDocente.getCbxDocentesEliminados().isSelected()){
+        if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
             docentesMD = docente.cargarDocentesEliminados();
             llenarTabla(docentesMD);
-            vtnDocente.getBtnEditar().setText("Habilitar Docente");
+            vtnDocente.getBtnEditar().setText("Habilitar");
             inhabilitarBotones();
         } else {
             docentesMD = docente.cargarDocentes();
@@ -149,7 +149,7 @@ public class VtnDocenteCTR {
         mdTbl.setRowCount(0);
         if (docentesMD != null) {
             docentesMD.forEach(d -> {
-                Object[] valores = {d.getCodigo(),d.getPrimerApellido() + " "
+                Object[] valores = {d.getCodigo(), d.getPrimerApellido() + " "
                     + d.getSegundoApellido() + " " + d.getPrimerNombre()
                     + " " + d.getSegundoNombre(),
                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
@@ -172,7 +172,7 @@ public class VtnDocenteCTR {
 
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            if (vtnDocente.getCbxDocentesEliminados().isSelected()){
+            if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
                 docentesMD = docente.buscarEliminados(aguja);
                 llenarTabla(docentesMD);
             } else {
@@ -207,8 +207,19 @@ public class VtnDocenteCTR {
                         ctrFrm.iniciar();
                         frmDoc.getBtnRegistrarPersona().setVisible(false);
                         //Le pasamos la persona de nuestro lista justo la persona seleccionada
-                        ctrFrm.habilitarComponentesDocente();
+                        if (docentesMD.get(posFila).getCodigo().length() == 10) {
+                            frmDoc.getCmbTipoIdentificacion().setSelectedItem("CEDULA");
+                            ctrFrm.habilitarComponentesDocente();
+                            frmDoc.getTxtIdentificacion().setEnabled(false);
+                        } else {
+                            frmDoc.getCmbTipoIdentificacion().setSelectedItem("PASAPORTE");
+                            ctrFrm.habilitarComponentesDocente();
+                             frmDoc.getTxtIdentificacion().setEnabled(false);
+                        }
+                        frmDoc.getCmbTipoIdentificacion().setEnabled(false);
+
                         frmDoc.getBtnGuardar().setEnabled(true);
+
                         ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                         //vtnDocente.getTblDocente().setVisible(false);
                         vtnDocente.dispose();
@@ -219,20 +230,28 @@ public class VtnDocenteCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
-        }else{
-          d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
-                  if (d != null) {
-                        int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
-                                "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
-                                JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
-                                new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
-                        if (seleccion == 1) {
-                           docente.activarDocente(docentesMD.get(posFila).getIdDocente());
-                           JOptionPane.showMessageDialog(null, "se activo el docnete");
-                        } else if (seleccion == 0) {
-                          
-                        }
-                  }
+        } else {
+            if (posFila >= 0) {
+                d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
+                if (d != null) {
+                    int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                            "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                            new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                    if (seleccion == 1) {
+                        cargarDocentes();
+                        System.out.println("opcion 2");
+                    } else if (seleccion == 0) {
+                        docente.activarDocente(docentesMD.get(posFila).getIdDocente());
+                        System.out.println(docente.activarDocente(docentesMD.get(posFila).getIdDocente()) + "METODO ACTIVAR");
+                        JOptionPane.showMessageDialog(null, "SE ACTIVO EL DOCENTE !");
+                        cargarDocentes();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
+            }
+
         }
 
     }
@@ -269,8 +288,10 @@ public class VtnDocenteCTR {
                 String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este Docente?");
                 if (observacion != null) {
                     docentemd.setEstado(observacion.toUpperCase());
-                    if (docente.eliminarDocente(docentemd, docentesMD.get(0).getIdDocente()) == true) {
+                    if (docente.eliminarDocente(docentemd, docentesMD.get(posFila).getIdDocente()) == true) {
+                        System.out.println(docentesMD.get(posFila).getIdDocente() + " " + docentesMD.get(posFila).getNombreCompleto());
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+
                         cargarDocentes();
 
                     } else {
