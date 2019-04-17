@@ -78,6 +78,7 @@ public class FrmRequisitos extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Formulario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 153))); // NOI18N
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
 
         jLabel3.setText("Escoga una de las dos opciones:");
 
