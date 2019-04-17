@@ -291,6 +291,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return btnCambiarRol;
     }
 
+    public JMenu getMnNotas() {
+        return mnNotas;
+    }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -345,7 +350,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
         mnCtHistorialUsers = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        mnNotas = new javax.swing.JMenu();
         mnCtPrdIngrNotas = new javax.swing.JMenuItem();
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
@@ -690,22 +695,22 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtHistorialUsers.setText("Historial usuarios");
         mnTipoNotas.add(mnCtHistorialUsers);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
-        jMenu1.setText("Notas");
+        mnNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
+        mnNotas.setText("Notas");
 
         mnCtPrdIngrNotas.setText("Periodos de Ingreso de Notas");
-        jMenu1.add(mnCtPrdIngrNotas);
+        mnNotas.add(mnCtPrdIngrNotas);
 
         mnCtTipoNotas.setText("Tipos de Notas");
-        jMenu1.add(mnCtTipoNotas);
+        mnNotas.add(mnCtTipoNotas);
 
         mnCtNotas.setText("Ingreso Notas");
-        jMenu1.add(mnCtNotas);
+        mnNotas.add(mnCtNotas);
 
         mnCtActivarNotas.setText("Activar Ingreso de Notas");
-        jMenu1.add(mnCtActivarNotas);
+        mnNotas.add(mnCtActivarNotas);
 
-        mnTipoNotas.add(jMenu1);
+        mnTipoNotas.add(mnNotas);
 
         menuCrud.add(mnTipoNotas);
 
@@ -846,7 +851,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPrdLectivo;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -888,6 +892,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgRolesPeriodo;
     private javax.swing.JMenuItem mnIgSilabo;
     private javax.swing.JMenu mnIngresar;
+    private javax.swing.JMenu mnNotas;
     private javax.swing.JMenu mnOpciones;
     private javax.swing.JRadioButtonMenuItem mnRbtnMetal;
     private javax.swing.JRadioButtonMenuItem mnRbtnNimbus;
