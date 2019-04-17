@@ -55,7 +55,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         String nsql = "UPDATE public.\"MallaAlumno\"\n"
                 + "SET  malla_almn_nota1=" + nota1 + ", malla_almn_nota2=" + nota2 + ", "
                 + "malla_almn_nota3=" + nota3 + ", malla_almn_estado='" + estado + "', "
-                + "malla_almn_num_matricula = " + numMatri + "\n"
+                + "malla_almn_num_matricula = " + numMatri + " \n"
                 + "WHERE id_malla_alumno=" + idMalla + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se actualizo la malla correctamente.");
@@ -268,7 +268,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
                     mll.setNota1(rs.getDouble("malla_almn_nota1"));
                     mll.setNota2(rs.getDouble("malla_almn_nota2"));
-                    mll.setNota2(rs.getDouble("malla_almn_nota2"));
+                    mll.setNota3(rs.getDouble("malla_almn_nota3"));
                     mll.setEstado(rs.getString("malla_almn_estado"));
 
                     mallas.add(mll);

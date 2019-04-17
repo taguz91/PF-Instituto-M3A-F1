@@ -34,6 +34,14 @@ public class FrmTipoNotaCTR {
 
     private Integer PK = null;
 
+    //Combo
+    private String[] carrerasTradicionales = {
+        "APORTE 1",
+        "APORTE 2",
+        "EXAMEN FINAL",
+        "EXAMEN SUPLETORIO"
+    };
+
     public FrmTipoNotaCTR(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
@@ -44,10 +52,13 @@ public class FrmTipoNotaCTR {
 
     //INITS
     public void Init() {
+        activarFormulario(false);
         new Thread(() -> {
             listaCarreras = CarreraBD.selectIdNombreAll();
             cargarComboCarreras();
+            cargarCmbNombreNota(carrerasTradicionales);
             InitEventos();
+            activarFormulario(true);
         }).start();
         try {
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
@@ -57,6 +68,20 @@ public class FrmTipoNotaCTR {
         } catch (PropertyVetoException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void cargarCmbNombreNota(String[] lista) {
+        vista.getCmbTipoDeNota().removeAllItems();
+        for (String obj : lista) {
+            vista.getCmbTipoDeNota().addItem(obj);
+        }
+    }
+
+    private void activarFormulario(boolean estado) {
+        vista.getCmbTipoDeNota().setEnabled(estado);
+        vista.getTxtNotaMax().setEnabled(estado);
+        vista.getTxtNotaMin().setEnabled(estado);
+        vista.getCmbTipoDeNota().setEnabled(estado);
     }
 
     private void InitEventos() {
@@ -108,18 +133,14 @@ public class FrmTipoNotaCTR {
     }
 
     private boolean validarFormulario() {
-        if (!vista.getTxtTipoNota().getText().isEmpty()) {
-            if (!vista.getTxtNotaMax().getText().isEmpty()) {
-                if (!vista.getTxtNotaMin().getText().isEmpty()) {
-                    return true;
-                } else {
-                    JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
-                }
+        if (!vista.getTxtNotaMax().getText().isEmpty()) {
+            if (!vista.getTxtNotaMin().getText().isEmpty()) {
+                return true;
             } else {
-                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
+                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
             }
         } else {
-            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DEL NOMBRE DEL TIPO DE NOTA!!");
+            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
         }
 
         return false;
@@ -128,7 +149,7 @@ public class FrmTipoNotaCTR {
     private TipoDeNotaBD setObj() {
         modelo = new TipoDeNotaBD();
 
-        modelo.setNombre(vista.getTxtTipoNota().getText());
+        modelo.setNombre(vista.getCmbTipoDeNota().getSelectedItem().toString());
         modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
         modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
 
@@ -137,7 +158,7 @@ public class FrmTipoNotaCTR {
                 .filter(item -> item.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    modelo.setIdCarrera(obj.getId());
+                    modelo.setCarrera(obj);
                 });
 
         return modelo;
@@ -151,7 +172,7 @@ public class FrmTipoNotaCTR {
     private void btnGuardar(ActionEvent e) {
 
         if (validarFormulario()) {
-            
+
             if (Funcion.equalsIgnoreCase("AGREGAR")) {
                 if (setObj().insertar()) {
                     String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";

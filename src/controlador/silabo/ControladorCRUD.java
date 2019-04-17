@@ -90,6 +90,7 @@ public class ControladorCRUD {
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
             
                 eliminarSilabo(seleccionarSilabo().getIdSilabo());
+                cargarSilabosDocente();
        
         });
 
