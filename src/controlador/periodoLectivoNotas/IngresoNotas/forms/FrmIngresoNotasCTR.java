@@ -1,7 +1,7 @@
-package controlador.periodoLectivoNotas;
+package controlador.periodoLectivoNotas.IngresoNotas.forms;
 
 import com.toedter.calendar.JDateChooser;
-import controlador.Libraries.Middlewares;
+import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.time.LocalDate;
@@ -40,6 +40,9 @@ public class FrmIngresoNotasCTR {
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
         this.Funcion = Funcion;
+        
+        
+        
     }
 
     //INICIADORES
@@ -65,6 +68,7 @@ public class FrmIngresoNotasCTR {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(FrmIngresoNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("prueba netbeans");
     }
 
     public void InitEventos() {

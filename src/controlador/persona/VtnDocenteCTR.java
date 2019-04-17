@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
+import controlador.docente.JDFinContratacionCTR;
 import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -35,6 +36,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.docente.JDFinContratacion;
 import vista.docente.VtnFinContratacion;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
@@ -231,6 +233,7 @@ public class VtnDocenteCTR {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
         } else {
+<<<<<<< HEAD
             if (posFila >= 0) {
                 d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
                 if (d != null) {
@@ -252,6 +255,21 @@ public class VtnDocenteCTR {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
 
+=======
+            d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
+            if (d != null) {
+                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
+                        "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                        new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
+                if (seleccion == 1) {
+                    docente.activarDocente(docentesMD.get(posFila).getIdDocente());
+                    JOptionPane.showMessageDialog(null, "se activo el docnete");
+                } else if (seleccion == 0) {
+
+                }
+            }
+>>>>>>> fca47ebaf9639eef4c68cdc4f8e9eb0003cfca98
         }
 
     }
@@ -307,7 +325,7 @@ public class VtnDocenteCTR {
 
     public void llamaReporteDocente() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repDocentes.jasper";
+        String path = "/vista/reportes/repDocentes.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
@@ -315,7 +333,7 @@ public class VtnDocenteCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
@@ -430,8 +448,10 @@ public class VtnDocenteCTR {
 
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
-            vtn_fin_contratacion.iniciar();
+//            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+//            vtn_fin_contratacion.iniciar();
+            JDFinContratacionCTR ctr = new JDFinContratacionCTR(conecta, vtnPrin, ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+            ctr.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }

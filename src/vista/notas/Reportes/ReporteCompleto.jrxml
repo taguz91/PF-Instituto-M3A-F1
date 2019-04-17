@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.6830134553650711"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="1540"/>
+	<property name="ireport.y" value="202"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/Reportes/"]]></defaultValueExpression>
 	</parameter>
@@ -45,11 +45,11 @@
 	"ViewAlumnoCurso".curso_paralelo,
 	"ViewAlumnoCurso".carrera_nombre,
 	"ViewAlumnoCurso".prd_lectivo_nombre,
-	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRE_PROF",
-	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDO_PROF",
-	"ViewAlumnoCurso".coor_prim_apellido || ' ' || "ViewAlumnoCurso".coor_segn_apellido AS "APELLIDOS_COORDINADOR",
-	"ViewAlumnoCurso"."PORCENTAJE_FALTAS",
-	"ViewAlumnoCurso".coor_prim_nombre || ' ' || "ViewAlumnoCurso".coor_segn_nombre AS "NOMBRES_COORDINADOR" 
+	"ViewAlumnoCurso".pri_ape_docente || ' ' || "ViewAlumnoCurso".seg_ape_docente || ' ' ||
+	"ViewAlumnoCurso".pri_nom_docente || ' ' || "ViewAlumnoCurso".seg_nom_docente  AS 	"DOCENTE",
+	"ViewAlumnoCurso".coor_prim_apellido || ' ' || "ViewAlumnoCurso".coor_segn_apellido || ' ' ||
+	"ViewAlumnoCurso".coor_prim_nombre || ' ' || "ViewAlumnoCurso".coor_segn_nombre AS "COORDINADOR",
+	"ViewAlumnoCurso"."PORCENTAJE_FALTAS" || '%' AS "PORCENTAJE_FALTAS"
 FROM
 	"ViewAlumnoCurso" 
 WHERE
@@ -81,11 +81,9 @@ ORDER BY
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="NOMBRE_PROF" class="java.lang.String"/>
-	<field name="APELLIDO_PROF" class="java.lang.String"/>
-	<field name="APELLIDOS_COORDINADOR" class="java.lang.String"/>
-	<field name="PORCENTAJE_FALTAS" class="java.lang.Integer"/>
-	<field name="NOMBRES_COORDINADOR" class="java.lang.String"/>
+	<field name="DOCENTE" class="java.lang.String"/>
+	<field name="COORDINADOR" class="java.lang.String"/>
+	<field name="PORCENTAJE_FALTAS" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -106,9 +104,9 @@ ORDER BY
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1249" y="80" width="164" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<reportElement x="1132" y="77" width="300" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCENTE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="313" y="80" width="223" height="20"/>
@@ -122,11 +120,6 @@ ORDER BY
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="1132" y="80" width="117" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="675" y="57" width="199" height="20"/>
 				<textElement textAlignment="Center">
@@ -174,7 +167,7 @@ ORDER BY
 			</staticText>
 			<textField>
 				<reportElement x="1132" y="112" width="300" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -185,8 +178,8 @@ ORDER BY
 				<text><![CDATA[Jornada:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1118" y="147" width="214" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="1132" y="147" width="214" height="20"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -537,6 +530,17 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{SUPLETORIO}.toString()]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="1324" y="0" width="54" height="20"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PORCENTAJE_FALTAS}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -548,14 +552,9 @@ ORDER BY
 	<summary>
 		<band height="178" splitType="Stretch">
 			<textField>
-				<reportElement x="313" y="135" width="117" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="430" y="135" width="144" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
+				<reportElement x="329" y="131" width="227" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCENTE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="406" y="155" width="100" height="20"/>
@@ -573,14 +572,9 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="962" y="135" width="146" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="847" y="135" width="115" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
+				<reportElement x="874" y="131" width="207" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="847" y="118" width="261" height="1"/>

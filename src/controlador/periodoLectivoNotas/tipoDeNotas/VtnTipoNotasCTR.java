@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.periodoLectivoNotas;
+package controlador.periodoLectivoNotas.tipoDeNotas;
 
+import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaAgregar;
 import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -124,6 +125,8 @@ public class VtnTipoNotasCTR {
             indice,
             obj.getIdTipoNota(),
             obj.getNombre(),
+            obj.getCarrera().getNombre(),
+            obj.getCarrera().getModalidad(),
             obj.getValorMinimo(),
             obj.getValorMaximo(),
             obj.getFechaCreacion()
@@ -154,7 +157,7 @@ public class VtnTipoNotasCTR {
         if (fila != -1) {
 
             setModeloFromTabla(fila);
-            FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), modelo, this, "Editar");
+            FrmTipoNotaAgregar form = new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), modelo, this, "Editar");
             form.Init();
 
         } else {
@@ -199,8 +202,9 @@ public class VtnTipoNotasCTR {
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmTipoNotaCTR form = new FrmTipoNotaCTR(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this, "Agregar");
+        FrmTipoNotaAgregar form = new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this, "Agregar");
         form.Init();
+        form.InitAgregar();
 
     }
 

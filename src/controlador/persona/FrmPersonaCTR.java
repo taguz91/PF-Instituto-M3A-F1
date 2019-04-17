@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import com.toedter.calendar.JDateChooser;
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -17,6 +18,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -40,6 +45,12 @@ import modelo.validaciones.TxtVNumCasa;
 import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVTelefono;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
 
@@ -797,13 +808,17 @@ public class FrmPersonaCTR {
                     if (fis != null) {
                         per.editarPersonaConFoto(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                        botonreportepersona();
                         borrarCamposConId();
                         ocultarErrores();
+                       
                     } else {
                         per.editarPersona(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                        botonreportepersona();
                         borrarCamposConId();
                         ocultarErrores();
+                        
                     }
                     editar = false;
                 }
@@ -811,13 +826,19 @@ public class FrmPersonaCTR {
                 if (fis != null) {
                     per.insertarPersonaConFoto();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
+                    botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
+                    
+                  
+        
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
+                    botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
+                    
                 }
             }
             frmPersona.dispose();
@@ -1250,5 +1271,45 @@ public class FrmPersonaCTR {
             System.out.println(ex.getMessage());
         }
     }
+    
+     public void llamaReportePersona() {
+        JasperReport jr;
+        String path = "/vista/reportes/repPersona.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("cedula",frmPersona.getTxtIdentificacion().getText());
+            System.out.println( "parametro del reporte"+parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Persona");
+            
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void botonreportepersona(){
+     int s = JOptionPane.showOptionDialog(vtnPrin,
+                "Registro de persona \n"
+                + "¿Dessea Imprimir el Registro realizado ?", "REPORTE PERSONAS",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"SI", "NO"}, "NO");
+        switch (s) {
+            case 0:
+               llamaReportePersona();
+                break;
+            case 1:
+                
+                break;
+            default:
+                break;
+    }
+     }
 
 }

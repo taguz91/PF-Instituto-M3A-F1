@@ -250,6 +250,7 @@ public class DocenteBD extends DocenteMD {
                 c.setId_materia(m);
                 c.setCurso_nombre(rs.getString("curso_nombre"));
                 lista.add(c);
+                
             }
             rs.close();
             return lista;

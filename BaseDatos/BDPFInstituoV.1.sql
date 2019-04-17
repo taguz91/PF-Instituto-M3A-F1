@@ -997,7 +997,21 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
+	
+--CREANDO TABLA SESION_NO_CLASE
 
+CREATE TABLE "SesionNoClase"(
+	"id_sesion_no_clase" serial NOT NULL,
+	"id_rol_docente" INTEGER NOT NULL,
+	"hora_inicio_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"hora_fin_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"dia_sesionnoclase" DATE NOT NULL,
+	CONSTRAINT pk_sesion_no_clase PRIMARY KEY("id_sesion_no_clase"),
+	CONSTRAINT fk_sesion_no_clase FOREIGN KEY ("id_rol_docente")
+        REFERENCES public."RolesDocente"("id_rol_docente") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)WITH(OIDS = FALSE);
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 
