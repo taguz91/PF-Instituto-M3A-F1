@@ -294,6 +294,32 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenu getMnNotas() {
         return mnNotas;
     }
+
+    public JMenuItem getMnIgActivarNotas1() {
+        return mnIgActivarNotas1;
+    }
+
+    public JMenuItem getMnIgNotas1() {
+        return mnIgNotas1;
+    }
+
+    public JMenuItem getMnIgPrdIngrNotas1() {
+        return mnIgPrdIngrNotas1;
+    }
+
+    public JMenuItem getMnIgRoles1() {
+        return mnIgRoles1;
+    }
+
+    public JMenuItem getMnIgUsuarios1() {
+        return mnIgUsuarios1;
+    }
+
+    public JMenu getMnNotas1() {
+        return mnNotas1;
+    }
+    
+    
     
 
     /**
@@ -368,6 +394,12 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgRolesPeriodo = new javax.swing.JMenuItem();
         mnIgSilabo = new javax.swing.JMenuItem();
         mnIgPlandeClase = new javax.swing.JMenuItem();
+        mnIgUsuarios1 = new javax.swing.JMenuItem();
+        mnIgRoles1 = new javax.swing.JMenuItem();
+        mnNotas1 = new javax.swing.JMenu();
+        mnIgPrdIngrNotas1 = new javax.swing.JMenuItem();
+        mnIgNotas1 = new javax.swing.JMenuItem();
+        mnIgActivarNotas1 = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
         mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
@@ -698,16 +730,21 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas.setText("Notas");
 
-        mnCtPrdIngrNotas.setText("Periodos de Ingreso de Notas");
+        mnCtPrdIngrNotas.setText("Consultar períodos de notas");
         mnNotas.add(mnCtPrdIngrNotas);
 
-        mnCtTipoNotas.setText("Tipos de Notas");
+        mnCtTipoNotas.setText("Tipos de notas");
         mnNotas.add(mnCtTipoNotas);
 
-        mnCtNotas.setText("Ingreso Notas");
+        mnCtNotas.setText("Consultar notas");
         mnNotas.add(mnCtNotas);
 
-        mnCtActivarNotas.setText("Activar Ingreso de Notas");
+        mnCtActivarNotas.setText("Consultar activación de notas");
+        mnCtActivarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCtActivarNotasActionPerformed(evt);
+            }
+        });
         mnNotas.add(mnCtActivarNotas);
 
         mnTipoNotas.add(mnNotas);
@@ -763,6 +800,28 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
         mnIgPlandeClase.setText("Plan de Clase");
         mnIngresar.add(mnIgPlandeClase);
+
+        mnIgUsuarios1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
+        mnIgUsuarios1.setText("Usuarios");
+        mnIngresar.add(mnIgUsuarios1);
+
+        mnIgRoles1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
+        mnIgRoles1.setText("Roles Usuarios");
+        mnIngresar.add(mnIgRoles1);
+
+        mnNotas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
+        mnNotas1.setText("Notas");
+
+        mnIgPrdIngrNotas1.setText("Periodos de Ingreso de Notas");
+        mnNotas1.add(mnIgPrdIngrNotas1);
+
+        mnIgNotas1.setText("Ingreso Notas");
+        mnNotas1.add(mnIgNotas1);
+
+        mnIgActivarNotas1.setText("Activar Ingreso de Notas");
+        mnNotas1.add(mnIgActivarNotas1);
+
+        mnIngresar.add(mnNotas1);
 
         menuCrud.add(mnIngresar);
 
@@ -830,6 +889,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnCtRolesPeriodoActionPerformed
 
+    private void mnCtActivarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtActivarNotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnCtActivarNotasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnAyuda;
@@ -879,6 +942,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtTipoNotas;
     private javax.swing.JMenuItem mnCtUsuarios;
     private javax.swing.JMenu mnEstilo;
+    private javax.swing.JMenuItem mnIgActivarNotas1;
     private javax.swing.JMenuItem mnIgAlumno;
     private javax.swing.JMenuItem mnIgCarrera;
     private javax.swing.JMenuItem mnIgCurso;
@@ -886,13 +950,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgDocenteMt;
     private javax.swing.JMenuItem mnIgInscripcion;
     private javax.swing.JMenuItem mnIgMatricula;
+    private javax.swing.JMenuItem mnIgNotas1;
     private javax.swing.JMenuItem mnIgPersona;
     private javax.swing.JMenuItem mnIgPlandeClase;
+    private javax.swing.JMenuItem mnIgPrdIngrNotas1;
     private javax.swing.JMenuItem mnIgPrdLectivo;
+    private javax.swing.JMenuItem mnIgRoles1;
     private javax.swing.JMenuItem mnIgRolesPeriodo;
     private javax.swing.JMenuItem mnIgSilabo;
+    private javax.swing.JMenuItem mnIgUsuarios1;
     private javax.swing.JMenu mnIngresar;
     private javax.swing.JMenu mnNotas;
+    private javax.swing.JMenu mnNotas1;
     private javax.swing.JMenu mnOpciones;
     private javax.swing.JRadioButtonMenuItem mnRbtnMetal;
     private javax.swing.JRadioButtonMenuItem mnRbtnNimbus;

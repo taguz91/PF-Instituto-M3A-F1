@@ -157,23 +157,26 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtPrdIngrNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar per&#xed;odos de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Tipos de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Activar Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar activaci&#xf3;n de notas"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtActivarNotasActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -280,6 +283,47 @@
                 <Property name="text" type="java.lang.String" value="Plan de Clase"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgUsuarios1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_User_Groups_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Usuarios"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgRoles1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
+              </Properties>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="mnNotas1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Notas"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgPrdIngrNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgActivarNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Activar Ingreso de Notas"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnOpciones">

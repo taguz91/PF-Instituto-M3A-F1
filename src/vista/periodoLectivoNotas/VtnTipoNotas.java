@@ -91,8 +91,10 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         setTitle("Tipos de Notas");
-        setPreferredSize(new java.awt.Dimension(700, 415));
+        setMinimumSize(new java.awt.Dimension(900, 415));
+        setPreferredSize(new java.awt.Dimension(900, 415));
 
         jLabel1.setText("Buscar");
 
@@ -107,11 +109,11 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "ID", "Nombre ", "Carrera", "Valor Máximo", "Valor Mínimo", "Fecha Creación"
+                "No.", "ID", "Nombre ", "Carrera", "Tipo de Carrera", "Valor Máximo", "Valor Mínimo", "F. Creación"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,10 +128,16 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
             tblTipoNotas.getColumnModel().getColumn(1).setMinWidth(50);
             tblTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(1);
             tblTipoNotas.getColumnModel().getColumn(1).setMaxWidth(50);
-            tblTipoNotas.getColumnModel().getColumn(4).setMinWidth(90);
-            tblTipoNotas.getColumnModel().getColumn(4).setMaxWidth(90);
-            tblTipoNotas.getColumnModel().getColumn(5).setMinWidth(90);
-            tblTipoNotas.getColumnModel().getColumn(5).setMaxWidth(90);
+            tblTipoNotas.getColumnModel().getColumn(2).setMinWidth(150);
+            tblTipoNotas.getColumnModel().getColumn(2).setMaxWidth(250);
+            tblTipoNotas.getColumnModel().getColumn(4).setMinWidth(100);
+            tblTipoNotas.getColumnModel().getColumn(4).setMaxWidth(100);
+            tblTipoNotas.getColumnModel().getColumn(5).setMinWidth(85);
+            tblTipoNotas.getColumnModel().getColumn(5).setMaxWidth(85);
+            tblTipoNotas.getColumnModel().getColumn(6).setMinWidth(85);
+            tblTipoNotas.getColumnModel().getColumn(6).setMaxWidth(85);
+            tblTipoNotas.getColumnModel().getColumn(7).setMinWidth(80);
+            tblTipoNotas.getColumnModel().getColumn(7).setMaxWidth(80);
         }
 
         lblResultados.setText("0 Resultados Obtenidos");
@@ -138,7 +146,6 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
 
         lblEstado.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));
-        lblEstado.setText("Estado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,16 +154,16 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +187,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)

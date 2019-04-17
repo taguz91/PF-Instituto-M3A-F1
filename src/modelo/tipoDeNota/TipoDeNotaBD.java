@@ -76,7 +76,6 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_estado,\n"
-                + "\"public\".\"TipoDeNota\".id_carrera,\n"
                 + "\"public\".\"Carreras\".carrera_activo,\n"
                 + "\"public\".\"Carreras\".carrera_codigo,\n"
                 + "\"public\".\"Carreras\".id_docente_coordinador\n"
@@ -142,8 +141,14 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
                 tipoNota.setFechaCreacion(rs.getDate("tipo_nota_fecha_creacion").toLocalDate());
                 tipoNota.setEstado(rs.getBoolean("tipo_nota_estado"));
-                
-                
+
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setCodigo(rs.getString("carrera_codigo"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
+                tipoNota.setCarrera(carrera);
+
                 Lista.add(tipoNota);
             }
             rs.close();
