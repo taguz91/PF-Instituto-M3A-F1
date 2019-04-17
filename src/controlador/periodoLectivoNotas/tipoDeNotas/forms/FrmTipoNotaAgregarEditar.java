@@ -18,7 +18,7 @@ public class FrmTipoNotaAgregarEditar extends AbstracForm {
 
     //INITS
     public void InitEditar() {
-        
+
     }
 
     //EVENTOS
