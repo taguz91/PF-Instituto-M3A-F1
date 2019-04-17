@@ -89,18 +89,18 @@ public class ControladorConfiguracion_plan_clases {
          unidadesSilabo.forEach((umd) -> {
             frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
         });
+         
+           
+         
      }
          
      public SilaboMD unidades(){
+         
          Optional<SilaboMD> silabounidad=silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals( 
          frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
          return silabounidad.get();
          
      }
-     public void cargarUnidades(){
-         Optional<SilaboMD> silabounidad=silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals( 
-         frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
-         
-     }
+  
     
 }
