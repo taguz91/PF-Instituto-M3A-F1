@@ -559,8 +559,10 @@ public class frmPlanClase extends javax.swing.JFrame {
 
         txrObjetivoPC.setEditable(false);
         txrObjetivoPC.setColumns(20);
+        txrObjetivoPC.setLineWrap(true);
         txrObjetivoPC.setRows(5);
         txrObjetivoPC.setText("SADASD\nDASD\nASDASD\nASDAS\nDAS\nDAS\nDAS\nDA\nSD\nAS\nDAS\nD\nASD\nAS\nDAS\nDAS\nD\nAS\nDAS\nDA\nSD");
+        txrObjetivoPC.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txrObjetivoPC);
 
         lbPlandeClase.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -650,11 +652,15 @@ public class frmPlanClase extends javax.swing.JFrame {
         lbTrabajoAutonomo.setText("Trabajo Autónomo");
 
         txrContenidosPC.setColumns(20);
+        txrContenidosPC.setLineWrap(true);
         txrContenidosPC.setRows(5);
+        txrContenidosPC.setWrapStyleWord(true);
         jScrollPane5.setViewportView(txrContenidosPC);
 
         txrTrabajoAutonomo.setColumns(20);
+        txrTrabajoAutonomo.setLineWrap(true);
         txrTrabajoAutonomo.setRows(5);
+        txrTrabajoAutonomo.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txrTrabajoAutonomo);
 
         lbObservacionesPC.setText("Observaciones:");
@@ -664,15 +670,19 @@ public class frmPlanClase extends javax.swing.JFrame {
         btnCancelarPC.setText("Cancelar");
 
         txrObservacionesPc.setColumns(20);
+        txrObservacionesPc.setLineWrap(true);
         txrObservacionesPc.setRows(5);
+        txrObservacionesPc.setWrapStyleWord(true);
         jScrollPane7.setViewportView(txrObservacionesPc);
 
         lbUnidad.setText("Unidad:");
 
         txrResultadosAprendizaje.setEditable(false);
         txrResultadosAprendizaje.setColumns(20);
+        txrResultadosAprendizaje.setLineWrap(true);
         txrResultadosAprendizaje.setRows(5);
         txrResultadosAprendizaje.setText("SADASD\nDASD\nASDASD\nASDAS\nDAS\nDAS\nDAS\nDA\nSD\nAS\nDAS\nD\nASD\nAS\nDAS\nDAS\nD\nAS\nDAS\nDA\nSD");
+        txrResultadosAprendizaje.setWrapStyleWord(true);
         jScrollPane8.setViewportView(txrResultadosAprendizaje);
 
         lbResultadosAprendizaje.setText("Resultados de Aprendizaje:");
@@ -865,7 +875,7 @@ public class frmPlanClase extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbObjetivoPC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,15 +883,16 @@ public class frmPlanClase extends javax.swing.JFrame {
                         .addComponent(lbEstrategiasPC)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CmbxEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
+                                .addGap(32, 32, 32)
                                 .addComponent(btnAgregarPC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnQuitarPC)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tbpEstrategiasPC))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()

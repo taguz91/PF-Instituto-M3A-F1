@@ -118,17 +118,9 @@ public class VtnRolesPeriodos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Periodo Lectivo", "Roles"
+                "Título 1", "Título 2"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tblAlumno);
 
         lblResultados.setText("0 Resultados obtenidos.");

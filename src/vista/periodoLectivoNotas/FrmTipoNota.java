@@ -43,9 +43,11 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         return txtNotaMin;
     }
 
-    public JTextField getTxtTipoNota() {
-        return txtTipoNota;
+    public JComboBox<String> getCmbTipoDeNota() {
+        return cmbTipoDeNota;
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -60,9 +62,9 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        txtTipoNota = new javax.swing.JTextField();
         lblCarrera = new javax.swing.JLabel();
         cmbCarrera = new javax.swing.JComboBox<>();
+        cmbTipoDeNota = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -101,6 +103,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                                 .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -108,8 +111,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 216, Short.MAX_VALUE))
-                            .addComponent(txtTipoNota)
-                            .addComponent(cmbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cmbTipoDeNota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -125,7 +127,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipoNota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTipoDeNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,6 +155,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbCarrera;
+    private javax.swing.JComboBox<String> cmbTipoDeNota;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblCarrera;
@@ -161,6 +164,5 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblNotaMin;
     private javax.swing.JTextField txtNotaMax;
     private javax.swing.JTextField txtNotaMin;
-    private javax.swing.JTextField txtTipoNota;
     // End of variables declaration//GEN-END:variables
 }

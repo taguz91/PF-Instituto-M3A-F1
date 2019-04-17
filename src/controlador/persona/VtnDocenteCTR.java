@@ -188,7 +188,6 @@ public class VtnDocenteCTR {
         System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (!vtnDocente.getCbxDocentesEliminados().isSelected()) {
             if (posFila >= 0) {
-
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                         "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
@@ -228,7 +227,8 @@ public class VtnDocenteCTR {
                                 JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
                                 new Object[]{"Activar Docente", "No Activar"}, "Cancelar");
                         if (seleccion == 1) {
-                           
+                           docente.activarDocente(docentesMD.get(posFila).getIdDocente());
+                           JOptionPane.showMessageDialog(null, "se activo el docnete");
                         } else if (seleccion == 0) {
                           
                         }
@@ -286,7 +286,7 @@ public class VtnDocenteCTR {
 
     public void llamaReporteDocente() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repDocentes.jasper";
+        String path = "/vista/reportes/repDocentes.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
@@ -294,7 +294,7 @@ public class VtnDocenteCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);

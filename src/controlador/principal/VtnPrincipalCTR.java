@@ -175,6 +175,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
+        InitPermisosTester();
     }
 
     /**
@@ -990,6 +991,30 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtPersona().setEnabled(false);
             }
 
+        }
+    }
+
+    private void InitPermisosTester() {
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
+            vtnPrin.getMnIngresar().setEnabled(false);
+            vtnPrin.getPnlMenu().setVisible(false);
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtCarrera().setEnabled(false);
+            vtnPrin.getMnCtCurso().setEnabled(false);
+            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+            vtnPrin.getMnCtMateria().setEnabled(false);
+            vtnPrin.getMnCtInscripcion().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+            vtnPrin.getMnCtSilabos().setEnabled(false);
+            vtnPrin.getMnCtPlandeClase().setEnabled(false);
+            vtnPrin.getMnCtUsuarios().setEnabled(false);
+            vtnPrin.getMnCtRoles().setEnabled(false);
+            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+            vtnPrin.getMnNotas().setEnabled(false);
         }
     }
 
