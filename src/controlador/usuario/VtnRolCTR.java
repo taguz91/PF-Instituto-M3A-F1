@@ -87,9 +87,7 @@ public class VtnRolCTR {
         vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-        
-        vista.getTxtBuscar().addCaretListener(txtBuscar());
-        
+
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
             if (obj.getNombre().equals("ROLES-Agregar")) {
@@ -115,9 +113,9 @@ public class VtnRolCTR {
     private void cargarTabla() {
         if (cargarTabla) {
             new Thread(() -> {
-                
+
                 tabla.setRowCount(0);
-                
+
                 vista.getTxtBuscar().setEnabled(false);
 
                 Middlewares.setLoadCursor(vista);
@@ -286,10 +284,6 @@ public class VtnRolCTR {
         } else {
             JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
         }
-    }
-
-    private CaretListener txtBuscar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
