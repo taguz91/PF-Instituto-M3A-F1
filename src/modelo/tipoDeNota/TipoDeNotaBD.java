@@ -35,6 +35,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         this.setValorMaximo(obj.getValorMaximo());
         this.setFechaCreacion(obj.getFechaCreacion());
         this.setEstado(obj.isEstado());
+        this.setCarrera(obj.getCarrera());
     }
 
     private static final String TABLA = " \"TipoDeNota\" ";
