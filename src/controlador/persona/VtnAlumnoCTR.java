@@ -110,10 +110,12 @@ public class VtnAlumnoCTR {
                     case "ALUMNOS RETIRADOS":
                         llenarRetirados();
                         vtnAlumno.getBtn_Materias().setVisible(true);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                     default:
                         llenarTabla();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
                         break;
                 }
             }
