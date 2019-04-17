@@ -64,6 +64,7 @@ public class FrmIngresoNotasCTR {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(FrmIngresoNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("prueba netbeans");
     }
 
     public void InitEventos() {
