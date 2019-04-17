@@ -81,13 +81,13 @@ BEGIN
 	IF new.rol_estado = FALSE THEN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_rol);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_rol,inet_client_addr());
 	ELSE 
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_rol);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_rol,inet_client_addr());
 	END IF;
 	RETURN NEW;
 END;

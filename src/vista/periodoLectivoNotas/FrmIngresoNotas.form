@@ -113,12 +113,12 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblFechaInicio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha Inicio"/>
+        <Property name="text" type="java.lang.String" value="Fecha inicio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFechaCierre">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha Cierre"/>
+        <Property name="text" type="java.lang.String" value="Fecha cierre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
@@ -133,12 +133,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblPeriodoLectivo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Per&#xed;odo Lectivo"/>
+        <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTipoNota">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo Nota"/>
+        <Property name="text" type="java.lang.String" value="Tipo nota"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbPeriodoLec">

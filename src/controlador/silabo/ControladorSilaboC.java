@@ -317,16 +317,30 @@ public class ControladorSilaboC {
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
+                 boolean existe = false;
 
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
 
-                if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
-                    JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+                List<EstrategiasAprendizajeMD> estrategias = EstrategiasAprendizajeBD.consultar(conexion);
 
-                } else {
-                    nuevaEstrategia.insertar();
-                    JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+                for (EstrategiasAprendizajeMD e : estrategias) {
 
+                    if (e.getDescripcionEstrategia().toUpperCase().trim().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase().trim())) {
+                        existe = true;
+                      JOptionPane.showMessageDialog(null, "La estrategia que intento ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);  
+                    }
+
+                }
+
+                if (!existe) {
+                    if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
+                        JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                    } else {
+                        nuevaEstrategia.insertar();
+                        JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+
+                    }
                 }
 
                 gestion.getTxtNuevaEstrategia().setText("");
@@ -334,9 +348,10 @@ public class ControladorSilaboC {
                 gestion.getLblGuardarEstrategia().setEnabled(false);
 
                 cargarEstrategias(seleccionarUnidad());
+                
 
+               
             }
-
         });
 
         gestion.getLstEstrategiasPredeterminadas().addMouseListener(new MouseAdapter() {
@@ -949,7 +964,7 @@ public class ControladorSilaboC {
 
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-
+                configuracion.dispose();
                 gestion.dispose();
                 bibliografia.dispose();
 

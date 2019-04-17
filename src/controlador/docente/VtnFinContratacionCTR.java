@@ -33,75 +33,76 @@ public class VtnFinContratacionCTR {
 
     private final ConectarDB conecta;
     private PeriodoLectivoBD plBD;
-    private final VtnFinContratacion vtnFinContratacion;
+    private final VtnFinContratacion frmFinContrato;
     private final VtnPrincipal vtnPrin;
-    private DocenteBD docente;
+    private DocenteBD dc;
     private DocenteMD docentesMD;
     private final String cedula;
     private boolean guardar = true;
 
     public VtnFinContratacionCTR(
             ConectarDB conecta, VtnPrincipal vtnPrin, String cedula) {
-        this.vtnFinContratacion = new VtnFinContratacion(vtnPrin, false);
+        this.frmFinContrato = new VtnFinContratacion(vtnPrin, false);
+        this.dc = new DocenteBD(conecta);
         this.conecta = conecta;
         this.vtnPrin = vtnPrin;
         this.cedula = cedula;
-        this.vtnFinContratacion.setLocationRelativeTo(vtnPrin);
-        this.vtnFinContratacion.setVisible(true);
-        this.vtnFinContratacion.setTitle("Fin de Contrato");
+        this.frmFinContrato.setLocationRelativeTo(vtnPrin);
+        this.frmFinContrato.setVisible(true);
+        this.frmFinContrato.setTitle("Fin de Contrato");
 
     }
 
     public void iniciar() {
-        vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
-        vtnFinContratacion.getLblErrorObservacion().setVisible(false);
-        vtnFinContratacion.getBtnGuardar().setEnabled(false);
-        vtnFinContratacion.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
-        vtnFinContratacion.getBtnCancelar().addActionListener(e -> salir());
+        frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
+        frmFinContrato.getLblErrorObservacion().setVisible(false);
+        frmFinContrato.getBtnGuardar().setEnabled(false);
+        frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
+        frmFinContrato.getBtnCancelar().addActionListener(e -> salir());
 
-        vtnFinContratacion.getTxtObservacion().addKeyListener(new KeyAdapter() {
+        frmFinContrato.getTxtObservacion().addKeyListener(new KeyAdapter() {
 
             public void keyReleased(KeyEvent e) {
-                String Observacion = vtnFinContratacion.getTxtObservacion().getText();
+                String Observacion = frmFinContrato.getTxtObservacion().getText();
                 if (!Validar.esObservacion(Observacion)) {
 
-                    vtnFinContratacion.getLblErrorObservacion().setVisible(true);
+                    frmFinContrato.getLblErrorObservacion().setVisible(true);
 
                 } else {
-                    vtnFinContratacion.getLblErrorObservacion().setVisible(false);
+                    frmFinContrato.getLblErrorObservacion().setVisible(false);
                 }
                 habilitarGuardar();
             }
         });
         
-        vtnFinContratacion.getJdcFinContratacion().addMouseListener(new MouseAdapter(){
+        frmFinContrato.getJdcFinContratacion().addMouseListener(new MouseAdapter(){
             public void mouseClicked(){
                 if(validarFecha() == true){
-                    vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
+                    frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
                 } else{
-                    vtnFinContratacion.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
-                    vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
+                    frmFinContrato.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
+                    frmFinContrato.getLblErrorFechaFinContratacion().setVisible(true);
                 }
                 habilitarGuardar();
             }
         });
-        docente = new DocenteBD(conecta);
-        docentesMD = docente.buscarDocente(cedula);
+        
+        docentesMD = dc.buscarDocente(cedula);
     }
 
     public void habilitarGuardar() {
         String observacion;
-        observacion = vtnFinContratacion.getTxtObservacion().getText();
-        Date fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
+        observacion = frmFinContrato.getTxtObservacion().getText();
+        Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
         if (observacion.equals("") == false || fecha != null) {
-            if (vtnFinContratacion.getLblErrorFechaFinContratacion().isVisible() == true
-                    || vtnFinContratacion.getLblErrorObservacion().isVisible() == true) {
-                vtnFinContratacion.getBtnGuardar().setEnabled(false);
+            if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
+                    || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
+                frmFinContrato.getBtnGuardar().setEnabled(false);
             } else {
-                vtnFinContratacion.getBtnGuardar().setEnabled(true);
+                frmFinContrato.getBtnGuardar().setEnabled(true);
             }
         } else {
-            vtnFinContratacion.getBtnGuardar().setEnabled(false);
+            frmFinContrato.getBtnGuardar().setEnabled(false);
         }
 
     }
@@ -111,8 +112,8 @@ public class VtnFinContratacionCTR {
         String Observacion, fechaFinContra;
         Date fecha;
 
-        Observacion = vtnFinContratacion.getTxtObservacion().getText().trim().toUpperCase();
-        fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
+        Observacion = frmFinContrato.getTxtObservacion().getText().trim().toUpperCase();
+        fecha = frmFinContrato.getJdcFinContratacion().getDate();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         fechaFinContra = sdf.format(fecha);
@@ -137,14 +138,14 @@ public class VtnFinContratacionCTR {
 
             VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docentesMD);
             vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-            vtnFinContratacion.dispose();
+            frmFinContrato.dispose();
         }
 
     }
 
     public boolean validarFecha() {
         Date fecha;
-        fecha = vtnFinContratacion.getJdcFinContratacion().getDate();
+        fecha = frmFinContrato.getJdcFinContratacion().getDate();
 
         if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
                 && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
@@ -159,7 +160,7 @@ public class VtnFinContratacionCTR {
     }
 
     private void salir() {
-        vtnFinContratacion.dispose();
+        frmFinContrato.dispose();
         System.out.println("Se dio click en cancelar Fin contratacion");
     }
 
