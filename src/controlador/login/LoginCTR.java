@@ -95,7 +95,7 @@ public class LoginCTR {
                 vista.getTxtPassword().setText("ROOT");
             } else if (c.equalsIgnoreCase("R.")) {
                 vista.getTxtUsername().setText("ROOT");
-                vista.getTxtPassword().setText("ROOT");
+                vista.getTxtPassword().setText("RUTH");
             } else if (c.equalsIgnoreCase("P.")) {
                 vista.getTxtUsername().setText("postgres");
                 vista.getTxtPassword().setText("Holapostgres");

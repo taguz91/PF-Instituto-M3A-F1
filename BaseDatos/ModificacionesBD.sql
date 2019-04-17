@@ -340,5 +340,25 @@ ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+<<<<<<< HEAD
+--Creamos una tabla para guardar los retirados
+CREATE TABLE "Retirados"(
+	"id_retirado" serial NOT NULL,
+	"id_malla_alumno" integer NOT NULL,
+	"id_almn_curso" integer NOT NULL,
+	"retiro_fecha" TIMESTAMP DEFAULT now(),
+	"retiro_observacion" text, 
+	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
+) WITH (OIDS = FALSE);
+
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
+FOREIGN KEY ("id_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
+FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
+ON UPDATE CASCADE ON DELETE CASCADE;
+=======
 ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip 
 character varying (200) NOT NULL DEFAULT '000.00.000.000';
+>>>>>>> fca47ebaf9639eef4c68cdc4f8e9eb0003cfca98

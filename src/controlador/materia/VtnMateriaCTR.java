@@ -5,8 +5,6 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,12 +144,14 @@ public class VtnMateriaCTR {
      * Informacion de la materia, nos indican sus materias de co y pre
      * requisitos.
      */
-    private void infoMateria() {
+    private void infoMateria(){
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId());
-            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin);
+            JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin, materia);
             info.iniciar();
+        }else{
+            JOptionPane.showMessageDialog(vtnPrin, "Seleccione una fila primero.");
         }
     }
 

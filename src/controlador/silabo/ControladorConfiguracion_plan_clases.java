@@ -1,7 +1,9 @@
 package controlador.silabo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
@@ -54,6 +56,7 @@ public class ControladorConfiguracion_plan_clases {
         cargarComboCarreras();
         cargarSilabosDocentes();
         iniciarSilabo(unidades());
+//     materiaseleccionada();
 
     }
 
@@ -79,24 +82,34 @@ public class ControladorConfiguracion_plan_clases {
         }
     }
 
-    public void iniciarSilabo(SilaboMD silabo) {
 
+    public void iniciarSilabo(SilaboMD silabo) {
+        System.out.println("--------------------->>>>>>>>>>>>>>");
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
         unidadesSilabo.forEach((umd) -> {
             frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
         });
-
+        frm_cong_PlanClase.getCmb_unidades().removeAllItems();
+        
     }
-
-    public SilaboMD unidades() {
-
+   
+    public SilaboMD unidades()  {
+        
         Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
         return silabounidad.get();
-        //sale un error...revisaras
+
+    
     }
-    public void Botones(){
+    void materiaseleccionada(){
+        silabo=(SilaboMD)frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
+        unidadesSilabo=UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
+         unidadesSilabo.forEach((umd) -> {
+            frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
+        });
+         
+        
     
-    
-    } 
+    }
+
 }
