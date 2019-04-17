@@ -20,7 +20,7 @@ import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
-import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
