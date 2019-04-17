@@ -43,6 +43,7 @@
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="cmbCarrera" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="txtNotaMax" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -51,8 +52,7 @@
                               <Component id="txtNotaMin" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="216" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtTipoNota" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cmbCarrera" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmbTipoDeNota" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -74,7 +74,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblNombre" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txtTipoNota" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmbTipoDeNota" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -137,8 +137,6 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtTipoNota">
-    </Component>
     <Component class="javax.swing.JLabel" name="lblCarrera">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
@@ -146,6 +144,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbCarrera">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbTipoDeNota">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>

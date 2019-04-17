@@ -339,3 +339,6 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip 
+character varying (200) NOT NULL DEFAULT '000.00.000.000';
