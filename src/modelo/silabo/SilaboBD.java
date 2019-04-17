@@ -50,8 +50,6 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-    
-    
 
     public static List<SilaboMD> consultar(ConexionBD conexion, String[] clave) {
 
@@ -69,7 +67,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
-                    + "AND m.materia_nombre ILIKE '%"+clave[1]+"%'\n"
+                    + "AND m.materia_nombre ILIKE '%" + clave[1] + "%'\n"
                     + "AND p.id_persona=?");
 
             st.setString(1, clave[0]);
@@ -100,6 +98,99 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
+
+    /*public void eliminar() {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setInt(1, getIdSilabo());
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }*/
+    public void actualizar() {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
+                    + "	SET id_materia=?, estado_silabo=?, id_prd_lectivo=?\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setInt(1, getIdMateria().getId());
+            st.setInt(2, getEstadoSilabo());
+            st.setInt(3, getIdPeriodoLectivo().getId_PerioLectivo());
+            st.setInt(4, getIdSilabo());
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public SilaboMD retornaSilabo(int id) {
+        SilaboMD silabo = null;
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo, id_materia, id_prd_lectivo, estado_silabo\n"
+                    + "FROM public.\"Silabo\"\n"
+                    + "WHERE id_silabo =?");
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                silabo = new SilaboMD();
+
+                silabo.setIdSilabo(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return silabo;
+    }
+
+    public void eliminar(SilaboMD s) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setInt(1, s.getIdSilabo());
+
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void insertar(SilaboMD s) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Silabo\"(\n"
+                    + "	 id_materia, id_prd_lectivo)\n"
+                    + "	VALUES (?, ?)");
+
+            st.setInt(1, s.getIdMateria().getId());
+            st.setInt(2, s.getIdPeriodoLectivo().getId_PerioLectivo());
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static List<SilaboMD> consultarSilabo1(ConexionBD conexion, String[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -146,82 +237,4 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
-    /*public void eliminar() {
-
-        try {
-            PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
-                    + "	WHERE id_silabo=?");
-
-            st.setInt(1, getIdSilabo());
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }*/
-
-    public void actualizar() {
-
-        try {
-            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
-                    + "	SET id_materia=?, estado_silabo=?, id_prd_lectivo=?\n"
-                    + "	WHERE id_silabo=?");
-
-            st.setInt(1, getIdMateria().getId());
-            st.setInt(2, getEstadoSilabo());
-            st.setInt(3, getIdPeriodoLectivo().getId_PerioLectivo());
-            st.setInt(4, getIdSilabo());
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public SilaboMD retornaSilabo(int id) {
-        SilaboMD silabo = null;
-        try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo, id_materia, id_prd_lectivo, estado_silabo\n"
-                    + "FROM public.\"Silabo\"\n"
-                    + "WHERE id_silabo =?");
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                silabo = new SilaboMD();
-
-                silabo.setIdSilabo(rs.getInt(1));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        return silabo;
-    }
-    
-   
-    
-    public void eliminar(SilaboMD s) {
-
-        try {
-             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
-                    + "	WHERE id_silabo=?");
-
-            st.setInt(1, s.getIdSilabo());
-            
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
 }
