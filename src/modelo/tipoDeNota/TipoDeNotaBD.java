@@ -20,8 +20,8 @@ import modelo.ResourceManager;
  */
 public class TipoDeNotaBD extends TipoDeNotaMD {
 
-    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado) {
-        super(idTipoNota, nombre, valorMinimo, valorMaximo, fechaCreacion, estado);
+    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, int idCarrera) {
+        super(idTipoNota, nombre, valorMinimo, valorMaximo, fechaCreacion, estado, idCarrera);
     }
 
     public TipoDeNotaBD() {
@@ -51,12 +51,13 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean insertar() {
         String INSERT = "INSERT INTO " + TABLA + " \n"
-                + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo )\n"
+                + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo, id_carrera )\n"
                 + "VALUES\n"
-                + "( "
-                + "'" + getNombre() + "',"
-                + " " + getValorMinimo() + ", "
-                + " " + getValorMaximo() + ""
+                + "( \n"
+                + "'" + getNombre() + "',\n"
+                + " " + getValorMinimo() + ",\n"
+                + " " + getValorMaximo() + ",\n"
+                + "" + getIdCarrera() + "\n"
                 + " );";
 
         return ResourceManager.Statement(INSERT) == null;
@@ -88,15 +89,15 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         try {
 
             while (rs.next()) {
-                
+
                 tipoNota.setIdTipoNota(rs.getInt("id_tipo_nota"));
                 tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
                 tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
                 tipoNota.setEstado(rs.getBoolean("tipo_nota_estado"));
-                
+
             }
-            
+
             rs.close();
 
         } catch (SQLException e) {
@@ -135,11 +136,12 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean editar(int Pk) {
         String UPDATE = "UPDATE\n"
-                + "	\"TipoDeNota\" \n"
+                + TABLA + "\n"
                 + "SET \n"
                 + "	tipo_nota_nombre = '" + getNombre() + "',\n"
                 + "	tipo_nota_valor_minimo = " + getValorMinimo() + ",\n"
-                + "	tipo_nota_valor_maximo = " + getValorMaximo() + " \n"
+                + "	tipo_nota_valor_maximo = " + getValorMaximo() + ",\n"
+                + "	id_carrera = " + getIdCarrera() + "\n"
                 + "WHERE\n"
                 + "	id_tipo_nota = " + Pk;
 
@@ -149,7 +151,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean eliminar(int Pk) {
         String DELETE = "UPDATE\n"
-                + TABLA
+                + TABLA + "\n"
                 + "SET \n"
                 + "     tipo_nota_estado = " + false + " \n"
                 + "WHERE\n"
@@ -160,7 +162,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean reactivar(int Pk) {
         String DELETE = "UPDATE\n"
-                + TABLA
+                + TABLA + "\n"
                 + "SET \n"
                 + "     tipo_nota_estado = " + true + "\n"
                 + "WHERE\n"

@@ -45,6 +45,10 @@ public class VtnTipoNotasCTR {
         this.permisos = permisos;
     }
 
+    public VtnTipoNotas getVista() {
+        return vista;
+    }
+
     //Inits
     public void Init() {
         vista.setVisible(true);
@@ -62,8 +66,6 @@ public class VtnTipoNotasCTR {
         }
 
     }
-    
-    
 
     private void InitEventos() {
 

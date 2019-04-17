@@ -348,6 +348,35 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
+    
+    public PeriodoLectivoMD buscarPeriodo(String nombrePer) {
+        PeriodoLectivoMD p = new PeriodoLectivoMD();
+        String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
+                + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
+                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
+                + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+
+                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                //Buscamos la carrera para guardarla en la clase
+                carrera = car.buscar(rs.getInt("id_carrera"));
+                p.setCarrera(carrera);
+
+                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+
+            }
+            rs.close();
+            return p;
+        } catch (SQLException ex) {
+            System.out.println("No pudimos consultar periodos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 
     public String Meses(LocalDate fecha) {
         String nueva_Fecha = "";

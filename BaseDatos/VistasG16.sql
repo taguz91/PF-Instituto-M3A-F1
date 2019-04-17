@@ -212,7 +212,7 @@ CREATE MATERIALIZED VIEW "public"."ViewDocentes" AS  SELECT "Docentes".id_docent
    FROM ("Docentes"
      JOIN "Personas" ON (("Docentes".id_persona = "Personas".id_persona)));
 
-ALTER MATERIALIZED VIEW "public"."ViewDocentes" OWNER TO "ROOT";
+ALTER MATERIALIZED VIEW "public"."ViewDocentes" OWNER TO "permisos";
 
 
 
