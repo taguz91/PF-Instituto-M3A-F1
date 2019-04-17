@@ -143,11 +143,11 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id Perido Lectivo", "Carrera", "Nombre Periodo Lectivo", "Fecha Inicio", "Fecha Fin"
+                "Id Perido Lectivo", "Carrera", "Nombre Periodo Lectivo", "Fecha Inicio", "Fecha Fin", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
