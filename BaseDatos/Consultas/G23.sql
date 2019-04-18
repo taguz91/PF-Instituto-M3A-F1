@@ -32,7 +32,7 @@ SELECT COUNT(*) FROM (public."Carreras" c JOIN public."AlumnosCarrera" a
 					  USING(id_carrera)) JOIN public."MallaAlumno" m USING(id_almn_carrera)
 							WHERE c.id_carrera = 2 AND m.malla_almn_estado LIKE 'M';
 
---Consultamos todos los alumnos de una malla por carrera 
+--Consultamos todos los alumnos de una malla por carrera
 SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
 malla_almn_ciclo, malla_almn_num_matricula,
 malla_almn_nota1, malla_almn_nota2,
@@ -41,3 +41,12 @@ FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
 WHERE ac.id_carrera = 2
 AND ma.id_almn_carrera = ac.id_almn_carrera
 AND malla_almn_estado = 'M';
+
+--Consultamos los horarios con el periodo lectivo
+
+	SELECT id_sesion, sc.id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion,
+curso_nombre, id_prd_lectivo, id_jornada, materia_nombre
+	FROM public."SesionClase" sc, public."Cursos" c,
+	public."Materias" m
+	WHERE c.id_curso = sc.id_curso AND
+	m.id_materia = c.id_materia;
