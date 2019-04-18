@@ -157,11 +157,13 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblNotas);
         tblNotas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
-            tblNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tblNotas.getColumnModel().getColumn(0).setMinWidth(30);
+            tblNotas.getColumnModel().getColumn(0).setMaxWidth(30);
             tblNotas.getColumnModel().getColumn(1).setPreferredWidth(100);
             tblNotas.getColumnModel().getColumn(2).setPreferredWidth(150);
             tblNotas.getColumnModel().getColumn(3).setPreferredWidth(150);
-            tblNotas.getColumnModel().getColumn(13).setPreferredWidth(90);
+            tblNotas.getColumnModel().getColumn(13).setMinWidth(80);
+            tblNotas.getColumnModel().getColumn(13).setMaxWidth(80);
         }
 
         btnImprimir.setText("Imprimir");

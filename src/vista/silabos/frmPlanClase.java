@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * @author Daniel
  */
-public class frmPlanClase extends javax.swing.JFrame {
+public class frmPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmPlanClase
@@ -555,7 +555,9 @@ public class frmPlanClase extends javax.swing.JFrame {
         btnQuitarPC = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
 
         txrObjetivoPC.setEditable(false);
         txrObjetivoPC.setColumns(20);
@@ -848,7 +850,7 @@ public class frmPlanClase extends javax.swing.JFrame {
                                 .addComponent(lbDocente)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtTituloUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbTituloUnidad))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
