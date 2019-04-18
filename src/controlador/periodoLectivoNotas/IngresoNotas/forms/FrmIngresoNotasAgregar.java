@@ -18,7 +18,7 @@ public class FrmIngresoNotasAgregar extends AbstractForm {
     }
 
     //INICIADORES
-    public void InitEditar() {
+    public void InitAgregar() {
         Init();
     }
 

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5315c383-6ac3-4b4b-801d-2a36e09537df">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="129"/>
+	<parameter name="cedula_alumno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT (per.persona_primer_nombre||' '||per.persona_segundo_nombre||' '||per.persona_primer_apellido||' '|| per.persona_segundo_apellido) as alumno,
 a.alumno_codigo,
@@ -22,7 +25,7 @@ a.alumno_parentesco_contacto,
 a.alumno_numero_contacto
 from public."Alumnos" a JOIN public. "Personas" per USING(id_persona)
 JOIN public."SectorEconomico" s USING (id_sec_economico)
-WHERE per.persona_identificacion =  persona_identificacion  
+WHERE per.persona_identificacion =   $P{cedula_alumno}
 AND per.persona_activa = true 
 AND a.alumno_activo = true;]]>
 	</queryString>
@@ -48,23 +51,23 @@ AND a.alumno_activo = true;]]>
 	<title>
 		<band height="141" splitType="Stretch">
 			<image>
-				<reportElement x="1" y="2" width="555" height="99" uuid="0d11e726-3c87-4700-9a48-ff9dafa5d28e"/>
-				<imageExpression><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<reportElement x="1" y="2" width="555" height="99"/>
+				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="348" y="40" width="207" height="20" uuid="4c1a3a1a-6fa2-4d3e-bad7-48fcbcbaaded"/>
+				<reportElement x="348" y="40" width="207" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="121" width="555" height="20" uuid="0827e7c1-7f09-4e06-a15c-4866c7a61911"/>
+				<reportElement x="1" y="121" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de Alumno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="101" width="555" height="20" uuid="0c71dca0-3506-412e-a368-92e3af2f1f95"/>
+				<reportElement x="1" y="101" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -75,190 +78,177 @@ AND a.alumno_activo = true;]]>
 	<pageHeader>
 		<band height="51" splitType="Stretch">
 			<textField>
-				<reportElement x="65" y="3" width="283" height="20" uuid="4a73f04e-d14c-427c-ab67-b00fc80b8a67"/>
+				<reportElement x="65" y="3" width="283" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="3" width="64" height="20" uuid="c9be0cbc-450b-40bb-9469-a7ce9edf8f94"/>
+				<reportElement x="1" y="3" width="64" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estudiante:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="23" width="64" height="20" uuid="09ee57c4-e23e-4b6e-be86-2528b26fab19"/>
+				<reportElement x="1" y="23" width="64" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cedula:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="65" y="25" width="283" height="20" uuid="0afe45c4-a734-4f81-8061-d90fc53a1987"/>
+				<reportElement x="65" y="25" width="283" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_codigo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_codigo}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="2" y="43" width="554" height="2" uuid="8e74b77a-b35c-4044-89de-2479a2e37f83"/>
+				<reportElement x="2" y="43" width="554" height="2"/>
 			</line>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="378" splitType="Stretch">
 			<staticText>
-				<reportElement x="65" y="72" width="100" height="20" uuid="b296cb1a-8893-4bbd-aa1f-4e2a0bb4f4f5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Educacion Superior:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="65" y="40" width="100" height="20" uuid="e46ebe8a-e9a7-4e7b-9261-3e4222273d26"/>
+				<reportElement x="65" y="62" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Año de Graduacion:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="20" width="100" height="20" uuid="de50032b-d64c-4ce7-a665-00d72b94138c"/>
+				<reportElement x="65" y="42" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Tipo Bachillerato:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="0" width="100" height="20" uuid="aaab22e5-7ddb-4231-8e2e-a53a95de41b7"/>
+				<reportElement x="65" y="22" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Tipo Colegio:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="92" width="100" height="20" uuid="950e784d-3e25-429c-b12d-83fa61967e1a"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Titulo Superior:]]></text>
+				<reportElement x="65" y="82" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Titulo :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="112" width="100" height="20" uuid="d75618a1-1b6b-49c4-acf5-281008d2618d"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="65" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Nivel Academico:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="162" width="100" height="20" uuid="8a26b22c-a9d8-46e9-adf8-21572da042b8"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="65" y="136" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Ocupacion:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="142" width="100" height="20" uuid="b0f166dd-31ee-4746-a730-6d46f2f8b41a"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="65" y="116" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Pension:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="212" width="141" height="20" uuid="dfe374bb-65ae-41d9-985a-d1164fa85677"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="24" y="186" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Nivel de formacion del padre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="65" y="182" width="100" height="20" uuid="9c473042-7c89-4ab5-87d8-3866a0f3e2a2"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="65" y="156" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Trabajo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="265" width="141" height="20" uuid="6838747d-981a-4749-95e0-32d7bdc15e39"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="24" y="239" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Contacto de emergencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="232" width="141" height="20" uuid="95b303ae-ac66-4c79-a8a6-394f778486c1"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="24" y="206" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[NIvel de formacion de la madre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="305" width="141" height="20" uuid="29b8cb55-276a-4a20-8055-05980a747acb"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Número de Contacto:]]></text>
+				<reportElement x="24" y="279" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Numero :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="285" width="141" height="20" uuid="6ece5b5f-a05a-4e77-b05f-cf8b03c03819"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="24" y="259" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Parentesco :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="182" y="0" width="166" height="20" uuid="54fd7217-e09d-4cd8-9217-a65afabb3574"/>
+				<reportElement x="182" y="22" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_tipo_colegio}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_tipo_colegio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="20" width="166" height="20" uuid="924d8c39-2474-4ace-b383-b0c522b5d5e9"/>
+				<reportElement x="182" y="42" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_tipo_bachillerato}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_tipo_bachillerato}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="40" width="166" height="20" uuid="ad4fdfdb-f537-40b5-82ac-5a65e89c6d9f"/>
+				<reportElement x="182" y="62" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_anio_graduacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_anio_graduacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="72" width="166" height="20" uuid="d1dd0b02-56c7-4d8e-813f-55cac18d16ff"/>
+				<reportElement x="182" y="82" width="335" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_educacion_superior}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_titulo_superior}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="92" width="166" height="20" uuid="dfab6002-09a4-478e-b7e8-3e85c36bd4c6"/>
+				<reportElement x="182" y="2" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_titulo_superior}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_academico}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="112" width="166" height="20" uuid="6d99306e-a905-4cea-9c43-52bc8fd2bcfd"/>
+				<reportElement x="182" y="116" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_nivel_academico}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_pension}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="142" width="166" height="20" uuid="37d27e9c-c984-4e3e-b13f-ce4ff08e5010"/>
+				<reportElement x="182" y="136" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_pension}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_ocupacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="162" width="166" height="20" uuid="a02d6fb0-915c-41c0-a6a5-8ca8306ec3fa"/>
+				<reportElement x="182" y="156" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_ocupacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_trabaja}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="182" width="166" height="20" uuid="1c4c7c8a-8afe-40c6-96c0-7e0e4b48b397"/>
+				<reportElement x="182" y="186" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_trabaja}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_formacion_padre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="212" width="166" height="20" uuid="e21f9c32-c41c-4df4-89aa-5563c8e17b77"/>
+				<reportElement x="182" y="206" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_nivel_formacion_padre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_formacion_madre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="232" width="166" height="20" uuid="a71b95cb-a7da-4f27-8851-19e0b25589a1"/>
+				<reportElement x="182" y="239" width="207" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_nivel_formacion_madre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nombre_contacto_emergencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="265" width="207" height="20" uuid="b4a958b5-c2dd-4c29-9fe9-bc7ccf572125"/>
+				<reportElement x="182" y="259" width="207" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_nombre_contacto_emergencia}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_parentesco_contacto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="285" width="207" height="20" uuid="c87be5f3-eb5b-4a19-881a-e2f49567a10d"/>
+				<reportElement x="182" y="279" width="207" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_parentesco_contacto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="182" y="305" width="207" height="20" uuid="bc3eecb1-2d04-414e-8999-34984ec0d46f"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{alumno_numero_contacto}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_numero_contacto}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="1" y="60" width="554" height="2" uuid="7dcb5a6b-f240-45a1-b2e6-da0bdec38069"/>
+				<reportElement x="2" y="102" width="554" height="2"/>
 			</line>
 			<line>
-				<reportElement x="0" y="132" width="554" height="2" uuid="913d2dc5-7605-436b-b261-59f7da035d64"/>
+				<reportElement x="0" y="174" width="554" height="2"/>
 			</line>
 			<line>
-				<reportElement x="0" y="200" width="554" height="2" uuid="5da4bd54-b15a-464e-8eb1-a274519df271"/>
+				<reportElement x="1" y="226" width="554" height="2"/>
 			</line>
 			<line>
-				<reportElement x="1" y="252" width="554" height="2" uuid="8500b581-e89b-48db-9836-2653a1d70d4f"/>
-			</line>
-			<line>
-				<reportElement x="2" y="325" width="554" height="2" uuid="f28cf45d-84a1-46e5-9564-14c9642bf1ec"/>
+				<reportElement x="2" y="299" width="554" height="2"/>
 			</line>
 		</band>
 	</detail>

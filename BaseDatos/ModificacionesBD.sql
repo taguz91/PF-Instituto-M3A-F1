@@ -363,3 +363,4 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip 
 character varying (200) NOT NULL DEFAULT '000.00.000.000';
 
+ALTER TABLE "Materias" ADD COLUMN materia_nucleo boolean DEFAULT 'false';
