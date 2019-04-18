@@ -22,8 +22,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[
-SELECT
+		<![CDATA[SELECT
 	"ViewAlumnoCurso".id_alumno,
 	"ViewAlumnoCurso".persona_identificacion,
 	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDOS",
@@ -186,7 +185,7 @@ WHERE
 			</line>
 			<image>
 				<reportElement x="13" y="57" width="172" height="111" uuid="76fbba72-7b52-4606-b13f-ded7fc59de34"/>
-				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="1183" y="57" width="300" height="20" uuid="d7d7be8f-e71f-4089-8f47-140889a0dbee"/>
