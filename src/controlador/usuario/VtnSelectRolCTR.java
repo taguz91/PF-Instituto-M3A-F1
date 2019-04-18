@@ -42,15 +42,27 @@ public class VtnSelectRolCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
+    private final boolean pruebas;
 
+    /**
+     *
+     * @param vista
+     * @param modelo
+     * @param usuario
+     * @param conexion
+     * @param icono
+     * @param ista
+     * @param pruebas Para saber si entramos unicamente a probar el sistema
+     */
     public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario,
-            ConectarDB conexion, ImageIcon icono, Image ista) {
+            ConectarDB conexion, ImageIcon icono, Image ista, boolean pruebas) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
         this.conexion = conexion;
         this.icono = icono;
         this.ista = ista;
+        this.pruebas = pruebas;
         vista.setIconImage(ista);
 
         registroIngreso(vista);
@@ -147,7 +159,7 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
         vtn.iniciar();
         logConexion();
         vista.dispose();
@@ -156,8 +168,6 @@ public class VtnSelectRolCTR {
     //Procesadores de Eventos
     private void logConexion() {
         //generarArchivo();
-        ResourceManager.resetConn();
-
     }
 
     private void generarArchivo() {

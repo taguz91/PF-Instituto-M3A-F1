@@ -69,6 +69,7 @@ public class ControladorCRUD {
         opcionesImpresion(false);
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
+            
             crud.dispose();
 
             ControladorSilaboC csc = new ControladorSilaboC(principal, usuario, conexion);
