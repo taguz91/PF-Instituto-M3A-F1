@@ -321,7 +321,7 @@ public class VtnDocenteCTR {
             view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
@@ -342,7 +342,7 @@ public class VtnDocenteCTR {
             view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
@@ -409,7 +409,7 @@ public class VtnDocenteCTR {
                 view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
-                Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "error" + ex);
             }
         }
     }
