@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * @author Daniel
  */
-public class frmPlanClase extends javax.swing.JFrame {
+public class frmPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmPlanClase
@@ -848,7 +848,7 @@ public class frmPlanClase extends javax.swing.JFrame {
                                 .addComponent(lbDocente)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtTituloUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbTituloUnidad))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
