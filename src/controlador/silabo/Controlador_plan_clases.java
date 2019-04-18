@@ -23,9 +23,13 @@ public class Controlador_plan_clases {
          vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
          fPlanClase.setTitle("Plan de Clases");
          fPlanClase.show();
-           fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
+         fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
-           
+         fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
+             fPlanClase.dispose();
+             ControladorConfiguracion_plan_clases ccpc=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
+             ccpc.iniciarControlaador();
+         });
            
            
      }
