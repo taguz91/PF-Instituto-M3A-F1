@@ -8,9 +8,9 @@ import javax.swing.JTextField;
  *
  * @author Alejandro
  */
-public class VtnAccesosDeRol extends javax.swing.JFrame {
+public class VtnAccesos extends javax.swing.JFrame {
 
-    public VtnAccesosDeRol() {
+    public VtnAccesos() {
         initComponents();
     }
 
