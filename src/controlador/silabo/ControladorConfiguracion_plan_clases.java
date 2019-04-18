@@ -121,8 +121,8 @@ public class ControladorConfiguracion_plan_clases {
 
        /* if (silabounidad.equals(" ")) {
             return silabounidad.get();
-        }
-        return null;*/
+        }*/
+        return null;
 
 
     }
