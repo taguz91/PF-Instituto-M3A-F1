@@ -50,6 +50,7 @@ public class CarrerasBDS extends CarreraMD {
                     + "WHERE usu_username=? AND pr.prd_lectivo_fecha_fin > current_date");
 
             st.setString(1, clave);
+            System.out.println(st);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
