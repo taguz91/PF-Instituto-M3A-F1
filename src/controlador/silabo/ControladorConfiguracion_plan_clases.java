@@ -26,6 +26,7 @@ public class ControladorConfiguracion_plan_clases {
     private final UsuarioBD usuario;
     private ConexionBD conexion;
     private frmConfiguraciónPlanClase frm_cong_PlanClase;
+    private frmPlanClase frm_Plan_Clase;
     private final VtnPrincipal vtnPrincipal;
     private List<CarreraMD> carrerasDocente;
     private List<MateriaMD> materiasDocente;
@@ -83,39 +84,39 @@ public class ControladorConfiguracion_plan_clases {
         }
     }
 
-
     public void iniciarSilabo(SilaboMD silabo) {
         System.out.println("--------------------->>>>>>>>>>>>>>");
-        if (silabo==null) {
+        if (silabo == null) {
             JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
         } else {
+            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
+            unidadesSilabo.forEach((umd) -> {
+                frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
+            });
+            frm_cong_PlanClase.getCmb_unidades().removeAllItems();
+        }
+    }
+
+    public SilaboMD unidades() {
+        System.out.println("...............................................");
+        Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
+                frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
+
+
+        if (silabounidad.equals(" ")) {
+            return silabounidad.get();
+        }
+        return null;
+
+    }
+
+    void materiaseleccionada() {
+        silabo = (SilaboMD) frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
         unidadesSilabo.forEach((umd) -> {
             frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
         });
-        frm_cong_PlanClase.getCmb_unidades().removeAllItems();
-        }
-    }
-   
-    public SilaboMD unidades()  {
-        System.out.println("...............................................");
-        Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
-                frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
-        if (silabounidad.equals("")) {
-            return silabounidad.get();
-        }
-        return null;
-    
-    }
-    void materiaseleccionada(){
-        silabo=(SilaboMD)frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
-        unidadesSilabo=UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
-         unidadesSilabo.forEach((umd) -> {
-            frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
-        });
-         
-        
-    
+
     }
 
 }

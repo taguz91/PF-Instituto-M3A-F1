@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f49dec58-ab42-4f8e-9290-68edccba7dae">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="23"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from "Materias" where id_materia=$P!{parameter1}]]>
@@ -32,7 +32,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="554" splitType="Stretch">
+		<band height="557" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="22" width="533" height="154" uuid="d04ea945-0e39-41b6-9eea-9f878a312fcb"/>
 				<box>
@@ -149,7 +149,7 @@ EVALUACIÓN]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[EXAMEN FINAL]]></text>
+				<text><![CDATA[EXÁMEN FINAL]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="267" width="162" height="41" uuid="4792d4c5-def8-4bc4-abd8-25ff7444e31a"/>

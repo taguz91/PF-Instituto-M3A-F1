@@ -58,7 +58,7 @@
 				<text><![CDATA[Co-requisitos]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="40" width="260" height="16" uuid="3d7ca1e0-c95f-4a5a-98fe-ada3506badc9"/>
+				<reportElement x="0" y="40" width="260" height="16" uuid="26b1131d-86f3-4627-b671-718ecab34b1b"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -70,9 +70,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="70" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<textField>
-				<reportElement x="181" y="0" width="79" height="70" uuid="24975bd0-c033-4b04-bbb9-d372ca5179d9"/>
+				<reportElement x="181" y="0" width="79" height="47" uuid="24975bd0-c033-4b04-bbb9-d372ca5179d9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -84,7 +84,7 @@
 				<textFieldExpression><![CDATA[$F{id_materia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="181" height="70" uuid="040b4a4a-845d-4975-a623-0a7ce957545e"/>
+				<reportElement x="0" y="0" width="181" height="47" uuid="040b4a4a-845d-4975-a623-0a7ce957545e"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
