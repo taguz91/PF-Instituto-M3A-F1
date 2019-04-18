@@ -20,6 +20,7 @@ import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDHorarios;
 import vista.silabos.frmConfiguraciónPlanClase;
 import vista.silabos.frmPlanClase;
+import vista.silabos.frmCRUDPlanClase;
 
 public class ControladorConfiguracion_plan_clases {
 
@@ -33,6 +34,7 @@ public class ControladorConfiguracion_plan_clases {
     private List<SilaboMD> silabosDocente;
     private SilaboMD silabo;
     private List<UnidadSilaboMD> unidadesSilabo;
+    private frmCRUDPlanClase plan;
 
     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
@@ -42,6 +44,11 @@ public class ControladorConfiguracion_plan_clases {
 
     public void iniciarControlaador() {
         conexion.conectar();
+        
+       // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
+        
+        
+        
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
