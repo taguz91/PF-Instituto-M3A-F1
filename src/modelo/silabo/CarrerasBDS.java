@@ -47,7 +47,7 @@ public class CarrerasBDS extends CarreraMD {
                     + "JOIN \"Usuarios\" AS u ON u.id_persona=p.id_persona\n"
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
-                    + "WHERE usu_username=? AND pr.prd_lectivo_fecha_fin > current_date");
+                    + "WHERE usu_username=? ");
 
             st.setString(1, clave);
             ResultSet rs = st.executeQuery();

@@ -104,8 +104,8 @@ public class ControladorConfiguracion_plan_clases {
 
         return silabounidad.get();
         //sale un error...revisaras
-
-//        if (silabounidad.equals(" ")) {
+//
+//        if (silabounidad.equals("")) {
 //            return silabounidad.get();
 //        }
 //        return null;
