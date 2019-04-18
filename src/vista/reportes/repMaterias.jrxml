@@ -60,7 +60,7 @@ where c.carrera_codigo=$P{carrera} order by m.materia_ciclo;]]>
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="348" y="42" width="207" height="20"/>

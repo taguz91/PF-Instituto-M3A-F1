@@ -32,7 +32,7 @@ AND p.prd_lectivo_activo = true;]]>
 		<band height="146" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="0" width="553" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="348" y="38" width="207" height="20"/>
