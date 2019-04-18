@@ -102,13 +102,11 @@ public class ControladorConfiguracion_plan_clases {
         Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
 
-        return silabounidad.get();
-        //sale un error...revisaras
 
-//        if (silabounidad.equals(" ")) {
-//            return silabounidad.get();
-//        }
-//        return null;
+        if (silabounidad.equals(" ")) {
+            return silabounidad.get();
+        }
+        return null;
 
     }
 
