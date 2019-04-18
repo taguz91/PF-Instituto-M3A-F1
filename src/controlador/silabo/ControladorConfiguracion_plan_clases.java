@@ -53,11 +53,16 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getBtn_cancelar().addActionListener((e) -> {
             frm_cong_PlanClase.dispose();
         });
+        frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
+            frm_cong_PlanClase.dispose();
+            Controlador_plan_clases cpc=new Controlador_plan_clases(usuario, vtnPrincipal);
+            cpc.iniciaControlador();
+        });
         frm_cong_PlanClase.getCmb_carreras().addActionListener(a1 -> cargarSilabosDocentes());
         frm_cong_PlanClase.getCmb_silabos().addActionListener(a1 -> iniciarSilabo(unidades()));
         cargarComboCarreras();
-        cargarSilabosDocentes();
-        iniciarSilabo(unidades());
+      //  cargarSilabosDocentes();
+       // iniciarSilabo(unidades());
 //     materiaseleccionada();
 
     }
@@ -86,20 +91,21 @@ public class ControladorConfiguracion_plan_clases {
 
     public void iniciarSilabo(SilaboMD silabo) {
         System.out.println("--------------------->>>>>>>>>>>>>>");
-        if (silabo == null) {
-            JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
-        } else {
+        if (silabo != null) {
             unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
             unidadesSilabo.forEach((umd) -> {
                 frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
             });
-            frm_cong_PlanClase.getCmb_unidades().removeAllItems();
+        } else {
+            System.out.println("NO EXISTEN SILABOS");
+            
+            
         }
     }
 
     public SilaboMD unidades() {
         System.out.println("...............................................");
-        Optional<SilaboMD> silabounidad =null;
+        Optional<SilaboMD> silabounidad=null;
         if (silabounidad==null) {
             return null;
         }else{
