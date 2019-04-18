@@ -3,6 +3,12 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="cedula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPeriodo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT distinct malla_almn_estado, p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
                 ||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as alumno,
@@ -24,10 +30,10 @@
 									AND g.id_materia=m.id_materia
 									AND g.id_prd_lectivo=pl.id_prd_lectivo
 									AND ma.malla_almn_estado='P'
-									AND p.persona_identificacion='0105342455'
+									AND p.persona_identificacion=$P{cedula}
 									AND j.id_jornada = g.id_jornada
 									AND d.id_docente = g.id_docente
-									AND pd.id_persona = d.id_persona						AND g.id_prd_lectivo = 4;]]>
+									AND pd.id_persona = d.id_persona						AND g.id_prd_lectivo = $P{idPeriodo};]]>
 	</queryString>
 	<field name="malla_almn_estado" class="java.lang.String"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -41,7 +47,7 @@
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="persona_foto" class="java.io.InputStream"/>
+	<field name="persona_foto" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
