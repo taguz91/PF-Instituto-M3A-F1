@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
@@ -85,20 +86,25 @@ public class ControladorConfiguracion_plan_clases {
 
     public void iniciarSilabo(SilaboMD silabo) {
         System.out.println("--------------------->>>>>>>>>>>>>>");
+        if (silabo==null) {
+            JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
+        } else {
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
         unidadesSilabo.forEach((umd) -> {
             frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
         });
         frm_cong_PlanClase.getCmb_unidades().removeAllItems();
-        
+        }
     }
    
     public SilaboMD unidades()  {
-        
+        System.out.println("...............................................");
         Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
-        return silabounidad.get();
-
+        if (silabounidad.equals("")) {
+            return silabounidad.get();
+        }
+        return null;
     
     }
     void materiaseleccionada(){

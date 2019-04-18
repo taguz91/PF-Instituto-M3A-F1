@@ -153,25 +153,28 @@ ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
 DROP TABLE public."Plan_de_clases" CASCADE;
 DROP TABLE public."Trabajo_autonomo" CASCADE;
 DROP TABLE public."Recursos_plan_clases" CASCADE;
+DROP TABLE public."Estrategias_metodologias" CASCADE;
 DROP TABLE public."Recursos" CASCADE;
 
 DROP SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
-DROP SEQUENCE public."Recursos_id_recurso_seq";
 DROP SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
 DROP SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq";
+DROP SEQUENCE public."Recursos_id_recurso_seq";
 
 --Actualizamos las tablas 16/4/2019
 
-CREATE SEQUENCE public."Plan_de_clases_id_plan_clases_seq";
 
-ALTER SEQUENCE public."Plan_de_clases_id_plan_clases_seq"
+CREATE SEQUENCE public."PlandeClases_id_plan_clases_seq";
+
+ALTER SEQUENCE public."PlandeClases_id_plan_clases_seq"
     OWNER TO postgres;
 
 
-CREATE TABLE public."Plan_de_clases"
+
+CREATE TABLE public."PlandeClases"
 (
-    id_plan_clases integer NOT NULL DEFAULT nextval('"Plan_de_clases_id_plan_clases_seq"'::regclass),
-    id_docente integer NOT NULL,
+    id_plan_clases integer NOT NULL DEFAULT nextval('"PlandeClases_id_plan_clases_seq"'::regclass),
+    
     id_curso integer NOT NULL,
     id_unidad integer NOT NULL,
     observaciones text COLLATE pg_catalog."default",
@@ -179,15 +182,12 @@ CREATE TABLE public."Plan_de_clases"
     fecha_revision date,
     fecha_generacion date,
     fecha_cierre date,
-    CONSTRAINT "Plan_de_clases_pkey" PRIMARY KEY (id_plan_clases),
+    CONSTRAINT "PlandeClases_pkey" PRIMARY KEY (id_plan_clases),
     CONSTRAINT id_curso FOREIGN KEY (id_curso)
         REFERENCES public."Cursos" (id_curso) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT "id_docente  integer" FOREIGN KEY (id_docente)
-        REFERENCES public."Docentes" (id_docente) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
+    
     CONSTRAINT id_unidad FOREIGN KEY (id_unidad)
         REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
         ON UPDATE CASCADE
@@ -198,11 +198,12 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Plan_de_clases"
+ALTER TABLE public."PlandeClases"
     OWNER to postgres;
 
 
-CREATE TABLE public."Trabajo_autonomo"
+
+CREATE TABLE public."TrabajoAutonomo"
 (
     id_evaluacion integer NOT NULL,
     id_plan_clases integer NOT NULL,
@@ -212,7 +213,7 @@ CREATE TABLE public."Trabajo_autonomo"
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
-        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
 )
@@ -221,9 +222,8 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Trabajo_autonomo"
+ALTER TABLE public."TrabajoAutonomo"
     OWNER to postgres;
-
 
 
 
@@ -249,20 +249,19 @@ ALTER TABLE public."Recursos"
 
 
 
+CREATE SEQUENCE public."RecursosPlanClases_id_recursos_plan_clases_seq";
 
-CREATE SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq";
-
-ALTER SEQUENCE public."Recursos_plan_clases_id_recursos_plan_clases_seq"
+ALTER SEQUENCE public."RecursosPlanClases_id_recursos_plan_clases_seq"
     OWNER TO postgres;
 
-CREATE TABLE public."Recursos_plan_clases"
+CREATE TABLE public."RecursosPlanClases"
 (
-    id_recursos_plan_clases integer NOT NULL DEFAULT nextval('"Recursos_plan_clases_id_recursos_plan_clases_seq"'::regclass),
+    id_recursos_plan_clases integer NOT NULL DEFAULT nextval('"RecursosPlanClases_id_recursos_plan_clases_seq"'::regclass),
     id_plan_clases integer NOT NULL,
     id_recurso integer NOT NULL,
-    CONSTRAINT "Recursos_plan_clases_pkey" PRIMARY KEY (id_recursos_plan_clases),
+    CONSTRAINT "RecursosPlanClases_pkey" PRIMARY KEY (id_recursos_plan_clases),
     CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
-        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT id_recurso FOREIGN KEY (id_recurso)
@@ -275,29 +274,30 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Recursos_plan_clases"
+ALTER TABLE public."RecursosPlanClases"
     OWNER to postgres;
 
 
-CREATE SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq";
 
-ALTER SEQUENCE public."Estrategias_metodologias_id_estrategias_metodologias_seq"
+CREATE SEQUENCE public."EstrategiasMetodologias_id_estrategias_metodologias_seq";
+
+ALTER SEQUENCE public."EstrategiasMetodologias_id_estrategias_metodologias_seq"
     OWNER TO postgres;
 
 
-CREATE TABLE public."Estrategias_metodologias"
+CREATE TABLE public."EstrategiasMetodologias"
 (
-    id_estrategias_metodologias integer NOT NULL DEFAULT nextval('"Estrategias_metodologias_id_estrategias_metodologias_seq"'::regclass),
+    id_estrategias_metodologias integer NOT NULL DEFAULT nextval('"EstrategiasMetodologias_id_estrategias_metodologias_seq"'::regclass),
     tipo_estrategias_metodologias text COLLATE pg_catalog."default",
     id_plan_de_clases integer NOT NULL,
     id_estrategias_unidad integer NOT NULL,
-    CONSTRAINT "Estrategias_metodologias_pkey" PRIMARY KEY (id_estrategias_metodologias),
+    CONSTRAINT "EstrategiasMetodologias_pkey" PRIMARY KEY (id_estrategias_metodologias),
     CONSTRAINT id_estrategias_unidad FOREIGN KEY (id_estrategias_metodologias)
         REFERENCES public."EstrategiasUnidad" (id_estrategia_unidad) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT id_plan_de_clases FOREIGN KEY (id_plan_de_clases)
-        REFERENCES public."Plan_de_clases" (id_plan_clases) MATCH SIMPLE
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
 )
@@ -306,8 +306,9 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Estrategias_metodologias"
+ALTER TABLE public."EstrategiasMetodologias"
     OWNER to postgres;
+
 
 --Dos campos nuevos
 ALTER TABLE public."Silabo" ADD COLUMN documento_silabo bytea;
@@ -340,7 +341,7 @@ ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
-<<<<<<< HEAD
+
 --Creamos una tabla para guardar los retirados
 CREATE TABLE "Retirados"(
 	"id_retirado" serial NOT NULL,
@@ -352,13 +353,13 @@ CREATE TABLE "Retirados"(
 ) WITH (OIDS = FALSE);
 
 ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
-FOREIGN KEY ("id_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
-=======
+
 ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip 
 character varying (200) NOT NULL DEFAULT '000.00.000.000';
->>>>>>> fca47ebaf9639eef4c68cdc4f8e9eb0003cfca98
+

@@ -33,7 +33,6 @@ public class JDFinContratacion extends javax.swing.JDialog {
     public JComboBox<String> getJcbPeriodos() {
         return Cbx_Periodos;
     }
-
     public JButton getBtnAnterior() {
         return btnAnterior;
     }
@@ -69,7 +68,6 @@ public class JDFinContratacion extends javax.swing.JDialog {
     public JComboBox<String> getCbx_Periodos() {
         return Cbx_Periodos;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.

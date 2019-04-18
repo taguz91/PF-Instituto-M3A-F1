@@ -56,14 +56,14 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         docenteMD = dc.buscarDocente(cedula);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
-        
+
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
-                int pos = frmFinContrato.getTpFrm().getSelectedIndex(); 
+            public void mouseClicked(MouseEvent e) {
+                int pos = frmFinContrato.getTpFrm().getSelectedIndex();
                 if (pos > 0) {
                     frmFinContrato.getBtnAnterior().setEnabled(true);
-                }else{
+                } else {
                     frmFinContrato.getBtnAnterior().setEnabled(false);
                 }
             }
@@ -74,7 +74,6 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     }
 
     public void iniciarPeriodosDocente() {
-
         frmFinContrato.getBtnAnterior().addActionListener(e -> pnlAnterior());
         frmFinContrato.getJcbPeriodos().addActionListener(new ActionListener() {
             @Override
@@ -95,6 +94,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     public void listaPeriodos() {
         periodoBD = new PeriodoLectivoBD(conecta);
 
+        //List<PeriodoLectivoMD> listaPeriodos = periodoBD.llenarTabla();
         List<PeriodoLectivoMD> listaPeriodos = periodoBD.periodoDocente(cedula);
         for (int i = 0; i < listaPeriodos.size(); i++) {
             frmFinContrato.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
@@ -176,34 +176,51 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
         int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+        int pos = frmFinContrato.getTpFrm().getSelectedIndex();
         System.out.println(observacion);
         System.out.println(fecha);
-        if (observacion.equals("") == false && fecha != null && posPrd > 0) {
-            if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-                    || frmFinContrato.getLblErrorObservacion().isVisible() == true || posPrd == 0) {
+        frmFinContrato.getTpFrm().setSelectedIndex(1);
+        if (observacion.equals("") == false && fecha != null && frmFinContrato.getCbx_Periodos().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
+
+            if(pos == 0){
+                if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
+                    || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
                 //frmFinContrato.getBtnGuardar().setEnabled(false);
                 guardar = false;
-            } else {
-                System.out.println("Se puede guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                
+                } else {
+    //                System.out.println("Se puede guardar");
+    //                frmFinContrato.getBtnGuardar().setEnabled(true);
+    //                
+    //                frmFinContrato.getBtnGuardar().setText("Guardar");
+    //                guardar = true;
+
+                    frmFinContrato.getBtnGuardar().setEnabled(true);
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
+                }
+            } else if(pos == 1){
                 frmFinContrato.getBtnGuardar().setEnabled(true);
                 frmFinContrato.getBtnGuardar().setText("Guardar");
-                guardar = true;
+                
+            } else{
+                
             }
+            
+            
+            
         } else {
-            frmFinContrato.getBtnGuardar().setEnabled(false);
-            frmFinContrato.getBtnGuardar().setText("Siguiente");
+
         }
 
     }
 
     private void guardarFinContratacion() {
-
         String Observacion = "", fechaFinContra = "";
         Date fecha;
 
         Observacion = frmFinContrato.getTxtObservacion().getText().trim().toUpperCase();
         fecha = frmFinContrato.getJdcFinContratacion().getDate();
-
         if (!fechaFinContra.equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             fechaFinContra = sdf.format(fecha);
@@ -234,6 +251,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         } else {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
+
         }
 
     }
