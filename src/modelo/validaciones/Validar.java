@@ -134,5 +134,5 @@ public class Validar {
     public static boolean esHora(String entrada){
         return entrada.matches("[0-9]{1,2}+:+[0-9]{1,2}");
     }
-    
+ 
 }

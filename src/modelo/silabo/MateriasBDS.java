@@ -48,7 +48,7 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "AND pr.prd_lectivo_fecha_fin > current_date\n"
+                    + ""
                     + "EXCEPT\n"
                     + "SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
                     + "FROM \"Materias\" AS m\n"
@@ -60,7 +60,7 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Silabo\" AS s ON s.id_materia=m.id_materia\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "AND pr.prd_lectivo_fecha_fin > current_date");
+                    + "");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));

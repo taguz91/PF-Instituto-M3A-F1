@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1560" pageHeight="1000" columnWidth="1520" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.000000000000005"/>
-	<property name="ireport.x" value="84"/>
+	<property name="ireport.x" value="322"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -27,62 +27,66 @@
 	"ViewAlumnoCurso".persona_identificacion,
 	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDOS",
 	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRES",
-	ROUND( "ViewAlumnoCurso".almn_curso_nt_1_parcial, 1 ) AS "APORTE 1",
-	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_interciclo, 1 ) AS "INTERCICLO",
-	ROUND( "ViewAlumnoCurso".almn_curso_nt_2_parcial, 1 ) AS "APORTE 2",
-	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_final, 1 ) AS "EXAMEN FINAL",
-	ROUND( "ViewAlumnoCurso".almn_curso_nt_examen_supletorio, 1 ) AS "SUPLETORIO",
-	"ViewAlumnoCurso".almn_curso_asistencia,
 	ROUND( "ViewAlumnoCurso".almn_curso_nota_final, 0 ) AS "NOTA FINAL",
-	"ViewAlumnoCurso".almn_curso_estado,
-	"ViewAlumnoCurso".almn_curso_num_faltas,
 	"ViewAlumnoCurso".materia_nombre,
 	"ViewAlumnoCurso".nombre_jornada,
 	"ViewAlumnoCurso".curso_ciclo,
 	"ViewAlumnoCurso".curso_paralelo,
 	"ViewAlumnoCurso".carrera_nombre,
 	"ViewAlumnoCurso".prd_lectivo_nombre,
-	"ViewAlumnoCurso".persona_primer_nombre || ' ' || "ViewAlumnoCurso".persona_segundo_nombre AS "NOMBRE_PROF",
-	"ViewAlumnoCurso".persona_primer_apellido || ' ' || "ViewAlumnoCurso".persona_segundo_apellido AS "APELLIDO_PROF",
-	"ViewAlumnoCurso".coor_prim_apellido || ' ' || "ViewAlumnoCurso".coor_segn_apellido AS "APELLIDOS_COORDINADOR",
-	"ViewAlumnoCurso".coor_prim_nombre || ' ' || "ViewAlumnoCurso".coor_segn_nombre AS "NOMBRES_COORDINADOR" 
+	"ViewAlumnoCurso".pri_ape_docente || ' ' || "ViewAlumnoCurso".seg_ape_docente || ' ' ||
+	"ViewAlumnoCurso".pri_nom_docente || ' ' || "ViewAlumnoCurso".seg_nom_docente  AS 	"DOCENTE",
+	"ViewAlumnoCurso".coor_prim_apellido || ' ' || "ViewAlumnoCurso".coor_segn_apellido || ' ' ||
+	"ViewAlumnoCurso".coor_prim_nombre || ' ' || "ViewAlumnoCurso".coor_segn_nombre AS "COORDINADOR",
+	M.malla_almn_num_matricula
+	
 FROM
-	"ViewAlumnoCurso" 
+	"ViewAlumnoCurso" INNER JOIN "AlumnosCarrera" ON "ViewAlumnoCurso".id_alumno = "AlumnosCarrera".id_alumno
+ INNER JOIN "MallaAlumno" M on "AlumnosCarrera".id_almn_carrera = M.id_almn_carrera
 WHERE
 	"public"."ViewAlumnoCurso".id_docente = $P{id_docente}
-	AND "public"."ViewAlumnoCurso".prd_lectivo_nombre =  $P{prd_lectivo_nombre}
+	AND "public"."ViewAlumnoCurso".prd_lectivo_nombre = $P{prd_lectivo_nombre} 
 	AND "public"."ViewAlumnoCurso".curso_ciclo = $P{curso_ciclo}
 	AND "public"."ViewAlumnoCurso".curso_paralelo = $P{curso_paralelo}
 	AND "public"."ViewAlumnoCurso".nombre_jornada = $P{nombre_jornada}
 	AND "public"."ViewAlumnoCurso".materia_nombre = $P{materia_nombre}
 	AND "public"."ViewAlumnoCurso".almn_curso_nota_final >= 70
-	AND "public"."ViewAlumnoCurso".almn_curso_nota_final < 81	
-ORDER BY
-	"public"."ViewAlumnoCurso".persona_primer_apellido ASC]]>
+	AND "public"."ViewAlumnoCurso".almn_curso_nota_final < 81
+	AND M.malla_almn_num_matricula = (SELECT max(a.malla_almn_num_matricula) FROM 
+  "MallaAlumno" a where a.id_almn_carrera = M.id_almn_carrera GROUP BY a.id_almn_carrera) 
+	
+	GROUP BY "ViewAlumnoCurso".id_alumno,
+	"ViewAlumnoCurso".persona_identificacion,
+	"ViewAlumnoCurso".persona_primer_apellido, "ViewAlumnoCurso".persona_segundo_apellido,
+	"ViewAlumnoCurso".persona_primer_nombre, "ViewAlumnoCurso".persona_segundo_nombre,
+	ROUND( "ViewAlumnoCurso".almn_curso_nota_final, 0 ),
+	"ViewAlumnoCurso".materia_nombre,
+	"ViewAlumnoCurso".nombre_jornada,
+	"ViewAlumnoCurso".curso_ciclo,
+	"ViewAlumnoCurso".curso_paralelo,
+	"ViewAlumnoCurso".carrera_nombre,
+	"ViewAlumnoCurso".prd_lectivo_nombre,
+	"ViewAlumnoCurso".pri_ape_docente, "ViewAlumnoCurso".seg_ape_docente,
+	"ViewAlumnoCurso".pri_nom_docente, "ViewAlumnoCurso".seg_nom_docente,
+	"ViewAlumnoCurso".coor_prim_apellido, "ViewAlumnoCurso".coor_segn_apellido,
+	"ViewAlumnoCurso".coor_prim_nombre, "ViewAlumnoCurso".coor_segn_nombre,
+	M.malla_almn_num_matricula
+	ORDER BY "ViewAlumnoCurso".persona_primer_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="APELLIDOS" class="java.lang.String"/>
 	<field name="NOMBRES" class="java.lang.String"/>
-	<field name="APORTE 1" class="java.math.BigDecimal"/>
-	<field name="INTERCICLO" class="java.math.BigDecimal"/>
-	<field name="APORTE 2" class="java.math.BigDecimal"/>
-	<field name="EXAMEN FINAL" class="java.math.BigDecimal"/>
-	<field name="SUPLETORIO" class="java.math.BigDecimal"/>
-	<field name="almn_curso_asistencia" class="java.lang.String"/>
 	<field name="NOTA FINAL" class="java.math.BigDecimal"/>
-	<field name="almn_curso_estado" class="java.lang.String"/>
-	<field name="almn_curso_num_faltas" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="curso_ciclo" class="java.lang.Integer"/>
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="NOMBRE_PROF" class="java.lang.String"/>
-	<field name="APELLIDO_PROF" class="java.lang.String"/>
-	<field name="APELLIDOS_COORDINADOR" class="java.lang.String"/>
-	<field name="NOMBRES_COORDINADOR" class="java.lang.String"/>
+	<field name="DOCENTE" class="java.lang.String"/>
+	<field name="COORDINADOR" class="java.lang.String"/>
+	<field name="malla_almn_num_matricula" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -117,19 +121,9 @@ ORDER BY
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1190" y="81" width="164" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="319" y="81" width="223" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="1073" y="81" width="117" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="258" y="158" width="37" height="20"/>
@@ -151,7 +145,7 @@ ORDER BY
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1069" y="158" width="214" height="20"/>
+				<reportElement x="1083" y="158" width="214" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
@@ -198,6 +192,11 @@ ORDER BY
 				<reportElement x="16" y="55" width="167" height="134"/>
 				<imageExpression class="java.lang.String"><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="1083" y="81" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCENTE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -206,7 +205,7 @@ ORDER BY
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="439" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="442" y="0" width="73" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -217,7 +216,7 @@ ORDER BY
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="539" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="515" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -228,7 +227,7 @@ ORDER BY
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="639" y="0" width="155" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="615" y="0" width="155" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -239,7 +238,7 @@ ORDER BY
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="794" y="0" width="138" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="770" y="0" width="138" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -250,7 +249,7 @@ ORDER BY
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="932" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="908" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -260,12 +259,23 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[NOTA FINAL]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1008" y="0" width="75" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[N° MATRÍCULA]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="539" y="0" width="100" height="20"/>
+				<reportElement x="515" y="0" width="100" height="20"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -276,7 +286,7 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="639" y="0" width="155" height="20"/>
+				<reportElement x="615" y="0" width="155" height="20"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -287,7 +297,7 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="794" y="0" width="138" height="20"/>
+				<reportElement x="770" y="0" width="138" height="20"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -298,7 +308,7 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="932" y="0" width="100" height="20" backcolor="#FFCC99"/>
+				<reportElement mode="Opaque" x="908" y="0" width="100" height="20" backcolor="#FFCC99"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -309,7 +319,7 @@ ORDER BY
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOTA FINAL}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="439" y="0" width="100" height="20"/>
+				<reportElement x="1008" y="0" width="75" height="20"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -317,7 +327,18 @@ ORDER BY
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}-0]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{malla_almn_num_matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="0" width="72" height="20"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -329,24 +350,11 @@ ORDER BY
 	</pageFooter>
 	<summary>
 		<band height="176" splitType="Stretch">
-			<textField>
-				<reportElement x="486" y="125" width="149" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDO_PROF}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="369" y="126" width="117" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRE_PROF}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="453" y="146" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="485" y="146" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
-			<line>
-				<reportElement x="369" y="102" width="266" height="1"/>
-			</line>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="1354" y="156" width="166" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -354,24 +362,27 @@ ORDER BY
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="977" y="125" width="146" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APELLIDOS_COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="857" y="126" width="120" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBRES_COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="857" y="103" width="266" height="1"/>
-			</line>
 			<staticText>
-				<reportElement x="927" y="146" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="953" y="146" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
+			<line>
+				<reportElement x="414" y="115" width="234" height="1"/>
+			</line>
+			<line>
+				<reportElement x="879" y="114" width="234" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="415" y="126" width="233" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOCENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="879" y="126" width="234" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

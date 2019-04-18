@@ -50,6 +50,7 @@ public class CarrerasBDS extends CarreraMD {
                     + "WHERE usu_username=? ");
 
             st.setString(1, clave);
+            System.out.println(st);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
