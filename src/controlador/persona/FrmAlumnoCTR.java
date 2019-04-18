@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -12,8 +13,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import modelo.ConectarDB;
@@ -25,6 +31,12 @@ import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.CmbValidar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
@@ -559,6 +571,7 @@ public class FrmAlumnoCTR {
             this.bdAlumno = pasarDatos(persona);
             if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
                 JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+                botonreporteAlumno();
                 frmAlumno.dispose();
                 ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
@@ -571,6 +584,7 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
+                botonreporteAlumno();
                 frmAlumno.dispose();
                 ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
@@ -584,6 +598,7 @@ public class FrmAlumnoCTR {
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
+                botonreporteAlumno();
                 frmAlumno.dispose();
                 ctrPrin.cerradoJIF();
 //                reiniciarComponentes(frmAlumno);
@@ -685,5 +700,44 @@ public class FrmAlumnoCTR {
         persona.setContacto_Emergencia(frmAlumno.getTxt_ConEmergency().getText());
         return persona;
     }
+     public void llamaReporteAlumno() {
+        JasperReport jr;
+        String path = "/vista/reportes/repAlumno.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        try {
+            Map parametro = new HashMap();
+            parametro.put("cedula_alumno",frmAlumno.getTxt_Cedula().getText());
+            System.out.println( "parametro del reporte"+parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Reporte de Alumno");
+            
+
+        } catch (JRException ex) {
+            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void botonreporteAlumno(){
+     int s = JOptionPane.showOptionDialog(vtnPrin,
+                "Registro de persona \n"
+                + "¿Dessea Imprimir el Registro realizado ?", "REPORTE ALUMNO",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"SI", "NO"}, "NO");
+        switch (s) {
+            case 0:
+               llamaReporteAlumno();
+                break;
+            case 1:
+                
+                break;
+            default:
+                break;
+    }
+     }
 
 }
