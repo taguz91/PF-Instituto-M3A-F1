@@ -47,7 +47,6 @@ public abstract class AbstractForm {
         listaNomNotas = TipoDeNotaBD.SelectAll();
         cargarComboNotas();
         cargarComboPeriodo();
-        setObjinTxt();
 
         InitEventos();
         try {

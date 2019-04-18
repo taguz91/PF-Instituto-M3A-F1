@@ -81,7 +81,7 @@ public class VtnPeriodoIngresoNotasCTR {
             }
 
         });
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnIngresar().addActionListener(e -> btnIngresar(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
     }
 
@@ -190,11 +190,10 @@ public class VtnPeriodoIngresoNotasCTR {
         }
     }
 
-    private void btnIngresarActionPerformance(ActionEvent e) {
+    private void btnIngresar(ActionEvent e) {
 
-//        FrmIngresoNotasAgregar form = new FrmIngresoNotasAgregar(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this, "Agregar");
-//        form.Init();
-
+        FrmIngresoNotasAgregar form = new FrmIngresoNotasAgregar(desktop, new FrmIngresoNotas(), modelo, this);
+        form.InitAgregar();
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {
