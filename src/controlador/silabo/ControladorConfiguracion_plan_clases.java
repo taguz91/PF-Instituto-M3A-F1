@@ -7,33 +7,25 @@ import java.util.stream.Stream;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
-import modelo.materia.MateriaMD;
+import modelo.curso.CursoMD;
 import modelo.silabo.CarrerasBDS;
-import modelo.silabo.MateriasBDS;
 import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
-import modelo.silabo.dbCarreras;
 import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmCRUDHorarios;
 import vista.silabos.frmConfiguraciónPlanClase;
-import vista.silabos.frmPlanClase;
 
 public class ControladorConfiguracion_plan_clases {
 
     private final UsuarioBD usuario;
     private ConexionBD conexion;
     private frmConfiguraciónPlanClase frm_cong_PlanClase;
-    private frmPlanClase frm_Plan_Clase;
     private final VtnPrincipal vtnPrincipal;
-    private List<CarreraMD> carrerasDocente;
-    private List<MateriaMD> materiasDocente;
     private List<SilaboMD> silabosDocente;
-    private SilaboMD silabo;
     private List<UnidadSilaboMD> unidadesSilabo;
-
+    private List<CursoMD> cursosSilabo;
     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
         this.vtnPrincipal = vtnPrincipal;
@@ -61,9 +53,13 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getCmb_carreras().addActionListener(a1 -> cargarSilabosDocentes());
         frm_cong_PlanClase.getCmb_silabos().addActionListener(a1 -> iniciarSilabo(unidades()));
         cargarComboCarreras();
+        cargarSilabosDocentes();
+        iniciarSilabo(unidades());
+
       //  cargarSilabosDocentes();
        // iniciarSilabo(unidades());
 //     materiaseleccionada();
+
 
     }
 
@@ -116,13 +112,6 @@ public class ControladorConfiguracion_plan_clases {
 
     }
 
-    void materiaseleccionada() {
-        silabo = (SilaboMD) frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
-        unidadesSilabo.forEach((umd) -> {
-            frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
-        });
-
-    }
+   
 
 }
