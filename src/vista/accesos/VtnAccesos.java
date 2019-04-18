@@ -36,7 +36,7 @@ public class VtnAccesos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID Acceso", "Nombre Acceso"
+                "No.", "ID Acceso", "Nombre Acceso"
             }
         ));
         jScrollPane1.setViewportView(tblAccesosDeRol);

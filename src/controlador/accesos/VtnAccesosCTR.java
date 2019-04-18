@@ -24,7 +24,7 @@ public class VtnAccesosCTR {
     private final VtnPrincipalCTR ctrPrin;
 
     //Listas
-    private List<AccesosMD> listaAccesos;
+    private List<AccesosMD> listaAccesosbd;
     private boolean cargarTabla = true;
 
     public VtnAccesosCTR(VtnPrincipal desktop, VtnAccesos vista, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
@@ -46,7 +46,8 @@ public class VtnAccesosCTR {
 
         new Thread(() -> {
             Middlewares.setLoadCursor(vista);
-            listaAccesos = AccesosBD.SelectAll();
+            listaAccesosbd = AccesosBD.SelectAll();
+            cargarTabla(listaAccesosbd);
             Middlewares.setDefaultCursor(vista);
         }).start();
 
@@ -55,6 +56,7 @@ public class VtnAccesosCTR {
             desktop.getDpnlPrincipal().add(vista);
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
             vista.setSelected(true);
+            
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,7 +69,7 @@ public class VtnAccesosCTR {
     
     //METODOS DE APOYO
     
-    public void cargarTabla(List <AccesosBD> lista){
+    public void cargarTabla(List <AccesosMD> lista){
         new Thread(() -> {
             if (cargarTabla) {
 
@@ -97,7 +99,7 @@ public class VtnAccesosCTR {
         tablaAccesos.addRow(new Object[]{
             tablaAccesos.getDataVector().size() + 1,
             obj.getIdAccesos(),
-            obj.getNombre(),
+            obj.getNombre()
             
         });
     }
