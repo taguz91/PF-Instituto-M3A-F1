@@ -99,14 +99,14 @@ public class ControladorConfiguracion_plan_clases {
 
     public SilaboMD unidades() {
         System.out.println("...............................................");
-        Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
+        Optional<SilaboMD> silabounidad =null;
+        if (silabounidad==null) {
+            return null;
+        }else{
+        silabounidad= silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
-
-
-        if (silabounidad.equals(" ")) {
-            return silabounidad.get();
+        return silabounidad.get();
         }
-        return null;
 
     }
 

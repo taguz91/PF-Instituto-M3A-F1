@@ -140,7 +140,7 @@ public class ControladorSilaboC {
 
             periodosCarrera = cargarComboPeriodos(carreraSeleccionada.get().getId());
             materiasDocente = cargarComboMaterias(carreraSeleccionada.get().getId());
-
+            
         });
 
         configuracion.getBtnSiguiente().addActionListener((ActionEvent ae) -> {
@@ -159,13 +159,16 @@ public class ControladorSilaboC {
             configuracion.dispose();
 
         });
-
+        
+       
         configuracion.getBtnCancelar().addActionListener((ActionEvent ae) -> {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 configuracion.dispose();
             }
         });
+        
+        
 
         configuracion.getCmbCarrera().setSelectedIndex(0);
 
