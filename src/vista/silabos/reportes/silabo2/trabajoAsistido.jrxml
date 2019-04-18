@@ -14,7 +14,7 @@ and u.id_silabo=$P!{parameter1}]]>
 	<field name="id_unidad" class="java.lang.Integer"/>
 	<field name="indicador" class="java.lang.String"/>
 	<field name="id_tipo_actividad" class="java.lang.Integer"/>
-	<field name="valoracion" class="java.lang.Integer"/>
+	<field name="valoracion" class="java.lang.Double"/>
 	<field name="fecha_presentacion" class="java.sql.Date"/>
 	<field name="fecha_envio" class="java.sql.Date"/>
 	<background>

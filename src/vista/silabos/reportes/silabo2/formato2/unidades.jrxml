@@ -53,7 +53,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="155" y="0" width="400" height="33" forecolor="#006699" uuid="cd420ef9-eaab-4234-8d9c-613cd7c9bb5f"/>

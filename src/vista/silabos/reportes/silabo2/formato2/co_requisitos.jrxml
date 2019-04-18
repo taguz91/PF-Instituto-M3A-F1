@@ -58,7 +58,7 @@
 				<text><![CDATA[Co-requisitos]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="40" width="260" height="16" uuid="8ac6bdb1-3f22-4228-bd46-a4379034a756"/>
+				<reportElement x="0" y="40" width="260" height="16" uuid="cb124de2-d071-4a99-8084-3034c6375a6b"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

@@ -36,7 +36,7 @@ public class VtnFinContratacionCTR {
     private final VtnFinContratacion frmFinContrato;
     private final VtnPrincipal vtnPrin;
     private DocenteBD dc;
-    private DocenteMD docentesMD;
+    private DocenteMD docenteMD;
     private final String cedula;
     private boolean guardar = true;
 
@@ -87,7 +87,7 @@ public class VtnFinContratacionCTR {
             }
         });
         
-        docentesMD = dc.buscarDocente(cedula);
+        docenteMD = dc.buscarDocente(cedula);
     }
 
     public void habilitarGuardar() {
@@ -136,7 +136,7 @@ public class VtnFinContratacionCTR {
 //            docente.setFechaFinContratacion(convertirDate(fecha));
             
 
-            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docentesMD);
+            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
             vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
             frmFinContrato.dispose();
         }
@@ -147,8 +147,8 @@ public class VtnFinContratacionCTR {
         Date fecha;
         fecha = frmFinContrato.getJdcFinContratacion().getDate();
 
-        if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
-                && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
+        if (docenteMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
+                && docenteMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
 
             
             return true;

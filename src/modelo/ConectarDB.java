@@ -67,6 +67,7 @@ public class ConectarDB {
 
     public PreparedStatement sqlPS(String nsql) {
         try {
+            ct = ResourceManager.getConnection();
             PreparedStatement ps = ct.prepareStatement(nsql);
             return ps;
         } catch (SQLException e) {
@@ -78,6 +79,7 @@ public class ConectarDB {
     public SQLException nosql(String noSql) {
         try {
             //Variable para las transacciones
+            ct = ResourceManager.getConnection();
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.execute(noSql);
@@ -95,6 +97,7 @@ public class ConectarDB {
         try {
             //Iniciamos la variable para las transacciones
 //            if (st == null) {
+            ct = ResourceManager.getConnection();
             st = ct.createStatement();
 //            }
             //Ejecutamos la consulta

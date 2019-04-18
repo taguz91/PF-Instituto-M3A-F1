@@ -69,6 +69,7 @@ public class ControladorCRUD {
         opcionesImpresion(false);
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
+            
             crud.dispose();
 
             ControladorSilaboC csc = new ControladorSilaboC(principal, usuario, conexion);
@@ -168,7 +169,7 @@ public class ControladorCRUD {
         } catch (Exception e) {
             
             JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
-                   
+            crud.dispose();    
             
         }
 

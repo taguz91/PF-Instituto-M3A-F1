@@ -61,7 +61,7 @@ DECLARE
   cursos_prd CURSOR FOR SELECT id_curso, id_materia , c.id_prd_lectivo, id_carrera
   FROM public."Cursos" c, public."PeriodoLectivo" pl
   WHERE
-  c.id_prd_lectivo = 2  AND
+  c.id_prd_lectivo = 4  AND
   pl.id_prd_lectivo = c.id_prd_lectivo ORDER BY id_materia;
 BEGIN
   OPEN cursos_prd;
@@ -139,32 +139,32 @@ BEGIN
       RAISE NOTICE 'Curso o reprobo : % Nota: %', estado, reg.almn_curso_nota_final;
 
       IF num_matricula = 1 THEN
-      UPDATE public."MallaAlumno"
-          SET  malla_almn_nota1 = reg.almn_curso_nota_final, malla_almn_estado=estado
-          WHERE id_materia = reg.id_materia
-          AND id_almn_carrera = (
-            SELECT id_almn_carrera
-            FROM public."AlumnosCarrera"
-            WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
-          );
+		    UPDATE public."MallaAlumno"
+		        SET  malla_almn_nota1 = reg.almn_curso_nota_final, malla_almn_estado=estado
+		        WHERE id_materia = reg.id_materia
+		        AND id_almn_carrera = (
+		          SELECT id_almn_carrera
+		          FROM public."AlumnosCarrera"
+		          WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
+		        ) AND malla_almn_estado = 'M';
       ELSIF num_matricula = 2 THEN
-      UPDATE public."MallaAlumno"
-      SET malla_almn_nota2= reg.almn_curso_nota_final, malla_almn_estado=estado
-      WHERE id_materia = reg.id_materia
-      AND id_almn_carrera = (
-        SELECT id_almn_carrera
-        FROM public."AlumnosCarrera"
-        WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
-      );
+	      UPDATE public."MallaAlumno"
+	      SET malla_almn_nota2= reg.almn_curso_nota_final, malla_almn_estado=estado
+	      WHERE id_materia = reg.id_materia
+	      AND id_almn_carrera = (
+	        SELECT id_almn_carrera
+	        FROM public."AlumnosCarrera"
+	        WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
+	      ) AND malla_almn_estado = 'M';
       ELSE
-      UPDATE public."MallaAlumno"
-      SET  malla_almn_nota3 = reg.almn_curso_nota_final, malla_almn_estado=estado
-      WHERE id_materia = reg.id_materia
-      AND id_almn_carrera = (
-        SELECT id_almn_carrera
-        FROM public."AlumnosCarrera"
-        WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
-      );
+	      UPDATE public."MallaAlumno"
+	      SET  malla_almn_nota3 = reg.almn_curso_nota_final, malla_almn_estado=estado
+	      WHERE id_materia = reg.id_materia
+	      AND id_almn_carrera = (
+	        SELECT id_almn_carrera
+	        FROM public."AlumnosCarrera"
+	        WHERE id_carrera = reg.id_carrera AND id_alumno = reg.id_alumno
+	      ) AND malla_almn_estado = 'M';
       END IF;
 
       FETCH almn_curso INTO reg;
@@ -181,9 +181,9 @@ ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE pasar_notas();
 
 
---Demostracion 
+--Demostracion
 
---Malla de los alumnos que se eliminara 
+--Malla de los alumnos que se eliminara
 SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
     malla_almn_ciclo, malla_almn_num_matricula,
     malla_almn_nota1, malla_almn_nota2,
