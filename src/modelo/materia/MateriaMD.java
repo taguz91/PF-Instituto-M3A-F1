@@ -217,6 +217,22 @@ public class MateriaMD {
     public void setMateriacampoformacion(String materiacampoformacion) {
         this.materiacampoformacion = materiacampoformacion;
     }
+
+    public boolean isMateriaNucleo() {
+        return materiaNucleo;
+    }
+
+    public void setMateriaNucleo(boolean materiaNucleo) {
+        this.materiaNucleo = materiaNucleo;
+    }
+
+    public boolean isMateriaActiva() {
+        return materiaActiva;
+    }
+
+    public void setMateriaActiva(boolean materiaActiva) {
+        this.materiaActiva = materiaActiva;
+    }
     
     
 }

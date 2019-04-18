@@ -23,9 +23,53 @@ public class MateriaBD extends MateriaMD {
         this.car = new CarreraBD(conecta);
     }
     
-//    public boolean insertarMateria(){
-//        String sql = "";
-//    }
+    public boolean insertarMateria(){
+        String sql = "INSERT INTO public.\"Materias\"(\n"
+                + "	 id_materia, id_carrera, id_eje, materia_codigo, materia_nombre, materia_ciclo,"
+                + " materia_creditos, materia_tipo, materia_categoria, materia_tipo_acreditacion, materia_horas_docencia, materia_horas_practicas,"
+                + " materia_horas_auto_estudio, materia_horas_presencial, materia_total_horas, materia_activa, "
+                + "materia_objetivo, materia_descripcion, materia_objetivo_especifico, materia_organizacion_curricular, materia_campo_formacion, materia_nucleo)\n"
+                + "	VALUES ( " + getId() + ", " + getCarrera().getId() + ", " + getEje().getId() + ", '" + getCodigo() + "', '" + getNombre() + "', " + getCiclo()
+                + ", " + getCreditos() + ", '" + getTipo() + "', '" + getCategoria() + "', '" + getTipoAcreditacion() + "', " + getHorasDocencia() + ", " + getHorasPracticas() 
+                + ", " + getHorasAutoEstudio() + ", " + getHorasPresenciales() + ", " + getTotalHoras() + ", true, '"
+                + getObjetivo() + "', '" + getDescripcion() + "', '" + getObjetivoespecifico() + "', '" + getOrganizacioncurricular() + "', '" + getMateriacampoformacion() + "', " + isMateriaNucleo() + ");";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
+    public boolean editarMateria(int aguja){
+        String sql = "UPDATE public.\"Materias\" SET\n"
+                + " id_carrera = " + getCarrera().getId() + ", id_eje = " + getEje().getId() + ", materia_codigo = '" + getCodigo()
+                + "', materia_nombre = '" + getNombre() + "', materia_ciclo = " + getCiclo() + ", materia_creditos = " + getCreditos()
+                + ", materia_tipo = '" + getTipo() + "', materia_categoria = '" + getCategoria() + "', materia_tipo_acreditacion = '" + getTipoAcreditacion()
+                + "', materia_horas_docencia = " + getHorasDocencia() + ", materia_horas_practicas = " + getHorasPracticas() + ", materia_horas_auto_estudio = " + getHorasAutoEstudio()
+                + ", materia_horas_presencial = " + getHorasPresenciales() + ", materia_total_horas = " + getTotalHoras() + ", materia_objetivo = '" + getObjetivo() + "\n"
+                + "', materia_descripcion = '" + getDescripcion() + "', materia_objetivo_especifico = '" + getObjetivoespecifico() + "', materia_organizacion_curricular = '" + getOrganizacioncurricular()
+                + "', materia_campo_formacion = '" + getMateriacampoformacion() + "', materia_nucleo = '" + isMateriaNucleo() + "'\n"
+                + " WHERE id_materia = " + aguja + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
+    public boolean elminarMateria(int aguja){
+        String sql = "UPDATE public.\"Materias\" SET\n"
+                + " materia_activa = false"
+                + " WHERE id_materia = " + aguja + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
