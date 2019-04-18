@@ -22,6 +22,10 @@ public class MateriaBD extends MateriaMD {
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
     }
+    
+//    public boolean insertarMateria(){
+//        String sql = "";
+//    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
