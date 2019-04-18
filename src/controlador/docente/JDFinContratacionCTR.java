@@ -76,6 +76,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     }
 
     public void iniciarPeriodosDocente() {
+
         frmFinContrato.getLbl_ErrPeriodos().setVisible(false);
         frmFinContrato.getBtnAnterior().addActionListener(e -> pnlAnterior());
         frmFinContrato.getJcbPeriodos().addActionListener(new ActionListener() {
@@ -116,7 +117,6 @@ public class JDFinContratacionCTR extends DependenciasCTR {
     public void listaPeriodos() {
         periodoBD = new PeriodoLectivoBD(conecta);
 
-        //List<PeriodoLectivoMD> listaPeriodos = periodoBD.llenarTabla();
         List<PeriodoLectivoMD> listaPeriodos = periodoBD.periodoDocente(cedula);
         for (int i = 0; i < listaPeriodos.size(); i++) {
             frmFinContrato.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
@@ -198,54 +198,55 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         String observacion;
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
-        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+//        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
         int pos = frmFinContrato.getTpFrm().getSelectedIndex();
-        System.out.println(observacion);
-        System.out.println(fecha);
-        frmFinContrato.getTpFrm().setSelectedIndex(1);
-        if (observacion.equals("") == false && fecha != null && frmFinContrato.getCbx_Periodos().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
-
-            if(pos == 0){
+        
+        if(pos == 0){
+            if(observacion.equals("") == false && fecha != null){
                 if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-                    || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
-                //frmFinContrato.getBtnGuardar().setEnabled(false);
-                guardar = false;
-                frmFinContrato.getBtnGuardar().setEnabled(false);
-                
+                        || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
+                    frmFinContrato.getBtnGuardar().setEnabled(false);
                 } else {
-    //                System.out.println("Se puede guardar");
-    //                frmFinContrato.getBtnGuardar().setEnabled(true);
-    //                
-    //                frmFinContrato.getBtnGuardar().setText("Guardar");
-    //                guardar = true;
-
+                    System.out.println("Se puede guardar");
                     frmFinContrato.getBtnGuardar().setEnabled(true);
                     frmFinContrato.getBtnGuardar().setText("Siguiente");
                 }
-            } else if(pos == 1){
+            } else{
                 frmFinContrato.getBtnGuardar().setEnabled(true);
                 frmFinContrato.getBtnGuardar().setText("Siguiente");
             }
         } else if(pos == 1){
             if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
                 frmFinContrato.getBtnGuardar().setText("Guardar");
-                
-            } else{
-                
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            } else if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
             }
             
-            
-            
-        } else {
+            if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            } else if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
+                System.out.println("entro");
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(true);
+                guardar = true;
+            }
         }
     }
 
     private void guardarFinContratacion() {
+
         String Observacion = "", fechaFinContra = "";
         Date fecha;
 
         Observacion = frmFinContrato.getTxtObservacion().getText().trim().toUpperCase();
         fecha = frmFinContrato.getJdcFinContratacion().getDate();
+
         if (!fechaFinContra.equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             fechaFinContra = sdf.format(fecha);
@@ -276,6 +277,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         } else {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
+            habilitarGuardar();
         }
 
     }
