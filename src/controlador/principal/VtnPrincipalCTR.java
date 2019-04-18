@@ -41,6 +41,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -272,7 +273,10 @@ public class VtnPrincipalCTR {
         /*
             SET DIRECCION IP
          */
-        vtnPrin.getLblIP().setText(Propiedades.getPropertie("ip"));
+        String IP = Propiedades.getPropertie("ip");
+        String database = Propiedades.getPropertie("database");
+
+        vtnPrin.getLblIP().setText(IP + "/" + database);
 
     }
 
@@ -1048,7 +1052,7 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtHistorialUsers().setEnabled(false);
                 vtnPrin.getMnNotas().setEnabled(false);
             }
-        }else{
+        } else {
             System.out.println("Entre en la base de datos pruebas");
             vtnPrin.setTitle("PF M3A | Modo Pruebas Activado");
         }
