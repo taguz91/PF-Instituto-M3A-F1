@@ -1289,7 +1289,7 @@ public class FrmPersonaCTR {
             
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
      public void botonreportepersona(){

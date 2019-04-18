@@ -277,7 +277,7 @@ public class VtnCursoCTR {
             view.setTitle("Lista de estudiantes");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 

@@ -7,6 +7,7 @@ package vista.usuario;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -36,6 +37,14 @@ public class FrmRol extends javax.swing.JInternalFrame {
     public JTextField getTxtNombre() {
         return txtNombre;
     }
+
+    public JTextArea getTxtObservaciones() {
+        return txtObservaciones;
+    }
+
+    public void setTxtObservaciones(JTextArea txtObservaciones) {
+        this.txtObservaciones = txtObservaciones;
+    }
     
 
     /**
@@ -54,8 +63,8 @@ public class FrmRol extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JSeparator();
         txtNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        txtObservaciones = new javax.swing.JTextArea();
+        lblObservaciones = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -67,11 +76,11 @@ public class FrmRol extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane1.setViewportView(txtObservaciones);
 
-        jLabel1.setText("Observaciones:");
+        lblObservaciones.setText("Observaciones:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,7 +98,7 @@ public class FrmRol extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombre)
-                    .addComponent(jLabel1))
+                    .addComponent(lblObservaciones))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -111,7 +120,7 @@ public class FrmRol extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(lblObservaciones))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,12 +137,12 @@ public class FrmRol extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblObservaciones;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextArea txtObservaciones;
     // End of variables declaration//GEN-END:variables
 }

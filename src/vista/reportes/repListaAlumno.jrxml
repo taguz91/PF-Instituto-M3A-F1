@@ -40,7 +40,7 @@ order by p.persona_primer_apellido;]]>
 		<band height="119" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="358" y="43" width="197" height="20"/>

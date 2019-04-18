@@ -327,7 +327,7 @@ public class VtnDocenteCTR {
 
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repDocentesCarrera.jasper";
+        String path = "/vista/reportes/repDocentesCarrera.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
@@ -335,14 +335,14 @@ public class VtnDocenteCTR {
             Map parametro = new HashMap();
             parametro.put("id", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
@@ -409,7 +409,7 @@ public class VtnDocenteCTR {
                 view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
-                Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "error" + ex);
             }
         }
     }
