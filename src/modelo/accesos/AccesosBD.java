@@ -40,7 +40,7 @@ public class AccesosBD extends AccesosMD {
         return ResourceManager.Statement(INSERT) == null;
     }
 
-    public List<AccesosMD> SelectAll() {
+    public static List<AccesosMD> SelectAll() {
 
         String SELECT = "SELECT id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" ";
 
