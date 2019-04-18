@@ -97,6 +97,7 @@ public class pgConect {
     public SQLException noQuery(String nSql) {
         System.out.println(nSql);
         try {
+            con = ResourceManager.getConnection();
             st = con.createStatement();
 
             st.execute(nSql);
@@ -115,6 +116,7 @@ public class pgConect {
 
         System.out.println(sql);
         try {
+            con = ResourceManager.getConnection();
             st = con.createStatement();
 
             rs = st.executeQuery(sql);
