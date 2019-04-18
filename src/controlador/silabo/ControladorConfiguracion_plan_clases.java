@@ -44,11 +44,8 @@ public class ControladorConfiguracion_plan_clases {
 
     public void iniciarControlaador() {
         conexion.conectar();
-        
-       // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
-        
-        
-        
+
+        // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
@@ -104,37 +101,33 @@ public class ControladorConfiguracion_plan_clases {
         }
     }
 
- /*   public SilaboMD unidades() {
+    public SilaboMD unidades() {
         System.out.println("...............................................");
-        Optional<SilaboMD> silabounidad =null;
-        if (silabounidad==null) {
+        Optional<SilaboMD> silabounidad = null;
+        if (silabounidad == null) {
             return null;
-        }else{
-        silabounidad= silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
-                frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
+        } else {
+            silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
+                    frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
 
-
-
-     //   return silabounidad.get();
-        //sale un error...revisaras
+            //   return silabounidad.get();
+            //sale un error...revisaras
 //
 //        if (silabounidad.equals("")) {
 //            return silabounidad.get();
 //        }
 //        return null;
-
-
-        if (silabounidad.equals(" ")) {
-            return silabounidad.get();
+//
+//        if (silabounidad.equals(" ")) {
+//            return silabounidad.get();
+//        }
+       return null;
+//
+//        return silabounidad.get();
+//        }
         }
-        return null;
-
-        return silabounidad.get();
-        }
-
-
-*/
     }
+
     void materiaseleccionada() {
         silabo = (SilaboMD) frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
