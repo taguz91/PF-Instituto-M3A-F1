@@ -73,7 +73,7 @@ public class ResourceManager implements Serializable {
 
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         } catch (SQLException ex) {
-            Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("INTENTE NUEVAMENTE");
         }
     }
 
