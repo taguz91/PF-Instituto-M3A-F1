@@ -56,6 +56,11 @@ public class ControladorConfiguracion_plan_clases {
         cargarSilabosDocentes();
         iniciarSilabo(unidades());
 
+      //  cargarSilabosDocentes();
+       // iniciarSilabo(unidades());
+//     materiaseleccionada();
+
+
     }
 
     public List<CarreraMD> cargarComboCarreras() {
@@ -88,7 +93,9 @@ public class ControladorConfiguracion_plan_clases {
                 frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
             });
         } else {
-            JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
+            System.out.println("NO EXISTEN SILABOS");
+            
+            
         }
     }
 
