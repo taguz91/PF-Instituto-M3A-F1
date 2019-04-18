@@ -81,6 +81,7 @@ CREATE TABLE "Materias"(
 	"materia_objetivo_especifico" TEXT,
 	"materia_organizacion_curricular" TEXT,
 	"materia_campo_formacion" character varying(200),
+	"materia_nucleo" boolean DEFAULT 'false',
 	CONSTRAINT materia_pk PRIMARY KEY ("id_materia")
 ) WITH (OIDS = FALSE);
 
