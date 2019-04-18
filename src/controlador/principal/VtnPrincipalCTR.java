@@ -1,6 +1,7 @@
 package controlador.principal;
 
 import controlador.Libraries.Middlewares;
+import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
@@ -98,7 +99,7 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
-
+import vista.accesos.VtnAccesos;
 /**
  *
  * @author Johnny
@@ -165,6 +166,7 @@ public class VtnPrincipalCTR {
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
         this.pruebas = pruebas;
+        
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
         this.icono = icono;
@@ -222,6 +224,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
+        vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -568,6 +571,18 @@ public class VtnPrincipalCTR {
             FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, this);
             ctrFrm.iniciar();
         }
+    }
+    
+    public void abrirVtnAccesos() {
+        VtnAccesos vtnAcceso = new VtnAccesos();
+        eventoInternal(vtnAcceso);
+        if (numVtns < 5) {
+            VtnAccesosCTR ctrVtnAcceso = new VtnAccesosCTR(vtnPrin, vtnAcceso, conecta, this);
+            ctrVtnAcceso.Init();
+        } else {
+            errorNumVentanas();
+        }
+
     }
 
     private void controladorCRUD() {
