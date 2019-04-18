@@ -9,11 +9,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
+import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
@@ -118,6 +122,12 @@ public class LoginCTR {
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
 
+                Map<Object, Object> properties = new HashMap<>();
+                properties.put("username", USERNAME);
+                properties.put("password", PASSWORD);
+
+                Propiedades.generateUserProperties(properties);
+
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
 
@@ -132,9 +142,6 @@ public class LoginCTR {
 
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista, false);
                         vtn.Init();
-                        
-                        
-                        
 
                     } else {
                         vista.getLblAvisos().setVisible(true);
