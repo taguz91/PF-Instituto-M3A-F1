@@ -185,6 +185,11 @@
                 <Property name="text" type="java.lang.String" value="Accesos"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtMiPerfil">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mi Perfil"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">
