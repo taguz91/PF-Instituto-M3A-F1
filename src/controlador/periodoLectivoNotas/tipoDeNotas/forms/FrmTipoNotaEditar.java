@@ -46,6 +46,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
                 String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
                 Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                vista.dispose();
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
             }

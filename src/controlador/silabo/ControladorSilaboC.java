@@ -158,7 +158,7 @@ public class ControladorSilaboC {
             
             configuracion.dispose();
             
-            principal.getBtnIngresarSilabo().doClick();
+            
 
         });
         configuracion.getCmbCarrera().setSelectedIndex(0);
