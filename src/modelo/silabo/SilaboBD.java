@@ -102,7 +102,7 @@ public class SilaboBD extends SilaboMD {
      public static List<CursoMD> Consultarcursos(ConexionBD conexion, int idsilabo,int id_docente){
          List<CursoMD> cursos=new ArrayList<>();
         try {
-            PreparedStatement st = conexion.getCon().prepareCall("SELECT curso_nombre FROM \"Cursos\" "
+            PreparedStatement st = conexion.getCon().prepareCall("SELECT id_curso,curso_nombre FROM \"Cursos\" "
                     + "where id_materia=(select id_materia from \"Silabo\" where id_silabo=?) \n" +
        "and id_prd_lectivo=(select id_prd_lectivo from \"Silabo\" where id_silabo=?)\n" +
        "and id_docente=?");
@@ -114,6 +114,7 @@ public class SilaboBD extends SilaboMD {
 
             while (rs.next()) {
                 CursoMD cur=new CursoMD();
+                cur.setId_curso(rs.getInt(2));
                 cur.setCurso_nombre(rs.getString(1));
                 
                 cursos.add(cur);
