@@ -318,6 +318,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenu getMnNotas1() {
         return mnNotas1;
     }
+
+    public JMenuItem getMnCtAccesos() {
+        return mnCtAccesos;
+    }
+
+    public void setMnCtAccesos(JMenuItem mnCtAccesos) {
+        this.mnCtAccesos = mnCtAccesos;
+    }
     
     
     
@@ -381,6 +389,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtActivarNotas = new javax.swing.JMenuItem();
+        mnCtAccesos = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -637,7 +646,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -712,9 +721,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
-
-        mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
-
         mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
 
@@ -751,6 +757,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.add(mnCtActivarNotas);
 
         mnTipoNotas.add(mnNotas);
+
+        mnCtAccesos.setText("Accesos");
+        mnTipoNotas.add(mnCtAccesos);
 
         menuCrud.add(mnTipoNotas);
 
@@ -923,6 +932,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblIP;
     private javax.swing.JMenuBar menuCrud;
+    private javax.swing.JMenuItem mnCtAccesos;
     private javax.swing.JMenuItem mnCtActivarNotas;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;
