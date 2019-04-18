@@ -137,7 +137,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true, true, true, true
+                true, false, false, false, false, false, false, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -149,18 +149,18 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblCursoTipoNotas);
         if (tblCursoTipoNotas.getColumnModel().getColumnCount() > 0) {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setResizable(false);
-            tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(29);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setResizable(false);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(30);
-            tblCursoTipoNotas.getColumnModel().getColumn(2).setMinWidth(100);
-            tblCursoTipoNotas.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMinWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMaxWidth(110);
             tblCursoTipoNotas.getColumnModel().getColumn(3).setPreferredWidth(50);
             tblCursoTipoNotas.getColumnModel().getColumn(4).setMinWidth(110);
             tblCursoTipoNotas.getColumnModel().getColumn(4).setMaxWidth(110);
-            tblCursoTipoNotas.getColumnModel().getColumn(5).setMinWidth(150);
-            tblCursoTipoNotas.getColumnModel().getColumn(5).setMaxWidth(150);
-            tblCursoTipoNotas.getColumnModel().getColumn(6).setMinWidth(150);
-            tblCursoTipoNotas.getColumnModel().getColumn(6).setMaxWidth(150);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMaxWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMaxWidth(140);
             tblCursoTipoNotas.getColumnModel().getColumn(7).setResizable(false);
         }
 
