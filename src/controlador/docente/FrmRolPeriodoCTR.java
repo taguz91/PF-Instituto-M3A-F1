@@ -16,7 +16,6 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.Validar;
 import vista.docente.FrmRolesPeriodos;
-import vista.docente.VtnRolesPeriodos;
 import vista.principal.VtnPrincipal;
 
 /**

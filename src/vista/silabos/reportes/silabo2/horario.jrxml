@@ -4,6 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_materia" class="java.lang.String"/>
+	<parameter name="id_silabo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select distinct hora,string_agg(lu,'') as Lunes,string_agg(ma,'') as Martes,string_agg(mi,'') as Miércoles,string_agg(ju,'') as Jueves,string_agg(vi,'') as Viernes,string_agg(sa,'') as S from(
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
@@ -11,7 +12,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as "lu",null as ma,null as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -19,7 +20,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as ma,null as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3'  and c.id_materia=$P!{id_materia}
+where      c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -28,7 +29,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as mi,null as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -38,7 +39,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as ju,null as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -49,7 +50,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
 				 as vi,null as sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 	union
 select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora, 
 			'' as lu,
@@ -61,7 +62,7 @@ select CONCAT(g.hora_inicio_sesion,' a ', g.hora_fin_sesion) as hora,
 				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) else ' ' end
 				 as  sa
 from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
-where    c.curso_ciclo='3' and c.id_materia=$P!{id_materia}
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
 
 ) as x
 group by hora
@@ -147,7 +148,7 @@ order by hora]]>
 				<text><![CDATA[Jueves]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="104" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="1a7dec97-c9b7-490d-9e22-61a578437674"/>
+				<reportElement mode="Opaque" x="11" y="0" width="93" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="1a7dec97-c9b7-490d-9e22-61a578437674"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -193,7 +194,7 @@ order by hora]]>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="104" height="21" uuid="1721824d-c49f-44cd-801a-54768631b694"/>
+				<reportElement x="11" y="0" width="93" height="21" uuid="1721824d-c49f-44cd-801a-54768631b694"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

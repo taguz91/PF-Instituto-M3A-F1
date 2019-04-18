@@ -99,31 +99,6 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-     public static List<CursoMD> Consultarcursos(ConexionBD conexion, int idsilabo,int id_docente){
-         List<CursoMD> cursos=new ArrayList<>();
-        try {
-            PreparedStatement st = conexion.getCon().prepareCall("SELECT curso_nombre FROM \"Cursos\" "
-                    + "where id_materia=(select id_materia from \"Silabo\" where id_silabo=?) \n" +
-       "and id_prd_lectivo=(select id_prd_lectivo from \"Silabo\" where id_silabo=?)\n" +
-       "and id_docente=?");
-            st.setInt(1, idsilabo);
-            st.setInt(2, idsilabo);
-            st.setInt(3, id_docente);
-            System.out.println(st);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                CursoMD cur=new CursoMD();
-                cur.setCurso_nombre(rs.getString(1));
-                
-                cursos.add(cur);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return  cursos;
-     } 
     /*public void eliminar() {
 
         try {
@@ -262,4 +237,5 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
+     
 }

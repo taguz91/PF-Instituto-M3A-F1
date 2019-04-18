@@ -81,6 +81,7 @@ public class VtnMateriaCTR {
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
+        
     }
 
     /**
@@ -151,7 +152,7 @@ public class VtnMateriaCTR {
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin, materia);
             info.iniciar();
         }else{
-            JOptionPane.showMessageDialog(vtnPrin, "Seleccione una fila primero.");
+            JOptionPane.showMessageDialog(null, "Seleccione una materia");
         }
     }
 
@@ -249,7 +250,7 @@ public class VtnMateriaCTR {
             view.setTitle("Reporte de Materias por Carrera");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 

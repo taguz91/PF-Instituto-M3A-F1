@@ -68,6 +68,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             while (rs.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
 
+                eu.getIdUnidad().setIdUnidad(rs.getInt(1));
                 eu.getIdUnidad().setNumeroUnidad(rs.getInt(4));
                 eu.getIdEstrategia().setIdEstrategia(rs.getInt(2));
                 eu.getIdEstrategia().setDescripcionEstrategia(rs.getString(3));

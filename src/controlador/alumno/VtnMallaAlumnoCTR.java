@@ -8,8 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -482,7 +480,7 @@ public class VtnMallaAlumnoCTR {
             view.setVisible(true);
             view.setTitle("Reporte de Malla de Alumno");
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 

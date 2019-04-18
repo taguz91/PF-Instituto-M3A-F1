@@ -58,7 +58,7 @@
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="40" width="273" height="16" uuid="317a3503-eb97-414f-bca6-85253440aee6"/>
+				<reportElement x="0" y="40" width="273" height="16" uuid="12c08bc7-d184-4070-a09d-ebe61840ca78"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -70,9 +70,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="71" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="181" height="70" isPrintWhenDetailOverflows="true" uuid="33b04a28-ccde-4c43-947a-f2f1106b868c"/>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="181" height="47" uuid="33b04a28-ccde-4c43-947a-f2f1106b868c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -83,7 +83,7 @@
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="181" y="0" width="92" height="70" uuid="1db0d76e-55c0-45f3-9f3b-c15ba6a51b59"/>
+				<reportElement x="181" y="0" width="92" height="47" uuid="1db0d76e-55c0-45f3-9f3b-c15ba6a51b59"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -96,4 +96,7 @@
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="1"/>
+	</pageFooter>
 </jasperReport>

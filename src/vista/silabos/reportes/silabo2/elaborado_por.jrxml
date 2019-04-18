@@ -4,10 +4,15 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ID_MATERIA_APRO" class="java.lang.String"/>
+	<parameter name="id_silabo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select distinct c.id_docente,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombre_docente,current_date from "Cursos" c, "Docentes" d, "Personas" p
- where c.id_docente=d.id_docente 
-and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO} ]]>
+		<![CDATA[select distinct c.id_docente,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' ',
+									p.persona_segundo_nombre) as nombre_docente,current_date from "Cursos" c, "Docentes" d, "Personas" p
+,"PeriodoLectivo" q where c.id_docente=d.id_docente 
+and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO} and c.id_prd_lectivo=q.id_prd_lectivo AND
+Q.ID_PRD_LECTIVO=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})]]>
 	</queryString>
 	<field name="id_docente" class="java.lang.Integer"/>
 	<field name="nombre_docente" class="java.lang.String"/>
@@ -52,7 +57,7 @@ and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO} ]]>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="277" height="57" uuid="c768a599-3e20-4671-9307-7b8fb2a840fc"/>
+				<reportElement x="0" y="0" width="277" height="57" uuid="5731a8a2-f498-477d-8541-93aafa3da08f"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -65,7 +70,7 @@ and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO} ]]>
 	<summary>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="36" height="20" uuid="75e31f77-7040-46c7-9c4b-ab031ebdbffd"/>
+				<reportElement x="0" y="0" width="39" height="20" uuid="75e31f77-7040-46c7-9c4b-ab031ebdbffd"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -76,17 +81,17 @@ and d.id_persona=p.id_persona and id_materia=$P!{ID_MATERIA_APRO} ]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[Fecha: ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="36" y="0" width="241" height="20" uuid="0676191a-9903-4221-8181-228bfef0920b"/>
+				<reportElement x="39" y="0" width="238" height="20" uuid="160be9c0-935b-4ae7-915b-4cce12a59581"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{current_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
