@@ -168,8 +168,6 @@ public class VtnSelectRolCTR {
     //Procesadores de Eventos
     private void logConexion() {
         //generarArchivo();
-        ResourceManager.resetConn();
-
     }
 
     private void generarArchivo() {

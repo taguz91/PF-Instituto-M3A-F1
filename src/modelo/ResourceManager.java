@@ -1,6 +1,7 @@
 package modelo;
 
 import controlador.login.LoginCTR;
+import java.io.File;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -41,37 +42,51 @@ public class ResourceManager implements Serializable {
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver(driver);
 
-                USERNAME = LoginCTR.USERNAME;
-                PASSWORD = LoginCTR.PASSWORD;
-
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
                 System.out.println(e.getMessage());
             }
 
         }
 
+        if (conn != null) {
+            //cerrarSesion();
+
+            conn.close();
+            resetConn();
+        }
+
         if (conn == null || conn.isClosed()) {
-            JDBC_URL = generarURL();
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            //cerrarSesion();
+            resetConn();
         }
 
         return conn;
 
     }
 
+    private static void resetConn() {
+        try {
+            JDBC_URL = generarURL();
+
+            USERNAME = Propiedades.getUserProp("username");
+            PASSWORD = Propiedades.getUserProp("password");
+
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        } catch (SQLException ex) {
+            System.out.println("INTENTE NUEVAMENTE");
+        }
+    }
+
     public static SQLException Statement(String Statement) {
 
         try {
-            INICIAR_TRANSACCION();
             //System.out.println(Statement);
-            if (conn == null) {
-                conn = getConnection();
-            }
+
+            conn = getConnection();
 
             stmt = conn.createStatement();
 
             stmt.execute(Statement);
-            TERMINAR_TRANSACCION();
             return null;
 
         } catch (SQLException | NullPointerException e) {
@@ -81,43 +96,36 @@ public class ResourceManager implements Serializable {
                 System.out.println(e.getMessage());
                 return (SQLException) e;
             }
-            TERMINAR_TRANSACCION();
+
         }
         return null;
     }
 
     public static void Statements(String Statement) {
         try {
-            INICIAR_TRANSACCION();
             //System.out.println(Statement);
-            if (conn == null || conn.isClosed()) {
-                conn = getConnection();
-            }
+
+            conn = getConnection();
 
             stmt = conn.createStatement();
 
             stmt.execute(Statement);
-            TERMINAR_TRANSACCION();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
-            TERMINAR_TRANSACCION();
         }
     }
 
     public static ResultSet Query(String Query) {
 
         try {
-            INICIAR_TRANSACCION();
+
             //System.out.println(Query);
-            if (conn == null || conn.isClosed()) {
-                System.out.println("QUERY!!");
-                conn = getConnection();
-            }
+            conn = getConnection();
+
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
 
-            TERMINAR_TRANSACCION();
             return rs;
 
         } catch (SQLException | NullPointerException e) {
@@ -134,7 +142,7 @@ public class ResourceManager implements Serializable {
 
                 System.out.println(e.getMessage());
             }
-            TERMINAR_TRANSACCION();
+
             return null;
         }
     }
@@ -175,37 +183,5 @@ public class ResourceManager implements Serializable {
      */
     public static void setConecct(Connection cn) {
         ResourceManager.conn = cn;
-    }
-
-    public static void resetConn() {
-//        new Thread(() -> {
-//            for (;;) {
-//                try {
-//                    Thread.sleep(1000 * 10);
-//                    if (!TRANSACCION) {
-//                        cerrarSesion();
-//                        try {
-//                            ResourceManager.getConnection();
-//                        } catch (SQLException ex) {
-//                            Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                    System.out.println("SE REINICIO LA CONEXION");
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//
-//            }
-//        }).start();
-    }
-
-    public static void INICIAR_TRANSACCION() {
-        //System.out.println("HA INICIADO UNA TRANSACCION");
-        TRANSACCION = true;
-    }
-
-    public static void TERMINAR_TRANSACCION() {
-        //System.out.println("HA TERMINADO LA TRANSACCION");
-        TRANSACCION = false;
     }
 }

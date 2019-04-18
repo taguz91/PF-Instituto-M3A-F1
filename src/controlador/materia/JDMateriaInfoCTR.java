@@ -91,7 +91,9 @@ public class JDMateriaInfoCTR {
     }
 
     private void editar() {
-        if (posFila >= 0) {
+        
+        try{
+             if (posFila >= 0) {
             FrmRequisitos frmreq = new FrmRequisitos();
             VtnRequisitosCTR req = new VtnRequisitosCTR(conecta, ctrPrin, vtnPrin, frmreq, materiabd, m);
             req.iniciar();
@@ -105,11 +107,19 @@ public class JDMateriaInfoCTR {
                
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Por favor seleccione una fila para continuar");
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
         }
+        }catch(Exception e){
+            System.out.println(e);
+            
+        
+        }
+       
     }
 
     private void eliminar() {
+        try {
+            
         if (posFila >= 0) {
 
             int r = JOptionPane.showConfirmDialog(vtnPrin, "Esta seguro que desea eliminar " + materia + "\n"
@@ -129,7 +139,10 @@ public class JDMateriaInfoCTR {
 
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Por favor seleccione una fila para continuar");
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
+        }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
