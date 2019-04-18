@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT (per.persona_primer_nombre||' '||per.persona_segundo_nombre||' '||per.persona_primer_apellido||' '|| per.persona_segundo_apellido) as docente,
+a.alumno_codigo,
+a.alumno_tipo_colegio,
+a.alumno_tipo_bachillerato,
+a.alumno_anio_graduacion,
+a.alumno_educacion_superior,
+a.alumno_titulo_superior,
+a.alumno_nivel_academico,
+a.alumno_pension,
+a.alumno_ocupacion,
+a.alumno_trabaja,
+a.alumno_nivel_formacion_padre,
+a.alumno_nivel_formacion_madre,
+a.alumno_nombre_contacto_emergencia,
+a.alumno_parentesco_contacto,
+a.alumno_numero_contacto
+from public."Alumnos" a JOIN public. "Personas" per USING(id_persona)
+JOIN public."SectorEconomico" s USING (id_sec_economico)
+WHERE per.persona_identificacion =  persona_identificacion  
+AND per.persona_activa = true 
+AND a.alumno_activo = true;]]>
+	</queryString>
+	<field name="docente" class="java.lang.String"/>
+	<field name="alumno_codigo" class="java.lang.String"/>
+	<field name="alumno_tipo_colegio" class="java.lang.String"/>
+	<field name="alumno_tipo_bachillerato" class="java.lang.String"/>
+	<field name="alumno_anio_graduacion" class="java.lang.String"/>
+	<field name="alumno_educacion_superior" class="java.lang.Boolean"/>
+	<field name="alumno_titulo_superior" class="java.lang.String"/>
+	<field name="alumno_nivel_academico" class="java.lang.String"/>
+	<field name="alumno_pension" class="java.lang.Boolean"/>
+	<field name="alumno_ocupacion" class="java.lang.String"/>
+	<field name="alumno_trabaja" class="java.lang.Boolean"/>
+	<field name="alumno_nivel_formacion_padre" class="java.lang.String"/>
+	<field name="alumno_nivel_formacion_madre" class="java.lang.String"/>
+	<field name="alumno_nombre_contacto_emergencia" class="java.lang.String"/>
+	<field name="alumno_parentesco_contacto" class="java.lang.String"/>
+	<field name="alumno_numero_contacto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
