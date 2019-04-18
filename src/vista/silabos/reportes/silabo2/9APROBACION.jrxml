@@ -5,7 +5,11 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+<<<<<<< HEAD
+		<defaultValueExpression><![CDATA[vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
+=======
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
+>>>>>>> 1633377ecede32bcdb824665262d756dd9476c04
 	</parameter>
 	<parameter name="id_silabo" class="java.lang.String"/>
 	<queryString>
