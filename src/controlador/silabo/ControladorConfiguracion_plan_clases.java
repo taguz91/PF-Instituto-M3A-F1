@@ -95,11 +95,9 @@ public class ControladorConfiguracion_plan_clases {
             unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
             unidadesSilabo.forEach((umd) -> {
                 frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
-                materiaseleccionada();
             });
         } else {
-            JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
-            System.out.println("ñññññññññññññññññññññññññ");
+            System.out.println("NO EXISTEN SILABOS");
             
             
         }
