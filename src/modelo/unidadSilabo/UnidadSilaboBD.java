@@ -104,5 +104,4 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
-
 }

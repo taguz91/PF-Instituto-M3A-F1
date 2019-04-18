@@ -88,10 +88,10 @@ public class ControladorCRUD {
 
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
-            
-                eliminarSilabo(seleccionarSilabo().getIdSilabo());
-                cargarSilabosDocente();
-       
+
+            eliminarSilabo(seleccionarSilabo().getIdSilabo());
+            cargarSilabosDocente();
+
         });
 
         crud.getBtnImprimir().addActionListener((ActionEvent ae) -> {
@@ -102,8 +102,6 @@ public class ControladorCRUD {
             csr.iniciarControlador();
 
         });
-
-       
 
         crud.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -135,35 +133,45 @@ public class ControladorCRUD {
     }
 
     public void cargarSilabosDocente() {
-        DefaultTableModel modeloTabla;
+        try {
 
-        modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
+            DefaultTableModel modeloTabla;
 
-        String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
-        //
+            modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
 
-        silabosDocente = SilaboBD.consultar(conexion, parametros);
+            String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
+            //
 
-        for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
+            silabosDocente = SilaboBD.consultar(conexion, parametros);
 
-            modeloTabla.removeRow(j);
-        }
+            for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
-        for (SilaboMD smd : silabosDocente) {
-
-            String estado = null;
-            if (smd.getEstadoSilabo() == 0) {
-                estado = "Por aprobar";
+                modeloTabla.removeRow(j);
             }
 
-            modeloTabla.addRow(new Object[]{
-                smd.getIdMateria().getNombre(),
-                smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
-                estado});
+            for (SilaboMD smd : silabosDocente) {
 
+                String estado = null;
+                if (smd.getEstadoSilabo() == 0) {
+                    estado = "Por aprobar";
+                }
+
+                modeloTabla.addRow(new Object[]{
+                    smd.getIdMateria().getNombre(),
+                    smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
+                    estado});
+
+            }
+
+            crud.getTblSilabos().setModel(modeloTabla);
+
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            crud.dispose();    
+            
         }
 
-        crud.getTblSilabos().setModel(modeloTabla);
     }
 
     public SilaboMD seleccionarSilabo() {

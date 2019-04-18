@@ -155,6 +155,10 @@ public class ControladorSilaboC {
             silabo = new SilaboBD(conexion, materiaSeleccionada.get(), periodoSeleccionado.get());
 
             iniciarSilabo(silabo, (int) configuracion.getSpnUnidades().getValue());
+            
+            configuracion.dispose();
+            
+            
 
         });
         configuracion.getCmbCarrera().setSelectedIndex(0);
@@ -874,18 +878,24 @@ public class ControladorSilaboC {
         gestion.getBtnSiguiente().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+
                 
-                if (retroceso) {
-                    bibliografia.setVisible(true);
-                }
-                    if (validarCampos()) {
-                    gestion.setVisible(false);
-                    citarReferencias(silabo, bibliografia);
-                    retroceso = true;
+
+                if (validarCampos()) {
+
+                    if (!retroceso) {
+                        gestion.setVisible(false);
+                        citarReferencias(silabo, bibliografia);
+                        retroceso = true;
+                    } else {
+                        gestion.setVisible(false);
+                        bibliografia.setVisible(true);
+                        
+                    }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No ha completado correctamente los campos necesarios", "Aviso", JOptionPane.ERROR_MESSAGE);
-                    retroceso=false;
+                   
                 }
 
             }
@@ -908,6 +918,7 @@ public class ControladorSilaboC {
 
     public void citarReferencias(SilaboBD silabo, frmReferencias bibliografia) {
 
+        System.out.println("------->entro");
         principal.getDpnlPrincipal().add(bibliografia);
 
         bibliografia.setTitle(silabo.getIdMateria().getNombre());
