@@ -149,7 +149,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblCursoTipoNotas);
         if (tblCursoTipoNotas.getColumnModel().getColumnCount() > 0) {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setResizable(false);
-            tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(29);
+            tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setResizable(false);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(30);
             tblCursoTipoNotas.getColumnModel().getColumn(2).setMinWidth(110);
@@ -210,7 +210,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)))
+                                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
