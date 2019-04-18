@@ -1,0 +1,6331 @@
+ [2019-04-17T16:34:36.399]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.429]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.460]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.491]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.521]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.551]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.582]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.642]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.673]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.703]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.733]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.763]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.793]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.823]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.854]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.884]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.915]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.946]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:36.976]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.006]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.037]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.067]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.098]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.128]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.159]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.190]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.220]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.251]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.282]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.312]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.372]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.402]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.433]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.463]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.494]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.525]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.555]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.586]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.617]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.647]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.678]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.708]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.739]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.769]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.799]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.830]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.860]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.890]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.920]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.950]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:37.981]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.011]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.042]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.072]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.103]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.133]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.164]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.194]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.225]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.255]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.285]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.315]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.346]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.376]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.406]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.437]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.467]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.498]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.529]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.560]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.591]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.621]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.651]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.681]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.712]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.742]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.772]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.802]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.832]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.863]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.893]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.924]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.954]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:38.984]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.015]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.045]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.076]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.106]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.136]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.166]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.197]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.227]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.257]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.287]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.318]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.348]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.378]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.409]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.439]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.470]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.500]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.531]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.561]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.591]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.621]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.651]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.681]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.711]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.742]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.773]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.803]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.834]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.864]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.894]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.924]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.954]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:39.985]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.015]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.045]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.076]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.107]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.138]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.168]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.199]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.230]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.260]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.291]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.322]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.352]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.382]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.412]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.443]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.474]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.504]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.535]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.566]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.596]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.626]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.656]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.687]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.718]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.749]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.780]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.810]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.841]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.871]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.901]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.932]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.962]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:40.992]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.022]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.053]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.083]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.113]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.143]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.174]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.204]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.234]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.265]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.295]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.325]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.356]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.386]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.416]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.447]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.478]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.508]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.538]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.568]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.598]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.629]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.659]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.690]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.751]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.782]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.812]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.842]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.872]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.903]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.933]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.963]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:41.993]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.023]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.053]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.083]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.114]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.144]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.174]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.205]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.235]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.265]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.295]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.326]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.356]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.386]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.416]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.446]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.477]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.508]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.538]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.568]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.599]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.629]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.659]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.690]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.721]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.752]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.783]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.813]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.843]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.874]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.904]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.935]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.965]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:42.996]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.026]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.056]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.086]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.116]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.147]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.178]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.209]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.239]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.270]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.300]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.330]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.360]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.390]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.420]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.451]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.481]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.511]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.541]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.572]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.602]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.632]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.662]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.694]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.725]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.755]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.785]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.816]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.846]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.877]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.907]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.937]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.968]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:43.998]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.029]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.059]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.089]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.119]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.149]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.180]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.210]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.240]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.271]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.301]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.332]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.362]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.392]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.422]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.484]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.514]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.544]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.575]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.635]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.696]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.727]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.758]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.788]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.819]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.849]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.879]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.910]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.940]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:44.971]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.002]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.032]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.063]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.094]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.124]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.154]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.185]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.215]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.246]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.276]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.307]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.338]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.368]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.398]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.428]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.459]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.489]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.520]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.550]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.581]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.642]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.672]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.702]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.732]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.763]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.793]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.824]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.854]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.884]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.914]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.945]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:45.976]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.006]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.036]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.066]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.096]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.127]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.158]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.188]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.219]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.249]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.279]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.310]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.341]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.372]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.402]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.432]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.463]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.493]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.523]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.553]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.583]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.614]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.644]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.675]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.705]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.736]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.766]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.796]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.826]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.857]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.888]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.918]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.949]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:46.980]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.011]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.042]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.072]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.102]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.133]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.163]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.194]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.225]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.255]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.285]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.315]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.346]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.376]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.407]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.437]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.468]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.498]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.528]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.559]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.590]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.620]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.650]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.680]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.710]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.740]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.771]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.801]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.831]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.862]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.892]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.922]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.952]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:47.983]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.014]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.044]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.075]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.105]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.135]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.165]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.196]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.227]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.258]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.288]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.319]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.350]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.381]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.412]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.443]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.474]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.505]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.536]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.567]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.598]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.628]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.658]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.688]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.719]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.749]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.779]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.810]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.840]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.870]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.900]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.930]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.960]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:48.990]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.020]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.051]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.081]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.111]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.142]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.172]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.202]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.232]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.263]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.293]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.324]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.354]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.385]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.415]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.445]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.476]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.507]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.537]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.568]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.599]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.629]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.659]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.690]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.750]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.780]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.810]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.841]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.872]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.902]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.932]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.962]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:49.993]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.023]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.053]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.083]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.113]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.143]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.173]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.204]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.234]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.264]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.294]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.325]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.355]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.385]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.415]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.445]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.476]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.507]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.537]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.567]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.598]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.628]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.658]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.689]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.751]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.781]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.812]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.842]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.873]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.903]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.933]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.963]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:50.994]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.024]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.054]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.085]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.115]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.146]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.176]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.206]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.237]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.268]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.298]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.328]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.358]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.388]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.419]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.449]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.480]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.510]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.540]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.571]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.602]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.632]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.662]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.693]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.723]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.753]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.783]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.814]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.845]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.875]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.905]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.935]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.966]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:51.997]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.027]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.058]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.088]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.119]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.149]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.180]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.210]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.241]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.271]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.301]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.331]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.361]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.392]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.423]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.454]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.484]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.514]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.544]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.574]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.636]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.696]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.727]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.757]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.787]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.818]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.848]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.878]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.909]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.939]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.969]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:52.999]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.029]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.059]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.090]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.120]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.150]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.180]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.210]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.241]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.271]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.302]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.332]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.362]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.392]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.422]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.483]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.513]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.543]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.574]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.604]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.634]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.665]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.696]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.727]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.757]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.788]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.818]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.849]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.879]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.909]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.939]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:53.970]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.001]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.031]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.062]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.092]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.122]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.152]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.335]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.365]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.395]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.425]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.456]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.486]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.516]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.546]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.576]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.606]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.637]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.668]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.699]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.730]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.761]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.791]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.822]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.852]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.883]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.913]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.944]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:54.974]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.005]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.035]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.065]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.096]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.126]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.156]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.186]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.217]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.247]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.278]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.308]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.338]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.369]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.399]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.429]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.459]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.490]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.520]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.550]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.581]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.643]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.673]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.703]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.733]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.763]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.793]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.824]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.855]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.885]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.916]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.946]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:55.977]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.008]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.038]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.069]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.100]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.130]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.160]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.190]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.221]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.251]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.281]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.312]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.373]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.404]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.434]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.464]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.494]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.524]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.554]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.585]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.615]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.646]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.676]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.707]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.737]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.767]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.797]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.828]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.858]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.889]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.919]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.949]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:56.980]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.010]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.040]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.071]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.102]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.132]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.162]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.193]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.223]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.254]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.285]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.315]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.346]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.377]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.407]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.438]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.468]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.499]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.530]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.560]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.590]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.620]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.651]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.681]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.711]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.741]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.772]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.802]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.832]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.863]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.893]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.923]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.953]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:57.983]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.013]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.044]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.075]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.106]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.137]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.168]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.198]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.228]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.259]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.289]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.319]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.350]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.380]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.411]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.441]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.471]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.502]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.532]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.563]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.594]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.625]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.655]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.685]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.715]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.746]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.776]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.806]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.836]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.866]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.896]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.927]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.957]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:58.987]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.017]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.047]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.077]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.107]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.137]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.167]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.197]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.228]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.259]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.290]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.320]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.350]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.380]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.411]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.442]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.472]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.502]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.532]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.562]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.593]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.623]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.653]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.684]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.714]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.745]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.776]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.806]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.836]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.866]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.896]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.926]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.956]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:34:59.986]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.016]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.047]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.077]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.107]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.139]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.169]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.199]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.230]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.260]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.290]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.321]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.351]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.381]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.411]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.442]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.472]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.503]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.534]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.564]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.595]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.625]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.655]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.685]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.715]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.746]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.776]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.806]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.836]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.866]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.897]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.927]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.958]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:00.988]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.018]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.049]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.080]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.110]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.140]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.170]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.200]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.230]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.261]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.291]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.322]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.352]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.382]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.412]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.443]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.474]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.504]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.534]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.565]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.595]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.626]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.656]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.686]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.717]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.747]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.777]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.808]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.838]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.868]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.898]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.928]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.958]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:01.988]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.018]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.048]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.079]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.109]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.139]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.169]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.199]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.230]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.261]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.292]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.322]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.352]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.382]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.413]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.444]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.474]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.504]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.535]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.565]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.596]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.626]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.656]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.687]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.717]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.748]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.786]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.816]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.847]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.877]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.908]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.938]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.969]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:02.999]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.029]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.059]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.089]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.120]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.150]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.181]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.211]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.242]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.272]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.302]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.333]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.363]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.393]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.423]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.483]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.514]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.544]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.574]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.604]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.635]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.665]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.695]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.726]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.757]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.787]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.818]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.848]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.878]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.909]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.940]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:03.971]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.001]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.031]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.061]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.092]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.122]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.152]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.305]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.336]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.366]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.397]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.427]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.458]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.488]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.518]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.549]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.579]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.610]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.640]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.670]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.700]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.731]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.761]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.791]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.822]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.853]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.883]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.913]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.944]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:04.974]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.005]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.035]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.066]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.096]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.127]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.157]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.188]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.219]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.249]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.279]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.310]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.340]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.370]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.400]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.430]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.460]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.490]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.521]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.551]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.581]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.643]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.673]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.704]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.734]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.764]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.794]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.824]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.855]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.885]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.915]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.946]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:05.976]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.006]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.036]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.067]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.098]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.128]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.158]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.188]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.218]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.249]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.279]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.310]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.340]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.371]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.401]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.431]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.461]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.491]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.521]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.552]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.582]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.643]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.673]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.703]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.733]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.763]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.793]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.824]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.855]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.885]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.915]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.946]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:06.977]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.007]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.037]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.067]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.098]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.129]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.159]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.189]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.219]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.250]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.280]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.311]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.373]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.403]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.434]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.464]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.494]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.524]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.555]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.586]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.616]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.647]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.677]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.707]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.737]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.768]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.799]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.829]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.859]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.889]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.920]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.951]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:07.981]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.012]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.043]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.073]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.104]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.134]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.164]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.195]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.225]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.255]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.286]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.316]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.347]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.377]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.407]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.438]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.468]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.499]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.529]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.560]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.590]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.620]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.651]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.681]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.711]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.741]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.771]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.801]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.831]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.861]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.891]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.922]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.952]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:08.983]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.013]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.043]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.074]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.105]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.135]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.165]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.196]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.226]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.256]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.286]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.317]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.347]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.378]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.409]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.440]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.471]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.502]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.533]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.564]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.595]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.626]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.657]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.688]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.719]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.750]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.781]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.812]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.843]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.874]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.905]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.936]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.967]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:09.998]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.028]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.058]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.088]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.118]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.148]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.178]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.208]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.238]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.268]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.298]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.329]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.359]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.389]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.420]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.450]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.480]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.511]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.541]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.572]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.602]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.633]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.663]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.694]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.725]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.755]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.785]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.816]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.846]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.876]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.907]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.937]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.967]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:10.998]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.028]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.059]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.089]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.119]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.149]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.179]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.209]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.240]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.270]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.301]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.331]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.361]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.391]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.421]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.452]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.482]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.512]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.543]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.574]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.635]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.665]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.696]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.726]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.757]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.787]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.817]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.848]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.878]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.908]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.939]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:11.969]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.030]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.060]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.091]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.122]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.152]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.335]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.365]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.396]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.426]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.456]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.486]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.516]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.546]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.576]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.607]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.637]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.667]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.697]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.728]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.758]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.788]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.819]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.850]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.880]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.910]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.940]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:12.971]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.001]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.031]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.061]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.091]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.122]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.152]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.243]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.334]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.364]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.394]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.424]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.454]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.484]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.514]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.544]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.574]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.635]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.665]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.695]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.726]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.756]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.786]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.816]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.847]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.877]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.908]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.939]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.969]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:13.999]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.030]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.060]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.090]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.120]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.151]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.181]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.211]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.242]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.272]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.302]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.333]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.363]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.393]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.423]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.483]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.513]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.543]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.573]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.604]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.634]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.664]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.695]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.725]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.755]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.786]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.816]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.846]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.877]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.908]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.938]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.969]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:14.999]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.030]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.061]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.091]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.121]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.151]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.182]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.212]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.243]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.273]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.334]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.364]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.394]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.424]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.454]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.484]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.514]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.545]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.575]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.635]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.697]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.727]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.757]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.787]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.818]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.848]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.878]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.909]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.940]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:15.970]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.001]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.031]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.062]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.092]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.122]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.153]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.243]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.335]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.365]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.395]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.425]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.456]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.486]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.516]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.546]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.576]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.606]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.636]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.697]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.728]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.758]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.789]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.820]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.850]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.880]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.910]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.940]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:16.971]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.001]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.031]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.062]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.093]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.123]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.153]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.214]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.274]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.304]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.335]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.365]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.395]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.426]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.457]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.488]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.518]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.548]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.578]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.608]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.639]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.669]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.699]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.730]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.761]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.791]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.822]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.852]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.882]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.912]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.943]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:17.973]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.003]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.033]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.063]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.094]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.124]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.154]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.184]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.214]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.275]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.305]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.335]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.365]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.396]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.426]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.456]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.487]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.517]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.547]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.578]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.609]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.639]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.669]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.699]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.730]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.760]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.791]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.821]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.852]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.882]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.913]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.943]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:18.973]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.004]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.035]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.065]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.096]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.126]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.157]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.187]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.218]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.248]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.278]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.308]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.338]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.369]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.399]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.429]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.460]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.490]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.521]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.552]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.582]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.612]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.642]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.672]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.702]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.732]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.763]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.794]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.824]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.854]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.884]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.915]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.945]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:19.976]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.006]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.036]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.066]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.097]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.128]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.159]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.190]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.220]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.250]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.281]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.311]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.372]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.402]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.432]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.462]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.492]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.523]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.553]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.583]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.613]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.644]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.674]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.704]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.735]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.765]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.796]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.826]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.856]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.886]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.916]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.947]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:20.978]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.009]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.039]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.069]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.099]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.130]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.160]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.191]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.222]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.253]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.283]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.314]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.344]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.374]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.405]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.435]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.466]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.496]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.527]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.557]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.587]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.617]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.648]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.678]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.708]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.738]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.770]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.801]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.831]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.861]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.891]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.921]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.951]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:21.981]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.011]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.041]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.071]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.102]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.133]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.163]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.193]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.223]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.253]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.284]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.314]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.345]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.376]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.406]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.436]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.467]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.497]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.528]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.559]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.590]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.620]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.651]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.681]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.711]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.742]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.772]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.803]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.834]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.864]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.894]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.924]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.954]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:22.985]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.015]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.045]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.076]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.106]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.137]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.167]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.197]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.228]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.258]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.288]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.319]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.350]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.380]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.411]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.441]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.471]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.501]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.531]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.562]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.593]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.623]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.653]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.683]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.713]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.744]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.775]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.806]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.837]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.867]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.898]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.928]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.958]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:23.988]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.019]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.049]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.079]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.110]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.140]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.170]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.200]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.231]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.261]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.291]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.321]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.352]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.382]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.412]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.442]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.473]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.504]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.534]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.565]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.595]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.625]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.655]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.686]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.716]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.746]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.776]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.807]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.837]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.868]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.898]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.928]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.958]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:24.989]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.019]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.050]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.081]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.111]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.141]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.171]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.201]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.232]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.263]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.294]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.325]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.356]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.386]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.416]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.446]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.476]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.506]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.537]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.568]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.598]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.629]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.660]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.690]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.750]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.781]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.811]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.842]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.872]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.902]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.932]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.962]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:25.992]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.023]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.053]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.083]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.113]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.143]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.174]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.204]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.234]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.264]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.294]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.325]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.355]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.386]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.416]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.446]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.477]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.507]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.537]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.567]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.597]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.628]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.659]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.689]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.751]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.782]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.812]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.842]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.873]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.903]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.933]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.964]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:26.994]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.024]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.055]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.086]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.116]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.146]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.176]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.206]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.237]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.267]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.297]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.327]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.357]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.388]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.419]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.449]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.480]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.510]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.540]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.570]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.601]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.631]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.662]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.693]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.723]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.753]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.783]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.813]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.843]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.873]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.903]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.933]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.963]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:27.993]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.024]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.054]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.085]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.116]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.146]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.176]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.206]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.237]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.267]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.298]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.328]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.358]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.388]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.419]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.450]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.480]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.511]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.541]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.572]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.602]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.633]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.663]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.694]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.724]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.754]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.785]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.815]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.846]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.876]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.906]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.937]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.968]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:28.998]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.028]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.058]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.088]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.119]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.149]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.179]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.209]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.240]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.270]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.301]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.332]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.362]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.392]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.422]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.483]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.513]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.544]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.575]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.636]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.697]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.728]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.758]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.788]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.819]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.850]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.881]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.911]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.941]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:29.972]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.002]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.032]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.063]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.094]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.125]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.156]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.186]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.216]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.247]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.277]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.307]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.338]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.368]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.399]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.430]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.460]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.490]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.520]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.551]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.582]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.613]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.643]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.673]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.703]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.734]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.764]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.794]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.825]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.855]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.885]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.916]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.946]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:30.977]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.008]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.038]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.069]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.099]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.130]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.160]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.190]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.221]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.251]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.281]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.312]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.372]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.402]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.433]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.463]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.493]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.523]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.553]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.583]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.614]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.644]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.675]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.705]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.735]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.765]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.795]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.825]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.856]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.886]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.916]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.947]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:31.977]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.008]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.038]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.069]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.100]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.130]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.160]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.191]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.221]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.251]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.281]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.312]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.342]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.372]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.403]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.433]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.464]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.494]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.525]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.555]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.585]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.615]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.645]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.675]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.705]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.736]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.767]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.798]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.828]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.859]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.889]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.919]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.950]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:32.980]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.010]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.040]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.071]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.102]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.132]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.162]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.193]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.224]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.254]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.284]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.315]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.346]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.376]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.406]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.436]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.466]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.496]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.526]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.557]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.587]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.617]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.647]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.677]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.708]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.738]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.769]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.799]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.829]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.860]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.890]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.921]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.952]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:33.982]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.013]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.043]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.073]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.103]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.134]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.164]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.195]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.225]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.256]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.286]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.317]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.348]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.378]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.408]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.438]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.468]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.498]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.528]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.558]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.588]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.618]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.649]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.679]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.710]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.740]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.770]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.800]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.830]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.861]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.891]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.922]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.952]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:34.983]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.014]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.044]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.074]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.105]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.135]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.166]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.196]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.226]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.257]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.287]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.318]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.348]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.378]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.409]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.440]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.470]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.501]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.531]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.561]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.591]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.622]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.653]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.684]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.715]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.746]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.776]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.806]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.836]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.866]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.897]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.927]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.958]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:35.989]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.019]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.049]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.080]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.111]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.142]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.172]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.203]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.233]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.263]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.295]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.325]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.355]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.385]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.415]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.446]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.477]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.507]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.537]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.567]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.597]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.628]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.659]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.689]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.720]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.751]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.781]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.812]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.842]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.872]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.902]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.933]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.963]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:36.993]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.024]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.055]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.085]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.116]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.146]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.177]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.207]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.238]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.269]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.300]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.331]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.362]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.392]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.423]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.453]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.484]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.515]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.545]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.575]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.605]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.636]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.666]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.696]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.727]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.758]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.788]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.818]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.848]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.879]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.910]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.941]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:37.971]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.002]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.032]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.063]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.093]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.123]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.153]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.183]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.213]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.244]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.275]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.306]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.336]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.366]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.397]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.427]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.458]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.488]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.519]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.549]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.579]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.610]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.640]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.670]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.701]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.731]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.762]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.792]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.823]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.853]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.884]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.914]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.945]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:38.975]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.006]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.037]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.067]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.097]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.128]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.158]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.189]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.219]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.250]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.280]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.311]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.341]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.371]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.402]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.432]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.463]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.493]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.523]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.553]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.583]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.614]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.644]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.674]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.705]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.735]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.766]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.797]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.828]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.859]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.890]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.921]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.952]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:39.983]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.014]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.044]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.075]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.106]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.136]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.167]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.197]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.227]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.258]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.288]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.318]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.348]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.379]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.409]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.440]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.470]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-04-17T16:35:40.501]
+Cerrado? R: false
+Cerrado? C: false
+ [2019-0
