@@ -85,14 +85,9 @@ public class FrmRequisitos extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Formulario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(153, 153, 153))); // NOI18N
 
         btnGuardar.setText("Guardar");
-<<<<<<< HEAD
         btnGuardar.setMaximumSize(new java.awt.Dimension(91, 29));
         btnGuardar.setMinimumSize(new java.awt.Dimension(91, 29));
         btnGuardar.setPreferredSize(new java.awt.Dimension(91, 29));
-=======
-        btnGuardar.setEnabled(false);
->>>>>>> 844f05a7f58b64e26f1f2bb678f7cc3a4c933d5a
-
         jLabel3.setBackground(new java.awt.Color(0, 51, 102));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Escoga una de las dos opciones:");
