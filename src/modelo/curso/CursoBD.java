@@ -186,12 +186,12 @@ public class CursoBD extends CursoMD {
                 + "prd_lectivo_nombre \n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m, \n"
                 + "public.\"Docentes\" d, public.\"Personas\" p, \n"
-                + "public.\"PeriodoLectivo\" pl\n"
+                + "public.\"PeriodoLectivo\" pl \n"
                 + "WHERE m.id_materia = c.id_materia AND \n"
                 + "d.id_docente = c.id_docente AND \n"
                 + "p.id_persona = d.id_persona \n"
                 + "AND curso_nombre = '" + nombre + "' AND \n"
-                + "pl.id_prd_lectivo = c.id_prd_lectivo;";
+                + " pl.id_prd_lectivo = c.id_prd_lectivo;";
         return consultarCursos(sql);
     }
 
@@ -208,7 +208,7 @@ public class CursoBD extends CursoMD {
                 + "d.id_docente = c.id_docente AND \n"
                 + "p.id_persona = d.id_persona \n"
                 + "AND curso_nombre = '" + nombre + "' AND \n"
-                + "c.id_prd_lectivo = " + idPrdLectivo + " \n"
+                + "c.id_prd_lectivo = " + idPrdLectivo + " AND \n"
                 + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
                 + "prd_lectivo_activo = true;";
         return consultarCursos(sql);

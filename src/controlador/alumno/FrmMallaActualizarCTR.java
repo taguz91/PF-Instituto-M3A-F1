@@ -136,7 +136,7 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
                 frmMalla.getLblEstado().setText("P");
             }
             //verificamos el numero de matricula que esta
-            if (nota1 > 0 && nota2 > 0 && nota3 > 0) {
+            if (nota3 > 0) {
                 numMatricula = 3;
             } else if (nota1 > 0 && nota2 > 0) {
                 numMatricula = 2;

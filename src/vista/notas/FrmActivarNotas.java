@@ -54,7 +54,7 @@ public class FrmActivarNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Activar Notas Por Curso");
+        setTitle("Activar notas por curso");
 
         btnGuardar.setText("Guardar");
 
@@ -66,11 +66,11 @@ public class FrmActivarNotas extends javax.swing.JInternalFrame {
 
         lblAporte1.setText("Aporte 1");
 
-        jLabel4.setText("Examen Interciclo");
+        jLabel4.setText("Examen interciclo");
 
         jLabel5.setText("Aporte 2");
 
-        jLabel6.setText("Examen Final");
+        jLabel6.setText("Examen final");
 
         jLabel7.setText("Examen Supletorio");
 

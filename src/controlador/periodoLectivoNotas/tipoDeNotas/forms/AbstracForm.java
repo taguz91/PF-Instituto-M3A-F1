@@ -1,8 +1,8 @@
-package controlador.periodoLectivoNotas;
+package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
-import java.awt.Color;
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -20,50 +20,62 @@ import vista.principal.VtnPrincipal;
  *
  * @author MrRainx
  */
-public class FrmTipoNotaCTR {
+public abstract class AbstracForm {
 
-    private VtnPrincipal desktop;
-    private FrmTipoNota vista;
-    private TipoDeNotaBD modelo;
+    protected VtnPrincipal desktop;
+    protected FrmTipoNota vista;
+    protected TipoDeNotaBD modelo;
     //Ventana Padre
-    private VtnTipoNotasCTR vtnPadre;
+    protected VtnTipoNotasCTR vtnPadre;
     //listas
-    private List<CarreraMD> listaCarreras;
-    //(Agregar o Editar)
-    private String Funcion;
+    protected List<CarreraMD> listaCarreras;
 
-    private Integer PK = null;
+    //Combo
+    protected String[] carrerasTradicionales = {
+        "APORTE 1",
+        "APORTE 2",
+        "EXAMEN FINAL",
+        "EXAMEN SUPLETORIO"
+    };
 
-    public FrmTipoNotaCTR(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
+    protected boolean COMPLETED = false;
+
+    public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
-        this.Funcion = Funcion;
     }
 
     //INITS
     public void Init() {
         new Thread(() -> {
-            listaCarreras = CarreraBD.selectIdNombreAll();
-            cargarComboCarreras();
-            InitEventos();
+            try {
+                Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+                desktop.getDpnlPrincipal().add(vista);
+                vista.setSelected(true);
+                vista.show();
+            } catch (PropertyVetoException e) {
+                System.out.println(e.getMessage());
+            }
         }).start();
-        try {
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-            desktop.getDpnlPrincipal().add(vista);
-            vista.setSelected(true);
-            vista.show();
-        } catch (PropertyVetoException e) {
-            System.out.println(e.getMessage());
-        }
+        activarFormulario(false);
+        listaCarreras = CarreraBD.selectIdNombreAll();
+        cargarComboCarreras();
+        cargarCmbNombreNota(carrerasTradicionales);
+        InitEventos();
+        COMPLETED = true;
     }
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+
         String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
+
         vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -78,18 +90,31 @@ public class FrmTipoNotaCTR {
         });
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
-
     }
 
     //METODOS DE APOYO
-    private void cargarComboCarreras() {
+    protected void cargarCmbNombreNota(String[] lista) {
+        vista.getCmbTipoDeNota().removeAllItems();
+        for (String obj : lista) {
+            vista.getCmbTipoDeNota().addItem(obj);
+        }
+    }
+
+    protected void activarFormulario(boolean estado) {
+        vista.getCmbTipoDeNota().setEnabled(estado);
+        vista.getTxtNotaMax().setEnabled(estado);
+        vista.getTxtNotaMin().setEnabled(estado);
+        vista.getCmbCarrera().setEnabled(estado);
+    }
+
+    protected void cargarComboCarreras() {
 
         listaCarreras.stream().forEach(obj -> {
             vista.getCmbCarrera().addItem(obj.getNombre());
         });
     }
 
-    private void validarValorMenor(FocusEvent e) {
+    protected void validarValorMenor(FocusEvent e) {
         if (!vista.getTxtNotaMax().getText().isEmpty() && !vista.getTxtNotaMin().getText().isEmpty()) {
 
             double minimo = Double.valueOf(vista.getTxtNotaMin().getText());
@@ -107,28 +132,24 @@ public class FrmTipoNotaCTR {
         }
     }
 
-    private boolean validarFormulario() {
-        if (!vista.getTxtTipoNota().getText().isEmpty()) {
-            if (!vista.getTxtNotaMax().getText().isEmpty()) {
-                if (!vista.getTxtNotaMin().getText().isEmpty()) {
-                    return true;
-                } else {
-                    JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
-                }
+    protected boolean validarFormulario() {
+        if (!vista.getTxtNotaMax().getText().isEmpty()) {
+            if (!vista.getTxtNotaMin().getText().isEmpty()) {
+                return true;
             } else {
-                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
+                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
             }
         } else {
-            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DEL NOMBRE DEL TIPO DE NOTA!!");
+            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
         }
 
         return false;
     }
 
-    private TipoDeNotaBD setObj() {
+    protected TipoDeNotaBD setObj() {
         modelo = new TipoDeNotaBD();
 
-        modelo.setNombre(vista.getTxtTipoNota().getText());
+        modelo.setNombre(vista.getCmbTipoDeNota().getSelectedItem().toString());
         modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
         modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
 
@@ -137,40 +158,16 @@ public class FrmTipoNotaCTR {
                 .filter(item -> item.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    modelo.setIdCarrera(obj.getId());
+                    modelo.setCarrera(obj);
                 });
 
         return modelo;
     }
 
-    //EVENTOS
+    //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
     }
 
-    private void btnGuardar(ActionEvent e) {
-
-        if (validarFormulario()) {
-            
-            if (Funcion.equalsIgnoreCase("AGREGAR")) {
-                if (setObj().insertar()) {
-                    String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
-                    JOptionPane.showMessageDialog(vista, MENSAJE);
-                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
-                } else {
-                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
-                }
-            } else {
-                if (setObj().editar(PK)) {
-                    String MENSAJE = "SE HA EDITADO EL TIPO DE NOTA";
-                    JOptionPane.showMessageDialog(vista, MENSAJE);
-                    Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
-                } else {
-                    JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
-                }
-            }
-        }
-
-    }
-
+    protected abstract void btnGuardar(ActionEvent e);
 }

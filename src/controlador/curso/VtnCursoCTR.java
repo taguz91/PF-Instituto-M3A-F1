@@ -58,6 +58,7 @@ public class VtnCursoCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
+    private int posFila;
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -99,6 +100,7 @@ public class VtnCursoCTR {
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
         vtnCurso.getBtnEliminar().addActionListener(e -> eliminarCurso());
+        vtnCurso.getBtnHorario().addActionListener(e -> horario());
         vtnCurso.getCbxEliminados().addActionListener(e -> verCursosEliminados());
         //Le damos una accion al combo de periodos lectivos 
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
@@ -259,7 +261,7 @@ public class VtnCursoCTR {
 
     public void reporteListaAlumnos() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repListaAlumno.jasper";
+        String path = "/vista/reportes/repListaAlumno.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
@@ -268,7 +270,7 @@ public class VtnCursoCTR {
             parametro.put("curso", cursos.get(posFila).getId_curso());
             // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
@@ -356,6 +358,19 @@ public class VtnCursoCTR {
             vtnCurso.getBtnListaAlumnos().setEnabled(true);
         } else {
             vtnCurso.getBtnListaAlumnos().setEnabled(false);
+        }
+    }
+    
+    /**
+     * Este es el horario de las materias
+     */
+    private void horario(){
+        posFila = vtnCurso.getTblCurso().getSelectedRow();
+        if (posFila >= 0) {
+            JDHorarioCTR ctr = new JDHorarioCTR(conecta, vtnPrin, ctrPrin, cursos.get(posFila));
+            ctr.iniciar();
+        }else{
+            JOptionPane.showMessageDialog(vtnPrin, "Antes debe seleccionar un curso.");
         }
     }
 }
