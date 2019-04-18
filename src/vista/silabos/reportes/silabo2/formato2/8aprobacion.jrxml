@@ -5,8 +5,9 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\HP\\Documents\\NetBeansProjects\\silabo2\\src\\silabo2\\formato2\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="id_silabo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  c.id_carrera, m.materia_codigo, m.materia_nombre,m.materia_descripcion,m.materia_objetivo,m.materia_objetivo_especifico,m.materia_organizacion_curricular,m.materia_campo_formacion,m.materia_horas_docencia,m.materia_horas_practicas,m.materia_horas_auto_estudio,m.materia_horas_docencia/18 as horas_sem_docen,m.materia_horas_practicas/18  as horas_sem_prac, m.materia_horas_auto_estudio/18 as horas_sem_auto ,m.materia_total_horas, c.carrera_nombre,c.carrera_modalidad,m.materia_horas_practicas/18+m.materia_horas_docencia/18+m.materia_horas_auto_estudio/18 as horas_semanales from "Materias" m,"Carreras" c where m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 	</queryString>
@@ -53,9 +54,12 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador_aprobacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="3" y="0" width="248" height="100" uuid="ae39316a-2ac1-41c9-8725-eece8121ab26"/>
+				<reportElement x="3" y="0" width="200" height="100" uuid="38ddba4d-a025-44d0-a0fe-466afd6835f3"/>
 				<subreportParameter name="ID_MATERIA_APRO">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "elaborado_por.jasper"]]></subreportExpression>

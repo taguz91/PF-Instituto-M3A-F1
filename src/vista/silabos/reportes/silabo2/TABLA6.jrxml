@@ -2,15 +2,16 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e43316c5-a018-4cbb-ba2e-dd9c1875b142">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="238"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select  * from "UnidadSilabo" where id_silabo=$P!{parameter1}]]>
+		<![CDATA[select  * from "UnidadSilabo" where id_silabo=$P!{parameter1} ORDER BY numero_unidad asc]]>
 	</queryString>
 	<field name="id_unidad" class="java.lang.Integer"/>
+	<field name="id_silabo" class="java.lang.Integer"/>
 	<field name="numero_unidad" class="java.lang.Integer"/>
 	<field name="objetivo_especifico_unidad" class="java.lang.String"/>
 	<field name="resultados_aprendizaje_unidad" class="java.lang.String"/>
@@ -21,7 +22,6 @@
 	<field name="horas_practica_unidad" class="java.lang.Integer"/>
 	<field name="horas_autonomo_unidad" class="java.lang.Integer"/>
 	<field name="titulo_unidad" class="java.lang.String"/>
-	<field name="id_silabo" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -194,9 +194,9 @@ ENSEÑANZA]]></text>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="329" splitType="Stretch">
+		<band height="492" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="84" height="329" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
+				<reportElement x="0" y="0" width="84" height="492" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -207,7 +207,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{objetivo_especifico_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="407" y="0" width="22" height="329" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
+				<reportElement x="407" y="0" width="22" height="492" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -219,7 +219,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="359" y="0" width="25" height="329" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
+				<reportElement x="359" y="0" width="25" height="492" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -231,7 +231,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_docencia_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="0" width="23" height="329" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
+				<reportElement x="384" y="0" width="23" height="492" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -243,7 +243,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="84" y="0" width="94" height="329" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
+				<reportElement x="84" y="0" width="94" height="492" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -254,7 +254,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="178" y="0" width="24" height="329" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
+				<reportElement x="178" y="0" width="24" height="492" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -266,7 +266,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="202" y="0" width="24" height="329" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
+				<reportElement x="202" y="0" width="24" height="492" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -278,7 +278,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_fin_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="226" y="32" width="133" height="20" uuid="c2e20fe5-f040-401b-96d7-809cd861dfe0"/>
+				<reportElement x="226" y="32" width="133" height="64" uuid="c2e20fe5-f040-401b-96d7-809cd861dfe0"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -291,16 +291,8 @@ ENSEÑANZA]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="429" y="0" width="125" height="328" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
-				<subreportParameter name="id_u">
-					<subreportParameterExpression><![CDATA[$F{id_unidad}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
-				<reportElement x="226" y="52" width="133" height="277" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
+				<reportElement x="226" y="96" width="133" height="396" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -332,21 +324,29 @@ ENSEÑANZA]]></text>
 				<text><![CDATA[UNIDAD DIDÁCTICA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="430" y="328" width="125" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
+				<reportElement x="431" y="491" width="125" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="554" y="0" width="1" height="329" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
+				<reportElement x="555" y="0" width="1" height="492" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
+			<subreport>
+				<reportElement x="431" y="0" width="125" height="415" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
+				<subreportParameter name="id_u">
+					<subreportParameterExpression><![CDATA[$F{id_unidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<summary>
-		<band height="42" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="359" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
 				<box>

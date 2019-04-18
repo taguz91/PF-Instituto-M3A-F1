@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\HP\\Documents\\NetBeansProjects\\silabo2\\src\\silabo2\\formato2\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select  * from "UnidadSilabo" where id_silabo=$P!{parameter1}]]>
@@ -59,7 +59,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero_unidad}+1]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="155" y="0" width="400" height="33" forecolor="#006699" uuid="6da00d18-dab3-42a8-80c2-4eefbead39a9"/>
