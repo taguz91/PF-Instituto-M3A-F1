@@ -29,34 +29,34 @@ import vista.principal.VtnPrincipal;
 public class VtnPeriodosDocenteCTR {
 
     private final ConectarDB conecta;
-    private final VtnPeriodosDocente vtnPeriodoDocente;
+    private final VtnPeriodosDocente frmFinContrato;
     private final VtnPrincipal vtnPrin;
     private static LocalDate fechaInicio;
-    private final DocenteMD docente;
+    private final DocenteMD docenteMD;
     private DefaultTableModel mdTbl;
     PeriodoLectivoBD periodoBD;
     private boolean guardar = false;
 
     public VtnPeriodosDocenteCTR(ConectarDB conecta, VtnPrincipal vtnPrin, DocenteMD docente) {
-        this.vtnPeriodoDocente = new VtnPeriodosDocente(vtnPrin, false);
+        this.frmFinContrato = new VtnPeriodosDocente(vtnPrin, false);
         this.conecta = conecta;
         this.vtnPrin = vtnPrin;
-        this.docente = docente;
+        this.docenteMD = docente;
 
-        this.vtnPeriodoDocente.setLocationRelativeTo(vtnPrin);
-        this.vtnPeriodoDocente.setVisible(true);
-        this.vtnPeriodoDocente.setTitle("Periodos Docente");
+        this.frmFinContrato.setLocationRelativeTo(vtnPrin);
+        this.frmFinContrato.setVisible(true);
+        this.frmFinContrato.setTitle("Periodos Docente");
 
     }
 
     public void iniciarPeriodosDocente() {
 
-        vtnPeriodoDocente.getBntAceptar().addActionListener(e -> aceptar());
-        vtnPeriodoDocente.getBtnCancelar().addActionListener(e -> cancelarPeriodo());
-        vtnPeriodoDocente.getCbx_Periodos().addActionListener(new ActionListener(){
+        frmFinContrato.getBntAceptar().addActionListener(e -> aceptar());
+        frmFinContrato.getBtnCancelar().addActionListener(e -> cancelarPeriodo());
+        frmFinContrato.getCbx_Periodos().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                String periodo = vtnPeriodoDocente.getCbx_Periodos().getSelectedItem().toString();
+                String periodo = frmFinContrato.getCbx_Periodos().getSelectedItem().toString();
                 if(periodo.equals("NINGUNO") == true){
                     JOptionPane.showConfirmDialog(null, "Este Docente no tiene ninguna materia asignada al no tener un Período Lectivo");
                 } else {
@@ -74,7 +74,7 @@ public class VtnPeriodosDocenteCTR {
 
         List<PeriodoLectivoMD> listaPeriodos = periodoBD.llenarTabla();
         for (int i = 0; i < listaPeriodos.size(); i++) {
-            vtnPeriodoDocente.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
+            frmFinContrato.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
 
         }
 
@@ -85,26 +85,26 @@ public class VtnPeriodosDocenteCTR {
         DocenteBD d = new DocenteBD(conecta);
         PeriodoLectivoBD p = new PeriodoLectivoBD(conecta);
         DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) vtnPeriodoDocente.getTblMateriasCursos().getModel();
-        for (int i = vtnPeriodoDocente.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
+        modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
+        for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId_PerioLectivo(), docente.getIdDocente());
+        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
-            vtnPeriodoDocente.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
         }
     }
 
     private void aceptar() {
-        vtnPeriodoDocente.getJcbPeriodos().getSelectedItem();
+        frmFinContrato.getJcbPeriodos().getSelectedItem();
 
     }
 
     private void cancelarPeriodo() {
-        vtnPeriodoDocente.dispose();
+        frmFinContrato.dispose();
         System.out.println("Se dio clic en cancelar periodo docente");
 
     }

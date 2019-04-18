@@ -56,15 +56,17 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         docenteMD = dc.buscarDocente(cedula);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
-        
+
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
-                int pos = frmFinContrato.getTpFrm().getSelectedIndex(); 
+            public void mouseClicked(MouseEvent e) {
+                int pos = frmFinContrato.getTpFrm().getSelectedIndex();
                 if (pos > 0) {
                     frmFinContrato.getBtnAnterior().setEnabled(true);
-                }else{
+                    habilitarGuardar();
+                } else {
                     frmFinContrato.getBtnAnterior().setEnabled(false);
+                    habilitarGuardar();
                 }
             }
         });
@@ -75,15 +77,35 @@ public class JDFinContratacionCTR extends DependenciasCTR {
 
     public void iniciarPeriodosDocente() {
 
+        frmFinContrato.getLbl_ErrPeriodos().setVisible(false);
         frmFinContrato.getBtnAnterior().addActionListener(e -> pnlAnterior());
         frmFinContrato.getJcbPeriodos().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String periodo = frmFinContrato.getJcbPeriodos().getSelectedItem().toString();
-                if (periodo.equals("NINGUNO") == true) {
-                    JOptionPane.showConfirmDialog(null, "Este Docente no tiene ninguna materia asignada al no tener un Período Lectivo");
+                
+                int pos = frmFinContrato.getJcbPeriodos().getSelectedIndex();
+                if (pos > 0) {
+                    frmFinContrato.getJcbPeriodos().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+                    if (frmFinContrato.getLbl_ErrPeriodos() != null) {
+                        frmFinContrato.getLbl_ErrPeriodos().setVisible(false);
+                        String periodo = frmFinContrato.getJcbPeriodos().getSelectedItem().toString();
+                        if (periodo.equals("NINGUNO") == true) {
+                            JOptionPane.showMessageDialog(null, "Este Docente no tiene ninguna materia asignada al no tener asignado un Período Lectivo");
+                            DefaultTableModel modelo_Tabla;
+                            modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
+                            for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
+                                modelo_Tabla.removeRow(i);
+                            }
+                        } else {
+                            llenarTabla(periodo);
+                        }
+                    }
+
                 } else {
-                    llenarTabla(periodo);
+                    frmFinContrato.getJcbPeriodos().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
+                    if (frmFinContrato.getLbl_ErrPeriodos() != null) {
+                        frmFinContrato.getLbl_ErrPeriodos().setVisible(true);
+                    }
                 }
             }
 
@@ -131,6 +153,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         frmFinContrato.getBtnAnterior().setEnabled(false);
         frmFinContrato.getBtnGuardar().setEnabled(true);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
+        habilitarGuardar();
     }
 
     public void iniciarFinContrato() {
@@ -175,25 +198,45 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         String observacion;
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
-        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
-        System.out.println(observacion);
-        System.out.println(fecha);
-        if (observacion.equals("") == false && fecha != null && posPrd > 0) {
-            if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-                    || frmFinContrato.getLblErrorObservacion().isVisible() == true || posPrd == 0) {
-                //frmFinContrato.getBtnGuardar().setEnabled(false);
-                guardar = false;
-            } else {
-                System.out.println("Se puede guardar");
+//        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+        int pos = frmFinContrato.getTpFrm().getSelectedIndex();
+        
+        if(pos == 0){
+            if(observacion.equals("") == false && fecha != null){
+                if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
+                        || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
+                    frmFinContrato.getBtnGuardar().setEnabled(false);
+                } else {
+                    System.out.println("Se puede guardar");
+                    frmFinContrato.getBtnGuardar().setEnabled(true);
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
+                }
+            } else{
                 frmFinContrato.getBtnGuardar().setEnabled(true);
+                frmFinContrato.getBtnGuardar().setText("Siguiente");
+            }
+        } else if(pos == 1){
+            if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
                 frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            } else if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            }
+            
+            if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            } else if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
+                System.out.println("entro");
+                frmFinContrato.getBtnGuardar().setText("Guardar");
+                frmFinContrato.getBtnGuardar().setEnabled(true);
                 guardar = true;
             }
-        } else {
-            frmFinContrato.getBtnGuardar().setEnabled(false);
-            frmFinContrato.getBtnGuardar().setText("Siguiente");
         }
-
     }
 
     private void guardarFinContratacion() {
@@ -234,6 +277,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         } else {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
+            habilitarGuardar();
         }
 
     }

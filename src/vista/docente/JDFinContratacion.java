@@ -33,7 +33,6 @@ public class JDFinContratacion extends javax.swing.JDialog {
     public JComboBox<String> getJcbPeriodos() {
         return Cbx_Periodos;
     }
-
     public JButton getBtnAnterior() {
         return btnAnterior;
     }
@@ -70,7 +69,13 @@ public class JDFinContratacion extends javax.swing.JDialog {
         return Cbx_Periodos;
     }
 
+    public JLabel getLbl_ErrPeriodos() {
+        return Lbl_ErrPeriodos;
+    }
 
+    public void setLbl_ErrPeriodos(JLabel Lbl_ErrPeriodos) {
+        this.Lbl_ErrPeriodos = Lbl_ErrPeriodos;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +103,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
         Cbx_Periodos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMateriasCursos = new javax.swing.JTable();
+        Lbl_ErrPeriodos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -178,9 +184,9 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblErrorObservacion)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         tpFrm.addTab("Fin Contrato", jPanel3);
@@ -209,6 +215,9 @@ public class JDFinContratacion extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblMateriasCursos);
 
+        Lbl_ErrPeriodos.setForeground(new java.awt.Color(255, 0, 0));
+        Lbl_ErrPeriodos.setText("Seleccione una Opción");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -222,20 +231,22 @@ public class JDFinContratacion extends javax.swing.JDialog {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(Lbl_ErrPeriodos, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addComponent(Lbl_ErrPeriodos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -271,6 +282,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Cbx_Periodos;
+    private javax.swing.JLabel Lbl_ErrPeriodos;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
