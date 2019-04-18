@@ -155,6 +155,10 @@ public class ControladorSilaboC {
             silabo = new SilaboBD(conexion, materiaSeleccionada.get(), periodoSeleccionado.get());
 
             iniciarSilabo(silabo, (int) configuracion.getSpnUnidades().getValue());
+            
+            configuracion.dispose();
+            
+            
 
         });
         configuracion.getCmbCarrera().setSelectedIndex(0);
