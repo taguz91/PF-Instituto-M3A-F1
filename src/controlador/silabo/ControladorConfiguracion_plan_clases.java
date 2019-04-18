@@ -23,6 +23,7 @@ public class ControladorConfiguracion_plan_clases {
     private final UsuarioBD usuario;
     private ConexionBD conexion;
     private frmConfiguraciónPlanClase frm_cong_PlanClase;
+    private frmPlanClase frm_Plan_Clase;
     private final VtnPrincipal vtnPrincipal;
     private List<CarreraMD> carrerasDocente;
     private List<MateriaMD> materiasDocente;
@@ -94,9 +95,6 @@ public class ControladorConfiguracion_plan_clases {
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
         return silabounidad.get();
         //sale un error...revisaras
-    }
-    public void Botones(){
-    
-    
     } 
+   
 }

@@ -766,8 +766,8 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
-//        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-//                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -796,8 +796,8 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-//        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-//                KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
+               KeyEvent.VK_Q, ActionEvent.ALT_MASK));
     }
 
     public int getNumVtns() {
