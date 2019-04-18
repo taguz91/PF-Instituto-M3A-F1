@@ -61,8 +61,8 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getCmb_carreras().addActionListener(a1 -> cargarSilabosDocentes());
         frm_cong_PlanClase.getCmb_silabos().addActionListener(a1 -> iniciarSilabo(unidades()));
         cargarComboCarreras();
-        cargarSilabosDocentes();
-        iniciarSilabo(unidades());
+      //  cargarSilabosDocentes();
+       // iniciarSilabo(unidades());
 //     materiaseleccionada();
 
     }
@@ -97,7 +97,9 @@ public class ControladorConfiguracion_plan_clases {
                 frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
             });
         } else {
-            JOptionPane.showMessageDialog(null, "NO EXISTEN SILABOS");
+            System.out.println("NO EXISTEN SILABOS");
+            
+            
         }
     }
 
