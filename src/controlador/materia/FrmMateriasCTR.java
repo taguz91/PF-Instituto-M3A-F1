@@ -15,6 +15,7 @@ import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.Validar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import modelo.validaciones.TxtVNumeros;
 import vista.materia.FrmMaterias;
 import vista.principal.VtnPrincipal;
 
@@ -123,37 +124,63 @@ public class FrmMateriasCTR {
                 frmMaterias.getCbEjeFormacion(), frmMaterias.getLblErrorEjeFormacion()));
         frmMaterias.getCbMateriaTipo().addActionListener(new CmbValidar(
                 frmMaterias.getCbMateriaTipo(), frmMaterias.getLblErrorMateriaTipo()));
-        frmMaterias.getCbTipoAcreditacion().addActionListener(new CmbValidar(
-                frmMaterias.getCbTipoAcreditacion(), frmMaterias.getLblErrorTipoAcreditacion()));
 
+        //Validar el codigo de materias con letras, numeros y _ - 
+        frmMaterias.getTxtCodigoMateria().addKeyListener(new TxtVLetras(
+                frmMaterias.getTxtCodigoMateria(), frmMaterias.getLblErrorCodigoMateria()));
+        frmMaterias.getTxtCreditos().addKeyListener(new TxtVNumeros(
+                frmMaterias.getTxtCreditos(), frmMaterias.getLblErrorCreditos()));
+        frmMaterias.getTxtHorasAutoEstudio().addKeyListener(new TxtVNumeros(
+                frmMaterias.getTxtHorasAutoEstudio(), frmMaterias.getLblErrorHorasAutoEstudio()));
+        
+
+//Descripocion materia, campo formacion, organizacion curricular, objetivo general y especifico
         frmMaterias.getTxtCampoFormacion().addKeyListener(new KeyAdapter() {
 
             public void keyReleased(KeyEvent e) {
-                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCampoFormacion().getText()) == false && frmMaterias.getTxtCampoFormacion().getText().equals("") == false) {
+                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCampoFormacion().getText()) == false
+                        && frmMaterias.getTxtCampoFormacion().getText().equals("") == false) {
                     frmMaterias.getLblErrorCampoFormacion().setVisible(true);
                 } else {
                     frmMaterias.getLblErrorCampoFormacion().setVisible(false);
                 }
             }
         });
+        frmMaterias.getTxtOrganizacionCurricular().addKeyListener(new KeyAdapter() {
 
-        frmMaterias.getTxtCodigoMateria().addKeyListener(new KeyAdapter() {
+            public void keyRealesed(KeyEvent e) {
 
-            public void KeyRealesed(KeyEvent e) {
-                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCodigoMateria().getText()) == false && frmMaterias.getTxtCodigoMateria().getText().equals("") == false) {
-                    frmMaterias.getLblErrorCodigoMateria().setVisible(true);
+                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtOrganizacionCurricular().getText()) == false
+                        && frmMaterias.getTxtOrganizacionCurricular().getText().equals("") == false) {
+                    frmMaterias.getLblErrorOrganizacionCurricular().setVisible(true);
                 } else {
-                    frmMaterias.getLblErrorCodigoMateria().setVisible(false);
+                    frmMaterias.getLblErrorOrganizacionCurricular().setVisible(false);
                 }
             }
         });
 
-        frmMaterias.getTxtCreditos().addKeyListener(new KeyAdapter() {
-            public void KeyRealesed(KeyEvent e) {
-                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCreditos().getText()) == false && frmMaterias.getTxtCreditos().getText().equals("") == false) {
-                    frmMaterias.getLblErrorCreditos().setVisible(true);
+        frmMaterias.getTxtObjetivoGeneral().addKeyListener(new KeyAdapter() {
+
+            public void keyRealesed(KeyEvent e) {
+
+                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtObjetivoGeneral().getText()) == false
+                        && frmMaterias.getTxtObjetivoGeneral().getText().equals("") == false) {
+                    frmMaterias.getLblErrorObjetivoGeneral().setVisible(true);
                 } else {
-                    frmMaterias.getLblErrorCreditos().setVisible(false);
+                    frmMaterias.getLblErrorObjetivoGeneral().setVisible(false);
+                }
+            }
+        });
+
+        frmMaterias.getTxtObjetivoEspecifico().addKeyListener(new KeyAdapter() {
+
+            public void keyRealesed(KeyEvent e) {
+
+                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtObjetivoEspecifico().getText()) == false
+                        && frmMaterias.getTxtObjetivoEspecifico().getText().equals("") == false) {
+                    frmMaterias.getLblErrorObjetivoEspecifico().setVisible(true);
+                } else {
+                    frmMaterias.getLblErrorObjetivoEspecifico().setVisible(false);
                 }
             }
         });
@@ -161,15 +188,102 @@ public class FrmMateriasCTR {
         frmMaterias.getTxtDescripcionMateria().addKeyListener(new KeyAdapter() {
 
             public void KeyRealesed(KeyEvent e) {
-                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtDescripcionMateria().getText()) == false && frmMaterias.getTxtDescripcionMateria().equals("") == false) {
+                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtDescripcionMateria().getText()) == false
+                        && frmMaterias.getTxtDescripcionMateria().equals("") == false) {
                     frmMaterias.getLblErrorDescripcionMateria().setVisible(true);
                 } else {
                     frmMaterias.getLblErrorDescripcionMateria().setVisible(false);
                 }
             }
-
         });
 
+//        frmMaterias.getTxtCodigoMateria().addKeyListener(new KeyAdapter() {
+//
+//            public void KeyRealesed(KeyEvent e) {
+//                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCodigoMateria().getText()) == false
+//                        && frmMaterias.getTxtCodigoMateria().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorCodigoMateria().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorCodigoMateria().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        frmMaterias.getTxtCreditos().addKeyListener(new KeyAdapter() {
+//            public void KeyRealesed(KeyEvent e) {
+//                if (modelo.validaciones.Validar.esLetras(frmMaterias.getTxtCreditos().getText()) == false
+//                        && frmMaterias.getTxtCreditos().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorCreditos().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorCreditos().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        
+//        frmMaterias.getTxtHorasAutoEstudio().addKeyListener(new KeyAdapter() {
+//
+//            public void keyRealesed(KeyEvent e) {
+//                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtHorasAutoEstudio().getText()) == false
+//                        && frmMaterias.getTxtHorasAutoEstudio().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorHorasAutoEstudio().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorHorasAutoEstudio().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        frmMaterias.getTxtHorasDocencia().addKeyListener(new KeyAdapter() {
+//
+//            public void keyRealesed(KeyEvent e) {
+//
+//                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtHorasDocencia().getText()) == false
+//                        && frmMaterias.getTxtHorasDocencia().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorHorasDocencia().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorHorasDocencia().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        frmMaterias.getTxtHorasPracticas().addKeyListener(new KeyAdapter() {
+//
+//            public void keyRealesed(KeyEvent e) {
+//
+//                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtHorasPracticas().getText()) == false
+//                        && frmMaterias.getTxtHorasPracticas().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorHorasPracticas().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorHorasPracticas().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        frmMaterias.getTxtHorasPresenciales().addKeyListener(new KeyAdapter() {
+//
+//            public void keyRealesed(KeyEvent e) {
+//
+//                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtHorasPresenciales().getText()) == false
+//                        && frmMaterias.getTxtHorasPresenciales().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorHorasPresenciales().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorHorasPresenciales().setVisible(false);
+//                }
+//            }
+//        });
+//
+//        frmMaterias.getTxtMateriaCiclo().addKeyListener(new KeyAdapter() {
+//
+//            public void keyRealesed(KeyEvent e) {
+//
+//                if (modelo.validaciones.Validar.esNumeros(frmMaterias.getTxtMateriaCiclo().getText()) == false
+//                        && frmMaterias.getTxtMateriaCiclo().getText().equals("") == false) {
+//                    frmMaterias.getLblErrorMateriaCiclo().setVisible(true);
+//                } else {
+//                    frmMaterias.getLblErrorMateriaCiclo().setVisible(false);
+//                }
+//            }
+//        });
     }
 
 }
