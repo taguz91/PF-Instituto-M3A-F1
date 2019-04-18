@@ -120,13 +120,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-<<<<<<< HEAD
-                  <KeyStroke key="Ctrl+Q"/>
-=======
-                  <KeyStroke key="Ctrl+K"/>
->>>>>>> 1633377ecede32bcdb824665262d756dd9476c04
-                </Property>
                 <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>
@@ -782,7 +775,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblIP" min="-2" pref="159" max="-2" attributes="0"/>
+                  <Component id="lblIP" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsola" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
