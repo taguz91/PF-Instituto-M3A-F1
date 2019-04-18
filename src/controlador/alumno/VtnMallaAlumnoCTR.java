@@ -480,7 +480,7 @@ public class VtnMallaAlumnoCTR {
             view.setVisible(true);
             view.setTitle("Reporte de Malla de Alumno");
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 

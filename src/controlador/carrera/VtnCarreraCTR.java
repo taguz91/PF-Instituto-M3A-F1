@@ -199,7 +199,7 @@ public class VtnCarreraCTR {
             view.setTitle("Reporte de Alumnos por Carrera");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
     /*
