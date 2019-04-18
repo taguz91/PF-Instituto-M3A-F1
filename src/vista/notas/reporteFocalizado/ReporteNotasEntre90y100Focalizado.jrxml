@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fa863e33-5e96-4e47-832f-a33181c902a8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="212" splitType="Stretch">
+			<staticText>
+				<reportElement x="672" y="56" width="199" height="20" uuid="1cd39dc5-3a89-499b-96be-81362a140ca6"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="81" width="97" height="20" uuid="920ab032-74a0-444a-944f-ca1400fad129"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="113" width="72" height="20" uuid="9ad3b68a-471d-469b-9536-0174b49d2490"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="148" width="52" height="20" uuid="a839946e-bc9d-4634-b96e-faa7d94a1d46"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Paralelo:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="39" y="56" width="147" height="124" uuid="807f3a8b-fd3e-42b4-8085-650d2358f045"/>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="452aa018-0ce9-4fbb-a5cd-370ac15164e7"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="113" width="54" height="20" uuid="8b4d344b-306f-4c5d-98ef-8a2bf7a269ea"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="148" width="56" height="20" uuid="a9d64d4a-ca0d-4f1e-934a-64421ae11857"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Jornada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="148" width="41" height="20" uuid="325b922c-9ac1-45c3-94ee-e5c12e2c01b2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="81" width="56" height="20" uuid="063e6c74-e843-420f-8705-01637d46a621"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="191" width="1520" height="1" uuid="6051b331-748d-476a-86f3-744ad4bea8e3"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

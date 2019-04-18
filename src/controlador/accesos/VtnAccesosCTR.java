@@ -2,11 +2,13 @@ package controlador.accesos;
 
 import controlador.Libraries.Middlewares;
 import controlador.notas.VtnActivarNotasCTR;
+import controlador.principal.VtnPrincipalCTR;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import vista.accesos.VtnAccesos;
@@ -17,16 +19,22 @@ public class VtnAccesosCTR {
     private VtnPrincipal desktop;
     private VtnAccesos vista;
     private AccesosBD modelo;
+    private final ConectarDB conecta;
+    
+    private final VtnPrincipalCTR ctrPrin;
 
     //Listas
     private List<AccesosMD> listaAccesos;
     private boolean cargarTabla = true;
 
-    public VtnAccesosCTR(VtnPrincipal desktop, VtnAccesos vista, AccesosBD modelo) {
+    public VtnAccesosCTR(VtnPrincipal desktop, VtnAccesos vista, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.desktop = desktop;
         this.vista = vista;
-        this.modelo = modelo;
+        this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
     }
+
+   
 
     //Iniciamos Tabla
     private static DefaultTableModel tablaAccesos;

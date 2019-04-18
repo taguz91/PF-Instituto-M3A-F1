@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e3193962-f4be-477f-9de7-c39ad9d36adf">
-	<property name="ireport.zoom" value="1.9487171000000056"/>
-	<property name="ireport.x" value="2067"/>
-	<property name="ireport.y" value="300"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="16"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/Reportes/"]]></defaultValueExpression>
 	</parameter>
@@ -89,8 +89,7 @@ WHERE
 	"ViewAlumnoCurso".coor_prim_nombre, "ViewAlumnoCurso".coor_segn_nombre,
 	"ViewAlumnoCurso"."PORCENTAJE_FALTAS" || '%',
 	"MallaAlumno".malla_almn_num_matricula
-	ORDER BY "ViewAlumnoCurso".persona_primer_apellido
-]]>
+	ORDER BY "ViewAlumnoCurso".persona_primer_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
@@ -218,7 +217,7 @@ WHERE
 			</line>
 			<image>
 				<reportElement x="41" y="57" width="147" height="124" uuid="687b43ba-c1d8-4eff-9dd6-ddd1eceedc7e"/>
-				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="261" y="147" width="28" height="20" uuid="c6d1bfc6-9c3d-4683-9820-84e25cb45f22"/>
