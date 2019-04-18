@@ -55,10 +55,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código]]></text>
+				<text><![CDATA[Codigo]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="40" width="273" height="16" uuid="0f4fbf19-69d3-4b97-829b-f7b676a77c1c"/>
+				<reportElement x="0" y="40" width="273" height="16" uuid="05ef27c7-4f5e-43b2-bae5-c3143fb2526a"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

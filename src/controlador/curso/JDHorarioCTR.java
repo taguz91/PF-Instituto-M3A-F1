@@ -141,6 +141,8 @@ public class JDHorarioCTR extends DependenciasCTR {
             bd.setHoraFin(fin);
 
             bd.ingresar();
+            //Actualizamos el horario 
+            ctrHClase.actualizar(dia);
         }
     }
 

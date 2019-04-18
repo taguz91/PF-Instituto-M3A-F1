@@ -34,6 +34,9 @@ public class VtnRequisitosCTR {
 
     private ArrayList<MateriaMD> materias;
 
+    /*
+    *Constructor de la clase
+    */
     public VtnRequisitosCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, FrmRequisitos frmreq,
             MateriaBD materiabd, MateriaMD materia) {
         this.conecta = conecta;
@@ -47,18 +50,20 @@ public class VtnRequisitosCTR {
         //agregar la ventana
         vtnPrin.getDpnlPrincipal().add(frmreq);
         frmreq.show();
+        frmreq.setLocation(650, 250);
         
     }
 
+     /**Inicia la accion del boton,asi como asigna valores a los componentes de la vista*/
     public void iniciar() {
-        frmreq.getBtnGuardar().setEnabled(habilitaBoton);
+        
         frmreq.getLblNombreMateria().setText(materia.getNombre());
         cargarComboMaterias();
-
         frmreq.getBtnGuardar().addActionListener(e -> guardarMateriaRequisito());
 
     }
 
+    /**Se encargar de enlistar en un combobox las materias*/
     private void cargarComboMaterias() {
         materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
         frmreq.getCmbrequisitos().removeAllItems();
@@ -70,6 +75,11 @@ public class VtnRequisitosCTR {
         });
 
     }
+    
+    /*
+    *Guardar toda la informacion del formulario Requisitos
+    *En la tabla Materia_Requisitos
+    */
 
     public void guardarMateriaRequisito() {
         if (frmreq.getJrbCoRequisito().isSelected() || frmreq.getJrbPrerequisito().isSelected() ) {
@@ -81,8 +91,10 @@ public class VtnRequisitosCTR {
         boolean guardar = true;
         String tipo="";
         int posicion;
+        //Guarda en a varibale posicion el indice de la materia seleccionada
         posicion = frmreq.getCmbrequisitos().getSelectedIndex();
 
+        //Guarda la materia requisito en su objeto
         materiarequisito.setMateria(materia);
         
         if (posicion > 0) {
@@ -90,17 +102,19 @@ public class VtnRequisitosCTR {
             materiarequisito.setMateriaRequisito(materia);
         } else {
             guardar = false;
+            JOptionPane.showMessageDialog(null, "Seleccione los datos");
         }
         
+        //Verifica que opcion de los radio buton han sido seleccionados para guardarlo en la variable
         if (frmreq.getJrbCoRequisito().isSelected()) {
             tipo = "C";
             materiarequisito.setTipo(tipo);
-            habilitaBoton = true;
+     
         } else if (frmreq.getJrbPrerequisito().isSelected()) {
             tipo = "P";
            materiarequisito.setTipo(tipo);
-           frmreq.getBtnGuardar().setEnabled(true);
-           habilitaBoton = true;
+         
+          
            
         } else {
             guardar = false;
@@ -112,8 +126,9 @@ public class VtnRequisitosCTR {
             } else {
                 if (materiarequisito.insertarMateriaRequisito()) {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
+                    frmreq.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se puede guardar los Datos");
+                    JOptionPane.showMessageDialog(null, "La Informacion existe, Por favor seleccione otros datos");
                 }
             }
 
@@ -121,7 +136,11 @@ public class VtnRequisitosCTR {
         
         
     }
-
+   
+    /**
+     *Permite cargar los datos seleccionados en la tabla en el formulario
+     * materia paa su porterior edicion
+     */
     public void editar(MateriaRequisitoMD mr) {
         editar = true;
         idRequisito = mr.getId();

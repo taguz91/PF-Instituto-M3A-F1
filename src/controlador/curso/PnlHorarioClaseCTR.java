@@ -193,5 +193,29 @@ public class PnlHorarioClaseCTR {
         return jSelec;
     }
     
+    public void actualizar(int dia){
+        switch(dia){
+            case 1:
+                actualizarLunes();
+                break; 
+            case 2: 
+                actualizarMartes();
+                break; 
+            case 3: 
+                actualizarMiercoles();
+                break; 
+            case 4: 
+                actuatizarJueves();
+                break; 
+            case 5: 
+                actualizarViernes();
+                break; 
+            case 6: 
+                actualizarSabado(); 
+                break; 
+            default:
+                break; 
+        }
+    }
     
 }
