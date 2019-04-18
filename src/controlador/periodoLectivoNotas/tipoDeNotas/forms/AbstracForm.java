@@ -89,10 +89,7 @@ public abstract class AbstracForm {
             }
         });
 
-        vista.getBtnGuardar().addActionListener(e -> {
-            btnGuardar(e);
-            vista.dispose();
-        });
+        vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
     }
 
     //METODOS DE APOYO

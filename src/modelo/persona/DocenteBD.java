@@ -509,6 +509,18 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
+    
+    public boolean deshabilitarCursos(int idPeriodo, int idDocente){
+        String sql = "UPDATE public.\"Cursos\" SET curso_activo = false "
+                + "WHERE id_docente = " + idDocente + " AND id_prd_lectivo = " + idPeriodo + ";";
+        System.out.println(sql);
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     public ArrayList<DocenteMD> buscar(String aguja) {
         String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
