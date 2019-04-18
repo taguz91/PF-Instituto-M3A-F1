@@ -25,7 +25,7 @@ public class ReportesCTR {
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/Reportes/ReporteCompleto.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteCompleto.jasper";
 
         Map parametros = new HashMap();
 
@@ -48,7 +48,7 @@ public class ReportesCTR {
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
 
-        String path = "./src/vista/notas/Reportes/ReporteNotasMenor70.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasMenor70.jasper";
         
         Map parametros = new HashMap();
         
@@ -70,7 +70,7 @@ public class ReportesCTR {
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/Reportes/ReporteNotasEntre70y80.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasEntre70y80.jasper";
     
         Map parametros = new HashMap();
         
@@ -94,7 +94,7 @@ public class ReportesCTR {
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/Reportes/ReporteNotasEntre80y90.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasEntre80y90.jasper";
         
         Map parametros = new HashMap();
         
@@ -117,7 +117,7 @@ public class ReportesCTR {
         String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
         
-        String path = "./src/vista/notas/Reportes/ReporteNotasEntre90y100.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasEntre90y100.jasper";
         
         Map parametros = new HashMap();
         

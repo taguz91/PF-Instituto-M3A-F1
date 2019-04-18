@@ -189,7 +189,7 @@ WHERE
 			</line>
 			<image>
 				<reportElement x="20" y="65" width="169" height="135" uuid="ae8a7cb4-b638-4dc0-8460-54a43db35157"/>
-				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

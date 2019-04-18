@@ -185,7 +185,7 @@ WHERE
 			</line>
 			<image>
 				<reportElement x="16" y="55" width="167" height="134" uuid="b50f521f-ca2e-4d39-aed8-178c5987eeed"/>
-				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="1083" y="81" width="300" height="20" uuid="773aaf8a-738a-42e4-8835-c85f74d0606b"/>
