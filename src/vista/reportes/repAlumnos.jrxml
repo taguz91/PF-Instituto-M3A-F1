@@ -18,8 +18,8 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 	<title>
 		<band height="144" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="555" height="99" uuid="961c6cec-0571-4909-b0ab-4fb36707b62b"/>
-				<imageExpression><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="99"/>
+				<imageExpression><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="99" width="555" height="20" uuid="1b2ace19-eaa3-486d-ad3c-c8799cce49ed"/>
