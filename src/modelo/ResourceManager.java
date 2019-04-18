@@ -66,7 +66,6 @@ public class ResourceManager implements Serializable {
 
     private static void resetConn() {
         try {
-            System.out.println("SILABOS");
             JDBC_URL = generarURL();
 
             USERNAME = Propiedades.getUserProp("username");
