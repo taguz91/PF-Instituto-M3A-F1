@@ -69,3 +69,30 @@ CREATE TRIGGER Elimina_Roles
 AFTER UPDATE OF rol_estado
 ON public."Roles" FOR EACH ROW
 EXECUTE PROCEDURE roles_elim();
+
+--trigger para grabar en el historial 
+
+CREATE TRIGGER up_date_usuarios
+AFTER UPDATE OF usu_estado
+ON public."Usuarios" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_usuarios();
+ 
+ CREATE TRIGGER up_date_alumnocurso
+AFTER UPDATE OF almn_curso_activo
+ON public."AlumnoCurso" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_alumnocurso();
+ 
+ CREATE TRIGGER up_date_ingresonotas
+AFTER UPDATE OF nota_primer_inteciclo, nota_examen_intecilo, nota_segundo_inteciclo, nota_examen_final, nota_examen_de_recuperacion
+ON public."IngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_ingresonotas();
+ 
+ CREATE TRIGGER up_date_periodoingresonotas
+AFTER UPDATE OF perd_notas_estado
+ON public."PeriodoIngresoNotas" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_periodoingresonotas();
+ 
+ CREATE TRIGGER up_date_tipodenota
+AFTER UPDATE OF tipo_nota_estado
+ON public."TipoDeNota" FOR EACH ROW
+ EXECUTE PROCEDURE actualiza_tipodenota();

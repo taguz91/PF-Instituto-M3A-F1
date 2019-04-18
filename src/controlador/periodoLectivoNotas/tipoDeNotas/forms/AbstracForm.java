@@ -8,8 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import modelo.carrera.CarreraBD;
@@ -29,12 +27,8 @@ public abstract class AbstracForm {
     protected TipoDeNotaBD modelo;
     //Ventana Padre
     protected VtnTipoNotasCTR vtnPadre;
-    //(Agregar o Editar)
-    protected String Funcion;
     //listas
     protected List<CarreraMD> listaCarreras;
-
-    protected Integer PK = null;
 
     //Combo
     protected String[] carrerasTradicionales = {
@@ -46,17 +40,15 @@ public abstract class AbstracForm {
 
     protected boolean COMPLETED = false;
 
-    public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
+    public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.vtnPadre = vtnPadre;
-        this.Funcion = Funcion;
     }
 
     //INITS
     public void Init() {
-        activarFormulario(false);
         new Thread(() -> {
             try {
                 Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
@@ -67,6 +59,7 @@ public abstract class AbstracForm {
                 System.out.println(e.getMessage());
             }
         }).start();
+        activarFormulario(false);
         listaCarreras = CarreraBD.selectIdNombreAll();
         cargarComboCarreras();
         cargarCmbNombreNota(carrerasTradicionales);
@@ -76,9 +69,13 @@ public abstract class AbstracForm {
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+
         String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
+
         Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
+
         vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {

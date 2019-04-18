@@ -253,7 +253,6 @@ public class VtnDocenteCTR {
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA !");
             }
-
         }
 
     }
@@ -293,9 +292,7 @@ public class VtnDocenteCTR {
                     if (docente.eliminarDocente(docentemd, docentesMD.get(posFila).getIdDocente()) == true) {
                         System.out.println(docentesMD.get(posFila).getIdDocente() + " " + docentesMD.get(posFila).getNombreCompleto());
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-
                         cargarDocentes();
-
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL DOCENTE !");
                     }

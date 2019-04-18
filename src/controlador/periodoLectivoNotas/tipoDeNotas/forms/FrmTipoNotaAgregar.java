@@ -15,16 +15,19 @@ import vista.principal.VtnPrincipal;
  */
 public class FrmTipoNotaAgregar extends AbstracForm {
 
-    public FrmTipoNotaAgregar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre, String Funcion) {
-        super(desktop, vista, modelo, vtnPadre, Funcion);
+    public FrmTipoNotaAgregar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
+        super(desktop, vista, modelo, vtnPadre);
     }
 
     //INITS
     public void InitAgregar() {
+
+        Init();
+
         vista.setTitle(StringUtils.capitalize("agregar nueva nota"));
-        if (COMPLETED) {
-            activarFormulario(true);
-        }
+
+        activarFormulario(true);
+
     }
 
     //EVENTOS
@@ -35,6 +38,7 @@ public class FrmTipoNotaAgregar extends AbstracForm {
                 String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
                 Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                vista.dispose();
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
             }

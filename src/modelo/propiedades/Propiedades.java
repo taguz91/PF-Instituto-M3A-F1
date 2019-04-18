@@ -71,7 +71,7 @@ public class Propiedades {
     }
 
     public static String getPropertie(String propertie) {
-        String IP = "";
+        String value = "";
 
         Map<Object, Object> map = loadProperties().entrySet()
                 .stream()
@@ -79,10 +79,52 @@ public class Propiedades {
                 .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
         for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            IP = (String) entry.getValue();
+            value = (String) entry.getValue();
         }
 
-        return IP;
+        return value;
+    }
+
+    public static String getUserProp(String propertie) {
+        String value = "";
+
+        Properties properties = new Properties();
+
+        try {
+            properties.load(new FileReader("user.properties"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Map<Object, Object> map = properties.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(propertie.toLowerCase()))
+                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            value = (String) entry.getValue();
+        }
+
+        return value;
+    }
+
+    public static void generateUserProperties(Map<Object, Object> properties) {
+        Properties file = new Properties();
+
+        properties
+                .entrySet()
+                .stream()
+                .forEach(entry -> {
+                    file.setProperty(entry.getKey().toString(), entry.getValue().toString());
+                });
+
+        try {
+            file.store(new FileWriter("user.properties"), "PROPIEDADES DEL USUARIO");
+        } catch (IOException ex) {
+            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

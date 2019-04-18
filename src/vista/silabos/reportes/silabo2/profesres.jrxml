@@ -7,13 +7,16 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="id_silabo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select distinct k.id_docente,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' '
 									,p.persona_segundo_nombre) as nombre_docente,
 concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) as curso from  "Cursos" c join "Jornadas" 
 a on c.id_jornada=a.id_jornada join "Docentes" k on k.id_docente=c.id_docente
-join "Personas" p  on k.id_persona=p.id_persona 
-where    c.id_materia=$P!{parameter1} ]]>
+join "Personas" p  on k.id_persona=p.id_persona join "PeriodoLectivo" q on c.id_prd_lectivo=q.id_prd_lectivo
+where    c.id_materia=$P!{parameter1} and q.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})]]>
 	</queryString>
 	<field name="id_docente" class="java.lang.Integer"/>
 	<field name="nombre_docente" class="java.lang.String"/>
@@ -31,7 +34,7 @@ where    c.id_materia=$P!{parameter1} ]]>
 				<text><![CDATA[3.1. Profesor Responsable]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-1" y="23" width="534" height="1" uuid="62ced5ee-6ad6-4ee9-b7ee-42778251d56d"/>
+				<reportElement x="0" y="23" width="535" height="1" uuid="6f4230e1-961c-4a57-a294-bca661f5d502"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
@@ -41,7 +44,7 @@ where    c.id_materia=$P!{parameter1} ]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="406" height="20" uuid="437d6874-44fe-4f33-a7b7-a45468e22ee7"/>
+				<reportElement x="0" y="0" width="406" height="20" uuid="b1ae290a-9ffd-4658-929d-6b28ed3539f5"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 				</box>
@@ -49,7 +52,7 @@ where    c.id_materia=$P!{parameter1} ]]>
 				<textFieldExpression><![CDATA[$F{nombre_docente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="406" y="0" width="127" height="20" uuid="b4b740dd-b4ed-4255-8740-61207b45fada"/>
+				<reportElement x="408" y="0" width="127" height="20" uuid="aa6525d4-1767-42df-86bf-61b1d7681a73"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -61,7 +64,7 @@ where    c.id_materia=$P!{parameter1} ]]>
 	<pageFooter>
 		<band height="1">
 			<line>
-				<reportElement x="0" y="0" width="534" height="1" uuid="46497e5a-19b7-4e8d-81dd-3dbab6242472"/>
+				<reportElement x="0" y="0" width="535" height="1" uuid="2dc1b86d-78e2-429b-99aa-5b15b692baf8"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>

@@ -85,3 +85,147 @@ BEGIN
 	RETURN NEW;
 END;
 $roles_elim$ LANGUAGE plpgsql;
+
+
+--funciones para guardar en la tabla historial
+
+CREATE OR REPLACE FUNCTION actualiza_usuarios()
+RETURNS TRIGGER AS $actualiza_usuarios$
+BEGIN
+	IF new.usu_estado = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_usuario,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_usuario,inet_client_addr());
+	END IF;
+	RETURN NEW;
+END;
+$actualiza_usuarios$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION actualiza_alumnocurso()
+RETURNS TRIGGER AS $actualiza_alumnocurso$
+BEGIN
+	IF new.almn_curso_activo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_almn_curso,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_almn_curso,inet_client_addr());
+	END IF;
+	RETURN NEW;
+END;
+$actualiza_alumnocurso$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION actualiza_ingresonotas()
+RETURNS TRIGGER AS $actualiza_ingresonotas$
+BEGIN
+	IF new.nota_primer_inteciclo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	END IF;
+	
+	IF new.nota_examen_intecilo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	END IF;
+	
+	IF new.nota_segundo_inteciclo = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	END IF;
+	
+	IF new.nota_examen_final = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	END IF;
+	
+	IF new.nota_examen_de_recuperacion = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_ingreso_notas,inet_client_addr());
+	END IF;
+	
+	RETURN NEW;
+END;
+$actualiza_ingresonotas$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION actualiza_periodoingresonotas()
+RETURNS TRIGGER AS $actualiza_periodoingresonotas$
+BEGIN
+	IF new.perd_notas_estado = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_perd_ingr_notas,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_perd_ingr_notas,inet_client_addr());
+	END IF;
+	RETURN NEW;
+END;
+$actualiza_periodoingresonotas$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION actualiza_tipodenota()
+RETURNS TRIGGER AS $actualiza_tipodenota$
+BEGIN
+	IF new.tipo_nota_estado = FALSE THEN
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'DESACTIVACION', TG_TABLE_NAME, old.id_tipo_nota,inet_client_addr());
+	ELSE 
+		INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla,historial_ip )
+		VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_tipo_nota,inet_client_addr());
+	END IF;
+	RETURN NEW;
+END;
+$actualiza_tipodenota$ LANGUAGE plpgsql;

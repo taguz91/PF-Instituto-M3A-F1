@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\HP\\Documents\\NetBeansProjects\\silabo2\\src\\silabo2\\formato2\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select  * from "UnidadSilabo" where id_silabo=$P!{parameter1}]]>

@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoBD;
@@ -31,9 +30,10 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
     private final VtnMallaAlumnoCTR ctrMalla;
     //Numero de notas
     private final int[] numMatriculas = {1, 2, 3};
-    private int posMatricula = 0, numMatricula;
+    private int posMatricula = 0, numMatricula, posEstado;
     private double nota1, nota2, nota3;
     private String notaAux;
+    private final String[] estados = {"Matriculado","Cursado","Reprobado","Pendiente", "Anulado"}; 
 
     public FrmMallaActualizarCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
@@ -49,16 +49,19 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
     public void iniciar() {
         frmMalla.getTxtNota().setEnabled(false);
         llenarComboNumMatriculas();
+        llenarCmb();
+        
         cargarDatos();
         eventoActualizar(frmMalla.getTxtNota());
         //Validacion 
         frmMalla.getTxtNota().addKeyListener(new TxtVNota(frmMalla.getTxtNota()));
         //Eventos
         frmMalla.getCmbNumMatricula().addActionListener(e -> clickCmbNumMatricula());
+        frmMalla.getCmbEstado().addActionListener(e -> clickEstados());
         frmMalla.getBtnGuardar().addActionListener(e -> guardar());
-
+        
         //Iniciamos el evento 
-        //ctrPrin.eventoJDCerrar(frmMalla);
+        ctrPrin.eventoJDCerrar(frmMalla);
         mostrarVtnMalla(frmMalla);
     }
 
@@ -77,11 +80,26 @@ public class FrmMallaActualizarCTR extends DependenciasCTR {
         }
         if (guardar) {
             if (bd.actualizarNota(malla.getId(), nota1, nota2, nota3, numMatricula, frmMalla.getLblEstado().getText())) {
+                vtnPrin.setEnabled(true);
                 ctrMalla.actualizarVtn(malla);
                 frmMalla.dispose();
             };
         }
-
+    }
+    
+    private void clickEstados(){
+        posEstado = frmMalla.getCmbEstado().getSelectedIndex();
+        if (posEstado > 0) {
+            frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).toString().charAt(0)+"");
+        }
+    }
+    
+    private void llenarCmb(){
+        frmMalla.getCmbEstado().removeAllItems();
+        frmMalla.getCmbEstado().addItem("Seleccione");
+        for(String e : estados){
+            frmMalla.getCmbEstado().addItem(e);
+        }
     }
 
     private void clickCmbNumMatricula() {
