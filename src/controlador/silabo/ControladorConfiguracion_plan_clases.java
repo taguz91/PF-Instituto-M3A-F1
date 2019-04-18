@@ -59,7 +59,7 @@ public class ControladorConfiguracion_plan_clases {
         });
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
             frm_cong_PlanClase.dispose();
-            Controlador_plan_clases cpc=new Controlador_plan_clases(usuario, vtnPrincipal);
+            Controlador_plan_clases cpc = new Controlador_plan_clases(usuario, vtnPrincipal);
             cpc.iniciaControlador();
         });
         frm_cong_PlanClase.getCmb_carreras().addActionListener(a1 -> cargarSilabosDocentes());
@@ -111,16 +111,16 @@ public class ControladorConfiguracion_plan_clases {
         Optional<SilaboMD> silabounidad = null;
         if (silabounidad == null) {
 
-        Optional<SilaboMD> silabounidad=null;
-        if (silabounidad==null) {
+            // Optional<SilaboMD> silabounidad = null;
+            if (silabounidad == null) {
 
-            return null;
-        } else {
-            silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
-                    frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
+                return null;
+            } else {
+                silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
+                        frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
 
-            //   return silabounidad.get();
-            //sale un error...revisaras
+                //   return silabounidad.get();
+                //sale un error...revisaras
 //
 //        if (silabounidad.equals("")) {
 //            return silabounidad.get();
@@ -130,11 +130,13 @@ public class ControladorConfiguracion_plan_clases {
 //        if (silabounidad.equals(" ")) {
 //            return silabounidad.get();
 //        }
-       return null;
 //
 //        return silabounidad.get();
 //        }
+            }
         }
+        return null;
+
     }
 
     void materiaseleccionada() {

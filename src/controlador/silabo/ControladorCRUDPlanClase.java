@@ -20,19 +20,17 @@ public class ControladorCRUDPlanClase {
     private UsuarioBD usuario;
     private ConexionBD conexion;
 
-   // public ControladorCRUDPlanClase(frmCRUDPlanClase plan, UsuarioBD usuario) {
-//        this.plan = plan;
-//        this.usuario = usuario;
-//        //iniciarControlador();
-//    }
-//
-//    public void BuscarCarrera(VtnPrincipal vtnPrincipal) {
-//           ControladorConfiguracion_plan_clases ConP= new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
-//            String clave = plan.getTxtBuscarPLC().getText();
-//            CarrerasBDS.consultar(conexion, clave);
-//                
-//        }
-//        
-//    }
+    public ControladorCRUDPlanClase(frmCRUDPlanClase plan, UsuarioBD usuario) {
+        this.plan = plan;
+        this.usuario = usuario;
+        //iniciarControlador();
+    }
+
+    public void BuscarCarrera(VtnPrincipal vtnPrincipal) {
+           ControladorConfiguracion_plan_clases ConP= new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
+            String clave = plan.getTxtBuscarPLC().getText();
+            CarrerasBDS.consultar(conexion, clave);
+
+    }
     
 }
