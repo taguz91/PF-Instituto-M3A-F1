@@ -34,8 +34,11 @@
                       <Component id="lblResultados" min="-2" pref="224" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnReporteAlumnoCarrera" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnReporteDocente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -78,8 +81,9 @@
                   <Component id="lblResultados" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReporteAlumnoCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnReporteDocente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -147,10 +151,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReporteAlumnoCarrera">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alumnos por Carreras"/>
+        <Property name="text" type="java.lang.String" value="Aumnos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteAlumnoCarreraActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnReporteDocente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Docentes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteDocenteActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -68,15 +68,17 @@ public class FrmRequisitos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("REQUISITOS");
         setToolTipText("");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/logo.png"))); // NOI18N
 
         jLabel1.setBackground(new java.awt.Color(0, 51, 102));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText(" Nombre Materia:");
         jLabel1.setOpaque(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Formulario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(153, 153, 153))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Formulario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 153))); // NOI18N
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
 
         jLabel3.setText("Escoga una de las dos opciones:");
 
@@ -130,7 +132,6 @@ public class FrmRequisitos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jrbCoRequisito)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
                 .addGap(10, 10, 10)
                 .addComponent(lblerror))

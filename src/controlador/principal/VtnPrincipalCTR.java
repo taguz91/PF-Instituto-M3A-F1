@@ -19,8 +19,8 @@ import controlador.login.LoginCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
-import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
-import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
+import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -32,9 +32,8 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
-import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
-import controlador.usuario.VtnRolCTR;
+import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -97,7 +96,6 @@ import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
-import vista.usuario.VtnSelectRol;
 import vista.usuario.VtnUsuario;
 
 /**
@@ -128,6 +126,8 @@ public class VtnPrincipalCTR {
             ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
 
+    private final boolean pruebas;
+
     private final String[][] ACCESOS = {
         {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
         {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
@@ -152,16 +152,18 @@ public class VtnPrincipalCTR {
      * @param icono ImagenIcon: Icono del sistema.
      * @param ista Imagen: Imagen del icono del sistema.
      * @param ctrSelecRol
+     * @param pruebas Para saber si estamos en pruebas
      */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista,
-            VtnSelectRolCTR ctrSelecRol) {
+            VtnSelectRolCTR ctrSelecRol, boolean pruebas) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
+        this.pruebas = pruebas;
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
         this.icono = icono;
@@ -766,8 +768,24 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
-        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPrdIngrNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_J, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -796,8 +814,20 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-               KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+
+
+        vtnPrin.getMnIgPrdIngrNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.ALT_MASK));
+
     }
 
     public int getNumVtns() {
@@ -995,26 +1025,32 @@ public class VtnPrincipalCTR {
     }
 
     private void InitPermisosTester() {
-        if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
-            vtnPrin.getMnIngresar().setEnabled(false);
-            vtnPrin.getPnlMenu().setVisible(false);
-            vtnPrin.getMnCtPersona().setEnabled(false);
-            vtnPrin.getMnCtDocente().setEnabled(false);
-            vtnPrin.getMnCtAlumno().setEnabled(false);
-            vtnPrin.getMnCtCarrera().setEnabled(false);
-            vtnPrin.getMnCtCurso().setEnabled(false);
-            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
-            vtnPrin.getMnCtMateria().setEnabled(false);
-            vtnPrin.getMnCtInscripcion().setEnabled(false);
-            vtnPrin.getMnCtMatricula().setEnabled(false);
-            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
-            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-            vtnPrin.getMnCtSilabos().setEnabled(false);
-            vtnPrin.getMnCtPlandeClase().setEnabled(false);
-            vtnPrin.getMnCtUsuarios().setEnabled(false);
-            vtnPrin.getMnCtRoles().setEnabled(false);
-            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
-            vtnPrin.getMnNotas().setEnabled(false);
+        System.out.println("Estamos en modo pruebas = " + pruebas);
+        if (!pruebas) {
+            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
+                vtnPrin.getMnIngresar().setEnabled(false);
+                vtnPrin.getPnlMenu().setVisible(false);
+                vtnPrin.getMnCtPersona().setEnabled(false);
+                vtnPrin.getMnCtDocente().setEnabled(false);
+                vtnPrin.getMnCtAlumno().setEnabled(false);
+                vtnPrin.getMnCtCarrera().setEnabled(false);
+                vtnPrin.getMnCtCurso().setEnabled(false);
+                vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+                vtnPrin.getMnCtMateria().setEnabled(false);
+                vtnPrin.getMnCtInscripcion().setEnabled(false);
+                vtnPrin.getMnCtMatricula().setEnabled(false);
+                vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+                vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+                vtnPrin.getMnCtSilabos().setEnabled(false);
+                vtnPrin.getMnCtPlandeClase().setEnabled(false);
+                vtnPrin.getMnCtUsuarios().setEnabled(false);
+                vtnPrin.getMnCtRoles().setEnabled(false);
+                vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+                vtnPrin.getMnNotas().setEnabled(false);
+            }
+        }else{
+            System.out.println("Entre en la base de datos pruebas");
+            vtnPrin.setTitle("PF M3A | Modo Pruebas Activado");
         }
     }
 

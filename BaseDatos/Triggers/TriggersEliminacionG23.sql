@@ -66,6 +66,9 @@ BEGIN
     historial_nombre_tabla, historial_pk_tabla)
     VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso);
 	END IF;
+	UPDATE public."AlumnoCurso" 
+	SET almn_curso_activo = new.curso_activo
+	WHERE id_curso = old.id_curso;
 	RETURN NEW;
 END;
 $curso_elimlog$ LANGUAGE plpgsql;

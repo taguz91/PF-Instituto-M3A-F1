@@ -10,7 +10,9 @@
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="REQUISITOS"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
-    <Property name="icon" type="boolean" value="true"/>
+    <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+      <Image iconType="3" name="/vista/img/logo.png"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -126,7 +128,6 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="lblerror" min="-2" max="-2" attributes="0"/>
@@ -138,6 +139,7 @@
         <Component class="javax.swing.JButton" name="btnGuardar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

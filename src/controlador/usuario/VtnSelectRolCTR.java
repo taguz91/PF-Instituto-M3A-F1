@@ -1,16 +1,25 @@
 package controlador.usuario;
 
+import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
@@ -33,15 +42,27 @@ public class VtnSelectRolCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
+    private final boolean pruebas;
 
+    /**
+     *
+     * @param vista
+     * @param modelo
+     * @param usuario
+     * @param conexion
+     * @param icono
+     * @param ista
+     * @param pruebas Para saber si entramos unicamente a probar el sistema
+     */
     public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario,
-            ConectarDB conexion, ImageIcon icono, Image ista) {
+            ConectarDB conexion, ImageIcon icono, Image ista, boolean pruebas) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
         this.conexion = conexion;
         this.icono = icono;
         this.ista = ista;
+        this.pruebas = pruebas;
         vista.setIconImage(ista);
 
         registroIngreso(vista);
@@ -138,11 +159,60 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
 
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
         vtn.iniciar();
-
+        logConexion();
         vista.dispose();
     }
 
     //Procesadores de Eventos
+    private void logConexion() {
+        //generarArchivo();
+        ResourceManager.resetConn();
+
+    }
+
+    private void generarArchivo() {
+        LocalDateTime fecha = LocalDateTime.now();
+        new Thread(() -> {
+            FileWriter fichero = null;
+            PrintWriter pw = null;
+            try {
+                fichero = new FileWriter(Middlewares.getProjectPath() + "log.txt");
+                pw = new PrintWriter(fichero);
+
+                for (;;) {
+                    try {
+
+                        Thread.sleep(30);
+                        pw.println(" [" + fecha.now() + "]");
+                        pw.println("Cerrado? R: " + ResourceManager.getConnection().isClosed());
+                        pw.println("Cerrado? C: " + conexion.getConecction().isClosed());
+
+                        System.out.println("Conectado R: " + ResourceManager.getConnection().isClosed());
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(VtnSelectRolCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VtnSelectRolCTR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    // Nuevamente aprovechamos el finally para 
+                    // asegurarnos que se cierra el fichero.
+                    if (null != fichero) {
+                        fichero.close();
+                    }
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
 }

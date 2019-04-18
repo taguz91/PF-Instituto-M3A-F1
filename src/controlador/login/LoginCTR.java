@@ -35,6 +35,9 @@ public class LoginCTR {
     private final ImageIcon icono;
     private final Image ista;
 
+    //validacion
+    private boolean carga = true;
+
     public LoginCTR(Login vista, UsuarioBD modelo) {
         this.vista = vista;
         this.modelo = modelo;
@@ -95,7 +98,7 @@ public class LoginCTR {
                 vista.getTxtPassword().setText("ROOT");
             } else if (c.equalsIgnoreCase("R.")) {
                 vista.getTxtUsername().setText("ROOT");
-                vista.getTxtPassword().setText("ROOT");
+                vista.getTxtPassword().setText("RUTH");
             } else if (c.equalsIgnoreCase("P.")) {
                 vista.getTxtUsername().setText("postgres");
                 vista.getTxtPassword().setText("Holapostgres");
@@ -105,39 +108,46 @@ public class LoginCTR {
 
     //Metodos de Apoyo
     private void Login() {
-        new Thread(() -> {
 
-            Middlewares.setLoadCursorInWindow(vista);
+        if (carga) {
 
-            USERNAME = vista.getTxtUsername().getText();
-            PASSWORD = vista.getTxtPassword().getText();
+            new Thread(() -> {
 
-            modelo.setUsername(vista.getTxtUsername().getText());
-            modelo.setPassword(vista.getTxtPassword().getText());
+                Middlewares.setLoadCursorInWindow(vista);
 
-            try {
-                List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+                USERNAME = vista.getTxtUsername().getText();
+                PASSWORD = vista.getTxtPassword().getText();
 
-                if (!Lista.isEmpty()) {
+                modelo.setUsername(vista.getTxtUsername().getText());
+                modelo.setPassword(vista.getTxtPassword().getText());
 
-                    modelo.setPersona(Lista.get(0).getPersona());
+                try {
+                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
-                    vista.dispose();
+                    if (!Lista.isEmpty()) {
 
-                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
-                    vtn.Init();
+                        modelo.setPersona(Lista.get(0).getPersona());
 
-                } else {
+                        vista.dispose();
+
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista, false);
+                        vtn.Init();
+                        
+                        
+                        
+
+                    } else {
+                        vista.getLblAvisos().setVisible(true);
+                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                    }
+
+                } catch (NullPointerException e) {
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
 
-            } catch (NullPointerException e) {
-                vista.getLblAvisos().setVisible(true);
-                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-            }
-
-        }).start();
+            }).start();
+        }
 
     }
 
@@ -171,7 +181,7 @@ public class LoginCTR {
 
                         vista.dispose();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
                         vtn.Init();
 
                     } else {
