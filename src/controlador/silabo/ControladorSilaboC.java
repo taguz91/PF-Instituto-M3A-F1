@@ -141,6 +141,12 @@ public class ControladorSilaboC {
             periodosCarrera = cargarComboPeriodos(carreraSeleccionada.get().getId());
             materiasDocente = cargarComboMaterias(carreraSeleccionada.get().getId());
             
+            if (configuracion.getCmbAsignatura().getItemCount()==0){
+               JOptionPane.showMessageDialog(null, "Ya ha ingresado todos los silabos correspondientes para esta carrera en el período en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+                configuracion.getBtnSiguiente().setEnabled(false);
+            }else{
+                configuracion.getBtnSiguiente().setEnabled(true);
+            }
         });
 
         configuracion.getBtnSiguiente().addActionListener((ActionEvent ae) -> {
