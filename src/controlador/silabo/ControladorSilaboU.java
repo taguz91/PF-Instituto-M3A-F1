@@ -1501,17 +1501,24 @@ public class ControladorSilaboU {
             }
 
             for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad().equals(unidadesSilabo.get(i).getIdUnidad())) {
                     contador++;
+                  
+                    
                 }
             }
+            
+         
 
             if (contador == 0) {
                 control = false;
             }
 
         }
-
+        
+        
+        
         return control;
 
     }
