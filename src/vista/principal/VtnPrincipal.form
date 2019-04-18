@@ -120,6 +120,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Q"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>

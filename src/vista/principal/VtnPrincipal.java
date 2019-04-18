@@ -712,6 +712,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
+        mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
 
