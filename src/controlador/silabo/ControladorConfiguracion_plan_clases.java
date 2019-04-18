@@ -104,10 +104,15 @@ public class ControladorConfiguracion_plan_clases {
         }
     }
 
-    public SilaboMD unidades() {
+ /*   public SilaboMD unidades() {
         System.out.println("...............................................");
-        Optional<SilaboMD> silabounidad = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
+        Optional<SilaboMD> silabounidad =null;
+        if (silabounidad==null) {
+            return null;
+        }else{
+        silabounidad= silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(
                 frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).findFirst();
+
 
 
      //   return silabounidad.get();
@@ -119,14 +124,17 @@ public class ControladorConfiguracion_plan_clases {
 //        return null;
 
 
-       /* if (silabounidad.equals(" ")) {
+        if (silabounidad.equals(" ")) {
             return silabounidad.get();
-        }*/
+        }
         return null;
 
+        return silabounidad.get();
+        }
 
+
+*/
     }
-
     void materiaseleccionada() {
         silabo = (SilaboMD) frm_cong_PlanClase.getCmb_silabos().getSelectedItem();
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
