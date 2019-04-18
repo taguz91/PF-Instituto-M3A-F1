@@ -280,8 +280,21 @@ public class VtnPersonaCTR {
     }
 
     public void llamaReportePersona() {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
+//        try {
+//            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
+//            Map parametro = new HashMap();
+//            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
+//            System.out.println(parametro);
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Persona");
+//
+//        } catch (JRException ex) {
+//                       JOptionPane.showMessageDialog(null, "error" + ex);
+//        }
+  try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
             Map parametro = new HashMap();
             parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             System.out.println(parametro);
