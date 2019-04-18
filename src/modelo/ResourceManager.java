@@ -51,7 +51,7 @@ public class ResourceManager implements Serializable {
         if (conn != null) {
             //cerrarSesion();
 
-            conn.close();
+            //conn.close();
             resetConn();
         }
 

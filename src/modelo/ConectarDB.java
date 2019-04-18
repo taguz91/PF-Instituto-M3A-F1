@@ -28,7 +28,7 @@ public class ConectarDB {
             ct = DriverManager.getConnection(url, user, pass);
             //ct = DriverManager.getConnection(url, user, pass);
             ResourceManager.setConecct(ct);
-            System.out.println("Nos conectamos. Desde:Como invitados " + user);
+            System.out.println("Nos conectamos. Como invitados: " + user);
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
