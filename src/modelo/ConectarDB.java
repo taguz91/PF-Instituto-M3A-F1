@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
@@ -16,6 +17,8 @@ public class ConectarDB {
     private Connection ct;
     private Statement st;
     private ResultSet rs;
+    private int nTransaccion;
+    private ResultSetMetaData metaData;
 
     //BD En cloud
     public ConectarDB(String user, String pass) {
@@ -29,7 +32,7 @@ public class ConectarDB {
             //ct = DriverManager.getConnection(url, user, pass);
             ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
-
+            nivelTransaccion();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         }
@@ -44,7 +47,7 @@ public class ConectarDB {
             ct = ResourceManager.getConnection();
             //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
-
+            nivelTransaccion();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         }
@@ -59,7 +62,7 @@ public class ConectarDB {
             ct = ResourceManager.getConnection();
             //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
-
+            nivelTransaccion();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         }
@@ -83,6 +86,17 @@ public class ConectarDB {
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.execute(noSql);
+            System.out.println("---------NSQL-----------");
+            System.out.println(st.getUpdateCount());
+            System.out.println(st.getGeneratedKeys());
+            //System.out.println(st.getGeneratedKeys().getInt(1));
+            rs = st.getGeneratedKeys();
+            while (rs.next()) {
+                System.out.println("ID generado: " + rs.getInt(1));
+            }
+            System.out.println("No hay id");
+            System.out.println("--------------------");
+            //idGenerado = st.getGeneratedKeys().getInt(0);
             //Cerramos la consulta
             st.close();
             //Si todo salio bienn retornamos nulo
@@ -100,6 +114,15 @@ public class ConectarDB {
             st = ct.createStatement();
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);
+            metaData = rs.getMetaData();
+            System.out.println("--------SQL----------");
+            //System.out.println(ct.getSchema());
+            System.out.println(metaData.getTableName(1));
+            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
+            //System.out.println("Cantidad de tiempo de espera: "+ct.getNetworkTimeout());
+            System.out.println("Nombre Base de datos: " + ct.getCatalog());
+            System.out.println();
+            System.out.println("------------------");
             //Si todo salio bien retornamos los resultados.
             return rs;
         } catch (SQLException e) {
@@ -110,5 +133,39 @@ public class ConectarDB {
 
     public Connection getConecction() {
         return ct;
+    }
+
+    private void nivelTransaccion() {
+        try {
+            nTransaccion = ct.getTransactionIsolation();
+            System.out.println(nTransaccion);
+            if (Connection.TRANSACTION_NONE == nTransaccion) {
+                System.out.println("No soprota transacciones");
+            }
+            switch (nTransaccion) {
+                case Connection.TRANSACTION_NONE:
+                    System.out.println("No soporta transacciones");
+                    break;
+                case Connection.TRANSACTION_READ_COMMITTED:
+                    System.out.println("Transaccion de tipo read commited\n"
+                            + "Se ven solo las modificaciones ya guardadas hechas por otras transacciones.");
+                    break;
+                case Connection.TRANSACTION_READ_UNCOMMITTED:
+                    System.out.println("Lectura terminada.");
+                    break;
+                case Connection.TRANSACTION_REPEATABLE_READ:
+                    System.out.println("Soporta transacciones que pueda abseder a la base");
+                    break;
+                case Connection.TRANSACTION_SERIALIZABLE:
+                    System.out.println("Soporta transacciones serializables. La mas alta.");
+                    break;
+                default:
+                    System.out.println("No soporta ningun nivel de transaccion");
+                    break;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("No podemos obtener el nivel de transacciones que soporta.");
+        }
     }
 }

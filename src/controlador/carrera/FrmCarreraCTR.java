@@ -194,7 +194,8 @@ public class FrmCarreraCTR {
         frmCarrera.getJdFechaInicio().setCalendar(fechaIni);
 
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
-        if (carrera.getCoordinador().getPrimerApellido() != null) {
+        System.out.println("Coordinador: "+carrera.getCoordinador().getIdentificacion());
+        if (carrera.getCoordinador().getIdentificacion() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
             frmCarrera.getTblDocentes().selectAll();
