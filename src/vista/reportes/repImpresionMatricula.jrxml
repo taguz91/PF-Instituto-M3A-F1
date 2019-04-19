@@ -3,13 +3,19 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="cedula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPeriodo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT distinct malla_almn_estado, p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
                 ||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as alumno,
 				 pd.persona_primer_apellido ||' '|| pd.persona_segundo_apellido
                 ||' '|| pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
   materia_codigo, materia_nombre, p.persona_identificacion, c.carrera_nombre,
-				m.id_materia, g.curso_ciclo,g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre
+				m.id_materia, g.curso_ciclo,g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre,p.persona_foto
 						FROM public."MallaAlumno" ma, public."Alumnos" a,
 						public."Personas" p, public."Materias" m, public."Carreras" c,
 						public."Cursos" g, public."AlumnoCurso" acur, public."PeriodoLectivo" pl, 
@@ -24,10 +30,10 @@
 									AND g.id_materia=m.id_materia
 									AND g.id_prd_lectivo=pl.id_prd_lectivo
 									AND ma.malla_almn_estado='P'
-									AND p.persona_identificacion='0105342455'
+									AND p.persona_identificacion=$P{cedula}
 									AND j.id_jornada = g.id_jornada
 									AND d.id_docente = g.id_docente
-									AND pd.id_persona = d.id_persona						AND g.id_prd_lectivo = 4;]]>
+									AND pd.id_persona = d.id_persona						AND g.id_prd_lectivo = $P{idPeriodo};]]>
 	</queryString>
 	<field name="malla_almn_estado" class="java.lang.String"/>
 	<field name="alumno" class="java.lang.String"/>
@@ -41,6 +47,7 @@
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="persona_foto" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -72,62 +79,74 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="91" splitType="Stretch">
+		<band height="127" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="11" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="239" y="11" width="94" height="20"/>
+				<reportElement x="129" y="11" width="94" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha Matrícula:  ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="31" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Periodo:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="51" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Alumno:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="71" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="31" width="487" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="53" y="31" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="71" width="487" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="53" y="71" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="51" width="487" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="53" y="51" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="333" y="11" width="207" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="223" y="11" width="174" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="438" y="1" width="117" height="126"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -229,43 +248,39 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="20" splitType="Stretch">
+		<band height="102" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="0" width="100" height="20"/>
+				<reportElement x="455" y="82" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="105">
 			<line>
-				<reportElement x="249" y="64" width="173" height="1"/>
+				<reportElement x="22" y="61" width="173" height="1"/>
 			</line>
+			<staticText>
+				<reportElement x="249" y="62" width="173" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Secretaria]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="22" y="85" width="173" height="20"/>
+				<reportElement x="22" y="82" width="173" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="22" y="65" width="173" height="20"/>
+				<reportElement x="22" y="62" width="173" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="249" y="65" width="173" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[Secretaria]]></text>
-			</staticText>
 			<line>
-				<reportElement x="22" y="64" width="173" height="1"/>
+				<reportElement x="249" y="61" width="173" height="1"/>
 			</line>
 		</band>
-	</summary>
+	</pageFooter>
 </jasperReport>

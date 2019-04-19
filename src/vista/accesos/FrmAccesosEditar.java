@@ -9,7 +9,7 @@ import javax.swing.JTextField;
  *
  * @author Alejandro
  */
-public class FrmAccesosEditar extends javax.swing.JFrame {
+public class FrmAccesosEditar extends javax.swing.JInternalFrame {
 
     
     public FrmAccesosEditar() {

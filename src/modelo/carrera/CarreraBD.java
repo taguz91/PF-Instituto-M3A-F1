@@ -110,11 +110,11 @@ public class CarreraBD extends CarreraMD {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
                 + "carrera_modalidad, (\n"
-                + "	SELECT persona_primer_nombre || ' ' || \n"
-                + "	persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' ||\n"
-                + "	persona_segundo_apellido || ' ' || "
-                + "     persona_identificacion\n"
+                + "	SELECT persona_primer_nombre || '%' || \n"
+                + "	persona_segundo_nombre || '%' ||\n"
+                + "	persona_primer_apellido || '%' ||\n"
+                + "	persona_segundo_apellido || '%' || "
+                + "     persona_identificacion \n"
                 + "    FROM public.\"Docentes\" d, public.\"Personas\" p \n"
                 + "    WHERE d.id_docente = id_docente_coordinador AND\n"
                 + "    p.id_persona = d.id_persona) AS coordinador\n"
@@ -134,10 +134,11 @@ public class CarreraBD extends CarreraMD {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
                 + "carrera_modalidad, (\n"
-                + "	SELECT persona_primer_nombre || ' ' || \n"
-                + "	persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' ||\n"
-                + "	persona_segundo_apellido \n"
+                + "	SELECT persona_primer_nombre || '%' || \n"
+                + "	persona_segundo_nombre || '%' ||\n"
+                + "	persona_primer_apellido || '%' ||\n"
+                + "	persona_segundo_apellido || '%' || "
+                + "     persona_identificacion \n"
                 + "    FROM public.\"Docentes\" d, public.\"Personas\" p \n"
                 + "    WHERE d.id_docente = id_docente_coordinador AND\n"
                 + "    p.id_persona = d.id_persona) AS coordinador\n"
@@ -168,11 +169,12 @@ public class CarreraBD extends CarreraMD {
                     DocenteMD docen = new DocenteMD();
                     String nombreC = rs.getString(7);
                     if (nombreC != null) {
-                        String nombres[] = nombreC.split(" ");
+                        String nombres[] = nombreC.split("%");
                         docen.setPrimerNombre(nombres[0]);
                         docen.setSegundoNombre(nombres[1]);
                         docen.setPrimerApellido(nombres[2]);
                         docen.setSegundoApellido(nombres[3]);
+                        docen.setIdentificacion(nombres[4]);
                     }
                     carrera.setCoordinador(docen);
 

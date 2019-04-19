@@ -140,7 +140,7 @@ public class LoginCTR {
 
                         vista.dispose();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista, false);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
 
                     } else {
@@ -171,11 +171,11 @@ public class LoginCTR {
             String c = new String(pass.getPassword());
             if (c.equals("soyyo")) {
 
-                USERNAME = "JOHNNY";
-                PASSWORD = "ROOT";
+                USERNAME = "ROOT";
+                PASSWORD = "RUTH";
 
-                modelo.setUsername("JOHNNY");
-                modelo.setPassword("ROOT");
+                modelo.setUsername("ROOT");
+                modelo.setPassword("RUTH");
 
                 ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
                 System.out.println("Conexion " + conecta.getConecction());
