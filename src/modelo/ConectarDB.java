@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -40,11 +42,13 @@ public class ConectarDB {
             this.pass = pass;
 
             //ct = DriverManager.getConnection(url, user, pass);
-            //ct = DriverManager.getConnection(url, user, pass);
+            ct = DriverManager.getConnection(url, user, pass);
             //ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("No se puede conectar.");
         }
     }
 
@@ -56,12 +60,15 @@ public class ConectarDB {
             this.user = user;
             this.pass = pass;
             conecta();
+            ct = DriverManager.getConnection(url, user, pass);
 
             //ct = ResourceManager.getConnection();
             //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("No nos pudimos conectar.");
         }
     }
 

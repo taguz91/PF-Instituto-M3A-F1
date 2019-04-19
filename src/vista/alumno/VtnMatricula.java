@@ -1,9 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.alumno;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,6 +16,38 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
      */
     public VtnMatricula() {
         initComponents();
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public JButton getBtnImprimirFicha() {
+        return btnImprimirFicha;
+    }
+
+    public JButton getBtnIngresar() {
+        return btnIngresar;
+    }
+
+    public JCheckBox getCbxEliminados() {
+        return cbxEliminados;
+    }
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
+    }
+
+    public JComboBox<String> getCmbPeriodos() {
+        return cmbPeriodos;
     }
 
     /**
