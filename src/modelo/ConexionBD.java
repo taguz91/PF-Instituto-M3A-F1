@@ -61,12 +61,15 @@ public class ConexionBD {
     }
 
     public Connection getCon() {
+        
+        // Comprobar conexion
+        
 
-        try {
-            con = ResourceManager.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            con = ResourceManager.getConnection();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         return con;
     }
