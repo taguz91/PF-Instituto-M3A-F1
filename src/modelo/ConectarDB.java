@@ -87,9 +87,7 @@ public class ConectarDB {
             //Ejecutamos la sentencia SQL
             st.execute(noSql);
             System.out.println("---------NSQL-----------");
-            System.out.println(st.getUpdateCount());
-            System.out.println(st.getGeneratedKeys());
-            //System.out.println(st.getGeneratedKeys().getInt(1));
+            System.out.println("Afecto a: "+st.getUpdateCount());
             rs = st.getGeneratedKeys();
             while (rs.next()) {
                 System.out.println("ID generado: " + rs.getInt(1));
