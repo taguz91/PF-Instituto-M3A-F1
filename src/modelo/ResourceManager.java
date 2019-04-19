@@ -53,13 +53,13 @@ public class ResourceManager implements Serializable {
 
             //conn.close();
             //resetConn();
-            System.out.println("Se inicio la conexion. En resource manager");
+            
         }
 
         if (conn == null || conn.isClosed()) {
             //cerrarSesion();
             resetConn();
-            System.out.println("Se resetea la conexion desde resource manager");
+            System.out.println("Se inicio la conexion. En resource manager");
         }
 
         return conn;
