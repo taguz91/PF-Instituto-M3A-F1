@@ -7,6 +7,8 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -146,12 +148,10 @@ public class FrmPersonaCTR {
         frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
 
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
-
             @Override
             public void focusLost(FocusEvent e) {
                 buscarIdentificacion();
             }
-
         });
 
         valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
@@ -165,7 +165,6 @@ public class FrmPersonaCTR {
 //Metodo para cerrar una ventana sin que se muestre el mensaje de cedula no valida
     public void cerrarandoVtn() {
         frmPersona.addInternalFrameListener(new InternalFrameAdapter() {
-
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 frmPersona.getTxtIdentificacion().setText("");
@@ -186,7 +185,7 @@ public class FrmPersonaCTR {
                 && frmPersona.getLblErrorCorreo().isVisible() == false
                 && frmPersona.getLblErrorEstadoCivil().isVisible() == false
                 && frmPersona.getLblErrorEtnia().isVisible() == false
-                && frmPersona.getLblErrorFecNac().isVisible() == false
+                //&& frmPersona.getLblErrorFecNac().isVisible() == false
                 && frmPersona.getLblErrorGenero().isVisible() == false
                 && frmPersona.getLblErrorIdentificacion().isVisible() == false
                 && frmPersona.getLblErrorIdioma().isVisible() == false
@@ -209,7 +208,7 @@ public class FrmPersonaCTR {
                 && frmPersona.getLblErrorTipoSangre().isVisible() == false) {
             return false;
         } else {
-            return  true;
+            return true;
         }
     }
 
@@ -577,22 +576,25 @@ public class FrmPersonaCTR {
 //            frmPersona.getLblErrorSegApellido().setVisible(false);
 //        }
         //Le pasamos la fecha que escribio en el calendario
-        fecha = frmPersona.getJdfechaNacimiento().getDate();
-        //Auxiliar para transformar de tipo texto a tipo LocalDate
-        //Dar formato a la fecha
+        if (frmPersona.getJdfechaNacimiento().isValid()) {
+            fecha = frmPersona.getJdfechaNacimiento().getDate();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        //Se lo pasa a un string para poder validarlo
-        fechaNac = sdf.format(fecha);
-        String fec[] = fechaNac.split("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            //Se lo pasa a un string para poder validarlo
+            fechaNac = sdf.format(fecha);
+            String fec[] = fechaNac.split("/");
 
-        if (Integer.parseInt(fec[2]) > fechaActual.getYear()
-                || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
-            guardar = false;
-            frmPersona.getLblErrorFecNac().setVisible(true);
+            if (Integer.parseInt(fec[2]) > fechaActual.getYear()
+                    || Integer.parseInt(fec[2]) > (fechaActual.getYear() - 16)) {
+                guardar = false;
+                frmPersona.getLblErrorFecNac().setVisible(true);
+            } else {
+                fechaNacimiento = LocalDate.of(Integer.parseInt(fec[2]),
+                        Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
+                frmPersona.getLblErrorFecNac().setVisible(false);
+            }
         } else {
-            fechaNacimiento = LocalDate.of(Integer.parseInt(fec[2]),
-                    Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
+            System.out.println("No es valida la fecha");
             frmPersona.getLblErrorFecNac().setVisible(false);
         }
 
@@ -811,14 +813,14 @@ public class FrmPersonaCTR {
                         botonreportepersona();
                         borrarCamposConId();
                         ocultarErrores();
-                       
+
                     } else {
                         per.editarPersona(idPersona);
                         JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                         botonreportepersona();
                         borrarCamposConId();
                         ocultarErrores();
-                        
+
                     }
                     editar = false;
                 }
@@ -829,21 +831,19 @@ public class FrmPersonaCTR {
                     botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
-                    
-                  
-        
+
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
-                    
+
                 }
             }
             frmPersona.dispose();
             ctrPrin.cerradoJIF();
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Existen errores en los campos\nRevise su información!!");
         }
@@ -1271,29 +1271,29 @@ public class FrmPersonaCTR {
             System.out.println(ex.getMessage());
         }
     }
-    
-     public void llamaReportePersona() {
+
+    public void llamaReportePersona() {
         JasperReport jr;
         String path = "/vista/reportes/repPersona.jasper";
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("cedula",frmPersona.getTxtIdentificacion().getText());
-            System.out.println( "parametro del reporte"+parametro);
+            parametro.put("cedula", frmPersona.getTxtIdentificacion().getText());
+            System.out.println("parametro del reporte" + parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
             view.setTitle("Reporte de Persona");
-            
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-     public void botonreportepersona(){
-     int s = JOptionPane.showOptionDialog(vtnPrin,
+
+    public void botonreportepersona() {
+        int s = JOptionPane.showOptionDialog(vtnPrin,
                 "Registro de persona \n"
                 + "¿Dessea Imprimir el Registro realizado ?", "REPORTE PERSONAS",
                 JOptionPane.YES_NO_CANCEL_OPTION,
@@ -1302,14 +1302,14 @@ public class FrmPersonaCTR {
                 new Object[]{"SI", "NO"}, "NO");
         switch (s) {
             case 0:
-               llamaReportePersona();
+                llamaReportePersona();
                 break;
             case 1:
-                
+
                 break;
             default:
                 break;
+        }
     }
-     }
 
 }

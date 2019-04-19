@@ -34,7 +34,7 @@ public class ResourceManager implements Serializable {
 
     public static synchronized Connection getConnection()
             throws SQLException {
-
+        System.out.println("Se inicio la conexion. En resource manager");
         if (driver == null) {
             try {
 
