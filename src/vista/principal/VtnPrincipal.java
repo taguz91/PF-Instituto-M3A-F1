@@ -334,6 +334,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setMnCtMiPerfil(JMenuItem mnCtMiPerfil) {
         this.mnCtMiPerfil = mnCtMiPerfil;
     }
+
+    public JMenuItem getMnCtListaAlumnos() {
+        return mnCtListaAlumnos;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -707,6 +711,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula.setText("Matricula");
         mnTipoNotas.add(mnCtMatricula);
 
+        mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
         mnCtListaAlumnos.setText("Lista Alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
 

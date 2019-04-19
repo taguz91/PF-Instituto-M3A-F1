@@ -1,6 +1,6 @@
 package controlador.curso;
 
-import controlador.principal.DependenciasCTR;
+import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalTime;
 import modelo.ConectarDB;
@@ -16,7 +16,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class JDHorarioCTR extends DependenciasCTR {
+public class JDHorarioCTR extends DependenciasVtnCTR {
 
     private final JDHorario jd;
     private final CursoMD curso;
