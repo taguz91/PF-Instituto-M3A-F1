@@ -8,6 +8,7 @@ import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.persona.PersonaMD;
 
 /**
  *
@@ -68,6 +69,61 @@ public class MateriaBD extends MateriaMD {
         } else {
             System.out.println("Error");
             return false;
+        }
+    }
+    
+    public List<CarreraMD> cargarCarreras(){
+        String sql = "SELECT carrera_nombre FROM public.\"Carreras\";";
+        List<CarreraMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                CarreraMD c = new CarreraMD();
+                c.setNombre(rs.getString("carrera_nombre"));
+                lista.add(c);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public List<EjeFormacionMD> cargarEjes(int aguja){
+        String sql = "SELECT eje_nombre FROM public.\"EjesFormacion\" WHERE id_carrera = " + aguja + ";";
+        List<EjeFormacionMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                EjeFormacionMD eje = new EjeFormacionMD();
+                eje.setNombre(rs.getString("eje_nombre"));
+                lista.add(eje);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public CarreraMD filtrarIdCarrera(String nombre){
+        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        CarreraMD carrera = new CarreraMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                carrera.setId(rs.getInt("id_carrera"));
+            }
+            rs.close();
+            return carrera;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
         }
     }
 
