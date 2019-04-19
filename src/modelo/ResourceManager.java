@@ -52,12 +52,13 @@ public class ResourceManager implements Serializable {
             //cerrarSesion();
 
             //conn.close();
-            resetConn();
+            //resetConn();
         }
 
         if (conn == null || conn.isClosed()) {
             //cerrarSesion();
             resetConn();
+            System.out.println("Se resetea la conexion desde resource manager");
         }
 
         return conn;
@@ -167,7 +168,7 @@ public class ResourceManager implements Serializable {
         }
     }
 
-    private static String generarURL() {
+    public static String generarURL() {
 
         String ip = Propiedades.getPropertie("ip");
         String port = Propiedades.getPropertie("port");
