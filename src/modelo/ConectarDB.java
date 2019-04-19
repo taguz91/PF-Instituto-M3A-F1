@@ -68,7 +68,9 @@ public class ConectarDB {
     public PreparedStatement sqlPS(String nsql) {
         try {
             //ct = ResourceManager.getConnection();
-            ct = DriverManager.getConnection(url, user, pass);
+            if (ct.isClosed()) {
+                ct = DriverManager.getConnection(url, user, pass);
+            }
             PreparedStatement ps = ct.prepareStatement(nsql);
 
             return ps;
@@ -89,7 +91,9 @@ public class ConectarDB {
         try {
             //Variable para las transacciones
             //ct = ResourceManager.getConnection();
-            ct = DriverManager.getConnection(url, user, pass);
+            if (ct.isClosed()) {
+                ct = DriverManager.getConnection(url, user, pass);
+            }
 
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
@@ -127,7 +131,9 @@ public class ConectarDB {
         try {
             //Iniciamos la variable para las transacciones
             //ct = ResourceManager.getConnection();
-            ct = DriverManager.getConnection(url, user, pass);
+            if (ct.isClosed()) {
+                ct = DriverManager.getConnection(url, user, pass);
+            }
 
             st = ct.createStatement();
             //Ejecutamos la consulta
