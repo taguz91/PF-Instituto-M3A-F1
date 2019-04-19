@@ -260,7 +260,7 @@ public class VtnHistorialUserCTR {
 
     private void llenarCmbAcciones(ArrayList<String> acciones) {
         vtnH.getCmbAccion().removeAllItems();
-        if (!acciones.isEmpty()) {
+        if (acciones != null) {
             vtnH.getCmbAccion().addItem("Seleccione");
             acciones.forEach(a -> {
                 vtnH.getCmbAccion().addItem(a);
@@ -268,7 +268,6 @@ public class VtnHistorialUserCTR {
             });
             vtnH.getCmbAccion().setSelectedIndex(0);
         }
-        System.out.println("Se cargaron acciones");
     }
 
     private void cmbCombinados() {
