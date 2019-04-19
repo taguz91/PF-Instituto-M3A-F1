@@ -112,6 +112,8 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             stmt.execute(Statement);
+            
+            conn.close();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -127,7 +129,8 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
-
+            
+            conn.close();
             return rs;
 
         } catch (SQLException | NullPointerException e) {
