@@ -15,6 +15,8 @@ import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.Validar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.util.List;
 import modelo.validaciones.TxtVNumeros;
 import vista.materia.FrmMaterias;
 import vista.principal.VtnPrincipal;
@@ -45,41 +47,91 @@ public class FrmMateriasCTR {
 
     public void iniciar() {
 
+        frmMaterias.getCbCarrera().addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(){
+                String nombre = frmMaterias.getCbCarrera().getSelectedItem().toString();
+                if(nombre.equals("SELECCIONE") == false){
+                    frmMaterias.getCbEjeFormacion().setEnabled(true);
+                    List<EjeFormacionMD> ejes = materiaBD.cargarEjes(materiaBD.filtrarIdCarrera(nombre).getId());
+                    for (int i = 0; i < ejes.size(); i++) {
+                        frmMaterias.getCbEjeFormacion().addItem(ejes.get(i).getNombre());
+                    }
+                }
+            }
+        });
+        
         frmMaterias.getBtnGuardar().addActionListener(e -> guardarMateria());
         frmMaterias.getBtnCancelar().addActionListener(e -> cancelar());
         iniciarValidaciones();
+        iniciarComponentes();
+        iniciarCarreras();
 
+    }
+    
+    public void iniciarCarreras(){
+        List<CarreraMD> carreras = materiaBD.cargarCarreras();
+        for (int i = 0; i < carreras.size(); i++) {
+            frmMaterias.getCbCarrera().addItem(carreras.get(i).getNombre());
+        }
+    }
+    
+    public void iniciarComponentes(){
+        
+        frmMaterias.getLblErrorCarrera().setVisible(false);
+        frmMaterias.getLblErrorEjeFormacion().setVisible(false);
+        frmMaterias.getLblErrorCodigoMateria().setVisible(false);
+        frmMaterias.getLblErrorMateriaTipo().setVisible(false);
+        frmMaterias.getLblErrorNombreMateria().setVisible(false);
+        frmMaterias.getLblErrorCategoria().setVisible(false);
+        frmMaterias.getLblErrorMateriaCiclo().setVisible(false);
+        frmMaterias.getLblErrorTipoAcreditacion().setVisible(false);
+        frmMaterias.getLblErrorCreditos().setVisible(false);
+        frmMaterias.getLblErrorHorasDocencia().setVisible(false);
+        frmMaterias.getLblErrorHorasPracticas().setVisible(false);
+        frmMaterias.getLblErrorHorasPresenciales().setVisible(false);
+        frmMaterias.getLblErrorHorasAutoEstudio().setVisible(false);
+        frmMaterias.getLblErrorTotalHoras().setVisible(false);
+        frmMaterias.getLblErrorObjetivoGeneral().setVisible(false);
+        frmMaterias.getLblErrorObjetivoEspecifico().setVisible(false);
+        frmMaterias.getLblErrorDescripcionMateria().setVisible(false);
+        frmMaterias.getLblErrorOrganizacionCurricular().setVisible(false);
+        frmMaterias.getLblErrorCampoFormacion().setVisible(false);
+        frmMaterias.getBtnGuardar().setText("Siguiente");
+        frmMaterias.getCbEjeFormacion().setEnabled(false);
+        
     }
 
     private void guardarMateria() {
 
-        String materiaCarrera, materiaCodigo, materiaNombre, materiaCiclo, creditos,
-                ejeFormacion, materiaTipo, categoria, tipoAcreditacion, horasDocencia,
-                horasPracticas, horasPresenciales, horasAutoEstudio, totalHoras,
+        String materiaCarrera, materiaCodigo, materiaNombre,
+                ejeFormacion, materiaTipo, categoria, tipoAcreditacion,
                 objetivoGeneral, objetivoEspecifico, descripcionMateria,
                 organizacionCurricular, campoFormacion;
-
+        
+        int id_Carrera, id_Eje, materiaCiclo, creditos,
+                horasDocencia, horasPracticas, horasPresenciales, horasAutoEstudio, 
+                totalHoras;
+        
         boolean materiaNucleo;
-        CarreraMD carrera = null;
-        EjeFormacionMD eje = null;
+        CarreraMD carrera = new CarreraMD();
+        EjeFormacionMD eje = new EjeFormacionMD();
 
-        carrera.getId();
-        eje.getId();
-
-        // materiaCarrera = frmMaterias.getCbCarrera().getSelectedItem().toString();
+//        carrera.setId(frmMaterias.getCbCarrera());
+//        eje.setId(frmMaterias.getCbEjeFormacion());
         materiaCodigo = frmMaterias.getTxtCodigoMateria().getText().trim().toUpperCase();
         materiaNombre = frmMaterias.getTxtNombreMateria().getText().trim().toUpperCase();
-        materiaCiclo = frmMaterias.getTxtMateriaCiclo().getText().trim().toUpperCase();
-        creditos = frmMaterias.getCbCategoria().getSelectedItem().toString();
-        //ejeFormacion = frmMaterias.getCbEjeFormacion().getSelectedItem().toString();
+        materiaCiclo = Integer.parseInt(frmMaterias.getTxtMateriaCiclo().getText().trim());
+        creditos = Integer.parseInt(frmMaterias.getTxtCreditos().getText());
         materiaTipo = frmMaterias.getCbMateriaTipo().getSelectedItem().toString();
         categoria = frmMaterias.getCbCategoria().getSelectedItem().toString();
         tipoAcreditacion = frmMaterias.getCbTipoAcreditacion().getSelectedItem().toString();
-        horasDocencia = frmMaterias.getTxtHorasDocencia().getText().trim().toUpperCase();
-        horasPracticas = frmMaterias.getTxtHorasPracticas().getText().trim().toUpperCase();
-        horasPresenciales = frmMaterias.getTxtHorasPresenciales().getText().trim().toUpperCase();
-        horasAutoEstudio = frmMaterias.getTxtHorasAutoEstudio().getText().trim().toUpperCase();
-        totalHoras = frmMaterias.getTxtTotalHoras().getText().trim().toUpperCase();
+        materiaNucleo = frmMaterias.getChBNucleo().isSelected();
+        horasDocencia = Integer.parseInt(frmMaterias.getTxtHorasDocencia().getText().trim());
+        horasPracticas = Integer.parseInt(frmMaterias.getTxtHorasPracticas().getText().trim());
+        horasPresenciales = Integer.parseInt(frmMaterias.getTxtHorasPresenciales().getText().trim());
+        horasAutoEstudio = Integer.parseInt(frmMaterias.getTxtHorasAutoEstudio().getText().trim());
+        totalHoras = Integer.parseInt(frmMaterias.getTxtTotalHoras().getText().trim());
         objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText().trim().toUpperCase();
         objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText().trim().toUpperCase();
         descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText().trim().toUpperCase();
@@ -89,19 +141,19 @@ public class FrmMateriasCTR {
         MateriaBD materia = new MateriaBD(conecta);
 
         materia.setCarrera(carrera);
+        materia.setEje(eje);
         materia.setCodigo(materiaCodigo);
         materia.setNombre(materiaNombre);
-        materia.setCiclo(Integer.parseInt(materiaCiclo));
-        materia.setCreditos(Integer.parseInt(categoria));
-        materia.setEje(eje);
+        materia.setCiclo(materiaCiclo);
+        materia.setCreditos(creditos);
         materia.setTipo(materiaTipo.charAt(0));
         materia.setCategoria(categoria);
         materia.setTipoAcreditacion(tipoAcreditacion.charAt(0));
-        materia.setHorasDocencia(Integer.parseInt(horasDocencia));
-        materia.setHorasPracticas(Integer.parseInt(horasPracticas));
-        materia.setHorasPresenciales(Integer.parseInt(horasPresenciales));
-        materia.setHorasAutoEstudio(Integer.parseInt(horasAutoEstudio));
-        materia.setTotalHoras(Integer.parseInt(totalHoras));
+        materia.setHorasDocencia(horasDocencia);
+        materia.setHorasPracticas(horasPracticas);
+        materia.setHorasPresenciales(horasPresenciales);
+        materia.setHorasAutoEstudio(horasAutoEstudio);
+        materia.setTotalHoras(totalHoras);
         materia.setObjetivo(objetivoGeneral);
         materia.setObjetivoespecifico(objetivoEspecifico);
         materia.setDescripcion(descripcionMateria);
@@ -110,8 +162,8 @@ public class FrmMateriasCTR {
 
     }
 
-    private void cancelar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void cancelar() {
+       frmMaterias.dispose();
     }
 
     public void iniciarValidaciones() {

@@ -17,6 +17,7 @@ import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
+import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
@@ -100,6 +101,7 @@ import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
+import vista.materia.FrmMaterias;
 /**
  *
  * @author Johnny
@@ -223,7 +225,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
-        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
+        vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
         //Para abrir los formularios 
@@ -509,6 +511,17 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
 
+    }
+    
+    public void abrirFrmMateria() {
+        FrmMaterias frmMaterias = new FrmMaterias();
+        eventoInternal(frmMaterias);
+        if(numVtns < 5) {
+            FrmMateriasCTR ctrFrmMaterias = new FrmMateriasCTR(vtnPrin, frmMaterias, conecta, this);
+            ctrFrmMaterias.iniciar();
+        } else {
+            errorNumVentanas();
+        }
     }
 
     public void abrirFrmCarrera() {
