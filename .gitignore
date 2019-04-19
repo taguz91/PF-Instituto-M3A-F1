@@ -9,7 +9,8 @@
 foto.png
 
 #Ocultamos las propiedades
-*.propierties
+user.properties
+configuracion.properties
 
 # Compiled class file
 *.class
