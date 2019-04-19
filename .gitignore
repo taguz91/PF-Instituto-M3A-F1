@@ -8,10 +8,6 @@
 #Foto creada temporalmente
 foto.png
 
-#Ocultamos las propiedades
-user.properties
-configuracion.properties
-
 # Compiled class file
 *.class
 
