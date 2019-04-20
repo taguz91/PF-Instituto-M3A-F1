@@ -20,15 +20,15 @@ SELECT DISTINCT id_alumno, id_prd_lectivo
 
 INSERT INTO public."Matricula"(
 id_alumno, id_prd_lectivo, matricula_fecha)
-  SELECT DISTINCT id_alumno, id_prd_lectivo, (
-  	SELECT almn_curso_fecha_registro
-  	FROM public."AlumnoCurso" ac, public."Cursos" c
-  	WHERE c.id_curso = ac.id_curso
-  	AND id_alumno = ac.id_alumno
-  	AND id_prd_lectivo = c.id_prd_lectivo
-  	LIMIT 1)
-	FROM public."AlumnoCurso" ac, public."Cursos" c
-	WHERE c.id_curso = ac.id_curso
-	ORDER BY id_prd_lectivo;
+SELECT DISTINCT id_alumno, id_prd_lectivo, (
+ SELECT almn_curso_fecha_registro
+ FROM public."AlumnoCurso" ac2, public."Cursos" c2
+  WHERE c2.id_curso = ac2.id_curso
+   AND ac2.id_alumno = ac.id_alumno 
+   AND c2.id_prd_lectivo = c.id_prd_lectivo
+   LIMIT 1)
+  FROM public."AlumnoCurso" ac, public."Cursos" c
+  WHERE c.id_curso = ac.id_curso
+  ORDER BY id_prd_lectivo;
 
 TRUNCATE TABLE public."Matricula";
