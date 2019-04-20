@@ -206,8 +206,8 @@ public class VtnPersonaCTR {
                     p.getFechaNacimiento()};
                 mdTbl.addRow(valores);
             });
+            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         }
-        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
@@ -280,15 +280,30 @@ public class VtnPersonaCTR {
     }
 
     public void llamaReportePersona() {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
+//        try {
+//            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
+//            Map parametro = new HashMap();
+//            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
+//            System.out.println(parametro);
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Persona");
+//
+//        } catch (JRException ex) {
+//                       JOptionPane.showMessageDialog(null, "error" + ex);
+//        }
+  try {
+      String cedula="0107390270";
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
             Map parametro = new HashMap();
-            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
+            parametro.put("cedula",cedula);
+            parametro.put("idPeriodo",4);
             System.out.println(parametro);
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            view.setTitle("Reporte de Persona");
+            view.setTitle("Reporte de Matricula");
 
         } catch (JRException ex) {
                        JOptionPane.showMessageDialog(null, "error" + ex);

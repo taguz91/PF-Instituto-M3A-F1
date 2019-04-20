@@ -195,7 +195,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         jLabel4.setText("Seleccione en que periodo desea dar de baja al docente");
 
-        Cbx_Periodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "NINGUNO" }));
+        Cbx_Periodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
 
         tblMateriasCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcc1321b-fc33-4765-a641-dab0e8a9d689">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -19,24 +19,24 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 		<band height="144" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="0" y="99" width="555" height="20"/>
+				<reportElement x="0" y="99" width="555" height="20" uuid="1b2ace19-eaa3-486d-ad3c-c8799cce49ed"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="119" width="555" height="20"/>
+				<reportElement x="0" y="119" width="555" height="20" uuid="c94ed04b-4f02-4e52-959e-61822fc637cc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de Alumnos]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="348" y="39" width="207" height="20"/>
+				<reportElement x="348" y="39" width="207" height="20" uuid="405b198f-03a9-4b41-810c-54ee22766bac"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -45,57 +45,54 @@ FROM  public."Alumnos" a join public."Personas" p using(id_persona);]]>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="55" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="0" width="55" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="4fab67ec-d919-4e1a-91e2-6977c555b8f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="55" y="0" width="303" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="55" y="0" width="303" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="084657fb-0b59-491f-9d8d-f04a7826b4a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Alumnos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="358" y="0" width="197" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="358" y="0" width="197" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="cb05501e-1659-4940-a65f-be2f095f3f68"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Correo]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="5abe8f8c-461d-4635-b386-1d64292256fb"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="55" height="20"/>
-				<textElement/>
+				<reportElement x="0" y="0" width="55" height="20" uuid="38fb03fa-719a-4023-9c30-e3736e9b0ae8"/>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="55" y="0" width="303" height="20"/>
-				<textElement/>
+				<reportElement x="55" y="0" width="303" height="20" uuid="97731626-46e9-4382-8d6d-436e04cb7f87"/>
 				<textFieldExpression><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="358" y="0" width="197" height="20"/>
-				<textElement/>
+				<reportElement x="358" y="0" width="197" height="20" uuid="2918e685-124a-4130-ba88-0e173da13185"/>
 				<textFieldExpression><![CDATA[$F{persona_correo}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="e8568606-ed49-45ed-b354-ac3149834fa2"/>
 			</line>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="34" width="100" height="20"/>
+				<reportElement x="455" y="34" width="100" height="20" uuid="ab46f531-09e7-4d6f-a414-3506fd773c63"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

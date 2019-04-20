@@ -97,7 +97,7 @@ public class TblEstilo {
         //Le pasamos el render a nuestro table head
         tblHead.setDefaultRenderer(hedRender);
         //Letra y anchura de las tablas
-        tbl.setFont(new Font("Arial", Font.PLAIN, 14));
+        tbl.setFont(new Font("Arial", Font.PLAIN, 10));
         tbl.setRowHeight(30);
         //Con esto solo selecionaremos un fila
         tbl.setSelectionMode(0);
@@ -105,6 +105,8 @@ public class TblEstilo {
         for (int i = 1; i < tbl.getColumnCount(); i++) {
             tbl.getColumnModel().getColumn(i).setCellRenderer(new TblRenderFocusClm(i));
         }
+          //El tamaño de hora es mas pequeño 
+        columnaMedida(tbl, 0, 40);
     }
 
     public static DefaultTableModel modelTblSinEditar(String datos[][], String titulo[]) {

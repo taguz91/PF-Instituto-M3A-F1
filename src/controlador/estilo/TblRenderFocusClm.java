@@ -13,22 +13,28 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class TblRenderFocusClm extends DefaultTableCellRenderer {
 
     private final int clm;
+    private JLabel lbl;
 
     public TblRenderFocusClm(int clm) {
         this.clm = clm;
+    }
+
+    private void iniciaLbl() {
+        lbl.setVisible(true);
+        lbl.setOpaque(false);
+        lbl.setHorizontalAlignment(JLabel.CENTER);
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
             boolean focused, int row, int column) {
         super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+        
+        this.lbl = new JLabel();
+        iniciaLbl();
 
-        JLabel lbl = new JLabel();
-        lbl.setVisible(true);
-        lbl.setOpaque(false);
-        lbl.setHorizontalAlignment(JLabel.CENTER);
         if (value != null) {
-            lbl.setText(value.toString());
+            lbl.setText(value.toString().split("%")[1]);
         }
 
         if (focused) {

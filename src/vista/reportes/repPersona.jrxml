@@ -24,7 +24,7 @@ public."Lugares" z on p.id_lugar_residencia=z.id_lugar
 where persona_identificacion=$P{cedula};]]>
 	</queryString>
 	<field name="id_persona" class="java.lang.Integer"/>
-	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_foto" class="java.io.InputStream"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="persona" class="java.lang.String"/>
 	<field name="persona_genero" class="java.lang.String"/>
@@ -206,7 +206,7 @@ where persona_identificacion=$P{cedula};]]>
 			</textField>
 			<image>
 				<reportElement x="429" y="13" width="116" height="170"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{persona_foto}]]></imageExpression>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="421" y="275" width="38" height="20"/>
