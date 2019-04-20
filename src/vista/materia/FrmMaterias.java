@@ -219,7 +219,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 cbCarreraActionPerformed(evt);
             }
         });
-        jPanel3.add(cbCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 20, 177, -1));
+        jPanel3.add(cbCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 20, 250, -1));
 
         txtNombreMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,35 +233,35 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel3.add(lblErrorCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 43, -1, -1));
 
         lblErrorCodigoMateria.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCodigoMateria.setText("Especifique el código materia");
+        lblErrorCodigoMateria.setText("Ingrese solo letras");
         jPanel3.add(lblErrorCodigoMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 99, -1, -1));
 
         lblErrorNombreMateria.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorNombreMateria.setText("jLabel1");
+        lblErrorNombreMateria.setText("Ingrese solo letras");
         jPanel3.add(lblErrorNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 154, -1, -1));
 
         lblErrorMateriaCiclo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorMateriaCiclo.setText("jLabel1");
+        lblErrorMateriaCiclo.setText("Ingrese solo números");
         jPanel3.add(lblErrorMateriaCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 206, -1, -1));
 
         lblErrorCreditos.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCreditos.setText("jLabel1");
+        lblErrorCreditos.setText("Ingrese solo números");
         jPanel3.add(lblErrorCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 258, -1, 14));
 
         lblErrorEjeFormacion.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorEjeFormacion.setText("jLabel1");
+        lblErrorEjeFormacion.setText("Seleccione un Eje de Formación");
         jPanel3.add(lblErrorEjeFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 43, -1, -1));
 
         lblErrorMateriaTipo.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorMateriaTipo.setText("jLabel1");
+        lblErrorMateriaTipo.setText("Seleccion un Tipo");
         jPanel3.add(lblErrorMateriaTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 99, -1, -1));
 
         lblErrorCategoria.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCategoria.setText("jLabel1");
+        lblErrorCategoria.setText("Seleccione una Categoría");
         jPanel3.add(lblErrorCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 154, -1, -1));
 
         lblErrorTipoAcreditacion.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorTipoAcreditacion.setText("jLabel1");
+        lblErrorTipoAcreditacion.setText("Seleccione un Tipo de Acreditación");
         jPanel3.add(lblErrorTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 206, -1, -1));
 
         jTPMaterias.addTab("Datos Principales", jPanel3);
@@ -295,23 +295,23 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel4.add(txtHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 123, 137, -1));
 
         lblErrorHorasDocencia.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorHorasDocencia.setText("jLabel12");
+        lblErrorHorasDocencia.setText("Ingrese solo números");
         jPanel4.add(lblErrorHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
         lblErrorHorasPracticas.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorHorasPracticas.setText("jLabel12");
+        lblErrorHorasPracticas.setText("Ingrese solo números");
         jPanel4.add(lblErrorHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 94, -1, -1));
 
         lblErrorHorasPresenciales.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorHorasPresenciales.setText("jLabel12");
+        lblErrorHorasPresenciales.setText("Ingrese solo números");
         jPanel4.add(lblErrorHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 152, -1, -1));
 
         lblErrorHorasAutoEstudio.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorHorasAutoEstudio.setText("jLabel12");
+        lblErrorHorasAutoEstudio.setText("Ingrese solo números");
         jPanel4.add(lblErrorHorasAutoEstudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 204, -1, -1));
 
         lblErrorTotalHoras.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorTotalHoras.setText("jLabel12");
+        lblErrorTotalHoras.setText("Ingrese solo números");
         jPanel4.add(lblErrorTotalHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 256, -1, -1));
 
         jTPMaterias.addTab("Horas de Materia", jPanel4);
@@ -337,11 +337,11 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 320, 220));
 
         lblErrorObjetivoGeneral.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorObjetivoGeneral.setText("jLabel17");
+        lblErrorObjetivoGeneral.setText("Ingrese solo letras");
         jPanel2.add(lblErrorObjetivoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         lblErrorObjetivoEspecifico.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorObjetivoEspecifico.setText("jLabel17");
+        lblErrorObjetivoEspecifico.setText("Ingrese solo letras");
         jPanel2.add(lblErrorObjetivoEspecifico, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, -1, -1));
 
         jTPMaterias.addTab("Observaciones", jPanel2);
@@ -361,7 +361,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         txtOrganizacionCurricular.setRows(5);
         jScrollPane3.setViewportView(txtOrganizacionCurricular);
 
-        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 39, 301, -1));
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 301, -1));
 
         txtDescripcionMateria.setColumns(20);
         txtDescripcionMateria.setRows(5);
@@ -376,15 +376,15 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 188, 644, 83));
 
         lblErrorDescripcionMateria.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorDescripcionMateria.setText("jLabel17");
+        lblErrorDescripcionMateria.setText("Ingrese solo letras");
         jPanel5.add(lblErrorDescripcionMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 136, -1, -1));
 
         lblErrorOrganizacionCurricular.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorOrganizacionCurricular.setText("jLabel17");
+        lblErrorOrganizacionCurricular.setText("Ingrese solo letras");
         jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 136, -1, -1));
 
         lblErrorCampoFormacion.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCampoFormacion.setText("jLabel17");
+        lblErrorCampoFormacion.setText("Ingrese solo letras");
         jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 278, -1, -1));
 
         jTPMaterias.addTab("Finalización", jPanel5);
