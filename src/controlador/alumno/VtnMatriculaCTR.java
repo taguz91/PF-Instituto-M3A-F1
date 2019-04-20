@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import modelo.ConectarDB;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
-import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.usuario.RolMD;
 import vista.alumno.VtnMatricula;
 import vista.principal.VtnPrincipal;
 
@@ -39,12 +37,19 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
 
     public void iniciar() {
         //Iniciamos la tabla 
-        String[] t = {"Periodo", "Alumno", "Fecha Matricula", "Numero Clases"};
+        String[] t = {"Periodo", "Alumno", "Fecha", "Hora"};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
 
         llenarCmbPrd();
+        cargarMatriculas();
     }
+    
+    public void cargarMatriculas(){
+        matriculas = matr.cargarMatriculas();
+        llenarTbl(matriculas);
+    }
+            
 
     private void llenarCmbPrd() {
         periodos = prd.cargarPrdParaCmbVtn();
@@ -53,6 +58,17 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             vtnMatri.getCmbPeriodos().addItem("Seleccione");
             periodos.forEach(p -> {
                 vtnMatri.getCmbPeriodos().addItem(p.getNombre_PerLectivo());
+            });
+        }
+    }
+    
+    private void llenarTbl(ArrayList<MatriculaMD> matriculas){
+        if (matriculas != null) {
+            matriculas.forEach(m -> {
+                Object[] v = {m.getPeriodo().getNombre_PerLectivo(), 
+                m.getAlumno().getNombreCompleto(), 
+                m.getSoloFecha(), m.getSoloFecha()}; 
+                mdTbl.addRow(v);
             });
         }
     }
