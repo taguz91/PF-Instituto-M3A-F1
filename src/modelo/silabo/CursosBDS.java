@@ -30,8 +30,8 @@ public class CursosBDS extends CursoMD{
        "and id_prd_lectivo=(select id_prd_lectivo from \"Silabo\" where id_silabo=?)\n" +
        "and id_docente=?");
             st.setInt(1, Integer.parseInt(clave[0]));
-            st.setInt(2, Integer.parseInt(clave[1]));
-            st.setInt(3, Integer.parseInt(clave[2]));
+            st.setInt(2, Integer.parseInt(clave[0]));
+            st.setInt(3, Integer.parseInt(clave[1]));
             System.out.println(st);
             ResultSet rs = st.executeQuery();
 
