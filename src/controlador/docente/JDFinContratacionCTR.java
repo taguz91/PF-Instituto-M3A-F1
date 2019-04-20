@@ -22,6 +22,7 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
 import vista.docente.JDFinContratacion;
 import vista.principal.VtnPrincipal;

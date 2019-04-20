@@ -4,6 +4,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
+import modelo.usuario.RolMD;
 import vista.principal.VtnPrincipal;
 
 /**
