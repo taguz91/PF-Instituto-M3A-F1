@@ -240,7 +240,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                             jd.getBtnCancelar().setVisible(true);
                             break;
                         case 1:
+                            idSesion = 0; 
                             bd.eliminar(idSesion);
+                            ctrHClase.actualizar(sesion.getDia());
                             break;
                         default:
                             System.out.println("Desidio cancelar");
