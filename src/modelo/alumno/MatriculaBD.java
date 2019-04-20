@@ -100,7 +100,7 @@ public class MatriculaBD extends MatriculaMD {
                     a.setId_Alumno(rs.getInt("id_alumno"));
                     p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                     m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
-                    a.setIdentificacion("persona_identificacion");
+                    a.setIdentificacion(rs.getString("persona_identificacion"));
                     a.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
