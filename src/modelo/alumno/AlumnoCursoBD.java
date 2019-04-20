@@ -20,6 +20,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     private ConectarDB conecta;
     private AlumnoBD alm;
     private CursoBD cur;
+    String nsqlMatri = ""; 
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -37,6 +38,20 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se ingresao correctamente el alumno en el curso");
         }
+    }
+    
+    public void agregarMatricula(int idAlmn, int idCurso){
+        String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
+                + "id_alumno, id_curso)\n"
+                + "VALUES (" + idAlmn + ", " + idCurso + ");";
+        nsqlMatri = nsqlMatri + nsql;
+        System.out.println("Matricula: "+nsqlMatri);
+    }
+    
+    public void guardarAlmnCurso(){
+        System.out.println("-------------");
+        System.out.println("Matricula completa: "+nsqlMatri);
+        nsqlMatri = ""; 
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {

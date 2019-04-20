@@ -9,6 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
+ "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0', 
  "prd_lectivo_estado" boolean NOT NULL DEFAULT 'true',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
@@ -291,13 +292,13 @@ ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
 FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
---Para retirar un alumno 
+--Para retirar un alumno
 CREATE TABLE "Retirados"(
 	"id_retirado" serial NOT NULL,
 	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
-	"retiro_observacion" text, 
+	"retiro_observacion" text,
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
@@ -648,7 +649,7 @@ ALTER SEQUENCE public."PlandeClases_id_plan_clases_seq"
 CREATE TABLE public."PlandeClases"
 (
     id_plan_clases integer NOT NULL DEFAULT nextval('"PlandeClases_id_plan_clases_seq"'::regclass),
-    
+
     id_curso integer NOT NULL,
     id_unidad integer NOT NULL,
     observaciones text COLLATE pg_catalog."default",
@@ -661,7 +662,7 @@ CREATE TABLE public."PlandeClases"
         REFERENCES public."Cursos" (id_curso) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    
+
     CONSTRAINT id_unidad FOREIGN KEY (id_unidad)
         REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
         ON UPDATE CASCADE
@@ -995,7 +996,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
-	
+
 --CREANDO TABLA SESION_NO_CLASE
 
 CREATE TABLE "SesionNoClase"(

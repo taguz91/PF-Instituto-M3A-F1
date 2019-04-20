@@ -94,6 +94,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
     private void iniciarAcciones() {
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
         vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirReporte());
+        vtnMatri.getBtnIngresar().addActionListener(e -> abrirFrm());
     }
 
     private void cargarMatriculas() {
@@ -135,6 +136,10 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         } else {
             vtnMatri.getLblNumResultados().setText("0 Resultados obtenidos.");
         }
+    }
+    
+    private void abrirFrm(){
+        ctrPrin.abrirFrmMatricula();
     }
 
     private void llamaReporteMatricula() {
