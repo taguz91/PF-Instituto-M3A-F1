@@ -1,8 +1,5 @@
 package vista.curso;
 
-import javax.swing.ImageIcon;
-
-
 /**
  *
  * @author Johnny
@@ -14,9 +11,6 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
      */
     public VtnAlumnoCurso() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
     
 

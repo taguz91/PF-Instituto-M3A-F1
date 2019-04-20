@@ -34,7 +34,7 @@ public class ResourceManager implements Serializable {
 
     public static synchronized Connection getConnection()
             throws SQLException {
-        System.out.println("Se inicio la conexion. En resource manager");
+        
         if (driver == null) {
             try {
 
@@ -52,12 +52,14 @@ public class ResourceManager implements Serializable {
             //cerrarSesion();
 
             //conn.close();
-            resetConn();
+            //resetConn();
+            
         }
 
         if (conn == null || conn.isClosed()) {
             //cerrarSesion();
             resetConn();
+            System.out.println("Se inicio la conexion. En resource manager");
         }
 
         return conn;
@@ -110,6 +112,8 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             stmt.execute(Statement);
+            
+            conn.close();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -125,7 +129,8 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
-
+            
+            conn.close();
             return rs;
 
         } catch (SQLException | NullPointerException e) {
@@ -167,7 +172,7 @@ public class ResourceManager implements Serializable {
         }
     }
 
-    private static String generarURL() {
+    public static String generarURL() {
 
         String ip = Propiedades.getPropertie("ip");
         String port = Propiedades.getPropertie("port");

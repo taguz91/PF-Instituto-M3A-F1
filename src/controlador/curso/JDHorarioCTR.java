@@ -1,11 +1,15 @@
 package controlador.curso;
 
-import controlador.principal.DependenciasCTR;
+import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalTime;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
+import modelo.curso.SesionClaseMD;
 import modelo.validaciones.TxtVHora;
 import modelo.validaciones.Validar;
 import vista.curso.JDHorario;
@@ -16,13 +20,13 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class JDHorarioCTR extends DependenciasCTR {
+public class JDHorarioCTR extends DependenciasVtnCTR {
 
     private final JDHorario jd;
     private final CursoMD curso;
     private final SesionClaseBD bd;
     //Variables para el horario
-    private int idSesion, posFila, posColumna, dia, horaC, horaT, minutoC, minutoT;
+    private int idSesion, posFil, posColum, dia, horaC, horaT, minutoC, minutoT;
     //Cargamos datos
     private String jornada, horaIni, horaFin;
     private String[] hs;
@@ -30,6 +34,7 @@ public class JDHorarioCTR extends DependenciasCTR {
     private PnlHorarioClase pnl;
     private PnlHorarioClaseCTR ctrHClase;
     private LocalTime inicio, fin;
+    private SesionClaseMD sesion;
 
     public JDHorarioCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
             CursoMD curso) {
@@ -50,8 +55,17 @@ public class JDHorarioCTR extends DependenciasCTR {
         llenarCmbDias();
 
         jd.setVisible(true);
+        jd.getBtnCancelar().setVisible(false);
+        jd.getBtnCancelar().addActionListener(e -> clickCancelar());
 
         jd.getBtnGuardar().addActionListener(e -> guardar());
+        clickTbl();
+    }
+
+    private void clickCancelar() {
+        editar = false;
+        idSesion = 0;
+        limpiarFrm();
     }
 
     private void llenarCmbDias() {
@@ -105,8 +119,12 @@ public class JDHorarioCTR extends DependenciasCTR {
                     todosLosCamposLlenos();
                 }
             }
-        }
 
+            if ((horaT - horaC) > 1) {
+                jd.getLblError().setText("<html>Debe ingresar solamente una hora: <br>08:00 - 09:00</html>");
+                guardar = false;
+            }
+        }
         if (guardar) {
             guardar = false;
             for (String hSelec : ctrHClase.gethSelec()) {
@@ -139,10 +157,18 @@ public class JDHorarioCTR extends DependenciasCTR {
             bd.setDia(dia);
             bd.setHoraIni(inicio);
             bd.setHoraFin(fin);
+            if (editar) {
+                bd.editar(idSesion);
+                idSesion = 0;
+                editar = false;
+                jd.getBtnCancelar().setVisible(false);
+            } else {
+                bd.ingresar();
+            }
 
-            bd.ingresar();
             //Actualizamos el horario 
             ctrHClase.actualizar(dia);
+            limpiarFrm();
         }
     }
 
@@ -185,6 +211,53 @@ public class JDHorarioCTR extends DependenciasCTR {
         jd.getLblDocente().setText(curso.getId_docente().getNombreCorto());
         jd.getLblCurso().setText(curso.getCurso_nombre());
         jd.getLblCapacidad().setText(curso.getCurso_capacidad() + "");
+    }
+
+    private void clickTbl() {
+        pnl.getTblHorario().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                posFil = pnl.getTblHorario().getSelectedRow();
+                posColum = pnl.getTblHorario().getSelectedColumn();
+                if (pnl.getTblHorario().getValueAt(posFil, posColum) != null) {
+                    System.out.println(pnl.getTblHorario().getValueAt(posFil, posColum));
+                    System.out.println(pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
+
+                    idSesion = Integer.parseInt(
+                            pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
+                    sesion = bd.buscarSesion(idSesion);
+                    int r = JOptionPane.showOptionDialog(vtnPrin, "Selecciono: " + idSesion + " "
+                            + jd.getCmbDia().getItemAt(sesion.getDia()) + "\nHora inicio: " + sesion.getHoraIni() + "\n"
+                            + "Hora fin: " + sesion.getHoraFin(), "Sesion Clase",
+                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                            null, new Object[]{"Editar", "Eliminar", "Cancelar"}, "Cancelar");
+                    switch (r) {
+                        case 0:
+                            jd.getCmbDia().setSelectedIndex(sesion.getDia());
+                            jd.getTxtHoraInicio().setText(sesion.getHoraIni().toString());
+                            jd.getTxtHoraFin().setText(sesion.getHoraFin().toString());
+                            editar = true;
+                            jd.getBtnCancelar().setVisible(true);
+                            break;
+                        case 1:
+                            idSesion = 0; 
+                            bd.eliminar(idSesion);
+                            ctrHClase.actualizar(sesion.getDia());
+                            break;
+                        default:
+                            System.out.println("Desidio cancelar");
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private void limpiarFrm() {
+        jd.getCmbDia().setSelectedIndex(0);
+        jd.getTxtHoraFin().setText("");
+        jd.getTxtHoraInicio().setText("");
+        jd.getLblError().setText("");
     }
 
 }

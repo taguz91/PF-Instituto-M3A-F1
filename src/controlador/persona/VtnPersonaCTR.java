@@ -206,8 +206,8 @@ public class VtnPersonaCTR {
                     p.getFechaNacimiento()};
                 mdTbl.addRow(valores);
             });
+            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         }
-        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
