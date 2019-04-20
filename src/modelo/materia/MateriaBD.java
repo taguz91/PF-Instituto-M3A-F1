@@ -73,7 +73,7 @@ public class MateriaBD extends MateriaMD {
     }
     
     public List<CarreraMD> cargarCarreras(){
-        String sql = "SELECT carrera_nombre FROM public.\"Carreras\";";
+        String sql = "SELECT carrera_nombre FROM public.\"Carreras\" WHERE carrera_activo = true;";
         List<CarreraMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
