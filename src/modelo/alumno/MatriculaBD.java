@@ -52,6 +52,41 @@ public class MatriculaBD extends MatriculaMD {
         return consultarParaTbl(sql);
     }
 
+    public ArrayList<MatriculaMD> cargarMatriculasPorPrd(int idPrd) {
+        sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
+                + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
+                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre\n"
+                + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
+                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
+                + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
+                + "	a.id_alumno = m.id_alumno AND \n"
+                + "	p.id_persona = a.id_persona AND \n"
+                + "     m.id_prd_lectivo = " + idPrd + "; ";
+        return consultarParaTbl(sql);
+    }
+
+    /**
+     * Se podran buscar por cedula, nombres completos y nombre del periodo, o
+     * siglas de la carrera
+     * @param aguja
+     * @return
+     */
+    public ArrayList<MatriculaMD> buscarMatriculas(String aguja) {
+        sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
+                + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
+                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre\n"
+                + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
+                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
+                + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
+                + "	a.id_alumno = m.id_alumno AND \n"
+                + "	p.id_persona = a.id_persona AND(\n"
+                + "	persona_identificacion ILIKE '%"+aguja+"%' OR \n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido ||' '|| persona_segundo_apellido ILIKE '%"+aguja+"%'\n"
+                + "	OR prd_lectivo_nombre ILIKE '%"+aguja+"%'); ";
+        return consultarParaTbl(sql);
+    }
+
     private ArrayList<MatriculaMD> consultarParaTbl(String sql) {
         ArrayList<MatriculaMD> matriculas = new ArrayList();
         ResultSet rs = conecta.sql(sql);
@@ -73,12 +108,12 @@ public class MatriculaBD extends MatriculaMD {
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                     m.setAlumno(a);
                     m.setPeriodo(p);
-                    
-                    matriculas.add(m); 
+
+                    matriculas.add(m);
                 }
                 return matriculas;
             } catch (SQLException e) {
-                System.out.println("No se pudieron consultar matriculas. "+e.getMessage());
+                System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
                 return null;
             }
         } else {

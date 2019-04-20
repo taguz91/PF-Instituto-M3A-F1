@@ -21,7 +21,7 @@ SELECT DISTINCT id_alumno, id_prd_lectivo
 INSERT INTO public."Matricula"(
 id_alumno, id_prd_lectivo, matricula_fecha)
   SELECT DISTINCT id_alumno, id_prd_lectivo, (
-  	SELECT DISTINCT almn_curso_fecha_registro
+  	SELECT almn_curso_fecha_registro
   	FROM public."AlumnoCurso" ac, public."Cursos" c
   	WHERE c.id_curso = ac.id_curso
   	AND id_alumno = ac.id_alumno
