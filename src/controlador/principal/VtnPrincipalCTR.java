@@ -21,6 +21,7 @@ import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
+import controlador.notas.VtnNotas;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
@@ -634,9 +635,14 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
-
-        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario);
-        vtnNotas.Init();
+        VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario);
+            vtnCtr.Init();
+        } else {
+            errorNumVentanas();
+        }
     }
 
     /**

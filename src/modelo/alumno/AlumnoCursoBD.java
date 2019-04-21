@@ -8,6 +8,7 @@ import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.notas.NotasBD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
@@ -20,7 +21,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     private ConectarDB conecta;
     private AlumnoBD alm;
     private CursoBD cur;
-    String nsqlMatri = ""; 
+    String nsqlMatri = "";
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -39,19 +40,19 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             System.out.println("Se ingresao correctamente el alumno en el curso");
         }
     }
-    
-    public void agregarMatricula(int idAlmn, int idCurso){
+
+    public void agregarMatricula(int idAlmn, int idCurso) {
         String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
                 + "id_alumno, id_curso)\n"
                 + "VALUES (" + idAlmn + ", " + idCurso + ");";
         nsqlMatri = nsqlMatri + nsql;
-        System.out.println("Matricula: "+nsqlMatri);
+        System.out.println("Matricula: " + nsqlMatri);
     }
-    
-    public void guardarAlmnCurso(){
+
+    public void guardarAlmnCurso() {
         System.out.println("-------------");
-        System.out.println("Matricula completa: "+nsqlMatri);
-        nsqlMatri = ""; 
+        System.out.println("Matricula completa: " + nsqlMatri);
+        nsqlMatri = "";
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
@@ -258,53 +259,51 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     public static List<AlumnoCursoBD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente, String nombrePeriodo) {
 
-        String SELECT = "SELECT \n"
-                + "\"public\".\"ViewAlumnoCurso\".id_almn_curso,\n"
-                + "\"public\".\"ViewAlumnoCurso\".alumno_codigo,\n"
-                + "\"public\".\"ViewAlumnoCurso\".id_alumno,\n"
-                + "\"public\".\"ViewAlumnoCurso\".id_curso,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_1_parcial,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_examen_interciclo,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_2_parcial,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_examen_final,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nt_examen_supletorio,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_asistencia,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_nota_final,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_estado,\n"
-                + "\"public\".\"ViewAlumnoCurso\".almn_curso_num_faltas,\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_identificacion,\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_primer_apellido,\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_segundo_apellido,\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_primer_nombre,\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_segundo_nombre,\n"
-                + "\"public\".\"ViewAlumnoCurso\".id_persona\n"
+        String SELECT = "SELECT\n"
+                + "\"public\".\"AlumnoCurso2\".id_alumno,\n"
+                + "\"public\".\"AlumnoCurso2\".almn_curso_asistencia,\n"
+                + "\"public\".\"AlumnoCurso2\".almn_curso_estado,\n"
+                + "\"public\".\"AlumnoCurso2\".almn_curso_num_faltas,\n"
+                //+ "\"public\".\"AlumnoCurso2\".almn_curso_activo,\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"AlumnoCurso2\".id_almn_curso\n"
                 + "FROM\n"
-                + "\"ViewAlumnoCurso\"\n"
+                + "\"public\".\"AlumnoCurso2\"\n"
+                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso2\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
+                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
+                + "INNER JOIN \"public\".\"Alumnos\" ON \"public\".\"AlumnoCurso2\".id_alumno = \"public\".\"Alumnos\".id_alumno\n"
+                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Alumnos\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
-                + "\"public\".\"ViewAlumnoCurso\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"ViewAlumnoCurso\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                + "\"public\".\"ViewAlumnoCurso\".curso_ciclo = " + ciclo + " AND\n"
-                + "\"public\".\"ViewAlumnoCurso\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"ViewAlumnoCurso\".nombre_jornada = '" + nombreJornada + "' AND\n"
-                + "\"public\".\"ViewAlumnoCurso\".materia_nombre = '" + nombreMateria + "'\n"
+                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
+                + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
+                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "' AND\n"
+                + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"ViewAlumnoCurso\".persona_primer_apellido ASC";
+                + "\"public\".\"Personas\".persona_primer_apellido ASC";
 
         System.out.println(SELECT);
 
-        return selectFromView(SELECT);
-
-    }
-
-    private static List<AlumnoCursoBD> selectFromView(String QUERY) {
         List<AlumnoCursoBD> lista = new ArrayList();
-        ResultSet rs = ResourceManager.Query(QUERY);
+
+        ResultSet rs = ResourceManager.Query(SELECT);
         try {
 
             while (rs.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
                 alumnoCurso.setId(rs.getInt("id_almn_curso"));
+                alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
+                alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
+                alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+
                 AlumnoMD alumno = new AlumnoMD();
                 alumno.setId_Alumno(rs.getInt("id_alumno"));
                 alumno.setIdentificacion(rs.getString("persona_identificacion"));
@@ -312,24 +311,13 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                alumno.setIdPersona(rs.getInt("id_persona"));
-                alumno.setId_Alumno(rs.getInt("alumno_codigo"));
 
                 alumnoCurso.setAlumno(alumno);
 
-                CursoMD curso = new CursoMD();
-                curso.setId_curso(rs.getInt("id_curso"));
-                alumnoCurso.setCurso(curso);
+                List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
 
-                alumnoCurso.setNota1Parcial(rs.getDouble("almn_curso_nt_1_parcial"));
-                alumnoCurso.setNotaExamenInter(rs.getDouble("almn_curso_nt_examen_interciclo"));
-                alumnoCurso.setNota2Parcial(rs.getDouble("almn_curso_nt_2_parcial"));
-                alumnoCurso.setNotaExamenFinal(rs.getDouble("almn_curso_nt_examen_final"));
-                alumnoCurso.setNotaExamenSupletorio(rs.getDouble("almn_curso_nt_examen_final"));
-                alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
-                alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
-                alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
-                alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+                alumnoCurso.setNotas(notas);
+
                 lista.add(alumnoCurso);
             }
 
@@ -337,6 +325,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             System.out.println(e.getMessage());
         }
         return lista;
+
     }
 
     public boolean editar() {

@@ -6,6 +6,8 @@ import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -78,6 +80,12 @@ public class VtnTipoNotasCTR {
             }
         });
 
+        vista.getTblTipoNotas().getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                oderBy(e);
+            }
+        });
     }
 
     //METODOS DE APOYO
@@ -85,14 +93,7 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas.setRowCount(0);
         listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
-        for (TipoDeNotaMD obj : listaTiposNotas) {
-            if (vista.isVisible()) {
-                agregarFila(obj);
-            } else {
-                listaTiposNotas = null;
-                break;
-            }
-        }
+        listaTiposNotas.forEach(VtnTipoNotasCTR::agregarFila);
 
         vista.getLblResultados().setText(listaTiposNotas.size() + " Resultados Obtenidos");
 
@@ -208,5 +209,15 @@ public class VtnTipoNotasCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
         cargarTabla();
+    }
+
+    private void oderBy(MouseEvent e) {
+
+        tablaTiposNotas.setRowCount(0);
+
+        listaTiposNotas
+                .stream()
+                .sorted((item, item2) -> item.getPeriodoLectivo().getCarrera().getNombre().compareToIgnoreCase(item2.getPeriodoLectivo().getCarrera().getNombre()))
+                .forEach(VtnTipoNotasCTR::agregarFila);
     }
 }

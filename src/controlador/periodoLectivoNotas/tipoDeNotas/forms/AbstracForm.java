@@ -33,9 +33,12 @@ public abstract class AbstracForm {
     //Combo
     protected String[] carrerasTradicionales = {
         "APORTE 1",
+        "NOTA INTERCICLO",
+        "EXAMEN INTERCICLO",
         "APORTE 2",
         "EXAMEN FINAL",
-        "EXAMEN SUPLETORIO"
+        "EXAMEN SUPLETORIO",
+        "NOTA FINAL"
     };
 
     protected boolean COMPLETED = false;

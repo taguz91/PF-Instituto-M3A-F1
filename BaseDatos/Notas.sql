@@ -36,3 +36,39 @@ ALTER TABLE "Notas" ADD CONSTRAINT "alumno_curso__notas_fk"
 ALTER TABLE "Notas" ADD CONSTRAINT "tipo_de_nota__notas_fk"
     FOREIGN KEY ("id_tipo_nota") REFERENCES "TipoDeNota"("id_tipo_nota")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--MIGRACION DE NOTAS
+INSERT INTO "AlumnoCurso2"(id_alumno, id_curso, almn_curso_asistencia, almn_curso_estado, almn_curso_num_faltas) 
+SELECT id_alumno, id_curso, almn_curso_asistencia, almn_curso_estado, almn_curso_num_faltas
+FROM "AlumnoCurso";
+
+--TRIGGER DE CREACION DE NOTAS
+
+
+CREATE OR REPLACE FUNCTION migrar_notas()
+RETURNS TRIGGER AS $migrar_notas$
+begin
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 5);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 4);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 6);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 7);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 8);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 9);
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    VALUES(0.0, new.id_almn_curso, 10);
+
+    RETURN NEW;
+end;
+$migrar_notas$ LANGUAGE plpgsql;
+
+CREATE TRIGGER migracion_notas
+AFTER INSERT ON "AlumnoCurso2"
+FOR EACH ROW
+EXECUTE PROCEDURE migrar_notas();
