@@ -83,14 +83,13 @@ public class VtnTipoNotasCTR {
     //METODOS DE APOYO
     public void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
-        listaTiposNotas = TipoDeNotaBD.SelectAll();
+        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
         for (TipoDeNotaMD obj : listaTiposNotas) {
             if (vista.isVisible()) {
-                agregarFila(listaTiposNotas.indexOf(obj) + 1, obj);
+                agregarFila(obj);
             } else {
                 listaTiposNotas = null;
-                System.gc();
                 break;
             }
         }
@@ -106,26 +105,23 @@ public class VtnTipoNotasCTR {
                 || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
-                || item.getCarrera().getNombre().toUpperCase().contains(Aguja)
-                || item.getCarrera().getModalidad().contains(Aguja)
                 )
                 .collect(Collectors.toList());
 
-        listaTemporal.forEach(obj -> {
-            agregarFila(listaTemporal.indexOf(obj) + 1, obj);
-        });
+        listaTemporal.forEach(VtnTipoNotasCTR::agregarFila);
 
         vista.getLblResultados().setText(listaTemporal.size() + " Resultados Obtenidos");
     }
 
-    private static void agregarFila(int indice, TipoDeNotaMD obj) {
+    private static void agregarFila(TipoDeNotaMD obj) {
 
         tablaTiposNotas.addRow(new Object[]{
-            indice,
+            tablaTiposNotas.getDataVector().size() + 1,
             obj.getIdTipoNota(),
             obj.getNombre(),
-            obj.getCarrera().getNombre(),
-            obj.getCarrera().getModalidad(),
+            obj.getPeriodoLectivo().getNombre_PerLectivo(),
+            obj.getPeriodoLectivo().getCarrera().getNombre(),
+            obj.getPeriodoLectivo().getCarrera().getModalidad(),
             obj.getValorMinimo(),
             obj.getValorMaximo(),
             obj.getFechaCreacion()

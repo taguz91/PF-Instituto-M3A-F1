@@ -366,3 +366,14 @@ character varying (200) NOT NULL DEFAULT '000.00.000.000';
 ALTER TABLE "Materias" ADD COLUMN materia_nucleo boolean DEFAULT 'false';
 --Updates 20/4/2019
 ALTER TABLE "PeriodoLectivo" ADD COLUMN "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0';
+
+
+
+--UPDATES  20/Abril/2019
+
+ALTER TABLE "TipoDeNota" DROP CONSTRAINT "carrera_TipoDeNota_fk";
+ALTER TABLE "TipoDeNota" DROP COLUMN id_carrera;
+ALTER TABLE "TipoDeNota" ADD COLUMN id_prd_lectivo INTEGER;
+ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
+    FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+        ON DELETE CASCADE ON UPDATE CASCADE;

@@ -32,7 +32,10 @@ public class FrmTipoNotaEditar extends AbstracForm {
     }
 
     private void setObjInForm() {
-        vista.getCmbCarrera().setSelectedItem(modelo.getCarrera().getNombre());
+
+        String key = modelo.getPeriodoLectivo().getNombre_PerLectivo() + " " + modelo.getPeriodoLectivo().getCarrera().getNombre();
+
+        vista.getCmbPeriodoLectivo().setSelectedItem(key);
         vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
         vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
         vista.getCmbTipoDeNota().setSelectedItem(modelo.getNombre());
