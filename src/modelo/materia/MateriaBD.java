@@ -63,7 +63,7 @@ public class MateriaBD extends MateriaMD {
 
     public boolean elminarMateria(int aguja) {
         String sql = "UPDATE public.\"Materias\" SET\n"
-                + " materia_activa = false"
+                + " materia_activa = 'false'"
                 + " WHERE id_materia = " + aguja + ";";
         if (conecta.nosql(sql) == null) {
             return true;
