@@ -72,11 +72,6 @@ public class VtnRequisitosCTR {
     }
 
     public void guardarMateriaRequisito() {
-        if (frmreq.getJrbCoRequisito().isSelected() || frmreq.getJrbPrerequisito().isSelected() ) {
-            frmreq.getBtnGuardar().setEnabled(true);
-        }else{
-            frmreq.getBtnGuardar().setEnabled(false);
-        }
         
         boolean guardar = true;
         String tipo="";
