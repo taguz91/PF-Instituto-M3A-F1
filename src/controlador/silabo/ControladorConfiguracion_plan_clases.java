@@ -9,6 +9,7 @@ import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
 import modelo.silabo.CarrerasBDS;
+import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.unidadSilabo.UnidadSilaboBD;
@@ -55,7 +56,7 @@ public class ControladorConfiguracion_plan_clases {
         cargarComboCarreras();
         cargarSilabosDocentes();
         iniciarSilabo(unidades());
-
+        cargarCursos();
       //  cargarSilabosDocentes();
        // iniciarSilabo(unidades());
 //     materiaseleccionada();
@@ -92,6 +93,8 @@ public class ControladorConfiguracion_plan_clases {
             unidadesSilabo.forEach((umd) -> {
                 frm_cong_PlanClase.getCmb_unidades().addItem("Unidad " + umd.getNumeroUnidad());
             });
+            
+            
         } else {
             System.out.println("NO EXISTEN SILABOS");
             
@@ -110,8 +113,19 @@ public class ControladorConfiguracion_plan_clases {
         return silabounidad.get();
         }
 
+        
     }
-
+    
+    void cargarCursos(){
+            String[] parametros =
+            { "55","144"};
+             cursosSilabo=CursosBDS.Consultarcursos(conexion, parametros);
+             System.out.println(cursosSilabo+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+             cursosSilabo.forEach((umd) -> {
+                frm_cong_PlanClase.getCmb_Cursos().addItem(  umd.getCurso_nombre());
+            });
+        
+    }
    
 
 }

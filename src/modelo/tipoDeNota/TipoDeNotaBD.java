@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ResourceManager;
 import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
  *
@@ -21,8 +22,8 @@ import modelo.carrera.CarreraMD;
  */
 public class TipoDeNotaBD extends TipoDeNotaMD {
 
-    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, CarreraMD idCarrera) {
-        super(idTipoNota, nombre, valorMinimo, valorMaximo, fechaCreacion, estado, idCarrera);
+    public TipoDeNotaBD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, PeriodoLectivoMD periodoLectivo) {
+        super(idTipoNota, nombre, valorMinimo, valorMaximo, fechaCreacion, estado, periodoLectivo);
     }
 
     public TipoDeNotaBD() {
@@ -35,7 +36,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         this.setValorMaximo(obj.getValorMaximo());
         this.setFechaCreacion(obj.getFechaCreacion());
         this.setEstado(obj.isEstado());
-        this.setCarrera(obj.getCarrera());
+        this.setPeriodoLectivo(obj.getPeriodoLectivo());
     }
 
     private static final String TABLA = " \"TipoDeNota\" ";
@@ -53,39 +54,37 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public boolean insertar() {
         String INSERT = "INSERT INTO " + TABLA + " \n"
-                + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo, id_carrera )\n"
+                + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo, id_prd_lectivo )\n"
                 + "VALUES\n"
                 + "( \n"
                 + "'" + getNombre() + "',\n"
                 + " " + getValorMinimo() + ",\n"
                 + " " + getValorMaximo() + ",\n"
-                + "" + getCarrera().getId() + "\n"
+                + "" + getPeriodoLectivo().getId_PerioLectivo() + "\n"
                 + " );";
 
         return ResourceManager.Statement(INSERT) == null;
     }
 
-    public static List<TipoDeNotaMD> SelectAll() {
+    public static List<TipoDeNotaMD> selectAllWhereEstadoIs(boolean estado) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"Carreras\".id_carrera,\n"
-                + "\"public\".\"Carreras\".carrera_nombre,\n"
-                + "\"public\".\"Carreras\".carrera_modalidad,\n"
                 + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_valor_minimo,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_estado,\n"
-                + "\"public\".\"Carreras\".carrera_activo,\n"
-                + "\"public\".\"Carreras\".carrera_codigo,\n"
-                + "\"public\".\"Carreras\".id_docente_coordinador\n"
+                + "\"public\".\"TipoDeNota\".id_prd_lectivo,\n"
+                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
+                + "\"public\".\"Carreras\".carrera_nombre,\n"
+                + "\"public\".\"Carreras\".carrera_modalidad,\n"
+                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"Carreras\"\n"
-                + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"TipoDeNota\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + "\"public\".\"TipoDeNota\"\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
                 + "WHERE\n"
-                + "\"TipoDeNota\".tipo_nota_estado IS TRUE;";
-
+                + "\"TipoDeNota\".tipo_nota_estado IS " + estado;
         return SelectSimple(SELECT);
 
     }
@@ -141,14 +140,18 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
                 tipoNota.setFechaCreacion(rs.getDate("tipo_nota_fecha_creacion").toLocalDate());
-                tipoNota.setEstado(rs.getBoolean("tipo_nota_estado"));
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
-                carrera.setCodigo(rs.getString("carrera_codigo"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 carrera.setModalidad(rs.getString("carrera_modalidad"));
-                tipoNota.setCarrera(carrera);
+                periodo.setCarrera(carrera);
+
+                tipoNota.setPeriodoLectivo(periodo);
 
                 Lista.add(tipoNota);
             }
@@ -167,7 +170,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "	tipo_nota_nombre = '" + getNombre() + "',\n"
                 + "	tipo_nota_valor_minimo = " + getValorMinimo() + ",\n"
                 + "	tipo_nota_valor_maximo = " + getValorMaximo() + ",\n"
-                + "	id_carrera = " + getCarrera().getId() + "\n"
+                + "	id_prd_lectivo = " + getPeriodoLectivo().getId_PerioLectivo() + "\n"
                 + "WHERE\n"
                 + "	id_tipo_nota = " + Pk;
 

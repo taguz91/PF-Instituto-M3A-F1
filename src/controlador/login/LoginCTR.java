@@ -176,7 +176,8 @@ public class LoginCTR {
                 modelo.setUsername("ROOT");
                 modelo.setPassword("RUTH");
 
-                ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
+                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
+                ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
                 System.out.println("Conexion " + conecta.getConecction());
                 try {
                     List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();

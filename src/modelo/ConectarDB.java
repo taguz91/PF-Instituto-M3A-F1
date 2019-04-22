@@ -174,7 +174,7 @@ public class ConectarDB {
                 System.out.println("Esta abierta la conexion.");
             }
         } catch (SQLException ex) {
-            System.out.println("No pudimos comprobar el estado de la conexion.");
+            System.out.println("No pudimos comprobar el estado de la conexion."+ex.getMessage());
         }
         return ct;
     }

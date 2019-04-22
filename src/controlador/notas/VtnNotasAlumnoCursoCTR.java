@@ -117,14 +117,10 @@ public class VtnNotasAlumnoCursoCTR {
         }).start();
 
         //TABLA
-        try {
-            desktop.getDpnlPrincipal().add(vista);
-            vista.show();
-            vista.setSelected(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        
+        
+        
     }
 
     private void InitEventos() {
@@ -239,7 +235,7 @@ public class VtnNotasAlumnoCursoCTR {
 
         table.setColumnSelectionAllowed(true);
         table.getTableHeader().setReorderingAllowed(false);
-        vista.getjScrollPane1().setViewportView(table);
+        vista.getjScrollPane2().setViewportView(table);
         table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         table.getColumnModel().getColumn(0).setPreferredWidth(25);

@@ -44,30 +44,28 @@ public class UsuarioBD extends UsuarioMD {
 
     public static List<UsuarioMD> SelectAll() {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
-                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_password\n"
-                + "FROM\n"
-                + "\"public\".\"Usuarios_Persona\"\n"
-                + "WHERE \n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado = TRUE";
+                + "    \"Usuarios\".usu_username,\n"
+                + "    \"Usuarios\".usu_password,\n"
+                + "    \"Usuarios\".usu_estado,\n"
+                + "    \"Usuarios\".id_persona,\n"
+                + "    \"Personas\".persona_identificacion,\n"
+                + "    \"Personas\".persona_primer_apellido,\n"
+                + "    \"Personas\".persona_segundo_apellido,\n"
+                + "    \"Personas\".persona_primer_nombre,\n"
+                + "    \"Personas\".persona_segundo_nombre,\n"
+                + "    \"Personas\".persona_foto\n"
+                + "   FROM (\"Usuarios\"\n"
+                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
 
-        return selectFromView(SELECT);
+        return selectSimple(SELECT);
 
     }
 
-    private static List<UsuarioMD> selectFromView(String QUERY) {
-        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"Usuarios_Persona\" \n");
+    private static List<UsuarioMD> selectSimple(String QUERY) {
         List<UsuarioMD> lista = new ArrayList<>();
 
-        //System.out.println(QUERY);
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
 
@@ -101,66 +99,68 @@ public class UsuarioBD extends UsuarioMD {
 
     public List<UsuarioMD> SelectWhereUsernamePassword() {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
-                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_password\n"
-                + "FROM\n"
-                + "\"public\".\"Usuarios_Persona\"\n"
+                + "    \"Usuarios\".usu_username,\n"
+                + "    \"Usuarios\".usu_password,\n"
+                + "    \"Usuarios\".usu_estado,\n"
+                + "    \"Usuarios\".id_persona,\n"
+                + "    \"Personas\".persona_identificacion,\n"
+                + "    \"Personas\".persona_primer_apellido,\n"
+                + "    \"Personas\".persona_segundo_apellido,\n"
+                + "    \"Personas\".persona_primer_nombre,\n"
+                + "    \"Personas\".persona_segundo_nombre,\n"
+                + "    \"Personas\".persona_foto\n"
+                + "   FROM (\"Usuarios\"\n"
+                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username = '" + getUsername() + "' AND\n"
-                + "\"public\".\"Usuarios_Persona\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado IS TRUE;";
-        return selectFromView(SELECT);
+                + "\"public\".\"Usuarios\".usu_username = '" + getUsername() + "' AND\n"
+                + "\"public\".\"Usuarios\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
+                + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
+        return selectSimple(SELECT);
     }
 
     public List<UsuarioMD> SelectAllWhereEstadoIsFalse() {
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
-                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_password\n"
-                + "FROM\n"
-                + "\"public\".\"Usuarios_Persona\"\n"
+        String SELECT = "SELECT \"Usuarios\".id_usuario,\n"
+                + "    \"Usuarios\".usu_username,\n"
+                + "    \"Usuarios\".usu_password,\n"
+                + "    \"Usuarios\".usu_estado,\n"
+                + "    \"Usuarios\".id_persona,\n"
+                + "    \"Personas\".persona_identificacion,\n"
+                + "    \"Personas\".persona_primer_apellido,\n"
+                + "    \"Personas\".persona_segundo_apellido,\n"
+                + "    \"Personas\".persona_primer_nombre,\n"
+                + "    \"Personas\".persona_segundo_nombre,\n"
+                + "    \"Personas\".persona_foto\n"
+                + "   FROM (\"Usuarios\"\n"
+                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado IS FALSE;";
+                + "\"public\".\"Usuarios\".usu_estado IS FALSE;";
 
-        return selectFromView(SELECT);
+        return selectSimple(SELECT);
     }
 
     public static String SelectNewUsername() {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_estado,\n"
-                + "\"public\".\"Usuarios_Persona\".id_persona,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_foto,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_identificacion,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_apellido,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_primer_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".persona_segundo_nombre,\n"
-                + "\"public\".\"Usuarios_Persona\".usu_password\n"
-                + "FROM\n"
-                + "\"public\".\"Usuarios_Persona\"\n"
+                + "    \"Usuarios\".usu_username\n"
+                + "   FROM " + TABLA + "\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username LIKE '%USER%'\n"
+                + "\"public\".\"Usuarios\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
-                + "\"public\".\"Usuarios_Persona\".usu_username";
+                + "\"public\".\"Usuarios\".usu_username";
 
-        List<UsuarioMD> lista = selectFromView(SELECT);
+        ResultSet rs = ResourceManager.Query(SELECT);
+        List<UsuarioMD> lista = new ArrayList<>();
+
+        try {
+            while (rs.next()) {
+                UsuarioMD usuario = new UsuarioMD();
+                usuario.setUsername(rs.getString("usu_username"));
+                lista.add(usuario);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
         String username = "";
 

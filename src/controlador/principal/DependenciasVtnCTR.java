@@ -1,10 +1,12 @@
 package controlador.principal;
 
+import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
-import modelo.usuario.RolMD;
+import modelo.validaciones.TxtVBuscador;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -30,6 +32,10 @@ public class DependenciasVtnCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo); 
         tbl.setModel(mdTbl);
         TblEstilo.formatoTbl(tbl);
+    }
+    
+    public void formatoBuscador(JTextField txt, JButton btn){
+        txt.addKeyListener(new TxtVBuscador(txt, btn));
     }
     
     
