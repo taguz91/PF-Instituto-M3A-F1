@@ -33,22 +33,24 @@ public class PnlHorarioClaseCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
+    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00","20:00"};
     private final String[] hvc = {
         "<html>14:00<br>15:00</html>",
-        "<html>08:00<br>09:00</html>",
-        "<html>09:00<br>10:00</html>",
-        "<html>10:00<br>11:00</html>",
-        "<html>11:00<br>12:00</html>",
-        "<html>12:00<br>13:00</html>"};
+        "<html>15:00<br>16:00</html>",
+        "<html>16:00<br>17:00</html>",
+        "<html>17:00<br>18:00</html>",
+        "<html>18:00<br>19:00</html>",
+        "<html>19:00<br>20:00</html>"};
     private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
-        "<html>14:00<br>15:00</html>",
-        "<html>08:00<br>09:00</html>",
-        "<html>09:00<br>10:00</html>",
+       
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
-        "<html>12:00<br>13:00</html>"};
+        "<html>12:00<br>13:00</html>",
+        "<html>18:00<br>19:00</html>",
+        "<html>19:00<br>20:00</html>",
+        "<html>20:00<br>21:00</html>",
+        "<html>21:00<br>22:00</html>"};
     private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
