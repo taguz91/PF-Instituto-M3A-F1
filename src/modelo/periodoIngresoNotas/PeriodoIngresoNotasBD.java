@@ -59,20 +59,20 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
 
     public static List<PeriodoIngresoNotasMD> selectAll() {
 
-        String SELECT = "SELECT\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".prd_lectivo_nombre,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_fecha_inicio,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_fecha_cierre,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".tipo_nota_nombre,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_estado,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".tipo_nota_estado,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".id_prd_lectivo,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".id_tipo_nota,\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".id_perd_ingr_notas\n"
-                + "FROM\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\"\n"
+        String SELECT = "SELECT \"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "    \"PeriodoIngresoNotas\".perd_notas_fecha_inicio,\n"
+                + "    \"PeriodoIngresoNotas\".perd_notas_fecha_cierre,\n"
+                + "    \"TipoDeNota\".tipo_nota_nombre,\n"
+                + "    \"PeriodoIngresoNotas\".perd_notas_estado,\n"
+                + "    \"TipoDeNota\".tipo_nota_estado,\n"
+                + "    \"PeriodoIngresoNotas\".id_prd_lectivo,\n"
+                + "    \"PeriodoIngresoNotas\".id_tipo_nota,\n"
+                + "    \"PeriodoIngresoNotas\".id_perd_ingr_notas\n"
+                + "   FROM ((\"PeriodoLectivo\"\n"
+                + "     JOIN \"PeriodoIngresoNotas\" ON ((\"PeriodoIngresoNotas\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo)))\n"
+                + "     JOIN \"TipoDeNota\" ON ((\"PeriodoIngresoNotas\".id_tipo_nota = \"TipoDeNota\".id_tipo_nota)))"
                 + "WHERE\n"
-                + "\"public\".\"ViewPeriodoIngresoNotas\".perd_notas_estado IS TRUE;";
+                + "\"public\".\"PeriodoLectivo\".perd_notas_estado IS TRUE;";
         return selectFromView(SELECT);
     }
 
@@ -94,7 +94,6 @@ public class PeriodoIngresoNotasBD extends PeriodoIngresoNotasMD {
     }
 
     private static List<PeriodoIngresoNotasMD> selectFromView(String QUERY) {
-        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewPeriodoIngresoNotas\" \n");
         List<PeriodoIngresoNotasMD> Lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(QUERY);

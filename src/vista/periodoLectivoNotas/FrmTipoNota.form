@@ -35,19 +35,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblCarrera" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="lblCarrera" min="-2" pref="90" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblNotaMax" min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="lblNombre" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblNotaMax" min="-2" pref="90" max="-2" attributes="0"/>
+                              <Component id="lblNombre" min="-2" pref="90" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cmbCarrera" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmdPeriodoLectivo" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="txtNotaMax" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lblNotaMin" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblNotaMin" min="-2" pref="90" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="txtNotaMin" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="216" max="32767" attributes="0"/>
@@ -86,7 +86,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCarrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="cmbCarrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="cmdPeriodoLectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -140,10 +140,10 @@
     <Component class="javax.swing.JLabel" name="lblCarrera">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Carrera"/>
+        <Property name="text" type="java.lang.String" value="Periodo Lectivo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmbCarrera">
+    <Component class="javax.swing.JComboBox" name="cmdPeriodoLectivo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>

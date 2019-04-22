@@ -61,6 +61,7 @@ public class ConexionBD {
     }
 
     public Connection getCon() {
+<<<<<<< HEAD
 //<<<<<<< HEAD
         
         // Comprobar conexion
@@ -86,6 +87,18 @@ public class ConexionBD {
 //            System.out.println(ex.getMessage());
 //>>>>>>> e599953f895825afbb823848abc7c1fe028a1393
 //        }
+=======
+        // Comprobar conexion
+        try {
+            if(con.isClosed()) {
+                System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
+                con = ResourceManager.getConnection();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al comprobar la conexion");
+            System.out.println(ex.getMessage());
+        }
+>>>>>>> bdf2c9cb550942be7746544efd52efc19fee7f7d
 
         return con;
     }

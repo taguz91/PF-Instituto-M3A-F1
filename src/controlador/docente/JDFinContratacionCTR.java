@@ -1,6 +1,6 @@
 package controlador.docente;
 
-import controlador.principal.DependenciasCTR;
+import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +22,7 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
 import vista.docente.JDFinContratacion;
 import vista.principal.VtnPrincipal;
@@ -30,7 +31,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Lina
  */
-public class JDFinContratacionCTR extends DependenciasCTR {
+public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     private PeriodoLectivoBD periodoBD;
     private DocenteBD dc;
@@ -230,7 +231,7 @@ public class JDFinContratacionCTR extends DependenciasCTR {
                     frmFinContrato.getBtnGuardar().setEnabled(false);
                     guardar = false;
                 } else {
-                    frmFinContrato.getBtnGuardar().setText("Siguinte");
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
                     frmFinContrato.getBtnGuardar().setEnabled(true);
                     guardar = false;
                 }

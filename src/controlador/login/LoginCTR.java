@@ -9,7 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -177,6 +176,7 @@ public class LoginCTR {
                 modelo.setUsername("ROOT");
                 modelo.setPassword("RUTH");
 
+                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
                 ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
                 System.out.println("Conexion " + conecta.getConecction());
                 try {

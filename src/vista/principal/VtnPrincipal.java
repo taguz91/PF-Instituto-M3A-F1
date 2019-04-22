@@ -334,6 +334,19 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setMnCtMiPerfil(JMenuItem mnCtMiPerfil) {
         this.mnCtMiPerfil = mnCtMiPerfil;
     }
+
+    public JMenuItem getMnCtListaAlumnos() {
+        return mnCtListaAlumnos;
+    }
+
+    public JButton getBtnSecretaria() {
+        return btnSecretaria;
+    }
+
+    public void setBtnSecretaria(JButton btnSecretaria) {
+        this.btnSecretaria = btnSecretaria;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -359,6 +372,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarSilabo = new javax.swing.JButton();
         btnConsultarSilabo = new javax.swing.JButton();
         btnIngresarRol = new javax.swing.JButton();
+        btnSecretaria = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnEstado = new javax.swing.JLabel();
@@ -381,6 +395,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMateria = new javax.swing.JMenuItem();
         mnCtInscripcion = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
+        mnCtListaAlumnos = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
@@ -482,6 +497,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
+        btnSecretaria.setText("Se");
+        btnSecretaria.setToolTipText("Secretaria, acceso para retirar a estudiantes");
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -513,7 +531,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngresarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSecretaria, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,8 +551,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
                     .addComponent(btnDocenteMateria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSecretaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(2, 2, 2))
         );
 
         dpnlPrincipal.setBackground(new java.awt.Color(244, 244, 244));
@@ -575,7 +596,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstado)
                     .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -706,6 +727,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula.setText("Matricula");
         mnTipoNotas.add(mnCtMatricula);
 
+        mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
+        mnCtListaAlumnos.setText("Lista Alumnos");
+        mnTipoNotas.add(mnCtListaAlumnos);
+
         mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
         mnCtMallaAlumno.setText("Malla alumnos");
         mnTipoNotas.add(mnCtMallaAlumno);
@@ -727,6 +752,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
+        mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
 
@@ -887,14 +913,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(dpnlPrincipal)
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
@@ -933,6 +959,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnMatricula;
     private javax.swing.JButton btnPersona;
     private javax.swing.JButton btnPrdLectivo;
+    private javax.swing.JButton btnSecretaria;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
     private javax.swing.JPanel jPanel1;
@@ -950,6 +977,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtDocenteMateria;
     private javax.swing.JMenuItem mnCtHistorialUsers;
     private javax.swing.JMenuItem mnCtInscripcion;
+    private javax.swing.JMenuItem mnCtListaAlumnos;
     private javax.swing.JMenuItem mnCtMallaAlumno;
     private javax.swing.JMenuItem mnCtMateria;
     private javax.swing.JMenuItem mnCtMatricula;

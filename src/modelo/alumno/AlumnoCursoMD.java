@@ -1,7 +1,8 @@
 package modelo.alumno;
 
+import java.util.List;
 import modelo.curso.CursoMD;
-import modelo.materia.MateriaMD;
+import modelo.notas.NotasBD;
 import modelo.persona.AlumnoMD;
 
 /**
@@ -24,7 +25,7 @@ public class AlumnoCursoMD {
     private int numFalta;
     private int totalHoras;
 
-    
+    private List<NotasBD> notas;
 
     public AlumnoCursoMD() {
     }
@@ -124,7 +125,7 @@ public class AlumnoCursoMD {
     public void setNumFalta(int numFalta) {
         this.numFalta = numFalta;
     }
-    
+
     public int getTotalHoras() {
         return totalHoras;
     }
@@ -133,9 +134,17 @@ public class AlumnoCursoMD {
         this.totalHoras = totalHoras;
     }
 
+    public List<NotasBD> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<NotasBD> notas) {
+        this.notas = notas;
+    }
+
     @Override
     public String toString() {
-        return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", nota1Parcial=" + nota1Parcial + ", notaExamenInter=" + notaExamenInter + ", nota2Parcial=" + nota2Parcial + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenSupletorio=" + notaExamenSupletorio + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + '}';
+        return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", nota1Parcial=" + nota1Parcial + ", notaExamenInter=" + notaExamenInter + ", nota2Parcial=" + nota2Parcial + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenSupletorio=" + notaExamenSupletorio + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + ", totalHoras=" + totalHoras + ", notas=" + notas + '}';
     }
 
 }

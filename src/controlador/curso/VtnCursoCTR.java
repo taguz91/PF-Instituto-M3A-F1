@@ -128,13 +128,19 @@ public class VtnCursoCTR {
             public void keyReleased(KeyEvent e) {
                 b = vtnCurso.getTxtBuscar().getText().trim();
                 //10 ENter - 32 Espacio - 8 Borrar
-                if (Validar.esLetras(b)) {
-                    if (b.length() > 2) {
-                        buscar(b);
-                    } else if (b.length() == 0) {
-                        cargarCursos();
-                    }
+                if (e.getKeyCode() == 10) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarCursos();
                 }
+
+//                if (Validar.esLetras(b)) {
+//                    if (b.length() > 2) {
+//                        buscar(b);
+//                    } else if (b.length() == 0) {
+//                        cargarCursos();
+//                    }
+//                }
             }
         });
     }

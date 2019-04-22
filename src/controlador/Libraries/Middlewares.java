@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import static java.lang.Thread.sleep;
 import java.sql.SQLException;
@@ -175,4 +176,29 @@ public class Middlewares {
         }).start();
     }
 
+    public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
+        try {
+            desktop.add(component);
+            component.setSelected(true);
+            component.setVisible(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void bugProcessor(Exception e, JComponent view) {
+        if (e instanceof NullPointerException) {
+        } else {
+            System.out.println(e.getMessage());
+            setDefaultCursor(view);
+        }
+    }
+
+    public static void bugProcessor(JComponent view) {
+        setDefaultCursor(view);
+    }
+
+    public static double conversor(String texto) {
+        return Math.round(Double.valueOf(texto) * 10) / 10d;
+    }
 }

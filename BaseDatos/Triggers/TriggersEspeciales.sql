@@ -35,6 +35,38 @@ AFTER INSERT
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_ingreso_notas();
 
+--Trigger para cuando se ingresa un alumno en un curso
+CREATE OR REPLACE FUNCTION actualiza_malla_matricula()
+RETURNS TRIGGER AS $actualiza_malla_matricula$
+BEGIN
+UPDATE public."MallaAlumno"
+  SET malla_almn_estado = 'M', malla_almn_num_matricula = malla_almn_num_matricula + 1
+  WHERE id_materia = (
+    SELECT id_materia
+    FROM public."Cursos"
+    WHERE id_curso = new.id_curso
+  ) AND id_almn_carrera = (
+    SELECT id_almn_carrera
+    FROM public."AlumnosCarrera"
+    WHERE id_alumno = new.id_alumno AND
+    id_carrera = (
+      SELECT id_carrera
+      FROM public."PeriodoLectivo"
+      WHERE id_prd_lectivo = (
+        SELECT id_prd_lectivo
+        FROM public."Cursos"
+        WHERE id_curso = new.id_curso)
+    )
+  );
+  RETURN NEW;
+END;
+$actualiza_malla_matricula$ LANGUAGE plpgsql;
+
+CREATE TRIGGER actualiza_malla_matricula
+AFTER INSERT
+ON public."AlumnoCurso" FOR EACH ROW
+EXECUTE PROCEDURE actualiza_malla_matricula();
+
 --Al volver reactivar una persona se activa tambien en docente o alumno
 CREATE OR REPLACE FUNCTION persona_activada()
 RETURNS TRIGGER AS $persona_activada$

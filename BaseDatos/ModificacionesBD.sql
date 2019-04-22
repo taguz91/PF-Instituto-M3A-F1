@@ -174,7 +174,7 @@ ALTER SEQUENCE public."PlandeClases_id_plan_clases_seq"
 CREATE TABLE public."PlandeClases"
 (
     id_plan_clases integer NOT NULL DEFAULT nextval('"PlandeClases_id_plan_clases_seq"'::regclass),
-    
+
     id_curso integer NOT NULL,
     id_unidad integer NOT NULL,
     observaciones text COLLATE pg_catalog."default",
@@ -187,7 +187,7 @@ CREATE TABLE public."PlandeClases"
         REFERENCES public."Cursos" (id_curso) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    
+
     CONSTRAINT id_unidad FOREIGN KEY (id_unidad)
         REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
         ON UPDATE CASCADE
@@ -345,22 +345,38 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 --Creamos una tabla para guardar los retirados
 CREATE TABLE "Retirados"(
 	"id_retirado" serial NOT NULL,
-	"id_malla_alumno" integer NOT NULL,
+--	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
-	"retiro_observacion" text, 
+	"retiro_observacion" text,
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
-FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
-ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk1"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip 
+/*
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk2"
+FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+*/
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip
 character varying (200) NOT NULL DEFAULT '000.00.000.000';
 
 ALTER TABLE "Materias" ADD COLUMN materia_nucleo boolean DEFAULT 'false';
+--Updates 20/4/2019
+ALTER TABLE "PeriodoLectivo" ADD COLUMN "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0';
+
+
+
+--UPDATES  20/Abril/2019
+
+ALTER TABLE "TipoDeNota" DROP CONSTRAINT "carrera_TipoDeNota_fk";
+ALTER TABLE "TipoDeNota" DROP COLUMN id_carrera;
+ALTER TABLE "TipoDeNota" ADD COLUMN id_prd_lectivo INTEGER;
+ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
+    FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+        ON DELETE CASCADE ON UPDATE CASCADE;
