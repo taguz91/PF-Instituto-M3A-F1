@@ -1,6 +1,7 @@
 package controlador.principal;
 
 import controlador.Libraries.Middlewares;
+import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
@@ -10,14 +11,17 @@ import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
+import controlador.alumno.VtnMatriculaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
+import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
+import controlador.notas.VtnNotas;
 import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
@@ -41,7 +45,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -98,6 +101,9 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
+import vista.accesos.VtnAccesos;
+import vista.alumno.VtnMatricula;
+import vista.materia.FrmMaterias;
 
 /**
  *
@@ -165,8 +171,9 @@ public class VtnPrincipalCTR {
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
         this.pruebas = pruebas;
+
         //Inciamos la carga pero la detenemos
-        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
+        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
         this.icono = icono;
         this.ista = ista;
         vtnPrin.setIconImage(ista);
@@ -218,10 +225,12 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
-        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnMatricula());
+        vtnPrin.getMnCtListaAlumnos().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
-        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
+        vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
+        vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -395,6 +404,17 @@ public class VtnPrincipalCTR {
         }
     }
 
+    public void abrirVtnMatricula() {
+        VtnMatricula vtnMatri = new VtnMatricula();
+        eventoInternal(vtnMatri);
+        if (numVtns < 5) {
+            VtnMatriculaCTR ctr = new VtnMatriculaCTR(conecta, vtnPrin, this, vtnMatri);
+            ctr.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
     public void abrirVtnMateria() {
         VtnMateria vtnMateria = new VtnMateria();
         eventoInternal(vtnMateria);
@@ -508,6 +528,17 @@ public class VtnPrincipalCTR {
 
     }
 
+    public void abrirFrmMateria() {
+        FrmMaterias frmMaterias = new FrmMaterias();
+        eventoInternal(frmMaterias);
+        if (numVtns < 5) {
+            FrmMateriasCTR ctrFrmMaterias = new FrmMateriasCTR(vtnPrin, frmMaterias, conecta, this);
+            ctrFrmMaterias.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
     public void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
         eventoInternal(frmCarrera);
@@ -570,6 +601,18 @@ public class VtnPrincipalCTR {
         }
     }
 
+    public void abrirVtnAccesos() {
+        VtnAccesos vtnAcceso = new VtnAccesos();
+        eventoInternal(vtnAcceso);
+        if (numVtns < 5) {
+            VtnAccesosCTR ctrVtnAcceso = new VtnAccesosCTR(vtnPrin, vtnAcceso, conecta, this);
+            ctrVtnAcceso.Init();
+        } else {
+            errorNumVentanas();
+        }
+
+    }
+
     private void controladorCRUD() {
 
         ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
@@ -592,9 +635,14 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
-
-        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario);
-        vtnNotas.Init();
+        VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario);
+            vtnCtr.Init();
+        } else {
+            errorNumVentanas();
+        }
     }
 
     /**
@@ -638,6 +686,7 @@ public class VtnPrincipalCTR {
      */
     public void eventoInternal(JInternalFrame internal) {
         Middlewares.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        setIconJIFrame(internal);
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
@@ -818,7 +867,6 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-
 
         vtnPrin.getMnIgPrdIngrNotas1().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, ActionEvent.ALT_MASK));

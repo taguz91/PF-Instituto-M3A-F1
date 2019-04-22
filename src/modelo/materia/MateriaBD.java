@@ -8,6 +8,8 @@ import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.curso.CursoMD;
+import modelo.persona.PersonaMD;
 
 /**
  *
@@ -21,6 +23,109 @@ public class MateriaBD extends MateriaMD {
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
+    }
+
+    public boolean insertarMateria() {
+        String sql = "INSERT INTO public.\"Materias\"(\n"
+                + "	 id_materia, id_carrera, id_eje, materia_codigo, materia_nombre, materia_ciclo,"
+                + " materia_creditos, materia_tipo, materia_categoria, materia_tipo_acreditacion, materia_horas_docencia, materia_horas_practicas,"
+                + " materia_horas_auto_estudio, materia_horas_presencial, materia_total_horas, materia_activa, "
+                + "materia_objetivo, materia_descripcion, materia_objetivo_especifico, materia_organizacion_curricular, materia_campo_formacion, materia_nucleo)\n"
+                + "	VALUES ( " + getId() + ", " + getCarrera().getId() + ", " + getEje().getId() + ", '" + getCodigo() + "', '" + getNombre() + "', " + getCiclo()
+                + ", " + getCreditos() + ", '" + getTipo() + "', '" + getCategoria() + "', '" + getTipoAcreditacion() + "', " + getHorasDocencia() + ", " + getHorasPracticas()
+                + ", " + getHorasAutoEstudio() + ", " + getHorasPresenciales() + ", " + getTotalHoras() + ", true, '"
+                + getObjetivo() + "', '" + getDescripcion() + "', '" + getObjetivoespecifico() + "', '" + getOrganizacioncurricular() + "', '" + getMateriacampoformacion() + "', " + isMateriaNucleo() + ");";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    public boolean editarMateria(int aguja) {
+        String sql = "UPDATE public.\"Materias\" SET\n"
+                + " id_carrera = " + getCarrera().getId() + ", id_eje = " + getEje().getId() + ", materia_codigo = '" + getCodigo()
+                + "', materia_nombre = '" + getNombre() + "', materia_ciclo = " + getCiclo() + ", materia_creditos = " + getCreditos()
+                + ", materia_tipo = '" + getTipo() + "', materia_categoria = '" + getCategoria() + "', materia_tipo_acreditacion = '" + getTipoAcreditacion()
+                + "', materia_horas_docencia = " + getHorasDocencia() + ", materia_horas_practicas = " + getHorasPracticas() + ", materia_horas_auto_estudio = " + getHorasAutoEstudio()
+                + ", materia_horas_presencial = " + getHorasPresenciales() + ", materia_total_horas = " + getTotalHoras() + ", materia_objetivo = '" + getObjetivo() + "\n"
+                + "', materia_descripcion = '" + getDescripcion() + "', materia_objetivo_especifico = '" + getObjetivoespecifico() + "', materia_organizacion_curricular = '" + getOrganizacioncurricular()
+                + "', materia_campo_formacion = '" + getMateriacampoformacion() + "', materia_nucleo = '" + isMateriaNucleo() + "'\n"
+                + " WHERE id_materia = " + aguja + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    public boolean elminarMateria(int aguja) {
+        String sql = "UPDATE public.\"Materias\" SET\n"
+                + " materia_activa = false"
+                + " WHERE id_materia = " + aguja + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    public List<CarreraMD> cargarCarreras() {
+        String sql = "SELECT carrera_nombre FROM public.\"Carreras\" WHERE carrera_activo = true;";
+        List<CarreraMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                CarreraMD c = new CarreraMD();
+                c.setNombre(rs.getString("carrera_nombre"));
+                lista.add(c);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public List<EjeFormacionMD> cargarEjes(int aguja) {
+        String sql = "SELECT eje_nombre FROM public.\"EjesFormacion\" WHERE id_carrera = " + aguja + ";";
+        List<EjeFormacionMD> lista = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                EjeFormacionMD eje = new EjeFormacionMD();
+                eje.setNombre(rs.getString("eje_nombre"));
+                lista.add(eje);
+            }
+            rs.close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public CarreraMD filtrarIdCarrera(String nombre) {
+        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        CarreraMD carrera = new CarreraMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                carrera.setId(rs.getInt("id_carrera"));
+            }
+            rs.close();
+            return carrera;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 
     //para mostrar datos de la materia
@@ -359,31 +464,31 @@ public class MateriaBD extends MateriaMD {
         }
     }
 
-    public static List<String> selectWhere(int idDocente, int ciclo, String paralelo, String jornada) {
+    public static List<MateriaMD> selectWhere(CursoMD curso) {
 
-        String SELECT = "SELECT DISTINCT\n"
-                + "\"Materias\".materia_nombre\n"
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Materias\".materia_nombre,\n"
+                + "\"public\".\"Materias\".id_materia\n"
                 + "FROM\n"
-                + "\"Cursos\"\n"
-                + "INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
-                + "INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "\"public\".\"Cursos\"\n"
+                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
                 + "WHERE\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE AND\n"
-                + "\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"Cursos\".curso_ciclo = " + ciclo + " AND \n"
-                + "\"Cursos\".curso_paralelo = '" + paralelo + "' AND \n"
-                + "\"Jornadas\".nombre_jornada = '" + jornada + "'";
+                + "\"Cursos\".id_docente = " + curso.getId_docente().getIdDocente() + " AND\n"
+                + "\"Cursos\".id_prd_lectivo = '" + curso.getId_prd_lectivo().getId_PerioLectivo() + "' AND \n"
+                + "\"Cursos\".curso_nombre = '" + curso.getCurso_nombre() + "'";
 
-        List<String> lista = new ArrayList<>();
+        System.out.println(SELECT);
+
+        List<MateriaMD> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
             while (rs.next()) {
-
-                lista.add(rs.getString("materia_nombre"));
-
+                MateriaMD materia = new MateriaMD();
+                materia.setId(rs.getInt("id_materia"));
+                materia.setNombre(rs.getString("materia_nombre"));
+                lista.add(materia);
             }
             rs.close();
         } catch (SQLException e) {

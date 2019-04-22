@@ -33,6 +33,9 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
         btnRetirados = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jcbxFiltroCursos = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        cbxAlumnoRetirado = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -75,6 +78,15 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 170));
 
+        jcbxFiltroCursos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[FILTRAR]" }));
+        getContentPane().add(jcbxFiltroCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 140, -1));
+
+        jLabel1.setText("Filtrar");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        cbxAlumnoRetirado.setText("Mostrar Alumnos Retirados");
+        getContentPane().add(cbxAlumnoRetirado, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -82,8 +94,11 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRetirados;
+    private javax.swing.JCheckBox cbxAlumnoRetirado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> jcbxFiltroCursos;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

@@ -1,6 +1,6 @@
 package controlador.alumno;
 
-import controlador.principal.DependenciasCTR;
+import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -20,7 +20,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class FrmMallaActualizarCTR extends DependenciasCTR {
+public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
 
     //Formulario 
     private final FrmMallaActualizar frmMalla;

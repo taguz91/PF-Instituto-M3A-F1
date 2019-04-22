@@ -6,6 +6,8 @@ import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -78,22 +80,20 @@ public class VtnTipoNotasCTR {
             }
         });
 
+        vista.getTblTipoNotas().getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                oderBy(e);
+            }
+        });
     }
 
     //METODOS DE APOYO
     public void cargarTabla() {
         tablaTiposNotas.setRowCount(0);
-        listaTiposNotas = TipoDeNotaBD.SelectAll();
+        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
-        for (TipoDeNotaMD obj : listaTiposNotas) {
-            if (vista.isVisible()) {
-                agregarFila(listaTiposNotas.indexOf(obj) + 1, obj);
-            } else {
-                listaTiposNotas = null;
-                System.gc();
-                break;
-            }
-        }
+        listaTiposNotas.forEach(VtnTipoNotasCTR::agregarFila);
 
         vista.getLblResultados().setText(listaTiposNotas.size() + " Resultados Obtenidos");
 
@@ -106,26 +106,23 @@ public class VtnTipoNotasCTR {
                 || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
-                || item.getCarrera().getNombre().toUpperCase().contains(Aguja)
-                || item.getCarrera().getModalidad().contains(Aguja)
                 )
                 .collect(Collectors.toList());
 
-        listaTemporal.forEach(obj -> {
-            agregarFila(listaTemporal.indexOf(obj) + 1, obj);
-        });
+        listaTemporal.forEach(VtnTipoNotasCTR::agregarFila);
 
         vista.getLblResultados().setText(listaTemporal.size() + " Resultados Obtenidos");
     }
 
-    private static void agregarFila(int indice, TipoDeNotaMD obj) {
+    private static void agregarFila(TipoDeNotaMD obj) {
 
         tablaTiposNotas.addRow(new Object[]{
-            indice,
+            tablaTiposNotas.getDataVector().size() + 1,
             obj.getIdTipoNota(),
             obj.getNombre(),
-            obj.getCarrera().getNombre(),
-            obj.getCarrera().getModalidad(),
+            obj.getPeriodoLectivo().getNombre_PerLectivo(),
+            obj.getPeriodoLectivo().getCarrera().getNombre(),
+            obj.getPeriodoLectivo().getCarrera().getModalidad(),
             obj.getValorMinimo(),
             obj.getValorMaximo(),
             obj.getFechaCreacion()
@@ -212,5 +209,15 @@ public class VtnTipoNotasCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
         cargarTabla();
+    }
+
+    private void oderBy(MouseEvent e) {
+
+        tablaTiposNotas.setRowCount(0);
+
+        listaTiposNotas
+                .stream()
+                .sorted((item, item2) -> item.getPeriodoLectivo().getCarrera().getNombre().compareToIgnoreCase(item2.getPeriodoLectivo().getCarrera().getNombre()))
+                .forEach(VtnTipoNotasCTR::agregarFila);
     }
 }

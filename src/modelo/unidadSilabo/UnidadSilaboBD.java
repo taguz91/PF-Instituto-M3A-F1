@@ -68,6 +68,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
     public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
+        
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, titulo_unidad\n"
@@ -96,6 +97,42 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
                 tmp.setHorasAutonomoUnidad(rs.getInt(10));
                 tmp.setTituloUnidad(rs.getString(11));
 
+                unidades.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return unidades;
+    }
+    public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo,int unidad) {
+
+        List<UnidadSilaboMD> unidades = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n" +
+"u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n" +
+"from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
+
+            st.setInt(1, silabo);
+            st.setInt(2,unidad);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                UnidadSilaboMD tmp = new UnidadSilaboMD();
+                tmp.setNumeroUnidad(rs.getInt(1));
+                tmp.setTituloUnidad(rs.getString(2));
+                tmp.setFechaInicioUnidad(rs.getDate(3).toLocalDate());
+                tmp.setFechaFinUnidad(rs.getDate(4).toLocalDate());
+                tmp.setHorasDocenciaUnidad(rs.getInt(5));
+                tmp.setHorasPracticaUnidad(rs.getInt(6));
+                tmp.setObjetivoEspecificoUnidad(rs.getString(7));
+                tmp.setResultadosAprendizajeUnidad(rs.getString(8));
+                tmp.setContenidosUnidad(rs.getString(9));
                 unidades.add(tmp);
             }
 

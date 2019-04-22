@@ -59,6 +59,12 @@ public class MatriculaMD {
         this.activo = activo;
     }
     
+    public String getSoloFecha(){
+        return fecha.getDayOfMonth()+"/"+fecha.getMonth()+"/"+fecha.getYear(); 
+    }
     
+    public String getSoloHora(){
+        return fecha.getHour()+":"+fecha.getMinute(); 
+    }
     
 }

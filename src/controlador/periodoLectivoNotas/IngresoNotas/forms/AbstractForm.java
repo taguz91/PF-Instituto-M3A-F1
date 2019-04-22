@@ -44,7 +44,7 @@ public abstract class AbstractForm {
     public void Init() {
 
         listaNomPeriodos = PeriodoLectivoBD.SelectAll();
-        listaNomNotas = TipoDeNotaBD.SelectAll();
+        listaNomNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
         cargarComboNotas();
         cargarComboPeriodo();
 
@@ -56,7 +56,6 @@ public abstract class AbstractForm {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(FrmIngresoNotasAgregar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("prueba netbeans");
     }
 
     private void InitEventos() {

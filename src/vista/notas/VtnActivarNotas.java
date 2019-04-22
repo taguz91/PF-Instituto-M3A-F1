@@ -136,9 +136,16 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 "No.", "ID", "Prd Lectivo", "Curso", "Materia", "Nombre", "Apellido", "Aporte 1", "Examen Interciclo", "Aporte 2", "Examen Final", "Examen Supletorio"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true, true, true, true
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -152,7 +159,15 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setResizable(false);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(30);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMinWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMaxWidth(110);
             tblCursoTipoNotas.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblCursoTipoNotas.getColumnModel().getColumn(4).setMinWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(4).setMaxWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMaxWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMaxWidth(140);
             tblCursoTipoNotas.getColumnModel().getColumn(7).setResizable(false);
         }
 
@@ -202,7 +217,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)))
+                                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(

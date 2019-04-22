@@ -40,9 +40,9 @@ public class AccesosBD extends AccesosMD {
         return ResourceManager.Statement(INSERT) == null;
     }
 
-    public List<AccesosMD> SelectAll() {
+    public static List<AccesosMD> SelectAll() {
 
-        String SELECT = "SELECT id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" ";
+        String SELECT = "SELECT id_acceso, acc_nombre FROM \"Accesos\" ";
 
         return SelectSimple(SELECT);
 
@@ -81,7 +81,6 @@ public class AccesosBD extends AccesosMD {
                 }
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
-                acceso.setDescripcion(rs.getString("acc_descripcion"));
                 Lista.add(acceso);
             }
             rs.close();
