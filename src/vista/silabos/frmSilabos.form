@@ -128,10 +128,11 @@
         <Component class="javax.swing.JTable" name="tblSilabos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="0">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Asignatura" type="java.lang.String"/>
                 <Column editable="false" title="Periodo" type="java.lang.String"/>
                 <Column editable="false" title="Estado" type="java.lang.String"/>
+                <Column editable="false" title="Id" type="java.lang.Integer"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -147,6 +148,11 @@
                   <Renderer/>
                 </Column>
                 <Column maxWidth="140" minWidth="140" prefWidth="140" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
