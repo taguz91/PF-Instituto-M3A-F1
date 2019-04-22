@@ -1,15 +1,11 @@
 package controlador.silabo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
-import modelo.materia.MateriaMD;
 import modelo.silabo.CarrerasBDS;
 import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboBD;

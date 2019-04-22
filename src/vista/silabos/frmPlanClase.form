@@ -30,54 +30,57 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbDocente" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="txtCarrera" max="32767" attributes="0"/>
+                                  <Component id="txtDocente" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbFechaInicioPC" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbAsignatura" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtAsignatura" alignment="0" min="-2" pref="311" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbCarrera" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                      <Component id="txtCarrera" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbDocente" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="txtDocente" max="32767" attributes="0"/>
+                                      <Component id="jDateChooserFechaInicioPC" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                      <Component id="lbFechafinPC" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jDateChooserFechaFinPC" min="-2" pref="93" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lbFechaInicioPC" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Component id="lbFechafinPC" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                                      <Component id="lbUnidad" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lbUnidad" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtUnidad" min="-2" pref="83" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                                      <Component id="txtTituloUnidad" min="-2" pref="305" max="-2" attributes="0"/>
+                                      <Component id="txtUnidad" min="-2" pref="33" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lbAsignatura" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCod_Asignatura" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtCod_Asignatura" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                      <Component id="lbCicloparalelo" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jDateChooserFechaInicioPC" min="-2" pref="80" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                                              <Component id="jDateChooserFechaFinPC" min="-2" pref="80" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="txtAsignatura" min="-2" pref="311" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lbCod_Asignatura" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                                              <Component id="lbCicloparalelo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtCicloParalelo" min="-2" pref="60" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lbDuracion" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtDuracion" min="-2" pref="60" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="txtCicloParalelo" min="-2" pref="60" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="lbDuracion" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtDuracion" min="-2" pref="73" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lbTituloUnidad" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtTituloUnidad" min="-2" pref="320" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -136,10 +139,8 @@
                                           <Component id="lbTrabajoAutonomo" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbObservacionesPC" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbContenidosPC" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbTituloUnidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCod_Asignatura" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="284" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="323" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jScrollPane7" alignment="0" max="32767" attributes="0"/>
@@ -160,8 +161,8 @@
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Component id="lbPlandeClase" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lbNumeroPlandeClase" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="491" max="-2" attributes="0"/>
+              <Component id="lbNumeroPlandeClase" min="-2" pref="43" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="468" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -191,37 +192,26 @@
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtDocente" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbDocente" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtTituloUnidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbTituloUnidad" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtDocente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbDocente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbFechaInicioPC" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbFechaInicioPC" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="lbUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jDateChooserFechaInicioPC" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="jDateChooserFechaFinPC" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbFechafinPC" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="lbUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbTituloUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTituloUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jDateChooserFechaInicioPC" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDateChooserFechaFinPC" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbFechafinPC" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -229,7 +219,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="lbObjetivoPC" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="94" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -317,7 +307,6 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="SADASD&#xa;DASD&#xa;ASDASD&#xa;ASDAS&#xa;DAS&#xa;DAS&#xa;DAS&#xa;DA&#xa;SD&#xa;AS&#xa;DAS&#xa;D&#xa;ASD&#xa;AS&#xa;DAS&#xa;DAS&#xa;D&#xa;AS&#xa;DAS&#xa;DA&#xa;SD"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
@@ -586,7 +575,6 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="SADASD&#xa;DASD&#xa;ASDASD&#xa;ASDAS&#xa;DAS&#xa;DAS&#xa;DAS&#xa;DA&#xa;SD&#xa;AS&#xa;DAS&#xa;D&#xa;ASD&#xa;AS&#xa;DAS&#xa;DAS&#xa;D&#xa;AS&#xa;DAS&#xa;DA&#xa;SD"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
