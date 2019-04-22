@@ -462,18 +462,6 @@ public class VtnMallaAlumnoCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-//            if (idAlmnSeleccionado > 0) {
-//                //int posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
-//                Map parametro = new HashMap();
-//                parametro.put("consulta", mallaAlm.getSql());
-//                System.out.println(parametro);
-//                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//                JasperViewer view = new JasperViewer(print, false);
-//                view.setVisible(true);
-//                view.setTitle("Reporte de Malla de Alumno");
-//            }
-
             Map parametro = new HashMap();
             parametro.put("consulta", mallaAlm.getSql());
             System.out.println(parametro);

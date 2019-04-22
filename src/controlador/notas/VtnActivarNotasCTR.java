@@ -77,20 +77,19 @@ public class VtnActivarNotasCTR {
 
     private void InitEventos() {
 
-        vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent ke) {
-                if (ke.getKeyCode() == 10) {
-
-                    setObj(getSelectedRow());
-                    if (modelo.editar(modelo.getIdIngresoNotas())) {
-                        Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
-                    } else {
-                        Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrió un error, revise la información", 2);
-                    }
-                }
-            }
-        });
+//        vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent ke) {
+//                if (ke.getKeyCode() == 10) {
+//                    setObj(getSelectedRow());
+//                    if (modelo.editar(modelo.getIdIngresoNotas())) {
+//                        Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
+//                    } else {
+//                        Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrió un error, revise la información", 2);
+//                    }
+//                }
+//            }
+//        });
 
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
 
@@ -119,17 +118,22 @@ public class VtnActivarNotasCTR {
         });
 
         vista.getBtnActualizar().addActionListener(e -> btnActualizar(e));
-        
+
         vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {              
-                    setObj(vista.getTblCursoTipoNotas().getSelectedRow());
+            public void keyReleased(KeyEvent e) {
+                if (modelo.editar(modelo.getIdIngresoNotas())) {
+                    setObj(getSelectedRow());
                     refreshTabla();
-                    System.out.println(modelo);
-            }       
+                    Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
+                }else{
+                     Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrio un error", 2);
+                }
+
+                System.out.println(modelo);
+            }
         });
 
-        
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
             boolean active = false;
 
@@ -246,7 +250,6 @@ public class VtnActivarNotasCTR {
         String examenFinal = null;
         String examenSupletorio = null;
         if (fila != -1) {
-
             try {
                 aporte1 = String.valueOf(datos.getValueAt(fila, 7));
                 System.out.println("A1-----> " + aporte1);
@@ -258,26 +261,27 @@ public class VtnActivarNotasCTR {
                 System.out.println("EXF-----> " + examenFinal);
                 examenSupletorio = String.valueOf(datos.getValueAt(fila, 11));
                 System.out.println("EXS-----> " + examenSupletorio);
+
                 switch (columna) {
                     case 7:
                         datos.setValueAt(Boolean.parseBoolean(aporte1), fila, columna);
-                        
+
                         break;
                     case 8:
                         datos.setValueAt(Boolean.parseBoolean(examenInterciclo), fila, columna);
-                        
+
                         break;
                     case 9:
                         datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
-                        
+
                         break;
                     case 10:
                         datos.setValueAt(Boolean.parseBoolean(examenFinal), fila, columna);
-                        
+
                         break;
                     case 11:
                         datos.setValueAt(Boolean.parseBoolean(examenSupletorio), fila, columna);
-                        
+
                         break;
                     default:
                         break;
@@ -305,7 +309,6 @@ public class VtnActivarNotasCTR {
 //        }
 //
 //    }
-
     private int getSelectedRow() {
         return vista.getTblCursoTipoNotas().getSelectedRow();
     }
@@ -349,7 +352,7 @@ public class VtnActivarNotasCTR {
         }
 
     }
-    
+
     private void refreshTabla() {
         System.out.println("REFRESH");
         tablaActivarNotas.setRowCount(0);
@@ -357,4 +360,5 @@ public class VtnActivarNotasCTR {
             listaNotasActivadas.stream().forEach(VtnActivarNotasCTR::agregarFila);
         }).start();
     }
+
 }
