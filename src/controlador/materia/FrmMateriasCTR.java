@@ -24,6 +24,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import modelo.validaciones.TxtVNumeros;
+import modelo.validaciones.TxtVNumeros_2;
 import vista.materia.FrmMaterias;
 import vista.principal.VtnPrincipal;
 
@@ -155,8 +156,8 @@ public class FrmMateriasCTR {
     
     public void habilitarGuardar(){
         String materiaCarrera, materiaCodigo, materiaNombre,
-                ejeFormacion, tipoAcreditacion,
-                objetivoGeneral, descripcionMateria, Carrera, Eje, materiaCiclo, creditos,
+                ejeFormacion, tipoAcreditacion, organizacionCurri, campoFormacion,
+                objetivoGeneral, objetivoEspecifico, descripcionMateria, Carrera, Eje, materiaCiclo, creditos,
                 horasDocencia, horasPracticas, horasPresenciales, horasAutoEstudio,
                 totalHoras;
         int pos = frmMaterias.getjTPMaterias().getSelectedIndex();
@@ -179,7 +180,8 @@ public class FrmMateriasCTR {
                         creditos.equals("") == false){
                     if(frmMaterias.getLblErrorCarrera().isVisible() == false && frmMaterias.getLblErrorEjeFormacion().isVisible() == false
                             && frmMaterias.getLblErrorMateriaTipo().isVisible() == false && frmMaterias.getLblErrorCategoria().isVisible() == false
-                            && frmMaterias.getLblErrorTipoAcreditacion().isVisible() == false){
+                            && frmMaterias.getLblErrorTipoAcreditacion().isVisible() == false && frmMaterias.getLblErrorMateriaCiclo().isVisible() == false
+                            && frmMaterias.getLblErrorCreditos().isVisible() == false){
                         frmMaterias.getBtnGuardar().setText("Siguiente");
                         frmMaterias.getBtnGuardar().setEnabled(true);
                         
@@ -217,8 +219,9 @@ public class FrmMateriasCTR {
                 anterior = false;
                 siguiente = false;
                 objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText();
+                objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText();
                 
-                if(objetivoGeneral.equals("") == false){
+                if(objetivoGeneral.equals("") == false && objetivoEspecifico.equals("") == false){
                     frmMaterias.getBtn_Anterior().setEnabled(true);
                     frmMaterias.getBtnGuardar().setText("Siguiente");
                     frmMaterias.getBtnGuardar().setEnabled(true);
@@ -233,8 +236,11 @@ public class FrmMateriasCTR {
                 anterior = false;
                 siguiente = false;
                 descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText();
+                organizacionCurri = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
+                campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
                 
-                if(descripcionMateria.equals("") == false){
+                if(descripcionMateria.equals("") == false && organizacionCurri.equals("SELECCIONE") == false &&
+                        campoFormacion.equals("SELECCIONE") == false){
                     frmMaterias.getBtn_Anterior().setEnabled(true);
                     frmMaterias.getBtnGuardar().setText("Guardar");
                     frmMaterias.getBtnGuardar().setEnabled(true);
@@ -380,23 +386,17 @@ public class FrmMateriasCTR {
         frmMaterias.getTxtNombreMateria().addKeyListener(new TxtVLetras(frmMaterias.getTxtNombreMateria(),
                 frmMaterias.getLblErrorNombreMateria()));
         frmMaterias.getTxtNombreMateria().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtCreditos().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtCreditos(), frmMaterias.getLblErrorCreditos()));
+        frmMaterias.getTxtCreditos().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtCreditos()));
         frmMaterias.getTxtCreditos().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtHorasDocencia().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtHorasDocencia(), frmMaterias.getLblErrorHorasDocencia()));
+        frmMaterias.getTxtHorasDocencia().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtHorasDocencia()));
         frmMaterias.getTxtHorasDocencia().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtHorasPracticas().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtHorasPracticas(), frmMaterias.getLblErrorHorasPracticas()));
+        frmMaterias.getTxtHorasPracticas().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtHorasPracticas()));
         frmMaterias.getTxtHorasPracticas().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtHorasPresenciales().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtHorasPresenciales(), frmMaterias.getLblErrorHorasPresenciales()));
+        frmMaterias.getTxtHorasPresenciales().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtHorasPresenciales()));
         frmMaterias.getTxtHorasPresenciales().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtHorasAutoEstudio().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtHorasAutoEstudio(), frmMaterias.getLblErrorHorasAutoEstudio()));
+        frmMaterias.getTxtHorasAutoEstudio().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtHorasAutoEstudio()));
         frmMaterias.getTxtHorasAutoEstudio().addPropertyChangeListener(habilitar);
-        frmMaterias.getTxtTotalHoras().addKeyListener(new TxtVNumeros(
-                frmMaterias.getTxtHorasAutoEstudio(), frmMaterias.getLblErrorHorasAutoEstudio()));
+        frmMaterias.getTxtTotalHoras().addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtTotalHoras()));
         frmMaterias.getTxtTotalHoras().addPropertyChangeListener(habilitar);
         //Permitir insertar comas y puntos
         
@@ -404,6 +404,16 @@ public class FrmMateriasCTR {
             public void keyTyped(KeyEvent e) {
                 char car = e.getKeyChar();
                 if (!Validar.esObservacion(car+"")) {
+                    e.consume();
+                }
+                habilitarGuardar();
+            }
+        };
+        
+        KeyListener numeros = new KeyAdapter(){
+            public void keyTyped(KeyEvent e) {
+                char car = e.getKeyChar();
+                if (!Validar.esNumeros(car+"")) {
                     e.consume();
                 }
                 habilitarGuardar();
