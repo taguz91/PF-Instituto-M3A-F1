@@ -36,6 +36,8 @@ public class ControladorConfiguracion_plan_clases {
 
     public void iniciarControlaador() {
         conexion.conectar();
+
+        // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");

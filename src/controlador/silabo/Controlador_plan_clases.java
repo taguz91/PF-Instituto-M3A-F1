@@ -1,4 +1,3 @@
-
 package controlador.silabo;
 
 import java.time.ZoneId;
@@ -15,9 +14,9 @@ import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmPlanClase;
 
-
 public class Controlador_plan_clases {
-     private final UsuarioBD usuario;
+
+    private final UsuarioBD usuario;
     private ConexionBD conexion;
     private final VtnPrincipal vtnPrincipal;
     private frmPlanClase fPlanClase;
@@ -37,13 +36,14 @@ public class Controlador_plan_clases {
         this.vtnPrincipal = vtnPrincipal;
         this.conexion = conexion;
     }
-     public void iniciaControlador(){
-         conexion.conectar();
-         fPlanClase=new frmPlanClase();
-         vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
-         fPlanClase.setTitle("Plan de Clases");
-         fPlanClase.show();
-         fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
+
+    public void iniciaControlador() {
+        conexion.conectar();
+        fPlanClase = new frmPlanClase();
+        vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
+        fPlanClase.setTitle("Plan de Clases");
+        fPlanClase.show();
+        fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
          fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
              fPlanClase.dispose();
@@ -115,3 +115,4 @@ public class Controlador_plan_clases {
      
      
 }
+
