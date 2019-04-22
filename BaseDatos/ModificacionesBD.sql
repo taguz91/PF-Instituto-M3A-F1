@@ -380,3 +380,6 @@ ALTER TABLE "TipoDeNota" ADD COLUMN id_prd_lectivo INTEGER;
 ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
     FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
         ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--UPDATES 22/Abril/2019
