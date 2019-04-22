@@ -61,11 +61,15 @@ public class ConexionBD {
     }
 
     public Connection getCon() {
-
+        // Comprobar conexion
         try {
-            con = ResourceManager.getConnection();
+            if(con.isClosed()) {
+                System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
+                con = ResourceManager.getConnection();
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al comprobar la conexion");
+            System.out.println(ex.getMessage());
         }
 
         return con;

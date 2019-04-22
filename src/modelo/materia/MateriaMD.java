@@ -28,10 +28,11 @@ public class MateriaMD {
     private String objetivoespecifico;
     private String organizacioncurricular;
     private String materiacampoformacion;
+    private boolean materiaNucleo, materiaActiva;
     public MateriaMD() {
     }
 
-    public MateriaMD(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion) {
+    public MateriaMD(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion, boolean materiaNucleo, boolean materiaActiva) {
         this.id = id;
         this.carrera = carrera;
         this.eje = eje;
@@ -52,6 +53,8 @@ public class MateriaMD {
         this.objetivoespecifico = objetivoespecifico;
         this.organizacioncurricular = organizacioncurricular;
         this.materiacampoformacion = materiacampoformacion;
+        this.materiaActiva = materiaActiva;
+        this.materiaNucleo = materiaNucleo;
     }
 
     
@@ -213,6 +216,22 @@ public class MateriaMD {
 
     public void setMateriacampoformacion(String materiacampoformacion) {
         this.materiacampoformacion = materiacampoformacion;
+    }
+
+    public boolean isMateriaNucleo() {
+        return materiaNucleo;
+    }
+
+    public void setMateriaNucleo(boolean materiaNucleo) {
+        this.materiaNucleo = materiaNucleo;
+    }
+
+    public boolean isMateriaActiva() {
+        return materiaActiva;
+    }
+
+    public void setMateriaActiva(boolean materiaActiva) {
+        this.materiaActiva = materiaActiva;
     }
     
     

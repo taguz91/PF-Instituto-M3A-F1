@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="129"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="cedula_alumno" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -16,6 +16,12 @@ a.alumno_educacion_superior,
 a.alumno_titulo_superior,
 a.alumno_nivel_academico,
 a.alumno_pension,
+CASE WHEN alumno_pension=true THEN 'Posee'
+	ELSE 'No tiene'
+	END AS pension,
+	CASE WHEN alumno_trabaja=true THEN 'trabaja'
+	ELSE 'No trabaja'
+	END AS trabaja,
 a.alumno_ocupacion,
 a.alumno_trabaja,
 a.alumno_nivel_formacion_padre,
@@ -38,6 +44,8 @@ AND a.alumno_activo = true;]]>
 	<field name="alumno_titulo_superior" class="java.lang.String"/>
 	<field name="alumno_nivel_academico" class="java.lang.String"/>
 	<field name="alumno_pension" class="java.lang.Boolean"/>
+	<field name="pension" class="java.lang.String"/>
+	<field name="trabaja" class="java.lang.String"/>
 	<field name="alumno_ocupacion" class="java.lang.String"/>
 	<field name="alumno_trabaja" class="java.lang.Boolean"/>
 	<field name="alumno_nivel_formacion_padre" class="java.lang.String"/>
@@ -52,7 +60,7 @@ AND a.alumno_activo = true;]]>
 		<band height="141" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="2" width="555" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA["./src/vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="348" y="40" width="207" height="20"/>
@@ -201,7 +209,7 @@ AND a.alumno_activo = true;]]>
 			<textField>
 				<reportElement x="182" y="116" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_pension}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pension}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="182" y="136" width="166" height="20"/>
@@ -211,7 +219,7 @@ AND a.alumno_activo = true;]]>
 			<textField>
 				<reportElement x="182" y="156" width="166" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_trabaja}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trabaja}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="182" y="186" width="166" height="20"/>

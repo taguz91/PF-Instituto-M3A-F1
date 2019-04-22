@@ -1,6 +1,6 @@
 #Archivos privados
 /nbproject/private/
-#Proyecto ejecutable 
+#Proyecto ejecutable
 /dist
 #Codigo compilado
 /build/
@@ -33,3 +33,5 @@ hs_err_pid*
 *.class
 /dist/
 /src/vista/silabos/reportes/silabo2/nbproject/private/
+user.properties
+build/built-jar.properties

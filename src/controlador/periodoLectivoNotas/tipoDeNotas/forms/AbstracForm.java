@@ -7,11 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyVetoException;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import modelo.carrera.CarreraBD;
-import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -28,14 +28,17 @@ public abstract class AbstracForm {
     //Ventana Padre
     protected VtnTipoNotasCTR vtnPadre;
     //listas
-    protected List<CarreraMD> listaCarreras;
+    protected Map<String, PeriodoLectivoMD> listaPeriodos;
 
     //Combo
     protected String[] carrerasTradicionales = {
         "APORTE 1",
+        "NOTA INTERCICLO",
+        "EXAMEN INTERCICLO",
         "APORTE 2",
         "EXAMEN FINAL",
-        "EXAMEN SUPLETORIO"
+        "EXAMEN SUPLETORIO",
+        "NOTA FINAL"
     };
 
     protected boolean COMPLETED = false;
@@ -60,7 +63,9 @@ public abstract class AbstracForm {
             }
         }).start();
         activarFormulario(false);
-        listaCarreras = CarreraBD.selectIdNombreAll();
+
+        listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
+
         cargarComboCarreras();
         cargarCmbNombreNota(carrerasTradicionales);
         InitEventos();
@@ -104,13 +109,13 @@ public abstract class AbstracForm {
         vista.getCmbTipoDeNota().setEnabled(estado);
         vista.getTxtNotaMax().setEnabled(estado);
         vista.getTxtNotaMin().setEnabled(estado);
-        vista.getCmbCarrera().setEnabled(estado);
+        vista.getCmbPeriodoLectivo().setEnabled(estado);
     }
 
     protected void cargarComboCarreras() {
 
-        listaCarreras.stream().forEach(obj -> {
-            vista.getCmbCarrera().addItem(obj.getNombre());
+        listaPeriodos.entrySet().stream().forEach(entry -> {
+            vista.getCmbPeriodoLectivo().addItem(entry.getKey());
         });
     }
 
@@ -153,12 +158,16 @@ public abstract class AbstracForm {
         modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
         modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
 
-        listaCarreras
+        String key = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+        Map<String, PeriodoLectivoMD> map = listaPeriodos
+                .entrySet()
                 .stream()
-                .filter(item -> item.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
-                .collect(Collectors.toList())
-                .forEach(obj -> {
-                    modelo.setCarrera(obj);
+                .filter(entry -> entry.getKey().equals(key))
+                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+        map.entrySet()
+                .stream()
+                .forEach(entry -> {
+                    modelo.setPeriodoLectivo(entry.getValue());
                 });
 
         return modelo;

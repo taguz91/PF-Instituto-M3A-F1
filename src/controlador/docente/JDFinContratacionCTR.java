@@ -1,6 +1,6 @@
 package controlador.docente;
 
-import controlador.principal.DependenciasCTR;
+import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +22,7 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
 import vista.docente.JDFinContratacion;
 import vista.principal.VtnPrincipal;
@@ -30,7 +31,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Lina
  */
-public class JDFinContratacionCTR extends DependenciasCTR {
+public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     private PeriodoLectivoBD periodoBD;
     private DocenteBD dc;
@@ -82,29 +83,24 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         frmFinContrato.getJcbPeriodos().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 int pos = frmFinContrato.getJcbPeriodos().getSelectedIndex();
                 if (pos > 0) {
                     frmFinContrato.getJcbPeriodos().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
                     if (frmFinContrato.getLbl_ErrPeriodos() != null) {
                         frmFinContrato.getLbl_ErrPeriodos().setVisible(false);
                         String periodo = frmFinContrato.getJcbPeriodos().getSelectedItem().toString();
-                        if (periodo.equals("NINGUNO") == true) {
-                            JOptionPane.showMessageDialog(null, "Este Docente no tiene ninguna materia asignada al no tener asignado un Período Lectivo");
-                            DefaultTableModel modelo_Tabla;
-                            modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
-                            for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
-                                modelo_Tabla.removeRow(i);
-                            }
-                        } else {
-                            llenarTabla(periodo);
-                        }
+                        llenarTabla(periodo);
                     }
-
                 } else {
                     frmFinContrato.getJcbPeriodos().setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
                     if (frmFinContrato.getLbl_ErrPeriodos() != null) {
                         frmFinContrato.getLbl_ErrPeriodos().setVisible(true);
+                        DefaultTableModel modelo_Tabla;
+                            modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
+                            for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
+                                modelo_Tabla.removeRow(i);
+                            }
                     }
                 }
             }
@@ -198,43 +194,59 @@ public class JDFinContratacionCTR extends DependenciasCTR {
         String observacion;
         observacion = frmFinContrato.getTxtObservacion().getText();
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
-//        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
+        int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
         int pos = frmFinContrato.getTpFrm().getSelectedIndex();
-        
-        if(pos == 0){
-            if(observacion.equals("") == false && fecha != null){
+
+        if (pos == 0) {
+            if (observacion.equals("") == false && fecha != null) {
                 if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
                         || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
                     frmFinContrato.getBtnGuardar().setEnabled(false);
+                    guardar = false;
                 } else {
-                    System.out.println("Se puede guardar");
                     frmFinContrato.getBtnGuardar().setEnabled(true);
                     frmFinContrato.getBtnGuardar().setText("Siguiente");
+                    guardar = false;
                 }
-            } else{
+            } else {
                 frmFinContrato.getBtnGuardar().setEnabled(true);
                 frmFinContrato.getBtnGuardar().setText("Siguiente");
-            }
-        } else if(pos == 1){
-            if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
-                frmFinContrato.getBtnGuardar().setText("Guardar");
-                frmFinContrato.getBtnGuardar().setEnabled(false);
-                guardar = false;
-            } else if(observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
-                frmFinContrato.getBtnGuardar().setText("Guardar");
-                frmFinContrato.getBtnGuardar().setEnabled(false);
                 guardar = false;
             }
-            
-            if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true){
+        } else if (pos == 1) {
+            if (observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
                 frmFinContrato.getBtnGuardar().setText("Guardar");
                 frmFinContrato.getBtnGuardar().setEnabled(false);
                 guardar = false;
-            } else if(observacion.equals("") == false && fecha != null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false){
-                System.out.println("entro");
+            } else if (observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false) {
                 frmFinContrato.getBtnGuardar().setText("Guardar");
-                frmFinContrato.getBtnGuardar().setEnabled(true);
-                guardar = true;
+                frmFinContrato.getBtnGuardar().setEnabled(false);
+                guardar = false;
+            }
+
+            if (observacion.equals("") == false && fecha != null && posPrd == 0) {
+
+                if (frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
+                    frmFinContrato.getBtnGuardar().setText("Guardar");
+                    frmFinContrato.getBtnGuardar().setEnabled(false);
+                    guardar = false;
+                } else {
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
+                    frmFinContrato.getBtnGuardar().setEnabled(true);
+                    guardar = false;
+                }
+
+            } else if (observacion.equals("") == false && fecha != null && posPrd > 0) {
+                if (frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
+                    frmFinContrato.getBtnGuardar().setText("Guardar");
+                    frmFinContrato.getBtnGuardar().setEnabled(false);
+                    guardar = false;
+                } else {
+                    frmFinContrato.getBtnGuardar().setText("Guardar");
+                    frmFinContrato.getBtnGuardar().setEnabled(true);
+                    guardar = true;
+                }
+
             }
         }
     }

@@ -404,7 +404,7 @@ public class VtnAlumnoCTR {
             view.setTitle("Reporte de Alumnos");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
+JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
