@@ -1,4 +1,4 @@
-spackage controlador.silabo;
+package controlador.silabo;
 
 import java.time.ZoneId;
 import java.util.Date;
@@ -46,7 +46,7 @@ public class Controlador_plan_clases {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
          fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
              fPlanClase.dispose();
-             ControladorConfiguracion_plan_clases ccpc=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
+           ControladorConfiguracion_plan_clases ccpc=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
              ccpc.iniciarControlaador();
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);
