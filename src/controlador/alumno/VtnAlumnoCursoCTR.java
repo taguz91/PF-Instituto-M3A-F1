@@ -37,7 +37,7 @@ public class VtnAlumnoCursoCTR {
     //Posicion de los filtros seleccinados;
     private int posPrd, posCur;
 
-    //Tabla  
+    //Tabla
     private DefaultTableModel mdTbl;
     //Datos
     private ArrayList<AlumnoCursoMD> almns;
@@ -45,7 +45,7 @@ public class VtnAlumnoCursoCTR {
     //Cargamos los periodos
     private final PeriodoLectivoBD prd;
     private ArrayList<PeriodoLectivoMD> periodos;
-    //Para cargar los cursos  
+    //Para cargar los cursos
     private final CursoBD cur;
     private ArrayList<String> cursos;
 
@@ -66,7 +66,7 @@ public class VtnAlumnoCursoCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
 
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos por curso");
         ctrPrin.setIconJIFrame(vtnAlmnCurso);
@@ -88,20 +88,26 @@ public class VtnAlumnoCursoCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnAlmnCurso.getTblAlumnoCurso());
         vtnAlmnCurso.getTblAlumnoCurso().setModel(mdTbl);
-        //Llenamos la tabla 
+        //Llenamos la tabla
         cargarAlumnosCurso();
-        //Cargando los datos para combos 
+        //Cargando los datos para combos
         cargarCmbPrds();
-        //Buscador 
+        //Buscador
         vtnAlmnCurso.getTxtbuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmnCurso.getTxtbuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarAlumnosCurso();
                 }
+                /*
+                if (b.length() > 2) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarAlumnosCurso();
+                }*/
             }
         });
         vtnAlmnCurso.getBtnbuscar().addActionListener(e -> buscar(vtnAlmnCurso.getTxtbuscar().getText().trim()));
@@ -110,10 +116,10 @@ public class VtnAlumnoCursoCTR {
                 vtnAlmnCurso.getBtnbuscar()));
         //Acciones de los botones
         vtnAlmnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
-        //Acciones en los combos  
+        //Acciones en los combos
         vtnAlmnCurso.getCmbPrdLectivos().addActionListener(e -> clickCmbPrd());
         vtnAlmnCurso.getCmbCursos().addActionListener(e -> clickCmbCurso());
-        //Le damos la accion al boton  
+        //Le damos la accion al boton
         vtnAlmnCurso.getBtnMaterias().addActionListener(e -> materiasCurso());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));

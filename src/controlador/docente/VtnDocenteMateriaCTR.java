@@ -53,7 +53,7 @@ public class VtnDocenteMateriaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes Materia");
         ctrPrin.setIconJIFrame(vtnDm);
@@ -76,14 +76,20 @@ public class VtnDocenteMateriaCTR {
         //Desabilitamos el combo de materia y ciclo, se activaran al escoger una carrera
         estadoCmbCicloYMateria(false);
         llenarCmbCarrera();
-        //Buscador 
+        //Buscador
         vtnDm.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String a = vtnDm.getTxtBuscar().getText().trim();
+                String b = vtnDm.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarDocenteMateria();
+                }
+                /*
                 if (a.length() > 2) {
                     buscar(a);
-                }
+                }*/
             }
         });
         //Validacion del buscar
@@ -103,14 +109,14 @@ public class VtnDocenteMateriaCTR {
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Docentes materia");
     }
-    
+
     /**
      * Eliminamos el docente materia
-     * @param aguja 
+     * @param aguja
      */
-    
+
     private void eliminar(){
-        int pos = vtnDm.getTblDocentesMateria().getSelectedRow(); 
+        int pos = vtnDm.getTblDocentesMateria().getSelectedRow();
         if (pos >= 0) {
             dm.eliminar(dms.get(pos).getId());
             buscar(vtnDm.getTxtBuscar().getText().trim());
@@ -145,7 +151,7 @@ public class VtnDocenteMateriaCTR {
         vtnDm.getCmbMateria().removeAllItems();
     }
 
-    //Al seleecionar una carrera se llenara los combos de ciclos y materias 
+    //Al seleecionar una carrera se llenara los combos de ciclos y materias
     private void clickCarreras() {
         int posCar = vtnDm.getCmbCarrera().getSelectedIndex();
         if (posCar > 0) {
@@ -179,7 +185,7 @@ public class VtnDocenteMateriaCTR {
         }
     }
 
-    //Al hacer click en una materia 
+    //Al hacer click en una materia
     private void clickMateria() {
         int posMat = vtnDm.getCmbMateria().getSelectedIndex();
         if (posMat > 0) {

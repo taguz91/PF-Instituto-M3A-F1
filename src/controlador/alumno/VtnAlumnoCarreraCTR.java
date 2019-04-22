@@ -60,7 +60,7 @@ public class VtnAlumnoCarreraCTR {
         this.permisos = permisos;
         this.ctrPrin = ctrPrin;
 
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos por carrera");
         ctrPrin.setIconJIFrame(vtnAlmCar);
@@ -78,25 +78,31 @@ public class VtnAlumnoCarreraCTR {
         String[] titulo = {"Carrera", "Alumno", "Cédula", "Fecha inscripción"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        //Le damos unos toques a la tabla  
+        //Le damos unos toques a la tabla
         TblEstilo.formatoTbl(vtnAlmCar.getTblAlmnCarrera());
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 0, 70);
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 2, 120);
         vtnAlmCar.getTblAlmnCarrera().setModel(mdTbl);
         //Llenamos la tabla
         cargarAlmnsCarrera();
-        //acciones 
+        //acciones
         vtnAlmCar.getCmbCarrera().addActionListener(e -> clickCmbCarreras());
-        //Buscador 
+        //Buscador
         vtnAlmCar.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmCar.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarAlmnsCarrera();
                 }
+                /*
+                if (b.length() > 2) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarAlmnsCarrera();
+                }*/
             }
         });
         vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
