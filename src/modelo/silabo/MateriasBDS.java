@@ -50,7 +50,7 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + ""
+                    + "AND crs.id_prd_lectivo=? "
                     + "EXCEPT\n"
                     + "SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
                     + "FROM \"Materias\" AS m\n"
@@ -62,12 +62,14 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Silabo\" AS s ON s.id_materia=m.id_materia\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "");
+                    + "AND s.id_prd_lectivo=?");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
-            st.setString(3, clave[0]);
-            st.setInt(4, Integer.parseInt(clave[1]));
+            st.setInt(3, Integer.parseInt(clave[2]));
+            st.setString(4, clave[0]);
+            st.setInt(5, Integer.parseInt(clave[1]));
+            st.setInt(6, Integer.parseInt(clave[2]));
 
             ResultSet rs = st.executeQuery();
             System.out.println(st);
