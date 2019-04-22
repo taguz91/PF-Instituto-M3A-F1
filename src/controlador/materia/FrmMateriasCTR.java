@@ -62,7 +62,8 @@ public class FrmMateriasCTR {
         this.materiaBD = new MateriaBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmMaterias);
         frmMaterias.show();
-
+        this.carBD = new CarreraBD(conecta); 
+        this.ejeBD = new EjeFormacionBD(conecta);
     }
 
     public void iniciar() {
