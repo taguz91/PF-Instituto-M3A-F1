@@ -95,8 +95,6 @@ public class VtnNotasAlumnoCursoCTR {
                     rellenarLblCarrera();
                     cargarComboCiclo();
                     cargarComboParalelo();
-                    cargarComboJornadas();
-                    cargarComboMaterias();
                     desktop.getLblEstado().setText("COMPLETADO");
                     try {
                         sleep(500);
@@ -118,9 +116,7 @@ public class VtnNotasAlumnoCursoCTR {
 
         //TABLA
         Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
-        
-        
-        
+
     }
 
     private void InitEventos() {
@@ -135,12 +131,7 @@ public class VtnNotasAlumnoCursoCTR {
 
         vista.getCmbCiclo().addActionListener(e -> {
             cargarComboParalelo();
-            cargarComboMaterias();
         });
-
-        vista.getCmbParalelo().addActionListener(e -> cargarComboMaterias());
-
-        vista.getCmbJornada().addActionListener(e -> cargarComboMaterias());
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
@@ -248,11 +239,8 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void activarColumnas() {
-        String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-        String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
         Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
 
-        idCurso = CursoBD.selectIdCursoWhere(paralelo, ciclo, nombreJornada, idDocente, idPeriodoLectivo);
         IngresoNotasMD ingreso = IngresoNotasBD.selectFromViewActivos(idCurso);
 
         if (ingreso.isNotaPrimerInterCiclo()) {
@@ -471,42 +459,6 @@ public class VtnNotasAlumnoCursoCTR {
 //
 //        } catch (NullPointerException e) {
 //        }
-
-    }
-
-    private void cargarComboJornadas() {
-
-        try {
-            vista.getCmbJornada().removeAllItems();
-            setIdDocente(getCmbDonceteKey());
-            setIdPeriodoLectivo();
-
-            JornadaBD.selectJornadasWhere(idDocente, idPeriodoLectivo)
-                    .stream()
-                    .forEach(vista.getCmbJornada()::addItem);
-
-        } catch (NullPointerException e) {
-        }
-
-    }
-
-    private void cargarComboMaterias() {
-//        try {
-//            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-//            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-//            String jornada = vista.getCmbJornada().getSelectedItem().toString();
-//
-//            vista.getCmbAsignatura().removeAllItems();
-//
-//            MateriaBD.selectWhere(idDocente, ciclo, paralelo, jornada)
-//                    .stream()
-//                    .forEach(vista.getCmbAsignatura()::addItem);
-//
-//            validarCombos();
-//        } catch (NullPointerException e) {
-//            vista.getCmbAsignatura().removeAllItems();
-//        }
-
     }
 
     private void validarCombos() {
