@@ -128,6 +128,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+K"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>
@@ -482,13 +485,15 @@
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnIngresarRol" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnSecretaria" min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnAlumno" max="32767" attributes="0"/>
                       <Component id="btnDocente" max="32767" attributes="0"/>
@@ -503,6 +508,7 @@
                       <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnIngresarRol" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnSecretaria" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               </Group>
@@ -625,6 +631,12 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSecretaria">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Se"/>
+            <Property name="toolTipText" type="java.lang.String" value="Secretaria, acceso para retirar a estudiantes"/>
           </Properties>
         </Component>
       </SubComponents>

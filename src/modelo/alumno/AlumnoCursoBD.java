@@ -257,20 +257,22 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public static List<AlumnoCursoBD> selectWhere(String paralelo, int ciclo, String nombreJornada, String nombreMateria, int idDocente, String nombrePeriodo) {
+    public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, String nombrePeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"AlumnoCurso2\".id_alumno,\n"
                 + "\"public\".\"AlumnoCurso2\".almn_curso_asistencia,\n"
                 + "\"public\".\"AlumnoCurso2\".almn_curso_estado,\n"
                 + "\"public\".\"AlumnoCurso2\".almn_curso_num_faltas,\n"
-                //+ "\"public\".\"AlumnoCurso2\".almn_curso_activo,\n"
+                + "\"public\".\"AlumnoCurso2\".almn_curso_activo,\n"
                 + "\"public\".\"Personas\".persona_identificacion,\n"
                 + "\"public\".\"Personas\".persona_primer_apellido,\n"
                 + "\"public\".\"Personas\".persona_segundo_apellido,\n"
                 + "\"public\".\"Personas\".persona_primer_nombre,\n"
                 + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"AlumnoCurso2\".id_almn_curso\n"
+                + "\"public\".\"AlumnoCurso2\".almn_curso_nota_final,\n"
+                + "\"public\".\"AlumnoCurso2\".id_almn_curso,\n"
+                + "\"public\".\"AlumnoCurso2\".id_curso\n"
                 + "FROM\n"
                 + "\"public\".\"AlumnoCurso2\"\n"
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso2\".id_curso = \"public\".\"Cursos\".id_curso\n"
@@ -282,9 +284,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
-                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
-                + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "' AND\n"
+                + "\"public\".\"Cursos\".curso_nombre = '" + cursoNombre + "' AND\n"
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido ASC";
@@ -303,6 +303,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
                 alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
                 alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+                alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
 
                 AlumnoMD alumno = new AlumnoMD();
                 alumno.setId_Alumno(rs.getInt("id_alumno"));
@@ -343,7 +344,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE \n"
                 + "id_almn_curso = " + getId() + ";";
 
-        System.out.println(UPDATE);
+        //System.out.println(UPDATE);
 
         return ResourceManager.Statement(UPDATE) == null;
 

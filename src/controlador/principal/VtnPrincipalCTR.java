@@ -173,7 +173,7 @@ public class VtnPrincipalCTR {
         this.pruebas = pruebas;
 
         //Inciamos la carga pero la detenemos
-        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
+        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
         this.icono = icono;
         this.ista = ista;
         vtnPrin.setIconImage(ista);
