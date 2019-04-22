@@ -14,7 +14,7 @@ import vista.curso.PnlHorarioClase;
  *
  * @author Johnny
  */
-public class PnlHorarioClaseCTR {
+public class PnlHorarioCursoCTR {
 
     private final PnlHorarioClase pnl;
     private final CursoMD curso;
@@ -26,6 +26,8 @@ public class PnlHorarioClaseCTR {
     private final String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
     private final String[] tn = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
     private final String[] hm = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00"};
+    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
+    private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hmc = {
         "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
@@ -33,26 +35,24 @@ public class PnlHorarioClaseCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
     private final String[] hvc = {
-        "<html>14:00<br>15:00</html>",
+        "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
-        "<html>14:00<br>15:00</html>",
+        "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private String[] hSelec, jSelec, tSelec;
+     private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
-    public PnlHorarioClaseCTR(PnlHorarioClase pnl, CursoMD curso, SesionClaseBD bd) {
+    public PnlHorarioCursoCTR(PnlHorarioClase pnl, CursoMD curso, SesionClaseBD bd) {
         this.pnl = pnl;
         this.curso = curso;
         this.bd = bd;
@@ -60,9 +60,9 @@ public class PnlHorarioClaseCTR {
 
     public void iniciar() {
         iniciaTbl();
-        System.out.println("Numero de columnas " + mdTbl.getColumnCount());
     }
 
+  
     private void iniciaTbl() {
         switch (curso.getCurso_nombre().charAt(0)) {
             case 'M':
@@ -87,7 +87,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hn);
                 hSelec = hn;
                 jSelec = tn;
-                llenatLunesSabado();
+                llenarLunesSabado();
                 break;
             default:
 
@@ -103,7 +103,7 @@ public class PnlHorarioClaseCTR {
         actualizarViernes();
     }
 
-    private void llenatLunesSabado() {
+    private void llenarLunesSabado() {
         llenarLunesViernes();
         actualizarSabado();
     }
@@ -111,7 +111,7 @@ public class PnlHorarioClaseCTR {
     private void formatoTbl(JTable tbl) {
         tbl.setModel(mdTbl);
         //TblEstilo.formatoTblConColor(tbl);
-        TblEstilo.formatoTblFocus(tbl);
+        TblEstilo.formatoTblHCurso(tbl);
     }
 
     private void llenarHoras(String[] horas) {
@@ -145,7 +145,10 @@ public class PnlHorarioClaseCTR {
         }
 
         for (int i = posI; i < posF; i++) {
-            mdTbl.setValueAt(s.getId()+"%Clase", i, dia);
+            mdTbl.setValueAt("<html> <center>"+s.getId()+""+s.getCurso().getId_curso()+  "<br>" + 
+                    s.getCurso().getId_materia().getCodigo()+"<br>"+
+                            s.getCurso().getId_docente().getNombreCorto()+"</center></html>", 
+                    i, dia);
 
         }
 
@@ -170,80 +173,33 @@ public class PnlHorarioClaseCTR {
 
     //Todos los metodos publicos de esta clase
     public void actualizarLunes() {
-        sesionLunes = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 1);
+        sesionLunes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 1);
         llenarDia(sesionLunes, 1);
     }
 
     public void actualizarMartes() {
-        sesionMartes = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 2);
+        sesionMartes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 2);
         llenarDia(sesionMartes, 2);
     }
 
     public void actualizarMiercoles() {
-        sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 3);
+        sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 3);
         llenarDia(sesionMiercoles, 3);
     }
 
     public void actuatizarJueves() {
-        sesionJueves = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 4);
+        sesionJueves = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 4);
         llenarDia(sesionJueves, 4);
     }
 
     public void actualizarViernes() {
-        sesionViernes = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 5);
+        sesionViernes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 5);
         llenarDia(sesionViernes, 5);
     }
 
     public void actualizarSabado() {
-        sesionSabado = bd.cargarHorarioCursoPorDia(curso.getId_curso(), 6);
+        sesionSabado = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 6);
         llenarDia(sesionSabado, 6);
     }
-
-    public SesionClaseMD getSesionSeleccionada() {
-        SesionClaseMD s = null;
-        if (posFila >= 0 && posColum > 0) {
-            if (pnl.getTblHorario().getValueAt(posFila, posColum) != null) {
-                 
-            }
-        }
-        return s;
-    }
-
-    public String[] gethSelec() {
-        return hSelec;
-    }
-
-    public String[] getjSelec() {
-        return jSelec;
-    }
     
-    public String[] gettSelec() {
-        return tSelec;
-    }
-
-    public void actualizar(int dia) {
-        switch (dia) {
-            case 1:
-                actualizarLunes();
-                break;
-            case 2:
-                actualizarMartes();
-                break;
-            case 3:
-                actualizarMiercoles();
-                break;
-            case 4:
-                actuatizarJueves();
-                break;
-            case 5:
-                actualizarViernes();
-                break;
-            case 6:
-                actualizarSabado();
-                break;
-            default:
-                break;
-        }
-    }
-
 }

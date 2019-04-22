@@ -38,6 +38,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        Btn_Anterior = new javax.swing.JButton();
         jTPMaterias = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         lblNombreMateria = new javax.swing.JLabel();
@@ -114,14 +115,18 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
 
+        Btn_Anterior.setText("Anterior");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap(413, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Btn_Anterior)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -131,15 +136,16 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnGuardar)
+                    .addComponent(Btn_Anterior))
                 .addGap(32, 32, 32))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 680, 40));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 690, 40));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblNombreMateria.setText("Nombre de Materia");
+        lblNombreMateria.setText("Nombre de Materia *");
         jPanel3.add(lblNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 128, -1, -1));
 
         txtCodigoMateria.addActionListener(new java.awt.event.ActionListener() {
@@ -149,10 +155,10 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         });
         jPanel3.add(txtCodigoMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 72, 177, 20));
 
-        cbTipoAcreditacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
+        cbTipoAcreditacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Tipos" }));
         jPanel3.add(cbTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 177, 178, -1));
 
-        jLabel4.setText("Eje de Formación");
+        jLabel4.setText("Eje de Formación *");
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 20, -1, -1));
 
         lblCategoriaMateria.setText("Categoría");
@@ -161,20 +167,20 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblActivo.setText("Materia Núcleo");
         jPanel3.add(lblActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 229, -1, 21));
 
-        lblCiclo.setText("Materia Ciclo");
+        lblCiclo.setText("Materia Ciclo *");
         jPanel3.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 177, -1, -1));
         jPanel3.add(chBNucleo, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 229, -1, -1));
 
-        lblCategoriaMateria1.setText("Tipo de Acreditación");
+        lblCategoriaMateria1.setText("Tipo de Acreditación *");
         jPanel3.add(lblCategoriaMateria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 180, -1, -1));
 
         lblCategoriaMateria2.setText("Materia Tipo");
         jPanel3.add(lblCategoriaMateria2, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 72, -1, -1));
 
-        lblCategoriaMateria4.setText("Créditos ");
+        lblCategoriaMateria4.setText("Créditos *");
         jPanel3.add(lblCategoriaMateria4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 229, -1, -1));
 
-        lblCategoriaMateria5.setText("Código de Materia");
+        lblCategoriaMateria5.setText("Código de Materia *");
         jPanel3.add(lblCategoriaMateria5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 74, -1, -1));
 
         cbMateriaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
@@ -210,7 +216,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         });
         jPanel3.add(cbEjeFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 17, 178, -1));
 
-        jLabel5.setText("Carrera");
+        jLabel5.setText("Carrera *");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 23, -1, -1));
 
         cbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
@@ -268,19 +274,19 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTeoricas.setText("Horas de Docencia");
+        lblTeoricas.setText("Horas de Docencia *");
         jPanel4.add(lblTeoricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 26, -1, -1));
 
-        lblPracticas.setText("Horas Prácticas");
+        lblPracticas.setText("Horas Prácticas *");
         jPanel4.add(lblPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 75, -1, -1));
 
-        lblAutoEvaluacion.setText("Horas de Auto-Estudio");
+        lblAutoEvaluacion.setText("Horas de Auto-Estudio *");
         jPanel4.add(lblAutoEvaluacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 178, -1, -1));
 
-        lblTeoricas1.setText("Horas Presenciales");
+        lblTeoricas1.setText("Horas Presenciales *");
         jPanel4.add(lblTeoricas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 126, -1, -1));
 
-        lblTeoricas2.setText("Total de Horas");
+        lblTeoricas2.setText("Total de Horas *");
         jPanel4.add(lblTeoricas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 230, -1, -1));
         jPanel4.add(txtHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 20, 137, -1));
         jPanel4.add(txtHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 69, 137, -1));
@@ -318,7 +324,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTeoricas3.setText("Objetivo General");
+        lblTeoricas3.setText("Objetivo General *");
         jPanel2.add(lblTeoricas3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, -1, -1));
 
         lblTeoricas5.setText("Objetivo Específico");
@@ -348,7 +354,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTeoricas4.setText("Descripción de la Materia");
+        lblTeoricas4.setText("Descripción de la Materia *");
         jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 16, -1, -1));
 
         lblTeoricas6.setText("Organización Curricular");
@@ -803,8 +809,17 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         this.txtTotalHoras = txtTotalHoras;
     }
 
+    public JButton getBtn_Anterior() {
+        return Btn_Anterior;
+    }
+
+    public void setBtn_Anterior(JButton Btn_Anterior) {
+        this.Btn_Anterior = Btn_Anterior;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_Anterior;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbCarrera;
