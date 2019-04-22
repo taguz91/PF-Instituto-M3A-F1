@@ -176,7 +176,27 @@ public class VtnNotas {
         }
     }
 
-    private void sumarColumnas() {
+    private static void guardarBD(String nota, String nombreNota, TableModel datos) {
+        if (Validaciones.isDecimal(nota)) {
+            double value = Middlewares.conversor(nota);
+
+            TipoDeNotaMD rango = getRango(getSelectedRow(), nombreNota);
+            if (value >= rango.getValorMinimo() && value <= rango.getValorMaximo()) {
+                datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
+                sumarColumnas();
+                editar();
+                refreshTabla();
+            } else {
+                JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + rango.getValorMinimo() + " Y " + rango.getValorMaximo());
+                refreshTabla();
+            }
+        } else {
+            mensajeDeError();
+            refreshTabla();
+        }
+    }
+
+    private static void sumarColumnas() {
         int fila = getSelectedRow();
 
         double aporte1 = 0;
@@ -211,7 +231,7 @@ public class VtnNotas {
         faltas = Middlewares.conversor(tablaNotas.getValueAt(fila, 14).toString());
     }
 
-    private void mensajeDeError() {
+    private static void mensajeDeError() {
         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO CORRECTO "
                 + "\n       EJEMPLO (15.6)");
     }
@@ -284,7 +304,7 @@ public class VtnNotas {
 
     }
 
-    private void refreshTabla() {
+    private static void refreshTabla() {
         System.out.println("REFRESH");
         tablaNotas.setRowCount(0);
         new Thread(() -> {
@@ -304,7 +324,7 @@ public class VtnNotas {
     /*
         VARIOS
      */
-    private void editar() {
+    private static void editar() {
         int fila = getSelectedRow();
 
         AlumnoCursoBD alumno = listaNotas.get(fila);
