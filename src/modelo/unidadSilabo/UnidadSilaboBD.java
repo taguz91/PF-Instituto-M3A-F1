@@ -68,6 +68,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
     public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
+        
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, titulo_unidad\n"
