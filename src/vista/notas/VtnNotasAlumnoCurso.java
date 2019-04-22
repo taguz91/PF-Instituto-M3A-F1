@@ -99,6 +99,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         this.valorMinimo = valorMinimo;
     }
 
+    public JLabel getLblResultados() {
+        return lblResultados;
+    }
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -163,11 +168,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "Cedula", "Apellidos", "Nombres", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Supletorio", "Not. Final", "Estado", "Nro. Faltas", "% Faltas", "Asistencia"
+                "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Supletorio", "Not. Final", "Estado", "Nro. Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
+                false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -178,12 +183,30 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
             tblNotas.getColumnModel().getColumn(0).setMinWidth(30);
             tblNotas.getColumnModel().getColumn(0).setMaxWidth(30);
-            tblNotas.getColumnModel().getColumn(4).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(4).setMaxWidth(55);
-            tblNotas.getColumnModel().getColumn(5).setMinWidth(75);
-            tblNotas.getColumnModel().getColumn(5).setMaxWidth(75);
-            tblNotas.getColumnModel().getColumn(7).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(7).setMaxWidth(55);
+            tblNotas.getColumnModel().getColumn(1).setMinWidth(90);
+            tblNotas.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblNotas.getColumnModel().getColumn(6).setMinWidth(55);
+            tblNotas.getColumnModel().getColumn(6).setMaxWidth(55);
+            tblNotas.getColumnModel().getColumn(7).setMinWidth(80);
+            tblNotas.getColumnModel().getColumn(7).setMaxWidth(80);
+            tblNotas.getColumnModel().getColumn(8).setMinWidth(80);
+            tblNotas.getColumnModel().getColumn(8).setMaxWidth(80);
+            tblNotas.getColumnModel().getColumn(9).setMinWidth(55);
+            tblNotas.getColumnModel().getColumn(9).setMaxWidth(55);
+            tblNotas.getColumnModel().getColumn(10).setMinWidth(60);
+            tblNotas.getColumnModel().getColumn(10).setMaxWidth(60);
+            tblNotas.getColumnModel().getColumn(11).setMinWidth(90);
+            tblNotas.getColumnModel().getColumn(11).setMaxWidth(90);
+            tblNotas.getColumnModel().getColumn(12).setMinWidth(70);
+            tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
+            tblNotas.getColumnModel().getColumn(13).setMinWidth(60);
+            tblNotas.getColumnModel().getColumn(13).setMaxWidth(60);
+            tblNotas.getColumnModel().getColumn(14).setMinWidth(70);
+            tblNotas.getColumnModel().getColumn(14).setMaxWidth(70);
+            tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
+            tblNotas.getColumnModel().getColumn(15).setMaxWidth(60);
+            tblNotas.getColumnModel().getColumn(16).setMinWidth(70);
+            tblNotas.getColumnModel().getColumn(16).setMaxWidth(70);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,8 +220,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(183, 183, 183)
+                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(113, 113, 113)
                                 .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

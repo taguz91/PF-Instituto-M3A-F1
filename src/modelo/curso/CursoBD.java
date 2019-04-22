@@ -70,45 +70,45 @@ public class CursoBD extends CursoMD {
                 + "	WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getCurso_nombre());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + getCurso_nombre());
         }
     }
-    
-    public void eliminarCurso(int idCurso){
+
+    public void eliminarCurso(int idCurso) {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = false "
-                + "WHERE id_curso = "+idCurso+";";  
+                + "WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
                     + "compruebe su conexion a internet.");
         }
     }
-    
-    public void activarCurso(int idCurso){
+
+    public void activarCurso(int idCurso) {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = true "
-                + "WHERE id_curso = "+idCurso+";";  
+                + "WHERE id_curso = " + idCurso + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se activo correctamente. ");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se pudo activar,"
                     + "compruebe su conexion a internet.");
         }
     }
-    
-    public int numAlumnos(int idCurso){
-        int num = 0; 
+
+    public int numAlumnos(int idCurso) {
+        int num = 0;
         String sql = "SELECT count(id_curso) "
                 + "FROM public.\"AlumnoCurso\" "
-                + "WHERE id_curso ="+idCurso+";"; 
+                + "WHERE id_curso =" + idCurso + ";";
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
                 while (rs.next()) {
-                   num = rs.getInt(1);
+                    num = rs.getInt(1);
                 }
                 return num;
             } else {
@@ -138,10 +138,11 @@ public class CursoBD extends CursoMD {
                 + "prd_lectivo_activo = true AND curso_activo = true;";
         return consultarCursos(sql);
     }
-    
+
     /**
      * Cargamos los cursos eliminados
-     * @return 
+     *
+     * @return
      */
     public ArrayList<CursoMD> cargarCursosEliminados() {
         String sql = "SELECT id_curso, materia_nombre, \n"
@@ -239,9 +240,9 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
                 + "curso_capacidad, curso_ciclo \n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
-                + "WHERE curso_nombre = '"+nombre+"' AND\n"
+                + "WHERE curso_nombre = '" + nombre + "' AND\n"
                 + "m.id_materia = c.id_materia AND\n"
-                + "id_prd_lectivo = "+idPrdLectivo+";";
+                + "id_prd_lectivo = " + idPrdLectivo + ";";
         ArrayList<CursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -491,17 +492,19 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectParaleloWhere(int idDocente, int ciclo, int idPeriodoLectivo) {
+    public static List<String> selectParaleloWhere(CursoMD curso) {
 
         String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"Cursos\".curso_paralelo\n"
+                + "\"public\".\"Cursos\".curso_nombre\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo + "";
+                + "\"public\".\"Cursos\".id_docente = " + curso.getId_docente() + " AND\n"
+                + "\"public\".\"Cursos\".curso_ciclo = " + curso.getCurso_ciclo() + " AND\n"
+                + "\"public\".\"Cursos\".id_prd_lectivo = " + curso.getId_prd_lectivo().getId_PerioLectivo() + "";
+
+        System.out.println(SELECT);
 
         List<String> lista = new ArrayList<>();
 
@@ -510,7 +513,7 @@ public class CursoBD extends CursoMD {
         try {
             while (rs.next()) {
 
-                String paralelo = rs.getString("curso_paralelo");
+                String paralelo = rs.getString("curso_nombre");
 
                 lista.add(paralelo);
 
@@ -522,10 +525,10 @@ public class CursoBD extends CursoMD {
         return lista;
     }
 
-    public static List<Integer> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
+    public static List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"Cursos\".curso_ciclo\n"
+                + "\"public\".\"Cursos\".curso_nombre\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "WHERE\n"
@@ -533,14 +536,14 @@ public class CursoBD extends CursoMD {
                 + "AND\n"
                 + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
 
-        List<Integer> lista = new ArrayList<>();
+        List<String> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
             while (rs.next()) {
 
-                lista.add(rs.getInt("curso_ciclo"));
+                lista.add(rs.getString("curso_nombre"));
 
             }
             rs.close();
