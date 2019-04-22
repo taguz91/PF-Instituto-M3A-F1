@@ -70,7 +70,7 @@ public class ControladorConfiguracion_plan_clases {
             
 //            cursosSilabo=cargarCursosSilabos(SilaboSeleccionado.get().getIdSilabo(), usuario.getPersona().getIdPersona());
        });
-             cursosSilabo=cargarCursosSilabos(144, usuario.getPersona().getIdPersona());
+             cursosSilabo=cargarCursosSilabos(221, usuario.getPersona().getIdPersona());
              
         frm_cong_PlanClase.getCmb_silabos().addActionListener((ActionEvent ae) -> {
             Optional<SilaboMD> SilaboSeleccionado =null;
