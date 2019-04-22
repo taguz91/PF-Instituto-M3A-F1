@@ -115,6 +115,7 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final ConectarDB conecta;
+    private final ConexionBD conexion;
     private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
     public AnimacionCarga carga;
@@ -171,6 +172,7 @@ public class VtnPrincipalCTR {
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
         this.pruebas = pruebas;
+        this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
@@ -615,20 +617,20 @@ public class VtnPrincipalCTR {
 
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin, conexion);
 
         c.iniciarControlador();
 
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin);
+        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin, conexion);
         cp.iniciarControlaador();
     }
 
     private void controladorIngreso() {
 
-        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());
+        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD(conecta));
 
         c.iniciarControlador();
 

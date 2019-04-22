@@ -187,7 +187,7 @@ public class VtnSelectRolCTR {
                         pw.println("Cerrado? R: " + ResourceManager.getConnection().isClosed());
                         pw.println("Cerrado? C: " + conexion.getConecction().isClosed());
 
-                        System.out.println("Conectado R: " + ResourceManager.getConnection().isClosed());
+                        //System.out.println("Conectado R: " + ResourceManager.getConnection().isClosed());
 
                     } catch (SQLException ex) {
                         Logger.getLogger(VtnSelectRolCTR.class.getName()).log(Level.SEVERE, null, ex);

@@ -427,7 +427,25 @@ public class CursoBD extends CursoMD {
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    c = obtenerCurso(rs);
+                    c = new CursoMD(); 
+                    c.setId_curso(rs.getInt("id_curso"));
+                    MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    c.setId_materia(m);
+                    PeriodoLectivoMD p = new PeriodoLectivoMD(); 
+                    p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                        
+                    c.setId_prd_lectivo(p);
+                    DocenteMD d = new DocenteMD(); 
+                    d.setIdDocente(rs.getInt("id_docente"));
+                    c.setId_docente(d);
+                    JornadaMD j = new JornadaMD(); 
+                    j.setId(rs.getInt("id_jornada"));
+                    c.setCurso_jornada(j);
+                    c.setCurso_nombre(rs.getString("curso_nombre"));
+                    c.setCurso_capacidad(rs.getInt("curso_capacidad"));
+                    c.setCurso_ciclo(rs.getInt("curso_ciclo"));
+                    c.setParalelo(rs.getString("curso_paralelo"));
                 }
                 return c;
             } else {
