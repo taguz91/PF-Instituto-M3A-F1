@@ -458,19 +458,19 @@ public class VtnNotasAlumnoCursoCTR {
 
     private void cargarComboParalelo() {
 
-        try {
-            vista.getCmbParalelo().removeAllItems();
-            vista.getCmbAsignatura().removeAllItems();
-            setIdDocente(getCmbDonceteKey());
-            setIdPeriodoLectivo();
-
-            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-            CursoBD.selectParaleloWhere(idDocente, ciclo, idPeriodoLectivo)
-                    .stream()
-                    .forEach(vista.getCmbParalelo()::addItem);
-
-        } catch (NullPointerException e) {
-        }
+//        try {
+//            vista.getCmbParalelo().removeAllItems();
+//            vista.getCmbAsignatura().removeAllItems();
+//            setIdDocente(getCmbDonceteKey());
+//            setIdPeriodoLectivo();
+//
+//            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+//            CursoBD.selectParaleloWhere(idDocente, ciclo, idPeriodoLectivo)
+//                    .stream()
+//                    .forEach(vista.getCmbParalelo()::addItem);
+//
+//        } catch (NullPointerException e) {
+//        }
 
     }
 
@@ -491,21 +491,21 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarComboMaterias() {
-        try {
-            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-            String jornada = vista.getCmbJornada().getSelectedItem().toString();
-
-            vista.getCmbAsignatura().removeAllItems();
-
-            MateriaBD.selectWhere(idDocente, ciclo, paralelo, jornada)
-                    .stream()
-                    .forEach(vista.getCmbAsignatura()::addItem);
-
-            validarCombos();
-        } catch (NullPointerException e) {
-            vista.getCmbAsignatura().removeAllItems();
-        }
+//        try {
+//            int ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+//            String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+//            String jornada = vista.getCmbJornada().getSelectedItem().toString();
+//
+//            vista.getCmbAsignatura().removeAllItems();
+//
+//            MateriaBD.selectWhere(idDocente, ciclo, paralelo, jornada)
+//                    .stream()
+//                    .forEach(vista.getCmbAsignatura()::addItem);
+//
+//            validarCombos();
+//        } catch (NullPointerException e) {
+//            vista.getCmbAsignatura().removeAllItems();
+//        }
 
     }
 
@@ -526,37 +526,37 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void cargarTabla() {
-        new Thread(() -> {
-
-            if (cargarTabla) {
-                cargarTabla = false;
-
-                Middlewares.setLoadCursor(vista);
-
-                try {
-
-                    tablaNotas.setRowCount(0);
-
-                    desktop.getLblEstado().setText("CARGANDO NOTAS");
-                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
-                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
-                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
-                    listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
-                    listaNotas.stream().forEach(VtnNotasAlumnoCursoCTR::agregarFilas);
-
-                    desktop.getLblEstado().setText("");
-                    Middlewares.setDefaultCursor(vista);
-
-                } catch (NullPointerException e) {
-                    System.out.println(e);
-                }
-                cargarTabla = true;
-                vista.getBtnImprimir().setEnabled(true);
-            }
-
-        }).start();
+//        new Thread(() -> {
+//
+//            if (cargarTabla) {
+//                cargarTabla = false;
+//
+////                Middlewares.setLoadCursor(vista);
+////
+////                try {
+////
+////                    tablaNotas.setRowCount(0);
+////
+////                    desktop.getLblEstado().setText("CARGANDO NOTAS");
+////                    String paralelo = vista.getCmbParalelo().getSelectedItem().toString();
+////                    String nombreJornada = vista.getCmbJornada().getSelectedItem().toString();
+////                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+////                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+////                    Integer ciclo = Integer.parseInt(vista.getCmbCiclo().getSelectedItem().toString());
+////                    listaNotas = AlumnoCursoBD.selectWhere(paralelo, ciclo, nombreJornada, nombreMateria, idDocente, nombrePeriodo);
+////                    listaNotas.stream().forEach(VtnNotasAlumnoCursoCTR::agregarFilas);
+////
+////                    desktop.getLblEstado().setText("");
+////                    Middlewares.setDefaultCursor(vista);
+////
+////                } catch (NullPointerException e) {
+////                    System.out.println(e);
+////                }
+////                cargarTabla = true;
+////                vista.getBtnImprimir().setEnabled(true);
+////            }
+//
+//        }).start();
 
     }
 

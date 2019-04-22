@@ -32,8 +32,6 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo,\n"
                 + "\"public\".\"TipoDeNota\".id_prd_lectivo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre\n"
-                //+ "\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
-                //+ "\"public\".\"PeriodoLectivo\".prd_lectivo_activo\n"
                 + "FROM\n"
                 + "\"public\".\"Notas\"\n"
                 + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
@@ -77,6 +75,16 @@ public class NotasBD extends NotasMD {
         }
 
         return lista;
+    }
+
+    public boolean editar() {
+
+        String UPDATE = "UPDATE \"Notas\" \n"
+                + "SET nota_valor = " + getNotaValor() + " \n"
+                + "WHERE \n"
+                + "\"public\".\"Notas\".id_nota = " + getIdNota();
+        System.out.println(UPDATE);
+        return ResourceManager.Statement(UPDATE) == null;
     }
 
 }
