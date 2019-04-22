@@ -89,7 +89,7 @@ public class VtnMateriaCTR {
      */
     public void iniciar() {
         vtnMateria.getBtnRequisitos().addActionListener(e -> abrirFrmRequisito());
-        vtnMateria.getBtnReporteMaterias().setEnabled(false);
+       // vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
@@ -130,10 +130,10 @@ public class VtnMateriaCTR {
         vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-              String b = vtnMateria.getTxtBuscar().getText().trim();
+                String b = vtnMateria.getTxtBuscar().getText().trim();
 
                 if (e.getKeyCode() == 10) {
-                  buscarMaterias(b);
+                    buscarMaterias(b);
                 }
             }
         });
@@ -149,13 +149,13 @@ public class VtnMateriaCTR {
      * Informacion de la materia, nos indican sus materias de co y pre
      * requisitos.
      */
-    private void infoMateria(){
+    private void infoMateria() {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId());
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin, materia);
             info.iniciar();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione una materia");
         }
     }
@@ -190,7 +190,7 @@ public class VtnMateriaCTR {
 
     private void filtrarPorCarrera() {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
-        validarBotonesReportes();
+        //validarBotonesReportes();
         if (pos > 0) {
             materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
             //Cargamos los ciclos de una carrera
@@ -245,7 +245,7 @@ public class VtnMateriaCTR {
         System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("carrera", vtnMateria.getCmbCarreras().getSelectedItem());
+            parametro.put("consulta", materia.getSql());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
@@ -279,18 +279,18 @@ public class VtnMateriaCTR {
         }
     }
 
-    public void validarBotonesReportes() {
-        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
-        if (selecTabl > 0) {
-            vtnMateria.getBtnReporteMaterias().setEnabled(true);
-        } else {
-            vtnMateria.getBtnReporteMaterias().setEnabled(false);
-        }
-    }
+//    public void validarBotonesReportes() {
+//        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
+//        if (selecTabl > 0) {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(true);
+//        } else {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(false);
+//        }
+//    }
 
     public void abrirFrmRequisito() {
         int fila = vtnMateria.getTblMateria().getSelectedRow();
-        if(fila >= 0) {
+        if (fila >= 0) {
 
             FrmRequisitos frmreq = new FrmRequisitos();
             VtnRequisitosCTR vtnreq = new VtnRequisitosCTR(conecta, ctrPrin, vtnPrin, frmreq, materia, materias.get(fila));
@@ -298,8 +298,6 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
         }
-
-
 
     }
 
