@@ -247,11 +247,11 @@
                 <Column editable="false" title="S.Nombre" type="java.lang.Object"/>
                 <Column editable="true" title="Aporte 1" type="java.lang.Object"/>
                 <Column editable="true" title="Ex. Interciclo" type="java.lang.Object"/>
-                <Column editable="true" title="T. Interciclo" type="java.lang.Object"/>
+                <Column editable="false" title="T. Interciclo" type="java.lang.Object"/>
                 <Column editable="true" title="Aporte 2" type="java.lang.Object"/>
                 <Column editable="true" title="Ex. Final" type="java.lang.Object"/>
                 <Column editable="true" title="Ex. Supletorio" type="java.lang.Object"/>
-                <Column editable="true" title="Not. Final" type="java.lang.Object"/>
+                <Column editable="false" title="Not. Final" type="java.lang.Object"/>
                 <Column editable="true" title="Estado" type="java.lang.Object"/>
                 <Column editable="true" title="Nro. Faltas" type="java.lang.Object"/>
                 <Column editable="true" title="% Faltas" type="java.lang.Object"/>
@@ -300,7 +300,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="80" minWidth="80" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -320,12 +320,12 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="70" minWidth="70" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="60" minWidth="60" prefWidth="-1" resizable="true">
+                <Column maxWidth="100" minWidth="100" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
