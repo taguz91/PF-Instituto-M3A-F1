@@ -333,7 +333,7 @@ public class DocenteBD extends DocenteMD {
                 + "AND p.id_persona = d.id_persona \n"
                 + "AND docente_activo = TRUE\n"
                 + "ORDER BY id_docente;";
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
