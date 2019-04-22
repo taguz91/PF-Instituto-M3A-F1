@@ -179,8 +179,11 @@ public class FrmCursoCTR {
         if (guardar()) {
             actualizarCmbMaterias();
             actualizarCmbDocentes();
+            frmCurso.getLblError().setVisible(false);
         } else {
-            System.out.println("Guardar y seguir");
+//            frmCurso.getLblError().setText("Posiblemente ya este asignada la materia.");
+//            frmCurso.getLblError().setVisible(true);
+            System.out.println("No se pudo guardar, posiblmente ");
         }
     }
 
@@ -235,18 +238,19 @@ public class FrmCursoCTR {
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
+
+                    existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
+                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId_PerioLectivo(),
+                            paralelo);
+                    if (existeCurso != null) {
+                        guardar = false;
+                        frmCurso.getLblError().setText("Este curso ya tiene guardado: " + materias.get(posMat - 1).getNombre() + ".");
+                        frmCurso.getLblError().setVisible(true);
+                    } else {
+                        frmCurso.getLblError().setVisible(false);
+                    }
                 }
 
-                existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
-                        jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId_PerioLectivo(),
-                        paralelo);
-                if (existeCurso != null) {
-                    guardar = false;
-                    frmCurso.getLblError().setText("Este curso ya tiene guardado: " + materias.get(posMat - 1).getNombre() + ".");
-                    frmCurso.getLblError().setVisible(true);
-                } else {
-                    frmCurso.getLblError().setVisible(false);
-                }
             }
         }
 

@@ -107,6 +107,9 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         Cbx_OrgCurricular = new javax.swing.JComboBox<>();
         Cbx_CamFormacion = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Ingreso de Materias");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setText("Cancelar");

@@ -1010,7 +1010,6 @@ public class ControladorSilaboC {
         });
 
         cargarEstrategias(unidadesSilabo.get(0));
-        
         gestion.getCmbUnidad().setSelectedIndex(0);
     }
 
