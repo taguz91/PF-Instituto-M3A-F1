@@ -54,13 +54,13 @@ public class VtnAlumnoCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Alumnos");
         ctrPrin.setIconJIFrame(vtnAlumno);
         vtnPrin.getDpnlPrincipal().add(vtnAlumno);
         vtnAlumno.show();
-        //Inicializamos la clase de alumno  
+        //Inicializamos la clase de alumno
         bdAlumno = new AlumnoBD(conecta);
     }
 
@@ -76,7 +76,11 @@ public class VtnAlumnoCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
+
+                if (e.getKeyCode() == 10) {
+                   
+                    buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
+                } 
             }
         };
 
@@ -125,10 +129,10 @@ public class VtnAlumnoCTR {
         });
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
-        //Validacion del buscador  
+        //Validacion del buscador
         vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(),
                 vtnAlumno.getBtnBuscar()));
-        
+
 //        vtnAlumno.getChBx_Alumnos().addActionListener(new ActionListener(){
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -155,7 +159,7 @@ public class VtnAlumnoCTR {
         vtnAlumno.dispose();
         ctrPrin.cerradoJIF();
     }
-    
+
     public void abrirVtnMaterias(){
         //AlumnoMD al = capturarFila();
         mdAlumno = capturarFila();
@@ -167,7 +171,7 @@ public class VtnAlumnoCTR {
             materias.iniciarVentana();
         }
     }
-    
+
     public void iniciarComponentes(){
         vtnAlumno.getBtn_Materias().setVisible(false);
         //vtnAlumno.getCbx_Filtrar().setVisible(false);
@@ -199,7 +203,7 @@ public class VtnAlumnoCTR {
         }
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-    
+
     public void llenarElimanados(){
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
@@ -220,7 +224,7 @@ public class VtnAlumnoCTR {
         }
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-    
+
     public void llenarRetirados(){
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
