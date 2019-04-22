@@ -122,9 +122,15 @@ public class VtnMallaAlumnoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = vtnMallaAlm.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscarMalla(a);
+                } else if (b.length() == 0) {
+                    mdTbl.setRowCount(0); 
+                }
+                /*
                 if (a.length() >= 10) {
                     buscarMalla(a);
-                }
+                }*/
             }
         });
         vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());

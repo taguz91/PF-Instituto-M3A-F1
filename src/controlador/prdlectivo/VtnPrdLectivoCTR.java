@@ -45,7 +45,7 @@ public class VtnPrdLectivoCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
 
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Peridos lectivos");
         ctrPrin.setIconJIFrame(vtnPrdLectivo);
@@ -70,11 +70,18 @@ public class VtnPrdLectivoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnPrdLectivo.getTxt_Buscar().getText().toUpperCase();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscaIncremental(b);
                 } else if (b.length() == 0) {
                     llenarTabla();
                 }
+                /*
+                if (b.length() > 2) {
+                    buscaIncremental(b);
+                } else if (b.length() == 0) {
+                    llenarTabla();
+                }*/
+
             }
         };
 
@@ -144,7 +151,7 @@ public class VtnPrdLectivoCTR {
             } else{
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
             }
-            
+
         }
         if (periodos.isEmpty()) {
             vtnPrdLectivo.getLblResultados().setText("0 Resultados obtenidos.");
@@ -177,7 +184,7 @@ public class VtnPrdLectivoCTR {
                 dia_Fin = String.valueOf(lista.get(i).getFecha_Fin().getDayOfMonth());
                 mes_Fin = String.valueOf(lista.get(i).getFecha_Fin().getMonthValue());
                 anio_Fin = String.valueOf(lista.get(i).getFecha_Fin().getYear());
-//                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " + 
+//                nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   " +
 //                    bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
                 nombre = lista.get(i).getNombre_PerLectivo();
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(lista.get(i).getId_PerioLectivo(), i, 0);

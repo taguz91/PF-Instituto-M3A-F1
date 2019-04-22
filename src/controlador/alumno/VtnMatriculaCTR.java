@@ -43,13 +43,13 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         this.matr = new MatriculaBD(conecta);
         this.vtnMatri = vtnMatri;
         this.prd = new PeriodoLectivoBD(conecta);
-        //Mostramos en la ventana 
+        //Mostramos en la ventana
         vtnPrin.getDpnlPrincipal().add(vtnMatri);
         vtnMatri.show();
     }
 
     public void iniciar() {
-        //Iniciamos la tabla 
+        //Iniciamos la tabla
         String[] t = {"Periodo", "Alumno", "Fecha", "Hora"};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
@@ -75,11 +75,18 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         vtnMatri.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+
+              if (e.getKeyCode() == 10) {
+                  buscar(vtnMatri.getTxtBuscar().getText().trim());
+              } else if (b.length() == 0) {
+                  cargarMatriculas();
+              }
+              /*
                 if (vtnMatri.getTxtBuscar().getText().trim().length() > 2) {
                     buscar(vtnMatri.getTxtBuscar().getText().trim());
                 } else if (vtnMatri.getTxtBuscar().getText().trim().length() == 0) {
                     cargarMatriculas();
-                }
+                }*/
             }
         });
     }
@@ -137,7 +144,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             vtnMatri.getLblNumResultados().setText("0 Resultados obtenidos.");
         }
     }
-    
+
     private void abrirFrm(){
         ctrPrin.abrirFrmMatricula();
     }
