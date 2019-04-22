@@ -36,7 +36,7 @@ public class AnimacionCarga extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Animacion en funcionamiento 000000000");
+        System.out.println("Animacion en funcionamiento 1111111111");
         try {
             ina = InetAddress.getByName(Propiedades.getPropertie("ip"));
         } catch (UnknownHostException e) {
