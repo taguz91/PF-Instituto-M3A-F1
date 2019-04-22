@@ -160,7 +160,8 @@ public class ControladorCRUD {
                 modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
                     smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
-                    estado});
+                    estado,
+                    smd.getIdSilabo()});
 
             }
 
@@ -180,7 +181,7 @@ public class ControladorCRUD {
         int seleccion = crud.getTblSilabos().getSelectedRow();
 
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getNombre().equals(crud.getTblSilabos().getValueAt(seleccion, 0))).
+                filter(s -> s.getIdMateria().getId()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
 
         return silaboSeleccionado.get();

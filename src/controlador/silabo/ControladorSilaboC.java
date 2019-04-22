@@ -329,7 +329,7 @@ public class ControladorSilaboC {
             cargarReferencias(referenciasSilabo);
             
            
-     
+           
 
         }
 
