@@ -29,7 +29,10 @@ public class VtnAccesos extends javax.swing.JInternalFrame {
         lblEstado = new javax.swing.JLabel();
         lblResultados = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
 
         tblAccesosDeRol.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
