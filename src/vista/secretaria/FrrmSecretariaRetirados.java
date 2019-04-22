@@ -5,17 +5,97 @@
  */
 package vista.secretaria;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author ana96
  */
-public class secretariaRetirados extends javax.swing.JInternalFrame {
+public class FrrmSecretariaRetirados extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form secretariaRetirados
      */
-    public secretariaRetirados() {
+    public FrrmSecretariaRetirados() {
         initComponents();
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public JButton getBtnRetirados() {
+        return btnRetirados;
+    }
+
+    public void setBtnRetirados(JButton btnRetirados) {
+        this.btnRetirados = btnRetirados;
+    }
+
+    public JCheckBox getCbxAlumnoRetirado() {
+        return cbxAlumnoRetirado;
+    }
+
+    public void setCbxAlumnoRetirado(JCheckBox cbxAlumnoRetirado) {
+        this.cbxAlumnoRetirado = cbxAlumnoRetirado;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JComboBox<String> getJcbxFiltrarSecretaria() {
+        return jcbxFiltrarSecretaria;
+    }
+
+    public void setJcbxFiltrarSecretaria(JComboBox<String> jcbxFiltrarSecretaria) {
+        this.jcbxFiltrarSecretaria = jcbxFiltrarSecretaria;
+    }
+
+    public JTable getJtbSecretaria() {
+        return jtbSecretaria;
+    }
+
+    public void setJtbSecretaria(JTable jtbSecretaria) {
+        this.jtbSecretaria = jtbSecretaria;
+    }
+
+    public JLabel getLblBuscar() {
+        return lblBuscar;
+    }
+
+    public void setLblBuscar(JLabel lblBuscar) {
+        this.lblBuscar = lblBuscar;
+    }
+
+    public JLabel getLblFiltrar() {
+        return lblFiltrar;
+    }
+
+    public void setLblFiltrar(JLabel lblFiltrar) {
+        this.lblFiltrar = lblFiltrar;
+    }
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
+    }
+
+    public void setTxtBuscar(JTextField txtBuscar) {
+        this.txtBuscar = txtBuscar;
     }
 
     /**
@@ -32,9 +112,9 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnRetirados = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jcbxFiltroCursos = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jtbSecretaria = new javax.swing.JTable();
+        jcbxFiltrarSecretaria = new javax.swing.JComboBox<>();
+        lblFiltrar = new javax.swing.JLabel();
         cbxAlumnoRetirado = new javax.swing.JCheckBox();
 
         setClosable(true);
@@ -55,7 +135,7 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
         btnRetirados.setText("Retirar Alumno");
         getContentPane().add(btnRetirados, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbSecretaria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -74,15 +154,15 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtbSecretaria);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 170));
 
-        jcbxFiltroCursos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[FILTRAR]" }));
-        getContentPane().add(jcbxFiltroCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 140, -1));
+        jcbxFiltrarSecretaria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[FILTRAR]" }));
+        getContentPane().add(jcbxFiltrarSecretaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 140, -1));
 
-        jLabel1.setText("Filtrar");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        lblFiltrar.setText("Filtrar");
+        getContentPane().add(lblFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         cbxAlumnoRetirado.setText("Mostrar Alumnos Retirados");
         getContentPane().add(cbxAlumnoRetirado, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
@@ -95,11 +175,11 @@ public class secretariaRetirados extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRetirados;
     private javax.swing.JCheckBox cbxAlumnoRetirado;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> jcbxFiltroCursos;
+    private javax.swing.JComboBox<String> jcbxFiltrarSecretaria;
+    private javax.swing.JTable jtbSecretaria;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblFiltrar;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
