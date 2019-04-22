@@ -352,7 +352,7 @@ public class VtnHistorialUserCTR {
                 && posAcc == 0 && posFI == 0
                 && posFF == 0) {
             //Consultamos por tabla 
-            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1));
+            historial = his.cargarHistorialAccion(acciones.get(posTbl - 1));
         } else if (posUser == 0 && posTbl > 0
                 && posAcc > 0 && posFI == 0
                 && posFF == 0) {

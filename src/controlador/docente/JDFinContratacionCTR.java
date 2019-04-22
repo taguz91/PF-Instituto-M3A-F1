@@ -231,7 +231,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
                     frmFinContrato.getBtnGuardar().setEnabled(false);
                     guardar = false;
                 } else {
-                    frmFinContrato.getBtnGuardar().setText("Siguinte");
+                    frmFinContrato.getBtnGuardar().setText("Siguiente");
                     frmFinContrato.getBtnGuardar().setEnabled(true);
                     guardar = false;
                 }

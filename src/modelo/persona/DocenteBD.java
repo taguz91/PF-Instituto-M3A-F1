@@ -223,6 +223,7 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
+
     public ArrayList<DocenteMD> cargarDocentesEliminados() {
         String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
@@ -233,7 +234,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = false;";
         return consultarDocenteTbl(sql);
     }
-    
+
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
         String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
                 + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
@@ -250,7 +251,7 @@ public class DocenteBD extends DocenteMD {
                 c.setId_materia(m);
                 c.setCurso_nombre(rs.getString("curso_nombre"));
                 lista.add(c);
-                
+
             }
             rs.close();
             return lista;
@@ -259,6 +260,7 @@ public class DocenteBD extends DocenteMD {
             return null;
         }
     }
+
     public ArrayList<DocenteMD> cargarDocentesPorCarrera(int idCarrera) {
         ArrayList<DocenteMD> docentes = new ArrayList();
         String sql = "	\n"
@@ -397,6 +399,7 @@ public class DocenteBD extends DocenteMD {
 //            return null;
 //        }
 //    }
+
     public DocenteMD buscarDocenteParaReferencia(int idDocente) {
         DocenteMD d = new DocenteMD();
         String sql = "SELECT id_docente, id_persona, docente_codigo \n"
@@ -509,8 +512,8 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-    
-    public boolean deshabilitarCursos(int idPeriodo, int idDocente){
+
+    public boolean deshabilitarCursos(int idPeriodo, int idDocente) {
         String sql = "UPDATE public.\"Cursos\" SET curso_activo = false "
                 + "WHERE id_docente = " + idDocente + " AND id_prd_lectivo = " + idPeriodo + ";";
         System.out.println(sql);
@@ -537,7 +540,7 @@ public class DocenteBD extends DocenteMD {
         return consultarDocenteTbl(sql);
     }
 
-        public ArrayList<DocenteMD> buscarEliminados(String aguja) {
+    public ArrayList<DocenteMD> buscarEliminados(String aguja) {
         String sql = "SELECT docente_codigo,id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
@@ -551,6 +554,7 @@ public class DocenteBD extends DocenteMD {
                 + ");";
         return consultarDocenteTbl(sql);
     }
+
     public DocenteMD buscarDocente(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
@@ -617,8 +621,8 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-    
-    public boolean terminarContrato(int aguja){
+
+    public boolean terminarContrato(int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_en_funcion = false\n"
                 + " WHERE id_docente = " + aguja + ";";
@@ -629,7 +633,7 @@ public class DocenteBD extends DocenteMD {
             return false;
         }
     }
-    
+
     public static Integer selectIdDocenteWhereUsername(String username) {
 
         String SELECT = "SELECT\n"
@@ -659,18 +663,17 @@ public class DocenteBD extends DocenteMD {
 
     public static HashMap<String, DocenteMD> selectAll() {
 
-        String SELECT = "SELECT\n"
-                + "\"public\".\"ViewDocentes\".id_docente,\n"
-                + "\"public\".\"ViewDocentes\".id_persona,\n"
-                + "\"public\".\"ViewDocentes\".docente_codigo,\n"
-                + "\"public\".\"ViewDocentes\".docente_activo,\n"
-                + "\"public\".\"ViewDocentes\".persona_identificacion,\n"
-                + "\"public\".\"ViewDocentes\".persona_primer_apellido,\n"
-                + "\"public\".\"ViewDocentes\".persona_segundo_apellido,\n"
-                + "\"public\".\"ViewDocentes\".persona_primer_nombre,\n"
-                + "\"public\".\"ViewDocentes\".persona_segundo_nombre\n"
-                + "FROM\n"
-                + "\"public\".\"ViewDocentes\"\n"
+        String SELECT = "SELECT \"Docentes\".id_docente,\n"
+                + "    \"Docentes\".id_persona,\n"
+                + "    \"Docentes\".docente_codigo,\n"
+                + "    \"Docentes\".docente_activo,\n"
+                + "    \"Personas\".persona_identificacion,\n"
+                + "    \"Personas\".persona_primer_apellido,\n"
+                + "    \"Personas\".persona_segundo_apellido,\n"
+                + "    \"Personas\".persona_primer_nombre,\n"
+                + "    \"Personas\".persona_segundo_nombre\n"
+                + "   FROM (\"Docentes\"\n"
+                + "     JOIN \"Personas\" ON ((\"Docentes\".id_persona = \"Personas\".id_persona)))\n"
                 + "ORDER BY persona_primer_apellido";
 
         HashMap<String, DocenteMD> lista = new HashMap<>();

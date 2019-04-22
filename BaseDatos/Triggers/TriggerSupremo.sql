@@ -1,9 +1,6 @@
 --Tabla en la que se almacenaran los datos
 CREATE TABLE "MallaAlumnoBackup"(
 	"id_malla_alumno" integer NOT NULL,
-	"id_materia" integer NOT NULL,
-	"id_almn_carrera" integer NOT NULL,
-	"malla_almn_ciclo" integer NOT NULL,
 	"malla_almn_num_matricula" integer NOT NULL DEFAULT '0',
 	"malla_almn_nota1" numeric(6, 2) NOT NULL DEFAULT '0',
 	"malla_almn_nota2" numeric(6, 2) NOT NULL DEFAULT '0',
@@ -11,6 +8,7 @@ CREATE TABLE "MallaAlumnoBackup"(
 	"malla_almn_estado" character varying(1) NOT NULL DEFAULT 'P',
 	"malla_alm_observacion" character varying(200),
   "id_prd_lectivo" integer NOT NULL,
+	"num_cierre" integer NOT NULL,
   "fecha_cierre" TIMESTAMP DEFAULT now()
 ) WITH (OIDS = FALSE);
 /*
@@ -23,21 +21,37 @@ CREATE OR REPLACE FUNCTION cierre_prd_backup()
 RETURNS TRIGGER AS $cierre_prd_backup$
 --Declaramos un cursor
 BEGIN
-	IF new.prd_lectivo_estado = FALSE THEN
+	IF new.prd_lectivo_estado = FALSE AND old.prd_lectivo_num_cierre < 1 THEN
 	 --Buscamos todos los alumnos para insertarlos en la tabla copia
    INSERT INTO public."MallaAlumnoBackup"(
-  	id_malla_alumno, id_materia, id_almn_carrera, malla_almn_ciclo,
-  	malla_almn_num_matricula, malla_almn_nota1,
+  	id_malla_alumno, malla_almn_num_matricula, malla_almn_nota1,
   	malla_almn_nota2, malla_almn_nota3, malla_almn_estado,
-  	malla_alm_observacion, id_prd_lectivo)
-    SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
-    malla_almn_ciclo, malla_almn_num_matricula,
+  	malla_alm_observacion, id_prd_lectivo, num_cierre)
+    SELECT id_malla_alumno, malla_almn_num_matricula,
     malla_almn_nota1, malla_almn_nota2,
-    malla_almn_nota3, malla_almn_estado, malla_alm_observacion, old.id_prd_lectivo
+    malla_almn_nota3, malla_almn_estado, malla_alm_observacion, old.id_prd_lectivo,
+		old.prd_lectivo_num_cierre
     FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
     WHERE ac.id_carrera = old.id_carrera
     AND ma.id_almn_carrera = ac.id_almn_carrera
     AND malla_almn_estado = 'M';
+	ELSIF new.prd_lectivo_estado = FALSE AND old.prd_lectivo_num_cierre >= 1 THEN
+		--Borramos los datos anteriores
+		DELETE FROM public."MallaAlumnoBackup"
+		WHERE id_prd_lectivo = old.id_prd_lectivo;
+		--Insertamos los nuevos datos
+		INSERT INTO public."MallaAlumnoBackup"(
+		 id_malla_alumno, malla_almn_num_matricula, malla_almn_nota1,
+		 malla_almn_nota2, malla_almn_nota3, malla_almn_estado,
+		 malla_alm_observacion, id_prd_lectivo, num_cierre)
+		 SELECT id_malla_alumno, malla_almn_num_matricula,
+		 malla_almn_nota1, malla_almn_nota2,
+		 malla_almn_nota3, malla_almn_estado, malla_alm_observacion, old.id_prd_lectivo,
+		 old.prd_lectivo_num_cierre
+		 FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
+		 WHERE ac.id_carrera = old.id_carrera
+		 AND ma.id_almn_carrera = ac.id_almn_carrera
+		 AND malla_almn_estado = 'M';
 	END IF;
 	RETURN NEW;
 END;
@@ -110,10 +124,14 @@ DECLARE
 
 BEGIN
   IF new.prd_lectivo_estado = FALSE THEN
---Comprobamos el total de registros que se deberian hacer
+		--Actualizamos el numero de cierre
+		UPDATE public."PeriodoLectivo"
+			SET prd_lectivo_num_cierre = prd_lectivo_num_cierre + 1
+			WHERE id_prd_lectivo = old.id_prd_lectivo;
+		--Comprobamos el total de registros que se deberian hacer
     SELECT count(*) INTO total
     FROM public."AlumnoCurso" ac, public."Cursos" c
-    WHERE c.id_prd_lectivo = 2 AND
+    WHERE c.id_prd_lectivo = old.id_prd_lectivo AND
     ac.id_curso = c.id_curso;
     RAISE NOTICE 'Total de registros: %', total;
     OPEN almn_curso;
@@ -180,6 +198,53 @@ AFTER UPDATE OF prd_lectivo_estado
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE pasar_notas();
 
+--Cuando se abre el periodo nuevamente todo regresa a como era antes
+
+--	DROP FUNCTION backup_notas_prd();
+CREATE OR REPLACE FUNCTION backup_notas_prd()
+RETURNS TRIGGER AS $backup_notas_prd$
+DECLARE
+	total INTEGER := 0;
+	ingresados INTEGER := 0;
+
+  reg RECORD;
+  backup_notas CURSOR FOR  SELECT id_malla_alumno, malla_almn_num_matricula,
+	malla_almn_nota1, malla_almn_nota2,
+	malla_almn_nota3, malla_almn_estado, malla_alm_observacion,
+	num_cierre FROM public."MallaAlumnoBackup"
+	WHERE id_prd_lectivo = old.id_prd_lectivo;
+BEGIN
+  IF new.prd_lectivo_estado = TRUE THEN
+		SELECT count(*) INTO total
+		FROM public."MallaAlumnoBackup"
+		WHERE id_prd_lectivo = old.id_prd_lectivo;
+		RAISE NOTICE 'Debemos ingresar : %', total;
+
+    OPEN backup_notas;
+    FETCH backup_notas INTO reg;
+
+    WHILE ( FOUND ) LOOP
+			ingresados := ingresados + 1;
+			UPDATE public."MallaAlumno"
+				SET  malla_almn_num_matricula= reg.malla_almn_num_matricula,
+				malla_almn_nota1= reg.malla_almn_nota1,
+				malla_almn_nota2= reg.malla_almn_nota2,
+				malla_almn_nota3= reg.malla_almn_nota3,
+				malla_almn_estado= reg.malla_almn_estado,
+				malla_alm_observacion= reg.malla_alm_observacion
+				WHERE id_malla_alumno= reg.id_malla_alumno;
+      FETCH backup_notas INTO reg;
+    END LOOP;
+		RAISE NOTICE 'Total de ingresados: % Todos se ingreasaron: %', ingresados, total = ingresados;
+  END IF;
+	RETURN NEW;
+END;
+$backup_notas_prd$ LANGUAGE plpgsql;
+
+CREATE TRIGGER backup_notas_malla
+AFTER UPDATE OF prd_lectivo_estado
+ON public."PeriodoLectivo" FOR EACH ROW
+EXECUTE PROCEDURE backup_notas_prd();
 
 --Demostracion
 

@@ -215,14 +215,16 @@ public class FrmAlumnoCursoCTR {
 
             cursosSelec.forEach(c -> {
                 //Guardamos el alumno en su curso 
-                almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
+                //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
+                almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
                 //Actualizamos el numero de matricula
-                mallaAlm.actualizarNumMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
-
-                mallaAlm.actualizarEstadoMallaAlmn(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
+//                mallaAlm.actualizarNumMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+//                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
+//
+//                mallaAlm.actualizarEstadoMallaAlmn(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+//                        periodos.get(posCar - 1).getCarrera().getId(), c.getId_materia().getId());
             });
+            almnCurso.guardarAlmnCurso();
             JOptionPane.showMessageDialog(null, "Se guardó el alumno en el curso, correctamente");
             //Reiniciamos todo 
             frmAlmCurso.getTxtBuscar().setText("");
@@ -513,14 +515,14 @@ public class FrmAlumnoCursoCTR {
             //Comprabamos que el curso en el que se quiere no estan vacios 
             if (!cursos.isEmpty()) {
                 //Revisamos el ciclo que es 
-                if (cursos.get(0).getCurso_ciclo() > 3) {
-                    cursos.forEach(c -> {
-                        Object[] valores = {c.getId_materia().getNombre()};
-                        mdMatPen.addRow(valores);
-                        //Agregamos la lista de cursos depurada 
-                        cursosPen = cursos;
-                    });
-                } else {
+                if (cursos.get(0).getCurso_ciclo() > 1) {
+//                    cursos.forEach(c -> {
+//                        Object[] valores = {c.getId_materia().getNombre()};
+//                        mdMatPen.addRow(valores);
+//                        //Agregamos la lista de cursos depurada 
+//                        cursosPen = cursos;
+//                    });
+//                } else {
                     llenarTblConRequisitosPasados(cursos);
                 }
 
