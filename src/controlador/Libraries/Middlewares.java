@@ -197,4 +197,8 @@ public class Middlewares {
     public static void bugProcessor(JComponent view) {
         setDefaultCursor(view);
     }
+
+    public static double conversor(String texto) {
+        return Math.round(Double.valueOf(texto) * 10) / 10d;
+    }
 }

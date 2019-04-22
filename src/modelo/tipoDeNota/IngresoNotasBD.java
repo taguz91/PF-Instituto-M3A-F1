@@ -59,7 +59,6 @@ public class IngresoNotasBD extends IngresoNotasMD {
     }
 
     public static IngresoNotasMD selectFromViewActivos(int idCurso) {
-        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
         String SELECT = "SELECT\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".nota_primer_inteciclo,\n"
                 + "\"public\".\"ViewCursosPermisosNotas\".nota_examen_intecilo,\n"
@@ -98,7 +97,6 @@ public class IngresoNotasBD extends IngresoNotasMD {
 
     private static List<IngresoNotasBD> selectFromView(String QUERY) {
         System.out.println(QUERY);
-        ResourceManager.Statements("REFRESH MATERIALIZED VIEW \"ViewCursosPermisosNotas\" \n");
         List<IngresoNotasBD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(QUERY);
         try {
