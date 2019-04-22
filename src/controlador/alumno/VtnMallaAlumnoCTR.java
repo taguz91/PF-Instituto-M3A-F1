@@ -121,10 +121,16 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String a = vtnMallaAlm.getTxtBuscar().getText().trim();
+                String b = vtnMallaAlm.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscarMalla(b);
+                } else if (b.length() == 0) {
+                    mdlTbl.setRowCount(0); 
+                }
+                /*
                 if (a.length() >= 10) {
                     buscarMalla(a);
-                }
+                }*/
             }
         });
         vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());
@@ -174,10 +180,10 @@ public class VtnMallaAlumnoCTR {
     }
 
     private void InitPermisosTester() {
-        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
-            vtnMallaAlm.getBtnIngNota().setEnabled(false);
-            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
-        }
+//        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+//            vtnMallaAlm.getBtnIngNota().setEnabled(false);
+//            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
+//        }
     }
 
     public void actualizarVtn(MallaAlumnoMD m) {
