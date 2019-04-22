@@ -1,6 +1,7 @@
 package controlador.materia;
 
 import controlador.carrera.VtnCarreraCTR;
+import controlador.persona.FrmPersonaCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -21,6 +22,7 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
@@ -30,8 +32,10 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.materia.FrmMaterias;
 import vista.materia.FrmRequisitos;
 import vista.materia.VtnMateria;
+import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -47,6 +51,7 @@ public class VtnMateriaCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final CarreraBD carrerBD;
+    
 
     //El modelo de la tabla materias  
     private DefaultTableModel mdTblMat;
@@ -56,6 +61,7 @@ public class VtnMateriaCTR {
     private ArrayList<CarreraMD> carreras;
     //Ciclos de una carrera  
     private ArrayList<Integer> ciclos;
+    
 
     /**
      * Iniciamos las dependencias de base de datos.
@@ -81,7 +87,7 @@ public class VtnMateriaCTR {
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
-        
+
     }
 
     /**
@@ -117,6 +123,9 @@ public class VtnMateriaCTR {
         cargarCmbCarreras();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
+        vtnMateria.getBtnIngresarMateria().addActionListener(e -> ingresarMaterias());
+        vtnMateria.getBtnEditarMateria().addActionListener(e -> editarMaterias());
+        vtnMateria.getBtnEliminarMateria().addActionListener(e -> eliminarMaterias());
 
 //        vtnMateria.getCmbCarreras().addMouseListener(new MouseAdapter() {
 //            @Override
@@ -145,13 +154,13 @@ public class VtnMateriaCTR {
      * Informacion de la materia, nos indican sus materias de co y pre
      * requisitos.
      */
-    private void infoMateria(){
+    private void infoMateria() {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
             MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId());
             JDMateriaInfoCTR info = new JDMateriaInfoCTR(vtnPrin, conecta, mt, ctrPrin, materia);
             info.iniciar();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione una materia");
         }
     }
@@ -286,7 +295,7 @@ public class VtnMateriaCTR {
 
     public void abrirFrmRequisito() {
         int fila = vtnMateria.getTblMateria().getSelectedRow();
-        if(fila >= 0) {
+        if (fila >= 0) {
 
             FrmRequisitos frmreq = new FrmRequisitos();
             VtnRequisitosCTR vtnreq = new VtnRequisitosCTR(conecta, ctrPrin, vtnPrin, frmreq, materia, materias.get(fila));
@@ -294,9 +303,54 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
         }
-        
-        
-        
+
+    }
+
+    private void ingresarMaterias() {
+        ctrPrin.abrirFrmMateria();
+        vtnMateria.dispose();
+        ctrPrin.cerradoJIF();
+    }
+
+    private void editarMaterias() {
+        int posFila = vtnMateria.getTblMateria().getSelectedRow();
+        if (posFila >= 0) {
+            vtnMateria.getLblError().setVisible(false);
+            FrmMaterias frmMateria = new FrmMaterias();
+            FrmMateriasCTR ctrFrm = new FrmMateriasCTR(vtnPrin, frmMateria, conecta, ctrPrin);
+            ctrFrm.iniciar();
+            //Le pasamos la persona de nuestro lista justo la persona seleccionada
+            MateriaMD matEditar = materia.buscarMateria(Integer.parseInt(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
+            ctrFrm.editarMaterias(matEditar);
+            cargarTblMaterias();
+        } else {
+            vtnMateria.getLblError().setVisible(true);
+        }
+
+    }
+
+    private void eliminarMaterias() {
+        int posFila = vtnMateria.getTblMateria().getSelectedRow();
+        if (posFila >= 0) {
+            MateriaMD mate;
+            System.out.println(Integer.valueOf(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
+            mate = materia.buscarMateria(Integer.valueOf(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
+            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"
+                    + vtnMateria.getTblMateria().getValueAt(posFila, 2) + "?", " Eliminar Materia", dialog);
+            if (result == 0) {
+                if (materia.editarMateria(mate.getId()) == true) {
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
+
+                    cargarTblMaterias();
+                    vtnMateria.getTxtBuscar().setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR A LA MATERIA");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA MATERIA");
+        }
     }
 
 }
