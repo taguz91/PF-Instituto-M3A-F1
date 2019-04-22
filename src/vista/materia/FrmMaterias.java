@@ -109,6 +109,9 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorOrganizacionCurricular = new javax.swing.JLabel();
         lblErrorCampoFormacion = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Ingreso de Materias");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setText("Cancelar");
