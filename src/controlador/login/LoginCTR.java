@@ -9,11 +9,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
+import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
@@ -34,6 +37,9 @@ public class LoginCTR {
     //Icono de la aplicacion
     private final ImageIcon icono;
     private final Image ista;
+
+    //validacion
+    private boolean carga = true;
 
     public LoginCTR(Login vista, UsuarioBD modelo) {
         this.vista = vista;
@@ -105,39 +111,49 @@ public class LoginCTR {
 
     //Metodos de Apoyo
     private void Login() {
-        new Thread(() -> {
 
-            Middlewares.setLoadCursorInWindow(vista);
+        if (carga) {
 
-            USERNAME = vista.getTxtUsername().getText();
-            PASSWORD = vista.getTxtPassword().getText();
+            new Thread(() -> {
 
-            modelo.setUsername(vista.getTxtUsername().getText());
-            modelo.setPassword(vista.getTxtPassword().getText());
+                Middlewares.setLoadCursorInWindow(vista);
 
-            try {
-                List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+                USERNAME = vista.getTxtUsername().getText();
+                PASSWORD = vista.getTxtPassword().getText();
 
-                if (!Lista.isEmpty()) {
+                Map<Object, Object> properties = new HashMap<>();
+                properties.put("username", USERNAME);
+                properties.put("password", PASSWORD);
 
-                    modelo.setPersona(Lista.get(0).getPersona());
+                Propiedades.generateUserProperties(properties);
 
-                    vista.dispose();
+                modelo.setUsername(vista.getTxtUsername().getText());
+                modelo.setPassword(vista.getTxtPassword().getText());
 
-                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
-                    vtn.Init();
+                try {
+                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
-                } else {
+                    if (!Lista.isEmpty()) {
+
+                        modelo.setPersona(Lista.get(0).getPersona());
+
+                        vista.dispose();
+
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
+                        vtn.Init();
+
+                    } else {
+                        vista.getLblAvisos().setVisible(true);
+                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                    }
+
+                } catch (NullPointerException e) {
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
 
-            } catch (NullPointerException e) {
-                vista.getLblAvisos().setVisible(true);
-                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-            }
-
-        }).start();
+            }).start();
+        }
 
     }
 
@@ -154,12 +170,13 @@ public class LoginCTR {
             String c = new String(pass.getPassword());
             if (c.equals("soyyo")) {
 
-                USERNAME = "JOHNNY";
-                PASSWORD = "ROOT";
+                USERNAME = "ROOT";
+                PASSWORD = "RUTH";
 
-                modelo.setUsername("JOHNNY");
-                modelo.setPassword("ROOT");
+                modelo.setUsername("ROOT");
+                modelo.setPassword("RUTH");
 
+                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
                 ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
                 System.out.println("Conexion " + conecta.getConecction());
                 try {
@@ -171,7 +188,7 @@ public class LoginCTR {
 
                         vista.dispose();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
                         vtn.Init();
 
                     } else {

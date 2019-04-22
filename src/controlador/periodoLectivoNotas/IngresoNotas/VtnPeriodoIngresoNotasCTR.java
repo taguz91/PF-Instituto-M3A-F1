@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas.IngresoNotas;
 
-import controlador.periodoLectivoNotas.IngresoNotas.forms.FrmIngresoNotasCTR;
+import controlador.periodoLectivoNotas.IngresoNotas.forms.FrmIngresoNotasAgregar;
 import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -81,7 +81,7 @@ public class VtnPeriodoIngresoNotasCTR {
             }
 
         });
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnIngresar().addActionListener(e -> btnIngresar(e));
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
     }
 
@@ -167,8 +167,8 @@ public class VtnPeriodoIngresoNotasCTR {
         if (fila != -1) {
 
             setObjFromTabla(fila);
-            FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), modelo, this, "Editar");
-            form.Init();
+//            FrmIngresoNotasAgregar form = new FrmIngresoNotasAgregar(desktop, new FrmIngresoNotas(), modelo, this, "Editar");
+//            form.Init();
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         }
@@ -190,11 +190,10 @@ public class VtnPeriodoIngresoNotasCTR {
         }
     }
 
-    private void btnIngresarActionPerformance(ActionEvent e) {
+    private void btnIngresar(ActionEvent e) {
 
-        FrmIngresoNotasCTR form = new FrmIngresoNotasCTR(desktop, new FrmIngresoNotas(), new PeriodoIngresoNotasBD(), this, "Agregar");
-        form.Init();
-
+        FrmIngresoNotasAgregar form = new FrmIngresoNotasAgregar(desktop, new FrmIngresoNotas(), modelo, this);
+        form.InitAgregar();
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {

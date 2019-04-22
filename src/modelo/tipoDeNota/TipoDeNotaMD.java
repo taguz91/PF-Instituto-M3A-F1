@@ -2,6 +2,7 @@ package modelo.tipoDeNota;
 
 import java.time.LocalDate;
 import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
  *
@@ -15,16 +16,16 @@ public class TipoDeNotaMD {
     private double valorMaximo;
     private LocalDate fechaCreacion;
     private boolean estado;
-    private CarreraMD carrera;
+    private PeriodoLectivoMD periodoLectivo;
 
-    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, CarreraMD idCarrera) {
+    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, PeriodoLectivoMD periodoLectivo) {
         this.idTipoNota = idTipoNota;
         this.nombre = nombre;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
-        this.carrera = idCarrera;
+        this.periodoLectivo = periodoLectivo;
     }
 
     public TipoDeNotaMD() {
@@ -78,17 +79,17 @@ public class TipoDeNotaMD {
         this.estado = estado;
     }
 
-    public CarreraMD getCarrera() {
-        return carrera;
+    public PeriodoLectivoMD getPeriodoLectivo() {
+        return periodoLectivo;
     }
 
-    public void setCarrera(CarreraMD idCarrera) {
-        this.carrera = idCarrera;
+    public void setPeriodoLectivo(PeriodoLectivoMD periodoLectivo) {
+        this.periodoLectivo = periodoLectivo;
     }
 
     @Override
     public String toString() {
-        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", Carrera=" + carrera + '}';
+        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", periodoLectivo=" + periodoLectivo + '}';
     }
 
 }

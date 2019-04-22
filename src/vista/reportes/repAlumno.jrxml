@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cedula_alumno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT (per.persona_primer_nombre||' '||per.persona_segundo_nombre||' '||per.persona_primer_apellido||' '|| per.persona_segundo_apellido) as alumno,
+a.alumno_codigo,
+a.alumno_tipo_colegio,
+a.alumno_tipo_bachillerato,
+a.alumno_anio_graduacion,
+a.alumno_educacion_superior,
+a.alumno_titulo_superior,
+a.alumno_nivel_academico,
+a.alumno_pension,
+CASE WHEN alumno_pension=true THEN 'Posee'
+	ELSE 'No tiene'
+	END AS pension,
+	CASE WHEN alumno_trabaja=true THEN 'trabaja'
+	ELSE 'No trabaja'
+	END AS trabaja,
+a.alumno_ocupacion,
+a.alumno_trabaja,
+a.alumno_nivel_formacion_padre,
+a.alumno_nivel_formacion_madre,
+a.alumno_nombre_contacto_emergencia,
+a.alumno_parentesco_contacto,
+a.alumno_numero_contacto
+from public."Alumnos" a JOIN public. "Personas" per USING(id_persona)
+JOIN public."SectorEconomico" s USING (id_sec_economico)
+WHERE per.persona_identificacion =   $P{cedula_alumno}
+AND per.persona_activa = true 
+AND a.alumno_activo = true;]]>
+	</queryString>
+	<field name="alumno" class="java.lang.String"/>
+	<field name="alumno_codigo" class="java.lang.String"/>
+	<field name="alumno_tipo_colegio" class="java.lang.String"/>
+	<field name="alumno_tipo_bachillerato" class="java.lang.String"/>
+	<field name="alumno_anio_graduacion" class="java.lang.String"/>
+	<field name="alumno_educacion_superior" class="java.lang.Boolean"/>
+	<field name="alumno_titulo_superior" class="java.lang.String"/>
+	<field name="alumno_nivel_academico" class="java.lang.String"/>
+	<field name="alumno_pension" class="java.lang.Boolean"/>
+	<field name="pension" class="java.lang.String"/>
+	<field name="trabaja" class="java.lang.String"/>
+	<field name="alumno_ocupacion" class="java.lang.String"/>
+	<field name="alumno_trabaja" class="java.lang.Boolean"/>
+	<field name="alumno_nivel_formacion_padre" class="java.lang.String"/>
+	<field name="alumno_nivel_formacion_madre" class="java.lang.String"/>
+	<field name="alumno_nombre_contacto_emergencia" class="java.lang.String"/>
+	<field name="alumno_parentesco_contacto" class="java.lang.String"/>
+	<field name="alumno_numero_contacto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="2" width="555" height="99"/>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="348" y="40" width="207" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="121" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Alumno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="101" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="65" y="3" width="283" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="3" width="64" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estudiante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="23" width="64" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cedula:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="25" width="283" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_codigo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="43" width="554" height="2"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="378" splitType="Stretch">
+			<staticText>
+				<reportElement x="65" y="62" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Año de Graduacion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="42" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo Bachillerato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="22" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo Colegio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="82" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Titulo :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="2" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Nivel Academico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="136" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Ocupacion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="116" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Pension:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="186" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Nivel de formacion del padre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="156" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Trabajo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="239" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Contacto de emergencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="206" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[NIvel de formacion de la madre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="279" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Numero :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="259" width="141" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Parentesco :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="22" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_tipo_colegio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="42" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_tipo_bachillerato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="62" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_anio_graduacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="82" width="335" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_titulo_superior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="2" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_academico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="116" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pension}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="136" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_ocupacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="156" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trabaja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="186" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_formacion_padre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="206" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_formacion_madre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="239" width="335" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nombre_contacto_emergencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="259" width="207" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_parentesco_contacto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="279" width="207" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_numero_contacto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="102" width="554" height="2"/>
+			</line>
+			<line>
+				<reportElement x="0" y="174" width="554" height="2"/>
+			</line>
+			<line>
+				<reportElement x="1" y="226" width="554" height="2"/>
+			</line>
+			<line>
+				<reportElement x="2" y="299" width="554" height="2"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="9" splitType="Stretch"/>
+	</summary>
+</jasperReport>

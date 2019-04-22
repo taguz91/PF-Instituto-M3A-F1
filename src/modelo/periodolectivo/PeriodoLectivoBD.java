@@ -4,7 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConectarDB;
@@ -68,7 +70,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_estado = true"
+                + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
@@ -78,10 +80,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
-    public List<PeriodoLectivoMD> periodoDocente(String aguja){
-        String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n" +
-        "public.\"Docentes\" d USING(id_docente)\n" +
-        "WHERE d.docente_codigo LIKE '" + aguja + "';";
+    public List<PeriodoLectivoMD> periodoDocente(String aguja) {
+        String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
+                + "public.\"Docentes\" d USING(id_docente)\n"
+                + "WHERE d.docente_codigo LIKE '" + aguja + "';";
         ResultSet rs = conecta.sql(sql);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {
@@ -97,7 +99,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
+
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
@@ -370,7 +372,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
+
     public PeriodoLectivoMD buscarPeriodo(String nombrePer) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
@@ -573,6 +575,51 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         }
         return lista;
+    }
+
+    public static Map<String, PeriodoLectivoMD> selectWhereEstadoAndActivo(boolean estado, boolean activo) {
+        String SELECT = "SELECT\n"
+                + "	\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"public\".\"PeriodoLectivo\".id_carrera,\n"
+                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
+                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "	\"public\".\"Carreras\".carrera_nombre \n"
+                + "FROM\n"
+                + "	\"public\".\"PeriodoLectivo\"\n"
+                + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_estado IS " + estado + " \n"
+                + "	AND \"PeriodoLectivo\".prd_lectivo_activo IS " + activo;
+
+        Map<String, PeriodoLectivoMD> map = new HashMap<>();
+
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                periodo.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                periodo.setActivo_PerLectivo(rs.getBoolean("prd_lectivo_activo"));
+
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                periodo.setCarrera(carrera);
+
+                String key = rs.getString("prd_lectivo_nombre") + " " + rs.getString("carrera_nombre");
+
+                map.put(key, periodo);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return map;
     }
 
 }

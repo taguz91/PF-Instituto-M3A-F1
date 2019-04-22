@@ -6,7 +6,6 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,20 +24,20 @@ public class ConexionBD {
 
     private final String contrasena = "qwerty79";
 
-    private  Connection con = null;
+    private Connection con = null;
 
-    private  Statement stm = null;
+    private Statement stm = null;
 
     private ResultSet rs = null;
 
     public ConexionBD() {
     }
 
-    public void conectar()  {
+    public void conectar() {
 
         try {
             con = ResourceManager.getConnection();
-            
+
             System.out.println("Establecida la conexión con la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,6 +61,17 @@ public class ConexionBD {
     }
 
     public Connection getCon() {
+        // Comprobar conexion
+        try {
+            if(con.isClosed()) {
+                System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
+                con = ResourceManager.getConnection();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al comprobar la conexion");
+            System.out.println(ex.getMessage());
+        }
+
         return con;
     }
 
@@ -84,9 +94,5 @@ public class ConexionBD {
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
-
-  
-    
-    
 
 }

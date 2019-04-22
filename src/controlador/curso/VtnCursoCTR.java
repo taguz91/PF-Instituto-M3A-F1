@@ -1,6 +1,5 @@
 package controlador.curso;
 
-import controlador.carrera.VtnCarreraCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -11,8 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -58,6 +55,8 @@ public class VtnCursoCTR {
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
+    private int posFila;
+    private String b;
 
     public VtnCursoCTR(VtnPrincipal vtnPrin, VtnCurso vtnCurso, ConectarDB conecta,
             VtnPrincipalCTR ctrPrin, RolMD permisos) {
@@ -94,30 +93,16 @@ public class VtnCursoCTR {
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 4, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 70);
-        //cargarNombreCursos();
         cargarCursos();
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
         vtnCurso.getBtnEliminar().addActionListener(e -> eliminarCurso());
+        vtnCurso.getBtnHorario().addActionListener(e -> horario());
         vtnCurso.getCbxEliminados().addActionListener(e -> verCursosEliminados());
         //Le damos una accion al combo de periodos lectivos 
         vtnCurso.getCmbPeriodoLectivo().addActionListener(e -> cargarCursosPorPeriodo());
         //Le damos una accion al combo de cursos  
         vtnCurso.getCmbCurso().addActionListener(e -> cargarCursosPorNombre());
-        //Buscador 
-        vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String b = vtnCurso.getTxtBuscar().getText().trim();
-                System.out.println(e.getKeyCode());
-                //10 ENter - 32 Espacio - 8 Borrar
-                if (b.length() > 2) {
-                    buscar(b);
-                } else if (b.length() == 0) {
-                    cargarCursos();
-                }
-            }
-        });
 
         vtnCurso.getBtnBuscar().addActionListener(e -> buscar(vtnCurso.getTxtBuscar().getText().trim()));
         //Validacion del buscador 
@@ -132,8 +117,32 @@ public class VtnCursoCTR {
                 validarBotonesReportes();
             }
         });
-
         vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
+        iniciarBuscador();
+    }
+
+    private void iniciarBuscador() {
+        //Buscador 
+        vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                b = vtnCurso.getTxtBuscar().getText().trim();
+                //10 ENter - 32 Espacio - 8 Borrar
+                if (e.getKeyCode() == 10) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarCursos();
+                }
+
+//                if (Validar.esLetras(b)) {
+//                    if (b.length() > 2) {
+//                        buscar(b);
+//                    } else if (b.length() == 0) {
+//                        cargarCursos();
+//                    }
+//                }
+            }
+        });
     }
 
     /**
@@ -182,9 +191,9 @@ public class VtnCursoCTR {
      * periodo lectivo en el que se abrieron
      */
     public void cargarCursos() {
-        System.out.println("Se cargaron cursos");
         cursos = curso.cargarCursos();
         llenarTbl(cursos);
+        System.out.println("Se cargaron cursos");
     }
 
     public void cargarNombreCursos() {
@@ -263,7 +272,7 @@ public class VtnCursoCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-            int posFila = vtnCurso.getTblCurso().getSelectedRow();
+            posFila = vtnCurso.getTblCurso().getSelectedRow();
             Map parametro = new HashMap();
             parametro.put("curso", cursos.get(posFila).getId_curso());
             // parametro.put("jornada", jornada.get(posFila).getNombre());
@@ -275,7 +284,7 @@ public class VtnCursoCTR {
             view.setTitle("Lista de estudiantes");
 
         } catch (JRException ex) {
-            Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
@@ -356,6 +365,19 @@ public class VtnCursoCTR {
             vtnCurso.getBtnListaAlumnos().setEnabled(true);
         } else {
             vtnCurso.getBtnListaAlumnos().setEnabled(false);
+        }
+    }
+
+    /**
+     * Este es el horario de las materias
+     */
+    private void horario() {
+        posFila = vtnCurso.getTblCurso().getSelectedRow();
+        if (posFila >= 0) {
+            JDHorarioCTR ctr = new JDHorarioCTR(conecta, vtnPrin, ctrPrin, cursos.get(posFila));
+            ctr.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Antes debe seleccionar un curso.");
         }
     }
 }

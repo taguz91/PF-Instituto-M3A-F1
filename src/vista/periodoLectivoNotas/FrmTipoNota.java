@@ -27,27 +27,49 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
+    public void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
 
-    public JComboBox<String> getCmbCarrera() {
-        return cmbCarrera;
+    public void setBtnGuardar(JButton btnGuardar) {
+        this.btnGuardar = btnGuardar;
+    }
+
+    public JComboBox<String> getCmbTipoDeNota() {
+        return cmbTipoDeNota;
+    }
+
+    public void setCmbTipoDeNota(JComboBox<String> cmbTipoDeNota) {
+        this.cmbTipoDeNota = cmbTipoDeNota;
+    }
+
+    public JComboBox<String> getCmbPeriodoLectivo() {
+        return cmdPeriodoLectivo;
+    }
+
+    public void setCmdPeriodoLectivo(JComboBox<String> cmdPeriodoLectivo) {
+        this.cmdPeriodoLectivo = cmdPeriodoLectivo;
     }
 
     public JTextField getTxtNotaMax() {
         return txtNotaMax;
     }
 
+    public void setTxtNotaMax(JTextField txtNotaMax) {
+        this.txtNotaMax = txtNotaMax;
+    }
+
     public JTextField getTxtNotaMin() {
         return txtNotaMin;
     }
 
-    public JComboBox<String> getCmbTipoDeNota() {
-        return cmbTipoDeNota;
+    public void setTxtNotaMin(JTextField txtNotaMin) {
+        this.txtNotaMin = txtNotaMin;
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,7 +85,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         lblCarrera = new javax.swing.JLabel();
-        cmbCarrera = new javax.swing.JComboBox<>();
+        cmdPeriodoLectivo = new javax.swing.JComboBox<>();
         cmbTipoDeNota = new javax.swing.JComboBox<>();
 
         setClosable(true);
@@ -85,7 +107,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         btnGuardar.setText("Guardar");
 
         lblCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCarrera.setText("Carrera");
+        lblCarrera.setText("Periodo Lectivo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,17 +119,17 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmdPeriodoLectivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 216, Short.MAX_VALUE))
@@ -137,7 +159,7 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmdPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,8 +176,8 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cmbCarrera;
     private javax.swing.JComboBox<String> cmbTipoDeNota;
+    private javax.swing.JComboBox<String> cmdPeriodoLectivo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblCarrera;

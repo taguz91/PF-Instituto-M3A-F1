@@ -140,7 +140,13 @@ public class ControladorSilaboC {
 
             periodosCarrera = cargarComboPeriodos(carreraSeleccionada.get().getId());
             materiasDocente = cargarComboMaterias(carreraSeleccionada.get().getId());
-
+            
+            if (configuracion.getCmbAsignatura().getItemCount()==0){
+               JOptionPane.showMessageDialog(null, "Ya ha ingresado todos los silabos correspondientes para esta carrera en el período en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+                configuracion.getBtnSiguiente().setEnabled(false);
+            }else{
+                configuracion.getBtnSiguiente().setEnabled(true);
+            }
         });
 
         configuracion.getBtnSiguiente().addActionListener((ActionEvent ae) -> {
@@ -156,7 +162,20 @@ public class ControladorSilaboC {
 
             iniciarSilabo(silabo, (int) configuracion.getSpnUnidades().getValue());
 
+            configuracion.dispose();
+
         });
+        
+       
+        configuracion.getBtnCancelar().addActionListener((ActionEvent ae) -> {
+            int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                configuracion.dispose();
+            }
+        });
+        
+        
+
         configuracion.getCmbCarrera().setSelectedIndex(0);
 
     }
@@ -328,7 +347,7 @@ public class ControladorSilaboC {
 
                     if (e.getDescripcionEstrategia().toUpperCase().trim().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase().trim())) {
                         existe = true;
-                        JOptionPane.showMessageDialog(null, "La estrategia que intento ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La estrategia que intentó ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
 
                 }
@@ -874,18 +893,22 @@ public class ControladorSilaboC {
         gestion.getBtnSiguiente().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
-                if (retroceso) {
-                    bibliografia.setVisible(true);
-                }
-                    if (validarCampos()) {
-                    gestion.setVisible(false);
-                    citarReferencias(silabo, bibliografia);
-                    retroceso = true;
+
+                if (validarCampos()) {
+
+                    if (!retroceso) {
+                        gestion.setVisible(false);
+                        citarReferencias(silabo, bibliografia);
+                        retroceso = true;
+                    } else {
+                        gestion.setVisible(false);
+                        bibliografia.setVisible(true);
+
+                    }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No ha completado correctamente los campos necesarios", "Aviso", JOptionPane.ERROR_MESSAGE);
-                    retroceso=false;
+
                 }
 
             }
@@ -908,6 +931,7 @@ public class ControladorSilaboC {
 
     public void citarReferencias(SilaboBD silabo, frmReferencias bibliografia) {
 
+        System.out.println("------->entro");
         principal.getDpnlPrincipal().add(bibliografia);
 
         bibliografia.setTitle(silabo.getIdMateria().getNombre());
@@ -1549,7 +1573,7 @@ public class ControladorSilaboC {
             }
 
             for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad().equals(unidadesSilabo.get(i).getIdUnidad())) {
                     contador++;
                 }
             }

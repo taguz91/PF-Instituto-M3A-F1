@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
+import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 
@@ -98,7 +99,6 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
     /*public void eliminar() {
 
         try {
@@ -237,4 +237,5 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
+    
 }

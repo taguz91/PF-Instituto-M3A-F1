@@ -7,8 +7,12 @@
 	<parameter name="id_materia" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ID_PERIODO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select  distinct concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) from  "Cursos" c join "Jornadas" a on c.id_jornada=a.id_jornada where   c.id_docente=$P!{id_profe} and c.id_materia=$P!{id_materia}]]>
+		<![CDATA[select  distinct concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo)
+from  "Cursos" c join "Jornadas" a on c.id_jornada=a.id_jornada JOIN "PeriodoLectivo" p  
+on p.id_prd_lectivo=c.id_prd_lectivo where 
+c.id_docente=$P!{id_profe} and c.id_materia=$P!{id_materia} and p.id_prd_lectivo=$P!{ID_PERIODO}]]>
 	</queryString>
 	<field name="concat" class="java.lang.String"/>
 	<background>

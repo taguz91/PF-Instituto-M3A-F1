@@ -130,4 +130,9 @@ public class Validar {
     public static boolean esCarnetConadis(String entrada) {
         return entrada.matches("[0-9]{1,4}+\\.+[0-9]{1,6}");
     }
+    
+    public static boolean esHora(String entrada){
+        return entrada.matches("[0-9]{1,2}+:+[0-9]{1,2}");
+    }
+ 
 }
