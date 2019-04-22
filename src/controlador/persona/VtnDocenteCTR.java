@@ -433,6 +433,8 @@ public class VtnDocenteCTR {
 //            vtn_fin_contratacion.iniciar();
             JDFinContratacionCTR ctr = new JDFinContratacionCTR(conecta, vtnPrin, ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
             ctr.iniciar();
+   
+            
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }
@@ -451,4 +453,5 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().setEnabled(false);
         vtnDocente.getBtnFinContratacion().setEnabled(false);
     }
+   
 }

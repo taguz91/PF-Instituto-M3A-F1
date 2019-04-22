@@ -45,6 +45,10 @@ public class JDFinContratacion extends javax.swing.JDialog {
         return jdcFinContratacion;
     }
 
+    public JButton getbtninforme_fin_docente() {
+        return btninforme_fin_docente;
+    }
+
     public JLabel getLblErrorFechaFinContratacion() {
         return lblErrorFechaFinContratacion;
     }
@@ -52,6 +56,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
     public JLabel getLblErrorObservacion() {
         return lblErrorObservacion;
     }
+
+
 
     public JTable getTblMateriasCursos() {
         return tblMateriasCursos;
@@ -88,6 +94,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
+        btninforme_fin_docente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         tpFrm = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -111,12 +118,16 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         btnAnterior.setText("Anterior");
 
+        btninforme_fin_docente.setText("informe");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btninforme_fin_docente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAnterior)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
@@ -128,7 +139,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnAnterior)))
+                    .addComponent(btnAnterior)
+                    .addComponent(btninforme_fin_docente)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -285,6 +297,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
     private javax.swing.JLabel Lbl_ErrPeriodos;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btninforme_fin_docente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
