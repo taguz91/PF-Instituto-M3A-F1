@@ -26,6 +26,7 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.UsuarioBD;
 import vista.notas.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
@@ -139,15 +140,25 @@ public class VtnNotas {
     private void carlcularNotas(TableModel datos) {
 
         try {
-
+            String nombreNota = "";
             switch (getSelectedColum()) {
                 case 6:
+                    nombreNota = "APORTE 1";
+
                     String aporte1 = datos.getValueAt(getSelectedRow(), getSelectedColum()).toString();
                     if (Validaciones.isDecimal(aporte1)) {
-                        datos.setValueAt(Middlewares.conversor(aporte1), getSelectedRow(), getSelectedColum());
-                        sumarColumnas();
-                        editar();
-                        refreshTabla();
+                        double value = Middlewares.conversor(aporte1);
+
+                        TipoDeNotaMD rango = getRango(getSelectedRow(), nombreNota);
+                        if (value >= rango.getValorMinimo() && value <= rango.getValorMaximo()) {
+                            datos.setValueAt(Middlewares.conversor(aporte1), getSelectedRow(), getSelectedColum());
+                            sumarColumnas();
+                            editar();
+                            refreshTabla();
+                        } else {
+                            JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + rango.getValorMinimo() + " Y " + rango.getValorMaximo());
+                            refreshTabla();
+                        }
                     } else {
                         mensajeDeError();
                         refreshTabla();
@@ -330,6 +341,17 @@ public class VtnNotas {
         alumno.setNotaFinal(Middlewares.conversor(vista.getTblNotas().getValueAt(fila, 12).toString()));
 
         alumno.editar();
+
+    }
+
+    private static TipoDeNotaMD getRango(int fila, String nombreNota) {
+        List<NotasBD> listaTemporal = listaNotas.get(fila)
+                .getNotas()
+                .stream()
+                .filter(item -> item.getTipoDeNota().getNombre().equals(nombreNota))
+                .collect(Collectors.toList());
+
+        return listaTemporal.get(0).getTipoDeNota();
 
     }
 

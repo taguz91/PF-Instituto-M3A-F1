@@ -61,7 +61,7 @@ public class VtnCarreraCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
         this.prd = new PeriodoLectivoBD(conecta);
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Carreras");
         ctrPrin.setIconJIFrame(vtnCarrera);
@@ -82,7 +82,7 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
 
         cargarCarreras();
-        //Le damos accion al btn editar  
+        //Le damos accion al btn editar
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnEliminar().addActionListener(e -> eliminarCarrera());
@@ -98,11 +98,17 @@ public class VtnCarreraCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnCarrera.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarCarreras();
                 }
+                /*
+                if (b.length() > 2) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarCarreras();
+                }*/
             }
         });
         vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
@@ -239,7 +245,7 @@ public class VtnCarreraCTR {
             seleccionarPeriodo();
         } else {
             int posPrd = nmPrd.indexOf(np);
-            //Se le resta 1 porque al inicio se agrega uno mas 
+            //Se le resta 1 porque al inicio se agrega uno mas
             posPrd = posPrd - 1;
             System.out.println("El peridodo esta en la pos: " + posPrd);
             System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());

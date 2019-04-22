@@ -60,7 +60,7 @@ public class NotasBD extends NotasMD {
                 tipoDeNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
 
                 nota.setTipoDeNota(tipoDeNota);
-
+                
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
