@@ -90,7 +90,7 @@ public class ControladorCRUD {
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
 
-            eliminarSilabo(seleccionarSilabo().getIdSilabo());
+            eliminarSilabo();
             cargarSilabosDocente();
 
         });
@@ -160,7 +160,8 @@ public class ControladorCRUD {
                 modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
                     smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
-                    estado});
+                    estado,
+                    smd.getIdSilabo()});
 
             }
 
@@ -180,7 +181,7 @@ public class ControladorCRUD {
         int seleccion = crud.getTblSilabos().getSelectedRow();
 
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getNombre().equals(crud.getTblSilabos().getValueAt(seleccion, 0))).
+                filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
 
         return silaboSeleccionado.get();
@@ -195,7 +196,7 @@ public class ControladorCRUD {
 
     }
 
-    public void eliminarSilabo(int aguja) {
+    public void eliminarSilabo() {
 
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
