@@ -48,13 +48,13 @@ public class VtnMateriaCTR {
     private final RolMD permisos;
     private final CarreraBD carrerBD;
 
-    //El modelo de la tabla materias  
+    //El modelo de la tabla materias
     private DefaultTableModel mdTblMat;
-    //Aqui guardamos todas las materias  
+    //Aqui guardamos todas las materias
     private ArrayList<MateriaMD> materias;
     //Para el combo de filtrar por carrera
     private ArrayList<CarreraMD> carreras;
-    //Ciclos de una carrera  
+    //Ciclos de una carrera
     private ArrayList<Integer> ciclos;
 
     /**
@@ -73,7 +73,7 @@ public class VtnMateriaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Materias");
         ctrPrin.setIconJIFrame(vtnMateria);
@@ -81,7 +81,7 @@ public class VtnMateriaCTR {
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
-        
+
     }
 
     /**
@@ -96,11 +96,11 @@ public class VtnMateriaCTR {
         mdTblMat = TblEstilo.modelTblSinEditar(datos, titulo);
         //Le pasamos el modelo a la tabla  v
         vtnMateria.getTblMateria().setModel(mdTblMat);
-        //Ocusltamos el id  
+        //Ocusltamos el id
         TblEstilo.ocualtarID(vtnMateria.getTblMateria());
-        //Pasamos el estilo a la tabla 
+        //Pasamos el estilo a la tabla
         TblEstilo.formatoTbl(vtnMateria.getTblMateria());
-        //Pasamos la columna de codigo para que sea de 20  
+        //Pasamos la columna de codigo para que sea de 20
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 1, 70);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 3, 40);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 70);
@@ -125,12 +125,16 @@ public class VtnMateriaCTR {
 //            }
 //        });
         vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
-        //Iniciamos el buscador  
+        //Iniciamos el buscador
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
         vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                buscar();
+              String b = vtnMateria.getTxtBuscar().getText().trim();
+
+                if (e.getKeyCode() == 10) {
+                  buscarMaterias(b);
+                }
             }
         });
         //Validacion del buscador 
@@ -176,7 +180,7 @@ public class VtnMateriaCTR {
 
     public void cargarCmbCarreras() {
         carreras = carrerBD.cargarCarrerasCmb();
-        //Cargamos el combo 
+        //Cargamos el combo
         vtnMateria.getCmbCarreras().removeAllItems();
         vtnMateria.getCmbCarreras().addItem("Seleccione una carrera");
         carreras.forEach((car) -> {
@@ -199,7 +203,7 @@ public class VtnMateriaCTR {
             vtnMateria.getCmbCiclo().setSelectedIndex(0);
         } else {
             materias = materia.cargarMaterias();
-            //Borramos todos los item del combo ciclos  
+            //Borramos todos los item del combo ciclos
             vtnMateria.getCmbCiclo().removeAllItems();
         }
 
@@ -294,9 +298,9 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
         }
-        
-        
-        
+
+
+
     }
 
 }

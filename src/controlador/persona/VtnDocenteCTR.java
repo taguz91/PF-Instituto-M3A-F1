@@ -78,7 +78,7 @@ public class VtnDocenteCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
         this.prd = new PeriodoLectivoBD(conecta);
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
         ctrPrin.setIconJIFrame(vtnDocente);
@@ -112,8 +112,13 @@ public class VtnDocenteCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnDocente.getTxtBuscar().getText().toUpperCase().trim();
-                if (b.length() > 2) {
+                /*if (b.length() > 2) {
                     buscaIncremental(vtnDocente.getTxtBuscar().getText().toUpperCase());
+                }*/
+                if (e.getKeyCode() == 10) {
+                    buscaIncremental(b);
+                } else if (b.length() == 0) {
+                    cargarDocentes();
                 }
             }
         });
@@ -387,13 +392,13 @@ public class VtnDocenteCTR {
             seleccionarPeriodo();
         } else {
             int posPrd = nmPrd.indexOf(np);
-            //Se le resta 1 porque al inicio se agrega uno mas 
+            //Se le resta 1 porque al inicio se agrega uno mas
             posPrd = posPrd - 1;
             System.out.println("El peridodo esta en la pos: " + posPrd);
             System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
 
             JasperReport jr;
-            String path = "./src/vista/reportes/repDocenteCarreraPeriodo.jasper";
+            String path = "/vista/reportes/repDocenteCarreraPeriodo.jasper";
             File dir = new File("./");
             System.out.println("Direccion: " + dir.getAbsolutePath());
             try {
@@ -402,7 +407,7 @@ public class VtnDocenteCTR {
                 parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
                 parametro.put("periodo", np);
                 System.out.println(parametro);
-                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
                 JasperViewer view = new JasperViewer(print, false);
                 view.setVisible(true);

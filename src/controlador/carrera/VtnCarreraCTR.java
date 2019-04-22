@@ -24,8 +24,11 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.principal.VtnPrincipal;
@@ -58,7 +61,7 @@ public class VtnCarreraCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
         this.prd = new PeriodoLectivoBD(conecta);
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Carreras");
         ctrPrin.setIconJIFrame(vtnCarrera);
@@ -80,7 +83,7 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
 
         cargarCarreras();
-        //Le damos accion al btn editar  
+        //Le damos accion al btn editar
         vtnCarrera.getBtnIngresar().addActionListener(e -> abrirFrmCarrera());
         vtnCarrera.getBtnEditar().addActionListener(e -> editarCarrera());
         vtnCarrera.getBtnEliminar().addActionListener(e -> eliminarCarrera());
@@ -92,16 +95,22 @@ public class VtnCarreraCTR {
             }
         });
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
-        // vtnCarrera.getBtnReporteDocente().addActionListener(e -> llamaReporteCarreraDocentes());
+        vtnCarrera.getBtnReporteDocente().addActionListener(e->botonDocentes());
         vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnCarrera.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarCarreras();
                 }
+                /*
+                if (b.length() > 2) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarCarreras();
+                }*/
             }
         });
         vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
@@ -200,23 +209,17 @@ public class VtnCarreraCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
-    /*
-     public void llamaReporteCarreraDocentes() {
-        int s = JOptionPane.showOptionDialog(vtnDocente,
-                "Reporte de Materias del Docente\n"
-                + "¿Elegir el tipo de Reporte?", "REPORTE MATERIAS",
+ public void botonDocentes() {
+        int s = JOptionPane.showOptionDialog(vtnCarrera,
+                "Reporte de Docentes por periodo LEctivo\n"
+                + "¿Elegir el tipo de Reporte?", "REPORTE DOCENTES",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
-                new Object[]{"Materias por Periodo", "Historial de Materias",
-                    "Cancelar"}, "Historial de Materias");
+                new Object[]{"Elegir Periodo","Cancelar"}, "Cancelar");
         switch (s) {
             case 0:
                 seleccionarPeriodo();
-                break;
-            case 1:
-                llamaReporteDocenteMateria();
                 break;
             default:
                 break;
@@ -228,6 +231,7 @@ public class VtnCarreraCTR {
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
+            ///546645645645465456
             nmPrd.add(p.getNombre_PerLectivo());
         });
         Object np = JOptionPane.showInputDialog(vtnPrin,
@@ -237,39 +241,38 @@ public class VtnCarreraCTR {
         System.out.println("Selecciono " + np);
         //Se es null significa que no selecciono nada
         if (np == null) {
-            llamaReporteCarreraDocentes();
+            botonDocentes();
         } else if (np.equals("Seleccione")) {
             JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un periodo lectivo.");
             seleccionarPeriodo();
         } else {
             int posPrd = nmPrd.indexOf(np);
-            //Se le resta 1 porque al inicio se agrega uno mas 
+            //Se le resta 1 porque al inicio se agrega uno mas
             posPrd = posPrd - 1;
             System.out.println("El peridodo esta en la pos: " + posPrd);
             System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
 
             JasperReport jr;
-            String path = "./src/vista/reportes/repDocenteCarreraPeriodo.jasper";
+            String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
             File dir = new File("./");
             System.out.println("Direccion: " + dir.getAbsolutePath());
             try {
-                int posFila = vtnCarrera.getTblMaterias().getSelectedRow();
+               // int posFila = vtn.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
-                parametro.put("idCarrera", carreras.get(posFila).getId());
-                parametro.put("periodo", np);
+              //  parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
+                parametro.put("idPeriodo", np);
                 System.out.println(parametro);
-                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
                 JasperViewer view = new JasperViewer(print, false);
                 view.setVisible(true);
                 view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
-                Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "error" + ex);
             }
         }
     }
-     */
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

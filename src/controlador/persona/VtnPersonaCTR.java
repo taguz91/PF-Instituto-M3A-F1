@@ -60,7 +60,7 @@ public class VtnPersonaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
+        //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Personas");
         ctrPrin.setIconJIFrame(vtnPersona);
@@ -89,9 +89,9 @@ public class VtnPersonaCTR {
 
         vtnPersona.getBtnReportePersona().setEnabled(false);
         cargarCmbTipoPersonas();
-        //Inicializamos el error para que no se vea  
+        //Inicializamos el error para que no se vea
         vtnPersona.getLblError().setVisible(false);
-        //Le pasamos accion a los botones  
+        //Le pasamos accion a los botones
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
 
@@ -100,23 +100,25 @@ public class VtnPersonaCTR {
         String datos[][] = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        //Pasamos el modelo a la tabla  
+        //Pasamos el modelo a la tabla
         vtnPersona.getTblPersona().setModel(mdTbl);
-        //Pasamos el formato a la tabla  
+        //Pasamos el formato a la tabla
         TblEstilo.formatoTbl(vtnPersona.getTblPersona());
         TblEstilo.ocualtarID(vtnPersona.getTblPersona());
-        //Cambiamos el tamaño de las columnas  
+        //Cambiamos el tamaño de las columnas
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 1, 100);
         TblEstilo.columnaMedida(vtnPersona.getTblPersona(), 3, 120);
 
         //Llenamos el combo de tipos de persona
         cargarTipoPersona();
 
-        //Inciamos el txt de buscador  
+        //Inciamos el txt de buscador
         vtnPersona.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                buscar();
+                if (e.getKeyCode() == 10) {
+                      buscar();
+                }
             }
         });
         //Validacion del buscador
@@ -223,14 +225,14 @@ public class VtnPersonaCTR {
 
     }
 
-    //Damos accion al boton de guardar 
+    //Damos accion al boton de guardar
     public void ingresar() {
         ctrPrin.abrirFrmPersona();
         vtnPersona.dispose();
         ctrPrin.cerradoJIF();
     }
 
-    //Para ejecutar el metodo editar del frm 
+    //Para ejecutar el metodo editar del frm
     public void editar() {
         int posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
@@ -282,6 +284,9 @@ public class VtnPersonaCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             System.out.println(parametro);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
             conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
 
         } catch (JRException ex) {
@@ -292,7 +297,7 @@ public class VtnPersonaCTR {
 //            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
 //            Map parametro = new HashMap();
 //            parametro.put("cedula", cedula);
-//            parametro.put("idPeriodo", 4);
+//            parametro.put("idPeriodo", 17);
 //            System.out.println(parametro);
 //            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
 //            JasperViewer view = new JasperViewer(print, false);
