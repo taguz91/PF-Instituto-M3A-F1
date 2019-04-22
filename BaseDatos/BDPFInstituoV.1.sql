@@ -9,7 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
- "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0', 
+ "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0',
  "prd_lectivo_estado" boolean NOT NULL DEFAULT 'true',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
@@ -185,6 +185,7 @@ CREATE TABLE "AlumnoCurso"(
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
 	"almn_curso_activo" boolean DEFAULT 'true',
+  "almn_curso_fecha_registro" DATE default now(), 
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 

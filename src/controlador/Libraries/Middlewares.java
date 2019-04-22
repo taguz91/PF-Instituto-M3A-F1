@@ -193,4 +193,8 @@ public class Middlewares {
             setDefaultCursor(view);
         }
     }
+
+    public static void bugProcessor(JComponent view) {
+        setDefaultCursor(view);
+    }
 }
