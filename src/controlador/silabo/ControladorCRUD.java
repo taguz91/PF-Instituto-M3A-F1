@@ -181,7 +181,7 @@ public class ControladorCRUD {
         int seleccion = crud.getTblSilabos().getSelectedRow();
 
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getId()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
+                filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
 
         return silaboSeleccionado.get();
