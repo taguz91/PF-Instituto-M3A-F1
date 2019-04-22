@@ -393,7 +393,7 @@ public class VtnDocenteCTR {
             System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
 
             JasperReport jr;
-            String path = "./src/vista/reportes/repDocenteCarreraPeriodo.jasper";
+            String path = "/vista/reportes/repDocenteCarreraPeriodo.jasper";
             File dir = new File("./");
             System.out.println("Direccion: " + dir.getAbsolutePath());
             try {
@@ -402,7 +402,7 @@ public class VtnDocenteCTR {
                 parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
                 parametro.put("periodo", np);
                 System.out.println(parametro);
-                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
                 JasperViewer view = new JasperViewer(print, false);
                 view.setVisible(true);
