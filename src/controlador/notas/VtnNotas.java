@@ -259,9 +259,6 @@ public class VtnNotas {
             default:
                 break;
         }
-
-        System.out.println("--------->" + arg);
-
         alumno.getNotas()
                 .stream()
                 .filter(buscar(arg))
@@ -269,8 +266,8 @@ public class VtnNotas {
                 .forEach(obj -> {
                     System.out.println(obj);
                     try {
-                        double valor = Double.valueOf(vista.getTblNotas().getValueAt(getSelectedRow(), getSelectedColum()).toString());
-                        obj.setNotaValor(valor);
+                        String valor = vista.getTblNotas().getValueAt(getSelectedRow(), getSelectedColum()).toString();
+                        obj.setNotaValor(conversor(valor));
                         obj.editar();
                     } catch (NumberFormatException e) {
                     }
@@ -397,7 +394,6 @@ public class VtnNotas {
         obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row));
 
         row.add(obj.getNotaFinal());
-
         row.add(obj.getEstado());
         row.add(obj.getNumFalta());
         row.add(0);
