@@ -248,28 +248,31 @@ public class VtnActivarNotasCTR {
         if (fila != -1) {
 
             try {
-                aporte1 = Validar(String.valueOf(datos.getValueAt(fila, 7)));
-                System.out.println("---->" + aporte1);
-                examenInterciclo = Validar(String.valueOf(datos.getValueAt(fila, 8)));
-                aporte2 = Validar(String.valueOf(datos.getValueAt(fila, 9)));
-                examenFinal = Validar(String.valueOf(datos.getValueAt(fila, 10)));
-                examenSupletorio = Validar(String.valueOf(datos.getValueAt(fila, 11)));
-
+                aporte1 = String.valueOf(datos.getValueAt(fila, 7));
+                System.out.println("A1-----> " + aporte1);
+                examenInterciclo = String.valueOf(datos.getValueAt(fila, 8));
+                System.out.println("EXI-----> " + examenInterciclo);
+                aporte2 = String.valueOf(datos.getValueAt(fila, 9));
+                System.out.println("A2-----> " + aporte2);
+                examenFinal = String.valueOf(datos.getValueAt(fila, 10));
+                System.out.println("EXF-----> " + examenFinal);
+                examenSupletorio = String.valueOf(datos.getValueAt(fila, 11));
+                System.out.println("EXS-----> " + examenSupletorio);
                 switch (columna) {
                     case 7:
-                        datos.setValueAt(aporte1, fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(aporte1), fila, columna);
                         break;
                     case 8:
-                        datos.setValueAt(examenInterciclo, fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(examenInterciclo), fila, columna);
                         break;
                     case 9:
-                        datos.setValueAt(aporte2, fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
                         break;
                     case 10:
-                        datos.setValueAt(examenFinal, fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(examenFinal), fila, columna);
                         break;
                     case 11:
-                        datos.setValueAt(examenSupletorio, fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
                         break;
                     default:
                         break;
@@ -284,20 +287,20 @@ public class VtnActivarNotasCTR {
 
     }
 
-    private String Validar(String valor) {
-        valor = valor.toLowerCase();
-        if (valor.equalsIgnoreCase("true") || valor.equalsIgnoreCase("false") || valor.equalsIgnoreCase("t") || valor.equalsIgnoreCase("f")) {
-            return valor;
-        } else {
-            JOptionPane.showMessageDialog(vista, "Dato Incorrecto " + valor + " ....\n"
-                    + "Ingrese nuevamente el valor ");
-
-            //System.out.println("---->"+listaNotasActivadas.size());
-            cargarTabla(listaNotasActivadas);
-            return "false";
-        }
-
-    }
+//    private String Validar(String valor) {
+//        valor = valor.toLowerCase();
+//        if (valor.equalsIgnoreCase("true") || valor.equalsIgnoreCase("false") || valor.equalsIgnoreCase("t") || valor.equalsIgnoreCase("f")) {
+//            return valor;
+//        } else {
+//            JOptionPane.showMessageDialog(vista, "Dato Incorrecto " + valor + " ....\n"
+//                    + "Ingrese nuevamente el valor ");
+//
+//            //System.out.println("---->"+listaNotasActivadas.size());
+//            cargarTabla(listaNotasActivadas);
+//            return "false";
+//        }
+//
+//    }
 
     private int getSelectedRow() {
         return vista.getTblCursoTipoNotas().getSelectedRow();

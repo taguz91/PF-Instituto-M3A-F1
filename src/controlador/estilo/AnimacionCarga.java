@@ -36,7 +36,7 @@ public class AnimacionCarga extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Animacion en funcionamiento 000000000");
+        System.out.println("Animacion en funcionamiento 1111111111");
         try {
             ina = InetAddress.getByName(Propiedades.getPropertie("ip"));
         } catch (UnknownHostException e) {
@@ -54,30 +54,30 @@ public class AnimacionCarga extends Thread {
                 pos = 1;
             }
            
-            if (ina != null) {
-                try {
-                    if (ina.isReachable(2000)) {
+//            if (ina != null) {
+//                try {
+//                    if (ina.isReachable(2000)) {
 //                        System.out.println("Se puede acceder sin problema.");
 //                        System.out.println("Esta hosteado en: "+ina.getHostName());
 //                        System.out.println(""+ina.getCanonicalHostName());
-                        if (bloqueo) {
-                            JOptionPane.showMessageDialog(null, "Se reestablecio la conexion a la red. "
-                                    + "\nPuede volver a usar la aplicacion...");
-                            vtnPrin.setEnabled(true);
-                            bloqueo = false;
-                        }
-                    } else {
-                        if (!bloqueo) {
-                            JOptionPane.showMessageDialog(null, "Se perdio la conexion a la red, \npor favor espere. "
-                                    + "\nSe bloqueara la aplicacion hasta que vuelva a tener conexion.");
-                            vtnPrin.setEnabled(false);
-                            bloqueo = true;
-                        }
-                    }
-                } catch (IOException e) {
-                    System.out.println("No se puede ver si puede ser accedida.");
-                }
-            }
+//                        if (bloqueo) {
+//                            JOptionPane.showMessageDialog(null, "Se reestablecio la conexion a la red. "
+//                                    + "\nPuede volver a usar la aplicacion...");
+//                            vtnPrin.setEnabled(true);
+//                            bloqueo = false;
+//                        }
+//                    } else {
+//                        if (!bloqueo) {
+//                            JOptionPane.showMessageDialog(null, "Se perdio la conexion a la red, \npor favor espere. "
+//                                    + "\nSe bloqueara la aplicacion hasta que vuelva a tener conexion.");
+//                            vtnPrin.setEnabled(false);
+//                            bloqueo = true;
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    System.out.println("No se puede ver si puede ser accedida.");
+//                }
+//            }
         }
 
         //Le regresmos al icono original
