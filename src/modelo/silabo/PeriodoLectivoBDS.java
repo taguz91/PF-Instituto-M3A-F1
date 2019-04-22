@@ -39,22 +39,23 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_nombre , p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin\n"
                     + "FROM \"PeriodoLectivo\" AS p\n"
                     + "JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n"
-                    + "WHERE c.id_carrera=?  AND  p.prd_lectivo_fecha_inicio>='2018-11-12'");
+                    + "WHERE c.id_carrera=?  AND  p.prd_lectivo_fecha_inicio>='2018-11-12' ORDER BY p.id_prd_lectivo DESC");
 
             st.setInt(1, clave);
 
             ResultSet rs = st.executeQuery();
-
+            System.out.println(st);
             while (rs.next()) {
 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
                 tmp.setId_PerioLectivo(rs.getInt(1));
-                tmp.setFecha_Inicio(rs.getDate(2).toLocalDate());
-                tmp.setFecha_Fin(rs.getDate(3).toLocalDate());
+                tmp.setNombre_PerLectivo(rs.getString(2));
+                tmp.setFecha_Inicio(rs.getDate(3).toLocalDate());
+                tmp.setFecha_Fin(rs.getDate(4).toLocalDate());
 
                 periodos.add(tmp);
             }
@@ -65,5 +66,8 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         return periodos;
 
     }
+    
+    
+    
 
 }

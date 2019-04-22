@@ -124,11 +124,11 @@
                 <Column editable="false" title="Materia" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
                 <Column editable="false" title="Apellido" type="java.lang.Object"/>
-                <Column editable="true" title="Aporte 1" type="java.lang.Object"/>
-                <Column editable="true" title="Examen Interciclo" type="java.lang.Object"/>
-                <Column editable="true" title="Aporte 2" type="java.lang.Object"/>
-                <Column editable="true" title="Examen Final" type="java.lang.Object"/>
-                <Column editable="true" title="Examen Supletorio" type="java.lang.Object"/>
+                <Column editable="true" title="Aporte 1" type="java.lang.Boolean"/>
+                <Column editable="true" title="Examen Interciclo" type="java.lang.Boolean"/>
+                <Column editable="true" title="Aporte 2" type="java.lang.Boolean"/>
+                <Column editable="true" title="Examen Final" type="java.lang.Boolean"/>
+                <Column editable="true" title="Examen Supletorio" type="java.lang.Boolean"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -153,7 +153,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="110" minWidth="110" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
