@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import modelo.propiedades.Propiedades;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -37,7 +38,7 @@ public class AnimacionCarga extends Thread {
     public void run() {
         System.out.println("Animacion en funcionamiento 000000000");
         try {
-            ina = InetAddress.getByName("35.193.226.187");
+            ina = InetAddress.getByName(Propiedades.getPropertie("ip"));
         } catch (UnknownHostException e) {
             ina = null;
             System.out.println("No se puede hacer ping a esta direccion." + e.getMessage());
