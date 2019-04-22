@@ -1,12 +1,15 @@
 
 package controlador.silabo;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import modelo.ConexionBD;
 import modelo.curso.CursoMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboMD;
+import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
@@ -53,6 +56,9 @@ public class Controlador_plan_clases {
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
       lista_curso=CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId_curso());
         cargarCamposCursoCarreraDocente(lista_curso);
+        
+      lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        cargarCamposUnidades(lista_unidadsilabo);
     }
     public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
@@ -69,6 +75,37 @@ public class Controlador_plan_clases {
         
         
             
+        }
+    }
+    
+    public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
+        for (UnidadSilaboMD lista_unidad : lista_unidades) {
+           fPlanClase.getTxrObjetivoPC().setText(lista_unidad.getObjetivoEspecificoUnidad());
+           fPlanClase.getTxrObjetivoPC().setEnabled(false);
+           
+           fPlanClase.getTxrContenidosPC().setText(lista_unidad.getContenidosUnidad());
+            fPlanClase.getTxrContenidosPC().setEnabled(false);
+           
+           fPlanClase.getTxtTituloUnidad().setText(lista_unidad.getTituloUnidad());
+            fPlanClase.getTxtTituloUnidad().setEnabled(false);
+            
+           fPlanClase.getTxtDuracion().setText(String.valueOf(lista_unidad.getHorasDocenciaUnidad()+lista_unidad.getHorasPracticaUnidad()+" horas"));
+           fPlanClase.getTxtDuracion().setEnabled(false);
+           
+           fPlanClase.getjDateChooserFechaInicioPC().setDate(Date.from(lista_unidad.getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+           fPlanClase.getjDateChooserFechaInicioPC().setEnabled(false);
+           
+           fPlanClase.getjDateChooserFechaFinPC().setDate(Date.from(lista_unidad.getFechaFinUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+           fPlanClase.getjDateChooserFechaFinPC().setEnabled(false);
+           
+           fPlanClase.getTxrResultadosAprendizaje().setText(lista_unidad.getResultadosAprendizajeUnidad());
+           fPlanClase.getTxrResultadosAprendizaje().setEnabled(false);
+           
+           fPlanClase.getTxtUnidad().setText(String.valueOf(lista_unidad.getNumeroUnidad()));
+           fPlanClase.getTxtUnidad().setEnabled(false);
+           
+           fPlanClase.getLbNumeroPlandeClase().setText("N°"+lista_unidad.getNumeroUnidad());
+           
         }
     }
     

@@ -17,3 +17,5 @@ ALTER TABLE public."AlumnosCarrera" ADD UNIQUE(id_alumno, id_carrera);
 ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
 --No se puede matricualr a un alumno mas de una vez en un mismo periodo
 ALTER TABLE public."Matricula" ADD UNIQUE(id_alumno, id_prd_lectivo);
+--No se puede duplicar un silabo de una materia y prd lectivo
+ALTER TABLE public."Sialbo" ADD UNIQUE(id_materia, id_prd_lectivo);
