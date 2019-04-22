@@ -31,8 +31,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
     private String jornada, horaIni, horaFin;
     private String[] hs;
     private boolean guardar, editar;
-    private PnlHorarioClase pnl;
+    private PnlHorarioClase pnl, pnlCurso;
     private PnlHorarioClaseCTR ctrHClase;
+    private PnlHorarioCursoCTR ctrHCurso;
     private LocalTime inicio, fin;
     private SesionClaseMD sesion;
 
@@ -48,7 +49,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
 
     public void iniciar() {
         cargarDatos();
-        horarioCurso();
+        horarioClase();
         iniciarValidaciones();
         ctrPrin.eventoJDCerrar(jd);
 
@@ -60,6 +61,20 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
 
         jd.getBtnGuardar().addActionListener(e -> guardar());
         clickTbl();
+        horarioCurso();
+        jd.getTbpHorario().addChangeListener(e -> clickTbp());
+
+    }
+
+    /**
+     * Dar click al contenedor de panles de curso
+     */
+    private void clickTbp() {
+        System.out.println("Cambiamos de panle");
+        if (jd.getTbpHorario().getSelectedIndex() == 1) {
+            //Inciamos el horario del curso completo  
+            ctrHCurso.iniciar();
+        }
     }
 
     private void clickCancelar() {
@@ -181,11 +196,17 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
         }
     }
 
-    private void horarioCurso() {
+    private void horarioClase() {
         pnl = new PnlHorarioClase();
         ctrHClase = new PnlHorarioClaseCTR(pnl, curso, bd);
         ctrHClase.iniciar();
         jd.getTbpHorario().addTab("Horario Clase", pnl);
+    }
+
+    private void horarioCurso() {
+        pnlCurso = new PnlHorarioClase();
+        ctrHCurso = new PnlHorarioCursoCTR(pnlCurso, curso, bd);
+        jd.getTbpHorario().addTab("Horario Curso", pnlCurso);
     }
 
     private void cargarDatos() {
@@ -240,7 +261,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                             jd.getBtnCancelar().setVisible(true);
                             break;
                         case 1:
-                            idSesion = 0; 
+                            idSesion = 0;
                             bd.eliminar(idSesion);
                             ctrHClase.actualizar(sesion.getDia());
                             break;

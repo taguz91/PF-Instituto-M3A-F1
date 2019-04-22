@@ -345,19 +345,22 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 --Creamos una tabla para guardar los retirados
 CREATE TABLE "Retirados"(
 	"id_retirado" serial NOT NULL,
-	"id_malla_alumno" integer NOT NULL,
+--	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
 	"retiro_observacion" text,
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
-FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk1"
+FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
-FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
+/*
+ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk2"
+FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
+*/
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE public."HistorialUsuarios" ADD COLUMN historial_ip
