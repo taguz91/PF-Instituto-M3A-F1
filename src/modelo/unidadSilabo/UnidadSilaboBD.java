@@ -105,4 +105,40 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
+    public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo,int unidad) {
+
+        List<UnidadSilaboMD> unidades = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n" +
+"u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n" +
+"from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
+
+            st.setInt(1, silabo);
+            st.setInt(2,unidad);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                UnidadSilaboMD tmp = new UnidadSilaboMD();
+                tmp.setNumeroUnidad(rs.getInt(1));
+                tmp.setTituloUnidad(rs.getString(2));
+                tmp.setFechaInicioUnidad(rs.getDate(3).toLocalDate());
+                tmp.setFechaFinUnidad(rs.getDate(4).toLocalDate());
+                tmp.setHorasDocenciaUnidad(rs.getInt(5));
+                tmp.setHorasPracticaUnidad(rs.getInt(6));
+                tmp.setObjetivoEspecificoUnidad(rs.getString(7));
+                tmp.setResultadosAprendizajeUnidad(rs.getString(8));
+                tmp.setContenidosUnidad(rs.getString(9));
+                unidades.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return unidades;
+    }
 }
