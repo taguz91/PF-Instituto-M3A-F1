@@ -119,17 +119,17 @@ public class VtnActivarNotasCTR {
         });
 
         vista.getBtnActualizar().addActionListener(e -> btnActualizar(e));
-
+        
         vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == 10) {
+            public void keyReleased(KeyEvent e) {              
                     setObj(vista.getTblCursoTipoNotas().getSelectedRow());
+                    refreshTabla();
                     System.out.println(modelo);
-                }
-            }
+            }       
         });
 
+        
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
             boolean active = false;
 
@@ -261,23 +261,27 @@ public class VtnActivarNotasCTR {
                 switch (columna) {
                     case 7:
                         datos.setValueAt(Boolean.parseBoolean(aporte1), fila, columna);
+                        
                         break;
                     case 8:
                         datos.setValueAt(Boolean.parseBoolean(examenInterciclo), fila, columna);
+                        
                         break;
                     case 9:
                         datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
+                        
                         break;
                     case 10:
                         datos.setValueAt(Boolean.parseBoolean(examenFinal), fila, columna);
+                        
                         break;
                     case 11:
-                        datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
+                        datos.setValueAt(Boolean.parseBoolean(examenSupletorio), fila, columna);
+                        
                         break;
                     default:
                         break;
                 }
-
             } catch (NumberFormatException e) {
                 System.out.println(e.getMessage());
             }
@@ -344,5 +348,13 @@ public class VtnActivarNotasCTR {
             vista.getTblCursoTipoNotas().getEditorComponent().requestFocusInWindow();
         }
 
+    }
+    
+    private void refreshTabla() {
+        System.out.println("REFRESH");
+        tablaActivarNotas.setRowCount(0);
+        new Thread(() -> {
+            listaNotasActivadas.stream().forEach(VtnActivarNotasCTR::agregarFila);
+        }).start();
     }
 }
