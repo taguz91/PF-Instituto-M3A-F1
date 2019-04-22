@@ -137,7 +137,7 @@ public class VtnMateriaCTR {
                 }
             }
         });
-        //Validacion del buscador
+        //Validacion del buscador 
         vtnMateria.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMateria.getTxtBuscar(),
                 vtnMateria.getBtnBuscar()));
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());

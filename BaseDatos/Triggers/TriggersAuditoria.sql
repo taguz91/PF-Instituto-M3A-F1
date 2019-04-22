@@ -4,8 +4,9 @@ RETURNS TRIGGER AS $historial_detalle_jornada$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_detalle_jornada);
+		historial_nombre_tabla, historial_pk_tabla, historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_detalle_jornada,
+			inet_client_addr());
 		RETURN NEW;
 END;
 $historial_detalle_jornada$ LANGUAGE plpgsql;
@@ -21,8 +22,8 @@ RETURNS TRIGGER AS $historial_cursos$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_curso);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_curso,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_cursos$ LANGUAGE plpgsql;
@@ -38,8 +39,8 @@ RETURNS TRIGGER AS $historial_sesion_clase$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_sesion);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_sesion,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_sesion_clase$ LANGUAGE plpgsql;
@@ -56,8 +57,8 @@ RETURNS TRIGGER AS $historial_jornadas$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_jornada);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_jornada,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_jornadas$ LANGUAGE plpgsql;
@@ -74,8 +75,8 @@ RETURNS TRIGGER AS $historial_jornada_docente$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_jornada_docente);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_jornada_docente,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_jornada_docente$ LANGUAGE plpgsql;
@@ -91,8 +92,8 @@ RETURNS TRIGGER AS $historial_periodo_lectivo$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_prd_lectivo);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_prd_lectivo,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_periodo_lectivo$ LANGUAGE plpgsql;
@@ -108,8 +109,8 @@ RETURNS TRIGGER AS $historial_docentes$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_docente);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_docente,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_docentes$ LANGUAGE plpgsql;
@@ -125,8 +126,8 @@ RETURNS TRIGGER AS $historial_carreras$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_carrera);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_carrera, inet_client_addr());
 		RETURN NEW;
 END;
 $historial_carreras$ LANGUAGE plpgsql;
@@ -142,8 +143,8 @@ RETURNS TRIGGER AS $historial_ejes_formacion$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_eje);
+		historial_nombre_tabla, historial_pk_tabla, historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_eje,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_ejes_formacion$ LANGUAGE plpgsql;
@@ -159,8 +160,8 @@ RETURNS TRIGGER AS $historial_personas$
 BEGIN
 	INSERT INTO public."HistorialUsuarios" (
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_persona);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_persona, inet_client_addr());
 	RETURN NEW;
 END;
 $historial_personas$ LANGUAGE plpgsql;
@@ -176,8 +177,8 @@ RETURNS TRIGGER AS $historial_lugares$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla)
-		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_lugar);
+		historial_nombre_tabla, historial_pk_tabla,historial_ip)
+		VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_lugar,inet_client_addr());
 		RETURN NEW;
 END;
 $historial_lugares$ LANGUAGE plpgsql;
@@ -193,8 +194,8 @@ RETURNS TRIGGER AS $historial_alumnos$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_alumno);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_alumno,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_alumnos$ LANGUAGE plpgsql;
@@ -210,8 +211,8 @@ RETURNS TRIGGER AS $historial_alumnos_carrera$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_almn_carrera);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_almn_carrera,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_alumnos_carrera$ LANGUAGE plpgsql;
@@ -227,8 +228,8 @@ RETURNS TRIGGER AS $historial_malla_alumno$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_malla_alumno);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_malla_alumno, historial_ip);
 	RETURN NEW;
 END;
 $historial_malla_alumno$ LANGUAGE plpgsql;
@@ -244,8 +245,8 @@ RETURNS TRIGGER AS $historial_sector_economico$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_sec_economico);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_sec_economico,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_sector_economico$ LANGUAGE plpgsql;
@@ -261,8 +262,8 @@ RETURNS TRIGGER AS $historial_alumno_curso$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_almn_curso);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_almn_curso,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_alumno_curso$ LANGUAGE plpgsql;
@@ -278,8 +279,8 @@ RETURNS TRIGGER AS $historial_docente_materia$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_docente_mat);
+	  historial_nombre_tabla, historial_pk_tabla, historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_docente_mat,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_docente_materia$ LANGUAGE plpgsql;
@@ -295,8 +296,8 @@ RETURNS TRIGGER AS $historial_materia_requisito$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_requisito);
+	  historial_nombre_tabla, historial_pk_tabla, historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_requisito, inet_client_addr());
 	RETURN NEW;
 END;
 $historial_materia_requisito$ LANGUAGE plpgsql;
@@ -312,8 +313,8 @@ RETURNS TRIGGER AS $historial_periodo_ingreso_notas$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_perd_ingr_notas);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_perd_ingr_notas,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_periodo_ingreso_notas$ LANGUAGE plpgsql;
@@ -329,8 +330,8 @@ RETURNS TRIGGER AS $historial_tipo_nota$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_tipo_nota);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_tipo_nota,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_tipo_nota$ LANGUAGE plpgsql;
@@ -346,8 +347,8 @@ RETURNS TRIGGER AS $historial_evaluacion_silabo$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_evaluacion);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_evaluacion,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_evaluacion_silabo$ LANGUAGE plpgsql;
@@ -363,8 +364,8 @@ RETURNS TRIGGER AS $historial_unidad_silabo$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_unidad);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_unidad,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_unidad_silabo$ LANGUAGE plpgsql;
@@ -380,8 +381,8 @@ RETURNS TRIGGER AS $historial_tipo_actividad$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_tipo_actividad);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_tipo_actividad,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_tipo_actividad$ LANGUAGE plpgsql;
@@ -397,8 +398,8 @@ RETURNS TRIGGER AS $historial_silabo$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_silabo);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_silabo,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_silabo$ LANGUAGE plpgsql;
@@ -414,8 +415,8 @@ RETURNS TRIGGER AS $historial_referencia_silabo$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_referencia_silabo);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_referencia_silabo,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_referencia_silabo$ LANGUAGE plpgsql;
@@ -431,8 +432,8 @@ RETURNS TRIGGER AS $historial_referencias$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_referencia);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_referencia,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_referencias$ LANGUAGE plpgsql;
@@ -448,8 +449,8 @@ RETURNS TRIGGER AS $historial_roles_usuario$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_roles_usuarios);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_roles_usuarios,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_roles_usuario$ LANGUAGE plpgsql;
@@ -465,8 +466,8 @@ RETURNS TRIGGER AS $historial_roles$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_rol);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_rol,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_roles$ LANGUAGE plpgsql;
@@ -482,8 +483,8 @@ RETURNS TRIGGER AS $historial_accesos_rol$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_acceso_del_rol);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_acceso_del_rol,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_accesos_rol$ LANGUAGE plpgsql;
@@ -499,8 +500,8 @@ RETURNS TRIGGER AS $historial_accesos$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_acceso);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_acceso,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_accesos$ LANGUAGE plpgsql;
@@ -516,8 +517,8 @@ RETURNS TRIGGER AS $historial_materias$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_materia);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_materia,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_materias$ LANGUAGE plpgsql;
@@ -533,8 +534,8 @@ RETURNS TRIGGER AS $historial_usuarios$
 BEGIN
 	INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-	  historial_nombre_tabla, historial_pk_tabla)
-	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_usuario);
+	  historial_nombre_tabla, historial_pk_tabla,historial_ip)
+	VALUES(USER, now(), TG_OP, TG_TABLE_NAME, new.id_usuario,inet_client_addr());
 	RETURN NEW;
 END;
 $historial_usuarios$ LANGUAGE plpgsql;

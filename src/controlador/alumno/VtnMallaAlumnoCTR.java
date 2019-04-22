@@ -180,10 +180,10 @@ public class VtnMallaAlumnoCTR {
     }
 
     private void InitPermisosTester() {
-        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
-            vtnMallaAlm.getBtnIngNota().setEnabled(false);
-            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
-        }
+//        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+//            vtnMallaAlm.getBtnIngNota().setEnabled(false);
+//            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
+//        }
     }
 
     public void actualizarVtn(MallaAlumnoMD m) {

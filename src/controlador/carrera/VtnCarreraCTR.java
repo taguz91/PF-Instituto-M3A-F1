@@ -71,7 +71,6 @@ public class VtnCarreraCTR {
 
     public void iniciar() {
         vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
-        vtnCarrera.getBtnReporteDocente().setEnabled(false);
         String titutlo[] = {"id", "Codigo", "Nombre", "Fecha Inicio", "Modalidad", "Coordinador"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titutlo);
@@ -91,7 +90,6 @@ public class VtnCarreraCTR {
             @Override
             public void mouseClicked(MouseEvent e) {
                 validarBotonesReportes();
-                validarBotonesReportes2();
             }
         });
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
@@ -302,14 +300,4 @@ public class VtnCarreraCTR {
             vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
         }
     }
-
-    public void validarBotonesReportes2() {
-        int selecTabl = vtnCarrera.getTblMaterias().getSelectedRow();
-        if (selecTabl >= 0) {
-            vtnCarrera.getBtnReporteDocente().setEnabled(true);
-        } else {
-            vtnCarrera.getBtnReporteDocente().setEnabled(false);
-        }
-    }
-
 }
