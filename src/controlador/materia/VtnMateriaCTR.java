@@ -93,7 +93,7 @@ public class VtnMateriaCTR {
      */
     public void iniciar() {
         vtnMateria.getBtnRequisitos().addActionListener(e -> abrirFrmRequisito());
-        vtnMateria.getBtnReporteMaterias().setEnabled(false);
+       // vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
@@ -198,7 +198,7 @@ public class VtnMateriaCTR {
 
     private void filtrarPorCarrera() {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
-        validarBotonesReportes();
+        //validarBotonesReportes();
         if (pos > 0) {
             materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
             //Cargamos los ciclos de una carrera
@@ -253,7 +253,7 @@ public class VtnMateriaCTR {
         System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("carrera", vtnMateria.getCmbCarreras().getSelectedItem());
+            parametro.put("consulta", materia.getSql());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
@@ -287,14 +287,14 @@ public class VtnMateriaCTR {
         }
     }
 
-    public void validarBotonesReportes() {
-        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
-        if (selecTabl > 0) {
-            vtnMateria.getBtnReporteMaterias().setEnabled(true);
-        } else {
-            vtnMateria.getBtnReporteMaterias().setEnabled(false);
-        }
-    }
+//    public void validarBotonesReportes() {
+//        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
+//        if (selecTabl > 0) {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(true);
+//        } else {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(false);
+//        }
+//    }
 
     public void abrirFrmRequisito() {
         int fila = vtnMateria.getTblMateria().getSelectedRow();
@@ -354,7 +354,6 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA MATERIA");
         }
-
     }
 
 }

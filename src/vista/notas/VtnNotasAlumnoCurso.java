@@ -153,7 +153,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -170,18 +170,16 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(6).setMaxWidth(55);
             tblNotas.getColumnModel().getColumn(7).setMinWidth(80);
             tblNotas.getColumnModel().getColumn(7).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMaxWidth(80);
+            tblNotas.getColumnModel().getColumn(8).setResizable(false);
             tblNotas.getColumnModel().getColumn(9).setMinWidth(55);
             tblNotas.getColumnModel().getColumn(9).setMaxWidth(55);
             tblNotas.getColumnModel().getColumn(10).setMinWidth(60);
             tblNotas.getColumnModel().getColumn(10).setMaxWidth(60);
             tblNotas.getColumnModel().getColumn(11).setMinWidth(90);
             tblNotas.getColumnModel().getColumn(11).setMaxWidth(90);
-            tblNotas.getColumnModel().getColumn(12).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
-            tblNotas.getColumnModel().getColumn(13).setMinWidth(60);
-            tblNotas.getColumnModel().getColumn(13).setMaxWidth(60);
+            tblNotas.getColumnModel().getColumn(12).setResizable(false);
+            tblNotas.getColumnModel().getColumn(13).setMinWidth(100);
+            tblNotas.getColumnModel().getColumn(13).setMaxWidth(100);
             tblNotas.getColumnModel().getColumn(14).setMinWidth(70);
             tblNotas.getColumnModel().getColumn(14).setMaxWidth(70);
             tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
