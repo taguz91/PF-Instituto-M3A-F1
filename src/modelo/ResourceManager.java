@@ -17,9 +17,7 @@ import modelo.propiedades.Propiedades;
  *
  * @author MrRainx
  */
-public class ResourceManager implements Serializable {
-
-    private static boolean TRANSACCION = true;
+public class ResourceManager {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
@@ -34,7 +32,7 @@ public class ResourceManager implements Serializable {
 
     public static synchronized Connection getConnection()
             throws SQLException {
-        
+
         if (driver == null) {
             try {
 
@@ -53,7 +51,6 @@ public class ResourceManager implements Serializable {
 
             //conn.close();
             //resetConn();
-            
         }
 
         if (conn == null || conn.isClosed()) {
@@ -112,7 +109,7 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             stmt.execute(Statement);
-            
+
             conn.close();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
@@ -129,7 +126,7 @@ public class ResourceManager implements Serializable {
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
-            
+
             conn.close();
             return rs;
 
