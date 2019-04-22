@@ -8,22 +8,31 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.curso.CursoMD;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.docente.JDFinContratacion;
 import vista.principal.VtnPrincipal;
 
@@ -57,7 +66,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
         docenteMD = dc.buscarDocente(cedula);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
-
+        frmFinContrato.getbtninforme_fin_docente().addActionListener(e -> botoninformeDocente());
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -290,6 +299,8 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
             habilitarGuardar();
+            
+            
         }
 
     }
@@ -311,6 +322,56 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     public LocalDate convertirDate(Date fecha) {
         return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+  
+    
+    
+    
+    
+        //llamada al informe de fin de contratacion
+     public void llamainformeDocente() {
+        JasperReport jr;
+        String path = "/vista/reportes/INFORME_DOCENTE_RETIRADO.jasper";
+        File dir = new File("./");
+        System.out.println("Direccion: " + dir.getAbsolutePath());
+        //int posfila = vtnDocente.getTblDocente().getSelectedRow();
+        
+        try {
+            Map parametro = new HashMap();
+          parametro.put("iddocente", docenteMD.getIdDocente());
+          
+          parametro.put("periodolectivo",frmFinContrato.getJcbPeriodos());
+          parametro.put("periodolectivo",frmFinContrato.getCbx_Periodos().getSelectedItem().toString());
+            System.out.println("parametro del informe" + parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+            view.setTitle("Informe de Retiro");
+
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+
+    public void botoninformeDocente() {
+        int s = JOptionPane.showOptionDialog(vtnPrin,
+                "Registro de persona \n"
+                + "¿Dessea Imprimir el Registro realizado ?", "Informe de Retiro",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"SI", "NO"}, "NO");
+        switch (s) {
+            case 0:
+                llamainformeDocente();
+                break;
+            case 1:
+
+                break;
+            default:
+                break;
+        }
     }
 
 }

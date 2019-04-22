@@ -64,7 +64,7 @@ public class MateriaBD extends MateriaMD {
 
     public boolean elminarMateria(int aguja) {
         String sql = "UPDATE public.\"Materias\" SET\n"
-                + " materia_activa = false"
+                + " materia_activa = 'false'"
                 + " WHERE id_materia = " + aguja + ";";
         if (conecta.nosql(sql) == null) {
             return true;
@@ -469,7 +469,8 @@ public class MateriaBD extends MateriaMD {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"Materias\".materia_nombre,\n"
-                + "\"public\".\"Materias\".id_materia\n"
+                + "\"public\".\"Materias\".id_materia,\n"
+                + "\"public\".\"Materias\".materia_total_horas\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
@@ -489,6 +490,7 @@ public class MateriaBD extends MateriaMD {
                 MateriaMD materia = new MateriaMD();
                 materia.setId(rs.getInt("id_materia"));
                 materia.setNombre(rs.getString("materia_nombre"));
+                materia.setTotalHoras(rs.getInt("materia_total_horas"));
                 lista.add(materia);
             }
             rs.close();
