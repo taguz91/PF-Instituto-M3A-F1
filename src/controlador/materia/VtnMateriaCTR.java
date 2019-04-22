@@ -134,8 +134,6 @@ public class VtnMateriaCTR {
 
                 if (e.getKeyCode() == 10) {
                   buscarMaterias(b);
-                } else if (b.length() == 0) {
-                    cargarMaterias();
                 }
             }
         });

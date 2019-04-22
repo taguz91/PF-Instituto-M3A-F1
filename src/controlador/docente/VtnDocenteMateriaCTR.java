@@ -84,7 +84,7 @@ public class VtnDocenteMateriaCTR {
                 if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
-                    cargarDocenteMateria();
+                    cargarDocenteMaterias();
                 }
                 /*
                 if (a.length() > 2) {

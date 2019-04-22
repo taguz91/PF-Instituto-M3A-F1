@@ -78,7 +78,7 @@ public class VtnAlumnoCTR {
             public void keyReleased(KeyEvent e) {
 
                 if (e.getKeyCode() == 10) {
-                    buscar(b);
+                   
                     buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
                 } 
             }

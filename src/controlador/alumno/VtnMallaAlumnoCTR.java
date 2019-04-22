@@ -121,11 +121,11 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String a = vtnMallaAlm.getTxtBuscar().getText().trim();
+                String b = vtnMallaAlm.getTxtBuscar().getText().trim();
                 if (e.getKeyCode() == 10) {
-                    buscarMalla(a);
+                    buscarMalla(b);
                 } else if (b.length() == 0) {
-                    mdTbl.setRowCount(0); 
+                    mdlTbl.setRowCount(0); 
                 }
                 /*
                 if (a.length() >= 10) {

@@ -78,7 +78,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
 
               if (e.getKeyCode() == 10) {
                   buscar(vtnMatri.getTxtBuscar().getText().trim());
-              } else if (b.length() == 0) {
+              } else if (vtnMatri.getTxtBuscar().getText().length() == 0) {
                   cargarMatriculas();
               }
               /*
