@@ -116,6 +116,11 @@ public class frmCRUDPlanClase extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tlbTablaPLC);
+        if (tlbTablaPLC.getColumnModel().getColumnCount() > 0) {
+            tlbTablaPLC.getColumnModel().getColumn(5).setMinWidth(50);
+            tlbTablaPLC.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tlbTablaPLC.getColumnModel().getColumn(5).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
