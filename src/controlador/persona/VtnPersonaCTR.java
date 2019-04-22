@@ -284,6 +284,9 @@ public class VtnPersonaCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
             System.out.println(parametro);
+            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
             conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
 
         } catch (JRException ex) {
@@ -294,7 +297,7 @@ public class VtnPersonaCTR {
 //            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
 //            Map parametro = new HashMap();
 //            parametro.put("cedula", cedula);
-//            parametro.put("idPeriodo", 4);
+//            parametro.put("idPeriodo", 17);
 //            System.out.println(parametro);
 //            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
 //            JasperViewer view = new JasperViewer(print, false);
