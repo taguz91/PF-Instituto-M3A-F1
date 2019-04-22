@@ -329,7 +329,7 @@ public class ControladorSilaboC {
             cargarReferencias(referenciasSilabo);
             
            
-          
+            mostrarUnidad();
 
         }
 
@@ -346,7 +346,7 @@ public class ControladorSilaboC {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
         
-        
+         gestion.getCmbUnidad().setSelectedIndex(0);
 
         gestion.getCmbUnidad().addActionListener(new ActionListener() {
             @Override
@@ -1008,8 +1008,6 @@ public class ControladorSilaboC {
             }
 
         });
-         gestion.getCmbUnidad().setSelectedIndex(0);
-        
 
         cargarEstrategias(unidadesSilabo.get(0));
     }
