@@ -323,22 +323,27 @@ public class DocenteBD extends DocenteMD {
 
     public ArrayList<DocenteMD> cargarDocentesPorMateria(int idMateria) {
         ArrayList<DocenteMD> docentes = new ArrayList();
-        String sql = "SELECT public.\"Docentes\".id_docente, id_persona, docente_codigo, docente_otro_trabajo, \n"
-                + "docente_categoria, docente_fecha_contrato,\n"
-                + "docente_tipo_tiempo, docente_activo, docente_observacion,\n"
-                + "docente_capacitador , docente_titulo, docente_abreviatura\n"
-                + "FROM public.\"Docentes\",  public.\"DocentesMateria\"\n"
-                + "WHERE public.\"DocentesMateria\".id_materia = " + idMateria + " \n"
-                + "AND public.\"Docentes\".id_docente = public.\"DocentesMateria\".id_docente\n"
+        String sql = "SELECT d.id_docente, d.id_persona, \n"
+                + "docente_abreviatura, \n"
+                + "persona_primer_nombre, persona_primer_apellido \n"
+                + "FROM public.\"Docentes\" d,  public.\"DocentesMateria\" dm, "
+                + "public.\"Personas\"p \n"
+                + "WHERE dm.id_materia = " + idMateria + " \n"
+                + "AND d.id_docente = dm.id_docente \n"
+                + "AND p.id_persona = d.id_persona \n"
+                + "AND docente_activo = TRUE\n"
                 + "ORDER BY id_docente;";
         System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                DocenteMD doc = obtenerDocente(rs);
-                if (doc != null) {
-                    docentes.add(doc);
-                }
+                DocenteMD doc = new DocenteMD();
+                doc.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                doc.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                doc.setIdDocente(rs.getInt("id_docente"));
+                doc.setIdPersona(rs.getInt("id_persona"));
+                
+                docentes.add(doc);
             }
             rs.close();
             return docentes;
