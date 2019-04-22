@@ -22,9 +22,10 @@ public class ConexionesCTR extends Thread {
         try {
             System.out.println("Se inicia el hilo para comprobar, la conexion.");
             
-            while (segundos < 200) {
+            while (segundos < 130) {
                 dormir(1000);
                 //System.out.println("Sigue contando: "+segundos);
+                System.out.println("SEgundos: "+segundos);
                 segundos++; 
             }
             System.out.println("Se cerrara la conexion. Se receteo por ultima: \n"+msg);
@@ -56,6 +57,10 @@ public class ConexionesCTR extends Thread {
         } catch (InterruptedException ex) {
             System.out.println("El hilo no se pudo dormir. "+ex.getMessage());
         }
+    }
+    
+    public void matarHilo(){
+        segundos = 2000;
     }
 
 }
