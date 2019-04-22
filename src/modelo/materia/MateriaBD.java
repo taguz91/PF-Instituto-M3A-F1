@@ -19,6 +19,7 @@ public class MateriaBD extends MateriaMD {
 
     private final ConectarDB conecta;
     private final CarreraBD car;
+    private String sql;
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -130,7 +131,7 @@ public class MateriaBD extends MateriaMD {
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
-        String sql = "SELECT id_materia, materia_codigo,"
+         sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -143,7 +144,7 @@ public class MateriaBD extends MateriaMD {
 
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarrera(int idcarrera) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -157,7 +158,7 @@ public class MateriaBD extends MateriaMD {
 
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -319,7 +320,7 @@ public class MateriaBD extends MateriaMD {
 
     //Metodo buscar por aguja
     public ArrayList<MateriaMD> cargarMaterias(String aguja) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -496,6 +497,10 @@ public class MateriaBD extends MateriaMD {
         }
         return lista;
 
+    }
+
+    public String getSql() {
+        return sql;
     }
 
 }
