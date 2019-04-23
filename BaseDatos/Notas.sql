@@ -1,15 +1,3 @@
-CREATE TABLE "AlumnoCurso2"(
-
-    "id_almn_curso" SERIAL NOT NULL PRIMARY KEY,
-    "id_alumno" INTEGER NOT NULL,
-    "id_curso" INTEGER NOT NULL,
-    "almn_curso_nota_final" NUMERIC(6,2) DEFAULT '0',
-    "almn_curso_asistencia" VARCHAR(30) DEFAULT 'Asiste',
-    "almn_curso_estado" VARCHAR(30) DEFAULT 'Reprobado',
-    "almn_curso_num_faltas" INTEGER DEFAULT '0',
-	"almn_curso_activo" BOOLEAN DEFAULT 'true'
-
-)WITH(OIDS = FALSE);
 
 CREATE TABLE "Notas"(
     "id_nota" SERIAL NOT NULL PRIMARY KEY,
@@ -47,7 +35,7 @@ ALTER TABLE "AlumnoCurso2" ADD COLUMN "almn_curso_nota_final" NUMERIC(6,2) DEFAU
 
 --MIGRACION DE NOTAS
 INSERT INTO "AlumnoCurso2"
-(id_alumno, id_curso, almn_curso_asistencia, almn_curso_estado, almn_curso_num_faltas, almn_curso_nota_final) 
+(id_alumno, id_curso, almn_curso_asistencia, almn_curso_estado, almn_curso_num_faltas, almn_curso_nota_final)
 SELECT
 "public"."AlumnoCurso".id_alumno,
 "public"."AlumnoCurso".id_curso,
@@ -69,17 +57,17 @@ WHERE
 CREATE OR REPLACE FUNCTION migrar_notas()
 RETURNS TRIGGER AS $migrar_notas$
 begin
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 5);
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 4);
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 6);
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 7);
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 8);
-    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota) 
+    INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 9);
     RETURN NEW;
 end;
