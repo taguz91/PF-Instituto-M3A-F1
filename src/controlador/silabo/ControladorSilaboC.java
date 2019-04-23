@@ -14,6 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -61,6 +66,16 @@ import vista.silabos.frmGestionSilabo.CheckListItem;
 import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmReferencias;
 import vista.silabos.frmSilabos;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import java.util.HashMap;
+import java.util.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -1614,14 +1629,50 @@ public class ControladorSilaboC {
 
     }
 
+//    public void exportarPDF(String path) {
+//       // path="C:\\Users\\Daniel\\Desktop\\API JAVA 8";
+//        Map<String, Object> parameters = new HashMap<String, Object>();// Creamos mapa de parametros de ayuda
+//        parameters.put("algunParametro", x);
+//        parameters.put("tipo", y);
+//         conexion.conectar();// creamos la conexion a la base de datos
+//        jasperReport = (JasperReport) JRLoader.loadObjectFromFile(rutaArchivo);//Cargamos al jasper    
+//
+//        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conexion);// llenamos el reporte, indicando la conexion a base de datos
+//
+//        JRPdfExporter pdfExporter = new JRPdfExporter(); //Creamos el exporter a PDF
+//        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);//EDIT 
+//        exporter.exportReport();
+//        return baos.toByteArray(); //y obtenemos los valiosos bytes generados ;)
+//        
+//        try {
+//            JasperExportManager.exportReportToPdfFile(jasperPrint,path );
+//        } catch (JRException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//    }
+
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
         insertarUnidades();
-
         insertarReferencias();
+       // exportarPDF();
 
+    
     }
+//    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
+//        String sql = "INSERT INTO\"Silabo\"VALUES (?)";
+//        //Creamos una cadena para después prepararla
+//        PreparedStatement stmt = conexion.prepareStatement(sql);
+//        File archivo = new File("C://user//Desktop");
+//        //ruta puede ser: "c://archivo"
+//        FileInputStream fis = new FileInputStream(archivo);
+//        //Lo convertimos en un Stream
+//        stmt.setBinaryStream(1, fis, (int) archivo.length());
+//        //Asignamos el Stream al Statement
+//        stmt.execute();
+//    }
 
     public boolean validarCampos() {
 

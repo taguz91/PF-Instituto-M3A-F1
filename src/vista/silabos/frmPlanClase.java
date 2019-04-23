@@ -592,7 +592,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         lbCarrera.setText("Carrera:");
 
         lbNumeroPlandeClase.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lbNumeroPlandeClase.setText("N°");
+        lbNumeroPlandeClase.setText("Unidad N°");
 
         lbAsignatura.setText("Asignatura:");
 
@@ -833,17 +833,17 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lbPlandeClase)
                 .addGap(18, 18, 18)
-                .addComponent(lbNumeroPlandeClase, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(468, 468, 468))
+                .addComponent(lbNumeroPlandeClase, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(504, 504, 504))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPlandeClase)
                     .addComponent(lbNumeroPlandeClase))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCod_Asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
