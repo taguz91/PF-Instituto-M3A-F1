@@ -89,9 +89,11 @@ public class ConectarDB {
             return ps;
         } catch (SQLException e) {
             System.out.println("No se pudo preparar el statement. " + e.getMessage());
+            ctrCt.matarHilo();
+            sqlPS(nsql);
             return null;
         } finally {
-            
+
             ctrCt.recetear("Terminando de preparar un statamente.");
 //            try {
 //                ct.close();
@@ -128,6 +130,9 @@ public class ConectarDB {
             return null;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la accion " + e.getMessage());
+            ctrCt.matarHilo();
+            //Se vuelve a llamar a la clase
+            nosql(noSql);
             return e;
         } finally {
             try {
@@ -161,7 +166,7 @@ public class ConectarDB {
             metaData = rs.getMetaData();
             System.out.println("--------SQL----------");
             //System.out.println(ct.getSchema());
-            System.out.println("Tabla en la que se consulta: "+metaData.getTableName(1));
+            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
             System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
             System.out.println();
@@ -169,6 +174,9 @@ public class ConectarDB {
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
+            ctrCt.matarHilo();
+            //Se vuelve a llamar a la clase
+            sql(sql);
             return null;
         } finally {
             ctrCt.recetear("Terminando de realizar una consulta.");
@@ -188,13 +196,20 @@ public class ConectarDB {
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
                 ct = DriverManager.getConnection(url, user, pass);
+                
+                return ct;
             } else {
                 System.out.println("Esta abierta la conexion.");
+                ctrCt.recetear("SE recea al devolver la conexion.");
+         
+                return ct;
             }
         } catch (SQLException ex) {
-            System.out.println("No pudimos comprobar el estado de la conexion."+ex.getMessage());
+            System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
+            ctrCt.matarHilo();
+            return null; 
         }
-        return ct;
+        
     }
 
     private void conecta() {
@@ -214,6 +229,8 @@ public class ConectarDB {
             view.setTitle(titulo);
         } catch (SQLException ex) {
             System.out.println("No se puede imprimir el reporte. " + ex.getMessage());
+            ctrCt.matarHilo();
+            //mostrarReporte(jr, parametro, titulo); 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
         } finally {

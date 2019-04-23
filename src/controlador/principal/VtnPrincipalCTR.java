@@ -10,6 +10,7 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
@@ -102,6 +103,7 @@ import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
+import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
 
@@ -115,6 +117,7 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final ConectarDB conecta;
+    private final ConexionBD conexion;
     private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
     public AnimacionCarga carga;
@@ -171,6 +174,7 @@ public class VtnPrincipalCTR {
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
         this.pruebas = pruebas;
+        this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
@@ -229,6 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtListaAlumnos().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
+        vtnPrin.getMnCtAlmnRetirados().addActionListener(e -> abrirVtnAlmnRetirados());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
@@ -454,6 +459,15 @@ public class VtnPrincipalCTR {
             ctrVtn.iniciar();
         }
     }
+    
+    public void abrirVtnAlmnRetirados(){
+        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn); 
+            ctr.iniciar();
+        }
+    }
 
     public void abrirVtnAyuda() {
         JDAyudaCTR ctrAyuda = new JDAyudaCTR(vtnPrin, this);
@@ -615,20 +629,20 @@ public class VtnPrincipalCTR {
 
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin, conexion);
 
         c.iniciarControlador();
 
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin);
+        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin, conexion);
         cp.iniciarControlaador();
     }
 
     private void controladorIngreso() {
 
-        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());
+        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD(conecta));
 
         c.iniciarControlador();
 
@@ -693,6 +707,7 @@ public class VtnPrincipalCTR {
                 numVtns++;
                 if (numVtns > 5) {
                     errorNumVentanas();
+                    internal.dispose();
                 }
             }
 

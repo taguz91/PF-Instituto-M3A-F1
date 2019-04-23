@@ -117,7 +117,7 @@ public class VtnPersonaCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
-                      buscar();
+                    buscar();
                 }
             }
         });
@@ -287,26 +287,11 @@ public class VtnPersonaCTR {
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);
-            conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
+            view.setTitle("Reporte de Persona");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
-//        try {
-//            String cedula = "0107390270";
-//            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
-//            Map parametro = new HashMap();
-//            parametro.put("cedula", cedula);
-//            parametro.put("idPeriodo", 17);
-//            System.out.println(parametro);
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Matricula");
-//
-//        } catch (JRException ex) {
-//            JOptionPane.showMessageDialog(null, "error" + ex);
-//        }
     }
 
     private void InitPermisos() {
