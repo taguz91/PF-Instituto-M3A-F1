@@ -13,18 +13,8 @@ import modelo.persona.PersonaMD;
  * @author DAVICHO
  */
 public class RolDocenteMD {
-
-    public PersonaMD getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonaMD persona) {
-        this.persona = persona;
-    }
     private RolPeriodoMD idRolPeriodo;
-    private DocenteMD idDocente;
-    private PersonaMD persona;
-    
+    private DocenteMD idDocente;    
 
     public RolPeriodoMD getIdRolPeriodo() {
         return idRolPeriodo;

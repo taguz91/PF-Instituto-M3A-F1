@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
 import modelo.persona.DocenteBD;
+import modelo.persona.DocenteMD;
 import modelo.persona.PersonaMD;
 
 /**
@@ -80,15 +81,15 @@ public class RolDocenteBD extends RolDocenteMD {
           ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                RolDocenteMD d = new RolDocenteMD();
-                PersonaMD p = new PersonaMD();
+                RolDocenteMD rd = new RolDocenteMD();
+                DocenteMD d = new DocenteMD();
                 RolPeriodoMD m = new RolPeriodoMD();
-                p.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                d.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                d.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setNombre_rol(rs.getString("rol_prd"));
-                d.setPersona(p);
-                d.setIdRolPeriodo(m);
-                lista.add(d);
+                rd.setIdDocente(d);
+                rd.setIdRolPeriodo(m);
+                lista.add(rd);
             }
             rs.close();
             return lista;

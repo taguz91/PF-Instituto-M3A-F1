@@ -8,7 +8,7 @@ package modelo.docente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -32,8 +32,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
     public boolean InsertarRol() {
         String nsql = "Insert into public.\"RolesPeriodo\"(\n"
                 + "id_prd_lectivo,rol_prd)\n"
-                + "Values (" + getPeriodo().getId_PerioLectivo() + ", '"
-                + getNombre_rol() + "');";
+                + "Values (" + getPeriodo().getId_PerioLectivo() + ", "
+                + "UPPER('" + getNombre_rol() + "'));";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -54,13 +54,14 @@ public class RolPeriodoBD extends RolPeriodoMD {
             return false;
         }
     }
-    public boolean eliminarRolPeriodo(int aguja){
-        String nsql="UPDATE public.\"RolesPeriodo\"\n" +
-"	SET rol_activo=false\n" +
-"	WHERE id_rol_prd=" +aguja +";";
-        if(conecta.nosql(nsql)== null){
+
+    public boolean eliminarRolPeriodo(int aguja) {
+        String nsql = "UPDATE public.\"RolesPeriodo\"\n"
+                + "	SET rol_activo=false\n"
+                + "	WHERE id_rol_prd=" + aguja + ";";
+        if (conecta.nosql(nsql) == null) {
             return true;
-        } else{
+        } else {
             System.out.println("Error de consulta");
             return false;
         }
@@ -90,6 +91,30 @@ public class RolPeriodoBD extends RolPeriodoMD {
             return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<RolPeriodoMD> cargarRolesWhere(String aguja) {
+        ArrayList<RolPeriodoMD> rPrd = new ArrayList();
+        String sql = "SELECT p.id_rol_prd, p.id_prd_lectivo, p.rol_prd, p.rol_activo\n"
+                + "	FROM public.\"RolesPeriodo\" p, public.\"PeriodoLectivo\" prd\n"
+                + "	where p.id_prd_lectivo=prd.id_prd_lectivo\n"
+                + "	and prd.prd_lectivo_nombre ='" + aguja + "'\n"
+                + "	and p.rol_activo= true;";
+        ResultSet rs = conecta.sql(sql);
+        
+          try {
+            while (rs.next()) {
+                RolPeriodoMD rol= new RolPeriodoMD();
+                rol.setNombre_rol(rs.getString("rol_prd"));
+                rPrd.add(rol);
+            }
+            rs.close();
+            return rPrd;
+        } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error al mostrar roles");
             System.out.println(ex.getMessage());
             return null;
         }
