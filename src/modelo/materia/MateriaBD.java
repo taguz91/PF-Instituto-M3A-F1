@@ -19,6 +19,7 @@ public class MateriaBD extends MateriaMD {
 
     private final ConectarDB conecta;
     private final CarreraBD car;
+    private String sql;
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -63,7 +64,7 @@ public class MateriaBD extends MateriaMD {
 
     public boolean elminarMateria(int aguja) {
         String sql = "UPDATE public.\"Materias\" SET\n"
-                + " materia_activa = false"
+                + " materia_activa = 'false'"
                 + " WHERE id_materia = " + aguja + ";";
         if (conecta.nosql(sql) == null) {
             return true;
@@ -112,7 +113,7 @@ public class MateriaBD extends MateriaMD {
     }
 
     public CarreraMD filtrarIdCarrera(String nombre) {
-        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        String sql = "SELECT id_carrera carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
         CarreraMD carrera = new CarreraMD();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -127,10 +128,15 @@ public class MateriaBD extends MateriaMD {
             return null;
         }
     }
+    
+//    public EjeFormacionMD filtrarIdEje(String nombre){
+//        String sql = "SELECT id_";
+//        
+//    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
-        String sql = "SELECT id_materia, materia_codigo,"
+         sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -143,7 +149,7 @@ public class MateriaBD extends MateriaMD {
 
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarrera(int idcarrera) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -157,7 +163,7 @@ public class MateriaBD extends MateriaMD {
 
     //Cargar datos de materia por carrera
     public ArrayList<MateriaMD> cargarMateriaPorCarreraCiclo(int idcarrera, int ciclo) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -319,7 +325,7 @@ public class MateriaBD extends MateriaMD {
 
     //Metodo buscar por aguja
     public ArrayList<MateriaMD> cargarMaterias(String aguja) {
-        String sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -468,7 +474,8 @@ public class MateriaBD extends MateriaMD {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"Materias\".materia_nombre,\n"
-                + "\"public\".\"Materias\".id_materia\n"
+                + "\"public\".\"Materias\".id_materia,\n"
+                + "\"public\".\"Materias\".materia_total_horas\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
@@ -488,6 +495,7 @@ public class MateriaBD extends MateriaMD {
                 MateriaMD materia = new MateriaMD();
                 materia.setId(rs.getInt("id_materia"));
                 materia.setNombre(rs.getString("materia_nombre"));
+                materia.setTotalHoras(rs.getInt("materia_total_horas"));
                 lista.add(materia);
             }
             rs.close();
@@ -496,6 +504,10 @@ public class MateriaBD extends MateriaMD {
         }
         return lista;
 
+    }
+
+    public String getSql() {
+        return sql;
     }
 
 }

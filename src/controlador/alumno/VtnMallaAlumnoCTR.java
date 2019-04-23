@@ -46,7 +46,7 @@ public class VtnMallaAlumnoCTR {
     private final ConectarDB conecta;
     private final MallaAlumnoBD mallaAlm;
     private final VtnPrincipalCTR ctrPrin;
-    private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado", "Retirado"};
+    private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado", "Anulado/Retirado"};
     private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
@@ -462,18 +462,6 @@ public class VtnMallaAlumnoCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-//            if (idAlmnSeleccionado > 0) {
-//                //int posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
-//                Map parametro = new HashMap();
-//                parametro.put("consulta", mallaAlm.getSql());
-//                System.out.println(parametro);
-//                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//                JasperViewer view = new JasperViewer(print, false);
-//                view.setVisible(true);
-//                view.setTitle("Reporte de Malla de Alumno");
-//            }
-
             Map parametro = new HashMap();
             parametro.put("consulta", mallaAlm.getSql());
             System.out.println(parametro);

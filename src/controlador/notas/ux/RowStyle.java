@@ -17,11 +17,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RowStyle extends DefaultTableCellRenderer {
 
     private int columna;
-    private int minValue;
+    
 
-    public RowStyle(int columna, int minValue) {
+    public RowStyle(int columna) {
         this.columna = columna;
-        this.minValue = minValue;
     }
 
     @Override
@@ -31,9 +30,9 @@ public class RowStyle extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         try {
 
-            double valor = Double.valueOf(table.getValueAt(row, this.columna).toString());
+            String valor = table.getValueAt(row, this.columna).toString();
 
-            if (valor >= minValue) {
+            if (valor.equals("APROBADO")) {
                 setForeground(Color.BLUE);
             } else {
                 setForeground(Color.RED);

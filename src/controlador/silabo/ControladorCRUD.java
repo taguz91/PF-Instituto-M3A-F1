@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.silabo.CarrerasBDS;
@@ -44,10 +45,10 @@ public class ControladorCRUD {
 
     private List<SilaboMD> silabosDocente;
 
-    public ControladorCRUD(UsuarioBD usuario, VtnPrincipal principal) {
+    public ControladorCRUD(UsuarioBD usuario, VtnPrincipal principal, ConexionBD conexion) {
         this.usuario = usuario;
         this.principal = principal;
-        this.conexion = new ConexionBD();
+        this.conexion = conexion;
 
     }
 

@@ -18,7 +18,7 @@ public class Validaciones {
     public static int NUMERO_DECIMAL_LIMIT = 2;
 
     public static boolean isInt(String Number) {
-        return Number.matches("^[0-9]");
+        return Number.matches("^[0-9]*");
     }
 
     public static boolean isDecimal(String Number) {
