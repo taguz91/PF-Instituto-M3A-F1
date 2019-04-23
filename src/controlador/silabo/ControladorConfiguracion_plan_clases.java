@@ -42,7 +42,6 @@ public class ControladorConfiguracion_plan_clases {
     public void iniciarControlaador() {
         conexion.conectar();
 
-        // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
@@ -60,108 +59,23 @@ public class ControladorConfiguracion_plan_clases {
         Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
         });
-        
-       silabos_docente=cargarComboCarreras();
-      silabosDocente=cargar_silabo();
-       
-       frm_cong_PlanClase.getCmb_carreras().addActionListener((ActionEvent ae) -> {
-           Optional<CarreraMD> carreraSeleccionada = silabos_docente.stream().
-                    filter(c -> c.getNombre().equals(frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString())).
-                    findFirst();
-           silabosDocente=cargar_silabo(carreraSeleccionada.get().getId());
-          
-           Optional<SilaboMD> SilaboSeleccionado = null;
-                   if (SilaboSeleccionado!=null) {
-                    SilaboSeleccionado=silabosDocente.stream().
-                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
-                    findFirst();
-                     unidadesSilabo=cargarUnidades(SilaboSeleccionado.get().getIdSilabo());
+          frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
+           frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
+           estadoCmb_silbo(false);
+           estadoCmb_cursoUnidDES(false);
+           CARGAR_COMBO_CARRERAS();
            }
-            
-//            cursosSilabo=cargarCursosSilabos(SilaboSeleccionado.get().getIdSilabo(), usuario.getPersona().getIdPersona());
-       });
-         cursosSilabo=cargarCursosSilabos(221, usuario.getPersona().getIdPersona());
-             
-        unidadesSilabo=cargarUnidades(221);
-        frm_cong_PlanClase.getCmb_silabos().addActionListener((ActionEvent ae) -> {
-            
-            Optional<SilaboMD> SilaboSeleccionado =null;
-            if(SilaboSeleccionado!=null){
-            SilaboSeleccionado= silabosDocente.stream().
-                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
-                    findFirst();
-            System.out.println(SilaboSeleccionado.get().getIdSilabo()+"iddddddddddddddddddddddddddddddd_silaboooooooooooooooooooooooooooooooooooooo");
-            
-            }
-            else{
-                System.out.println("NO HAY ID DE SILABO");
-            }
-       });
-//        
-        
-        
-      
-//    frm_cong_PlanClase.getCmb_silabos().setSelectedIndex(0);
-         frm_cong_PlanClase.getCmb_carreras().setSelectedIndex(0);
-           
-//           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
-////           frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
-//           estadoCmb_silbo(false);
-//           estadoCmb_cursoUnidDES(false);
-//           CARGAR_COMBO_CARRERAS();
-//           
-//           cargarCursosSilabos(221,usuario.getPersona().getIdPersona());
-//           cargarUnidades(221);
-    }
-
-    public List<CarreraMD> cargarComboCarreras() {
-        List<CarreraMD> carrerasDocentes = CarrerasBDS.consultar(conexion, usuario.getUsername());
-        carrerasDocentes.forEach((cmd) -> {
-            frm_cong_PlanClase.getCmb_carreras().addItem(cmd.getNombre());
-        });
-
-        return carrerasDocentes;
-    }
 
    
-    public List<SilaboMD> cargar_silabo(int carrera){
-        frm_cong_PlanClase.getCmb_silabos().removeAllItems();
-         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
-         List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
-         for (SilaboMD smd : silabosdocente) {
-            String estado = null;
-            if (smd.getEstadoSilabo() == 0) {
-                estado = "Por aprobar";
-            }
-            frm_cong_PlanClase.getCmb_silabos().addItem(smd.getIdMateria().getNombre());
-        }
-         return silabosdocente;
-    }
      public List<SilaboMD> cargar_silabo(){
          String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
+         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
     }
-    
-  
-    public List<UnidadSilaboMD> cargarUnidades(int silabo){
-        frm_cong_PlanClase.getCmb_unidades().removeAllItems();
-        List<UnidadSilaboMD> unidades_silabo=UnidadSilaboBD.consultar(conexion, silabo);
-        unidades_silabo.forEach((cmd) -> {
-            frm_cong_PlanClase.getCmb_unidades().addItem(String.valueOf(cmd.getNumeroUnidad()));
-        });
-        return unidades_silabo;
-    }
-     
-    public List<CursoMD> cargarCursosSilabos(int id_silabo,int id_persona){
-            List<CursoMD> cursos_Silabo=CursosBDS.Consultarcursos(conexion, id_silabo,id_persona);
-             cursos_Silabo.forEach((umd) -> {
-                frm_cong_PlanClase.getCmb_Cursos().addItem(  umd.getCurso_nombre());
-            });
-             return cursos_Silabo;
-    }
+ 
     private SilaboMD silabo_seleccionado(){
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
                 filter(s -> s.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
@@ -214,11 +128,22 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getCmb_unidades().removeAllItems();
         if (unidadesSilabo!=null) {
             unidadesSilabo.forEach(us -> {
+                
                 frm_cong_PlanClase.getCmb_unidades().addItem(String.valueOf(us.getNumeroUnidad()));
             });
-            frm_cong_PlanClase.getCmb_unidades().removeAllItems();
         } else {
             System.out.println("siiiiiiiiiiiiiiiiiiiiiiiiimnnnnnnnnnnnnnn unidades");
+        }
+    }
+    
+    private void LLENAR_COMBO_CURSOS(List<CursoMD> cursos){
+        frm_cong_PlanClase.getCmb_Cursos().removeAllItems();
+        if (cursos!=null) {
+            cursos.forEach(cs->{
+                frm_cong_PlanClase.getCmb_Cursos().addItem(String.valueOf(cs.getCurso_nombre()));
+            });
+        } else {
+            System.out.println("NO tiene");
         }
     }
       
@@ -241,6 +166,8 @@ private void clickCmbCarreras(){
            
            unidadesSilabo=UnidadSilaboBD.consultar(conexion,getIdSilabo() );
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
+           cursosSilabo=CursosBDS.Consultarcursos(conexion, id_silabo,usuario.getPersona().getIdPersona());
+           LLENAR_COMBO_CURSOS(cursosSilabo);
                
        }else{
            clickCmbCarreras();
@@ -262,6 +189,7 @@ private void clickCmbCarreras(){
   
   private int getIdSilabo(){
       String silabo=frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString();
+      silabosDocente=cargar_silabo();
       silabosDocente
               .stream()
                 .filter(item -> item.getIdMateria().getNombre().equals(silabo))

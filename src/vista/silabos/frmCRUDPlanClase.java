@@ -97,7 +97,9 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tlbTablaPLC = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
 
         lbBuscarPLC.setText("Buscar");
 
