@@ -529,34 +529,38 @@ public class VtnNotas {
     }
 
     private static void agregarFilas(AlumnoCursoBD obj) {
+        
+        try {
+            
+            Vector<Object> row = new Vector<>();
 
-        Vector<Object> row = new Vector<>();
+            row.add(0, tablaNotas.getDataVector().size() + 1);
+            row.add(1, obj.getAlumno().getIdentificacion());
+            row.add(2, obj.getAlumno().getPrimerApellido());
+            row.add(3, obj.getAlumno().getSegundoApellido());
+            row.add(4, obj.getAlumno().getPrimerNombre());
+            row.add(5, obj.getAlumno().getSegundoNombre());
 
-        row.add(0, tablaNotas.getDataVector().size() + 1);
-        row.add(1, obj.getAlumno().getIdentificacion());
-        row.add(2, obj.getAlumno().getPrimerApellido());
-        row.add(3, obj.getAlumno().getSegundoApellido());
-        row.add(4, obj.getAlumno().getPrimerNombre());
-        row.add(5, obj.getAlumno().getSegundoNombre());
+            obj.getNotas().stream().filter(buscar("APORTE 1")).forEach(agregar(row, 6));
+            obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).forEach(agregar(row, 7));
+            obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).forEach(agregar(row, 8));
+            obj.getNotas().stream().filter(buscar("APORTE 2")).forEach(agregar(row, 9));
+            obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
+            obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
 
-        obj.getNotas().stream().filter(buscar("APORTE 1")).forEach(agregar(row, 6));
-        obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).forEach(agregar(row, 7));
-        obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).forEach(agregar(row, 8));
-        obj.getNotas().stream().filter(buscar("APORTE 2")).forEach(agregar(row, 9));
-        obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
-        obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
+            row.add(12, obj.getNotaFinal());
 
-        row.add(12, obj.getNotaFinal());
+            int faltas = obj.getNumFalta();
 
-        int faltas = obj.getNumFalta();
+            String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String materia = vista.getCmbAsignatura().getSelectedItem().toString();
+            listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
+                    .forEach(setPorcentajeVetor(row, faltas, obj));
 
-        listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
-                .forEach(setPorcentajeVetor(row, faltas, obj));
-
-        row.add(16, obj.getAsistencia());
-        tablaNotas.addRow(row);
+            row.add(16, obj.getAsistencia());
+            tablaNotas.addRow(row);
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
 
     }
 
