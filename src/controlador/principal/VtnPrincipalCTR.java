@@ -10,6 +10,7 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
@@ -102,6 +103,7 @@ import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
 import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
+import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
 
@@ -231,6 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtListaAlumnos().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
+        vtnPrin.getMnCtAlmnRetirados().addActionListener(e -> abrirVtnAlmnRetirados());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
@@ -454,6 +457,15 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtnPrin, vtn, conecta, this, rolSeleccionado);
             ctrVtn.iniciar();
+        }
+    }
+    
+    public void abrirVtnAlmnRetirados(){
+        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn); 
+            ctr.iniciar();
         }
     }
 
@@ -695,6 +707,7 @@ public class VtnPrincipalCTR {
                 numVtns++;
                 if (numVtns > 5) {
                     errorNumVentanas();
+                    internal.dispose();
                 }
             }
 
