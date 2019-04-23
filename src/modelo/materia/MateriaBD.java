@@ -113,7 +113,7 @@ public class MateriaBD extends MateriaMD {
     }
 
     public CarreraMD filtrarIdCarrera(String nombre) {
-        String sql = "SELECT id_carrera carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
         CarreraMD carrera = new CarreraMD();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -123,20 +123,33 @@ public class MateriaBD extends MateriaMD {
             rs.close();
             return carrera;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
+            System.out.println("No se pudieron consultar carreras");
             System.out.println(ex.getMessage());
             return null;
         }
     }
-    
-//    public EjeFormacionMD filtrarIdEje(String nombre){
-//        String sql = "SELECT id_";
-//        
-//    }
+
+    public EjeFormacionMD filtrarIdEje(String nombre) {
+        String sql = "SELECT id_eje FROM public.\"EjesFormacion\" WHERE eje_nombre LIKE '" + nombre + "';";
+        EjeFormacionMD eje = new EjeFormacionMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                eje.setId(rs.getInt("id_eje"));
+            }
+            rs.close();
+            return eje;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar ejes");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
-         sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
