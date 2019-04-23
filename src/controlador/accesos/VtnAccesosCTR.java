@@ -3,17 +3,21 @@ package controlador.accesos;
 import controlador.Libraries.Middlewares;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import vista.accesos.FrmAccesosEditar;
 import vista.accesos.VtnAccesos;
 import vista.principal.VtnPrincipal;
 
@@ -75,6 +79,8 @@ public class VtnAccesosCTR {
                 txtBuscarKeyReleased(e);
             }
         });
+        
+        vista.getBtnEditar().addActionListener(e-> btnEditarActonPerformance(e));
 
     }
 
@@ -128,10 +134,43 @@ public class VtnAccesosCTR {
         listaTemporal.forEach(VtnAccesosCTR::agregarFila);
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
     }
+    
+    private void setObjFromTable(int fila){
+        
+        listaAccesosbd = AccesosBD.SelectAll();
+        
+        String acceso = (String) vista.getTblAccesosDeRol().getValueAt(fila, 2);
+        
+        modelo = new AccesosBD();
+        
+        listaAccesosbd
+                .stream()
+                .filter(item -> item.getNombre().equals(acceso))
+                .collect(Collectors.toList())
+                .forEach(obj->{
+                    modelo.setNombre(obj.getNombre());
+                    modelo.setDescripcion(obj.getDescripcion());
+                });              
+    }
 
     //EVENTOS
     private void txtBuscarKeyReleased(KeyEvent e) {
         cargarTablaFilter(vista.getTxtBuscar().getText());
+    }
+    
+    private void btnEditarActonPerformance(ActionEvent e){
+        
+        int fila = vista.getTblAccesosDeRol().getSelectedRow();
+        
+        if (fila != -1) {
+            setObjFromTable(fila);
+            FrmAccesosEditarCTR form = new FrmAccesosEditarCTR(desktop, new FrmAccesosEditar(), modelo, conecta);
+            form.Init();
+        }else{
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
+        }
+        
+        
     }
 
 }
