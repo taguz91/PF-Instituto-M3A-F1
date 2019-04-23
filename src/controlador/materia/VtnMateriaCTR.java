@@ -51,7 +51,6 @@ public class VtnMateriaCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final CarreraBD carrerBD;
-    
 
     //El modelo de la tabla materias
     private DefaultTableModel mdTblMat;
@@ -61,7 +60,6 @@ public class VtnMateriaCTR {
     private ArrayList<CarreraMD> carreras;
     //Ciclos de una carrera
     private ArrayList<Integer> ciclos;
-    
 
     /**
      * Iniciamos las dependencias de base de datos.
@@ -95,7 +93,7 @@ public class VtnMateriaCTR {
      */
     public void iniciar() {
         vtnMateria.getBtnRequisitos().addActionListener(e -> abrirFrmRequisito());
-        vtnMateria.getBtnReporteMaterias().setEnabled(false);
+       // vtnMateria.getBtnReporteMaterias().setEnabled(false);
         String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
@@ -117,6 +115,7 @@ public class VtnMateriaCTR {
         //Iniciamos el combo de ciclos
         vtnMateria.getCmbCiclo().removeAllItems();
         vtnMateria.getCmbCiclo().addItem("Todos");
+        vtnMateria.getLblError().setVisible(false);
 
         materias = materia.cargarMaterias();
         cargarTblMaterias();
@@ -139,10 +138,10 @@ public class VtnMateriaCTR {
         vtnMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-              String b = vtnMateria.getTxtBuscar().getText().trim();
+                String b = vtnMateria.getTxtBuscar().getText().trim();
 
                 if (e.getKeyCode() == 10) {
-                  buscarMaterias(b);
+                    buscarMaterias(b);
                 }
             }
         });
@@ -199,7 +198,7 @@ public class VtnMateriaCTR {
 
     private void filtrarPorCarrera() {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
-        validarBotonesReportes();
+        //validarBotonesReportes();
         if (pos > 0) {
             materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
             //Cargamos los ciclos de una carrera
@@ -254,7 +253,7 @@ public class VtnMateriaCTR {
         System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("carrera", vtnMateria.getCmbCarreras().getSelectedItem());
+            parametro.put("consulta", materia.getSql());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
@@ -288,14 +287,14 @@ public class VtnMateriaCTR {
         }
     }
 
-    public void validarBotonesReportes() {
-        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
-        if (selecTabl > 0) {
-            vtnMateria.getBtnReporteMaterias().setEnabled(true);
-        } else {
-            vtnMateria.getBtnReporteMaterias().setEnabled(false);
-        }
-    }
+//    public void validarBotonesReportes() {
+//        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
+//        if (selecTabl > 0) {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(true);
+//        } else {
+//            vtnMateria.getBtnReporteMaterias().setEnabled(false);
+//        }
+//    }
 
     public void abrirFrmRequisito() {
         int fila = vtnMateria.getTblMateria().getSelectedRow();
@@ -307,7 +306,6 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
         }
-
 
     }
 
@@ -344,7 +342,7 @@ public class VtnMateriaCTR {
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"
                     + vtnMateria.getTblMateria().getValueAt(posFila, 2) + "?", " Eliminar Materia", dialog);
             if (result == 0) {
-                if (materia.editarMateria(mate.getId()) == true) {
+                if (materia.elminarMateria(mate.getId()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
 
                     cargarTblMaterias();
@@ -356,7 +354,6 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA MATERIA");
         }
-
     }
 
 }

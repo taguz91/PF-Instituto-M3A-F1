@@ -10,5 +10,5 @@ package modelo.secretaria;
  * @author ana96
  */
 public class SecretariaMD {
-    
-}
+    private int codigo;
+} 
