@@ -321,6 +321,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                 lista.add(alumnoCurso);
             }
+            rs.close();
+            ResourceManager.getConnection().close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
