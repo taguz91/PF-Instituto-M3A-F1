@@ -206,6 +206,7 @@ public class FrmMateriasCTR {
                 horasAutoEstudio = frmMaterias.getTxtHorasAutoEstudio().getText();
                 totalHoras = frmMaterias.getTxtTotalHoras().getText();
 
+                System.out.println("entro");
                 if (horasDocencia.equals("") == false && horasPracticas.equals("") == false
                         && horasPresenciales.equals("") == false && horasAutoEstudio.equals("") == false
                         && totalHoras.equals("") == false) {
@@ -381,6 +382,16 @@ public class FrmMateriasCTR {
                 habilitarGuardar();
             }
         };
+        
+        KeyListener validarPalabras = new KeyAdapter(){
+            public void keyTyped(KeyEvent e) {
+                char car = e.getKeyChar();
+                if (!Validar.esLetrasYNumeros2(car+"")) {
+                    e.consume();
+                }
+                habilitarGuardar();
+            }
+        };
 
 //        frmMaterias.getCbCarrera().addActionListener(new CmbValidar(
 //                frmMaterias.getCbCarrera(), frmMaterias.getLblErrorCarrera()));
@@ -404,8 +415,7 @@ public class FrmMateriasCTR {
                 frmMaterias.getCbx_CamFormacion(), frmMaterias.getLblErrorCampoFormacion()));
 
         //Validar el codigo de materias con letras, numeros y _ - 
-        frmMaterias.getTxtCodigoMateria().addKeyListener(new TxtVLetras(
-                frmMaterias.getTxtCodigoMateria(), frmMaterias.getLblErrorCodigoMateria()));
+        frmMaterias.getTxtCodigoMateria().addKeyListener(validarPalabras);
         frmMaterias.getTxtCodigoMateria().addPropertyChangeListener(habilitar);
         frmMaterias.getTxtNombreMateria().addKeyListener(new TxtVLetras(frmMaterias.getTxtNombreMateria(),
                 frmMaterias.getLblErrorNombreMateria()));
@@ -434,15 +444,6 @@ public class FrmMateriasCTR {
             }
         };
         
-        KeyListener numeros = new KeyAdapter(){
-            public void keyTyped(KeyEvent e) {
-                char car = e.getKeyChar();
-                if (!Validar.esNumeros(car+"")) {
-                    e.consume();
-                }
-                habilitarGuardar();
-            }
-        };
         frmMaterias.getTxtObjetivoGeneral().addKeyListener(validar);
         frmMaterias.getTxtObjetivoEspecifico().addKeyListener(validar);
         frmMaterias.getTxtDescripcionMateria().addKeyListener(validar);
