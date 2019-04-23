@@ -51,8 +51,8 @@ public class FrmMateriasCTR {
     private boolean editar = false;
     private ArrayList<CarreraMD> listaCarrera;
     private ArrayList<EjeFormacionMD> listaEje;
-    private final CarreraBD carBD;
-    private final EjeFormacionBD ejeBD;
+    private final CarreraBD carBD = null;
+    private final EjeFormacionBD ejeBD = null;
 
     public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
