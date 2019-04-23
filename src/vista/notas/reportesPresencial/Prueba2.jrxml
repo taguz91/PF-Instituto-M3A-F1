@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.75"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="806"/>
+	<property name="ireport.y" value="186"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Lushito\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\notas\\reportesPresencial\\"]]></defaultValueExpression>
 	</parameter>
@@ -121,32 +121,32 @@ ORDER BY
 			<textField>
 				<reportElement x="1159" y="82" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1159" y="112" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="317" y="80" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="319" y="112" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="292" y="147" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="31" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="61" splitType="Stretch">
@@ -175,6 +175,11 @@ ORDER BY
 				<textElement/>
 				<text><![CDATA[NOTA 1]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="931" y="5" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Examen Interciclo]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -182,25 +187,25 @@ ORDER BY
 			<textField>
 				<reportElement x="32" y="16" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{id_alumno}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{id_alumno}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="184" y="21" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{ALUMNO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ALUMNO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="340" y="21" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="510" y="21" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{id_alumno}.toString()]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="746" y="9" width="200" height="100"/>
+				<reportElement x="683" y="9" width="200" height="100"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -220,7 +225,30 @@ ORDER BY
 					<subreportParameterExpression><![CDATA[4]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReportePrueba2.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReportePrueba2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="942" y="9" width="200" height="100"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[7]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
