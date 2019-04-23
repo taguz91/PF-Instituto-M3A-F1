@@ -147,7 +147,7 @@ public class ControladorSilaboC {
             periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
             //configuracion.getCmbPeriodo().removeAllItems();
             configuracion.getCmbAsignatura().removeAllItems();
-            System.out.println("-----------------" + periodosCarrera.get(0).getNombre_PerLectivo());
+            System.out.println("-------------------" + periodosCarrera.get(0).getNombre_PerLectivo());
             cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId_PerioLectivo());
             //cargarComboPeriodos(carreraSeleccionada.get().getId());
 
