@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dc7a7094-d1eb-480c-a970-19cf262f7cbe">
-	<property name="ireport.zoom" value="0.75"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="806"/>
+	<property name="ireport.y" value="186"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Lushito\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\notas\\reportesPresencial\\"]]></defaultValueExpression>
 	</parameter>
@@ -67,126 +67,145 @@ ORDER BY
 	<title>
 		<band height="198" splitType="Stretch">
 			<staticText>
-				<reportElement x="195" y="112" width="54" height="20" uuid="d074bdca-f0ef-403f-9705-d1b29879d5c9"/>
+				<reportElement x="195" y="112" width="54" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="195" y="80" width="97" height="20" uuid="d50ed798-a2c1-4d74-b026-5dd1e25d4be7"/>
+				<reportElement x="195" y="80" width="97" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="195" y="147" width="41" height="20" uuid="dbb9d687-468c-4f2a-b7f5-c227ec0a0a3f"/>
+				<reportElement x="195" y="147" width="41" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="673" y="55" width="199" height="20" uuid="3319d53f-23b5-44e9-83f3-7773672735d2"/>
+				<reportElement x="673" y="55" width="199" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="78176f7c-c6fe-4fb2-a4bc-d013b0ced952"/>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699"/>
 				<textElement textAlignment="Center">
 					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1043" y="112" width="72" height="20" uuid="fcd8913f-54f1-4a7c-88eb-25e6bb72936f"/>
+				<reportElement x="1043" y="112" width="72" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1043" y="80" width="56" height="20" uuid="942e28c2-ad1c-4122-bac2-aeabde9bbf7a"/>
+				<reportElement x="1043" y="80" width="56" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="187" width="1520" height="1" uuid="ce880257-0711-443a-8a88-88e23ef9f98b"/>
+				<reportElement x="1" y="187" width="1520" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="1159" y="82" width="100" height="20" uuid="de2035ae-08e6-4e3c-ae6e-16d8674ba695"/>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<reportElement x="1159" y="82" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1159" y="112" width="100" height="20" uuid="c8d0827c-ea8c-4f66-b95c-981b1c16a90b"/>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<reportElement x="1159" y="112" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="317" y="80" width="100" height="20" uuid="43853ca7-e894-4574-a367-8b38dc68adf8"/>
-				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<reportElement x="317" y="80" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="319" y="112" width="100" height="20" uuid="f34bf5ba-72b2-42db-823d-0a32c41cee60"/>
-				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<reportElement x="319" y="112" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="147" width="100" height="20" uuid="f350a5b6-5f15-4d58-9516-2229fccfcaf4"/>
-				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+				<reportElement x="292" y="147" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="31" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="32" y="1" width="100" height="20" uuid="015e56fb-4bc4-4823-aa32-05eb0201b5c5"/>
+				<reportElement x="32" y="1" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[id_alumno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="184" y="1" width="100" height="20" uuid="ddf01831-0774-49a2-8c58-c67f8f27880c"/>
+				<reportElement x="184" y="1" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[ALUMNO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="352" y="1" width="100" height="20" uuid="361e2d78-7934-4318-89c7-1eef5094e279"/>
+				<reportElement x="352" y="1" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[persona_identificacion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="500" y="1" width="100" height="20" uuid="1deb1833-2230-4dc8-96dc-27fdb4d66ced"/>
+				<reportElement x="500" y="1" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[almn_curso_nota_final]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="733" y="1" width="100" height="20" uuid="141be24b-2e9d-46b4-b140-1a763b42c422"/>
+				<reportElement x="733" y="1" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[NOTA 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="931" y="5" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Examen Interciclo]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="32" y="16" width="100" height="20" uuid="467120c1-d8d6-444d-ac7b-3e9af6b029f1"/>
-				<textFieldExpression><![CDATA[$F{id_alumno}]]></textFieldExpression>
+				<reportElement x="32" y="16" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{id_alumno}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="184" y="21" width="100" height="20" uuid="51c730be-e6c3-48b1-8b88-3661b6c15a81"/>
-				<textFieldExpression><![CDATA[$F{ALUMNO}]]></textFieldExpression>
+				<reportElement x="184" y="21" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ALUMNO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="340" y="21" width="100" height="20" uuid="8e1bb1a3-6bc3-44a5-97b3-aee003d329df"/>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<reportElement x="340" y="21" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="510" y="21" width="100" height="20" uuid="f129d096-34b0-4f16-b8fc-4ae23fed9b0b"/>
-				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+				<reportElement x="510" y="21" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{id_alumno}.toString()]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="733" y="13" width="200" height="28" uuid="f0193403-1551-4620-bd1f-ed643444937f"/>
+				<reportElement x="683" y="9" width="200" height="100"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -203,10 +222,33 @@ ORDER BY
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="id_tipo_nota">
-					<subreportParameterExpression><![CDATA[12]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[4]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReportePrueba2.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReportePrueba2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="942" y="9" width="200" height="100"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[7]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
