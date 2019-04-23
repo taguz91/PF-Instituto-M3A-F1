@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  *
  * @author Daniel
  */
-public class frmCRUDPlanClase extends javax.swing.JFrame {
+public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmCRUDPlanClase
@@ -97,7 +97,9 @@ public class frmCRUDPlanClase extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tlbTablaPLC = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
 
         lbBuscarPLC.setText("Buscar");
 

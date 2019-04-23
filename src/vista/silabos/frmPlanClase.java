@@ -176,6 +176,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         this.jSeparator1 = jSeparator1;
     }
 
+    public JList<String> getJlisRecursos() {
+        return jlisRecursos;
+    }
+
+    public void setJlisRecursos(JList<String> jlisRecursos) {
+        this.jlisRecursos = jlisRecursos;
+    }
+
     public JList<String> getJlistInstrumentoEvaluacion() {
         return jlistInstrumentoEvaluacion;
     }
@@ -184,13 +192,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         this.jlistInstrumentoEvaluacion = jlistInstrumentoEvaluacion;
     }
 
-    public JList<String> getJlistRecursos() {
-        return jlistRecursos;
-    }
 
-    public void setJlistRecursos(JList<String> jlistRecursos) {
-        this.jlistRecursos = jlistRecursos;
-    }
 
     public JLabel getLbAsignatura() {
         return lbAsignatura;
@@ -520,10 +522,10 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         lbObjetivoPC = new javax.swing.JLabel();
         lbContenidosPC = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jlistRecursos = new javax.swing.JList<>();
+        jlistInstrumentoEvaluacion = new javax.swing.JList<>();
         lbEstrategiasPC = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlistInstrumentoEvaluacion = new javax.swing.JList<>();
+        jlisRecursos = new javax.swing.JList<>();
         lbRecursosPC = new javax.swing.JLabel();
         lbIns_Evaluacion = new javax.swing.JLabel();
         jDateChooserFechaFinPC = new com.toedter.calendar.JDateChooser();
@@ -630,21 +632,21 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbContenidosPC.setText("Contenidos:");
 
-        jlistRecursos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jlistRecursos);
-
-        lbEstrategiasPC.setText("Estrategias:");
-
         jlistInstrumentoEvaluacion.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jlistInstrumentoEvaluacion);
+        jScrollPane3.setViewportView(jlistInstrumentoEvaluacion);
+
+        lbEstrategiasPC.setText("Estrategias:");
+
+        jlisRecursos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jlisRecursos);
 
         lbRecursosPC.setText("Recursos:");
 
@@ -1012,8 +1014,8 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> jlisRecursos;
     private javax.swing.JList<String> jlistInstrumentoEvaluacion;
-    private javax.swing.JList<String> jlistRecursos;
     private javax.swing.JLabel lbAsignatura;
     private javax.swing.JLabel lbCarrera;
     private javax.swing.JLabel lbCicloparalelo;
