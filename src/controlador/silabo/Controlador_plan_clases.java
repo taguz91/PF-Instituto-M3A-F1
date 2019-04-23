@@ -132,7 +132,7 @@ public class Controlador_plan_clases {
            fPlanClase.getTxtUnidad().setText(String.valueOf(lista_unidad.getNumeroUnidad()));
            fPlanClase.getTxtUnidad().setEnabled(false);
            
-           fPlanClase.getLbNumeroPlandeClase().setText("N°"+lista_unidad.getNumeroUnidad());
+           fPlanClase.getLbNumeroPlandeClase().setText("Unidad N°"+lista_unidad.getNumeroUnidad());
            
         }
     }
