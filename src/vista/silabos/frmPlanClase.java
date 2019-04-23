@@ -132,6 +132,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         return jScrollPane4;
     }
 
+    public JTextField getTxt_buscarPCL() {
+        return txt_buscarPCL;
+    }
+
+    public void setTxt_buscarPCL(JTextField txt_buscarPCL) {
+        this.txt_buscarPCL = txt_buscarPCL;
+    }
+    
     public void setjScrollPane4(JScrollPane jScrollPane4) {
         this.jScrollPane4 = jScrollPane4;
     }
@@ -556,7 +564,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        txt_buscarPCL = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -672,7 +680,12 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         btmnGuardarPc.setText("Guardar");
 
-        btnCancelarPC.setText("Cancelar");
+        btnCancelarPC.setText("Atrás");
+        btnCancelarPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarPCActionPerformed(evt);
+            }
+        });
 
         txrObservacionesPc.setColumns(20);
         txrObservacionesPc.setLineWrap(true);
@@ -710,8 +723,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         btnQuitarPC.setText("Quitar");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jTextField1.setText("jTextField1");
 
         jLabel1.setText("Buscar:");
 
@@ -799,7 +810,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1))
+                                        .addComponent(txt_buscarPCL))
                                     .addComponent(lbIns_Evaluacion))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -814,7 +825,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane7)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancelarPC)
+                        .addComponent(btnCancelarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btmnGuardarPc)))
                 .addContainerGap())
@@ -909,7 +920,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addComponent(lbRecursosPC)
                                     .addGap(3, 3, 3)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_buscarPCL, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -956,6 +967,10 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCarreraActionPerformed
+
+    private void btnCancelarPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarPCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1013,7 +1028,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JList<String> jlisRecursos;
     private javax.swing.JList<String> jlistInstrumentoEvaluacion;
     private javax.swing.JLabel lbAsignatura;
@@ -1053,5 +1067,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtTituloUnidad;
     private javax.swing.JTextField txtUnidad;
+    private javax.swing.JTextField txt_buscarPCL;
     // End of variables declaration//GEN-END:variables
 }

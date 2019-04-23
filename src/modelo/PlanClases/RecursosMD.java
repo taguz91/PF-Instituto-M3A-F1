@@ -13,9 +13,9 @@ public class RecursosMD {
     
     private int id_recurso;
     private String nombre_recursos;
-    private char tipo_recurso;
+    private String tipo_recurso;
 
-    public RecursosMD(int id_recurso, String nombre_recursos, char tipo_recurso) {
+    public RecursosMD(int id_recurso, String nombre_recursos, String tipo_recurso) {
         this.id_recurso = id_recurso;
         this.nombre_recursos = nombre_recursos;
         this.tipo_recurso = tipo_recurso;
@@ -40,17 +40,15 @@ public class RecursosMD {
         this.nombre_recursos = nombre_recursos;
     }
 
-    public char getTipo_recurso() {
+    public String getTipo_recurso() {
         return tipo_recurso;
     }
 
-    public void setTipo_recurso(char tipo_recurso) {
+    public void setTipo_recurso(String tipo_recurso) {
         this.tipo_recurso = tipo_recurso;
     }
-    
-    public static List<RecursosMD> consultarRecursos(ConexionBD conexion){
-        return null;
-    }
+
+  
     
     
 }
