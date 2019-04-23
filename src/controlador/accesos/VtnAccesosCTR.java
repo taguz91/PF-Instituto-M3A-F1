@@ -3,10 +3,13 @@ package controlador.accesos;
 import controlador.Libraries.Middlewares;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
@@ -20,7 +23,7 @@ public class VtnAccesosCTR {
     private VtnAccesos vista;
     private AccesosBD modelo;
     private final ConectarDB conecta;
-    
+
     private final VtnPrincipalCTR ctrPrin;
 
     //Listas
@@ -33,8 +36,6 @@ public class VtnAccesosCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
     }
-
-   
 
     //Iniciamos Tabla
     private static DefaultTableModel tablaAccesos;
@@ -56,20 +57,29 @@ public class VtnAccesosCTR {
             desktop.getDpnlPrincipal().add(vista);
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
             vista.setSelected(true);
-            
+
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        InitEventos();
 
     }
-    
+
     //ESCUCHADORES DE EVENTOS
-    
-    
-    
+    private void InitEventos() {
+
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscarKeyReleased(e);
+            }
+        });
+
+    }
+
     //METODOS DE APOYO
-    
-    public void cargarTabla(List <AccesosMD> lista){
+    public void cargarTabla(List<AccesosMD> lista) {
         new Thread(() -> {
             if (cargarTabla) {
 
@@ -82,29 +92,46 @@ public class VtnAccesosCTR {
                 tablaAccesos.setRowCount(0);
 
                 lista.stream().forEach(VtnAccesosCTR::agregarFila);
-                
+
                 vista.getLblResultados().setText(lista.size() + " Resultados");
 
                 cargarTabla = true;
 
                 Middlewares.setDefaultCursor(vista);
 
-               Middlewares.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
+                Middlewares.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
             }
 
         }).start();
     }
-    
-     private static void agregarFila(AccesosMD obj) {
+
+    private static void agregarFila(AccesosMD obj) {
         tablaAccesos.addRow(new Object[]{
             tablaAccesos.getDataVector().size() + 1,
             obj.getIdAccesos(),
             obj.getNombre()
-            
+
         });
     }
-    
-    
-    
+
+    private void cargarTablaFilter(String aguja) {
+
+        tablaAccesos.setRowCount(0);
+
+        List<AccesosMD> listaTemporal = listaAccesosbd
+                .stream()
+                .filter(item ->
+                        item.getNombre().toUpperCase().contains(aguja.toUpperCase())
+                )
+                .collect(Collectors.toList());
+
+        listaTemporal.forEach(VtnAccesosCTR::agregarFila);
+        vista.getLblResultados().setText(listaTemporal.size() + " Registros");
+    }
+
     //EVENTOS
+    private void txtBuscarKeyReleased(KeyEvent e) {
+        cargarTablaFilter(vista.getTxtBuscar().getText());
+    }
+
 }
