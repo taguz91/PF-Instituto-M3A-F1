@@ -154,6 +154,7 @@ public class FrmAlumnoCursoCTR {
                     //Si no tipamos mas de tres letras borramos los datos
                     mdAlm.setRowCount(0);
                     frmAlmCurso.getBtnReprobadas().setVisible(false);
+                    frmAlmCurso.getBtnAnuladas().setVisible(false);
                 }
             }
         });
@@ -169,6 +170,7 @@ public class FrmAlumnoCursoCTR {
         });
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
+        frmAlmCurso.getBtnAnuladas().addActionListener(e -> mostrarInformacion("A"));
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
 
         inicarValidaciones();
@@ -401,7 +403,7 @@ public class FrmAlumnoCursoCTR {
                 }
             });
         } else if (mallaAnuladas.size() > 0) {
-            System.out.println("Vemos cual se anulo: ");
+            frmAlmCurso.getBtnAnuladas().setVisible(true);
             mallaAnuladas.forEach(m -> {
                 if (m.getMallaCiclo() < cicloReprobado) {
                     cicloReprobado = m.getMallaCiclo();
@@ -574,18 +576,43 @@ public class FrmAlumnoCursoCTR {
                 }
             }
         }
+        System.out.println("Numero de cursos: "+cursos.size());
+        System.out.println("Esto se va a eliminar: ");
+        for(int i: posElim){
+            System.out.print(i+"  ");
+        }
+        System.out.println("");
+        cursos.forEach(c -> {System.out.println(c.getId_materia().getNombre());});
         //Eliminamos las materias que tiene pre requisitos y aun no los a pasado
+        System.out.println("Numero de curso: "+posElim.length);
         for (int i = 0; i < posElim.length; i++) {
-            if (posElim[i] != 0) {
+            if (posElim[i] > 0) {
                 cursos.remove(posElim[i] - 1);
+                posElim = posElim(posElim); 
             }
         }
+
         //Pasamos el nuevo cursos depurado al array 
         cursosPen = cursos;
         if (cursos.size() > 0) {
             llenarTblConCoRequisitos(cursos);
         }
     }
+    
+    /**
+     * para mover el eliminado uno menos si se elimina 
+     * @param posElim
+     * @return 
+     */
+    public int[] posElim(int[] posElim){
+        int[] pos = new int[posElim.length];
+        for (int i = 0; i < posElim.length; i++) {
+            pos[i] = posElim[i] - 1; 
+            System.out.println("Se movio: "+pos[i]);
+        }
+        return pos; 
+    }
+    
 
     /**
      * Comprobamos que este
