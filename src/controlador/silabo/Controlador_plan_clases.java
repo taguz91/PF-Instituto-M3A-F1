@@ -3,8 +3,13 @@ package controlador.silabo;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import modelo.ConexionBD;
 import modelo.curso.CursoMD;
+import modelo.estrategiasUnidad.EstrategiasUnidadBD;
+import modelo.estrategiasUnidad.EstrategiasUnidadMD;
+import modelo.evaluacionSilabo.EvaluacionSilaboBD;
+import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboMD;
@@ -23,10 +28,12 @@ public class Controlador_plan_clases {
     private SilaboMD silabo;
     private CursoMD curso;
     private UnidadSilaboMD unidadsilabo;
-    private List<SilaboMD> lista_silabo;
     private List<CursoMDS> lista_curso;
     private List<UnidadSilaboMD> lista_unidadsilabo;
-    
+    private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
+     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
+     private DefaultListModel modeloInstrumentos;
+     
     public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,
             UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.silabo=silabo;
@@ -47,9 +54,7 @@ public class Controlador_plan_clases {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
          fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
              fPlanClase.dispose();
-             ControladorConfiguracion_plan_clases ccpc=new 
-        ControladorConfiguracion_plan_clases(usuario, vtnPrincipal, conexion);
-             ccpc.iniciarControlaador();
+            
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);
         
@@ -61,6 +66,12 @@ public class Controlador_plan_clases {
         
       lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
+        
+     lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        CargarEstrategiasUnidad(lista_estrategiasSilabo);
+        
+      lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
     }
     public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
@@ -74,9 +85,6 @@ public class Controlador_plan_clases {
         fPlanClase.getTxtCod_Asignatura().setEnabled(false);
         fPlanClase.getTxtCicloParalelo().setText(cursoMDS.getCurso_nombre());
         fPlanClase.getTxtCicloParalelo().setEnabled(false);
-        
-        
-            
         }
     }
     
@@ -111,7 +119,20 @@ public class Controlador_plan_clases {
         }
     }
     
-    
+    private void CargarEstrategiasUnidad(List<EstrategiasUnidadMD> lista){
+        fPlanClase.getCmbxEstrategiasPC().removeAllItems();
+        for (EstrategiasUnidadMD estrategiasUnidadMD : lista) {
+            fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
+        }
+    }
+    private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
+        fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
+        modeloInstrumentos=new DefaultListModel();
+        for (EvaluacionSilaboMD evaluacionSilaboMD : lista) {
+            modeloInstrumentos.addElement(evaluacionSilaboMD.getInstrumento());
+        }
+        fPlanClase.getJlistInstrumentoEvaluacion().setModel(modeloInstrumentos);
+    }
      
      
 }
