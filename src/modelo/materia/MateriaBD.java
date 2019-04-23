@@ -113,7 +113,7 @@ public class MateriaBD extends MateriaMD {
     }
 
     public CarreraMD filtrarIdCarrera(String nombre) {
-        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        String sql = "SELECT id_carrera carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
         CarreraMD carrera = new CarreraMD();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -127,6 +127,11 @@ public class MateriaBD extends MateriaMD {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+    
+    public EjeFormacionMD filtrarIdEje(String nombre){
+        String sql = "SELECT id_";
+        
     }
 
     //para mostrar datos de la materia
