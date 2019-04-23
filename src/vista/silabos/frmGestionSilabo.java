@@ -955,6 +955,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAgregarEstrategia = new javax.swing.JLabel();
         txtNuevaEstrategia = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -994,7 +995,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(lblResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 190, -1, -1));
 
         lblContenidos.setText("Contenidos de la Unidad:");
-        pnlUnidad.add(lblContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        pnlUnidad.add(lblContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         pnlAsistidaDocente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1285,7 +1286,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txrResultados.setWrapStyleWord(true);
         scrResultados.setViewportView(txrResultados);
 
-        pnlUnidad.add(scrResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 220, 430, 101));
+        pnlUnidad.add(scrResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 220, 430, 110));
 
         txrObjetivos.setColumns(20);
         txrObjetivos.setLineWrap(true);
@@ -1293,7 +1294,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txrObjetivos.setWrapStyleWord(true);
         scrObjetivos.setViewportView(txrObjetivos);
 
-        pnlUnidad.add(scrObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 410, 100));
+        pnlUnidad.add(scrObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 410, 90));
 
         txrContenidos.setColumns(20);
         txrContenidos.setLineWrap(true);
@@ -1301,7 +1302,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txrContenidos.setWrapStyleWord(true);
         scrContenidos.setViewportView(txrContenidos);
 
-        pnlUnidad.add(scrContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 410, 100));
+        pnlUnidad.add(scrContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 410, 100));
 
         btnCancelar.setText("Cancelar");
         pnlUnidad.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 570, -1, -1));
@@ -1334,7 +1335,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         scrEstrategiasPredeterminadas.setViewportView(lstEstrategiasPredeterminadas);
 
-        pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 370, 230));
+        pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 370, 220));
 
         lblNuevaEstrategia.setText("Nueva Estrategia de Enseñanza:");
         pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, -1, 20));
@@ -1364,7 +1365,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 430, -1));
 
         jButton1.setText("Guardar");
-        pnlUnidad.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 330, -1, -1));
+        pnlUnidad.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 340, -1, -1));
+        pnlUnidad.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 1210, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1458,6 +1460,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAD;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionP;
     private javax.swing.JButton jButton1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
     private javax.swing.JLabel lblAprendizajeColaborativo;
