@@ -64,6 +64,7 @@ public class ControladorConfiguracion_plan_clases {
            estadoCmb_silbo(false);
            estadoCmb_cursoUnidDES(false);
            CARGAR_COMBO_CARRERAS();
+           frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
            }
 
    
@@ -168,10 +169,19 @@ private void clickCmbCarreras(){
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
            cursosSilabo=CursosBDS.Consultarcursos(conexion, id_silabo,usuario.getPersona().getIdPersona());
            LLENAR_COMBO_CURSOS(cursosSilabo);
+           
+           if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
+               frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
+           } else {
+               JOptionPane.showMessageDialog(frm_cong_PlanClase, "Este silabo no esta asignado a ningún curso!");
+              
+               frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
+           }
                
        }else{
            clickCmbCarreras();
            estadoCmb_cursoUnidDES(false);
+           frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
        }
    }
 
