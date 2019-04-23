@@ -59,6 +59,7 @@ public class FrmAccesosEditarCTR {
     private void InitEventos(){
         
         vista.getBtnCancelar().addActionListener(e-> btnCancelarActionPerformance(e));
+        vista.getBtnGuardar().addActionListener(e-> btnGuardarActionPerformance(e));
         
     }
     
