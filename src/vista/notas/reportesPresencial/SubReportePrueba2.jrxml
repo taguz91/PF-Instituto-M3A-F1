@@ -18,6 +18,9 @@
 	<parameter name="materia_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="id_tipo_nota" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 	"public"."Notas".nota_valor AS "Aporte 1"
@@ -41,7 +44,7 @@ WHERE
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND "Notas".id_tipo_nota = 4]]>
+	AND "Notas".id_tipo_nota = $P{id_tipo_nota}]]>
 	</queryString>
 	<field name="Aporte 1" class="java.math.BigDecimal"/>
 	<title>
