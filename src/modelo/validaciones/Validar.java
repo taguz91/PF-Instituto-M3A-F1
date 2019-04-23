@@ -27,6 +27,10 @@ public class Validar {
     public static boolean esLetrasYNumeros(String cadena) {
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
     }
+    
+    public static boolean esLetrasYNumeros2(String cadena) {
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\_0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\-0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
+    }
 
     public static boolean esNumeros(String cadena) {
         //Si la cadena no contine solo numeros se retorna falso

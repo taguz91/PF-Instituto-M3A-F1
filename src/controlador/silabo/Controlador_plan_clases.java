@@ -27,13 +27,14 @@ public class Controlador_plan_clases {
     private List<CursoMDS> lista_curso;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     
-    public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
+    public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,
+            UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.silabo=silabo;
         this.curso=curso;
         this.unidadsilabo=unidadsilabo;
         this.usuario = usuario;
         this.vtnPrincipal = vtnPrincipal;
-        this.conexion = new ConexionBD();
+        this.conexion = conexion;
     }
 
     public void iniciaControlador() {
@@ -46,7 +47,8 @@ public class Controlador_plan_clases {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
          fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
              fPlanClase.dispose();
-           ControladorConfiguracion_plan_clases ccpc=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
+             ControladorConfiguracion_plan_clases ccpc=new 
+        ControladorConfiguracion_plan_clases(usuario, vtnPrincipal, conexion);
              ccpc.iniciarControlaador();
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);

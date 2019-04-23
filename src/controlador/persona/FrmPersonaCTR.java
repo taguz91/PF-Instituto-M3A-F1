@@ -685,12 +685,6 @@ public class FrmPersonaCTR {
         calleSec = frmPersona.getTxtCalleSecundaria().getText().trim().toUpperCase().toUpperCase();
         referencia = frmPersona.getTxtReferencia().getText().trim().toUpperCase();
         celular = frmPersona.getTxtCelular().getText().trim().toUpperCase();
-//        if (!Validar.esTelefono(celular)) {
-//            guardar = false;
-//            frmPersona.getLblErrorCelular().setVisible(true);
-//        } else {
-//            frmPersona.getLblErrorCelular().setVisible(false);
-//        }
         // Lugares en donde reside y vive 
         LugarMD lugarNac = null, lugarRes = null;
         //Aqui preguntamos siempre que sea mayor a la posicion 0 porque 
@@ -742,20 +736,6 @@ public class FrmPersonaCTR {
         }
         //Esto creo que deberiamos cambiarlo para hacerlo de otra manera 
         numCasa = frmPersona.getTxtNumeroCasa().getText().trim().toUpperCase();
-//        if (!Validar.esNumCasa(numCasa)) {
-//            guardar = false;
-//            frmPersona.getLblErrorNumeroCasa().setVisible(true);
-//            if (!Validar.esNumeCasaLetras(numCasa)) {
-//                guardar = false;
-//                frmPersona.getLblErrorNumeroCasa().setVisible(true);
-//            }
-//            if (!Validar.esNumeCasaSoloNumeros(numCasa)) {
-//                guardar = false;
-//                frmPersona.getLblErrorNumeroCasa().setVisible(true);
-//            }
-//        } else {
-//            frmPersona.getLblErrorNumeroCasa().setVisible(false);
-//        }
         sector = frmPersona.getTxtSector().getText().trim().toUpperCase();
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
         correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
