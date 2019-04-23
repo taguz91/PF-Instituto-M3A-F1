@@ -106,11 +106,11 @@ public class VtnNotas {
         vista.getCmbCiclo().addActionListener(e -> {
             cargarComboMaterias();
         });
-        
+
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
-        
+
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
         Validaciones.validarNumerosEnJTEXTField(vista.getTxtBuscar());
@@ -659,8 +659,8 @@ public class VtnNotas {
         }
 
     }
-    
-        private void btnImprimir(ActionEvent e) {
+
+    private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 
             int r = JOptionPane.showOptionDialog(vista,
@@ -730,22 +730,6 @@ public class VtnNotas {
         }).start();
 
     }
-        
-           private void btnBuscar(ActionEvent e) {
-        String busqueda = vista.getTxtBuscar().getText().toLowerCase();
-        new Thread(() -> {
-            listaDocentes
-                    .entrySet()
-                    .stream()
-                    .filter(item -> item.getKey().toLowerCase().contains(busqueda))
-                    .collect(Collectors.toList())
-                    .forEach(obj -> {
-                        vista.getCmbDocente().setSelectedItem(obj.getKey());
-                    });
-        }).start();
-
-    }
-    // </editor-fold>  
 
     private void btnBuscar(ActionEvent e) {
         activarForm(false);
@@ -762,4 +746,6 @@ public class VtnNotas {
 
         activarForm(true);
     }
+    // </editor-fold>  
+
 }
