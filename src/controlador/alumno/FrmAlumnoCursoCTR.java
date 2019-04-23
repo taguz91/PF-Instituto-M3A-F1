@@ -638,8 +638,9 @@ public class FrmAlumnoCursoCTR {
 
         //Eliminamos las que no estan por matricularse ni a ver cursado.
         for (int i = 0; i < posElim.length; i++) {
-            if (posElim[i] != 0) {
+            if (posElim[i] > 0) {
                 cursos.remove(posElim[i] - 1);
+                posElim = posElim(posElim); 
             }
         }
 
