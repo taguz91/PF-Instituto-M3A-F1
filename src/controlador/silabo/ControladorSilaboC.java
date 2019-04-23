@@ -162,15 +162,14 @@ public class ControladorSilaboC {
             if (configuracion.getCmbPeriodo().getItemCount() > 0) {
 
                 System.out.println("-----------------------------entro");
-                for (SilaboMD s: silabosAnteriores){
-                    System.out.println(materiaSeleccionada.get().getId()+" - "+s.getIdMateria()+" - "+s.getIdPeriodoLectivo().getNombre_PerLectivo()+" - "+configuracion.getCmbPeriodo().getSelectedItem().toString());
+                for (SilaboMD s : silabosAnteriores) {
+                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre_PerLectivo() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
                 }
                 Optional<SilaboMD> silaboSeleccionado = silabosAnteriores.stream().
-                        filter(s -> s.getIdMateria().getId()==(materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                         findFirst();
                 silaboAnterior = silaboSeleccionado.get();
             }
-            
 
             silaboNuevo = new SilaboBD(conexion, materiaSeleccionada.get(), periodosCarrera.stream().findFirst().get());
 
@@ -327,9 +326,6 @@ public class ControladorSilaboC {
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             cargarReferencias(referenciasSilabo);
-            
-           
-           
 
         }
 
@@ -345,8 +341,8 @@ public class ControladorSilaboC {
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
-        
-         gestion.getCmbUnidad().setSelectedIndex(0);
+
+        gestion.getCmbUnidad().setSelectedIndex(0);
 
         gestion.getCmbUnidad().addActionListener(new ActionListener() {
             @Override
@@ -1498,7 +1494,10 @@ public class ControladorSilaboC {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
+                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            }
+
         });
 
         modeloBase = new DefaultListModel<>();
