@@ -62,6 +62,8 @@ import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmReferencias;
 import vista.silabos.frmSilabos;
 
+import net.sf.jasperreports.engine.JasperExportManager;
+
 /**
  *
  * @author Andres Ullauri
@@ -162,15 +164,14 @@ public class ControladorSilaboC {
             if (configuracion.getCmbPeriodo().getItemCount() > 0) {
 
                 System.out.println("-----------------------------entro");
-                for (SilaboMD s: silabosAnteriores){
-                    System.out.println(materiaSeleccionada.get().getId()+" - "+s.getIdMateria()+" - "+s.getIdPeriodoLectivo().getNombre_PerLectivo()+" - "+configuracion.getCmbPeriodo().getSelectedItem().toString());
+                for (SilaboMD s : silabosAnteriores) {
+                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre_PerLectivo() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
                 }
                 Optional<SilaboMD> silaboSeleccionado = silabosAnteriores.stream().
-                        filter(s -> s.getIdMateria().getId()==(materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                         findFirst();
                 silaboAnterior = silaboSeleccionado.get();
             }
-            
 
             silaboNuevo = new SilaboBD(conexion, materiaSeleccionada.get(), periodosCarrera.stream().findFirst().get());
 
@@ -327,9 +328,6 @@ public class ControladorSilaboC {
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             cargarReferencias(referenciasSilabo);
-            
-           
-           
 
         }
 
@@ -345,8 +343,8 @@ public class ControladorSilaboC {
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
-        
-         gestion.getCmbUnidad().setSelectedIndex(0);
+
+        gestion.getCmbUnidad().setSelectedIndex(0);
 
         gestion.getCmbUnidad().addActionListener(new ActionListener() {
             @Override
@@ -1615,13 +1613,48 @@ public class ControladorSilaboC {
 
     }
 
+//    public void exportarPDF(String path) {
+//        path="C:\\Users\\Daniel\\Desktop\\API JAVA 8";
+//        Map<String, Object> parameters = new HashMap<String, Object>();// Creamos mapa de parametros de ayuda
+//        parameters.put("algunParametro", x);
+//        parameters.put("tipo", y);
+//         conexion.conectar();// creamos la conexion a la base de datos
+//        jasperReport = (JasperReport) JRLoader.loadObjectFromFile(rutaArchivo);//Cargamos al jasper    
+//
+//        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conexion);// llenamos el reporte, indicando la conexion a base de datos
+//
+//        JRPdfExporter pdfExporter = new JRPdfExporter(); //Creamos el exporter a PDF
+//        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);//EDIT 
+//        exporter.exportReport();
+//        return baos.toByteArray(); //y obtenemos los valiosos bytes generados ;)
+//        
+//        try {
+//            JasperExportManager.exportReportToPdfFile(jasperPrint,path );
+//        } catch (JRException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//    }
+
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
         insertarUnidades();
-
         insertarReferencias();
+       // exportarPDF();
 
+//    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
+//        String sql = "INSERT INTO\"Silabo\"VALUES (?)";
+//        //Creamos una cadena para después prepararla
+//        PreparedStatement stmt = conexion.prepareStatement(sql);
+//        File archivo = new File("C://");
+//        //ruta puede ser: "c://archivo"
+//        FileInputStream fis = new FileInputStream(archivo);
+//        //Lo convertimos en un Stream
+//        stmt.setBinaryStream(1, fis, (int) archivo.length());
+//        //Asignamos el Stream al Statement
+//        stmt.execute();
+//    }
     }
 
     public boolean validarCampos() {
