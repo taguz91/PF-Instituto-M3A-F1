@@ -36,7 +36,8 @@ FROM
 	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
-  INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso	
+  INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
+	INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota	
 WHERE
 	"PeriodoLectivo".prd_lectivo_estado = true 
 	AND "Alumnos".id_alumno = $P{id_alumno}
@@ -44,7 +45,8 @@ WHERE
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND "Notas".id_tipo_nota = $P{id_tipo_nota}]]>
+	AND "TipoDeNota".id_tipo_nota = $P{id_tipo_nota}
+]]>
 	</queryString>
 	<field name="Aporte 1" class="java.math.BigDecimal"/>
 	<title>

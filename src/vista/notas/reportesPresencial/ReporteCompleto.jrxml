@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e3193962-f4be-477f-9de7-c39ad9d36adf">
-	<property name="ireport.zoom" value="0.9330147604194666"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.0263162364614136"/>
+	<property name="ireport.x" value="591"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/reportesPresencial/"]]></defaultValueExpression>
@@ -339,7 +339,7 @@ WHERE
 				<text><![CDATA[EXAMEN INTERCICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="725" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="d217b1a3-623c-4986-8231-d8cf34550105"/>
+				<reportElement mode="Opaque" x="725" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="d217b1a3-623c-4986-8231-d8cf34550105"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>

@@ -23,7 +23,7 @@ public class ReportesCTR {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/reportesPresencial/ReporteCompleto.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteCompletoPresencial.jasper";
 
         Map parametros = new HashMap();
 
