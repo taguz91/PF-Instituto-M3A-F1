@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.curso.CursoBD;
@@ -54,7 +55,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public void guardarAlmnCurso() {
         System.out.println("-------------");
         System.out.println("Matricula completa: " + nsqlMatri);
-        nsqlMatri = "";
+//        if (conecta.nosql(nsqlMatri) == null) {
+//            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
+//        }
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
