@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RowStyle extends DefaultTableCellRenderer {
 
     private int columna;
-    
 
     public RowStyle(int columna) {
         this.columna = columna;
@@ -32,10 +31,12 @@ public class RowStyle extends DefaultTableCellRenderer {
 
             String valor = table.getValueAt(row, this.columna).toString();
 
-            if (valor.equals("APROBADO")) {
+            if (valor.equalsIgnoreCase("APROBADO")) {
                 setForeground(Color.BLUE);
-            } else {
+            } else if (valor.equalsIgnoreCase("REPROBADO")) {
                 setForeground(Color.RED);
+            } else {
+                setForeground(new Color(0, 0, 0));
             }
         } catch (NumberFormatException | NullPointerException e) {
 

@@ -264,11 +264,13 @@ public class VtnNotas {
             int porcentaje = (faltas * obj.getTotalHoras()) / 100;
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), getSelectedRow());
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), 15);
-
-            if (porcentaje >= 25) {
-                vista.getTblNotas().setValueAt("Reprobado", getSelectedRow(), 13);
-            } else {
-                vista.getTblNotas().setValueAt("Aprobado", getSelectedRow(), 13);
+            String estado = vista.getTblNotas().getValueAt(getSelectedRow(), 13).toString();
+            if (!estado.equalsIgnoreCase("RETIRADO")) {
+                if (porcentaje >= 25) {
+                    vista.getTblNotas().setValueAt("Reprobado", getSelectedRow(), 13);
+                } else {
+                    vista.getTblNotas().setValueAt("Aprobado", getSelectedRow(), 13);
+                }
             }
         };
     }
