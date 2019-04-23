@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.6105100000000043"/>
+	<property name="ireport.zoom" value="1.6105100000000057"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="periodolectivo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="iddocente" class="java.lang.String">
+	<parameter name="iddocente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT (per.persona_primer_nombre||' '||per.persona_segundo_nombre||' '||per.persona_primer_apellido||' '|| per.persona_segundo_apellido) as docente,
-m.materia_nombre, c.curso_nombre,p.prd_lectivo_nombre
+m.materia_nombre, c.curso_nombre,p.prd_lectivo_nombre,m.materia_horas_docencia
 FROM ((public."Materias" m JOIN public."Cursos" c USING(id_materia)) 
 JOIN public."PeriodoLectivo" p USING(id_prd_lectivo))
 JOIN public."Docentes" d USING(id_docente)
 JOIN public. "Personas" per USING (id_persona)
-WHERE p.id_prd_lectivo =  $P{periodolectivo}   
+WHERE p.prd_lectivo_nombre =  $P{periodolectivo}   
 AND d.id_docente =  $P{iddocente}   
 AND m.materia_activa = true 
 AND p.prd_lectivo_activo = true;]]>
@@ -25,11 +25,12 @@ AND p.prd_lectivo_activo = true;]]>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="materia_horas_docencia" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="146" splitType="Stretch">
+		<band height="213" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="0" width="553" height="99"/>
 				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
@@ -53,58 +54,73 @@ AND p.prd_lectivo_activo = true;]]>
 				</textElement>
 				<text><![CDATA[Reporte de Finalizacion de Docencia ]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="156" width="553" height="17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Por medio de la presente se CERTIFICA el cierre de las asignaturas del docente : ]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="1" y="0" width="324" height="20"/>
+				<reportElement x="0" y="173" width="324" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="1" y="193" width="554" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Quien hasta el momento se encontraba impartiendo las asignaturas:]]></text>
+			</staticText>
 		</band>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="348" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement mode="Opaque" x="273" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Curso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="405" y="0" width="151" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement mode="Opaque" x="329" y="0" width="151" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Periodo Lectivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="0" width="347" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1" y="0" width="272" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Materia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="480" y="0" width="75" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="1" y="1" width="347" height="20"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="348" y="1" width="57" height="20"/>
+				<reportElement x="273" y="0" width="57" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="405" y="1" width="149" height="20"/>
+				<reportElement x="329" y="0" width="149" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
@@ -114,15 +130,53 @@ AND p.prd_lectivo_activo = true;]]>
 			<line>
 				<reportElement x="1" y="21" width="553" height="1"/>
 			</line>
+			<textField>
+				<reportElement x="1" y="0" width="272" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="0" width="76" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="31" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="79" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Atentamente:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="79" y="30" width="128" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="103" y="31" width="79" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Vicerectorado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="0" width="76" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total de horas :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="519" y="0" width="36" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="15" splitType="Stretch"/>
 	</summary>
 </jasperReport>

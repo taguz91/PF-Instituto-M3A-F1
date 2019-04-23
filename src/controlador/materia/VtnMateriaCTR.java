@@ -51,7 +51,6 @@ public class VtnMateriaCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final CarreraBD carrerBD;
-    
 
     //El modelo de la tabla materias
     private DefaultTableModel mdTblMat;
@@ -61,7 +60,6 @@ public class VtnMateriaCTR {
     private ArrayList<CarreraMD> carreras;
     //Ciclos de una carrera
     private ArrayList<Integer> ciclos;
-    
 
     /**
      * Iniciamos las dependencias de base de datos.
@@ -117,6 +115,7 @@ public class VtnMateriaCTR {
         //Iniciamos el combo de ciclos
         vtnMateria.getCmbCiclo().removeAllItems();
         vtnMateria.getCmbCiclo().addItem("Todos");
+        vtnMateria.getLblError().setVisible(false);
 
         materias = materia.cargarMaterias();
         cargarTblMaterias();
@@ -308,8 +307,6 @@ public class VtnMateriaCTR {
             JOptionPane.showMessageDialog(vtnPrin, "Seleccione una materia");
         }
 
-
-
     }
 
     private void ingresarMaterias() {
@@ -345,7 +342,7 @@ public class VtnMateriaCTR {
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"
                     + vtnMateria.getTblMateria().getValueAt(posFila, 2) + "?", " Eliminar Materia", dialog);
             if (result == 0) {
-                if (materia.editarMateria(mate.getId()) == true) {
+                if (materia.elminarMateria(mate.getId()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
 
                     cargarTblMaterias();

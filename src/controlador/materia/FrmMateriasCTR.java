@@ -22,8 +22,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.carrera.CarreraBD;
+import modelo.lugar.LugarMD;
+import modelo.materia.EjeFormacionBD;
 import modelo.materia.MateriaMD;
 import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVNumeros_2;
@@ -45,6 +49,10 @@ public class FrmMateriasCTR {
     private int acceso;
     private int idMateria = 0;
     private boolean editar = false;
+    private ArrayList<CarreraMD> listaCarrera;
+    private ArrayList<EjeFormacionMD> listaEje;
+    private final CarreraBD carBD;
+    private final EjeFormacionBD ejeBD;
 
     public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
@@ -54,7 +62,8 @@ public class FrmMateriasCTR {
         this.materiaBD = new MateriaBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmMaterias);
         frmMaterias.show();
-
+        this.carBD = new CarreraBD(conecta); 
+        this.ejeBD = new EjeFormacionBD(conecta);
     }
 
     public void iniciar() {
@@ -285,33 +294,59 @@ public class FrmMateriasCTR {
         frmMaterias.getCbEjeFormacion().setEnabled(false);
         frmMaterias.getBtnGuardar().setEnabled(false);
         frmMaterias.getBtn_Anterior().setEnabled(false);
+        frmMaterias.getjTPMaterias().setEnabledAt(0, false);
+        frmMaterias.getjTPMaterias().setEnabledAt(1, false);
+        frmMaterias.getjTPMaterias().setEnabledAt(2, false);
+        frmMaterias.getjTPMaterias().setEnabledAt(3, false);
+
+    }
+
+    public void borrarCampos() {
+
+        frmMaterias.getTxtCodigoMateria().setText("");
+        frmMaterias.getTxtCreditos().setText("");
+        frmMaterias.getTxtDescripcionMateria().setText("");
+        frmMaterias.getTxtHorasAutoEstudio().setText("");
+        frmMaterias.getTxtHorasDocencia().setText("");
+        frmMaterias.getTxtHorasPracticas().setText("");
+        frmMaterias.getTxtHorasPresenciales().setText("");
+        frmMaterias.getTxtNombreMateria().setText("");
+        frmMaterias.getTxtObjetivoEspecifico().setText("");
+        frmMaterias.getTxtObjetivoGeneral().setText("");
+        frmMaterias.getTxtTotalHoras().setText("");
+        frmMaterias.getCbCarrera().setSelectedIndex(0);
+        frmMaterias.getCbCategoria().setSelectedIndex(0);
+        frmMaterias.getCbEjeFormacion().setSelectedIndex(0);
+        frmMaterias.getCbMateriaTipo().setSelectedIndex(0);
+        frmMaterias.getCbTipoAcreditacion().setSelectedIndex(0);
+        frmMaterias.getCbx_CamFormacion().setSelectedIndex(0);
+        frmMaterias.getCbx_Ciclo().setSelectedIndex(0);
+        frmMaterias.getCbx_OrgCurricular().setSelectedIndex(0);
+        frmMaterias.getChBNucleo().setSelected(false);
 
     }
 
     private void guardarMateria() {
         boolean guardar = true;
-        String materiaCarrera, materiaCodigo, materiaNombre,
-                ejeFormacion, materiaTipo, categoria, tipoAcreditacion,
+        String materiaCodigo, materiaNombre, materiaCiclo = null,
+                ejeFormacion, materiaTipo = null, categoria = null, tipoAcreditacion = null,
                 objetivoGeneral, objetivoEspecifico, descripcionMateria,
-                organizacionCurricular, campoFormacion;
+                organizacionCurricular, campoFormacion, carrera, eje;
 
-        int id_Carrera, id_Eje, materiaCiclo, creditos,
+        int materiaCarrera, creditos,
                 horasDocencia, horasPracticas, horasPresenciales, horasAutoEstudio,
                 totalHoras;
 
         boolean materiaNucleo;
-        CarreraMD carrera = new CarreraMD();
-        EjeFormacionMD eje = new EjeFormacionMD();
+        CarreraMD carreraMD = new CarreraMD();
+        EjeFormacionMD ejeMD = new EjeFormacionMD();
 
-//        carrera.setId(frmMaterias.getCbCarrera());
-//        eje.setId(frmMaterias.getCbEjeFormacion());
+        carrera = frmMaterias.getCbCarrera().getSelectedItem().toString();
+        eje = frmMaterias.getCbEjeFormacion().getSelectedItem().toString();
         materiaCodigo = frmMaterias.getTxtCodigoMateria().getText().trim().toUpperCase();
         materiaNombre = frmMaterias.getTxtNombreMateria().getText().trim().toUpperCase();
-        materiaCiclo = Integer.parseInt(frmMaterias.getCbx_Ciclo().getSelectedItem().toString());
+
         creditos = Integer.parseInt(frmMaterias.getTxtCreditos().getText());
-        materiaTipo = frmMaterias.getCbMateriaTipo().getSelectedItem().toString();
-        categoria = frmMaterias.getCbCategoria().getSelectedItem().toString();
-        tipoAcreditacion = frmMaterias.getCbTipoAcreditacion().getSelectedItem().toString();
         materiaNucleo = frmMaterias.getChBNucleo().isSelected();
         horasDocencia = Integer.parseInt(frmMaterias.getTxtHorasDocencia().getText().trim());
         horasPracticas = Integer.parseInt(frmMaterias.getTxtHorasPracticas().getText().trim());
@@ -321,18 +356,83 @@ public class FrmMateriasCTR {
         objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText().trim().toUpperCase();
         objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText().trim().toUpperCase();
         descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText().trim().toUpperCase();
-        organizacionCurricular = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
-        campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
+
+        //
+        materiaCarrera = frmMaterias.getCbCarrera().getSelectedIndex();
+        if (materiaCarrera > 0 && materiaCarrera <= listaCarrera.size()) {
+            frmMaterias.getLblErrorCarrera().setVisible(false);
+            carreraMD = listaCarrera.get(materiaCarrera - 1);
+//            eje = frmMaterias.getCbEjeFormacion().getSelectedIndex();
+//            if (eje > 0 && eje <= listaEje.size()) {
+//                frmMaterias.getLblErrorEjeFormacion().setVisible(false);
+//                ejeMD = listaEje.get(eje - 1);
+//            } else {
+//                frmMaterias.getLblErrorEjeFormacion().setVisible(true);
+//            }
+        } else {
+            frmMaterias.getLblErrorCarrera().setVisible(true);
+        }
+
+        //
+        if (frmMaterias.getCbx_Ciclo().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorMateriaCiclo().setVisible(true);
+        } else {
+            materiaCiclo = frmMaterias.getCbx_Ciclo().getSelectedItem().toString();
+            frmMaterias.getLblErrorMateriaCiclo().setVisible(false);
+        }
+        //
+        if (frmMaterias.getCbCategoria().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorCategoria().setVisible(true);
+        } else {
+            categoria = frmMaterias.getCbCategoria().getSelectedItem().toString();
+            frmMaterias.getLblErrorCategoria().setVisible(false);
+        }
+        //
+        if (frmMaterias.getCbMateriaTipo().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorMateriaTipo().setVisible(true);
+        } else {
+            materiaTipo = frmMaterias.getCbMateriaTipo().getSelectedItem().toString();
+            frmMaterias.getLblErrorMateriaTipo().setVisible(false);
+        }
+        //
+        if (frmMaterias.getCbTipoAcreditacion().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorTipoAcreditacion().setVisible(true);
+        } else {
+            tipoAcreditacion = frmMaterias.getCbTipoAcreditacion().getSelectedItem().toString();
+            frmMaterias.getLblErrorTipoAcreditacion().setVisible(false);
+        }
+        //
+        if (frmMaterias.getCbx_OrgCurricular().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorOrganizacionCurricular().setVisible(true);
+        } else {
+            organizacionCurricular = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
+            frmMaterias.getLblErrorOrganizacionCurricular().setVisible(false);
+        }
+        //
+        if (frmMaterias.getCbx_CamFormacion().getSelectedIndex() < 1) {
+            guardar = false;
+            frmMaterias.getLblErrorCampoFormacion().setVisible(true);
+        } else {
+            campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
+            frmMaterias.getLblErrorCampoFormacion().setVisible(false);
+        }
+        //
 
         if (guardar) {
 
             MateriaBD materia = new MateriaBD(conecta);
-
-            materia.setCarrera(carrera);
-            materia.setEje(eje);
+            carreraMD.setId(materiaBD.filtrarIdCarrera(carrera).getId());
+            ejeMD.setId(acceso);
+            materia.setCarrera(carreraMD);
+            materia.setEje(ejeMD);
             materia.setCodigo(materiaCodigo);
             materia.setNombre(materiaNombre);
-            materia.setCiclo(materiaCiclo);
+            materia.setCiclo(Integer.parseInt(materiaCiclo));
             materia.setCreditos(creditos);
             materia.setTipo(materiaTipo.charAt(0));
             materia.setCategoria(categoria);
@@ -345,21 +445,23 @@ public class FrmMateriasCTR {
             materia.setObjetivo(objetivoGeneral);
             materia.setObjetivoespecifico(objetivoEspecifico);
             materia.setDescripcion(descripcionMateria);
-            materia.setOrganizacioncurricular(organizacionCurricular);
-            materia.setMateriacampoformacion(campoFormacion);
+//            materia.setOrganizacioncurricular(organizacionCurricular);
+//            materia.setMateriacampoformacion(campoFormacion);
 
             if (editar) {
                 if (idMateria > 0) {
                     materia.editarMateria(idMateria);
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                     //Boton de reportes
+                    borrarCampos();
                     frmMaterias.dispose();
                     editar = false;
                 }
             } else {
                 materia.insertarMateria();
-                JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
+                JOptionPane.showMessageDialog(vtnPrin, "Datos Guardados Correctamente.");
                 //Boton de reportes
+                borrarCampos();
                 frmMaterias.dispose();
             }
             frmMaterias.dispose();
@@ -378,6 +480,16 @@ public class FrmMateriasCTR {
         PropertyChangeListener habilitar = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
+                habilitarGuardar();
+            }
+        };
+        
+        KeyListener validarPalabras = new KeyAdapter(){
+            public void keyTyped(KeyEvent e) {
+                char car = e.getKeyChar();
+                if (!Validar.esLetrasYNumeros2(car+"")) {
+                    e.consume();
+                }
                 habilitarGuardar();
             }
         };
@@ -404,8 +516,7 @@ public class FrmMateriasCTR {
                 frmMaterias.getCbx_CamFormacion(), frmMaterias.getLblErrorCampoFormacion()));
 
         //Validar el codigo de materias con letras, numeros y _ - 
-        frmMaterias.getTxtCodigoMateria().addKeyListener(new TxtVLetras(
-                frmMaterias.getTxtCodigoMateria(), frmMaterias.getLblErrorCodigoMateria()));
+        frmMaterias.getTxtCodigoMateria().addKeyListener(validarPalabras);
         frmMaterias.getTxtCodigoMateria().addPropertyChangeListener(habilitar);
         frmMaterias.getTxtNombreMateria().addKeyListener(new TxtVLetras(frmMaterias.getTxtNombreMateria(),
                 frmMaterias.getLblErrorNombreMateria()));
@@ -434,15 +545,6 @@ public class FrmMateriasCTR {
             }
         };
         
-        KeyListener numeros = new KeyAdapter(){
-            public void keyTyped(KeyEvent e) {
-                char car = e.getKeyChar();
-                if (!Validar.esNumeros(car+"")) {
-                    e.consume();
-                }
-                habilitarGuardar();
-            }
-        };
         frmMaterias.getTxtObjetivoGeneral().addKeyListener(validar);
         frmMaterias.getTxtObjetivoEspecifico().addKeyListener(validar);
         frmMaterias.getTxtDescripcionMateria().addKeyListener(validar);
@@ -466,6 +568,8 @@ public class FrmMateriasCTR {
         frmMaterias.getTxtObjetivoGeneral().setText(matEditar.getObjetivo());
         frmMaterias.getTxtTotalHoras().setText(matEditar.getTotalHoras() + "");
         frmMaterias.getChBNucleo().setSelected(matEditar.isMateriaNucleo());
+        frmMaterias.getCbCarrera().setSelectedItem(matEditar.getCarrera());
+        frmMaterias.getCbEjeFormacion().setSelectedItem(matEditar.getEje());
 
         if (matEditar.getCarrera() == null) {
             frmMaterias.getCbCarrera().setSelectedItem("SELECCIONE");

@@ -358,7 +358,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTeoricas4.setText("Descripción de la Materia *");
-        jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         lblTeoricas6.setText("Organización Curricular *");
         jPanel5.add(lblTeoricas6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
@@ -370,7 +370,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         txtDescripcionMateria.setRows(5);
         jScrollPane4.setViewportView(txtDescripcionMateria);
 
-        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 650, 110));
+        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 650, 130));
 
         lblErrorDescripcionMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorDescripcionMateria.setText("Ingrese solo letras");
@@ -378,11 +378,11 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorOrganizacionCurricular.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorOrganizacionCurricular.setText("Seleccione una Organización");
-        jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         lblErrorCampoFormacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCampoFormacion.setText("Ingrese solo letras");
-        jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
+        jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
         Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "ejemplo" }));
         Cbx_OrgCurricular.addActionListener(new java.awt.event.ActionListener() {

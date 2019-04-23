@@ -64,7 +64,7 @@ public class MateriaBD extends MateriaMD {
 
     public boolean elminarMateria(int aguja) {
         String sql = "UPDATE public.\"Materias\" SET\n"
-                + " materia_activa = false"
+                + " materia_activa = 'false'"
                 + " WHERE id_materia = " + aguja + ";";
         if (conecta.nosql(sql) == null) {
             return true;
@@ -113,7 +113,7 @@ public class MateriaBD extends MateriaMD {
     }
 
     public CarreraMD filtrarIdCarrera(String nombre) {
-        String sql = "SELECT id_carrera FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
+        String sql = "SELECT id_carrera carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre + "';";
         CarreraMD carrera = new CarreraMD();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -128,6 +128,11 @@ public class MateriaBD extends MateriaMD {
             return null;
         }
     }
+    
+//    public EjeFormacionMD filtrarIdEje(String nombre){
+//        String sql = "SELECT id_";
+//        
+//    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
