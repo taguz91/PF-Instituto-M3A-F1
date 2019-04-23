@@ -55,9 +55,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public void guardarAlmnCurso() {
         System.out.println("-------------");
         System.out.println("Matricula completa: " + nsqlMatri);
-        if (conecta.nosql(nsqlMatri) == null) {
-            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
-        }
+//        if (conecta.nosql(nsqlMatri) == null) {
+//            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
+//        }
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {

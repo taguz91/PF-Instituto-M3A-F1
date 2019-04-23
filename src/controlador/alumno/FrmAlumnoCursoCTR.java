@@ -502,6 +502,15 @@ public class FrmAlumnoCursoCTR {
     private void llenarTblMatPen(ArrayList<CursoMD> cursos) {
         mdMatPen.setRowCount(0);
         if (cursos != null) {
+            //Eliminamos las materias que ya selecciono  
+            for (int i = 0; i < cursosSelec.size(); i++) {
+                for (int j = 0; j < cursos.size(); j++) {
+                    if (cursosSelec.get(i).getId_materia().getId() == cursos.get(j).getId_materia().getId()) {
+                        cursos.remove(j);
+                    }
+                }
+            }
+
             //Eliminamos la materias en las que ya esta matriculado
             for (int i = 0; i < mallaMatriculadas.size(); i++) {
                 for (int j = 0; j < cursos.size(); j++) {
@@ -573,6 +582,41 @@ public class FrmAlumnoCursoCTR {
         }
         //Pasamos el nuevo cursos depurado al array 
         cursosPen = cursos;
+        if (cursos.size() > 0) {
+            llenarTblConCoRequisitos(cursos);
+        }
+    }
+
+    /**
+     * Comprobamos que este
+     */
+    private void llenarTblConCoRequisitos(ArrayList<CursoMD> cursos) {
+        MallaAlumnoMD requisito;
+        int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
+        int[] posElim = new int[cursos.size()];
+
+        for (int i = 0; i < cursos.size(); i++) {
+            requisitos = matReq.buscarCoRequisitos(cursos.get(i).getId_materia().getId());
+            for (int j = 0; j < requisitos.size(); j++) {
+                System.out.println("Este es el co requisito: ");
+                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
+                        requisitos.get(j).getMateriaRequisito().getId());
+                if (requisito.getEstado() != null) {
+                    if (!requisito.getEstado().equals("M") || !requisito.getEstado().equals("C")) {
+                        posElim[i] = i + 1;
+                    }
+                }
+            }
+        }
+
+        //Eliminamos las que no estan por matricularse ni a ver cursado.
+        for (int i = 0; i < posElim.length; i++) {
+            if (posElim[i] != 0) {
+                cursos.remove(posElim[i] - 1);
+            }
+        }
+
+        //Antes validamos que esos cursos ya no esten el materia seleccionados 
         //Si cursos no esta vacio llenamos la tabla
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
