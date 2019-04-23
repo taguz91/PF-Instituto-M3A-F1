@@ -66,6 +66,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "	FROM public.\"DocentesMateria\" \n"
                 + "	WHERE id_docente = "+idDocente+" AND id_materia = "+idMateria+";";
         ResultSet rs = conecta.sql(sql);
+        System.out.println(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {

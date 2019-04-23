@@ -364,6 +364,8 @@ public class FrmAlumnoCursoCTR {
      * @param posPrd Int: Poscion en el array del periodo seleccionado.
      */
     private void clasificarMaterias(int posAlmn, int posPrd) {
+        cursosSelec = new ArrayList<>();
+        mdMatSelec.setRowCount(0);
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
         //Si no esta matriculado miramos la materias que a cursado 
@@ -463,8 +465,6 @@ public class FrmAlumnoCursoCTR {
      * @param cicloReprobado Int: Ciclo minimo en el que reprobo.
      */
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
-        System.out.println("Ciclo cursado: " + cicloCursado);
-        System.out.println("Ciclo reprobado: " + cicloReprobado);
         frmAlmCurso.getCmbCurso().removeAllItems();
         nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo(), cicloReprobado,
                 cicloCursado);
@@ -576,19 +576,21 @@ public class FrmAlumnoCursoCTR {
                 }
             }
         }
-        System.out.println("Numero de cursos: "+cursos.size());
+        System.out.println("Numero de cursos: " + cursos.size());
         System.out.println("Esto se va a eliminar: ");
-        for(int i: posElim){
-            System.out.print(i+"  ");
+        for (int i : posElim) {
+            System.out.print(i + "  ");
         }
         System.out.println("");
-        cursos.forEach(c -> {System.out.println(c.getId_materia().getNombre());});
+        cursos.forEach(c -> {
+            System.out.println(c.getId_materia().getNombre());
+        });
         //Eliminamos las materias que tiene pre requisitos y aun no los a pasado
-        System.out.println("Numero de curso: "+posElim.length);
+        System.out.println("Numero de curso: " + posElim.length);
         for (int i = 0; i < posElim.length; i++) {
             if (posElim[i] > 0) {
                 cursos.remove(posElim[i] - 1);
-                posElim = posElim(posElim); 
+                posElim = posElim(posElim);
             }
         }
 
@@ -598,49 +600,103 @@ public class FrmAlumnoCursoCTR {
             llenarTblConCoRequisitos(cursos);
         }
     }
-    
+
     /**
-     * para mover el eliminado uno menos si se elimina 
+     * para mover el eliminado uno menos si se elimina
+     *
      * @param posElim
-     * @return 
+     * @return
      */
-    public int[] posElim(int[] posElim){
+    public int[] posElim(int[] posElim) {
         int[] pos = new int[posElim.length];
         for (int i = 0; i < posElim.length; i++) {
-            pos[i] = posElim[i] - 1; 
-            System.out.println("Se movio: "+pos[i]);
+            pos[i] = posElim[i] - 1;
+            System.out.println("Se movio: " + pos[i]);
         }
-        return pos; 
+        return pos;
     }
-    
 
     /**
      * Comprobamos que este
      */
     private void llenarTblConCoRequisitos(ArrayList<CursoMD> cursos) {
+
+        System.out.println("De estas materias comprobamos el co ");
+        cursos.forEach(c -> {
+            System.out.println(c.getId_materia().getNombre());
+        });
+        System.out.println("-------------------------------");
+
         MallaAlumnoMD requisito;
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
         int[] posElim = new int[cursos.size()];
+        boolean matricula = false;
 
         for (int i = 0; i < cursos.size(); i++) {
             requisitos = matReq.buscarCoRequisitos(cursos.get(i).getId_materia().getId());
+            String am = cursos.get(i).getId_materia().getNombre();
+            matricula = true;
+            if (requisitos.size() > 0) {
+                matricula = false;
+            }
+
             for (int j = 0; j < requisitos.size(); j++) {
-                System.out.println("Este es el co requisito: ");
+
                 requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
                         requisitos.get(j).getMateriaRequisito().getId());
-                if (requisito.getEstado() != null) {
-                    if (!requisito.getEstado().equals("M") || !requisito.getEstado().equals("C")) {
-                        posElim[i] = i + 1;
+                System.out.println("······················"+requisito.getEstado()+" "+requisitos.get(i).getMateriaRequisito().getNombre());
+
+                if (!requisito.getEstado().equals("C") && !requisito.getEstado().equals("R")) {
+                    for (int k = 0; k < cursos.size(); k++) {
+                        if (cursos.get(k).getId_materia().getNombre().
+                                equals(requisitos.get(j).getMateriaRequisito().getNombre())) {
+                            System.out.println(j + " Se puede matricular en esta materia.");
+                            matricula = true;
+                            break;
+                        }
                     }
                 }
+
+//                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
+//                        requisitos.get(j).getMateriaRequisito().getId());
+//                if (requisito.getEstado() != null) {
+//                    System.out.println("################### Estado: " + requisito.getEstado());
+////                    if (!requisito.getEstado().equals("M")
+////                            || !requisito.getEstado().equals("C")
+////                            || !requisito.getEstado().equals("P")) {
+////                        posElim[i] = i + 1;
+////                    }
+////                    
+//                    if (!requisito.getEstado().equals("P")) {
+//                        posElim[i] = i + 1;
+//                    }
+//                }
+//                
+            }
+            if (!matricula) {
+                System.out.println("Eliminar");
+                posElim[i] = i + 1;
+                System.out.println("Debemos eliminar: " + cursos.get(i).getId_materia().getNombre());
             }
         }
+
+        System.out.println("Numero de cursos coordinadores: " + cursos.size());
+        System.out.println("Esto se va a eliminar: ");
+        for (int i : posElim) {
+            System.out.print(i + "  ");
+        }
+        System.out.println("");
+        cursos.forEach(c -> {
+            System.out.println(c.getId_materia().getNombre());
+        });
+        //Eliminamos las materias que tiene pre requisitos y aun no los a pasado
+        System.out.println("Cursos antes de coorequisitos: " + posElim.length);
 
         //Eliminamos las que no estan por matricularse ni a ver cursado.
         for (int i = 0; i < posElim.length; i++) {
             if (posElim[i] > 0) {
                 cursos.remove(posElim[i] - 1);
-                posElim = posElim(posElim); 
+                posElim = posElim(posElim);
             }
         }
 
