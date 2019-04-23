@@ -3,6 +3,7 @@
 --Trigger al retirar a un alumno de una materia
 CREATE OR REPLACE FUNCTION iniciar_notas_matricula()
 RETURNS TRIGGER AS $iniciar_notas_matricula$
+  DECLARE
   total INTEGER := 0;
   ingresados INTEGER := 0;
 
@@ -14,8 +15,8 @@ RETURNS TRIGGER AS $iniciar_notas_matricula$
   AND id_prd_lectivo = (
     SELECT id_prd_lectivo
     FROM public."Cursos"
-    WHERE id_curso = new.id_curso;
-  )
+    WHERE id_curso = new.id_curso
+  );
 BEGIN
 
   SELECT count(*) INTO total
@@ -25,8 +26,8 @@ BEGIN
   AND id_prd_lectivo = (
     SELECT id_prd_lectivo
     FROM public."Cursos"
-    WHERE id_curso = new.id_curso;
-  )
+    WHERE id_curso = new.id_curso
+  );
 
   OPEN tipos_nota;
   FETCH tipos_nota INTO reg;

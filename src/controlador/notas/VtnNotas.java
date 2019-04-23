@@ -106,6 +106,10 @@ public class VtnNotas {
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
+        Validaciones.validarNumerosEnJTEXTField(vista.getTxtBuscar());
+
+        vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
+
         tablaNotas.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -211,19 +215,46 @@ public class VtnNotas {
             double value = Middlewares.conversor(nota);
 
             TipoDeNotaMD rango = getRango(nombreNota);
-            if (value >= 0 && value <= rango.getValorMaximo()) {
-                datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
-                sumarColumnas();
-                editar();
-                refreshTabla();
+            if (!rango.getNombre().equalsIgnoreCase("EXAMEN FINAL")) {
+                if (value >= 0 && value <= rango.getValorMaximo()) {
+                    datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
+                    sumarColumnas();
+                    editar();
+                    refreshTabla();
+
+                } else {
+                    errorDeNota(rango);
+                    refreshTabla();
+                }
+
             } else {
-                JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + rango.getValorMinimo() + " Y " + rango.getValorMaximo());
-                refreshTabla();
+                if (value >= 0 && value <= rango.getValorMaximo()) {
+
+                    if (value >= rango.getValorMinimo() && value <= rango.getValorMaximo()) {
+                        datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
+                        sumarColumnas();
+                        editar();
+                        refreshTabla();
+                    } else {
+                        datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
+                        datos.setValueAt("REPROBADO", getSelectedRow(), 13);
+                        sumarColumnas();
+                        editar();
+                        refreshTabla();
+                    }
+                } else {
+                    errorDeNota(rango);
+                }
             }
         } else {
             mensajeDeError();
             refreshTabla();
         }
+    }
+
+    private static void errorDeNota(TipoDeNotaMD rango) {
+        JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo());
+        refreshTabla();
     }
 
     private static void sumarColumnas() {
@@ -261,15 +292,19 @@ public class VtnNotas {
 
     private static Consumer<MateriaMD> setPorcentaje(int faltas) {
         return obj -> {
-            int porcentaje = (faltas * obj.getTotalHoras()) / 100;
-            vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), getSelectedRow());
+
+            int horasMateria = obj.getHorasPresenciales();
+            int porcentaje = 1;
+            if (horasMateria != 0) {
+                porcentaje = (faltas * obj.getHorasPresenciales()) / 100;
+            }
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), 15);
             String estado = vista.getTblNotas().getValueAt(getSelectedRow(), 13).toString();
             if (!estado.equalsIgnoreCase("RETIRADO")) {
                 if (porcentaje >= 25) {
-                    vista.getTblNotas().setValueAt("Reprobado", getSelectedRow(), 13);
+                    vista.getTblNotas().setValueAt("REPROBADO", getSelectedRow(), 13);
                 } else {
-                    vista.getTblNotas().setValueAt("Aprobado", getSelectedRow(), 13);
+                    vista.getTblNotas().setValueAt("APROBADO", getSelectedRow(), 13);
                 }
             }
         };
@@ -331,8 +366,6 @@ public class VtnNotas {
             curso.setId_prd_lectivo(periodo);
             curso.setCurso_nombre(vista.getCmbCiclo().getSelectedItem().toString());
 
-            System.out.println(curso);
-
             listaMaterias = MateriaBD.selectWhere(curso);
 
             listaMaterias.stream()
@@ -352,10 +385,10 @@ public class VtnNotas {
 
     private static void refreshTabla() {
         System.out.println("REFRESH");
+        activarForm(false);
         tablaNotas.setRowCount(0);
-        new Thread(() -> {
-            listaNotas.stream().forEach(VtnNotas::agregarFilas);
-        }).start();
+        listaNotas.stream().forEach(VtnNotas::agregarFilas);
+        activarForm(true);
     }
 
     private void validarCombos() {
@@ -413,8 +446,6 @@ public class VtnNotas {
 
     private static TipoDeNotaMD getRango(String nombreNota) {
 
-        System.out.println(listaValidaciones);
-
         List<TipoDeNotaMD> listaTemporal = listaValidaciones
                 .stream()
                 .filter(item -> item.getNombre().equals(nombreNota))
@@ -471,7 +502,7 @@ public class VtnNotas {
         return vista.getTblNotas().getSelectedColumn();
     }
 
-    private void activarForm(boolean estado) {
+    private static void activarForm(boolean estado) {
         vista.getTxtBuscar().setEnabled(estado);
         vista.getBtnBuscar().setEnabled(estado);
         vista.getCmbDocente().setEnabled(estado);
@@ -507,7 +538,6 @@ public class VtnNotas {
 
                     listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), nombrePeriodo);
 
-                    System.out.println("size---->" + listaNotas.size());
                     listaNotas.stream().forEach(VtnNotas::agregarFilas);
 
                     activarForm(true);
@@ -554,7 +584,9 @@ public class VtnNotas {
         obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
         obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
 
-        row.add(12, (int) Middlewares.conversor("" + obj.getNotaFinal()));
+        int notaFinal = (int) Middlewares.conversor("" + obj.getNotaFinal());
+
+        row.add(12, notaFinal);
 
         int faltas = obj.getNumFalta();
 
@@ -572,11 +604,9 @@ public class VtnNotas {
         return obj -> {
 
             int horaPresenciales = obj.getHorasPresenciales();
-            int porcentaje = -1;
+            int porcentaje = 0;
             if (horaPresenciales != 0) {
                 porcentaje = (faltas * 100) / horaPresenciales;
-            } else {
-
             }
 
             List<TipoDeNotaMD> listaTemporal = listaValidaciones
@@ -586,11 +616,22 @@ public class VtnNotas {
             TipoDeNotaMD valid = listaTemporal.get(0);
 
             if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
-                if (porcentaje >= 25 || alumno.getNotaFinal() < valid.getValorMinimo()) {
-                    row.add(13, "REPROBADO");
+
+                TipoDeNotaMD rango = getRango("EXAMEN FINAL");
+
+                double examenFinal = (Double) row.get(10);
+
+                if (examenFinal >= rango.getValorMinimo()) {
+                    if (porcentaje >= 25 || alumno.getNotaFinal() < valid.getValorMinimo()) {
+                        row.add(13, "REPROBADO");
+                    } else {
+                        row.add(13, "APROBADO");
+                    }
+
                 } else {
-                    row.add(13, "APROBADO");
+                    row.add(13, "REPROBADO");
                 }
+
             } else {
                 row.add(13, "RETIRADO");
             }
@@ -612,4 +653,20 @@ public class VtnNotas {
 
     }
     // </editor-fold>  
+
+    private void btnBuscar(ActionEvent e) {
+        activarForm(false);
+        Map<String, DocenteMD> map = listaDocentes
+                .entrySet()
+                .stream()
+                .filter(item -> item.getValue().getIdentificacion().equalsIgnoreCase(vista.getTxtBuscar().getText())).collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+
+        map.entrySet()
+                .stream()
+                .forEach(entry -> {
+                    vista.getCmbDocente().setSelectedItem(entry.getKey());
+                });
+
+        activarForm(true);
+    }
 }
