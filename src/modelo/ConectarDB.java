@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -113,7 +115,7 @@ public class ConectarDB {
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("nosql Clase: ConectarBD");
             }
-
+            ct.setAutoCommit(false);
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.execute(noSql);
@@ -127,11 +129,17 @@ public class ConectarDB {
             System.out.println("No hay id");
             System.out.println("--------------------");
             //idGenerado = st.getGeneratedKeys().getInt(0);
+            ct.commit();
             return null;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la accion " + e.getMessage());
             ctrCt.matarHilo();
-            //Se vuelve a llamar a la clase
+            try {
+                //Se vuelve a llamar a la clase
+                ct.rollback();
+            } catch (SQLException ex) {
+                System.out.println("NO SE Pudo hacer rollback " + ex.getMessage());
+            }
             nosql(noSql);
             return e;
         } finally {
@@ -196,20 +204,20 @@ public class ConectarDB {
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
                 ct = DriverManager.getConnection(url, user, pass);
-                
+
                 return ct;
             } else {
                 System.out.println("Esta abierta la conexion.");
                 ctrCt.recetear("SE recea al devolver la conexion.");
-         
+
                 return ct;
             }
         } catch (SQLException ex) {
             System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
             ctrCt.matarHilo();
-            return null; 
+            return null;
         }
-        
+
     }
 
     private void conecta() {

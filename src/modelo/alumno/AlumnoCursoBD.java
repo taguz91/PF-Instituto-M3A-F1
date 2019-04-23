@@ -4,11 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
 import modelo.notas.NotasBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
@@ -52,7 +55,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public void guardarAlmnCurso() {
         System.out.println("-------------");
         System.out.println("Matricula completa: " + nsqlMatri);
-        nsqlMatri = "";
+//        if (conecta.nosql(nsqlMatri) == null) {
+//            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
+//        }
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
@@ -136,6 +141,83 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             }
         } catch (SQLException e) {
             System.out.println("No se pudieron consultar los cursos");
+            return null;
+        }
+    }
+
+    public ArrayList<AlumnoCursoMD> buscarClasesAlumnoCurso(String aguja) {
+        String sql = "SELECT ac.id_almn_curso, almn_curso_estado, \n"
+                + "ac.id_curso, materia_nombre, persona_identificacion, \n"
+                + "persona_primer_nombre, persona_primer_apellido, prd_lectivo_nombre\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Cursos\" c, \n"
+                + "public.\"Materias\" m, public.\"Alumnos\" a, \n"
+                + "public.\"Personas\" p, public.\"PeriodoLectivo\" pl \n"
+                + "WHERE c.id_curso = ac.id_curso AND \n"
+                + "m.id_materia = c.id_materia AND \n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
+                + "p.id_persona = a.id_persona AND(\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%' OR \n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre \n"
+                + "	|| ' ' || persona_primer_apellido || ' ' || persona_segundo_apellido \n"
+                + "	ILIKE '%" + aguja + "%'  \n"
+                + "OR persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%') \n"
+                + "AND prd_lectivo_estado = true;";
+        return consultaParaTblRetirados(sql);
+    }
+
+    public ArrayList<AlumnoCursoMD> cargarClasesAlumnoCursoPorPrd(int idPrd) {
+        String sql = "SELECT ac.id_almn_curso, almn_curso_estado, \n"
+                + "ac.id_curso, materia_nombre, persona_identificacion, \n"
+                + "persona_primer_nombre, persona_primer_apellido, prd_lectivo_nombre \n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Cursos\" c, \n"
+                + "public.\"Materias\" m, public.\"Alumnos\" a, \n"
+                + "public.\"Personas\" p, public.\"PeriodoLectivo\" pl\n"
+                + "WHERE c.id_curso = ac.id_curso AND \n"
+                + "m.id_materia = c.id_materia AND \n"
+                + "a.id_alumno = ac.id_alumno AND \n"
+                + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.id_prd_lectivo = "+idPrd+" \n"
+                + "AND prd_lectivo_estado = true;";
+        return consultaParaTblRetirados(sql);
+    }
+
+    private ArrayList<AlumnoCursoMD> consultaParaTblRetirados(String sql) {
+        ArrayList<AlumnoCursoMD> almns = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    AlumnoCursoMD ac = new AlumnoCursoMD();
+                    CursoMD c = new CursoMD();
+                    c.setId_curso(rs.getInt("id_curso"));
+                    ac.setId(rs.getInt("id_almn_curso"));
+                    ac.setEstado(rs.getString("almn_curso_estado"));
+                    AlumnoMD a = new AlumnoMD();
+                    a.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    a.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    a.setIdentificacion(rs.getString("persona_identificacion"));
+
+                    MateriaMD m = new MateriaMD();
+                    m.setNombre(rs.getString("materia_nombre"));
+                    
+                    PeriodoLectivoMD p = new PeriodoLectivoMD(); 
+                    p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    c.setId_prd_lectivo(p);
+
+                    c.setId_materia(m);
+                    ac.setAlumno(a);
+                    ac.setCurso(c);
+
+                    almns.add(ac);
+                }
+                return almns;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron consultar las clases de un alumno " + e.getMessage());
             return null;
         }
     }
@@ -321,6 +403,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                 lista.add(alumnoCurso);
             }
+            rs.close();
+            ResourceManager.getConnection().close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

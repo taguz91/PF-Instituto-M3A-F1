@@ -39,11 +39,6 @@ BEGIN
 END;
 $curso_elim$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_curso_elim
-BEFORE DELETE
-ON public."Cursos" FOR EACH ROW
-EXECUTE PROCEDURE curso_elim();
-
 
 --Eliminacion logica de un curso
 CREATE OR REPLACE FUNCTION curso_elimlog()
@@ -66,11 +61,6 @@ BEGIN
 	RETURN NEW;
 END;
 $curso_elimlog$ LANGUAGE plpgsql;
-
-CREATE TRIGGER auditoria_curso_elimlog
-BEFORE UPDATE OF curso_activo
-ON public."Cursos" FOR EACH ROW
-EXECUTE PROCEDURE curso_elimlog();
 
 
 --Docentes
@@ -102,11 +92,6 @@ BEGIN
 END;
 $docente_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_docente_elimlog
-BEFORE UPDATE OF docente_activo
-ON public."Docentes" FOR EACH ROW
-EXECUTE PROCEDURE docente_elimlog();
-
 
 --MateriaRequisitos
 --Si se elimina una materia requsito se guardara
@@ -123,11 +108,6 @@ BEGIN
 		RETURN OLD;
 END;
 $materia_requisito_elim$ LANGUAGE plpgsql;
-
-CREATE TRIGGER auditoria_mt_requisito_elim
-BEFORE DELETE
-ON public."MateriaRequisitos" FOR EACH ROW
-EXECUTE PROCEDURE materia_requisito_elim();
 
 
 --DocentesMateria
@@ -149,10 +129,6 @@ BEGIN
 END;
 $docentes_materia_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_docentes_mt_elimlog
-BEFORE UPDATE OF docente_mat_activo
-ON public."DocentesMateria" FOR EACH ROW
-EXECUTE PROCEDURE docentes_materia_elimlog();
 
 
 --Carreras
@@ -184,10 +160,7 @@ BEGIN
 END;
 $carrera_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_carrera_elim
-BEFORE UPDATE OF carrera_activo
-ON public."Carreras" FOR EACH ROW
-EXECUTE PROCEDURE carrera_elimlog();
+
 
 --PeriodoLectivo
 CREATE OR REPLACE FUNCTION prd_lectivo_elim()
@@ -215,10 +188,6 @@ BEGIN
 END;
 $prd_lectivo_elim$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_prd_lectivo_elim
-BEFORE UPDATE OF prd_lectivo_activo
-ON public."PeriodoLectivo" FOR EACH ROW
-EXECUTE PROCEDURE prd_lectivo_elim();
 
 
 --Personas
@@ -255,10 +224,6 @@ BEGIN
 END;
 $persona_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_persona_elimlog
-BEFORE UPDATE OF persona_activa
-ON public."Personas" FOR EACH ROW
-EXECUTE PROCEDURE persona_elimlog();
 
 
 --Alumnos
@@ -289,10 +254,7 @@ BEGIN
 END;
 $alumno_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_alumno_elimlog
-BEFORE UPDATE OF alumno_activo
-ON public."Alumnos" FOR EACH ROW
-EXECUTE PROCEDURE alumno_elimlog();
+
 
 --AlumnosCarrera
 CREATE OR REPLACE FUNCTION almn_carrera_elimlog()
@@ -308,10 +270,6 @@ BEGIN
 END;
 $almn_carrera_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_almn_carrera_elimlog
-BEFORE UPDATE OF almn_carrera_activo
-ON public."AlumnosCarrera" FOR EACH ROW
-EXECUTE PROCEDURE almn_carrera_elimlog();
 
 
 --AlumnoCurso
@@ -336,12 +294,6 @@ BEGIN
 END;
 $almn_curso_elim$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_almn_curso_elim
-BEFORE DELETE
-ON public."AlumnoCurso" FOR EACH ROW
-EXECUTE PROCEDURE almn_curso_elim();
-
-
 --Eliminacion logica de AlumnoCurso
 CREATE OR REPLACE FUNCTION almn_curso_elimlog()
 RETURNS TRIGGER AS $almn_curso_elimlog$
@@ -356,10 +308,7 @@ BEGIN
 END;
 $almn_curso_elimlog$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auditoria_almn_curso_elimlog
-BEFORE UPDATE OF almn_curso_activo
-ON public."AlumnoCurso" FOR EACH ROW
-EXECUTE PROCEDURE almn_curso_elimlog();
+
 
 
 --MallaAlumno
@@ -389,11 +338,74 @@ ON public."Materias" FOR EACH ROW
 EXECUTE PROCEDURE materia_elim();
 
 
---
+--MallaAlumno
 
 CREATE TRIGGER auditoria_malla_almn_elim
 BEFORE DELETE
 ON public."MallaAlumno" FOR EACH ROW
 EXECUTE PROCEDURE malla_almn_elim();
+
+--Cursos
+CREATE TRIGGER auditoria_curso_elim
+BEFORE DELETE
+ON public."Cursos" FOR EACH ROW
+EXECUTE PROCEDURE curso_elim();
+
+--Docentes
+CREATE TRIGGER auditoria_docente_elimlog
+BEFORE UPDATE OF docente_activo
+ON public."Docentes" FOR EACH ROW
+EXECUTE PROCEDURE docente_elimlog();
+
+--MateriaRequisitos
+CREATE TRIGGER auditoria_mt_requisito_elim
+BEFORE DELETE
+ON public."MateriaRequisitos" FOR EACH ROW
+EXECUTE PROCEDURE materia_requisito_elim();
+
+--DocentesMateria
+CREATE TRIGGER auditoria_docentes_mt_elimlog
+BEFORE UPDATE OF docente_mat_activo
+ON public."DocentesMateria" FOR EACH ROW
+EXECUTE PROCEDURE docentes_materia_elimlog();
+
+--Carreras
+CREATE TRIGGER auditoria_carrera_elim
+BEFORE UPDATE OF carrera_activo
+ON public."Carreras" FOR EACH ROW
+EXECUTE PROCEDURE carrera_elimlog();
+
+--PeriodoLectivo
+CREATE TRIGGER auditoria_prd_lectivo_elim
+BEFORE UPDATE OF prd_lectivo_activo
+ON public."PeriodoLectivo" FOR EACH ROW
+EXECUTE PROCEDURE prd_lectivo_elim();
+
+--Personas
+CREATE TRIGGER auditoria_persona_elimlog
+BEFORE UPDATE OF persona_activa
+ON public."Personas" FOR EACH ROW
+EXECUTE PROCEDURE persona_elimlog();
+
+--Alumnos
+CREATE TRIGGER auditoria_alumno_elimlog
+BEFORE UPDATE OF alumno_activo
+ON public."Alumnos" FOR EACH ROW
+EXECUTE PROCEDURE alumno_elimlog();
+
+--AlumnosCarrera
+CREATE TRIGGER auditoria_almn_carrera_elimlog
+BEFORE UPDATE OF almn_carrera_activo
+ON public."AlumnosCarrera" FOR EACH ROW
+EXECUTE PROCEDURE almn_carrera_elimlog();
+
+--AlumnosCurso
+CREATE TRIGGER auditoria_almn_curso_elim
+BEFORE DELETE
+ON public."AlumnoCurso" FOR EACH ROW
+EXECUTE PROCEDURE almn_curso_elim();
+
+
+
 
 

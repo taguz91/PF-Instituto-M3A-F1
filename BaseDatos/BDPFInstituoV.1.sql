@@ -175,17 +175,11 @@ CREATE TABLE "AlumnoCurso"(
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
   "almn_curso_fecha_registro" DATE default now();
-  "almn_curso_nt_1_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_interciclo" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_2_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_final" numeric(6, 2) DEFAULT '0' ,
-  "almn_curso_nt_examen_supletorio" numeric(6, 2) DEFAULT '0',
   "almn_curso_asistencia" character varying(30) DEFAULT 'Asiste',
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
 	"almn_curso_activo" boolean DEFAULT 'true',
-  "almn_curso_fecha_registro" DATE default now(), 
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 
@@ -294,20 +288,17 @@ FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 --Para retirar un alumno
-CREATE TABLE "Retirados"(
+CREATE TABLE "AlumnoCursoRetirados"(
 	"id_retirado" serial NOT NULL,
-	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
 	"retiro_observacion" text,
+  "retiro_activo" boolean DEFAULT 'true',
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
-FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
-ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
+ALTER TABLE "AlumnoCursoRetirados" ADD CONSTRAINT "retirado_fk1"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 

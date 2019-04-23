@@ -29,7 +29,7 @@ import vista.principal.VtnPrincipal;
 public class VtnActivarNotasCTR {
 
     private final VtnPrincipal desktop;
-    private final VtnActivarNotas vista;
+    private static VtnActivarNotas vista;
     private IngresoNotasBD modelo;
     private final RolBD permisos;
 
@@ -77,20 +77,6 @@ public class VtnActivarNotasCTR {
 
     private void InitEventos() {
 
-//        vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyReleased(KeyEvent ke) {
-//                if (ke.getKeyCode() == 10) {
-//                    setObj(getSelectedRow());
-//                    if (modelo.editar(modelo.getIdIngresoNotas())) {
-//                        Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
-//                    } else {
-//                        Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrió un error, revise la información", 2);
-//                    }
-//                }
-//            }
-//        });
-
         tablaActivarNotas.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -123,11 +109,8 @@ public class VtnActivarNotasCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (modelo.editar(modelo.getIdIngresoNotas())) {
-                    setObj(getSelectedRow());
                     refreshTabla();
                     Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
-                }else{
-                     Middlewares.setTextInLabel(vista.getLblDatosIncorrectos(), "Ocurrio un error", 2);
                 }
 
                 System.out.println(modelo);
@@ -165,7 +148,6 @@ public class VtnActivarNotasCTR {
             modelo.setNotaSegundoInterCiclo(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 9).toString()));
             modelo.setNotaExamenFinal(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 10).toString()));
             modelo.setNotaExamenDeRecuperacion(validarValor(vista.getTblCursoTipoNotas().getValueAt(fila, 11).toString()));
-
         }
 
     }
@@ -243,74 +225,45 @@ public class VtnActivarNotasCTR {
     private TableModel Validaciones(TableModel datos) {
         int fila = getSelectedRow();
         int columna = vista.getTblCursoTipoNotas().getSelectedColumn();
+        String valor = "";
+        try {
 
-        String aporte1 = null;
-        String aporte2 = null;
-        String examenInterciclo = null;
-        String examenFinal = null;
-        String examenSupletorio = null;
-        if (fila != -1) {
-            try {
-                aporte1 = String.valueOf(datos.getValueAt(fila, 7));
-                System.out.println("A1-----> " + aporte1);
-                examenInterciclo = String.valueOf(datos.getValueAt(fila, 8));
-                System.out.println("EXI-----> " + examenInterciclo);
-                aporte2 = String.valueOf(datos.getValueAt(fila, 9));
-                System.out.println("A2-----> " + aporte2);
-                examenFinal = String.valueOf(datos.getValueAt(fila, 10));
-                System.out.println("EXF-----> " + examenFinal);
-                examenSupletorio = String.valueOf(datos.getValueAt(fila, 11));
-                System.out.println("EXS-----> " + examenSupletorio);
+            switch (getSelectedColum()) {
+                case 7:
+                    valor = vista.getTblCursoTipoNotas().getValueAt(getSelectedRow(), 7).toString();
 
-                switch (columna) {
-                    case 7:
-                        datos.setValueAt(Boolean.parseBoolean(aporte1), fila, columna);
+                    IngresoNotasBD notaModificar = listaNotasActivadas.get(getSelectedRow());
+                    
+                    break;
+                case 8:
 
-                        break;
-                    case 8:
-                        datos.setValueAt(Boolean.parseBoolean(examenInterciclo), fila, columna);
+                    break;
+                case 9:
 
-                        break;
-                    case 9:
-                        datos.setValueAt(Boolean.parseBoolean(aporte2), fila, columna);
+                    break;
+                case 10:
 
-                        break;
-                    case 10:
-                        datos.setValueAt(Boolean.parseBoolean(examenFinal), fila, columna);
+                    break;
+                case 11:
 
-                        break;
-                    case 11:
-                        datos.setValueAt(Boolean.parseBoolean(examenSupletorio), fila, columna);
-
-                        break;
-                    default:
-                        break;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
+                    break;
+                default:
+                    break;
             }
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
         }
 
         return datos;
 
     }
 
-//    private String Validar(String valor) {
-//        valor = valor.toLowerCase();
-//        if (valor.equalsIgnoreCase("true") || valor.equalsIgnoreCase("false") || valor.equalsIgnoreCase("t") || valor.equalsIgnoreCase("f")) {
-//            return valor;
-//        } else {
-//            JOptionPane.showMessageDialog(vista, "Dato Incorrecto " + valor + " ....\n"
-//                    + "Ingrese nuevamente el valor ");
-//
-//            //System.out.println("---->"+listaNotasActivadas.size());
-//            cargarTabla(listaNotasActivadas);
-//            return "false";
-//        }
-//
-//    }
-    private int getSelectedRow() {
+    private static int getSelectedRow() {
         return vista.getTblCursoTipoNotas().getSelectedRow();
+    }
+
+    private static int getSelectedColum() {
+        return vista.getTblCursoTipoNotas().getSelectedColumn();
     }
 
     //EVENTOS
@@ -344,21 +297,13 @@ public class VtnActivarNotasCTR {
 
     }
 
-    public void SelectTextInRow(MouseEvent e) {
-
-        if (!vista.getTblCursoTipoNotas().isEditing() && vista.getTblCursoTipoNotas().editCellAt(vista.getTblCursoTipoNotas().getSelectedRow(),
-                vista.getTblCursoTipoNotas().getSelectedColumn())) {
-            vista.getTblCursoTipoNotas().getEditorComponent().requestFocusInWindow();
-        }
-
-    }
-
     private void refreshTabla() {
         System.out.println("REFRESH");
         tablaActivarNotas.setRowCount(0);
         new Thread(() -> {
             listaNotasActivadas.stream().forEach(VtnActivarNotasCTR::agregarFila);
         }).start();
+
     }
 
 }

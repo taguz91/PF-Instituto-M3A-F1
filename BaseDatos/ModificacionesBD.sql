@@ -343,17 +343,19 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --Creamos una tabla para guardar los retirados
-CREATE TABLE "Retirados"(
+--DROP TABLE "AlumnoCursoRetirados"
+
+CREATE TABLE "AlumnoCursoRetirados"(
 	"id_retirado" serial NOT NULL,
---	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
-	"retiro_observacion" text,
+	"retiro_observacion" character varying(250) DEFAULT 'SA',
+  "retiro_activo" boolean DEFAULT 'true',
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk1"
+ALTER TABLE "AlumnoCursoRetirados" ADD CONSTRAINT "retirado_fk1"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -369,7 +371,7 @@ character varying (200) NOT NULL DEFAULT '000.00.000.000';
 ALTER TABLE "Materias" ADD COLUMN materia_nucleo boolean DEFAULT 'false';
 --Updates 20/4/2019
 ALTER TABLE "PeriodoLectivo" ADD COLUMN "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0';
-
+ALTER TABLE "" ADD COLUMN "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0';
 
 
 --UPDATES  20/Abril/2019

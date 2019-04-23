@@ -4,6 +4,7 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -263,10 +264,13 @@ public class VtnNotas {
             int porcentaje = (faltas * obj.getTotalHoras()) / 100;
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), getSelectedRow());
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), 15);
-            if (porcentaje >= 25) {
-                vista.getTblNotas().setValueAt("Reprobado", getSelectedRow(), 13);
-            } else {
-                vista.getTblNotas().setValueAt("Aprobado", getSelectedRow(), 13);
+            String estado = vista.getTblNotas().getValueAt(getSelectedRow(), 13).toString();
+            if (!estado.equalsIgnoreCase("RETIRADO")) {
+                if (porcentaje >= 25) {
+                    vista.getTblNotas().setValueAt("Reprobado", getSelectedRow(), 13);
+                } else {
+                    vista.getTblNotas().setValueAt("Aprobado", getSelectedRow(), 13);
+                }
             }
         };
     }
@@ -499,8 +503,11 @@ public class VtnNotas {
 
                     activarForm(false);
 
+                    listaNotas = new ArrayList<>();
+
                     listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), nombrePeriodo);
 
+                    System.out.println("size---->" + listaNotas.size());
                     listaNotas.stream().forEach(VtnNotas::agregarFilas);
 
                     activarForm(true);
@@ -524,6 +531,7 @@ public class VtnNotas {
 
     private static Consumer<NotasBD> agregar(Vector<Object> row, int posicion) {
         return (objNota) -> {
+//            System.out.println(objNota);
             row.add(posicion, objNota.getNotaValor());
         };
     }
@@ -546,7 +554,7 @@ public class VtnNotas {
         obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
         obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
 
-        row.add(12, obj.getNotaFinal());
+        row.add(12, (int) Middlewares.conversor("" + obj.getNotaFinal()));
 
         int faltas = obj.getNumFalta();
 
@@ -562,7 +570,14 @@ public class VtnNotas {
 
     private static Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
         return obj -> {
-            int porcentaje = (faltas * 100) / obj.getTotalHoras();
+
+            int horaPresenciales = obj.getHorasPresenciales();
+            int porcentaje = -1;
+            if (horaPresenciales != 0) {
+                porcentaje = (faltas * 100);
+            } else {
+
+            }
 
             List<TipoDeNotaMD> listaTemporal = listaValidaciones
                     .stream()
@@ -570,12 +585,18 @@ public class VtnNotas {
                     .collect(Collectors.toList());
             TipoDeNotaMD valid = listaTemporal.get(0);
 
-            if (porcentaje >= 25 || alumno.getNotaFinal() < valid.getValorMinimo()) {
-                row.add(13, "REPROBADO");
+            if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
+                if (porcentaje >= 25 || alumno.getNotaFinal() < valid.getValorMinimo()) {
+                    row.add(13, "REPROBADO");
+                } else {
+                    row.add(13, "APROBADO");
+                }
             } else {
-                row.add(13, "APROBADO");
+                row.add(13, "RETIRADO");
             }
+
             row.add(14, faltas);
+
             row.add(15, porcentaje);
         };
     }

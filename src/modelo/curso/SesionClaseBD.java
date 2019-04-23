@@ -122,7 +122,7 @@ public class SesionClaseBD extends SesionClaseMD {
      * @param dia
      * @return 
      */
-    public ArrayList<SesionClaseMD> cargarHorarioCursoPorDia(String nombreCurso, int dia) {
+    public ArrayList<SesionClaseMD> cargarHorarioCursoPorDia(String nombreCurso, int dia, int idPrdLectivo) {
         sql = "SELECT id_sesion, sc.id_curso, \n"
                 + "hora_inicio_sesion, hora_fin_sesion, \n"
                 + "materia_nombre, materia_codigo, \n"
@@ -134,7 +134,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "WHERE sc.id_curso IN (\n"
                 + "	SELECT id_curso\n"
                 + "	FROM public.\"Cursos\"\n"
-                + "	WHERE id_prd_lectivo = 4  AND \n"
+                + "	WHERE id_prd_lectivo = "+idPrdLectivo+"  AND \n"
                 + "	curso_nombre = '"+nombreCurso+"'\n"
                 + ") AND dia_sesion = "+dia+" AND\n"
                 + "c.id_curso = sc.id_curso AND \n"
