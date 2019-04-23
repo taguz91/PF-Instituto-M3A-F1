@@ -129,10 +129,10 @@ public class MateriaBD extends MateriaMD {
         }
     }
     
-    public EjeFormacionMD filtrarIdEje(String nombre){
-        String sql = "SELECT id_";
-        
-    }
+//    public EjeFormacionMD filtrarIdEje(String nombre){
+//        String sql = "SELECT id_";
+//        
+//    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
