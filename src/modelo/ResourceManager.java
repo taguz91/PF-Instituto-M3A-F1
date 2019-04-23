@@ -126,8 +126,7 @@ public class ResourceManager {
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
-
-            conn.close();
+            
             return rs;
 
         } catch (SQLException | NullPointerException e) {
