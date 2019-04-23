@@ -157,7 +157,7 @@ BEGIN
       END IF;
       RAISE NOTICE 'Curso o reprobo : % Nota: %', estado, reg.almn_curso_nota_final;
 
-      IF num_matricula = 1 THEN
+      IF num_matricula = 1 OR num_matricula = 0 THEN
 		    UPDATE public."MallaAlumno"
 		        SET  malla_almn_nota1 = reg.almn_curso_nota_final, malla_almn_estado=estado
 		        WHERE id_materia = reg.id_materia
