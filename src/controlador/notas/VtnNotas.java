@@ -554,7 +554,7 @@ public class VtnNotas {
         obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
         obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
 
-        row.add(12, obj.getNotaFinal());
+        row.add(12, (int) Middlewares.conversor("" + obj.getNotaFinal()));
 
         int faltas = obj.getNumFalta();
 
