@@ -574,7 +574,7 @@ public class VtnNotas {
             int horaPresenciales = obj.getHorasPresenciales();
             int porcentaje = -1;
             if (horaPresenciales != 0) {
-                porcentaje = (faltas * 100);
+                porcentaje = (faltas * 100) / horaPresenciales;
             } else {
 
             }
