@@ -255,4 +255,16 @@ public class Validaciones {
         return Double.parseDouble(Number);
     }
 
+    public static void validarNumerosEnJTEXTField(JComponent component) {
+        component.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isDigit(e.getKeyChar())) {
+                    e.consume();
+                    component.getToolkit().beep();
+                }
+            }
+        });
+    }
+
 }
