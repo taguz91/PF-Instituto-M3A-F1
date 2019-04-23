@@ -14,6 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -63,6 +68,14 @@ import vista.silabos.frmReferencias;
 import vista.silabos.frmSilabos;
 
 import net.sf.jasperreports.engine.JasperExportManager;
+import java.util.HashMap;
+import java.util.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -1617,7 +1630,7 @@ public class ControladorSilaboC {
     }
 
 //    public void exportarPDF(String path) {
-//        path="C:\\Users\\Daniel\\Desktop\\API JAVA 8";
+//       // path="C:\\Users\\Daniel\\Desktop\\API JAVA 8";
 //        Map<String, Object> parameters = new HashMap<String, Object>();// Creamos mapa de parametros de ayuda
 //        parameters.put("algunParametro", x);
 //        parameters.put("tipo", y);
@@ -1646,11 +1659,13 @@ public class ControladorSilaboC {
         insertarReferencias();
        // exportarPDF();
 
+    
+    }
 //    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
 //        String sql = "INSERT INTO\"Silabo\"VALUES (?)";
 //        //Creamos una cadena para después prepararla
 //        PreparedStatement stmt = conexion.prepareStatement(sql);
-//        File archivo = new File("C://");
+//        File archivo = new File("C://user//Desktop");
 //        //ruta puede ser: "c://archivo"
 //        FileInputStream fis = new FileInputStream(archivo);
 //        //Lo convertimos en un Stream
@@ -1658,7 +1673,6 @@ public class ControladorSilaboC {
 //        //Asignamos el Stream al Statement
 //        stmt.execute();
 //    }
-    }
 
     public boolean validarCampos() {
 
