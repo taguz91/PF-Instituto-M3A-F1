@@ -23,6 +23,7 @@ import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
+import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.validaciones.CmbValidar;
 import vista.periodoLectivoNotas.VtnTipoNotas;
@@ -249,6 +250,7 @@ public class FrmPrdLectivoCTR {
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
                     VtnTipoNotas vista = new VtnTipoNotas();
+//                    TipoDeNotaMD m = new TipoDeNotaMD();
                     TipoDeNotaBD modelo = new TipoDeNotaBD();
                     RolBD permisos = new RolBD();
                     VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(vtnPrin, vista, modelo, permisos);

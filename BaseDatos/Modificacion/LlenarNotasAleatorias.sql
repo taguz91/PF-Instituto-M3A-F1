@@ -6,10 +6,9 @@ DECLARE
 	ingresados INTEGER := 0;
 
   reg RECORD;
-  almns_cursos CURSOR FOR  SELECT id_almn_curso,
+  almns_cursos CURSOR FOR  SELECT id_almn_curso
   FROM public."AlumnoCurso";
 BEGIN
-  IF new.prd_lectivo_estado = TRUE THEN
 		SELECT count(*) INTO total
 		FROM public."AlumnoCurso";
 
@@ -24,7 +23,7 @@ BEGIN
       FETCH almns_cursos INTO reg;
     END LOOP;
 		RAISE NOTICE 'Total de updates: % Todos se ingreasaron: %', ingresados, total = ingresados;
-  END IF;
+
   RETURN;
 END;
 $llenar_notas_aleatorias$ LANGUAGE plpgsql;
