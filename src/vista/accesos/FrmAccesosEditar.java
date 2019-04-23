@@ -71,6 +71,7 @@ public class FrmAccesosEditar extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setResizable(true);
+        setTitle("Editar Acceso");
 
         btnGuardar.setText("Guardar");
 
