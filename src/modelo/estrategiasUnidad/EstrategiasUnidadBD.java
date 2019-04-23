@@ -85,6 +85,37 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
         
         return lista;
     }
+    public static List<EstrategiasUnidadMD> cargarEstrategiasPlanClae(ConexionBD conexion, int id_silabo,int numero_unidad)  {
+        
+        List<EstrategiasUnidadMD> lista = new ArrayList<>();
+        try {
+            
+             PreparedStatement st = conexion.getCon().prepareStatement("SELECT \"EstrategiasUnidad\".id_estrategia,\"EstrategiasAprendizaje\".descripcion_estrategia\n" +
+"                     FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n" +
+"                     WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n" +
+"                     AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n" +
+"                    AND id_silabo=? AND numero_unidad=?");
+             st.setInt(1, id_silabo);
+            st.setInt(2, numero_unidad);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
+                eu.getIdEstrategia().setIdEstrategia(rs.getInt(1));
+                eu.getIdEstrategia().setDescripcionEstrategia(rs.getString(2));
+
+                lista.add(eu);
+            }
+           
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbEstrategiasUnidad.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        return lista;
+    }
 
 
 }

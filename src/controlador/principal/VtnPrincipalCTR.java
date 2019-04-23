@@ -34,6 +34,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
@@ -624,8 +625,9 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin, conexion);
-        cp.iniciarControlaador();
+        ControladorCRUDPlanClase cP=new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        cP.iniciaControlador();
+        
     }
 
     private void controladorIngreso() {

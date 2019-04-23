@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  *
  * @author Daniel
  */
-public class frmCRUDPlanClase extends javax.swing.JFrame {
+public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmCRUDPlanClase

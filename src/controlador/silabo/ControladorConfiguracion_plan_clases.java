@@ -61,55 +61,57 @@ public class ControladorConfiguracion_plan_clases {
             cpc.iniciaControlador();
         });
         
-//       silabos_docente=cargarComboCarreras();
-//       
-//       frm_cong_PlanClase.getCmb_carreras().addActionListener((ActionEvent ae) -> {
-//          silabosDocente=cargar_silabo();
-//           Optional<CarreraMD> carreraSeleccionada = silabos_docente.stream().
-//                    filter(c -> c.getNombre().equals(frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString())).
-//                    findFirst();
-//           silabosDocente=cargar_silabo(carreraSeleccionada.get().getId());
-//           System.out.println(silabosDocente.get(0).getIdSilabo()+"------------------------------------------------------silabo");
-//          
-//           Optional<SilaboMD> SilaboSeleccionado = silabosDocente.stream().
-//                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
-//                    findFirst();
-//            System.out.println(SilaboSeleccionado.get().getIdSilabo()+" ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
-//            unidadesSilabo=cargarUnidades(SilaboSeleccionado.get().getIdSilabo());
-//            
-////            cursosSilabo=cargarCursosSilabos(SilaboSeleccionado.get().getIdSilabo(), usuario.getPersona().getIdPersona());
-//       });
-//             cursosSilabo=cargarCursosSilabos(221, usuario.getPersona().getIdPersona());
-//             
-//        frm_cong_PlanClase.getCmb_silabos().addActionListener((ActionEvent ae) -> {
-//            cargar_silabo();
-//            int posSil=frm_cong_PlanClase.getCmb_silabos().getSelectedIndex();
-//            if (posSil>0) {
-//                
-//            Optional<SilaboMD> SilaboSeleccionado =null;
-//            if(SilaboSeleccionado!=null){
-//            SilaboSeleccionado= silabosDocente.stream().
-//                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
-//                    findFirst();
-//            System.out.println(SilaboSeleccionado.get().getIdSilabo()+"iddddddddddddddddddddddddddddddd_silaboooooooooooooooooooooooooooooooooooooo");
-//            
-//            }
-//            }else{
-//                System.out.println("NO HAY ID DE SILABO");
-//            }
-//       });
-////        
+       silabos_docente=cargarComboCarreras();
+      silabosDocente=cargar_silabo();
+       
+       frm_cong_PlanClase.getCmb_carreras().addActionListener((ActionEvent ae) -> {
+           Optional<CarreraMD> carreraSeleccionada = silabos_docente.stream().
+                    filter(c -> c.getNombre().equals(frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString())).
+                    findFirst();
+           silabosDocente=cargar_silabo(carreraSeleccionada.get().getId());
+          
+           Optional<SilaboMD> SilaboSeleccionado = null;
+                   if (SilaboSeleccionado!=null) {
+                    SilaboSeleccionado=silabosDocente.stream().
+                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
+                    findFirst();
+                     unidadesSilabo=cargarUnidades(SilaboSeleccionado.get().getIdSilabo());
+           }
+            
+//            cursosSilabo=cargarCursosSilabos(SilaboSeleccionado.get().getIdSilabo(), usuario.getPersona().getIdPersona());
+       });
+         cursosSilabo=cargarCursosSilabos(221, usuario.getPersona().getIdPersona());
+             
+        unidadesSilabo=cargarUnidades(221);
+        frm_cong_PlanClase.getCmb_silabos().addActionListener((ActionEvent ae) -> {
+            
+            Optional<SilaboMD> SilaboSeleccionado =null;
+            if(SilaboSeleccionado!=null){
+            SilaboSeleccionado= silabosDocente.stream().
+                    filter(c -> c.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
+                    findFirst();
+            System.out.println(SilaboSeleccionado.get().getIdSilabo()+"iddddddddddddddddddddddddddddddd_silaboooooooooooooooooooooooooooooooooooooo");
+            
+            }
+            else{
+                System.out.println("NO HAY ID DE SILABO");
+            }
+       });
 //        
-//        
-//      
-////    frm_cong_PlanClase.getCmb_silabos().setSelectedIndex(0);
-//         frm_cong_PlanClase.getCmb_carreras().setSelectedIndex(0);
+        
+        
+      
+//    frm_cong_PlanClase.getCmb_silabos().setSelectedIndex(0);
+         frm_cong_PlanClase.getCmb_carreras().setSelectedIndex(0);
            
-           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
-           frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
-           estadoCmb_silbo(false);
-           estadoCmb_cursoUnidDES(false);
-           CARGAR_COMBO_CARRERAS();
+//           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
+////           frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
+//           estadoCmb_silbo(false);
+//           estadoCmb_cursoUnidDES(false);
+//           CARGAR_COMBO_CARRERAS();
+//           
+//           cargarCursosSilabos(221,usuario.getPersona().getIdPersona());
+//           cargarUnidades(221);
     }
 
     public List<CarreraMD> cargarComboCarreras() {
@@ -124,7 +126,7 @@ public class ControladorConfiguracion_plan_clases {
    
     public List<SilaboMD> cargar_silabo(int carrera){
         frm_cong_PlanClase.getCmb_silabos().removeAllItems();
-         String[] parametros = {String.valueOf(carrera), String.valueOf(usuario.getPersona().getIdPersona())};
+         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          for (SilaboMD smd : silabosdocente) {
             String estado = null;
@@ -139,7 +141,6 @@ public class ControladorConfiguracion_plan_clases {
          String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
-         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
     }
