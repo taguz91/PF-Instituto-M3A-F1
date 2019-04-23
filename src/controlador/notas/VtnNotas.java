@@ -342,8 +342,16 @@ public class VtnNotas {
                 .stream()
                 .forEach(obj -> {
                     vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
+                });
+
+        listaPeriodos
+                .stream()
+                .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .collect(Collectors.toList())
+                .forEach(obj -> {
                     vista.getLblCarrera().setText(obj.getCarrera().getNombre());
                 });
+
     }
 
     private void cargarComboCiclo() {
