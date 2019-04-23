@@ -1,7 +1,7 @@
 
 CREATE TABLE "Notas"(
     "id_nota" SERIAL NOT NULL PRIMARY KEY,
-    "nota_valor" NUMERIC(6,2),
+    "nota_valor" NUMERIC(6,2) DEFAULT 0.0,
     "id_almn_curso" INTEGER,
     "id_tipo_nota" INTEGER
 
@@ -57,6 +57,7 @@ WHERE
 CREATE OR REPLACE FUNCTION migrar_notas()
 RETURNS TRIGGER AS $migrar_notas$
 begin
+
     INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)
     VALUES(0.0, new.id_almn_curso, 5);
     INSERT INTO "Notas"(nota_valor,id_almn_curso,id_tipo_nota)

@@ -40,7 +40,7 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"TipoDeNota\".tipo_nota_estado IS TRUE AND\n"
                 + "\"public\".\"Notas\".id_almn_curso = " + alumnnoCurso.getId();
 
-        System.out.println(SELECT);
+        //System.out.println(SELECT);
 
         List<NotasBD> lista = new ArrayList<>();
 
