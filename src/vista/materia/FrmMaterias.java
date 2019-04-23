@@ -107,6 +107,9 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         Cbx_OrgCurricular = new javax.swing.JComboBox<>();
         Cbx_CamFormacion = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Ingreso de Materias");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setText("Cancelar");
@@ -235,7 +238,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorNombreMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorNombreMateria.setText("Ingrese solo letras");
-        jPanel3.add(lblErrorNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, -1));
+        jPanel3.add(lblErrorNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
 
         lblErrorMateriaCiclo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorMateriaCiclo.setText("Seleccione un Ciclo");
@@ -281,9 +284,15 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel4.add(lblTeoricas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
 
         lblTeoricas2.setText("Total de Horas *");
-        jPanel4.add(lblTeoricas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
+        jPanel4.add(lblTeoricas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, -1, -1));
         jPanel4.add(txtHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 137, -1));
-        jPanel4.add(txtHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 137, -1));
+
+        txtHorasPracticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHorasPracticasActionPerformed(evt);
+            }
+        });
+        jPanel4.add(txtHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 137, -1));
         jPanel4.add(txtHorasAutoEstudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 137, -1));
 
         txtTotalHoras.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +305,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorHorasDocencia.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasDocencia.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
+        jPanel4.add(lblErrorHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
 
         lblErrorHorasPracticas.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasPracticas.setText("Ingrese solo números");
@@ -304,7 +313,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorHorasPresenciales.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasPresenciales.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, -1, -1));
+        jPanel4.add(lblErrorHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, -1, -1));
 
         lblErrorHorasAutoEstudio.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasAutoEstudio.setText("Ingrese solo números");
@@ -349,7 +358,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTeoricas4.setText("Descripción de la Materia *");
-        jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         lblTeoricas6.setText("Organización Curricular *");
         jPanel5.add(lblTeoricas6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
@@ -361,7 +370,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         txtDescripcionMateria.setRows(5);
         jScrollPane4.setViewportView(txtDescripcionMateria);
 
-        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 650, 110));
+        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 650, 130));
 
         lblErrorDescripcionMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorDescripcionMateria.setText("Ingrese solo letras");
@@ -369,11 +378,11 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorOrganizacionCurricular.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorOrganizacionCurricular.setText("Seleccione una Organización");
-        jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         lblErrorCampoFormacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCampoFormacion.setText("Ingrese solo letras");
-        jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
+        jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
         Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "ejemplo" }));
         Cbx_OrgCurricular.addActionListener(new java.awt.event.ActionListener() {
@@ -425,6 +434,10 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
     private void Cbx_OrgCurricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cbx_OrgCurricularActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Cbx_OrgCurricularActionPerformed
+
+    private void txtHorasPracticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorasPracticasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHorasPracticasActionPerformed
 
     public JButton getBtnCancelar() {
         return btnCancelar;

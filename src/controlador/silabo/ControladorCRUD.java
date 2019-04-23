@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.silabo.CarrerasBDS;
@@ -44,10 +45,10 @@ public class ControladorCRUD {
 
     private List<SilaboMD> silabosDocente;
 
-    public ControladorCRUD(UsuarioBD usuario, VtnPrincipal principal) {
+    public ControladorCRUD(UsuarioBD usuario, VtnPrincipal principal, ConexionBD conexion) {
         this.usuario = usuario;
         this.principal = principal;
-        this.conexion = new ConexionBD();
+        this.conexion = conexion;
 
     }
 
@@ -90,7 +91,7 @@ public class ControladorCRUD {
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
 
-            eliminarSilabo(seleccionarSilabo().getIdSilabo());
+            eliminarSilabo();
             cargarSilabosDocente();
 
         });
@@ -181,7 +182,7 @@ public class ControladorCRUD {
         int seleccion = crud.getTblSilabos().getSelectedRow();
 
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getId()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
+                filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
 
         return silaboSeleccionado.get();
@@ -196,7 +197,7 @@ public class ControladorCRUD {
 
     }
 
-    public void eliminarSilabo(int aguja) {
+    public void eliminarSilabo() {
 
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {

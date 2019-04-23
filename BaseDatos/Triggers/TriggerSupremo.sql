@@ -67,6 +67,7 @@ EXECUTE PROCEDURE cierre_prd_backup();
 
 --Una funcion que me llena las notas *
 --Solo debo pasar el id del periodo
+/*
 CREATE OR REPLACE FUNCTION llenar_cursos()
 RETURNS VOID AS $llenar_cursos$
 DECLARE
@@ -102,7 +103,7 @@ BEGIN
   RETURN;
 END;
 $llenar_cursos$ LANGUAGE plpgsql;
-
+*/
 --Ahora al cerrar el periodo se migra las notas
 
 --Creamos un trigger

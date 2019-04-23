@@ -41,12 +41,16 @@ public class PnlHorarioClaseCTR {
         "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>"};
-    private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
+    private final String[] hn = {"8:00","9:00","10:00", "11:00", "12:00", "13:00","17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
        
+        
+        "<html>8:00<br>9:00</html>",
+        "<html>9:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
+        "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>",
         "<html>20:00<br>21:00</html>",

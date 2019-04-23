@@ -1496,7 +1496,10 @@ public class ControladorSilaboC {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
+                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            }
+
         });
 
         modeloBase = new DefaultListModel<>();
