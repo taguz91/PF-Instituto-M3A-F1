@@ -4,12 +4,15 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
 import java.awt.event.ActionEvent;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -103,8 +106,12 @@ public class VtnNotas {
         vista.getCmbCiclo().addActionListener(e -> {
             cargarComboMaterias();
         });
+        
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+        
+        vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
         Validaciones.validarNumerosEnJTEXTField(vista.getTxtBuscar());
 
@@ -650,6 +657,92 @@ public class VtnNotas {
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
+
+    }
+    
+        private void btnImprimir(ActionEvent e) {
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vista,
+                    "Reporte de Notas por Curso\n"
+                    + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
+                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+
+            Middlewares.setLoadCursor(vista);
+
+            ReportesCTR reportes = new ReportesCTR(vista, idDocente);
+
+            switch (r) {
+                case 0:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteMenos70();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 1:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre70_80();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 2:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre80_90();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 3:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre90_100();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 4:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteCompleto();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    break;
+
+                default:
+                    break;
+            }
+
+            try {
+                sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            desktop.getLblEstado().setText("");
+            Middlewares.setDefaultCursor(vista);
+            vista.getBtnVerNotas().setEnabled(true);
+        }).start();
+
+    }
+        
+           private void btnBuscar(ActionEvent e) {
+        String busqueda = vista.getTxtBuscar().getText().toLowerCase();
+        new Thread(() -> {
+            listaDocentes
+                    .entrySet()
+                    .stream()
+                    .filter(item -> item.getKey().toLowerCase().contains(busqueda))
+                    .collect(Collectors.toList())
+                    .forEach(obj -> {
+                        vista.getCmbDocente().setSelectedItem(obj.getKey());
+                    });
+        }).start();
 
     }
     // </editor-fold>  
