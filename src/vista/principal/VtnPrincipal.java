@@ -346,6 +346,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setBtnSecretaria(JButton btnSecretaria) {
         this.btnSecretaria = btnSecretaria;
     }
+
+    public JMenuItem getMnCtAlmnRetirados() {
+        return mnCtAlmnRetirados;
+    }
     
     
     /**
@@ -397,6 +401,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtListaAlumnos = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
+        mnCtAlmnRetirados = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
@@ -728,12 +733,15 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnCtMatricula);
 
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
-        mnCtListaAlumnos.setText("Lista Alumnos");
+        mnCtListaAlumnos.setText("Lista alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
 
         mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
         mnCtMallaAlumno.setText("Malla alumnos");
         mnTipoNotas.add(mnCtMallaAlumno);
+
+        mnCtAlmnRetirados.setText("Alumnos retirados");
+        mnTipoNotas.add(mnCtAlmnRetirados);
 
         mnCtDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_20px.png"))); // NOI18N
         mnCtDocenteMateria.setText("Materia docentes");
@@ -970,6 +978,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenuItem mnCtAccesos;
     private javax.swing.JMenuItem mnCtActivarNotas;
+    private javax.swing.JMenuItem mnCtAlmnRetirados;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;

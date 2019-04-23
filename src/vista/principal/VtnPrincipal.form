@@ -88,7 +88,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Lista Alumnos"/>
+                <Property name="text" type="java.lang.String" value="Lista alumnos"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
@@ -97,6 +97,11 @@
                   <Image iconType="3" name="/vista/img/icons8_Report_Card_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Malla alumnos"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnRetirados">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alumnos retirados"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtDocenteMateria">
