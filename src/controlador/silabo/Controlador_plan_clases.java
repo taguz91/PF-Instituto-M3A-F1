@@ -1,10 +1,14 @@
 package controlador.silabo;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import modelo.ConexionBD;
+import modelo.PlanClases.RecursosBD;
+import modelo.PlanClases.RecursosMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -17,6 +21,8 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
+import vista.silabos.frmGestionSilabo.CheckListItem;
+import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmPlanClase;
 
 public class Controlador_plan_clases {
@@ -31,9 +37,9 @@ public class Controlador_plan_clases {
     private List<CursoMDS> lista_curso;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
-     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
-     private DefaultListModel modeloInstrumentos;
-     
+    private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
+    private DefaultListModel modelo;
+    private List<RecursosMD> lista_recursos; 
     public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,
             UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.silabo=silabo;
@@ -54,10 +60,19 @@ public class Controlador_plan_clases {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
          fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
              fPlanClase.dispose();
+           ControladorConfiguracion_plan_clases cp=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal, conexion);
+           cp.iniciarControlaador();
             
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);
-        
+          fPlanClase.getTxt_buscarPCL().addKeyListener(new KeyAdapter(){
+              @Override
+            public void keyReleased(KeyEvent ke) {
+           RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+           CargarRecursos(lista_recursos);
+
+            }
+          });
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
@@ -72,6 +87,9 @@ public class Controlador_plan_clases {
         
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
+        
+      lista_recursos=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+      CargarRecursos(lista_recursos);
     }
     public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
@@ -114,7 +132,7 @@ public class Controlador_plan_clases {
            fPlanClase.getTxtUnidad().setText(String.valueOf(lista_unidad.getNumeroUnidad()));
            fPlanClase.getTxtUnidad().setEnabled(false);
            
-           fPlanClase.getLbNumeroPlandeClase().setText("N°"+lista_unidad.getNumeroUnidad());
+           fPlanClase.getLbNumeroPlandeClase().setText("Unidad N°"+lista_unidad.getNumeroUnidad());
            
         }
     }
@@ -127,13 +145,23 @@ public class Controlador_plan_clases {
     }
     private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
-        modeloInstrumentos=new DefaultListModel();
+        modelo=new DefaultListModel();
         for (EvaluacionSilaboMD evaluacionSilaboMD : lista) {
-            modeloInstrumentos.addElement(evaluacionSilaboMD.getInstrumento());
+            modelo.addElement(evaluacionSilaboMD.getInstrumento());
         }
-        fPlanClase.getJlistInstrumentoEvaluacion().setModel(modeloInstrumentos);
+        fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
     }
-     
+ 
+   private void CargarRecursos(List<RecursosMD> lista_recursos){    
+     fPlanClase.getJlisRecursos().removeAll();
+     DefaultListModel modeloRecursos = new DefaultListModel();
+     fPlanClase.getJlisRecursos().setCellRenderer(new CheckListRenderer());
+     fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+       for (RecursosMD lista_recurso : lista_recursos) {
+           modeloRecursos.addElement(new CheckListItem(lista_recurso.getNombre_recursos()));
+       }
+       fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+   }
      
 }
 
