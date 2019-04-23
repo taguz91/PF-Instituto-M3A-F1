@@ -284,6 +284,7 @@ public class SilaboBD extends SilaboMD {
         return silabos;
     }
 
+
  
    public static List<SilaboMD> consultarAnteriores(ConexionBD conexion, Integer[] clave) {
 
@@ -331,5 +332,4 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
 }

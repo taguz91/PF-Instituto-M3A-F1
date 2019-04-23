@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
@@ -32,14 +33,16 @@ public class ControladorConfiguracion_plan_clases {
     private List<CarreraMD>  silabos_docente;
     private List<UnidadSilaboMD> unidadesSilabo;
     private List<CursoMD> cursosSilabo;
-    public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
+    public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
         this.vtnPrincipal = vtnPrincipal;
-        this.conexion = new ConexionBD();
+        this.conexion = conexion;
     }
 
     public void iniciarControlaador() {
         conexion.conectar();
+
+        // ControladorCRUDPlanClase ccpc= new ControladorCRUDPlanClase(plan, usuario);
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
@@ -53,7 +56,8 @@ public class ControladorConfiguracion_plan_clases {
         });
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
             frm_cong_PlanClase.dispose();
-            Controlador_plan_clases cpc=new Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal);
+            Controlador_plan_clases cpc=new 
+        Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
         });
         

@@ -14,7 +14,7 @@ public class Validar {
 
     public static boolean esObservacion(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
-        return cadena.matches("[0-9A-Za-záéíóúÁÉÍ\\.ÓÚÑñ/\\-\\s]+");
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍ\\.,ÓÚÑñ\\-\\s]+");
     }
 
     //Para validar letras y caracteres como // 
@@ -26,6 +26,10 @@ public class Validar {
     //Validamos un txt de un buscador 
     public static boolean esLetrasYNumeros(String cadena) {
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
+    }
+    
+    public static boolean esLetrasYNumeros2(String cadena) {
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\_0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\-0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
     }
 
     public static boolean esNumeros(String cadena) {

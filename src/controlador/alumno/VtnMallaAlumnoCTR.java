@@ -121,10 +121,16 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String a = vtnMallaAlm.getTxtBuscar().getText().trim();
+                String b = vtnMallaAlm.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscarMalla(b);
+                } else if (b.length() == 0) {
+                    mdlTbl.setRowCount(0); 
+                }
+                /*
                 if (a.length() >= 10) {
                     buscarMalla(a);
-                }
+                }*/
             }
         });
         vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());
@@ -174,10 +180,10 @@ public class VtnMallaAlumnoCTR {
     }
 
     private void InitPermisosTester() {
-        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
-            vtnMallaAlm.getBtnIngNota().setEnabled(false);
-            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
-        }
+//        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+//            vtnMallaAlm.getBtnIngNota().setEnabled(false);
+//            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
+//        }
     }
 
     public void actualizarVtn(MallaAlumnoMD m) {
@@ -456,18 +462,6 @@ public class VtnMallaAlumnoCTR {
         File dir = new File("./");
         System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
-//            if (idAlmnSeleccionado > 0) {
-//                //int posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
-//                Map parametro = new HashMap();
-//                parametro.put("consulta", mallaAlm.getSql());
-//                System.out.println(parametro);
-//                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//                JasperViewer view = new JasperViewer(print, false);
-//                view.setVisible(true);
-//                view.setTitle("Reporte de Malla de Alumno");
-//            }
-
             Map parametro = new HashMap();
             parametro.put("consulta", mallaAlm.getSql());
             System.out.println(parametro);

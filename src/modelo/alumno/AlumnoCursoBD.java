@@ -260,26 +260,26 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, String nombrePeriodo) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"AlumnoCurso2\".id_alumno,\n"
-                + "\"public\".\"AlumnoCurso2\".almn_curso_asistencia,\n"
-                + "\"public\".\"AlumnoCurso2\".almn_curso_estado,\n"
-                + "\"public\".\"AlumnoCurso2\".almn_curso_num_faltas,\n"
-                + "\"public\".\"AlumnoCurso2\".almn_curso_activo,\n"
+                + "\"public\".\"AlumnoCurso\".id_alumno,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_asistencia,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_estado,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_num_faltas,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_activo,\n"
                 + "\"public\".\"Personas\".persona_identificacion,\n"
                 + "\"public\".\"Personas\".persona_primer_apellido,\n"
                 + "\"public\".\"Personas\".persona_segundo_apellido,\n"
                 + "\"public\".\"Personas\".persona_primer_nombre,\n"
                 + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"AlumnoCurso2\".almn_curso_nota_final,\n"
-                + "\"public\".\"AlumnoCurso2\".id_almn_curso,\n"
-                + "\"public\".\"AlumnoCurso2\".id_curso\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_nota_final,\n"
+                + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
+                + "\"public\".\"AlumnoCurso\".id_curso\n"
                 + "FROM\n"
-                + "\"public\".\"AlumnoCurso2\"\n"
-                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso2\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + "\"public\".\"AlumnoCurso\"\n"
+                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso\".id_curso = \"public\".\"Cursos\".id_curso\n"
                 + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
-                + "INNER JOIN \"public\".\"Alumnos\" ON \"public\".\"AlumnoCurso2\".id_alumno = \"public\".\"Alumnos\".id_alumno\n"
+                + "INNER JOIN \"public\".\"Alumnos\" ON \"public\".\"AlumnoCurso\".id_alumno = \"public\".\"Alumnos\".id_alumno\n"
                 + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Alumnos\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
@@ -332,12 +332,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public boolean editar() {
         String UPDATE = "UPDATE \"AlumnoCurso\" \n"
                 + "SET \n"
-                + "almn_curso_nt_1_parcial = " + getNota1Parcial() + ", \n"
-                + "almn_curso_nt_examen_interciclo = " + getNotaExamenInter() + ", \n"
-                + "almn_curso_nt_2_parcial = " + getNota2Parcial() + ", \n"
-                + "almn_curso_nt_examen_final = " + getNotaExamenFinal() + ", \n"
-                + "almn_curso_nt_examen_supletorio = " + getNotaExamenSupletorio() + ", \n"
-                + "almn_curso_asistencia = '" + getAsistencia() + "', \n"
                 + "almn_curso_nota_final = " + getNotaFinal() + ", \n"
                 + "almn_curso_estado = '" + getEstado() + "',\n"
                 + "almn_curso_num_faltas = " + getNumFalta() + "\n"
@@ -345,7 +339,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "id_almn_curso = " + getId() + ";";
 
         //System.out.println(UPDATE);
-
         return ResourceManager.Statement(UPDATE) == null;
 
     }

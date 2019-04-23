@@ -33,22 +33,24 @@ public class PnlHorarioClaseCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
+    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00","20:00"};
     private final String[] hvc = {
         "<html>14:00<br>15:00</html>",
-        "<html>08:00<br>09:00</html>",
-        "<html>09:00<br>10:00</html>",
-        "<html>10:00<br>11:00</html>",
-        "<html>11:00<br>12:00</html>",
-        "<html>12:00<br>13:00</html>"};
+        "<html>15:00<br>16:00</html>",
+        "<html>16:00<br>17:00</html>",
+        "<html>17:00<br>18:00</html>",
+        "<html>18:00<br>19:00</html>",
+        "<html>19:00<br>20:00</html>"};
     private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
-        "<html>14:00<br>15:00</html>",
-        "<html>08:00<br>09:00</html>",
-        "<html>09:00<br>10:00</html>",
+       
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
-        "<html>12:00<br>13:00</html>"};
+        "<html>12:00<br>13:00</html>",
+        "<html>18:00<br>19:00</html>",
+        "<html>19:00<br>20:00</html>",
+        "<html>20:00<br>21:00</html>",
+        "<html>21:00<br>22:00</html>"};
     private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
@@ -76,7 +78,7 @@ public class PnlHorarioClaseCTR {
             case 'V':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, t);
                 formatoTbl(pnl.getTblHorario());
-                llenarHoras(hv);
+                llenarHoras(hvc);
                 hSelec = hv;
                 jSelec = t;
                 llenarLunesViernes();
@@ -84,7 +86,7 @@ public class PnlHorarioClaseCTR {
             case 'N':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
                 formatoTbl(pnl.getTblHorario());
-                llenarHoras(hn);
+                llenarHoras(hnc);
                 hSelec = hn;
                 jSelec = tn;
                 llenatLunesSabado();
@@ -124,29 +126,35 @@ public class PnlHorarioClaseCTR {
     private void llenarDia(ArrayList<SesionClaseMD> sesiones, int dia) {
         if (sesiones != null) {
             sesiones.forEach(s -> {
+                //System.out.print("Dia "+dia+" "+s.getHoraIni()+" / "+s.getHoraFin());
                 buscarClm(s, dia);
+                System.out.println("");
             });
         }
     }
 
     private void buscarClm(SesionClaseMD s, int dia) {
         for (int i = 0; i < hSelec.length; i++) {
+            //System.out.print("Hora: "+hSelec[i]+" : "+tranformar(s.getHoraIni())+ " Igual: "+hSelec[i].equals(tranformar(s.getHoraIni())));
             if (hSelec[i].equals(tranformar(s.getHoraIni()))) {
                 posI = i;
                 break;
             }
+            System.out.println("");
         }
 
         for (int i = 0; i < hSelec.length; i++) {
+            
+            //System.out.print("Hora: "+hSelec[i]+" : "+tranformar(s.getHoraFin())+ " Igual: "+hSelec[i].equals(tranformar(s.getHoraFin())));
             if (hSelec[i].equals(tranformar(s.getHoraFin()))) {
                 posF = i;
                 break;
             }
+            System.out.println("");
         }
 
         for (int i = posI; i < posF; i++) {
             mdTbl.setValueAt(s.getId()+"%Clase", i, dia);
-
         }
 
     }

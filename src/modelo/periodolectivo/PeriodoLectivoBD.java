@@ -105,20 +105,25 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
                 + "WHERE carrera_activo = true;";
         ResultSet rs = conecta.sql(sql);
-        try {
-            while (rs.next()) {
-                CarreraMD a = new CarreraMD();
-                a.setId(rs.getInt("id_carrera"));
-                a.setNombre(rs.getString("carrera_nombre"));
-                a.setCodigo(rs.getString("carrera_codigo"));
-                lista.add(a);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CarreraMD a = new CarreraMD();
+                    a.setId(rs.getInt("id_carrera"));
+                    a.setNombre(rs.getString("carrera_nombre"));
+                    a.setCodigo(rs.getString("carrera_codigo"));
+                    lista.add(a);
+                }
+                rs.close();
+                return lista;
+            } catch (SQLException ex) {
+                Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
             }
-            rs.close();
-            return lista;
-        } catch (SQLException ex) {
-            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
             return null;
         }
+
     }
 
     public CarreraMD capturarIdCarrera(String aguja) {
