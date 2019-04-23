@@ -163,6 +163,41 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return Lista;
     }
 
+    public static List<TipoDeNotaMD> selectValidaciones(int idPeriodo) {
+        String SELECT = "SELECT\n"
+                + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
+                + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
+                + "\"public\".\"TipoDeNota\".tipo_nota_valor_minimo,\n"
+                + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo\n"
+                + "FROM\n"
+                + "\"public\".\"TipoDeNota\"\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "WHERE \n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo + "";
+
+        List<TipoDeNotaMD> lista = new ArrayList<>();
+
+        System.out.println(SELECT);
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                TipoDeNotaMD tipo = new TipoDeNotaMD();
+                tipo.setIdTipoNota(rs.getInt("id_tipo_nota"));
+                tipo.setNombre(rs.getString("tipo_nota_nombre"));
+                tipo.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
+                tipo.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
+
+                lista.add(tipo);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lista;
+    }
+
     public boolean editar(int Pk) {
         String UPDATE = "UPDATE\n"
                 + TABLA + "\n"

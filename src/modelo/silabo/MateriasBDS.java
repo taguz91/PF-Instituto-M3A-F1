@@ -92,5 +92,39 @@ public class MateriasBDS extends MateriaMD {
         return materias;
 
     }
+    public static List<MateriaMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona ) {
 
+        List<MateriaMD> materias = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
+                    + "m.materia_nombre\n"
+                    + "FROM \"Silabo\" AS s\n"
+                    + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
+                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
+                    + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
+                    + "JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
+                    + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
+                    + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
+                    + "WHERE crr.carrera_nombre=?\n"
+                    + "AND p.id_persona=?");
+
+            st.setString(1, carrera);
+            st.setInt(2, id_persona);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+               MateriaMD tmp=new MateriaMD();
+               tmp.setNombre(rs.getString(2));
+
+                materias.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return materias;
+    }
 }

@@ -1,5 +1,6 @@
 package controlador.prdlectivo;
 
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.Font;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -21,7 +22,11 @@ import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.tipoDeNota.TipoDeNotaBD;
+import modelo.tipoDeNota.TipoDeNotaMD;
+import modelo.usuario.RolBD;
 import modelo.validaciones.CmbValidar;
+import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.principal.VtnPrincipal;
 
@@ -244,6 +249,12 @@ public class FrmPrdLectivoCTR {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
+                    VtnTipoNotas vista = new VtnTipoNotas();
+//                    TipoDeNotaMD m = new TipoDeNotaMD();
+                    TipoDeNotaBD modelo = new TipoDeNotaBD();
+                    RolBD permisos = new RolBD();
+                    VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(vtnPrin, vista, modelo, permisos);
+                    controlador.Init();
 //                    reiniciarComponentes(frmPrdLectivo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");

@@ -49,7 +49,7 @@ public class PnlHorarioCursoCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-     private String[] hSelec, jSelec, tSelec;
+    private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
     public PnlHorarioCursoCTR(PnlHorarioClase pnl, CursoMD curso, SesionClaseBD bd) {
@@ -62,7 +62,6 @@ public class PnlHorarioCursoCTR {
         iniciaTbl();
     }
 
-  
     private void iniciaTbl() {
         switch (curso.getCurso_nombre().charAt(0)) {
             case 'M':
@@ -145,9 +144,9 @@ public class PnlHorarioCursoCTR {
         }
 
         for (int i = posI; i < posF; i++) {
-            mdTbl.setValueAt("<html> <center>"+s.getId()+""+s.getCurso().getId_curso()+  "<br>" + 
-                    s.getCurso().getId_materia().getCodigo()+"<br>"+
-                            s.getCurso().getId_docente().getNombreCorto()+"</center></html>", 
+            mdTbl.setValueAt("<html> <center>" + s.getId() + "" + s.getCurso().getId_curso() + "<br>"
+                    + s.getCurso().getId_materia().getCodigo() + "<br>"
+                    + s.getCurso().getId_docente().getNombreCorto() + "</center></html>",
                     i, dia);
 
         }
@@ -173,33 +172,39 @@ public class PnlHorarioCursoCTR {
 
     //Todos los metodos publicos de esta clase
     public void actualizarLunes() {
-        sesionLunes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 1);
+        sesionLunes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 1,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionLunes, 1);
     }
 
     public void actualizarMartes() {
-        sesionMartes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 2);
+        sesionMartes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 2,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionMartes, 2);
     }
 
     public void actualizarMiercoles() {
-        sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 3);
+        sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 3,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionMiercoles, 3);
     }
 
     public void actuatizarJueves() {
-        sesionJueves = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 4);
+        sesionJueves = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 4,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionJueves, 4);
     }
 
     public void actualizarViernes() {
-        sesionViernes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 5);
+        sesionViernes = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 5,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionViernes, 5);
     }
 
     public void actualizarSabado() {
-        sesionSabado = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 6);
+        sesionSabado = bd.cargarHorarioCursoPorDia(curso.getCurso_nombre(), 6,
+                curso.getId_prd_lectivo().getId_PerioLectivo());
         llenarDia(sesionSabado, 6);
     }
-    
+
 }
