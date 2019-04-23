@@ -4,11 +4,14 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
 import java.awt.event.ActionEvent;
+import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -104,6 +107,8 @@ public class VtnNotas {
         });
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+        
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         tablaNotas.addTableModelListener(new TableModelListener() {
 
@@ -590,5 +595,85 @@ public class VtnNotas {
         }
 
     }
+    
+     private void btnImprimir(ActionEvent e) {
+        
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vista,
+                    "Reporte de Notas por Curso\n"
+                    + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
+                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo", "Prueba2"}, "Cancelar");
+
+            Middlewares.setLoadCursor(vista);
+
+            ReportesCTR reportes = new ReportesCTR(vista, idDocente);
+
+            switch (r) {
+                case 0:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteMenos70();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 1:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre70_80();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 2:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre80_90();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 3:
+
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre90_100();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                    break;
+
+                case 4:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteCompleto();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    break;
+                
+                case 5:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.ReportePrueba2();
+                    desktop.getLblEstado().setText("COMPLETADO");
+
+                default:
+                    break;
+                    
+                
+            }
+
+            try {
+                sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            desktop.getLblEstado().setText("");
+            Middlewares.setDefaultCursor(vista);
+            vista.getBtnVerNotas().setEnabled(true);
+        }).start();
+
+
     // </editor-fold>  
+}
 }
