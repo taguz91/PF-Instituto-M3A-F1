@@ -570,7 +570,7 @@ public class VtnNotas {
 
     private static Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
         return obj -> {
-            int porcentaje = (faltas * 100) / obj.getTotalHoras();
+            int porcentaje = (faltas * 100) / obj.getHorasPresenciales();
 
             List<TipoDeNotaMD> listaTemporal = listaValidaciones
                     .stream()
