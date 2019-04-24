@@ -117,7 +117,6 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnFinContratacion = new javax.swing.JButton();
         btnAsignarRol = new javax.swing.JButton();
         btnhorasAsignadas = new javax.swing.JButton();
-
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -173,9 +172,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnFinContratacion.setText("Fin de Contratación");
 
         btnAsignarRol.setText("Asignar rol");
-
         btnhorasAsignadas.setText("horas asignacion ");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
