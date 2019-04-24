@@ -41,11 +41,12 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"Notas\".id_almn_curso = " + alumnnoCurso.getId();
 
         //System.out.println(SELECT);
-
         List<NotasBD> lista = new ArrayList<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
 
+        System.out.println(SELECT);
+        
         try {
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
@@ -60,7 +61,7 @@ public class NotasBD extends NotasMD {
                 tipoDeNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
 
                 nota.setTipoDeNota(tipoDeNota);
-                
+
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
@@ -72,6 +73,42 @@ public class NotasBD extends NotasMD {
             rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+
+        if (lista.isEmpty()) {
+            String SELECT_COMPROBACION = "SELECT\n"
+                    + "\"public\".\"Cursos\".id_curso,\n"
+                    + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
+                    + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
+                    + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
+                    + "\"public\".\"Carreras\".carrera_modalidad"
+                    + "WHERE\n"
+                    + "\"AlumnoCurso\".id_almn_curso = " + alumnnoCurso.getId() + " AND\n"
+                    + "\"TipoDeNota\".tipo_nota_nombre <> 'NOTA FINAL'";
+            ResultSet info = ResourceManager.Query(SELECT_COMPROBACION);
+
+            try {
+
+                while (info.next()) {
+                    String modalidad = info.getString("carrera_modalidad");
+                    if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
+                        int id_curso = info.getInt("id_curso");
+                        int id_tipo_nota = info.getInt("id_curso");
+                        String INSERT_NOTAS = "INSERT INTO \"Notas\" "
+                                + " ( id_tipo_nota, id_almn_curso, id_curso )\n"
+                                + "VALUES\n"
+                                + "	(" + id_tipo_nota + "," + alumnnoCurso.getId() + "," + id_curso + ");";
+
+                        ResourceManager.Statements(INSERT_NOTAS);
+                    }
+
+                }
+                info.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            lista = selectWhere(alumnnoCurso);
         }
 
         return lista;
