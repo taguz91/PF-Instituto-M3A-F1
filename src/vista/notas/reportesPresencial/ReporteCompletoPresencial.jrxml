@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="15251eee-2da6-4047-bd6c-6a1d139a9f50">
-	<property name="ireport.zoom" value="1.771561000000005"/>
-	<property name="ireport.x" value="784"/>
-	<property name="ireport.y" value="249"/>
+	<property name="ireport.zoom" value="2.357947691000012"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="543"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -198,7 +198,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[ASISTENCIA]]></text>
+				<text><![CDATA[NOTA FINAL]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="968" y="0" width="125" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f5433f41-c533-481f-9a74-5503ccafb094"/>
@@ -352,7 +352,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[NOTA FINAL]]></text>
+				<text><![CDATA[ASISTENCIA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="157" y="0" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="48611bf3-3858-49b6-ae64-9b76983b843f"/>
@@ -641,39 +641,39 @@ WHERE
 		<band height="3" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="19" splitType="Stretch"/>
+		<band height="30" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="79" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<staticText>
-				<reportElement x="934" y="46" width="100" height="20" uuid="243fccc6-54c2-487a-a372-acedac1c729f"/>
+				<reportElement x="966" y="138" width="100" height="20" uuid="243fccc6-54c2-487a-a372-acedac1c729f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
 			<line>
-				<reportElement x="351" y="14" width="234" height="1" uuid="2051bc37-06d5-4776-a41a-5cb20facd679"/>
+				<reportElement x="383" y="106" width="234" height="1" uuid="2051bc37-06d5-4776-a41a-5cb20facd679"/>
 			</line>
 			<staticText>
-				<reportElement x="418" y="46" width="100" height="20" uuid="06648785-ea04-4018-aae1-afb5418f9dc1"/>
+				<reportElement x="450" y="138" width="100" height="20" uuid="06648785-ea04-4018-aae1-afb5418f9dc1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1306" y="6" width="166" height="20" uuid="7368b7ec-bf43-42c4-95f6-91b461fbb5cb"/>
+				<reportElement x="1338" y="98" width="166" height="20" uuid="7368b7ec-bf43-42c4-95f6-91b461fbb5cb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="868" y="15" width="234" height="1" uuid="ceebbc9c-0bd0-472a-a3e4-16890a63e88a"/>
+				<reportElement x="900" y="107" width="234" height="1" uuid="ceebbc9c-0bd0-472a-a3e4-16890a63e88a"/>
 			</line>
 			<textField>
-				<reportElement x="351" y="26" width="234" height="20" uuid="6814a59f-f3a6-47a7-bc8b-b33dba2b32de"/>
+				<reportElement x="383" y="118" width="234" height="20" uuid="6814a59f-f3a6-47a7-bc8b-b33dba2b32de"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="868" y="26" width="234" height="20" uuid="3db5f174-f911-41ad-ac5c-1ac24f062c55"/>
+				<reportElement x="900" y="118" width="234" height="20" uuid="3db5f174-f911-41ad-ac5c-1ac24f062c55"/>
 				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 		</band>
