@@ -150,7 +150,7 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getTblMateriasSelec().setModel(mdMatSelec);
         frmAlmCurso.getTblAlumnos().setModel(mdAlm);
         TblEstilo.formatoTbl(frmAlmCurso.getTblMateriasPen());
-        TblEstilo.formatoTbl(frmAlmCurso.getTblMateriasSelec());
+        TblEstilo.formatoTblMatricula(frmAlmCurso.getTblMateriasSelec());
         TblEstilo.formatoTbl(frmAlmCurso.getTblAlumnos());
 
         //Tamaño de el nombre curso 
@@ -198,6 +198,7 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
         frmAlmCurso.getBtnAnuladas().addActionListener(e -> mostrarInformacion("A"));
         frmAlmCurso.getBtnPendientes().addActionListener(e -> mostrarInformacion("P"));
+        frmAlmCurso.getBtnHorarioAlmn().addActionListener(e -> horarioAlmn());
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
         //Ocultamos el boton 
         frmAlmCurso.getBtnAnuladas().setVisible(false);
@@ -696,7 +697,6 @@ public class FrmAlumnoCursoCTR {
         int[] pos = new int[posElim.length];
         for (int i = 0; i < posElim.length; i++) {
             pos[i] = posElim[i] - 1;
-            System.out.println("Se movio: " + pos[i]);
         }
         return pos;
     }
@@ -717,19 +717,19 @@ public class FrmAlumnoCursoCTR {
             if (requisitos.size() > 0) {
                 matricula = false;
             }
-            System.out.println("Vamos a comprobar de: " + cursos.get(i).getId_materia().getNombre());
             for (int j = 0; j < requisitos.size(); j++) {
                 requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
                         requisitos.get(j).getMateriaRequisito().getId());
-                System.out.println("Estado de la materia: " + requisito.getEstado());
-                System.out.println("Materia: " + requisitos.get(j).getMateriaRequisito().getNombre());
+                
+//                System.out.println("Estado de la materia: " + requisito.getEstado());
+//                System.out.println("Materia: " + requisitos.get(j).getMateriaRequisito().getNombre());
+                
                 if (!requisito.getEstado().equals("C")
                         && !requisito.getEstado().equals("R")
                         && !requisito.getEstado().equals("M")) {
                     for (int k = 0; k < cursos.size(); k++) {
                         if (cursos.get(k).getId_materia().getNombre().
                                 equals(requisitos.get(j).getMateriaRequisito().getNombre())) {
-                            System.out.println(j + " Se puede matricular en esta materia.");
                             matricula = true;
                             break;
                         }
@@ -740,7 +740,6 @@ public class FrmAlumnoCursoCTR {
             }
             if (!matricula) {
                 posElim[i] = i + 1;
-                System.out.println("Debemos eliminar: " + cursos.get(i).getId_materia().getNombre());
             }
         }
 
@@ -892,8 +891,10 @@ public class FrmAlumnoCursoCTR {
         horarioAlmn.forEach(h -> {
             horario.forEach(hc -> {
                 if ((h.getDia() == hc.getDia() && h.getHoraIni() == hc.getHoraIni())
-                        || (h.getDia() == hc.getDia() && h.getHoraFin() == hc.getHoraIni())) {
+                        || (h.getDia() == hc.getDia() && h.getHoraFin() == hc.getHoraFin())) {
                     choque = true;
+                    System.out.println("Dia que choca: "+hc.getDia());
+                    System.out.println("Choca hora de: "+hc.getHoraIni()+" || "+hc.getHoraFin());
                 }
             });
         });
@@ -926,6 +927,19 @@ public class FrmAlumnoCursoCTR {
             }
         });
     }
+    
+    /**
+     * Imprimimos el horario de del alumno
+     */
+    public void horarioAlmn(){
+        System.out.println("||||||||||||||||||||||||||||||||||||");
+        System.out.println("Horario del alumno: ");
+        horarioAlmn.forEach(h -> {
+            System.out.println(h.getDia()+" -> "+h.getHoraIni()+" -- "+h.getHoraFin());
+        });
+        System.out.println("||||||||||||||||||||||||||||||||||||");
+    }
+    
 
     /**
      * Llamamos al reporte que se gera al matriculas un alumno
