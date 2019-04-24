@@ -45,8 +45,7 @@ WHERE
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND "TipoDeNota".id_tipo_nota = $P{id_tipo_nota}
-]]>
+	AND "TipoDeNota".id_tipo_nota = $P{id_tipo_nota}]]>
 	</queryString>
 	<field name="Aporte 1" class="java.math.BigDecimal"/>
 	<title>
