@@ -151,10 +151,8 @@ public class SilaboBD extends SilaboMD {
             st.execute();
             System.out.println(st);
             st.close();
-            fis.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -172,11 +170,10 @@ public class SilaboBD extends SilaboMD {
             st.execute();
             System.out.println(st);
             st.close();
-            fis1.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 

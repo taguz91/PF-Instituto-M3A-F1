@@ -1,7 +1,9 @@
 package vista.silabos;
-
 import com.toedter.calendar.JDateChooser;
+import java.awt.Component;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -10,6 +12,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,6 +32,8 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
      */
     public frmPlanClase() {
         initComponents();
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
        
     }
 
@@ -533,7 +538,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         jlistInstrumentoEvaluacion = new javax.swing.JList<>();
         lbEstrategiasPC = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlisRecursos = new javax.swing.JList<>();
+        jlisRecursos = new javax.swing.JList();
         lbRecursosPC = new javax.swing.JLabel();
         lbIns_Evaluacion = new javax.swing.JLabel();
         jDateChooserFechaFinPC = new com.toedter.calendar.JDateChooser();
@@ -649,11 +654,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbEstrategiasPC.setText("Estrategias:");
 
-        jlisRecursos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane4.setViewportView(jlisRecursos);
 
         lbRecursosPC.setText("Recursos:");
@@ -1028,7 +1028,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<String> jlisRecursos;
+    private javax.swing.JList jlisRecursos;
     private javax.swing.JList<String> jlistInstrumentoEvaluacion;
     private javax.swing.JLabel lbAsignatura;
     private javax.swing.JLabel lbCarrera;
@@ -1069,4 +1069,58 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtUnidad;
     private javax.swing.JTextField txt_buscarPCL;
     // End of variables declaration//GEN-END:variables
+ public static class CheckListItem {
+
+        private String label;
+        private boolean isSelected = false;
+
+        public CheckListItem(String label) {
+            this.label = label;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean isSelected) {
+            this.isSelected = isSelected;
+        }
+
+        public String toString() {
+            return label;
+        }
+    }
+
+    public static class CheckListRenderer extends JCheckBox implements ListCellRenderer {
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
+            setEnabled(list.isEnabled());
+            setSelected(((CheckListItem) value).isSelected());
+            setFont(list.getFont());
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+            setText(value.toString());
+            return this;
+        }
+    }
+
+    public static class CheckboxListCellRenderer extends JCheckBox implements ListCellRenderer {
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index,
+                boolean isSelected, boolean cellHasFocus) {
+
+            setComponentOrientation(list.getComponentOrientation());
+            setFont(list.getFont());
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+            setSelected(isSelected);
+            setEnabled(list.isEnabled());
+
+            setText(value == null ? "" : value.toString());
+
+            return this;
+        }
+    }
 }

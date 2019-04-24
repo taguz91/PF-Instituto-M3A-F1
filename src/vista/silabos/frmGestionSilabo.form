@@ -1162,6 +1162,7 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="lstEstrategiasPredeterminadas">
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="frmGestionSilabo_lstEstrategiasPredeterminadas"/>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
               </AuxValues>
             </Component>

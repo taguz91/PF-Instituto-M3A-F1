@@ -1,7 +1,10 @@
 package controlador.silabo;
+import vista.silabos.frmPlanClase;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,9 +25,9 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmGestionSilabo.CheckListItem;
-import vista.silabos.frmGestionSilabo.CheckListRenderer;
-import vista.silabos.frmPlanClase;
+import vista.silabos.frmPlanClase.CheckListItem;
+import vista.silabos.frmPlanClase.CheckListRenderer;
+
 
 public class Controlador_plan_clases {
 
@@ -89,6 +92,15 @@ public class Controlador_plan_clases {
         fPlanClase.getBtnQuitarPC().addActionListener(qp->{
             eliminarElementopanel();
         });
+        fPlanClase.getJlisRecursos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event ){
+                
+                int index=fPlanClase.getJlisRecursos().locationToIndex(event.getPoint());
+               // CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
+                
+            }
+         });
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
