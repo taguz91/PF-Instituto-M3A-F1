@@ -23,7 +23,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	"public"."Notas".nota_valor AS "Supletorio"
+	ROUND("Notas".nota_valor,1) AS "Supletorio"
 	
 FROM
 	"AlumnoCurso"
