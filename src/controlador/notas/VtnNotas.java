@@ -113,6 +113,8 @@ public class VtnNotas {
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+        
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
@@ -791,4 +793,5 @@ public class VtnNotas {
     }
     // </editor-fold>  
 
+}
 }
