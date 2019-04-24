@@ -46,6 +46,7 @@ public class NotasBD extends NotasMD {
         ResultSet rs = ResourceManager.Query(SELECT);
 
         System.out.println(SELECT);
+        
         try {
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
