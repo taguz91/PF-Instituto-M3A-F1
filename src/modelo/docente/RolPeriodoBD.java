@@ -109,12 +109,12 @@ public class RolPeriodoBD extends RolPeriodoMD {
             while (rs.next()) {
                 RolPeriodoMD rol= new RolPeriodoMD();
                 rol.setNombre_rol(rs.getString("rol_prd"));
+                System.out.println("Nombre " +rol.getNombre_rol());
                 rPrd.add(rol);
             }
             rs.close();
             return rPrd;
         } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null, "Error al mostrar roles");
             System.out.println(ex.getMessage());
             return null;
         }

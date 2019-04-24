@@ -63,7 +63,6 @@ public class VtnRolPeriodosCTR {
         vtnRolPe.getBtnIngresar().addActionListener(e -> abrirFRM());
         vtnRolPe.getBtnEditar().addActionListener(e -> abrirFrmEditar());
         vtnRolPe.getBtnEliminar().addActionListener(e -> eliminarRolPeriodo());
-        vtnRolPe.getBtnRolDocente().addActionListener(e -> rolDocente());
         llenarTabla();
     }
 
@@ -115,31 +114,5 @@ public class VtnRolPeriodosCTR {
 
         }
         vtnRolPe.getLblResultados().setText(String.valueOf(roles.size()) + " Resultados obtenidos.");
-    }
-    public void rolDocente() {
-        periodos = prd.cargarPeriodos();
-        ArrayList<String> nmPrd = new ArrayList();
-        ArrayList<String> nmRol = new ArrayList();
-        nmPrd.add("Seleccione");
-        periodos.forEach(p -> {
-            nmPrd.add(p.getNombre_PerLectivo());
-        });
-        Object np = JOptionPane.showInputDialog(vtnPrin,
-                "Lista de periodos lectivos", "Periodos lectivos",
-                JOptionPane.QUESTION_MESSAGE, null,
-                nmPrd.toArray(), 0);
-        System.out.println(np.toString());
-        
-        
-        roles = rolPer.cargarRolesWhere(np.toString());
-
-        nmRol.add("Seleccione");
-        roles.forEach(r -> {
-            nmRol.add(r.getNombre_rol());
-        });
-        Object nr = JOptionPane.showInputDialog(vtnPrin,
-                "Lista de roles por periodos", "Roles de Docente",
-                JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
-        System.out.println(nr);
     }
 }
