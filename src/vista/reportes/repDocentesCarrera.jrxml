@@ -46,16 +46,16 @@ order by p.persona_primer_apellido;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{personanombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personanombre}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="348" y="39" width="207" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -92,17 +92,17 @@ order by p.persona_primer_apellido;]]>
 			<textField>
 				<reportElement x="0" y="0" width="55" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="417" y="0" width="138" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="55" y="0" width="362" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="20" width="555" height="1"/>
@@ -114,7 +114,7 @@ order by p.persona_primer_apellido;]]>
 			<textField>
 				<reportElement x="455" y="34" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
