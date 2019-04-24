@@ -1,7 +1,7 @@
 package controlador.usuario;
 
+import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
-import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -70,7 +70,7 @@ public class FrmUsuarioCTR {
                 InitEditar();
             }
 
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+            Effects.centerFrame(vista, desktop.getDpnlPrincipal());
             try {
                 vista.setSelected(true);
             } catch (PropertyVetoException ex) {

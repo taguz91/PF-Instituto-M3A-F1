@@ -1,8 +1,8 @@
 package controlador.usuario;
 
+import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
-import controlador.Libraries.Middlewares;
-import java.awt.Cursor;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -64,7 +64,7 @@ public class VtnUsuarioCTR {
         listaUsuarios = UsuarioBD.SelectAll();
         cargarTabla(listaUsuarios);
 
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitPermisos();
         InitEventos();
@@ -137,7 +137,7 @@ public class VtnUsuarioCTR {
 
                     cargar = false;
 
-                    Middlewares.setLoadCursor(vista);
+                    Effects.setLoadCursor(vista);
 
                     desktop.getLblEstado().setText("CARGANDO USUARIOS");
 
@@ -145,13 +145,13 @@ public class VtnUsuarioCTR {
                             .forEach(VtnUsuarioCTR::agregarFila);
                     vista.getLblResultados().setText(lista.size() + " Registros");
 
-                    Middlewares.setDefaultCursor(vista);
+                    Effects.setDefaultCursor(vista);
 
                     sleep(500);
 
                     cargar = true;
 
-                    Middlewares.setTextInLabel(desktop.getLblEstado(), "CARGA COMPLETA", 2);
+                    Effects.setTextInLabel(desktop.getLblEstado(), "CARGA COMPLETA", 2);
 
                     vista.getTxtBuscar().setEnabled(true);
 

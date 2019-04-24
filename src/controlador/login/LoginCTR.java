@@ -1,7 +1,7 @@
 package controlador.login;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -50,7 +50,6 @@ public class LoginCTR {
         vista.getLblAvisos().setText("");
 
         InitEventos();
-
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
         //ocusltamos el error
@@ -58,10 +57,10 @@ public class LoginCTR {
     }
 
     private void InitEventos() {
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnIngresar().addActionListener(e -> login());
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
-        vista.getTxtPassword().addKeyListener(evento());
-        vista.getTxtUsername().addKeyListener(evento());
+        vista.getTxtPassword().addKeyListener(eventoText());
+        vista.getTxtUsername().addKeyListener(eventoText());
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
 
@@ -91,14 +90,14 @@ public class LoginCTR {
         }
     }
 
-    //Metodos de Apoyo
-    private void Login() {
+    //METODOS DE APOYO
+    private void login() {
 
         if (carga) {
 
             new Thread(() -> {
 
-                Middlewares.setLoadCursorInWindow(vista);
+                Effects.setLoadCursorInWindow(vista);
                 modelo = new UsuarioBD();
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
@@ -124,11 +123,11 @@ public class LoginCTR {
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-                    Middlewares.setDefaultCursorInWindow(vista);
+                    Effects.setDefaultCursorInWindow(vista);
                 } catch (NullPointerException e) {
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    Middlewares.setDefaultCursorInWindow(vista);
+                    Effects.setDefaultCursorInWindow(vista);
                 }
 
             }).start();
@@ -151,9 +150,9 @@ public class LoginCTR {
 
                 String USERNAME = "ROOT";
                 String PASSWORD = "RUTH";
-                
+
                 modelo = new UsuarioBD();
-                
+
                 modelo.setUsername("ROOT");
                 modelo.setPassword("RUTH");
 
@@ -196,31 +195,19 @@ public class LoginCTR {
 
     }
 
-    //Procesadores de eventos
-    private void btnIngresarActionPerformance(ActionEvent e) {
-        Login();
-    }
-
-    private void txtOnKeyRelessed(KeyEvent e) {
-
-        if (e.getKeyCode() == 10) {
-            Login();
-        }
-
-    }
+    //EVENTOS
 
     private void btnIngSUActionPerformance(ActionEvent e) {
         LoginGenerico();
     }
 
-    /**
-     * Animacion de hover en el boton
-     */
-    private KeyAdapter evento() {
+    private KeyAdapter eventoText() {
         return new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
+                if (e.getKeyCode() == 10) {
+                    login();
+                }
             }
         };
     }

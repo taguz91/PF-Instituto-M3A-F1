@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -48,7 +48,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
             if (setObj().editar(PK)) {
                 String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
-                Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
+                Effects.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Effects.SUCCESS_COLOR);
                 vtnPadre.cargarTabla();
                 vista.dispose();
             } else {

@@ -5,18 +5,15 @@
  */
 package controlador.usuario.Roles;
 
+import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmRolCTR;
-import controlador.Libraries.Middlewares;
 import controlador.accesos.FrmAccesosDeRolCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
@@ -58,7 +55,7 @@ public class VtnRolCTR {
     //Inits
     public void Init() {
 
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         vista.setTitle("Lista de Roles");
 
@@ -119,7 +116,7 @@ public class VtnRolCTR {
 
                 vista.getTxtBuscar().setEnabled(false);
 
-                Middlewares.setLoadCursor(vista);
+                Effects.setLoadCursor(vista);
 
                 cargarTabla = false;
 
@@ -131,7 +128,7 @@ public class VtnRolCTR {
 
                 cargarTabla = true;
 
-                Middlewares.setDefaultCursor(vista);
+                Effects.setDefaultCursor(vista);
 
                 vista.getTxtBuscar().setEnabled(true);
 

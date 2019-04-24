@@ -1,5 +1,6 @@
 package controlador.notas;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
@@ -92,7 +93,7 @@ public class VtnNotas {
             activarForm(true);
         }).start();
 
-        Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
     }
 
@@ -388,7 +389,7 @@ public class VtnNotas {
                         vista.getCmbCiclo().addItem(obj + "");
                     });
         } catch (NullPointerException e) {
-            Middlewares.bugProcessor(vista);
+            Effects.bugProcessor(vista);
         }
     }
 
@@ -417,7 +418,7 @@ public class VtnNotas {
 
             validarCombos();
         } catch (NullPointerException e) {
-            Middlewares.bugProcessor(e, vista);
+            Effects.bugProcessor(e, vista);
             vista.getCmbAsignatura().removeAllItems();
         }
 
@@ -567,7 +568,7 @@ public class VtnNotas {
                 cargarTabla = false;
                 tablaNotas.setRowCount(0);
                 vista.getTblNotas().setEnabled(false);
-                Middlewares.setLoadCursor(vista);
+                Effects.setLoadCursor(vista);
 
                 try {
 
@@ -589,10 +590,10 @@ public class VtnNotas {
                     vista.getLblResultados().setText(listaNotas.size() + " Resultados");
 
                     desktop.getLblEstado().setText("");
-                    Middlewares.setDefaultCursor(vista);
+                    Effects.setDefaultCursor(vista);
 
                 } catch (NullPointerException e) {
-                    Middlewares.bugProcessor(vista);
+                    Effects.bugProcessor(vista);
                 }
                 cargarTabla = true;
                 vista.getTblNotas().setEnabled(true);
@@ -709,7 +710,7 @@ public class VtnNotas {
                     new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
                         "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
 
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
 
             ReportesCTR reportes = new ReportesCTR(vista, idDocente);
 
@@ -762,7 +763,7 @@ public class VtnNotas {
                 Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
             }
             desktop.getLblEstado().setText("");
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
             vista.getBtnVerNotas().setEnabled(true);
         }).start();
 

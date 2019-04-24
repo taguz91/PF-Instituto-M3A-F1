@@ -1,5 +1,6 @@
 package controlador.notas;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import java.awt.event.ActionEvent;
@@ -7,7 +8,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyVetoException;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +23,6 @@ import javax.swing.table.TableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
-import modelo.jornada.JornadaBD;
-import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
@@ -85,7 +83,7 @@ public class VtnNotasAlumnoCursoCTR {
             listaPersonasDocentes = DocenteBD.selectAll();
             //RELLENADO DE COMBOS Y LABELS
 
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
             desktop.getLblEstado().setText("CARGANDO INFORMACION DEL DOCENTE");
 
             new Thread(() -> {
@@ -102,10 +100,10 @@ public class VtnNotasAlumnoCursoCTR {
                         Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     desktop.getLblEstado().setText("");
-                    Middlewares.setDefaultCursor(vista);
+                    Effects.setDefaultCursor(vista);
                     InitEventos();
                 } catch (NullPointerException e) {
-                    Middlewares.setDefaultCursor(vista);
+                    Effects.setDefaultCursor(vista);
                     JOptionPane.showMessageDialog(vista, "EL DOCENTE NO ESTA ASIGNADO A NINGUN CURSO ACTIVO!!");
                 }
 
@@ -115,7 +113,7 @@ public class VtnNotasAlumnoCursoCTR {
         }).start();
 
         //TABLA
-        Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
     }
 
@@ -563,7 +561,7 @@ public class VtnNotasAlumnoCursoCTR {
                     new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
                         "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
 
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
 
             ReportesCTR reportes = new ReportesCTR(vista, idDocente);
 
@@ -616,7 +614,7 @@ public class VtnNotasAlumnoCursoCTR {
                 Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
             }
             desktop.getLblEstado().setText("");
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
             vista.getBtnVerNotas().setEnabled(true);
         }).start();
 

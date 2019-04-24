@@ -1,6 +1,6 @@
 package controlador.principal;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
@@ -699,7 +699,7 @@ public class VtnPrincipalCTR {
      * @see errorNumVentanas()
      */
     public void eventoInternal(JInternalFrame internal) {
-        Middlewares.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        Effects.centerFrame(internal, vtnPrin.getDpnlPrincipal());
         setIconJIFrame(internal);
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override

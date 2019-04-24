@@ -1,6 +1,7 @@
 package controlador.accesos;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -55,7 +56,7 @@ public class FrmAccesosDeRolCTR {
 
         tablaPermDados = (DefaultTableModel) vista.getTabPermDados().getModel();
 
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitFuncion();
 
@@ -326,7 +327,7 @@ public class FrmAccesosDeRolCTR {
 
     private void btnGuardar(ActionEvent e) {
         new Thread(() -> {
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
             listaBorrar.stream().forEach(obj -> {
                 modelo.eliminarWhere(rol.getId(), obj.getIdAcceso());
             });
@@ -342,9 +343,9 @@ public class FrmAccesosDeRolCTR {
             vista.dispose();
             JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
 
-            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase(), 2);
+            Effects.setTextInLabel(desktop.getLblEstado(), "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase(), 2);
 
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
 
         }).start();
     }

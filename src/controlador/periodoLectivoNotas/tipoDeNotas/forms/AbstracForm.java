@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
@@ -54,7 +54,7 @@ public abstract class AbstracForm {
     public void Init() {
         new Thread(() -> {
             try {
-                Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+                Effects.centerFrame(vista, desktop.getDpnlPrincipal());
                 desktop.getDpnlPrincipal().add(vista);
                 vista.setSelected(true);
                 vista.show();
