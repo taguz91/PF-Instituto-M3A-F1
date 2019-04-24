@@ -41,13 +41,13 @@ public class ReportesCTR {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/reportesPresencial/ReporteNotasMenor70.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasMenor70_Presencial.jasper";
 
         Map parametros = new HashMap();
 
         parametros.put("id_docente", idDocente);
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_ciclo", new Integer(ciclo));
+        parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
 
         Middlewares.generarReporte(path, "Reporte Menor 70", parametros);
@@ -59,13 +59,13 @@ public class ReportesCTR {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/reportesPresencial/ReporteNotasEntre70y80.jasper";
+        String path = "./src/vista/notas/reportesPresencial/ReporteNotasEntre70y80_Presencial.jasper";
 
         Map parametros = new HashMap();
 
         parametros.put("id_docente", idDocente);
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_ciclo", new Integer(ciclo));
+        parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
 
         Middlewares.generarReporte(path, "Reporte Entre 70 y 80", parametros);
