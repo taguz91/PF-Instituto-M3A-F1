@@ -57,6 +57,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NotaInterciclo}]]></textFieldExpression>
 			</textField>
 		</band>
