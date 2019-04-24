@@ -5,6 +5,9 @@
  */
 package modelo.silabo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -99,6 +102,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
+
     /*public void eliminar() {
 
         try {
@@ -131,6 +135,49 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+//Ya ahora si se guarda en la base
+
+    public static void guardarSilabo(ConexionBD conexion, FileInputStream fis, File f, SilaboMD s) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
+                    + "	SET documento_silabo =?\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setBinaryStream(1, fis, (int) f.length());
+
+            st.setInt(2, s.getIdSilabo());
+            st.execute();
+            System.out.println(st);
+            st.close();
+            fis.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void guardarAnalitico(ConexionBD conexion, FileInputStream fis1, File fl, SilaboMD s) {
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
+                    + "	SET documento_analitico =?\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setBinaryStream(1, fis1, (int) fl.length());
+
+            st.setInt(2, s.getIdSilabo());
+            st.execute();
+            System.out.println(st);
+            st.close();
+            fis1.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public SilaboMD retornaSilabo(int id) {
@@ -237,7 +284,8 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    public static List<SilaboMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona ) {
+
+    public static List<SilaboMD> consultarSilabo2(ConexionBD conexion, String carrera, int id_persona) {
 
         List<SilaboMD> silabos = new ArrayList<>();
         try {
@@ -284,9 +332,7 @@ public class SilaboBD extends SilaboMD {
         return silabos;
     }
 
-
- 
-   public static List<SilaboMD> consultarAnteriores(ConexionBD conexion, Integer[] clave) {
+    public static List<SilaboMD> consultarAnteriores(ConexionBD conexion, Integer[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
         try {
@@ -306,7 +352,6 @@ public class SilaboBD extends SilaboMD {
 
             st.setInt(1, clave[0]);
             st.setInt(2, clave[1]);
-            
 
             System.out.println(st);
             ResultSet rs = st.executeQuery();

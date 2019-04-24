@@ -955,7 +955,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAgregarEstrategia = new javax.swing.JLabel();
         txtNuevaEstrategia = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1366,7 +1365,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         jButton1.setText("Guardar");
         pnlUnidad.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 340, -1, -1));
-        pnlUnidad.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 1210, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1460,7 +1458,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAD;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionP;
     private javax.swing.JButton jButton1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
     private javax.swing.JLabel lblAprendizajeColaborativo;
