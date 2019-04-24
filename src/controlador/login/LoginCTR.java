@@ -1,5 +1,6 @@
 package controlador.login;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
@@ -7,8 +8,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +28,8 @@ import vista.usuario.VtnSelectRol;
  */
 public class LoginCTR {
 
-    public static String USERNAME = "";
-    public static String PASSWORD = "";
-
     private final Login vista; //LO QUE VA A VISUALIZAR
-    private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
+    private UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
     //Icono de la aplicacion
     private final ImageIcon icono;
     private final Image ista;
@@ -41,9 +37,8 @@ public class LoginCTR {
     //validacion
     private boolean carga = true;
 
-    public LoginCTR(Login vista, UsuarioBD modelo) {
+    public LoginCTR(Login vista) {
         this.vista = vista;
-        this.modelo = modelo;
         this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
         this.ista = icono.getImage();
         vista.setIconImage(ista);
@@ -51,9 +46,7 @@ public class LoginCTR {
 
     //Inits
     public void Init() {
-        btnHover();
-        //Ocultamos el boton que ya no se usa
-        //vista.getBtnIngSU().setEnabled(false);
+
         vista.getLblAvisos().setText("");
 
         InitEventos();
@@ -66,23 +59,12 @@ public class LoginCTR {
 
     private void InitEventos() {
         vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
-
-        vista.getTxtPassword().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
+        Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
+        vista.getTxtPassword().addKeyListener(evento());
+        vista.getTxtUsername().addKeyListener(evento());
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
 
-        //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -117,39 +99,36 @@ public class LoginCTR {
             new Thread(() -> {
 
                 Middlewares.setLoadCursorInWindow(vista);
-
-                USERNAME = vista.getTxtUsername().getText();
-                PASSWORD = vista.getTxtPassword().getText();
+                modelo = new UsuarioBD();
+                String USERNAME = vista.getTxtUsername().getText();
+                String PASSWORD = vista.getTxtPassword().getText();
 
                 Map<Object, Object> properties = new HashMap<>();
                 properties.put("username", USERNAME);
                 properties.put("password", PASSWORD);
-
                 Propiedades.generateUserProperties(properties);
 
-                modelo.setUsername(vista.getTxtUsername().getText());
-                modelo.setPassword(vista.getTxtPassword().getText());
+                modelo.setUsername(USERNAME);
+                modelo.setPassword(PASSWORD);
 
                 try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+                    modelo = modelo.selectWhereUsernamePassword();
 
-                    if (!Lista.isEmpty()) {
-
-                        modelo.setPersona(Lista.get(0).getPersona());
+                    if (modelo != null) {
 
                         vista.dispose();
 
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
-
                     } else {
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-
+                    Middlewares.setDefaultCursorInWindow(vista);
                 } catch (NullPointerException e) {
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                    Middlewares.setDefaultCursorInWindow(vista);
                 }
 
             }).start();
@@ -170,9 +149,11 @@ public class LoginCTR {
             String c = new String(pass.getPassword());
             if (c.equals("soyyo")) {
 
-                USERNAME = "ROOT";
-                PASSWORD = "RUTH";
-
+                String USERNAME = "ROOT";
+                String PASSWORD = "RUTH";
+                
+                modelo = new UsuarioBD();
+                
                 modelo.setUsername("ROOT");
                 modelo.setPassword("RUTH");
 
@@ -180,11 +161,9 @@ public class LoginCTR {
                 ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
                 System.out.println("Conexion " + conecta.getConecction());
                 try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+                    modelo = modelo.selectWhereUsernamePassword();
 
-                    if (!Lista.isEmpty()) {
-
-                        modelo.setPersona(Lista.get(0).getPersona());
+                    if (modelo != null) {
 
                         vista.dispose();
 
@@ -237,18 +216,12 @@ public class LoginCTR {
     /**
      * Animacion de hover en el boton
      */
-    private void btnHover() {
-        vista.getBtnIngresar().addMouseListener(new MouseAdapter() {
+    private KeyAdapter evento() {
+        return new KeyAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(139, 195, 74));
+            public void keyReleased(KeyEvent e) {
+                txtOnKeyRelessed(e);
             }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(235, 192, 36));
-            }
-        });
+        };
     }
-
 }

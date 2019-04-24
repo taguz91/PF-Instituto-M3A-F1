@@ -46,8 +46,7 @@ public class VtnUsuarioCTR {
     private static DefaultTableModel tablaUsuarios;
 
     //Threads
-    private Thread thread;
-    private boolean cargaTabla = true;
+    private boolean cargar = true;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos, ConectarDB conexion) {
         this.desktop = desktop;
@@ -129,14 +128,14 @@ public class VtnUsuarioCTR {
      */
     public void cargarTabla(List<UsuarioMD> lista) {
 
-        if (cargaTabla) {
+        if (cargar) {
             new Thread(() -> {
                 try {
                     tablaUsuarios.setRowCount(0);
 
                     vista.getTxtBuscar().setEnabled(false);
 
-                    cargaTabla = false;
+                    cargar = false;
 
                     Middlewares.setLoadCursor(vista);
 
@@ -150,7 +149,7 @@ public class VtnUsuarioCTR {
 
                     sleep(500);
 
-                    cargaTabla = true;
+                    cargar = true;
 
                     Middlewares.setTextInLabel(desktop.getLblEstado(), "CARGA COMPLETA", 2);
 

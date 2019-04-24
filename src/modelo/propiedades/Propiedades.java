@@ -112,13 +112,14 @@ public class Propiedades {
 
     public static void generateUserProperties(Map<Object, Object> properties) {
         Properties file = new Properties();
-
-        properties
-                .entrySet()
-                .stream()
-                .forEach(entry -> {
-                    file.setProperty(entry.getKey().toString(), entry.getValue().toString());
-                });
+        if (properties != null) {
+            properties
+                    .entrySet()
+                    .stream()
+                    .forEach(entry -> {
+                        file.setProperty(entry.getKey().toString(), entry.getValue().toString());
+                    });
+        }
 
         try {
             file.store(new FileWriter("user.properties"), "PROPIEDADES DEL USUARIO");

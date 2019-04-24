@@ -1,9 +1,12 @@
 package modelo.usuario;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.ConnDBPool;
 import modelo.ResourceManager;
 import modelo.persona.PersonaMD;
 
@@ -13,11 +16,29 @@ import modelo.persona.PersonaMD;
  */
 public class UsuarioBD extends UsuarioMD {
 
+    private ConnDBPool pool = null;
+    private Connection conn = null;
+    private PreparedStatement stmt = null;
+    private ResultSet rs = null;
+
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
         super(username, password, estado, idPersona);
+        InitConn();
     }
 
     public UsuarioBD() {
+        InitConn();
+    }
+
+    private void InitConn() {
+        pool = new ConnDBPool();
+        try {
+            conn = pool.getConnection();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
     }
 
     private static final String TABLA = " \"Usuarios\" ";
@@ -55,7 +76,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "    \"Personas\".persona_segundo_nombre,\n"
                 + "    \"Personas\".persona_foto\n"
                 + "   FROM (\"Usuarios\"\n"
-                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
+                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))\n"
                 + "WHERE\n"
                 + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
 
@@ -96,26 +117,57 @@ public class UsuarioBD extends UsuarioMD {
         return lista;
 
     }
-
-    public List<UsuarioMD> SelectWhereUsernamePassword() {
+    public UsuarioBD selectWhereUsernamePassword() {
         String SELECT = "SELECT\n"
-                + "    \"Usuarios\".usu_username,\n"
-                + "    \"Usuarios\".usu_password,\n"
-                + "    \"Usuarios\".usu_estado,\n"
-                + "    \"Usuarios\".id_persona,\n"
-                + "    \"Personas\".persona_identificacion,\n"
-                + "    \"Personas\".persona_primer_apellido,\n"
-                + "    \"Personas\".persona_segundo_apellido,\n"
-                + "    \"Personas\".persona_primer_nombre,\n"
-                + "    \"Personas\".persona_segundo_nombre,\n"
-                + "    \"Personas\".persona_foto\n"
-                + "   FROM (\"Usuarios\"\n"
-                + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
+                + "\"public\".\"Usuarios\".id_persona,\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"Usuarios\"\n"
+                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = '" + getUsername() + "' AND\n"
-                + "\"public\".\"Usuarios\".usu_password = set_byte( MD5( '" + getPassword() + "' ) :: bytea, 4, 64 ) AND\n"
+                + "\"public\".\"Usuarios\".usu_username = ? AND\n"
+                + "\"public\".\"Usuarios\".usu_password = set_byte( MD5( ? ) :: bytea, 4, 64 ) AND\n"
                 + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
-        return selectSimple(SELECT);
+        UsuarioBD usuario = null;
+        try {
+            conn = pool.getConnection();
+
+            stmt = conn.prepareStatement(SELECT);
+
+            stmt.setString(1, getUsername());
+            stmt.setString(2, getPassword());
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                usuario = new UsuarioBD();
+                usuario.setUsername(getUsername());
+
+                PersonaMD persona = new PersonaMD();
+
+                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                usuario.setPersona(persona);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(rs);
+            pool.close(conn);
+            pool.close(stmt);
+        }
+
+        return usuario;
     }
 
     public List<UsuarioMD> SelectAllWhereEstadoIsFalse() {

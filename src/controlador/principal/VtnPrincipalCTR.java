@@ -23,7 +23,6 @@ import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotas;
-import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -36,7 +35,6 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
-import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -913,11 +911,11 @@ public class VtnPrincipalCTR {
         vtn.Init();
     }
 
-    private void btnCerrarSesion(ActionEvent e) {
+    private void btnCerrarSesion(ActionEvent e){
         ctrSelecRol.cierreSesion();
         ResourceManager.cerrarSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+        LoginCTR login = new LoginCTR(new Login());
         login.Init();
     }
 
