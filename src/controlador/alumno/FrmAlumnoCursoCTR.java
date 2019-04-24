@@ -255,16 +255,16 @@ public class FrmAlumnoCursoCTR {
             int r = JOptionPane.showConfirmDialog(vtnPrin, alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
                     + "Sera matricula en estas materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
-//                if (almnCurso.guardarAlmnCurso()) {
-//                    //Reiniciamos todo 
-//                    frmAlmCurso.getTxtBuscar().setText("");
-//                    frmAlmCurso.getCmbCurso().removeAllItems();
-//                    mdAlm.setRowCount(0);
-//                    mdMatPen.setRowCount(0);
-//                    mdMatSelec.setRowCount(0);
-//                    cursosSelec = new ArrayList();
-//                    frmAlmCurso.getBtnReprobadas().setVisible(false);
-//                }
+                if (almnCurso.guardarAlmnCurso()) {
+                    //Reiniciamos todo 
+                    frmAlmCurso.getTxtBuscar().setText("");
+                    frmAlmCurso.getCmbCurso().removeAllItems();
+                    mdAlm.setRowCount(0);
+                    mdMatPen.setRowCount(0);
+                    mdMatSelec.setRowCount(0);
+                    cursosSelec = new ArrayList();
+                    frmAlmCurso.getBtnReprobadas().setVisible(false);
+                }
                 System.out.println("-----------------------------");
                 System.out.println("H O R A R I O");
                 horarioAlmn.forEach(h -> {
