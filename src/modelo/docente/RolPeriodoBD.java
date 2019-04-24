@@ -32,8 +32,7 @@ public class RolPeriodoBD extends RolPeriodoMD {
     public boolean InsertarRol() {
         String nsql = "Insert into public.\"RolesPeriodo\"(\n"
                 + "id_prd_lectivo,rol_prd)\n"
-                + "Values (" + getPeriodo().getId_PerioLectivo() + ", '"
-                + getNombre_rol() + "');";
+                + "Values (" + getPeriodo().getId_PerioLectivo() + ", '" + getNombre_rol() + "');";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {

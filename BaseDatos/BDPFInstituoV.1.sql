@@ -175,17 +175,11 @@ CREATE TABLE "AlumnoCurso"(
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
   "almn_curso_fecha_registro" DATE default now();
-  "almn_curso_nt_1_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_interciclo" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_2_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_final" numeric(6, 2) DEFAULT '0' ,
-  "almn_curso_nt_examen_supletorio" numeric(6, 2) DEFAULT '0',
   "almn_curso_asistencia" character varying(30) DEFAULT 'Asiste',
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
 	"almn_curso_activo" boolean DEFAULT 'true',
-  "almn_curso_fecha_registro" DATE default now(),
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 
@@ -306,7 +300,7 @@ CREATE TABLE "AlumnoCursoRetirados"(
 
 ALTER TABLE "AlumnoCursoRetirados" ADD CONSTRAINT "retirado_fk1"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
-ON UPDATE CASCADE ON DELETE CASCADE;  
+ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 /*

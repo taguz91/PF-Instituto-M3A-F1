@@ -132,6 +132,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         return jScrollPane4;
     }
 
+    public JTextField getTxt_buscarPCL() {
+        return txt_buscarPCL;
+    }
+
+    public void setTxt_buscarPCL(JTextField txt_buscarPCL) {
+        this.txt_buscarPCL = txt_buscarPCL;
+    }
+    
     public void setjScrollPane4(JScrollPane jScrollPane4) {
         this.jScrollPane4 = jScrollPane4;
     }
@@ -176,6 +184,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         this.jSeparator1 = jSeparator1;
     }
 
+    public JList<String> getJlisRecursos() {
+        return jlisRecursos;
+    }
+
+    public void setJlisRecursos(JList<String> jlisRecursos) {
+        this.jlisRecursos = jlisRecursos;
+    }
+
     public JList<String> getJlistInstrumentoEvaluacion() {
         return jlistInstrumentoEvaluacion;
     }
@@ -184,13 +200,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         this.jlistInstrumentoEvaluacion = jlistInstrumentoEvaluacion;
     }
 
-    public JList<String> getJlistRecursos() {
-        return jlistRecursos;
-    }
 
-    public void setJlistRecursos(JList<String> jlistRecursos) {
-        this.jlistRecursos = jlistRecursos;
-    }
 
     public JLabel getLbAsignatura() {
         return lbAsignatura;
@@ -520,10 +530,10 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         lbObjetivoPC = new javax.swing.JLabel();
         lbContenidosPC = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jlistRecursos = new javax.swing.JList<>();
+        jlistInstrumentoEvaluacion = new javax.swing.JList<>();
         lbEstrategiasPC = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlistInstrumentoEvaluacion = new javax.swing.JList<>();
+        jlisRecursos = new javax.swing.JList<>();
         lbRecursosPC = new javax.swing.JLabel();
         lbIns_Evaluacion = new javax.swing.JLabel();
         jDateChooserFechaFinPC = new com.toedter.calendar.JDateChooser();
@@ -554,7 +564,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        txt_buscarPCL = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -582,7 +592,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         lbCarrera.setText("Carrera:");
 
         lbNumeroPlandeClase.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lbNumeroPlandeClase.setText("N°");
+        lbNumeroPlandeClase.setText("Unidad N°");
 
         lbAsignatura.setText("Asignatura:");
 
@@ -630,21 +640,21 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbContenidosPC.setText("Contenidos:");
 
-        jlistRecursos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jlistRecursos);
-
-        lbEstrategiasPC.setText("Estrategias:");
-
         jlistInstrumentoEvaluacion.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jlistInstrumentoEvaluacion);
+        jScrollPane3.setViewportView(jlistInstrumentoEvaluacion);
+
+        lbEstrategiasPC.setText("Estrategias:");
+
+        jlisRecursos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jlisRecursos);
 
         lbRecursosPC.setText("Recursos:");
 
@@ -670,7 +680,12 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         btmnGuardarPc.setText("Guardar");
 
-        btnCancelarPC.setText("Cancelar");
+        btnCancelarPC.setText("Atrás");
+        btnCancelarPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarPCActionPerformed(evt);
+            }
+        });
 
         txrObservacionesPc.setColumns(20);
         txrObservacionesPc.setLineWrap(true);
@@ -708,8 +723,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         btnQuitarPC.setText("Quitar");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jTextField1.setText("jTextField1");
 
         jLabel1.setText("Buscar:");
 
@@ -797,7 +810,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1))
+                                        .addComponent(txt_buscarPCL))
                                     .addComponent(lbIns_Evaluacion))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -812,7 +825,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane7)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancelarPC)
+                        .addComponent(btnCancelarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btmnGuardarPc)))
                 .addContainerGap())
@@ -820,17 +833,17 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lbPlandeClase)
                 .addGap(18, 18, 18)
-                .addComponent(lbNumeroPlandeClase, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(468, 468, 468))
+                .addComponent(lbNumeroPlandeClase, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(504, 504, 504))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPlandeClase)
                     .addComponent(lbNumeroPlandeClase))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCod_Asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -907,7 +920,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                     .addComponent(lbRecursosPC)
                                     .addGap(3, 3, 3)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_buscarPCL, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -954,6 +967,10 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCarreraActionPerformed
+
+    private void btnCancelarPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarPCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1011,9 +1028,8 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> jlisRecursos;
     private javax.swing.JList<String> jlistInstrumentoEvaluacion;
-    private javax.swing.JList<String> jlistRecursos;
     private javax.swing.JLabel lbAsignatura;
     private javax.swing.JLabel lbCarrera;
     private javax.swing.JLabel lbCicloparalelo;
@@ -1051,5 +1067,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtTituloUnidad;
     private javax.swing.JTextField txtUnidad;
+    private javax.swing.JTextField txt_buscarPCL;
     // End of variables declaration//GEN-END:variables
 }

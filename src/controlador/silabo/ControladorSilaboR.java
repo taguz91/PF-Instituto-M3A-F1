@@ -3,28 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controlador.silabo;
-
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
+import modelo.silabo.SilaboBD;
 
 import modelo.silabo.SilaboMD;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmSilabos;
 
 /**
- * 
+ *
  * @author Andres Ullauri
  */
 public class ControladorSilaboR {
@@ -32,68 +39,64 @@ public class ControladorSilaboR {
     private SilaboMD silabo;
 
     private ConexionBD conexion;
-    
+
     private frmSilabos crud;
-    
+
     private VtnPrincipal principal;
 
-    public ControladorSilaboR( frmSilabos crud, SilaboMD silabo, ConexionBD conexion, VtnPrincipal principal  ) {
+    public ControladorSilaboR(frmSilabos crud, SilaboMD silabo, ConexionBD conexion, VtnPrincipal principal) {
         this.silabo = silabo;
         this.conexion = conexion;
         this.crud = crud;
-        this.principal=principal;
+        this.principal = principal;
     }
-
-   
 
     public ControladorSilaboR() {
     }
 
-    public void iniciarControlador(){
-        
-       crud.getBtnGenerar().addActionListener(new ActionListener(){
-           @Override
-           public void actionPerformed(ActionEvent ae) {
-               
-               if (crud.getChbSilabo().isSelected()){
-                   imprimirSilabo();
-                   
-               }else if (crud.getChbProgramaAnalitico().isSelected()){
-                   imprimirProgramaAnalitico();
-                   
-               }else{
-                   JOptionPane.showMessageDialog(null, "Debe seleccionar el documento antes de imprimir");
-               }
-               
-             
-              crud.dispose();
-              
-              principal.getBtnConsultarSilabo().doClick();
-       
-           }
-           
-       });
-       
-       
-       crud.getChbProgramaAnalitico().addActionListener(new ActionListener(){
-           @Override
-           public void actionPerformed(ActionEvent ae) {
-               
-               crud.getChbSilabo().setSelected(false);
-           }
-           
-       });
-       
-       crud.getChbSilabo().addActionListener(new ActionListener(){
-           @Override
-           public void actionPerformed(ActionEvent ae) {
-               crud.getChbProgramaAnalitico().setSelected(false);
-           }
-           
-       });
+    public void iniciarControlador() {
+
+        crud.getBtnGenerar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                if (crud.getChbSilabo().isSelected()) {
+                imprimirSilabo();
+
+                } else if (crud.getChbProgramaAnalitico().isSelected()) {
+                    imprimirProgramaAnalitico();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar el documento antes de imprimir");
+                }
+
+                crud.dispose();
+
+                principal.getBtnConsultarSilabo().doClick();
+
+            }
+
+        });
+
+        crud.getChbProgramaAnalitico().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                crud.getChbSilabo().setSelected(false);
+            }
+
+        });
+
+        crud.getChbSilabo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                crud.getChbProgramaAnalitico().setSelected(false);
+            }
+
+        });
     }
-    
-    public void imprimirSilabo(){
+
+    public void imprimirSilabo() {
         try {
 
             System.out.println("Imprimiendo.......");
@@ -108,16 +111,23 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Sílabo");
 
+            //EXPORTACION A PDF
+            File f =new File(("../PF-Instituto-M3A-F1/"+"SA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
+            OutputStream output = new FileOutputStream(f);
+            JasperExportManager.exportReportToPdfStream(jp, output);
+            //byte[] d=JasperExportManager.exportReportToPdf(jp);
+            FileInputStream fis = new FileInputStream(f);
+            SilaboBD.guardarSilabo(conexion,fis, f, silabo);
+            System.out.println("Se guardo pdf");
+
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(null, "error" + e);
         }
-        
-        
+
     }
-    
-    
-    public void imprimirProgramaAnalitico(){
+
+    public void imprimirProgramaAnalitico() {
         try {
 
             System.out.println("Imprimiendo.......");
@@ -132,6 +142,14 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Programa Analítico");
             
+            //EXPORTACION A PDF
+            File fl =new File(("../PF-Instituto-M3A-F1/"+"PA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
+            OutputStream output = new FileOutputStream(fl);
+            JasperExportManager.exportReportToPdfStream(jp, output);
+            //byte[] d=JasperExportManager.exportReportToPdf(jp);
+            FileInputStream fis1 = new FileInputStream(fl);
+            SilaboBD.guardarAnalitico(conexion,fis1, fl, silabo);
+            System.out.println("Se guardo pdf");
 
         } catch (Exception e) {
 
