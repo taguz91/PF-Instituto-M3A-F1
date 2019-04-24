@@ -47,8 +47,8 @@ public class VtnNotas {
     private UsuarioBD usuario;
 
     //LISTAS
-    private Map<String, DocenteMD> listaDocentes;
-    private List<PeriodoLectivoMD> listaPeriodos;
+    private static Map<String, DocenteMD> listaDocentes;
+    private static List<PeriodoLectivoMD> listaPeriodos;
     private static List<AlumnoCursoBD> listaNotas;
     private static List<MateriaMD> listaMaterias;
     private static List<TipoDeNotaMD> listaValidaciones;
@@ -57,9 +57,9 @@ public class VtnNotas {
     private static DefaultTableModel tablaNotas;
 
     //VARIABLES DE BUSQUEDA
-    protected int idDocente = -1;
-    protected int idPeriodoLectivo = -1;
-    protected int idCurso = -1;
+    protected static int idDocente = -1;
+    protected static int idPeriodoLectivo = -1;
+    protected static int idCurso = -1;
 
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
@@ -85,6 +85,7 @@ public class VtnNotas {
             activarForm(false);
             cargarComboDocente();
             cargarComboPeriodos();
+            setLblCarrera();
             cargarComboCiclo();
             cargarComboMaterias();
             InitEventos();
@@ -97,11 +98,13 @@ public class VtnNotas {
 
     private void InitEventos() {
 
-        vista.getCmbDocente().addActionListener(e -> cargarComboPeriodos());
-
+        vista.getCmbDocente().addActionListener(e -> {
+            cargarComboPeriodos();
+        });
         vista.getCmbPeriodoLectivo().addActionListener(e -> {
             cargarComboCiclo();
         });
+        vista.getCmbPeriodoLectivo().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCiclo().addActionListener(e -> {
             cargarComboMaterias();
@@ -197,6 +200,25 @@ public class VtnNotas {
                     }
 
                     refreshTabla();
+                    break;
+                case 16:
+                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRow(), 16).toString();
+
+                    List<String> palabrasValidas = new ArrayList();
+
+                    palabrasValidas.add("RETIRADO");
+                    palabrasValidas.add("R");
+                    palabrasValidas.add("ASISTE");
+                    palabrasValidas.add("A");
+                    palabrasValidas.add("DESERTOR");
+                    palabrasValidas.add("D");
+                    palabrasValidas.add("NO ASISTE");
+                    palabrasValidas.add("N");
+
+                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+                        editar();
+                    }
+
                     break;
                 default:
                     break;
@@ -344,6 +366,9 @@ public class VtnNotas {
                     vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
                 });
 
+    }
+
+    private static void setLblCarrera() {
         listaPeriodos
                 .stream()
                 .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
@@ -351,7 +376,6 @@ public class VtnNotas {
                 .forEach(obj -> {
                     vista.getLblCarrera().setText(obj.getCarrera().getNombre());
                 });
-
     }
 
     private void cargarComboCiclo() {
@@ -386,6 +410,7 @@ public class VtnNotas {
             listaMaterias.stream()
                     .forEach(obj -> {
                         vista.getCmbAsignatura().addItem(obj.getNombre());
+                        vista.getLblHoras().setText("" + obj.getHorasPresenciales());
                     });
 
             listaValidaciones = TipoDeNotaBD.selectValidaciones(getIdPeriodoLectivo());
@@ -482,7 +507,7 @@ public class VtnNotas {
         };
     }
 
-    private int getIdDocente() {
+    private static int getIdDocente() {
         listaDocentes
                 .entrySet()
                 .stream()
@@ -496,16 +521,20 @@ public class VtnNotas {
 
     }
 
-    private int getIdPeriodoLectivo() {
-        String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+    private static int getIdPeriodoLectivo() {
+        try {
+            String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 
-        listaPeriodos
-                .stream()
-                .filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                .collect(Collectors.toList())
-                .forEach(obj -> {
-                    idPeriodoLectivo = obj.getId_PerioLectivo();
-                });
+            listaPeriodos
+                    .stream()
+                    .filter(item -> item.getNombre_PerLectivo().equals(periodo))
+                    .collect(Collectors.toList())
+                    .forEach(obj -> {
+                        idPeriodoLectivo = obj.getId_PerioLectivo();
+                    });
+
+        } catch (NullPointerException e) {
+        }
         return idPeriodoLectivo;
     }
 
