@@ -57,6 +57,7 @@ WHERE
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Supletorio}]]></textFieldExpression>
 			</textField>
 		</band>

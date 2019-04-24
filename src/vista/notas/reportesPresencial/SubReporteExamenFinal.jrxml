@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="100" pageHeight="842" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="49706ad2-d842-4c32-b7e1-3136cf6c30de">
-	<property name="ireport.zoom" value="88.19748525897501"/>
-	<property name="ireport.x" value="8496"/>
-	<property name="ireport.y" value="2369"/>
+	<property name="ireport.zoom" value="6.115909044841473"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2"/>
 	<parameter name="id_alumno" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -60,6 +60,7 @@ WHERE
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ExamenFinal}]]></textFieldExpression>
 			</textField>
 		</band>
