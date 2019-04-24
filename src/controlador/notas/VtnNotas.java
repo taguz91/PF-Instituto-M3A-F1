@@ -656,55 +656,41 @@ public class VtnNotas {
             double notaSupletorio = (Double) row.get(11);
 
             if (notaSupletorio != 0) {
-
-                if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
-
-                    TipoDeNotaMD rango = getRango("EXAMEN SUPLETORIO");
-
-                    if (notaSupletorio >= rango.getValorMinimo()) {
-
-                        if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo()) {
-                            row.add(13, "REPROBADO");
-                        } else {
-                            row.add(13, "APROBADO");
-                        }
-
-                    } else {
-                        row.add(13, "REPROBADO");
-                    }
-
-                } else {
-                    row.add(13, "RETIRADO");
-                }
+                validarAprobado(alumno, notaSupletorio, porcentaje, row);
             } else {
 
                 double examenFinal = (double) row.get(10);
 
-                if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
-
-                    TipoDeNotaMD rango = getRango("EXAMEN FINAL");
-
-                    if (examenFinal >= rango.getValorMinimo()) {
-
-                        if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo()) {
-                            row.add(13, "REPROBADO");
-                        } else {
-                            row.add(13, "APROBADO");
-                        }
-
-                    } else {
-                        row.add(13, "REPROBADO");
-                    }
-
-                } else {
-                    row.add(13, "RETIRADO");
-                }
+                validarAprobado(alumno, examenFinal, porcentaje, row);
             }
 
             row.add(14, faltas);
 
             row.add(15, porcentaje);
         };
+    }
+
+    private static void validarAprobado(AlumnoCursoBD alumno, double notaValidar, int porcentaje, List<Object> row) {
+        if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
+            int notaFinal = (Integer) row.get(12);
+
+            TipoDeNotaMD rango = getRango("EXAMEN SUPLETORIO");
+
+            if (notaValidar >= rango.getValorMinimo()) {
+
+                if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo() || notaFinal < getRango("NOTA FINAL").getValorMinimo()) {
+                    row.add(13, "REPROBADO");
+                } else {
+                    row.add(13, "APROBADO");
+                }
+
+            } else {
+                row.add(13, "REPROBADO");
+            }
+
+        } else {
+            row.add(13, "RETIRADO");
+        }
     }
 
     // </editor-fold>  
