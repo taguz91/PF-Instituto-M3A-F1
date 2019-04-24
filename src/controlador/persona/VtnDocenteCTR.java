@@ -499,7 +499,6 @@ public class VtnDocenteCTR {
             System.out.println("Posicion: ");
             if (np == null) {
                 JOptionPane.showMessageDialog(null, "Seleccione un periodo");
-                asignarRolDocente();
             } else {
 
                 System.out.println("Este es el periodo: " + np.toString());
