@@ -51,7 +51,7 @@ WHERE
 	<summary>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="110" height="20" uuid="d3b246fe-e8a8-407d-b2f7-65ef5f73a4d6"/>
+				<reportElement mode="Opaque" x="0" y="0" width="110" height="20" backcolor="#99FF99" uuid="d3b246fe-e8a8-407d-b2f7-65ef5f73a4d6"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
