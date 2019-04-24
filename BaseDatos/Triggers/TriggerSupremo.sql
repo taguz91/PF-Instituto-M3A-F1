@@ -264,3 +264,6 @@ SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
 UPDATE public."PeriodoLectivo"
   SET  prd_lectivo_estado=false
   WHERE id_prd_lectivo = 2;
+
+  --Desarrollo fue 1074 alactualizar
+  --Sistemas fue 1271 al cerrar
