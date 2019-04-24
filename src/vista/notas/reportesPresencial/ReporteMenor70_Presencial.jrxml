@@ -1,8 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de92be63-ec0b-4785-9199-21f77bc387e9">
-	<property name="ireport.zoom" value="0.8264462809917362"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="220"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="materia_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "Apellidos_al",
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "Nombres_al",
+	"AlumnoCurso".almn_curso_nota_final,
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
+	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
+  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
+	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
+	
+
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
+	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
+	
+WHERE
+	"PeriodoLectivo".prd_lectivo_estado = true 
+	AND "Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "Cursos".curso_nombre= $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}
+	AND "AlumnoCurso".almn_curso_nota_final < 70
+
+	GROUP BY "Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido,
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre,
+	"AlumnoCurso".almn_curso_nota_final,
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
+  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
+	"AlumnoCurso".almn_curso_estado
+	
+	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido  ]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="Apellidos_al" class="java.lang.String"/>
+	<field name="Nombres_al" class="java.lang.String"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="PROFESOR" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.String"/>
+	<field name="COORDINADOR" class="java.lang.String"/>
+	<field name="N° Matricula" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -64,6 +150,26 @@
 			<line>
 				<reportElement x="0" y="210" width="1520" height="1" uuid="9c1b4698-9ddb-4317-a211-643826a19d6c"/>
 			</line>
+			<textField>
+				<reportElement x="1142" y="124" width="100" height="20" uuid="611749a7-5f1e-4207-b400-1db73b543e9a"/>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="148" width="100" height="20" uuid="b37aedca-d6bf-4a08-be60-c952abf1321d"/>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="113" width="267" height="20" uuid="72733486-3dde-417e-9e0f-21c2d6849a33"/>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="81" width="189" height="20" uuid="aceaef37-6990-457f-b524-d9ceca051172"/>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1142" y="92" width="100" height="20" uuid="0500f547-e13e-4ac3-afc4-4a465cb754e7"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -163,7 +269,36 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="388" y="0" width="44" height="20" uuid="09d67b2c-bcdc-4638-ba98-5e77073fc4e0"/>
+				<textFieldExpression><![CDATA[$F{id_alumno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="0" width="100" height="20" uuid="765831d9-d633-430a-9bd3-b3635cdf8318"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="532" y="0" width="156" height="20" uuid="8c005dc5-90b7-4e8f-8af3-dc7676b7b5f6"/>
+				<textFieldExpression><![CDATA[$F{Apellidos_al}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="0" width="137" height="20" uuid="8f622c46-51f9-4654-9842-ae854dca34a5"/>
+				<textFieldExpression><![CDATA[$F{Nombres_al}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="825" y="0" width="67" height="20" uuid="0e2697dc-8190-45a6-8e71-3955dd779f67"/>
+				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="892" y="0" width="79" height="20" uuid="c5050c7b-c25d-427c-b1b0-9e2aa3ddf263"/>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="971" y="0" width="77" height="20" uuid="288a91e2-2822-412c-8fd7-dacdbaac43ec"/>
+				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
@@ -196,6 +331,14 @@
 			<line>
 				<reportElement x="882" y="11" width="234" height="1" uuid="c9c3611b-9ee7-4ce3-ad55-50b1cd61a193"/>
 			</line>
+			<textField>
+				<reportElement x="882" y="22" width="234" height="20" uuid="fe1fdd43-a73b-4133-a0dc-ca30034c86c6"/>
+				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="22" width="232" height="20" uuid="efddd8eb-7334-41bb-900c-0f86d115a69c"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
