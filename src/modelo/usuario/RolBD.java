@@ -21,31 +21,29 @@ public class RolBD extends RolMD {
     public RolBD() {
     }
 
-    private static String TABLA = " \"Roles\" ";
     private static String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
-    private static String PRIMARY_KEY = " id_rol ";
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA + "(rol_nombre,rol_observaciones) VALUES('" + getNombre() + "', '" + getObservaciones() + "')";
+        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES('" + getNombre() + "', '" + getObservaciones() + "')";
 
         return ResourceManager.Statement(INSERT) == null;
     }
 
     public static List<RolMD> SelectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre != 'ROOT'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
         return SelectSimple(SELECT);
     }
 
     public static List<RolMD> SelectWhereNombreLike(String Aguja) {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre LIKE '%" + Aguja + "%'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
     public static List<RolMD> SelectWhereUSUARIOusername(String username) {
-        String SELECT = "SELECT  " + ATRIBUTOS + " FROM " + TABLA + " JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
+        String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 
@@ -76,12 +74,12 @@ public class RolBD extends RolMD {
 
     public boolean editar(int Pk) {
 
-        String UPDATE = "UPDATE " + TABLA
+        String UPDATE = "UPDATE \"Roles\" "
                 + " SET "
                 + " id_rol = " + getId()
                 + ",rol_nombre = '" + getNombre() + "'"
                 + " WHERE"
-                + "	" + PRIMARY_KEY + " = '" + Pk + "'";
+                + " id_rol = '" + Pk + "'";
 
         return ResourceManager.Statement(UPDATE) == null;
 
@@ -89,11 +87,11 @@ public class RolBD extends RolMD {
 
     public boolean eliminar(int Pk) {
 
-        String DELETE = "UPDATE " + TABLA
+        String DELETE = "UPDATE \"Roles\" "
                 + " SET "
                 + " rol_estado = " + false
                 + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
+                + " id_rol = " + Pk
                 + "";
 
         return ResourceManager.Statement(DELETE) == null;
@@ -102,11 +100,11 @@ public class RolBD extends RolMD {
 
     public boolean reactivar(int Pk) {
 
-        String REACTIVAR = "UPDATE " + TABLA
+        String REACTIVAR = "UPDATE \"Roles\" "
                 + " SET "
                 + " rol_estado = " + false
                 + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
+                + " id_rol = " + Pk
                 + "";
 
         return ResourceManager.Statement(REACTIVAR) == null;
