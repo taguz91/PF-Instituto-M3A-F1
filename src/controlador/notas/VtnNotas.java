@@ -255,7 +255,6 @@ public class VtnNotas {
                     errorDeNota(rango);
                     refreshTabla();
                 }
-
             } else {
                 if (value >= 0 && value <= rango.getValorMaximo()) {
 
@@ -649,35 +648,57 @@ public class VtnNotas {
 
             int horaPresenciales = obj.getHorasPresenciales();
             int porcentaje = 0;
+
             if (horaPresenciales != 0) {
                 porcentaje = (faltas * 100) / horaPresenciales;
             }
 
-            List<TipoDeNotaMD> listaTemporal = listaValidaciones
-                    .stream()
-                    .filter(item -> item.getNombre().equals("NOTA FINAL"))
-                    .collect(Collectors.toList());
-            TipoDeNotaMD valid = listaTemporal.get(0);
+            double notaSupletorio = (Double) row.get(11);
 
-            if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
+            if (notaSupletorio != 0) {
 
-                TipoDeNotaMD rango = getRango("EXAMEN FINAL");
+                if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
 
-                double examenFinal = (Double) row.get(10);
+                    TipoDeNotaMD rango = getRango("EXAMEN SUPLETORIO");
 
-                if (examenFinal >= rango.getValorMinimo()) {
-                    if (porcentaje >= 25 || alumno.getNotaFinal() < valid.getValorMinimo()) {
-                        row.add(13, "REPROBADO");
+                    if (notaSupletorio >= rango.getValorMinimo()) {
+
+                        if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo()) {
+                            row.add(13, "REPROBADO");
+                        } else {
+                            row.add(13, "APROBADO");
+                        }
+
                     } else {
-                        row.add(13, "APROBADO");
+                        row.add(13, "REPROBADO");
                     }
 
                 } else {
-                    row.add(13, "REPROBADO");
+                    row.add(13, "RETIRADO");
                 }
-
             } else {
-                row.add(13, "RETIRADO");
+
+                double examenFinal = (double) row.get(10);
+
+                if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
+
+                    TipoDeNotaMD rango = getRango("EXAMEN FINAL");
+
+                    if (examenFinal >= rango.getValorMinimo()) {
+
+                        if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo()) {
+                            row.add(13, "REPROBADO");
+                        } else {
+                            row.add(13, "APROBADO");
+                        }
+
+                    } else {
+                        row.add(13, "REPROBADO");
+                    }
+
+                } else {
+                    row.add(13, "RETIRADO");
+                }
             }
 
             row.add(14, faltas);
