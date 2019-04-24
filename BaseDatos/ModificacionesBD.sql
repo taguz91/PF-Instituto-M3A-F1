@@ -384,4 +384,6 @@ ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
         ON DELETE CASCADE ON UPDATE CASCADE;
 
 
---UPDATES 22/Abril/2019
+--UPDATES 24/Abril/2019
+ALTER TABLE "public"."Carreras" 
+  ADD COLUMN "carrera_emanas" smallint DEFAULT 0;
