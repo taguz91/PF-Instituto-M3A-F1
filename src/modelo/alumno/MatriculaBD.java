@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.alumno;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
@@ -32,12 +26,15 @@ public class MatriculaBD extends MatriculaMD {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
                 + "	id_alumno, id_prd_lectivo)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ");";
-        if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
-                    + "compruebe su conexion a internet.");
-        }
+        
+        System.out.println("SE matricula: ");
+        System.out.println(nsql);
+//        if (conecta.nosql(nsql) == null) {
+//            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
+//        } else {
+//            JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
+//                    + "compruebe su conexion a internet.");
+//        }
     }
 
     public ArrayList<MatriculaMD> cargarMatriculas() {
@@ -63,6 +60,36 @@ public class MatriculaBD extends MatriculaMD {
                 + "	p.id_persona = a.id_persona AND \n"
                 + "     m.id_prd_lectivo = " + idPrd + "; ";
         return consultarParaTbl(sql);
+    }
+    
+    /**
+     * Buscamos si el alumno ya fue matriculado
+     * @param idAlm
+     * @param idPrd
+     * @return 
+     */
+    public MatriculaMD buscarMatriculaAlmnPrd(int idAlm, int idPrd){
+        MatriculaMD m = null; 
+        sql = "SELECT id_matricula, id_alumno, id_prd_lectivo, matricula_fecha, "
+                + "\n"
+                + "FROM public.\"Matricula\" m, public.\"A\" \n "
+                + "WHERE id_prd_lectivo = "+idPrd+" AND id_alumno = "+idAlm+";"; 
+        ResultSet rs = conecta.sql(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    m = new MatriculaMD();
+                    m.setId(rs.getInt("id_matricula"));
+                    m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
+                }
+                return m;
+            } catch (SQLException e) {
+                System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     /**
