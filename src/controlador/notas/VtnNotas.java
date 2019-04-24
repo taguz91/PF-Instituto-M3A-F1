@@ -687,7 +687,6 @@ public class VtnNotas {
             } else {
                 row.add(13, "REPROBADO");
             }
-
         } else {
             row.add(13, "RETIRADO");
         }

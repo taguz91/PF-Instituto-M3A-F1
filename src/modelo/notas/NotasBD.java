@@ -46,7 +46,7 @@ public class NotasBD extends NotasMD {
         ResultSet rs = ResourceManager.Query(SELECT);
 
         System.out.println(SELECT);
-        
+
         try {
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
@@ -82,23 +82,41 @@ public class NotasBD extends NotasMD {
                     + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
                     + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
                     + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
-                    + "\"public\".\"Carreras\".carrera_modalidad"
+                    + "\"public\".\"Carreras\".carrera_modalidad,\n"
+                    + "\"public\".\"Cursos\".id_curso,\n"
+                    + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                    + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
+                    + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
+                    + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
+                    + "\"public\".\"Carreras\".carrera_modalidad\n"
+                    + "FROM\n"
+                    + "\"public\".\"Cursos\"\n"
+                    + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                    + "INNER JOIN \"public\".\"AlumnoCurso\" ON \"public\".\"AlumnoCurso\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                    + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
                     + "WHERE\n"
                     + "\"AlumnoCurso\".id_almn_curso = " + alumnnoCurso.getId() + " AND\n"
                     + "\"TipoDeNota\".tipo_nota_nombre <> 'NOTA FINAL'";
             ResultSet info = ResourceManager.Query(SELECT_COMPROBACION);
 
+            System.out.println(SELECT_COMPROBACION);
+
             try {
 
                 while (info.next()) {
                     String modalidad = info.getString("carrera_modalidad");
+
                     if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
-                        int id_curso = info.getInt("id_curso");
-                        int id_tipo_nota = info.getInt("id_curso");
+
+                        int id_tipo_nota = info.getInt("id_tipo_nota");
+
                         String INSERT_NOTAS = "INSERT INTO \"Notas\" "
-                                + " ( id_tipo_nota, id_almn_curso, id_curso )\n"
+                                + " ( id_tipo_nota, id_almn_curso )\n"
                                 + "VALUES\n"
-                                + "	(" + id_tipo_nota + "," + alumnnoCurso.getId() + "," + id_curso + ");";
+                                + "	(" + id_tipo_nota + "," + alumnnoCurso.getId() + ");";
+
+                        System.out.println(INSERT_NOTAS);
 
                         ResourceManager.Statements(INSERT_NOTAS);
                     }
