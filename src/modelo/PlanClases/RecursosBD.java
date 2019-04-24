@@ -37,7 +37,7 @@ public class RecursosBD extends RecursosMD {
         
          try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' ");
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' order by nombre_recursos ");
 
             ResultSet rs = st.executeQuery();
 
