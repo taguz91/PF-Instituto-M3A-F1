@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="810e11a8-93c3-420d-842a-97855e72b22c">
+	<property name="ireport.zoom" value="0.5644739300537774"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="224" splitType="Stretch">
+			<staticText>
+				<reportElement x="1046" y="92" width="56" height="20" uuid="2cb11d89-46ca-4631-8e37-824506e3d308"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="1520" height="45" forecolor="#006699" uuid="7db12be9-1582-4b86-b6e2-bbe21f8164a8"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1046" y="124" width="72" height="20" uuid="d8c197f1-ea75-4b20-b986-10433079862d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="113" width="54" height="20" uuid="9dd113e1-b9d3-4af6-9639-f12b49c40c0c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="597" y="61" width="293" height="20" uuid="543679bd-6094-44b2-8457-7915dc56b647"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 90 Y 100]]></text>
+			</staticText>
+			<image>
+				<reportElement x="41" y="69" width="147" height="124" uuid="b7a34070-8d1c-466c-9c89-110587f614dd"/>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="203" y="81" width="97" height="20" uuid="b67e34d2-a9cd-465e-a4f9-093234260870"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="208" width="1520" height="1" uuid="73c8314d-ff90-4b09-b8cc-008bac8ca8d6"/>
+			</line>
+			<staticText>
+				<reportElement x="203" y="148" width="41" height="20" uuid="b156bc17-84df-46ce-89d4-0d7ff9908290"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="90" splitType="Stretch">
+			<line>
+				<reportElement x="880" y="26" width="234" height="1" uuid="c172e20b-ea6d-4dc3-9d14-ea339b1e88c2"/>
+			</line>
+			<staticText>
+				<reportElement x="430" y="57" width="100" height="20" uuid="e1fc0c14-3527-41db-a5e3-be1ba6bfc822"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="946" y="57" width="100" height="20" uuid="23f028c4-ade7-4214-9929-9c1dce8f704c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[COORDINADOR]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="1318" y="17" width="166" height="20" uuid="74aa6e49-3416-48f6-8828-0388ee1aaccb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="363" y="25" width="234" height="1" uuid="c39c2c7b-2dcd-4cf5-bbe3-049c5e8d8c95"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
