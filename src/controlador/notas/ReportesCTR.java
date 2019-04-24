@@ -84,7 +84,7 @@ public class ReportesCTR {
 
         parametros.put("id_docente", idDocente);
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_ciclo", new Integer(ciclo));
+        parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
 
         Middlewares.generarReporte(path, "Reporte Entre 80 y 90", parametros);
