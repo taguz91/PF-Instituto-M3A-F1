@@ -80,19 +80,32 @@ public class ControladorCRUD {
 
         // Boton EDITAR Silabo
         crud.getBtnEditar().addActionListener((ActionEvent ae) -> {
-
+         int row =crud.getTblSilabos().getSelectedRow();
+            if (row!=-1) {
+                
             crud.dispose();
 
             ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(), principal, conexion);
 
             csu.iniciarControlador();
+            
+            }else{
+             JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
-
+        int row =crud.getTblSilabos().getSelectedRow();
+            if (row!=-1) {
+                
+            
             eliminarSilabo();
             cargarSilabosDocente();
+            
+            }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
 
         });
 
@@ -110,7 +123,7 @@ public class ControladorCRUD {
 
             csr.iniciarControlador();
             } else {
-                JOptionPane.showMessageDialog(principal, "Seleccione un silabo");
+                JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
 
         });

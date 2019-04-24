@@ -6,6 +6,7 @@
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
+import static controlador.silabo.ControladorSilaboCRUD.x;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -1629,28 +1630,7 @@ public class ControladorSilaboC {
 
     }
 
-//    public void exportarPDF(String path) {
-//       // path="C:\\Users\\Daniel\\Desktop\\API JAVA 8";
-//        Map<String, Object> parameters = new HashMap<String, Object>();// Creamos mapa de parametros de ayuda
-//        parameters.put("algunParametro", x);
-//        parameters.put("tipo", y);
-//         conexion.conectar();// creamos la conexion a la base de datos
-//        jasperReport = (JasperReport) JRLoader.loadObjectFromFile(rutaArchivo);//Cargamos al jasper    
-//
-//        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conexion);// llenamos el reporte, indicando la conexion a base de datos
-//
-//        JRPdfExporter pdfExporter = new JRPdfExporter(); //Creamos el exporter a PDF
-//        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);//EDIT 
-//        exporter.exportReport();
-//        return baos.toByteArray(); //y obtenemos los valiosos bytes generados ;)
-//        
-//        try {
-//            JasperExportManager.exportReportToPdfFile(jasperPrint,path );
-//        } catch (JRException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//    }
+
 
     public void guardarSilabo() {
 
@@ -1662,16 +1642,25 @@ public class ControladorSilaboC {
     
     }
 //    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
-//        String sql = "INSERT INTO\"Silabo\"VALUES (?)";
+//        String sql = "UPDATE \"Silabo\"VALUES (?)";
 //        //Creamos una cadena para después prepararla
 //        PreparedStatement stmt = conexion.prepareStatement(sql);
-//        File archivo = new File("C://user//Desktop");
+//        File archivo = new File("../PF-Instituto-M3A-F1/"+silabo.getIdMateria().getNombre()+".pdf");
 //        //ruta puede ser: "c://archivo"
 //        FileInputStream fis = new FileInputStream(archivo);
 //        //Lo convertimos en un Stream
 //        stmt.setBinaryStream(1, fis, (int) archivo.length());
 //        //Asignamos el Stream al Statement
 //        stmt.execute();
+    
+//    File file = new File("myimage.gif");
+//FileInputStream fis = new FileInputStream(file);
+//PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
+//ps.setString(1, file.getName());
+//ps.setBinaryStream(2, fis, (int)file.length());
+//ps.executeUpdate();
+//ps.close();
+//fis.close();
 //    }
 
     public boolean validarCampos() {

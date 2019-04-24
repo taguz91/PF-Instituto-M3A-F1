@@ -8,6 +8,9 @@
 #Foto creada temporalmente
 foto.png
 
+#Para pdfs de silabo 
+*.pdf
+
 # Compiled class file
 *.class
 

@@ -20,7 +20,7 @@ EXECUTE PROCEDURE actualiza_nom_prd();
 --Para borrar los triggers si es necesario
 --DROP TRIGGER inicia_ingreso_notas ON public."Cursos";
 --DROP FUNCTION iniciar_ingreso_notas;
-
+/*
 CREATE OR REPLACE FUNCTION iniciar_ingreso_notas()
 RETURNS TRIGGER AS $iniciar_ingreso_notas$
 BEGIN
@@ -34,7 +34,7 @@ CREATE TRIGGER inicia_ingreso_notas
 AFTER INSERT
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_ingreso_notas();
-
+*/
 --Trigger para cuando se ingresa un alumno en un curso
 CREATE OR REPLACE FUNCTION actualiza_malla_matricula()
 RETURNS TRIGGER AS $actualiza_malla_matricula$
