@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.ResourceManager;
-import modelo.UtilidadesConn;
 
 /**
  *
@@ -44,7 +43,7 @@ public class RolBD extends RolMD {
         parametros.put(1, getNombre());
         parametros.put(2, getObservaciones());
 
-        return UtilidadesConn.ejecutar(INSERT, pool.getConnection(), parametros);
+        return pool.ejecutar(INSERT, pool.getConnection(), parametros);
     }
 
     public static List<RolMD> selectAll() {
@@ -84,9 +83,9 @@ public class RolBD extends RolMD {
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            UtilidadesConn.close(pool.getConnection());
-            UtilidadesConn.close(rs);
-            UtilidadesConn.close(stmt);
+            pool.close(pool.getConnection());
+            pool.close(rs);
+            pool.close(stmt);
         }
 
         return Lista;

@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import modelo.ConnDBPool;
-import modelo.UtilidadesConn;
 import modelo.ResourceManager;
 import modelo.persona.PersonaMD;
 
@@ -50,9 +49,8 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
-        System.out.println();
 
-        return UtilidadesConn.ejecutar(INSERT, pool.getConnection(), parametros);
+        return pool.ejecutar(INSERT, pool.getConnection(), parametros);
 
     }
 
@@ -107,9 +105,9 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            UtilidadesConn.close(conn);
-            UtilidadesConn.close(stmt);
-            UtilidadesConn.close(rs);
+            pool.close(conn);
+            pool.close(stmt);
+            pool.close(rs);
         }
         return lista;
     }
@@ -159,9 +157,9 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            UtilidadesConn.close(rs);
-            UtilidadesConn.close(conn);
-            UtilidadesConn.close(stmt);
+            pool.close(rs);
+            pool.close(conn);
+            pool.close(stmt);
         }
 
         return usuario;
@@ -261,7 +259,7 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(3, getPersona().getIdPersona());
         parametros.put(4, Pk);
 
-        return UtilidadesConn.ejecutar(UPDATE, pool.getConnection(), parametros);
+        return pool.ejecutar(UPDATE, pool.getConnection(), parametros);
 
     }
 
@@ -287,7 +285,7 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(1, estado);
         parametros.put(2, Pk);
 
-        return UtilidadesConn.ejecutar(DELETE, pool.getConnection(), parametros);
+        return pool.ejecutar(DELETE, pool.getConnection(), parametros);
     }
 
 }
