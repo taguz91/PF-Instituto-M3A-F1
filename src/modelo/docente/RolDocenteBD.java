@@ -20,14 +20,18 @@ import modelo.persona.PersonaMD;
 public class RolDocenteBD extends RolDocenteMD {
 
     private final ConectarDB conecta;
+    private final DocenteBD docentes;
+    private final RolPeriodoBD prdRol;
 
     public RolDocenteBD(ConectarDB conecta) {
         this.conecta = conecta;
+        this.docentes = new DocenteBD(conecta);
+        this.prdRol = new RolPeriodoBD(conecta);
     }
 
     public boolean InsertarRol() {
         String nsql = "INSERT INTO public.\"RolesDocente\"(\n"
-                + "	id_docente, id_rol_prd)\n"
+                + "	id_docente, id_rol_prd, rol_docente_activo)\n"
                 + "	VALUES (" + getIdDocente().getIdDocente() + ",+" + getIdRolPeriodo().getId_rol() + ");";
 
         if (conecta.nosql(nsql) == null) {

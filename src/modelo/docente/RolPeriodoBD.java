@@ -8,6 +8,7 @@ package modelo.docente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -21,9 +22,11 @@ public class RolPeriodoBD extends RolPeriodoMD {
     private final ConectarDB conecta;
 
     //Para consultar periodos
+    private final PeriodoLectivoBD perLec;
 
     public RolPeriodoBD(ConectarDB conecta) {
         this.conecta = conecta;
+        this.perLec = new PeriodoLectivoBD(conecta);
     }
 
     public boolean InsertarRol() {
@@ -93,18 +96,18 @@ public class RolPeriodoBD extends RolPeriodoMD {
         }
     }
 
-    public ArrayList<RolPeriodoMD> cargarRolesPorPeriodo(int idPrd) {
+    public ArrayList<RolPeriodoMD> cargarRolesWhere(String aguja) {
         ArrayList<RolPeriodoMD> rPrd = new ArrayList();
         String sql = "SELECT p.id_rol_prd, p.id_prd_lectivo, p.rol_prd, p.rol_activo\n"
-                + "	FROM public.\"RolesPeriodo\" p\n"
-                + "	where p.id_prd_lectivo="+idPrd+"\n"
+                + "	FROM public.\"RolesPeriodo\" p, public.\"PeriodoLectivo\" prd\n"
+                + "	where p.id_prd_lectivo=prd.id_prd_lectivo\n"
+                + "	and prd.prd_lectivo_nombre ='" + aguja + "'\n"
                 + "	and p.rol_activo= true;";
         ResultSet rs = conecta.sql(sql);
         
           try {
             while (rs.next()) {
                 RolPeriodoMD rol= new RolPeriodoMD();
-                rol.setId_rol(rs.getInt("id_rol_prd"));
                 rol.setNombre_rol(rs.getString("rol_prd"));
                 System.out.println("Nombre " +rol.getNombre_rol());
                 rPrd.add(rol);
