@@ -124,4 +124,4 @@ UPDATE public."MallaAlumno"
 		c.id_prd_lectivo = 8
 	) AND malla_almn_estado = 'R';
 
---151 actualizados en sistemas en el ultimo periodo 
+--154 actualizados en sistemas en el ultimo periodo 

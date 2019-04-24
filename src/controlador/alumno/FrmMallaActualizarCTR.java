@@ -33,7 +33,7 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
     private int posMatricula = 0, numMatricula, posEstado;
     private double nota1, nota2, nota3;
     private String notaAux;
-    private final String[] estados = {"Matriculado","Cursado","Reprobado","Pendiente", "Anulado"}; 
+    private final String[] estados = {"Matriculado", "Cursado", "Reprobado", "Pendiente", "Anulado"};
 
     public FrmMallaActualizarCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
@@ -50,7 +50,7 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
         frmMalla.getTxtNota().setEnabled(false);
         llenarComboNumMatriculas();
         llenarCmb();
-        
+
         cargarDatos();
         eventoActualizar(frmMalla.getTxtNota());
         //Validacion 
@@ -59,13 +59,24 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
         frmMalla.getCmbNumMatricula().addActionListener(e -> clickCmbNumMatricula());
         frmMalla.getCmbEstado().addActionListener(e -> clickEstados());
         frmMalla.getBtnGuardar().addActionListener(e -> guardar());
-        
+
         //Iniciamos el evento 
         ctrPrin.eventoJDCerrar(frmMalla);
         mostrarVtnMalla(frmMalla);
     }
 
     private void guardar() {
+        //verificamos el numero de matricula que esta
+        if (nota3 > 0) {
+            numMatricula = 3;
+        } else if (nota1 > 0 && nota2 > 0) {
+            numMatricula = 2;
+        } else if (nota1 > 0) {
+            numMatricula = 1;
+        } else {
+            numMatricula = 0;
+        }
+
 //        System.out.println("Id a actualizar" + malla.getId());
 //        System.out.println("Notas " + nota1);
 //        System.out.println("Notas " + nota2);
@@ -86,18 +97,18 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
             };
         }
     }
-    
-    private void clickEstados(){
+
+    private void clickEstados() {
         posEstado = frmMalla.getCmbEstado().getSelectedIndex();
         if (posEstado > 0) {
-            frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).toString().charAt(0)+"");
+            frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).toString().charAt(0) + "");
         }
     }
-    
-    private void llenarCmb(){
+
+    private void llenarCmb() {
         frmMalla.getCmbEstado().removeAllItems();
         frmMalla.getCmbEstado().addItem("Seleccione");
-        for(String e : estados){
+        for (String e : estados) {
             frmMalla.getCmbEstado().addItem(e);
         }
     }
@@ -152,14 +163,6 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
             }
             if (nota1 == 0 && nota2 == 0 && nota3 == 0) {
                 frmMalla.getLblEstado().setText("P");
-            }
-            //verificamos el numero de matricula que esta
-            if (nota3 > 0) {
-                numMatricula = 3;
-            } else if (nota1 > 0 && nota2 > 0) {
-                numMatricula = 2;
-            } else {
-                numMatricula = 1;
             }
 
         }
