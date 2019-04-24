@@ -106,7 +106,7 @@ public class NotasBD extends NotasMD {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-            selectWhere(alumnnoCurso);
+            lista = selectWhere(alumnnoCurso);
         }
 
         return lista;
