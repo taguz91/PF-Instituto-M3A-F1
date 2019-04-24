@@ -33,12 +33,13 @@ public class CursosBDS extends CursoMDS{
      public static List<CursoMD> Consultarcursos(ConexionBD conexion, int silabo,int id_docente){
          List<CursoMD> cursos=new ArrayList<>();
         try {
-            PreparedStatement st = conexion.getCon().prepareCall("SELECT c.id_curso,c.curso_nombre FROM \"Cursos\" c join \"Docentes\" d on c.id_docente=d.id_docente join \"Personas\" p on d.id_persona=p.id_persona\n" +
-"                    where id_materia=(select id_materia from \"Silabo\" where id_silabo=?)  \n" +
-"       and id_prd_lectivo=(select id_prd_lectivo from \"Silabo\" where id_silabo=?) and p.id_persona=?");
+            PreparedStatement st = conexion.getCon().prepareCall("select c.id_curso, c.curso_nombre\n" +
+"from \"Silabo\" s join \"Materias\" m on m.id_materia=s.id_materia\n" +
+" join     \"Cursos\" c on m.id_materia=c.id_materia join \"Docentes\" d on c.id_docente=d.id_docente\n" +
+" join \"Personas\" p on d.id_persona=p.id_persona join \"PeriodoLectivo\" pl on s.id_prd_lectivo=pl.id_prd_lectivo\n" +
+" where s.id_silabo=?  and p.id_persona=?");
             st.setInt(1, silabo);
-            st.setInt(2, silabo);
-            st.setInt(3,id_docente);
+            st.setInt(2, id_docente);
             System.out.println(st);
             ResultSet rs = st.executeQuery();
 
@@ -66,7 +67,6 @@ public class CursosBDS extends CursoMDS{
             st.setInt(1, id_curso);
             
             System.out.println(st);
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 CursoMDS cur=new CursoMDS();

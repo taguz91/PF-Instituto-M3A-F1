@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.curso.CursoBD;
@@ -42,19 +43,32 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             System.out.println("Se ingresao correctamente el alumno en el curso");
         }
     }
+    
+    /**
+     * La sentencia que se va a enviar se le manda un string vacio.
+     */
+    public void borrarMatricula(){
+        nsqlMatri = ""; 
+    }
 
     public void agregarMatricula(int idAlmn, int idCurso) {
         String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
                 + "id_alumno, id_curso)\n"
                 + "VALUES (" + idAlmn + ", " + idCurso + ");";
         nsqlMatri = nsqlMatri + nsql;
-        System.out.println("Matricula: " + nsqlMatri);
     }
 
-    public void guardarAlmnCurso() {
+    public boolean guardarAlmnCurso() {
         System.out.println("-------------");
         System.out.println("Matricula completa: " + nsqlMatri);
-        nsqlMatri = "";
+        if (conecta.nosql(nsqlMatri) == null) {
+            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "No pudimos matricular al alumno, revise \n"
+                    + "su conexion a internet.");
+            return false; 
+        }
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {

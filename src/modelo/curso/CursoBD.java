@@ -256,6 +256,7 @@ public class CursoBD extends CursoMD {
                     c.setId_materia(m);
                     c.setCurso_capacidad(rs.getInt("curso_capacidad"));
                     c.setCurso_ciclo(rs.getInt("curso_ciclo"));
+                    c.setCurso_nombre(nombre);
 
                     cursos.add(c);
                 }
@@ -348,8 +349,6 @@ public class CursoBD extends CursoMD {
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
                 + "AND curso_ciclo >= " + cicloReprobado + " AND curso_ciclo <= " + (cicloCursado + 1) + " "
                 + "ORDER BY curso_ciclo;";
-        //System.out.println("Consulta de los ciclos por perido lectivo\n"
-        //        + sql);
         return consultarNombreCursos(sql);
     }
 

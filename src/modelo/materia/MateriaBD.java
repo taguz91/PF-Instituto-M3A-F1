@@ -129,15 +129,14 @@ public class MateriaBD extends MateriaMD {
             return null;
         }
     }
-    
+
 //    public EjeFormacionMD filtrarIdEje(String nombre){
 //        String sql = "SELECT id_";
 //        
 //    }
-
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
-         sql = "SELECT id_materia, materia_codigo,"
+        sql = "SELECT id_materia, materia_codigo,"
                 + " materia_nombre, materia_ciclo, "
                 + "materia_horas_docencia, materia_horas_practicas, "
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
@@ -476,7 +475,7 @@ public class MateriaBD extends MateriaMD {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Materias\".materia_nombre,\n"
                 + "\"public\".\"Materias\".id_materia,\n"
-                + "\"public\".\"Materias\".materia_total_horas\n"
+                + "\"public\".\"Materias\".materia_horas_presencial\n"
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
@@ -496,7 +495,7 @@ public class MateriaBD extends MateriaMD {
                 MateriaMD materia = new MateriaMD();
                 materia.setId(rs.getInt("id_materia"));
                 materia.setNombre(rs.getString("materia_nombre"));
-                materia.setTotalHoras(rs.getInt("materia_total_horas"));
+                materia.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
                 lista.add(materia);
             }
             rs.close();

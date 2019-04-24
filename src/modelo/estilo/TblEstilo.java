@@ -2,6 +2,7 @@ package modelo.estilo;
 
 import controlador.estilo.TblRenderClase;
 import controlador.estilo.TblRenderFocusClm;
+import controlador.estilo.TblRenderMateriasMatricula;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -157,5 +158,10 @@ public class TblEstilo {
             }
         };
         return modelo;
+    }
+    
+    public static void formatoTblMatricula(JTable tbl){
+        formatoTbl(tbl);
+        tbl.getColumnModel().getColumn(1).setCellRenderer(new TblRenderMateriasMatricula(1));
     }
 }
