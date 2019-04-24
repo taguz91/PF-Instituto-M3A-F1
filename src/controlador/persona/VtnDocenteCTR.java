@@ -1,8 +1,6 @@
 package controlador.persona;
 
-import controlador.carrera.VtnCarreraCTR;
 import controlador.docente.JDFinContratacionCTR;
-import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -13,14 +11,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.docente.RolPeriodoBD;
+import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
@@ -36,8 +34,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import vista.docente.JDFinContratacion;
-import vista.docente.VtnFinContratacion;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
@@ -58,11 +54,12 @@ public class VtnDocenteCTR {
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
+    private final RolPeriodoBD rolPer;
     private final PeriodoLectivoBD prd;
     private DocenteMD d;
     //Lista de todos los periodos lectivos
     private ArrayList<PeriodoLectivoMD> periodos;
-
+    private ArrayList<RolPeriodoMD> roles;
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
@@ -77,6 +74,7 @@ public class VtnDocenteCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
+        this.rolPer = new RolPeriodoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
@@ -126,6 +124,7 @@ public class VtnDocenteCTR {
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnhorasAsignadas().addActionListener(e -> botonReporteHorasAsignadas());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnAsignarRol().addActionListener(e -> asignarRolDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
             @Override
@@ -326,7 +325,7 @@ public class VtnDocenteCTR {
             view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
-             JOptionPane.showMessageDialog(null, "error" + ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 
@@ -438,8 +437,7 @@ public class VtnDocenteCTR {
 //            vtn_fin_contratacion.iniciar();
             JDFinContratacionCTR ctr = new JDFinContratacionCTR(conecta, vtnPrin, ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
             ctr.iniciar();
-   
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }
@@ -458,7 +456,7 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().setEnabled(false);
         vtnDocente.getBtnFinContratacion().setEnabled(false);
     }
-    
+
     public void botonReporteHorasAsignadas() {
         int s = JOptionPane.showOptionDialog(vtnDocente,
                 "Reporte de Materias del Docente\n"
@@ -466,21 +464,21 @@ public class VtnDocenteCTR {
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
-                new Object[]{"Horas por Docente","Horas por periodo", 
+                new Object[]{"Horas por Docente","Horas por periodo",
                     "Cancelar"}, "Historial de Materias");
         switch (s) {
             case 0:
                 seleccionarPeriodohoras();
                 break;
            case 1:
-                
+
                 break;
-            
+
             default:
                 break;
         }
-        
-        
+
+
     }
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
         public void seleccionarPeriodohoras() {
@@ -529,5 +527,5 @@ public class VtnDocenteCTR {
             }
         }
     }
-   
+
 }
