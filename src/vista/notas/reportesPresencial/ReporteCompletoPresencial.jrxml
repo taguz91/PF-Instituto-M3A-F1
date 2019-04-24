@@ -1,8 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="15251eee-2da6-4047-bd6c-6a1d139a9f50">
-	<property name="ireport.zoom" value="0.6830134553650707"/>
-	<property name="ireport.x" value="67"/>
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="26"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="materia_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Lushito\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\notas\\reportesPresencial\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "apellidos_al",
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "nombres_al",
+	"AlumnoCurso".almn_curso_nota_final,
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
+	"AlumnoCurso".almn_curso_num_faltas AS "N° Faltas",
+	("AlumnoCurso".almn_curso_num_faltas * 100)/"Materias".materia_total_horas|| '%'  as "% Faltas",
+  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
+	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula",
+	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
+	"upper"("AlumnoCurso".almn_curso_asistencia) AS "Asistencia"
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
+	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
+	
+WHERE
+	"PeriodoLectivo".prd_lectivo_estado = true 
+	AND "Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre =  $P{prd_lectivo_nombre}
+	AND "Cursos".curso_nombre= $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}
+	AND "MallaAlumno".id_materia = "Materias".id_materia
+	
+	GROUP BY "Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido,
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre,
+	"AlumnoCurso".almn_curso_nota_final,
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
+	"AlumnoCurso".almn_curso_num_faltas,
+	("AlumnoCurso".almn_curso_num_faltas * 100)/"Materias".materia_total_horas|| '%',
+  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
+	"upper"("AlumnoCurso".almn_curso_estado),
+	"upper"("AlumnoCurso".almn_curso_asistencia)
+	
+	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido  ]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="apellidos_al" class="java.lang.String"/>
+	<field name="nombres_al" class="java.lang.String"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="PROFESOR" class="java.lang.String"/>
+	<field name="N° Faltas" class="java.lang.Integer"/>
+	<field name="% Faltas" class="java.lang.String"/>
+	<field name="COORDINADOR" class="java.lang.String"/>
+	<field name="N° Matricula" class="java.lang.Integer"/>
+	<field name="Estado" class="java.lang.String"/>
+	<field name="Asistencia" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -64,16 +160,240 @@
 			<line>
 				<reportElement x="0" y="207" width="1520" height="1" uuid="7a574c4a-425a-4cf2-8f6d-9556f357a6d2"/>
 			</line>
+			<textField>
+				<reportElement x="318" y="80" width="100" height="20" uuid="c4fcf949-2e30-4d6c-a924-9e8fb9b866be"/>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="112" width="100" height="20" uuid="4eebe16f-2ce9-4c6d-9792-5b302943526d"/>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="147" width="100" height="20" uuid="77d95b6c-7709-4be5-b663-c0384e73467b"/>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1130" y="91" width="259" height="20" uuid="31fcb59d-89c5-4d75-bf25-fb430f249e6d"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1130" y="123" width="259" height="20" uuid="9047f7bb-2d92-4061-b723-691339cae5c8"/>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="31" splitType="Stretch"/>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="449" y="0" width="54" height="20" uuid="22303922-6bb3-4f7f-8e7d-711cc6df9e69"/>
+				<text><![CDATA[Aporte 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="0" width="65" height="20" uuid="11be8e0e-197a-45ed-970b-5641e9121d99"/>
+				<text><![CDATA[Ex Interciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="0" width="73" height="20" uuid="87ad4365-3078-40aa-aa1e-1af64d7848ab"/>
+				<text><![CDATA[Nota Interciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="0" width="53" height="20" uuid="5478a700-d0dd-40c1-85e7-32267fd9062b"/>
+				<text><![CDATA[Aporte 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="782" y="0" width="67" height="20" uuid="4fafc630-8b92-45e3-9b14-dfa5443db887"/>
+				<text><![CDATA[Examen FInal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="867" y="0" width="100" height="20" uuid="17dee9bb-f83d-4e5e-8d1a-aa4e3eead79f"/>
+				<text><![CDATA[Suple]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="36" splitType="Stretch"/>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="0" width="111" height="20" uuid="9a6310e8-8e74-49d8-a264-593ca016cd1a"/>
+				<textFieldExpression><![CDATA[$F{apellidos_al}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="0" width="81" height="20" uuid="496f9180-1fa9-4507-963c-aadeaea73e23"/>
+				<textFieldExpression><![CDATA[$F{id_alumno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="100" height="20" uuid="16c48ac6-0350-4550-9a65-b2a01a0f4375"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="100" height="20" uuid="2a70b7f2-548b-4ac4-bd0d-dad943fa634a"/>
+				<textFieldExpression><![CDATA[$F{nombres_al}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1036" y="0" width="82" height="20" uuid="b0f83454-4351-400f-ab07-3fd443839629"/>
+				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1136" y="0" width="82" height="20" uuid="22e01231-6fed-419b-8d0d-4f0e6035bbf4"/>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1265" y="0" width="67" height="20" uuid="7f3d77e7-ec1c-47c8-9f14-0cee4b8c0fc7"/>
+				<textFieldExpression><![CDATA[$F{N° Faltas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1342" y="0" width="65" height="20" uuid="d10787a3-ff8a-4b0c-81e3-24fa44bbde11"/>
+				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1429" y="0" width="74" height="20" uuid="64707c78-fb0d-46fb-a1d0-c6bb26322c68"/>
+				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="934" y="0" width="72" height="20" uuid="2fbf2ef9-620d-487b-8693-06b42880709d"/>
+				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="449" y="0" width="54" height="20" uuid="4359c158-b537-4ca9-a2be-e6f7bc175c49"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[4]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="697" y="0" width="53" height="20" uuid="fb7e0671-0616-44d4-bd14-4dcd8be6f012"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[5]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteAporte2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="602" y="0" width="56" height="20" uuid="4318f9db-cefe-4126-aeef-9cbd53b9da95"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[6]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="520" y="0" width="53" height="20" uuid="da5f94d3-8252-4cd5-b4e6-ee74b29ecea8"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[7]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteAporte2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="782" y="0" width="52" height="20" uuid="1551116a-2ceb-4497-9ff7-f5647fa17812"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[8]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenFinal.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="867" y="0" width="54" height="20" uuid="706fd624-e0dc-43a9-b49c-43f326e3cb40"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_tipo_nota">
+					<subreportParameterExpression><![CDATA[9]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenSupletorio.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="28" splitType="Stretch"/>
@@ -106,6 +426,14 @@
 			<line>
 				<reportElement x="868" y="15" width="234" height="1" uuid="ceebbc9c-0bd0-472a-a3e4-16890a63e88a"/>
 			</line>
+			<textField>
+				<reportElement x="351" y="26" width="234" height="20" uuid="6814a59f-f3a6-47a7-bc8b-b33dba2b32de"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="868" y="26" width="234" height="20" uuid="3db5f174-f911-41ad-ac5c-1ac24f062c55"/>
+				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
