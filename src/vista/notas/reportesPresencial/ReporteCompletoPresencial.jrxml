@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="15251eee-2da6-4047-bd6c-6a1d139a9f50">
 	<property name="ireport.zoom" value="1.1000000000000083"/>
-	<property name="ireport.x" value="262"/>
+	<property name="ireport.x" value="756"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -24,7 +24,7 @@
 	p_alu.persona_identificacion,
 	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "apellidos_al",
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "nombres_al",
-	"AlumnoCurso".almn_curso_nota_final,
+	ROUND("AlumnoCurso".almn_curso_nota_final,0) AS "NotaFinal",
 	"Materias".materia_nombre,
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
@@ -87,7 +87,7 @@ WHERE
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="apellidos_al" class="java.lang.String"/>
 	<field name="nombres_al" class="java.lang.String"/>
-	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
+	<field name="NotaFinal" class="java.math.BigDecimal"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -490,17 +490,6 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="1093" y="0" width="82" height="20" uuid="2fbf2ef9-620d-487b-8693-06b42880709d"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement x="868" y="0" width="100" height="20" uuid="1551116a-2ceb-4497-9ff7-f5647fa17812"/>
 				<subreportParameter name="id_alumno">
@@ -650,6 +639,17 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteAporte2.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="1093" y="0" width="82" height="20" uuid="b7bbaf66-eb31-4f26-8c43-5138699257ca"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NotaFinal}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
