@@ -239,7 +239,7 @@ public class VtnUsuarioCTR {
                     if (modelo == null) {
                         modelo = new UsuarioBD();
                     }
-                    modelo.eliminar(Username);
+                    modelo.cambiarEstado(Username, false);
 
                     cargarTabla(UsuarioBD.selectAll());
 

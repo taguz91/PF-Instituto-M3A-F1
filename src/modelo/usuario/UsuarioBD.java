@@ -26,8 +26,6 @@ public class UsuarioBD extends UsuarioMD {
 
     static {
         pool = new ConnDBPool();
-        conn = pool.getConnection();
-        UtilidadesConn.close(conn);
     }
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -54,7 +52,7 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(3, getPersona().getIdPersona());
         System.out.println();
 
-        return UtilidadesConn.ejecutar(INSERT, stmt, pool.getConnection(), parametros);
+        return UtilidadesConn.ejecutar(INSERT, pool.getConnection(), parametros);
 
     }
 
@@ -263,46 +261,33 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(3, getPersona().getIdPersona());
         parametros.put(4, Pk);
 
-        return UtilidadesConn.ejecutar(UPDATE, stmt, pool.getConnection(), parametros);
+        return UtilidadesConn.ejecutar(UPDATE, pool.getConnection(), parametros);
 
     }
 
-    public boolean eliminar(String Pk) {
+    public boolean cambiarEstado(String Pk, boolean estado) {
 
         String DELETE = "UPDATE \"Usuarios\" \n"
                 + " SET \n"
                 + " usu_estado = ?\n"
                 + " WHERE \n"
                 + " usu_username = ? ;\n"
-                + " ALTER ROLE \"" + Pk + "\" NOLOGIN;"
                 + "";
+        String ROL_POSTGRES;
 
+        if (estado) {
+            ROL_POSTGRES = "ALTER ROLE \"" + Pk + "\" LOGIN";
+        } else {
+            ROL_POSTGRES = "ALTER ROLE \"" + Pk + "\" NOLOGIN";
+        }
+        DELETE = DELETE + ROL_POSTGRES;
         System.out.println(Pk);
 
         Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, false);
+        parametros.put(1, estado);
         parametros.put(2, Pk);
 
-        return UtilidadesConn.ejecutar(DELETE, stmt, pool.getConnection(), parametros);
-    }
-
-    public boolean reactivar(String Pk) {
-
-        String REACTIVAR = "UPDATE \"Usuarios\"\n"
-                + " SET \n"
-                + " usu_estado = ?\n"
-                + " WHERE \n"
-                + " usu_username = ? ;\n"
-                + " ALTER ROLE \"" + Pk + "\" NOLOGIN;"
-                + "";
-
-        System.out.println(Pk);
-
-        Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, true);
-        parametros.put(2, Pk);
-
-        return UtilidadesConn.ejecutar(REACTIVAR, stmt, pool.getConnection(), parametros);
+        return UtilidadesConn.ejecutar(DELETE, pool.getConnection(), parametros);
     }
 
 }

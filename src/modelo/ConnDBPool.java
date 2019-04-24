@@ -31,7 +31,7 @@ public class ConnDBPool {
         String password = Propiedades.getUserProp("password");
         config.setPassword(password);
 
-        config.setMaximumPoolSize(12);
+        config.setMaximumPoolSize(5);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

@@ -120,7 +120,7 @@ public class VtnRolCTR {
 
                 cargarTabla = false;
 
-                listaRoles = RolBD.SelectAll();
+                listaRoles = RolBD.selectAll();
 
                 listaRoles.stream().forEach(VtnRolCTR::agregarFila);
 

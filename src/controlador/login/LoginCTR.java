@@ -1,7 +1,6 @@
 package controlador.login;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -18,7 +16,6 @@ import modelo.ConectarDB;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import modelo.usuario.UsuarioMD;
 import vista.Login;
 import vista.usuario.VtnSelectRol;
 
@@ -34,8 +31,7 @@ public class LoginCTR {
     private final ImageIcon icono;
     private final Image ista;
 
-    //validacion
-    private boolean carga = true;
+    private final boolean carga = true;
 
     public LoginCTR(Login vista) {
         this.vista = vista;
@@ -58,6 +54,7 @@ public class LoginCTR {
 
     private void InitEventos() {
         vista.getBtnIngresar().addActionListener(e -> login());
+        
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
         vista.getTxtPassword().addKeyListener(eventoText());
         vista.getTxtUsername().addKeyListener(eventoText());

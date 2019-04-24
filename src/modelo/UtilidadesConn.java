@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class UtilidadesConn {
 
-    public static boolean ejecutar(String sql, PreparedStatement stmt, Connection conn, Map<Integer, Object> parametros) {
+    public static boolean ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         boolean proceso = false;
-
+        PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
 

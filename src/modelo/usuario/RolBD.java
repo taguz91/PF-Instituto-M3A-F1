@@ -1,18 +1,31 @@
 package modelo.usuario;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.ConnDBPool;
 import modelo.ResourceManager;
+import modelo.UtilidadesConn;
 
 /**
  *
  * @author MrRainx
  */
 public class RolBD extends RolMD {
+
+    private static ConnDBPool pool;
+    private static PreparedStatement stmt;
+    private static ResultSet rs;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
         super(id, nombre, observaciones, estado);
@@ -25,12 +38,16 @@ public class RolBD extends RolMD {
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES('" + getNombre() + "', '" + getObservaciones() + "')";
+        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES(?, ?)";
 
-        return ResourceManager.Statement(INSERT) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getNombre());
+        parametros.put(2, getObservaciones());
+
+        return UtilidadesConn.ejecutar(INSERT, pool.getConnection(), parametros);
     }
 
-    public static List<RolMD> SelectAll() {
+    public static List<RolMD> selectAll() {
 
         String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
@@ -50,9 +67,9 @@ public class RolBD extends RolMD {
     private static List<RolMD> SelectSimple(String Query) {
         List<RolMD> Lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(Query);
-
         try {
+            stmt = pool.getConnection().prepareStatement(Query);
+            rs = stmt.executeQuery();
             while (rs.next()) {
                 RolMD rol = new RolMD();
 
@@ -64,9 +81,12 @@ public class RolBD extends RolMD {
                 Lista.add(rol);
 
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            UtilidadesConn.close(pool.getConnection());
+            UtilidadesConn.close(rs);
+            UtilidadesConn.close(stmt);
         }
 
         return Lista;
