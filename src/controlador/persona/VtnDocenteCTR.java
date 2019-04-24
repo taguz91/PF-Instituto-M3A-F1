@@ -480,6 +480,40 @@ public class VtnDocenteCTR {
 
 
     }
+      public void asignarRolDocente() {
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        String docente= docentesMD.get(posFila).getNombreCompleto();
+        if (posFila >= 0) {
+            periodos = prd.cargarPeriodos();
+            ArrayList<String> nmPrd = new ArrayList();
+            ArrayList<String> nmRol = new ArrayList();
+            nmPrd.add("Seleccione");
+            periodos.forEach(p -> {
+                nmPrd.add(p.getNombre_PerLectivo());
+            });
+            Object np = JOptionPane.showInputDialog(vtnPrin,
+                    "Lista de periodos lectivos", "Periodos lectivos",
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    nmPrd.toArray(), 0);
+            if(np==null){
+               JOptionPane.showMessageDialog(null, "Seleccione un periodo");
+            }else{
+            roles = rolPer.cargarRolesWhere(np.toString());
+            nmRol.add("Seleccione");
+            roles.forEach(r -> {
+                nmRol.add(r.getNombre_rol());
+            });
+            Object nr = JOptionPane.showInputDialog(vtnPrin,
+                    "Lista de roles por periodos", "Roles de Docente",
+                    JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
+            JOptionPane.showMessageDialog(null, "Al docente:\n"
+                    +docente+"\n se le asigno el rol de:\n"+nr);
+            System.out.println(nr.toString());
+        }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
+        }
+    }
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
         public void seleccionarPeriodohoras() {
         periodos = prd.cargarPeriodos();
