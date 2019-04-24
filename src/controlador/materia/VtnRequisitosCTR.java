@@ -82,7 +82,7 @@ public class VtnRequisitosCTR {
     */
 
     public void guardarMateriaRequisito() {
-        
+     
         boolean guardar = true;
         String tipo="";
         int posicion;
@@ -108,6 +108,8 @@ public class VtnRequisitosCTR {
         } else if (frmreq.getJrbPrerequisito().isSelected()) {
             tipo = "P";
            materiarequisito.setTipo(tipo);
+           
+           
          
           
            

@@ -119,5 +119,15 @@ public class AccesosBD extends AccesosMD {
 
         return Lista;
     }
+    
+    public boolean editar(String pk){
+        String UPDATE = "UPDATE Accesos SET"
+                + "acc_nombre = "+getNombre()+""
+                + "acc_descripcion = "+getDescripcion()+""
+                + "WHERE"
+                + "id_acceso = "+pk+"";
+        System.out.println(UPDATE);
+        return ResourceManager.Statement(UPDATE) == null;
+    }
 
 }

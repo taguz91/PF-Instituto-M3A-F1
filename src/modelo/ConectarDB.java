@@ -137,10 +137,10 @@ public class ConectarDB {
             try {
                 //Se vuelve a llamar a la clase
                 ct.rollback();
+                System.out.println("Se hizo rollback");
             } catch (SQLException ex) {
                 System.out.println("NO SE Pudo hacer rollback " + ex.getMessage());
             }
-            nosql(noSql);
             return e;
         } finally {
             try {
@@ -172,13 +172,13 @@ public class ConectarDB {
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);
             metaData = rs.getMetaData();
-            System.out.println("--------SQL----------");
-            //System.out.println(ct.getSchema());
-            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
-            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
-            System.out.println("Nombre Base de datos: " + ct.getCatalog());
-            System.out.println();
-            System.out.println("------------------");
+//            System.out.println("--------SQL----------");
+//            //System.out.println(ct.getSchema());
+//            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
+//            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
+//            System.out.println("Nombre Base de datos: " + ct.getCatalog());
+//            System.out.println();
+//            System.out.println("------------------");
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());

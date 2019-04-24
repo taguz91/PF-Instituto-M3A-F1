@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
@@ -17,7 +18,7 @@ import vista.curso.PnlHorarioClase;
 public class PnlHorarioClaseCTR {
 
     private final PnlHorarioClase pnl;
-    private final CursoMD curso;
+    private CursoMD curso;
     private final SesionClaseBD bd;
     private ArrayList<SesionClaseMD> sesionLunes, sesionMartes, sesionMiercoles, sesionJueves, sesionViernes,
             sesionSabado;
@@ -43,8 +44,6 @@ public class PnlHorarioClaseCTR {
         "<html>19:00<br>20:00</html>"};
     private final String[] hn = {"8:00","9:00","10:00", "11:00", "12:00", "13:00","17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
-       
-        
         "<html>8:00<br>9:00</html>",
         "<html>9:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
