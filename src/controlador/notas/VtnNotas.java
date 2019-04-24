@@ -607,7 +607,7 @@ public class VtnNotas {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
-                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo", "Prueba2"}, "Cancelar");
+                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
 
             Middlewares.setLoadCursor(vista);
 
@@ -651,11 +651,6 @@ public class VtnNotas {
                     reportes.generarReporteCompleto();
                     desktop.getLblEstado().setText("COMPLETADO");
                     break;
-                
-                case 5:
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                    reportes.ReportePrueba2();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                 default:
                     break;
