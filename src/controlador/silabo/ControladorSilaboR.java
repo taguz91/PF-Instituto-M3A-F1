@@ -112,7 +112,7 @@ public class ControladorSilaboR {
             pv.setTitle("Sílabo");
 
             //EXPORTACION A PDF
-            File f =new File(("../PF-Instituto-M3A-F1/"+"SA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
+            File f =new File(("../PF-Instituto-M3A-F1/pdfs/"+"SA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
             OutputStream output = new FileOutputStream(f);
             JasperExportManager.exportReportToPdfStream(jp, output);
             //byte[] d=JasperExportManager.exportReportToPdf(jp);
@@ -143,7 +143,7 @@ public class ControladorSilaboR {
             pv.setTitle("Programa Analítico");
             
             //EXPORTACION A PDF
-            File fl =new File(("../PF-Instituto-M3A-F1/"+"PA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
+            File fl =new File(("../PF-Instituto-M3A-F1/pdfs/"+"PA-"+silabo.getIdMateria().getNombre()+"-"+LocalDate.now()+".pdf"));
             OutputStream output = new FileOutputStream(fl);
             JasperExportManager.exportReportToPdfStream(jp, output);
             //byte[] d=JasperExportManager.exportReportToPdf(jp);
