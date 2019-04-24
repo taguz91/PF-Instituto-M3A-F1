@@ -25,6 +25,7 @@ public class MateriaBD extends MateriaMD {
         this.conecta = conecta;
         this.car = new CarreraBD(conecta);
     }
+    
 
     public boolean insertarMateria() {
         String sql = "INSERT INTO public.\"Materias\"(\n"

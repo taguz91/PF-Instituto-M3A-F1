@@ -33,6 +33,8 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
             return false;
         }
     }
+    
+
 
     public void eliminar(int idRequisito) {
         String nsql = "DELETE FROM public.\"MateriaRequisitos\" \n"
