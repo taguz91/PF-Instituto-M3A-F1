@@ -206,6 +206,7 @@ CREATE TABLE "EjesFormacion"(
 	"id_carrera" integer NOT NULL,
 	"eje_codigo" character varying(10) NOT NULL,
 	"eje_nombre" character varying(100) NOT NULL,
+	"eje_estado" BOOLEAN DEFAULT TRUE,
 	CONSTRAINT eje_formacion_pk PRIMARY KEY ("id_eje")
 ) WITH (OIDS = FALSE);
 
