@@ -255,15 +255,17 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="btnPasar1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnPasarTodos" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnRegresar1" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnPasarTodos" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="btnRegresar1" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="btnPasar1" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="btnRegresarTodos" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="250" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="262" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">

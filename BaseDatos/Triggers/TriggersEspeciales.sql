@@ -68,6 +68,7 @@ ON public."AlumnoCurso" FOR EACH ROW
 EXECUTE PROCEDURE actualiza_malla_matricula();
 
 --Al volver reactivar una persona se activa tambien en docente o alumno
+/*
 CREATE OR REPLACE FUNCTION persona_activada()
 RETURNS TRIGGER AS $persona_activada$
 BEGIN
@@ -96,7 +97,7 @@ $persona_activada$ LANGUAGE plpgsql;
 CREATE TRIGGER auditoria_persona_activa
 BEFORE UPDATE OF persona_activa
 ON public."Personas" FOR EACH ROW
-EXECUTE PROCEDURE persona_activada();
+EXECUTE PROCEDURE persona_activada();*/
 
 --Iniciar malla al inscribir un alumno en un curso
 
