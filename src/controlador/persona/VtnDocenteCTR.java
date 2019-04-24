@@ -483,6 +483,7 @@ public class VtnDocenteCTR {
 
 
     }
+<<<<<<< HEAD
       public void asignarRolDocente() {
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
@@ -549,6 +550,8 @@ public class VtnDocenteCTR {
         
     }
 
+=======
+>>>>>>> parent of efd84c69... METODO ASIGNAR ROL DOCENTE
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
         public void seleccionarPeriodohoras() {
         periodos = prd.cargarPeriodos();
