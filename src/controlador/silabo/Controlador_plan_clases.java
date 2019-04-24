@@ -3,6 +3,7 @@ package controlador.silabo;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -40,6 +41,14 @@ public class Controlador_plan_clases {
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
     private DefaultListModel modelo;
     private List<RecursosMD> lista_recursos; 
+    
+    //JLIST 
+     ArrayList array=new ArrayList();
+    ArrayList array2=new ArrayList();
+    ArrayList array3=new ArrayList();
+    DefaultListModel modelo1;
+    DefaultListModel modelo2;
+    DefaultListModel modelo3;
     public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,
             UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.silabo=silabo;
@@ -68,11 +77,18 @@ public class Controlador_plan_clases {
           fPlanClase.getTxt_buscarPCL().addKeyListener(new KeyAdapter(){
               @Override
             public void keyReleased(KeyEvent ke) {
-           RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+           lista_recursos=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
            CargarRecursos(lista_recursos);
 
             }
           });
+      
+        fPlanClase.getBtnAgregarPC().addActionListener(ba->{
+            pasarElementospanel();
+        });
+        fPlanClase.getBtnQuitarPC().addActionListener(qp->{
+            eliminarElementopanel();
+        });
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
@@ -162,6 +178,46 @@ public class Controlador_plan_clases {
        }
        fPlanClase.getJlisRecursos().setModel(modeloRecursos);
    }
-     
+    
+   private void pasarElementospanel(){
+        modelo=new DefaultListModel();
+        modelo2=new DefaultListModel();
+        modelo3=new DefaultListModel();
+        if (fPlanClase.getjScrollPane10().isShowing()) {
+          fPlanClase.getListAnticipacionPC().setModel(modelo);
+          String dato1=(String) fPlanClase.getCmbxEstrategiasPC().getSelectedItem();
+          array.add(dato1);
+            for (int i = 0; i < array.size(); i++) {
+                modelo.addElement(array.get(i));
+            }
+        } else if(fPlanClase.getjScrollPane11().isShowing()){
+           fPlanClase.getListConstruccionPC().setModel(modelo2);
+           String dato2=(String) fPlanClase.getCmbxEstrategiasPC().getSelectedItem();
+           array2.add(dato2);
+           for (int i = 0; i < array2.size(); i++) {
+                modelo2.addElement(array2.get(i));
+            }
+        }else if(fPlanClase.getjScrollPane9().isShowing()){
+            fPlanClase.getListConsolidacionPC().setModel(modelo3);
+            String dato3=(String) fPlanClase.getCmbxEstrategiasPC().getSelectedItem();
+            array3.add(dato3);
+            for (int i = 0; i < array3.size(); i++) {
+                modelo3.addElement(array3.get(i));
+            }
+        }
+    }
+    private void eliminarElementopanel(){
+        int indice;
+        if (fPlanClase.getjScrollPane10().isShowing()) {
+            indice=fPlanClase.getListAnticipacionPC().getSelectedIndex();
+            modelo.remove(indice);
+        } else if(fPlanClase.getjScrollPane11().isShowing()) {
+            indice=fPlanClase.getListConstruccionPC().getSelectedIndex();
+            modelo2.remove(indice);
+        }else if(fPlanClase.getjScrollPane9().isShowing()){
+            indice=fPlanClase.getListConsolidacionPC().getSelectedIndex();
+            modelo3.remove(indice);
+        }
+    }
 }
 

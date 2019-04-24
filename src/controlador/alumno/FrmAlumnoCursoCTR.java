@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -20,6 +22,8 @@ import modelo.estilo.TblEstilo;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.alumno.MatriculaBD;
+import modelo.alumno.MatriculaMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
@@ -30,6 +34,9 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.FrmAlumnoCurso;
 import vista.curso.JDInfoHorario;
 import vista.curso.PnlHorarioClase;
@@ -76,11 +83,14 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MallaAlumnoMD> mallaMatriculadas;
     private ArrayList<MallaAlumnoMD> mallaCursadas;
     private ArrayList<MallaAlumnoMD> mallaAnuladas;
+    private ArrayList<MallaAlumnoMD> mallaPendientes;
     private ArrayList<MateriaRequisitoMD> requisitos;
     private ArrayList<SesionClaseMD> horarioAlmn, horario;
-    private SesionClaseBD sesion;
+    private final SesionClaseBD sesion;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
+    //Matricula 
+    private final MatriculaBD matri;
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -98,6 +108,7 @@ public class FrmAlumnoCursoCTR {
         this.frmAlmCurso = frmAlmCurso;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.matri = new MatriculaBD(conecta);
         //Cambiamos el estado del cursos  
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaFrm("Alumno por curso");
@@ -186,6 +197,7 @@ public class FrmAlumnoCursoCTR {
 
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
         frmAlmCurso.getBtnAnuladas().addActionListener(e -> mostrarInformacion("A"));
+        frmAlmCurso.getBtnPendientes().addActionListener(e -> mostrarInformacion("P"));
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
         //Ocultamos el boton 
         frmAlmCurso.getBtnAnuladas().setVisible(false);
@@ -224,25 +236,24 @@ public class FrmAlumnoCursoCTR {
             guardar = false;
         }
 
-        int posCar = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
-        if (posCar < 1) {
+        int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
+        if (posPrd < 1) {
             guardar = false;
         }
-        
-        System.out.println("Antes de borrar teniamos: "+cursosSelec.size());
+
+        System.out.println("Antes de borrar teniamos: " + cursosSelec.size());
         //Borro los choques de horas  
         cursosSelec.forEach(c -> {
             if (c.getCurso_nombre().charAt(0) == 'C') {
-                if(cursosSelec.remove(c)){
-                    System.out.println("Eliminamos: "+c.getCurso_nombre()+" Materia: "+
-                            c.getId_materia().getNombre());
+                if (cursosSelec.remove(c)) {
+                    System.out.println("Eliminamos: " + c.getCurso_nombre() + " Materia: "
+                            + c.getId_materia().getNombre());
                 }
             }
         });
-        System.out.println("Despues de borrar tenemos: "+cursosSelec.size());
+        System.out.println("Despues de borrar tenemos: " + cursosSelec.size());
 
         if (guardar) {
-            System.out.println("Ingresaremos " + cursosSelec.size() + " cursos.");
             //Se limpia la variable antes de guardar 
             almnCurso.borrarMatricula();
             materiasMatricula = "";
@@ -255,16 +266,33 @@ public class FrmAlumnoCursoCTR {
             int r = JOptionPane.showConfirmDialog(vtnPrin, alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
                     + "Sera matricula en estas materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
-//                if (almnCurso.guardarAlmnCurso()) {
-//                    //Reiniciamos todo 
-//                    frmAlmCurso.getTxtBuscar().setText("");
-//                    frmAlmCurso.getCmbCurso().removeAllItems();
-//                    mdAlm.setRowCount(0);
-//                    mdMatPen.setRowCount(0);
-//                    mdMatSelec.setRowCount(0);
-//                    cursosSelec = new ArrayList();
-//                    frmAlmCurso.getBtnReprobadas().setVisible(false);
-//                }
+                if (almnCurso.guardarAlmnCurso()) {
+                    //Reiniciamos todo 
+                    frmAlmCurso.getTxtBuscar().setText("");
+                    frmAlmCurso.getCmbCurso().removeAllItems();
+                    mdAlm.setRowCount(0);
+                    mdMatPen.setRowCount(0);
+                    mdMatSelec.setRowCount(0);
+                    cursosSelec = new ArrayList();
+                    frmAlmCurso.getBtnReprobadas().setVisible(false);
+                    
+                    //Se ingresa matricula
+                    MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+                            periodos.get(posPrd - 1).getId_PerioLectivo());
+
+                    if (m != null) {
+                        System.out.println("Ya esta matriculado: ");
+                    } else {
+                        matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
+                        matri.setPeriodo(periodos.get(posPrd - 1));
+                        matri.ingresar();
+                    }
+                    System.out.println("Ingresaremos " + cursosSelec.size() + " cursos.");
+
+                    llamaReporteMatricula(alumnosCarrera.get(posAlm).getAlumno().getIdentificacion(),
+                            periodos.get(posPrd - 1).getId_PerioLectivo());
+                }
+
                 System.out.println("-----------------------------");
                 System.out.println("H O R A R I O");
                 horarioAlmn.forEach(h -> {
@@ -276,7 +304,7 @@ public class FrmAlumnoCursoCTR {
             JOptionPane.showMessageDialog(vtnPrin, "El formulario contiene errores.");
         }
     }
-    
+
     /**
      * Ocultamos los errores en los formularios.
      */
@@ -431,6 +459,9 @@ public class FrmAlumnoCursoCTR {
         mallaAnuladas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "A");
         System.out.println("Numero de materias anuladas: " + mallaAnuladas.size());
 
+        //Buscamos las pendientes 
+        mallaPendientes = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "P");
+        System.out.println("NUmero de pendientes: " + mallaPendientes.size());
         //Buscamos todas las materias en las que ya a cursado  para borrarlas de la tabla
         //mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
         mallaCursadas = materiasAlmn;
@@ -459,10 +490,20 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnAnuladas().setVisible(false);
         }
 
-        if (mallaPerdidas.isEmpty() && mallaAnuladas.isEmpty()) {
-            cicloReprobado++;
+        if (mallaPendientes.size() > 0) {
+            frmAlmCurso.getBtnPendientes().setVisible(true);
+            mallaPendientes.forEach(m -> {
+                if (m.getMallaCiclo() < cicloReprobado) {
+                    cicloReprobado = m.getMallaCiclo();
+                }
+            });
+        } else {
+            frmAlmCurso.getBtnPendientes().setVisible(false);
         }
 
+//        if (mallaPerdidas.isEmpty() && mallaAnuladas.isEmpty()) {
+//            cicloReprobado++;
+//        }
         System.out.println("Curso hasta: " + cicloCursado + " Reprobo: " + cicloReprobado);
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
@@ -676,12 +717,15 @@ public class FrmAlumnoCursoCTR {
             if (requisitos.size() > 0) {
                 matricula = false;
             }
-
+            System.out.println("Vamos a comprobar de: " + cursos.get(i).getId_materia().getNombre());
             for (int j = 0; j < requisitos.size(); j++) {
                 requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
                         requisitos.get(j).getMateriaRequisito().getId());
                 System.out.println("Estado de la materia: " + requisito.getEstado());
-                if (!requisito.getEstado().equals("C") && !requisito.getEstado().equals("R")) {
+                System.out.println("Materia: " + requisitos.get(j).getMateriaRequisito().getNombre());
+                if (!requisito.getEstado().equals("C")
+                        && !requisito.getEstado().equals("R")
+                        && !requisito.getEstado().equals("M")) {
                     for (int k = 0; k < cursos.size(); k++) {
                         if (cursos.get(k).getId_materia().getNombre().
                                 equals(requisitos.get(j).getMateriaRequisito().getNombre())) {
@@ -881,5 +925,21 @@ public class FrmAlumnoCursoCTR {
                 }
             }
         });
+    }
+
+    /**
+     * Llamamos al reporte que se gera al matriculas un alumno
+     */
+    private void llamaReporteMatricula(String cedula, int idPrd) {
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("cedula", cedula);
+            parametro.put("idPeriodo", idPrd);
+            System.out.println(parametro);
+            conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
     }
 }

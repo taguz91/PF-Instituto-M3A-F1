@@ -9,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -173,7 +171,7 @@ public class ConectarDB {
             rs = st.executeQuery(sql);
             metaData = rs.getMetaData();
 //            System.out.println("--------SQL----------");
-//            //System.out.println(ct.getSchema());
+//            System.out.println(ct.getSchema());
 //            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
 //            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
 //            System.out.println("Nombre Base de datos: " + ct.getCatalog());
