@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="15251eee-2da6-4047-bd6c-6a1d139a9f50">
-	<property name="ireport.zoom" value="1.210000000000007"/>
-	<property name="ireport.x" value="794"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.zoom" value="0.683013455365075"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -162,22 +162,27 @@ WHERE
 			</line>
 			<textField>
 				<reportElement x="318" y="80" width="232" height="20" uuid="c4fcf949-2e30-4d6c-a924-9e8fb9b866be"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="277" y="112" width="273" height="20" uuid="4eebe16f-2ce9-4c6d-9792-5b302943526d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="277" y="147" width="41" height="20" uuid="77d95b6c-7709-4be5-b663-c0384e73467b"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1130" y="91" width="259" height="20" uuid="31fcb59d-89c5-4d75-bf25-fb430f249e6d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1130" y="123" width="259" height="20" uuid="9047f7bb-2d92-4061-b723-691339cae5c8"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -405,6 +410,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{apellidos_al}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -415,6 +421,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -425,6 +432,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nombres_al}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -435,6 +443,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -445,6 +454,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -455,6 +465,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{N° Faltas}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -465,6 +476,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -475,6 +487,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -485,6 +498,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
 			</textField>
 			<subreport>
@@ -633,6 +647,7 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -641,7 +656,7 @@ WHERE
 		<band height="3" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="30" splitType="Stretch"/>
+		<band height="29" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="178" splitType="Stretch">
@@ -670,10 +685,12 @@ WHERE
 			</line>
 			<textField>
 				<reportElement x="383" y="118" width="234" height="20" uuid="6814a59f-f3a6-47a7-bc8b-b33dba2b32de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="900" y="118" width="234" height="20" uuid="3db5f174-f911-41ad-ac5c-1ac24f062c55"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 		</band>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de92be63-ec0b-4785-9199-21f77bc387e9">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="220"/>
+	<property name="ireport.zoom" value="0.699761070314601"/>
+	<property name="ireport.x" value="22"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -74,7 +74,7 @@ WHERE
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
 	
-	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido  ]]>
+	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
@@ -151,29 +151,34 @@ WHERE
 				<reportElement x="0" y="210" width="1520" height="1" uuid="9c1b4698-9ddb-4317-a211-643826a19d6c"/>
 			</line>
 			<textField>
-				<reportElement x="1142" y="124" width="100" height="20" uuid="611749a7-5f1e-4207-b400-1db73b543e9a"/>
+				<reportElement x="1142" y="124" width="244" height="20" uuid="611749a7-5f1e-4207-b400-1db73b543e9a"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="257" y="148" width="100" height="20" uuid="b37aedca-d6bf-4a08-be60-c952abf1321d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="113" width="267" height="20" uuid="72733486-3dde-417e-9e0f-21c2d6849a33"/>
+				<reportElement x="265" y="113" width="334" height="20" uuid="72733486-3dde-417e-9e0f-21c2d6849a33"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="315" y="81" width="189" height="20" uuid="aceaef37-6990-457f-b524-d9ceca051172"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1142" y="92" width="100" height="20" uuid="0500f547-e13e-4ac3-afc4-4a465cb754e7"/>
+				<reportElement x="1142" y="92" width="244" height="20" uuid="0500f547-e13e-4ac3-afc4-4a465cb754e7"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="5" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
@@ -269,74 +274,125 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="388" y="0" width="44" height="20" uuid="09d67b2c-bcdc-4638-ba98-5e77073fc4e0"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{id_alumno}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="432" y="0" width="100" height="20" uuid="765831d9-d633-430a-9bd3-b3635cdf8318"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="532" y="0" width="156" height="20" uuid="8c005dc5-90b7-4e8f-8af3-dc7676b7b5f6"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Apellidos_al}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="688" y="0" width="137" height="20" uuid="8f622c46-51f9-4654-9842-ae854dca34a5"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Nombres_al}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="825" y="0" width="67" height="20" uuid="0e2697dc-8190-45a6-8e71-3955dd779f67"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{almn_curso_nota_final}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="892" y="0" width="79" height="20" uuid="c5050c7b-c25d-427c-b1b0-9e2aa3ddf263"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="971" y="0" width="77" height="20" uuid="288a91e2-2822-412c-8fd7-dacdbaac43ec"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="5" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="81" splitType="Stretch">
+		<band height="156" splitType="Stretch">
 			<line>
-				<reportElement x="365" y="10" width="234" height="1" uuid="79263748-a5b0-4eb3-927a-9bb6d440806a"/>
+				<reportElement x="367" y="94" width="234" height="1" uuid="79263748-a5b0-4eb3-927a-9bb6d440806a"/>
 			</line>
 			<staticText>
-				<reportElement x="432" y="42" width="100" height="20" uuid="43be783c-7191-49d2-b91f-5bd59e3c002d"/>
+				<reportElement x="434" y="126" width="100" height="20" uuid="43be783c-7191-49d2-b91f-5bd59e3c002d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1320" y="2" width="166" height="20" uuid="c023b896-9ef8-42de-b210-9c486b032ad7"/>
+				<reportElement x="1332" y="94" width="166" height="20" uuid="c023b896-9ef8-42de-b210-9c486b032ad7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="948" y="42" width="100" height="20" uuid="418b7551-3858-47bf-b234-a1c4a7e9f823"/>
+				<reportElement x="950" y="126" width="100" height="20" uuid="418b7551-3858-47bf-b234-a1c4a7e9f823"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
 			<line>
-				<reportElement x="882" y="11" width="234" height="1" uuid="c9c3611b-9ee7-4ce3-ad55-50b1cd61a193"/>
+				<reportElement x="884" y="95" width="234" height="1" uuid="c9c3611b-9ee7-4ce3-ad55-50b1cd61a193"/>
 			</line>
 			<textField>
-				<reportElement x="882" y="22" width="234" height="20" uuid="fe1fdd43-a73b-4133-a0dc-ca30034c86c6"/>
+				<reportElement x="884" y="106" width="234" height="20" uuid="fe1fdd43-a73b-4133-a0dc-ca30034c86c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="365" y="22" width="232" height="20" uuid="efddd8eb-7334-41bb-900c-0f86d115a69c"/>
+				<reportElement x="367" y="106" width="232" height="20" uuid="efddd8eb-7334-41bb-900c-0f86d115a69c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
