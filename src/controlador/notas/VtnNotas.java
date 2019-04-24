@@ -606,7 +606,8 @@ public class VtnNotas {
 
     private static Consumer<NotasBD> agregar(Vector<Object> row, int posicion) {
         return (objNota) -> {
-//            System.out.println(objNota);
+            //System.out.println(objNota);
+
             row.add(posicion, objNota.getNotaValor());
         };
     }
@@ -621,6 +622,8 @@ public class VtnNotas {
         row.add(3, obj.getAlumno().getSegundoApellido());
         row.add(4, obj.getAlumno().getPrimerNombre());
         row.add(5, obj.getAlumno().getSegundoNombre());
+
+        System.out.println(obj.getId());
 
         obj.getNotas().stream().filter(buscar("APORTE 1")).forEach(agregar(row, 6));
         obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).forEach(agregar(row, 7));
