@@ -121,6 +121,7 @@ CREATE TABLE "Carreras"(
   "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true',
+  "carrera_semanas" smallint DEFAULT 0,
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
