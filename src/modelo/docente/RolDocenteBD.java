@@ -31,7 +31,7 @@ public class RolDocenteBD extends RolDocenteMD {
 
     public boolean InsertarRol() {
         String nsql = "INSERT INTO public.\"RolesDocente\"(\n"
-                + "	id_docente, id_rol_prd, rol_docente_activo)\n"
+                + "	id_docente, id_rol_prd)\n"
                 + "	VALUES (" + getIdDocente().getIdDocente() + ",+" + getIdRolPeriodo().getId_rol() + ");";
 
         if (conecta.nosql(nsql) == null) {

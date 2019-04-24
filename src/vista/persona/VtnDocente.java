@@ -116,11 +116,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         cbxDocentesEliminados = new javax.swing.JCheckBox();
         btnFinContratacion = new javax.swing.JButton();
         btnAsignarRol = new javax.swing.JButton();
-<<<<<<< HEAD
         btnhorasAsignadas = new javax.swing.JButton();
-=======
-
->>>>>>> parent of 19657ec8... insertar rrolDoc
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -176,12 +172,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnFinContratacion.setText("Fin de Contratación");
 
         btnAsignarRol.setText("Asignar rol");
-
-<<<<<<< HEAD
-
         btnhorasAsignadas.setText("horas asignacion ");
-=======
->>>>>>> parent of 19657ec8... insertar rrolDoc
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -268,10 +259,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteDocente;
     private javax.swing.JButton btnReporteDocenteMateria;
-<<<<<<< HEAD
     private javax.swing.JButton btnhorasAsignadas;
-=======
->>>>>>> parent of 19657ec8... insertar rrolDoc
     private javax.swing.JCheckBox cbxDocentesEliminados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;

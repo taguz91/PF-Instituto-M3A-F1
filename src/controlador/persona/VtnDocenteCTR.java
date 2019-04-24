@@ -1,5 +1,4 @@
 package controlador.persona;
-
 import controlador.docente.JDFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
@@ -17,6 +16,7 @@ import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -55,6 +55,7 @@ public class VtnDocenteCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final RolPeriodoBD rolPer;
+    private final RolDocenteBD rolDoc;
     private final PeriodoLectivoBD prd;
     private DocenteMD d;
     //Lista de todos los periodos lectivos
@@ -76,6 +77,7 @@ public class VtnDocenteCTR {
         this.permisos = permisos;
         this.rolPer = new RolPeriodoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
+        this.rolDoc = new RolDocenteBD(conecta);        
         //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
@@ -480,15 +482,11 @@ public class VtnDocenteCTR {
 
 
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
       public void asignarRolDocente() {
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        String docente= docentesMD.get(posFila).getNombreCompleto();
         if (posFila >= 0) {
             periodos = prd.cargarPeriodos();
             ArrayList<String> nmPrd = new ArrayList();
-            ArrayList<String> nmRol = new ArrayList();
             nmPrd.add("Seleccione");
             periodos.forEach(p -> {
                 nmPrd.add(p.getNombre_PerLectivo());
@@ -497,7 +495,6 @@ public class VtnDocenteCTR {
                     "Lista de periodos lectivos", "Periodos lectivos",
                     JOptionPane.QUESTION_MESSAGE, null,
                     nmPrd.toArray(), 0);
-<<<<<<< HEAD
 
             System.out.println("Posicion: ");
             if (np == null) {
@@ -529,35 +526,28 @@ public class VtnDocenteCTR {
             if (!nr.equals("Seleccione")) {
                 int posRol = nmRol.indexOf(nr);
                 insertarRolDocente(roles.get(posRol - 1));
-=======
-            if(np==null){
-               JOptionPane.showMessageDialog(null, "Seleccione un periodo");
->>>>>>> parent of 19657ec8... insertar rrolDoc
             }else{
-            roles = rolPer.cargarRolesWhere(np.toString());
-            nmRol.add("Seleccione");
-            roles.forEach(r -> {
-                nmRol.add(r.getNombre_rol());
-            });
-            Object nr = JOptionPane.showInputDialog(vtnPrin,
-                    "Lista de roles por periodos", "Roles de Docente",
-                    JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
-            JOptionPane.showMessageDialog(null, "Al docente:\n"
-                    +docente+"\n se le asigno el rol de:\n"+nr);
-            System.out.println(nr.toString());
+                JOptionPane.showMessageDialog(null, "Selleccione un rol");
+                selecionarRol(idPrd);
+            }
         }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
-        }
-    }
-<<<<<<< HEAD
-        
+
     }
 
-=======
->>>>>>> parent of efd84c69... METODO ASIGNAR ROL DOCENTE
-=======
->>>>>>> parent of efd84c69... METODO ASIGNAR ROL DOCENTE
+    public void insertarRolDocente(RolPeriodoMD rol) {
+        System.out.println("Ya podemos ingresar el rol: "+rol);
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        rolDoc.setIdDocente(docentesMD.get(posFila));
+        rolDoc.setIdRolPeriodo(rol);
+        if(rolDoc.InsertarRol()== true){
+            JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+        } else{
+            JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+        }
+    }
+        
+    
+
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
         public void seleccionarPeriodohoras() {
         periodos = prd.cargarPeriodos();
@@ -606,6 +596,4 @@ public class VtnDocenteCTR {
         }
     }
 
-=======
->>>>>>> parent of 19657ec8... insertar rrolDoc
 }

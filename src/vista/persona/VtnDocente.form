@@ -222,13 +222,10 @@
         <Property name="text" type="java.lang.String" value="Asignar rol"/>
       </Properties>
     </Component>
-<<<<<<< HEAD
     <Component class="javax.swing.JButton" name="btnhorasAsignadas">
       <Properties>
         <Property name="text" type="java.lang.String" value="horas asignacion "/>
       </Properties>
     </Component>
-=======
->>>>>>> parent of 19657ec8... insertar rrolDoc
   </SubComponents>
 </Form>
