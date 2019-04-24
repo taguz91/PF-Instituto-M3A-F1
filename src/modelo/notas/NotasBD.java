@@ -75,6 +75,8 @@ public class NotasBD extends NotasMD {
             System.out.println(e.getMessage());
         }
 
+        System.out.println(lista.size() + "<--------------");
+
         if (lista.isEmpty()) {
             String SELECT_COMPROBACION = "SELECT\n"
                     + "\"public\".\"Cursos\".id_curso,\n"
@@ -100,7 +102,7 @@ public class NotasBD extends NotasMD {
                     + "\"TipoDeNota\".tipo_nota_nombre <> 'NOTA FINAL'";
             ResultSet info = ResourceManager.Query(SELECT_COMPROBACION);
 
-            System.out.println(SELECT_COMPROBACION);
+            //System.out.println(SELECT_COMPROBACION);
 
             try {
 
