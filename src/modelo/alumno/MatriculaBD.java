@@ -29,12 +29,12 @@ public class MatriculaBD extends MatriculaMD {
         
         System.out.println("SE matricula: ");
         System.out.println(nsql);
-//        if (conecta.nosql(nsql) == null) {
-//            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
-//                    + "compruebe su conexion a internet.");
-//        }
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
+                    + "compruebe su conexion a internet.");
+        }
     }
 
     public ArrayList<MatriculaMD> cargarMatriculas() {
@@ -70,9 +70,8 @@ public class MatriculaBD extends MatriculaMD {
      */
     public MatriculaMD buscarMatriculaAlmnPrd(int idAlm, int idPrd){
         MatriculaMD m = null; 
-        sql = "SELECT id_matricula, id_alumno, id_prd_lectivo, matricula_fecha, "
-                + "\n"
-                + "FROM public.\"Matricula\" m, public.\"A\" \n "
+        sql = "SELECT id_matricula, id_alumno, id_prd_lectivo, matricula_fecha \n"
+                + "FROM public.\"Matricula\" \n "
                 + "WHERE id_prd_lectivo = "+idPrd+" AND id_alumno = "+idAlm+";"; 
         ResultSet rs = conecta.sql(sql);
         if (rs != null) {
