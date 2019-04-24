@@ -17,6 +17,7 @@ import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -55,6 +56,7 @@ public class VtnDocenteCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     private final RolPeriodoBD rolPer;
+    private final RolDocenteBD rolDoc;
     private final PeriodoLectivoBD prd;
     private DocenteMD d;
     //Lista de todos los periodos lectivos
@@ -76,6 +78,7 @@ public class VtnDocenteCTR {
         this.permisos = permisos;
         this.rolPer = new RolPeriodoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
+        this.rolDoc = new RolDocenteBD(conecta);        
         //Cambiamos el estado del cursos
         vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Docentes");
@@ -459,11 +462,9 @@ public class VtnDocenteCTR {
 
     public void asignarRolDocente() {
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        String docente= docentesMD.get(posFila).getNombreCompleto();
         if (posFila >= 0) {
             periodos = prd.cargarPeriodos();
             ArrayList<String> nmPrd = new ArrayList();
-            ArrayList<String> nmRol = new ArrayList();
             nmPrd.add("Seleccione");
             periodos.forEach(p -> {
                 nmPrd.add(p.getNombre_PerLectivo());
@@ -472,23 +473,57 @@ public class VtnDocenteCTR {
                     "Lista de periodos lectivos", "Periodos lectivos",
                     JOptionPane.QUESTION_MESSAGE, null,
                     nmPrd.toArray(), 0);
-            if(np==null){
-               JOptionPane.showMessageDialog(null, "Seleccione un periodo");
-            }else{
-            roles = rolPer.cargarRolesWhere(np.toString());
-            nmRol.add("Seleccione");
-            roles.forEach(r -> {
-                nmRol.add(r.getNombre_rol());
-            });
-            Object nr = JOptionPane.showInputDialog(vtnPrin,
-                    "Lista de roles por periodos", "Roles de Docente",
-                    JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
-            JOptionPane.showMessageDialog(null, "Al docente:\n"
-                    +docente+"\n se le asigno el rol de:\n"+nr);
-            System.out.println(nr.toString());
-        }
+
+            System.out.println("Posicion: ");
+            if (np == null) {
+                JOptionPane.showMessageDialog(null, "Seleccione un periodo");
+                asignarRolDocente();
+            } else {
+
+                System.out.println("Este es el periodo: " + np.toString());
+                int posPrd = nmPrd.indexOf(np);
+                System.out.println("La posicion es: " + posPrd + " El nombre es: " + periodos.get(posPrd - 1).getNombre_PerLectivo());
+
+                selecionarRol(periodos.get(posPrd - 1).getId_PerioLectivo());
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
         }
     }
-}
+
+    private void selecionarRol(int idPrd) {
+        ArrayList<String> nmRol = new ArrayList();
+        roles = rolPer.cargarRolesPorPeriodo(idPrd);
+        nmRol.add("Seleccione");
+        roles.forEach(r -> {
+            nmRol.add(r.getNombre_rol());
+        });
+        Object nr = JOptionPane.showInputDialog(vtnPrin,
+                "Lista de roles por periodos", "Roles de Docente",
+                JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
+        if (nr != null) {
+            if (!nr.equals("Seleccione")) {
+                int posRol = nmRol.indexOf(nr);
+                insertarRolDocente(roles.get(posRol - 1));
+            }else{
+                JOptionPane.showMessageDialog(null, "Selleccione un rol");
+                selecionarRol(idPrd);
+            }
+        }
+
+    }
+
+    public void insertarRolDocente(RolPeriodoMD rol) {
+        System.out.println("Ya podemos ingresar el rol: "+rol);
+        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        rolDoc.setIdDocente(docentesMD.get(posFila));
+        rolDoc.setIdRolPeriodo(rol);
+        if(rolDoc.InsertarRol()== true){
+            JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+        } else{
+            JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+        }
+    }
+        
+    }
+
