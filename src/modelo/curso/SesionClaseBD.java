@@ -81,12 +81,13 @@ public class SesionClaseBD extends SesionClaseMD {
             return null;
         }
     }
-    
+
     /**
-     * Cargamos el horario del curso por calse de ese dia 
+     * Cargamos el horario del curso por calse de ese dia
+     *
      * @param idCurso
      * @param dia
-     * @return 
+     * @return
      */
     public ArrayList<SesionClaseMD> cargarHorarioCursoPorDia(int idCurso, int dia) {
         sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
@@ -117,10 +118,44 @@ public class SesionClaseBD extends SesionClaseMD {
     }
     
     /**
+     * Cargamos el horario de un curso.
+     * @param idCurso
+     * @return 
+     */
+    public ArrayList<SesionClaseMD> cargarHorarioCurso(int idCurso) {
+        sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
+                + "	FROM public.\"SesionClase\" \n"
+                + "	WHERE id_curso = " + idCurso + ";";
+        ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
+        ResultSet rs = conecta.sql(sql);
+        //System.out.println(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    SesionClaseMD s = new SesionClaseMD();
+                    s.setDia(rs.getInt("dia_sesion"));
+                    s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
+                    s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
+                    s.setId(rs.getInt("id_sesion"));
+
+                    sesiones.add(s);
+                }
+                return sesiones;
+            } catch (SQLException e) {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Cargamos todo el horario del curso por dia.
+     *
      * @param nombreCurso
      * @param dia
-     * @return 
+     * @param idPrdLectivo
+     * @return
      */
     public ArrayList<SesionClaseMD> cargarHorarioCursoPorDia(String nombreCurso, int dia, int idPrdLectivo) {
         sql = "SELECT id_sesion, sc.id_curso, \n"
@@ -134,9 +169,9 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "WHERE sc.id_curso IN (\n"
                 + "	SELECT id_curso\n"
                 + "	FROM public.\"Cursos\"\n"
-                + "	WHERE id_prd_lectivo = "+idPrdLectivo+"  AND \n"
-                + "	curso_nombre = '"+nombreCurso+"'\n"
-                + ") AND dia_sesion = "+dia+" AND\n"
+                + "	WHERE id_prd_lectivo = " + idPrdLectivo + "  AND \n"
+                + "	curso_nombre = '" + nombreCurso + "'\n"
+                + ") AND dia_sesion = " + dia + " AND\n"
                 + "c.id_curso = sc.id_curso AND \n"
                 + "d.id_docente = c.id_docente AND\n"
                 + "p.id_persona = d.id_persona AND \n"
@@ -152,15 +187,15 @@ public class SesionClaseBD extends SesionClaseMD {
                     s.setId(rs.getInt("id_sesion"));
                     s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
                     s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
-                    CursoMD c = new CursoMD(); 
+                    CursoMD c = new CursoMD();
                     c.setId_curso(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD(); 
+                    MateriaMD m = new MateriaMD();
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCodigo(rs.getString("materia_codigo"));
-                    DocenteMD d = new DocenteMD(); 
+                    DocenteMD d = new DocenteMD();
                     d.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     d.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    
+
                     c.setId_docente(d);
                     c.setId_materia(m);
                     s.setCurso(c);

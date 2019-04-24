@@ -1,5 +1,7 @@
 package controlador.alumno;
 
+import controlador.curso.PnlHorarioCursoCTR;
+import controlador.estilo.CambioPnlCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -18,6 +20,8 @@ import modelo.estilo.TblEstilo;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.curso.SesionClaseBD;
+import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
@@ -27,6 +31,8 @@ import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.FrmAlumnoCurso;
+import vista.curso.JDInfoHorario;
+import vista.curso.PnlHorarioClase;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -71,6 +77,8 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MallaAlumnoMD> mallaCursadas;
     private ArrayList<MallaAlumnoMD> mallaAnuladas;
     private ArrayList<MateriaRequisitoMD> requisitos;
+    private ArrayList<SesionClaseMD> horarioAlmn, horario;
+    private SesionClaseBD sesion;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
 
@@ -84,7 +92,8 @@ public class FrmAlumnoCursoCTR {
      * datos.
      * @param ctrPrin VtnPrincipalCTR: Controlador de ventana principal.
      */
-    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta,
+            VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCurso = frmAlmCurso;
         this.conecta = conecta;
@@ -101,6 +110,7 @@ public class FrmAlumnoCursoCTR {
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.mat = new MateriaBD(conecta);
         this.matReq = new MateriaRequisitoBD(conecta);
+        this.sesion = new SesionClaseBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
         frmAlmCurso.show();
@@ -117,7 +127,7 @@ public class FrmAlumnoCursoCTR {
         ocultarErrores();
         //Pasamos los modelos a las tablas 
         String[] titulo1 = {"Materias no seleccionadas"};
-        String[] titulo2 = {"Materias seleccionadas"};
+        String[] titulo2 = {"Materias seleccionadas", "C"};
         String[] tituloAlmn = {"Cédula", "Alumnos"};
         String[][] datos1 = {};
         String[][] datos2 = {};
@@ -132,6 +142,9 @@ public class FrmAlumnoCursoCTR {
         TblEstilo.formatoTbl(frmAlmCurso.getTblMateriasSelec());
         TblEstilo.formatoTbl(frmAlmCurso.getTblAlumnos());
 
+        //Tamaño de el nombre curso 
+        TblEstilo.columnaMedida(frmAlmCurso.getTblMateriasSelec(), 1, 30);
+
         //Acciones de los combos  
         frmAlmCurso.getCmbPrdLectivo().addActionListener(e -> clickPrdLectivo());
         frmAlmCurso.getCmbCurso().addActionListener(e -> cargarMaterias());
@@ -140,7 +153,8 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getBtnPasarTodos().addActionListener(e -> pasarTodasMaterias());
         frmAlmCurso.getBtnRegresar1().addActionListener(e -> regresarUnaMateria());
         frmAlmCurso.getBtnRegresarTodos().addActionListener(e -> regresarTodasMaterias());
-        frmAlmCurso.getBtnReprobadas().addActionListener(e -> clickMateriasReprobadas());
+        frmAlmCurso.getBtnReprobadas().addActionListener(e -> mostrarInformacion("R"));
+        frmAlmCurso.getBtnHorarioCurso().addActionListener(e -> clickHorario());
 
         //Iniciamos el txtbuscador y el btn  los activamos cuando escojamos un periodo
         buscadoresEstado(false);
@@ -149,9 +163,9 @@ public class FrmAlumnoCursoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String aguja = frmAlmCurso.getTxtBuscar().getText().trim();
-                if (aguja.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscarAlumnos(aguja);
-                } else {
+                } else if (aguja.length() == 0) {
                     //Si no tipamos mas de tres letras borramos los datos
                     mdAlm.setRowCount(0);
                     frmAlmCurso.getBtnReprobadas().setVisible(false);
@@ -173,7 +187,8 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getBtnMtCursadas().addActionListener(e -> mostrarInformacion("C"));
         frmAlmCurso.getBtnAnuladas().addActionListener(e -> mostrarInformacion("A"));
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
-
+        //Ocultamos el boton 
+        frmAlmCurso.getBtnAnuladas().setVisible(false);
         inicarValidaciones();
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -213,6 +228,18 @@ public class FrmAlumnoCursoCTR {
         if (posCar < 1) {
             guardar = false;
         }
+        
+        System.out.println("Antes de borrar teniamos: "+cursosSelec.size());
+        //Borro los choques de horas  
+        cursosSelec.forEach(c -> {
+            if (c.getCurso_nombre().charAt(0) == 'C') {
+                if(cursosSelec.remove(c)){
+                    System.out.println("Eliminamos: "+c.getCurso_nombre()+" Materia: "+
+                            c.getId_materia().getNombre());
+                }
+            }
+        });
+        System.out.println("Despues de borrar tenemos: "+cursosSelec.size());
 
         if (guardar) {
             System.out.println("Ingresaremos " + cursosSelec.size() + " cursos.");
@@ -228,22 +255,28 @@ public class FrmAlumnoCursoCTR {
             int r = JOptionPane.showConfirmDialog(vtnPrin, alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
                     + "Sera matricula en estas materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
-                if (almnCurso.guardarAlmnCurso()) {
-                    //Reiniciamos todo 
-                    frmAlmCurso.getTxtBuscar().setText("");
-                    frmAlmCurso.getCmbCurso().removeAllItems();
-                    mdAlm.setRowCount(0);
-                    mdMatPen.setRowCount(0);
-                    mdMatSelec.setRowCount(0);
-                    cursosSelec = new ArrayList();
-                    frmAlmCurso.getBtnReprobadas().setVisible(false);
-                };
+//                if (almnCurso.guardarAlmnCurso()) {
+//                    //Reiniciamos todo 
+//                    frmAlmCurso.getTxtBuscar().setText("");
+//                    frmAlmCurso.getCmbCurso().removeAllItems();
+//                    mdAlm.setRowCount(0);
+//                    mdMatPen.setRowCount(0);
+//                    mdMatSelec.setRowCount(0);
+//                    cursosSelec = new ArrayList();
+//                    frmAlmCurso.getBtnReprobadas().setVisible(false);
+//                }
+                System.out.println("-----------------------------");
+                System.out.println("H O R A R I O");
+                horarioAlmn.forEach(h -> {
+                    System.out.println("Dia: " + h.getDia() + "--" + h.getHoraIni() + " || " + h.getHoraFin());
+                });
+                System.out.println("-----------------------------");
             }
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "El formulario contiene errores.");
         }
     }
-
+    
     /**
      * Ocultamos los errores en los formularios.
      */
@@ -369,6 +402,8 @@ public class FrmAlumnoCursoCTR {
      * @param posPrd Int: Poscion en el array del periodo seleccionado.
      */
     private void clasificarMaterias(int posAlmn, int posPrd) {
+        //Iniciamos los array de nuevo
+        horarioAlmn = new ArrayList<>();
         cursosSelec = new ArrayList<>();
         mdMatSelec.setRowCount(0);
         //Se reinciia el ciclo en el que esta matriculado
@@ -410,7 +445,6 @@ public class FrmAlumnoCursoCTR {
                 }
             });
         } else {
-            cicloReprobado++;
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
 
@@ -422,11 +456,14 @@ public class FrmAlumnoCursoCTR {
                 }
             });
         } else {
-            cicloReprobado++;
             frmAlmCurso.getBtnAnuladas().setVisible(false);
         }
 
-        System.out.println("Curso hasta. : " + cicloCursado + " Reprobo: " + cicloReprobado);
+        if (mallaPerdidas.isEmpty() && mallaAnuladas.isEmpty()) {
+            cicloReprobado++;
+        }
+
+        System.out.println("Curso hasta: " + cicloCursado + " Reprobo: " + cicloReprobado);
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
@@ -692,7 +729,7 @@ public class FrmAlumnoCursoCTR {
         mdMatSelec.setRowCount(0);
         if (cursosSelec != null) {
             cursosSelec.forEach(c -> {
-                Object[] valores = {c.getId_materia().getNombre()};
+                Object[] valores = {c.getId_materia().getNombre(), c.getCurso_nombre()};
                 mdMatSelec.addRow(valores);
             });
         }
@@ -712,6 +749,8 @@ public class FrmAlumnoCursoCTR {
             //Rellenamos las dos tablas con los item seleccionados
             llenarTblMatPen(cursosPen);
             llenarTblMatSelec(cursosSelec);
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Seleecione una materia.");
         }
     }
 
@@ -721,7 +760,17 @@ public class FrmAlumnoCursoCTR {
     private void pasarTodasMaterias() {
         //Pasamos todos las materias que nos quedan en la tabla cursos 
         //La rrellenamos en cursos seleccionados
-        cursosPen.forEach(c -> cursosSelec.add(c));
+        cursosPen.forEach(c -> {
+            horario = sesion.cargarHorarioCurso(c.getId_curso());
+            if (c.getCurso_nombre().charAt(0) != 'C') {
+                if (chocanHoras(horario)) {
+                    c.setCurso_nombre("C-" + c.getCurso_nombre());
+                } else {
+                    llenarHorarioAlmn(horario);
+                }
+            }
+            cursosSelec.add(c);
+        });
         //Borramos todas las materias de cursos 
         cursosPen = new ArrayList();
         llenarTblMatPen(cursosPen);
@@ -736,11 +785,18 @@ public class FrmAlumnoCursoCTR {
         if (posMat >= 0) {
             //Pasamos u cursod e selecciona a la lista de no seleccinados
             cursosPen.add(cursosSelec.get(posMat));
+            //Eliminamos el horario de esta materia 
+            if (cursosSelec.get(posMat).getCurso_nombre().charAt(0) != 'C') {
+                horario = sesion.cargarHorarioCurso(cursosSelec.get(posMat).getId_curso());
+                quitarHorarioAlmn(horario);
+            }
             //Eliminamos la materia que fue pasada 
             cursosSelec.remove(posMat);
             //Volvemos a llenar las tablas
             llenarTblMatPen(cursosPen);
             llenarTblMatSelec(cursosSelec);
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Seleecione una materia.");
         }
     }
 
@@ -751,15 +807,79 @@ public class FrmAlumnoCursoCTR {
         cursosSelec.forEach(c -> cursosPen.add(c));
         //Reiniciamos el array para borrar todos los datos
         cursosSelec = new ArrayList();
+        horarioAlmn = new ArrayList<>();
         llenarTblMatPen(cursosPen);
         llenarTblMatSelec(cursosSelec);
     }
 
     /**
-     * Se muestran las materias reprobadas de un alumno
+     * Mostramos el horario del curso que esta seleccionado
      */
-    private void clickMateriasReprobadas() {
-        mostrarInformacion("R");
+    public void clickHorario() {
+        int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
+        int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
+        if (posPrd > 0 && posCurso > 0) {
+            JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
+            PnlHorarioClase pnl = new PnlHorarioClase();
+            CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
+            PnlHorarioCursoCTR ctr = new PnlHorarioCursoCTR(pnl,
+                    frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
+                    periodos.get(posPrd - 1).getId_PerioLectivo(), conecta);
+            ctr.iniciar();
+            jd.setLocationRelativeTo(vtnPrin);
+            jd.setVisible(true);
+            jd.setTitle("Horario de " + frmAlmCurso.getCmbCurso().getSelectedItem().toString());
+            ctrPrin.eventoJDCerrar(jd);
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Seleccione un curso primero.");
+        }
     }
 
+    private boolean choque;
+
+    /**
+     * Comprobamos si se choca el horario del alumno
+     *
+     * @param horario
+     * @return
+     */
+    public boolean chocanHoras(ArrayList<SesionClaseMD> horario) {
+        choque = false;
+        horarioAlmn.forEach(h -> {
+            horario.forEach(hc -> {
+                if ((h.getDia() == hc.getDia() && h.getHoraIni() == hc.getHoraIni())
+                        || (h.getDia() == hc.getDia() && h.getHoraFin() == hc.getHoraIni())) {
+                    choque = true;
+                }
+            });
+        });
+        return choque;
+    }
+
+    /**
+     * Llenamos el array con el horario del alumno
+     *
+     * @param horario
+     */
+    public void llenarHorarioAlmn(ArrayList<SesionClaseMD> horario) {
+        horario.forEach(h -> {
+            horarioAlmn.add(h);
+        });
+    }
+
+    /**
+     * Quitamos el horario de un alumno si excluye esa materia
+     *
+     * @param horario
+     */
+    public void quitarHorarioAlmn(ArrayList<SesionClaseMD> horario) {
+        horario.forEach(h -> {
+            for (int i = 0; i < horarioAlmn.size(); i++) {
+                if (h.getId() == horarioAlmn.get(i).getId()) {
+                    horarioAlmn.remove(i);
+                    break;
+                }
+            }
+        });
+    }
 }

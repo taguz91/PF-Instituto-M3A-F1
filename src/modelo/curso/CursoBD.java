@@ -256,6 +256,7 @@ public class CursoBD extends CursoMD {
                     c.setId_materia(m);
                     c.setCurso_capacidad(rs.getInt("curso_capacidad"));
                     c.setCurso_ciclo(rs.getInt("curso_ciclo"));
+                    c.setCurso_nombre(nombre);
 
                     cursos.add(c);
                 }
