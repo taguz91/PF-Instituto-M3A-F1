@@ -9,7 +9,7 @@
 foto.png
 
 #Para pdfs de silabo 
-/pdfs/
+*.pdf
 
 # Compiled class file
 *.class
