@@ -66,7 +66,7 @@ public class ControladorCRUD {
 
         crud.setLocation((principal.getDpnlPrincipal().getSize().width - crud.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - crud.getSize().height) / 2);
-
+        
         opcionesImpresion(false);
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
@@ -80,28 +80,51 @@ public class ControladorCRUD {
 
         // Boton EDITAR Silabo
         crud.getBtnEditar().addActionListener((ActionEvent ae) -> {
-
+         int row =crud.getTblSilabos().getSelectedRow();
+            if (row!=-1) {
+                
             crud.dispose();
 
             ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(), principal, conexion);
 
             csu.iniciarControlador();
+            
+            }else{
+             JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
-
+        int row =crud.getTblSilabos().getSelectedRow();
+            if (row!=-1) {
+                
+            
             eliminarSilabo();
             cargarSilabosDocente();
+            
+            }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
 
         });
 
         crud.getBtnImprimir().addActionListener((ActionEvent ae) -> {
+            
+            
+            //VALIDA QUE SELECCIONE UN SILABO E IMPRIMA
+            int row =crud.getTblSilabos().getSelectedRow();
+            
+            if (row!=-1) {
+                
             opcionesImpresion(true);
 
             ControladorSilaboR csr = new ControladorSilaboR(crud, seleccionarSilabo(), conexion, principal);
 
             csr.iniciarControlador();
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
 
         });
 
@@ -180,7 +203,7 @@ public class ControladorCRUD {
     public SilaboMD seleccionarSilabo() {
 
         int seleccion = crud.getTblSilabos().getSelectedRow();
-
+        
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
                 filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
@@ -206,5 +229,8 @@ public class ControladorCRUD {
         }
 
     }
+    
+    
+    
 
 }
