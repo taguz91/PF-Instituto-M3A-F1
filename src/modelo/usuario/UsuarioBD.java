@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.ConnDBPool;
+import modelo.ConnectionUtils;
 import modelo.ResourceManager;
 import modelo.persona.PersonaMD;
 
@@ -16,54 +19,59 @@ import modelo.persona.PersonaMD;
  */
 public class UsuarioBD extends UsuarioMD {
 
-    private ConnDBPool pool = null;
-    private Connection conn = null;
-    private PreparedStatement stmt = null;
-    private ResultSet rs = null;
+    private static ConnDBPool pool = null;
+    private static Connection conn = null;
+    private static PreparedStatement stmt = null;
+    private static ResultSet rs = null;
 
-    public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
-        super(username, password, estado, idPersona);
-        InitConn();
-    }
+    private static final String TABLA = " \"Usuarios\" ";
+    private static final String PRIMARY_KEY = " usu_username ";
 
-    public UsuarioBD() {
-        InitConn();
-    }
-
-    private void InitConn() {
+    static {
         pool = new ConnDBPool();
         try {
             conn = pool.getConnection();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            ConnectionUtils.close(conn);
         }
     }
 
-    private static final String TABLA = " \"Usuarios\" ";
-    private static final String PRIMARY_KEY = " usu_username ";
+    public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
+        super(username, password, estado, idPersona);
+    }
+
+    public UsuarioBD() {
+    }
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA + "\n"
+        String INSERT = ""
+                + "INSERT INTO " + TABLA + "\n"
                 + " (usu_username, usu_password, id_persona)\n"
-                + " VALUES ("
-                + " '" + getUsername() + "',\n"
-                + " set_byte( MD5('" + getPassword() + "')::bytea, 4,64), \n"
-                + " " + getPersona().getIdPersona() + "\n"
-                + " );\n"
-                + "CREATE ROLE \"" + getUsername() + "\" CREATEROLE LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
+                + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n"
+                + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
                 + " ";
 
-        System.out.println(INSERT);
+        Map<Integer, Object> parametros = new HashMap<>();
 
-        return ResourceManager.Statement(INSERT) == null;
+        parametros.put(1, getUsername());
+        parametros.put(2, getPassword());
+        parametros.put(3, getPersona().getIdPersona());
+        System.out.println();
+
+        try {
+            return ConnectionUtils.insert(INSERT, stmt, pool.getConnection(), parametros);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
 
     }
 
-    public static List<UsuarioMD> SelectAll() {
+    public static List<UsuarioMD> selectAll() {
         String SELECT = "SELECT\n"
                 + "    \"Usuarios\".usu_username,\n"
                 + "    \"Usuarios\".usu_password,\n"
@@ -86,9 +94,11 @@ public class UsuarioBD extends UsuarioMD {
 
     private static List<UsuarioMD> selectSimple(String QUERY) {
         List<UsuarioMD> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(QUERY);
         try {
+            conn = pool.getConnection();
+            stmt = conn.prepareStatement(QUERY);
+            System.out.println(stmt);
+            rs = stmt.executeQuery();
 
             while (rs.next()) {
                 UsuarioMD usuario = new UsuarioMD();
@@ -111,12 +121,14 @@ public class UsuarioBD extends UsuarioMD {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
+        } finally {
+            ConnectionUtils.close(conn);
+            ConnectionUtils.close(stmt);
+            ConnectionUtils.close(rs);
         }
-
         return lista;
-
     }
+
     public UsuarioBD selectWhereUsernamePassword() {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Usuarios\".id_persona,\n"
@@ -162,9 +174,9 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(rs);
-            pool.close(conn);
-            pool.close(stmt);
+            ConnectionUtils.close(rs);
+            ConnectionUtils.close(conn);
+            ConnectionUtils.close(stmt);
         }
 
         return usuario;

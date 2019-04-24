@@ -8,11 +8,7 @@ package modelo;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -60,38 +56,4 @@ public class ConnDBPool {
         String database = Propiedades.getPropertie("database");
         return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
-
-    /*
-        METODOS DE CIERRE
-     */
-    public void close(Connection conn) {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void close(PreparedStatement stmt) {
-        try {
-            if (stmt != null) {
-                stmt.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void close(ResultSet rs) {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }
