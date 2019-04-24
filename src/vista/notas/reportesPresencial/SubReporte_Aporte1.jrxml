@@ -52,6 +52,12 @@ WHERE
 		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="20" uuid="ff156279-3762-40b7-a288-23100547e3c0"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{Aporte 1}]]></textFieldExpression>
 			</textField>
 		</band>
