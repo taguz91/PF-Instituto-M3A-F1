@@ -227,7 +227,7 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            String Username = (String) vista.getTblUsuario().getValueAt(fila, 0);
+            String Username = vista.getTblUsuario().getValueAt(fila, 1).toString();
 
             if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");
@@ -236,7 +236,9 @@ public class VtnUsuarioCTR {
                 int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + Username);
 
                 if (opcion == 0) {
-
+                    if (modelo == null) {
+                        modelo = new UsuarioBD();
+                    }
                     modelo.eliminar(Username);
 
                     cargarTabla(UsuarioBD.selectAll());

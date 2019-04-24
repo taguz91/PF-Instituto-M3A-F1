@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import modelo.ConnDBPool;
-import modelo.ConnectionUtils;
+import modelo.UtilidadesConn;
 import modelo.ResourceManager;
 import modelo.persona.PersonaMD;
 
@@ -24,18 +24,10 @@ public class UsuarioBD extends UsuarioMD {
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
-    private static final String TABLA = " \"Usuarios\" ";
-    private static final String PRIMARY_KEY = " usu_username ";
-
     static {
         pool = new ConnDBPool();
-        try {
-            conn = pool.getConnection();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            ConnectionUtils.close(conn);
-        }
+        conn = pool.getConnection();
+        UtilidadesConn.close(conn);
     }
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -48,7 +40,7 @@ public class UsuarioBD extends UsuarioMD {
     public boolean insertar() {
 
         String INSERT = ""
-                + "INSERT INTO " + TABLA + "\n"
+                + "INSERT INTO \"Usuarios\" \n"
                 + " (usu_username, usu_password, id_persona)\n"
                 + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n"
                 + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
@@ -62,12 +54,7 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(3, getPersona().getIdPersona());
         System.out.println();
 
-        try {
-            return ConnectionUtils.ejecutar(INSERT, stmt, pool.getConnection(), parametros);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        return UtilidadesConn.ejecutar(INSERT, stmt, pool.getConnection(), parametros);
 
     }
 
@@ -122,9 +109,9 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            ConnectionUtils.close(conn);
-            ConnectionUtils.close(stmt);
-            ConnectionUtils.close(rs);
+            UtilidadesConn.close(conn);
+            UtilidadesConn.close(stmt);
+            UtilidadesConn.close(rs);
         }
         return lista;
     }
@@ -174,9 +161,9 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            ConnectionUtils.close(rs);
-            ConnectionUtils.close(conn);
-            ConnectionUtils.close(stmt);
+            UtilidadesConn.close(rs);
+            UtilidadesConn.close(conn);
+            UtilidadesConn.close(stmt);
         }
 
         return usuario;
@@ -206,7 +193,7 @@ public class UsuarioBD extends UsuarioMD {
 
         String SELECT = "SELECT\n"
                 + "    \"Usuarios\".usu_username\n"
-                + "   FROM " + TABLA + "\n"
+                + "   FROM \"Usuarios\" \n"
                 + "WHERE\n"
                 + "\"public\".\"Usuarios\".usu_username LIKE '%USER%'\n"
                 + "ORDER BY\n"
@@ -259,45 +246,63 @@ public class UsuarioBD extends UsuarioMD {
     }
 
     public boolean editar(String Pk) {
-        String UPDATE = "UPDATE  " + TABLA + "\n"
+        String UPDATE = "UPDATE  \"Usuarios\" \n"
                 + " SET \n"
-                + "usu_password = " + "set_byte( MD5('" + getPassword() + "')::bytea, 4,64),\n"
-                + "id_persona = " + getPersona().getIdPersona() + "\n"
+                + "usu_username = ?,\n"
+                + "usu_password = set_byte( MD5( ? )::bytea, 4,64),\n"
+                + "id_persona = ?\n"
                 + " WHERE \n"
-                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + " usu_username = ?;\n"
                 + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';\n"
                 + "";
 
-        System.out.println(UPDATE);
+        Map<Integer, Object> parametros = new HashMap<>();
 
-        return ResourceManager.Statement(UPDATE) == null;
+        parametros.put(1, getUsername());
+        parametros.put(2, getPassword());
+        parametros.put(3, getPersona().getIdPersona());
+        parametros.put(4, Pk);
+
+        return UtilidadesConn.ejecutar(UPDATE, stmt, pool.getConnection(), parametros);
 
     }
 
     public boolean eliminar(String Pk) {
 
-        String DELETE = "UPDATE " + TABLA + "\n"
+        String DELETE = "UPDATE \"Usuarios\" \n"
                 + " SET \n"
-                + " usu_estado = " + false + "\n"
+                + " usu_estado = ?\n"
                 + " WHERE \n"
-                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
+                + " usu_username = ? ;\n"
                 + " ALTER ROLE \"" + Pk + "\" NOLOGIN;"
                 + "";
 
-        return ResourceManager.Statement(DELETE) == null;
+        System.out.println(Pk);
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, false);
+        parametros.put(2, Pk);
+
+        return UtilidadesConn.ejecutar(DELETE, stmt, pool.getConnection(), parametros);
     }
 
     public boolean reactivar(String Pk) {
 
-        String REACTIVAR = "UPDATE " + TABLA + "\n"
+        String REACTIVAR = "UPDATE \"Usuarios\"\n"
                 + " SET \n"
-                + " usu_estado = " + true + "\n"
+                + " usu_estado = ?\n"
                 + " WHERE \n"
-                + " " + PRIMARY_KEY + " = '" + Pk + "';\n"
-                + "ALTER ROLE \"" + Pk + "\" LOGIN;"
+                + " usu_username = ? ;\n"
+                + " ALTER ROLE \"" + Pk + "\" NOLOGIN;"
                 + "";
 
-        return ResourceManager.Statement(REACTIVAR) == null;
+        System.out.println(Pk);
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, true);
+        parametros.put(2, Pk);
+
+        return UtilidadesConn.ejecutar(REACTIVAR, stmt, pool.getConnection(), parametros);
     }
 
 }

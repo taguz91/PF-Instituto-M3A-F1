@@ -41,8 +41,13 @@ public class ConnDBPool {
     public ConnDBPool() {
     }
 
-    public Connection getConnection() throws SQLException {
-        return ds.getConnection();
+    public Connection getConnection() {
+        try {
+            return ds.getConnection();
+
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     /*

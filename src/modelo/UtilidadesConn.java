@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.sql.Connection;
@@ -12,14 +7,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author MrRainx
  */
-public class ConnectionUtils {
+public class UtilidadesConn {
 
     public static boolean ejecutar(String sql, PreparedStatement stmt, Connection conn, Map<Integer, Object> parametros) {
         boolean proceso = false;
@@ -48,15 +41,20 @@ public class ConnectionUtils {
                 if (entry.getValue() instanceof LocalDate) {
                     stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
                 }
+                if (entry.getValue() instanceof Boolean) {
+                    stmt.setBoolean(posicion, (boolean) entry.getValue());
+                }
 
             }
-            System.out.println("PreparedStatement creado correctamente");
 
-            proceso = stmt.execute();
+            proceso = !stmt.execute();
 
             conn.close();
             stmt.close();
             parametros = null;
+            System.out.println("*******************************************");
+            System.out.println("*PreparedStatement ejecutado correctamente*");
+            System.out.println("*******************************************");
             return proceso;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -70,7 +68,7 @@ public class ConnectionUtils {
                 conn.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -80,7 +78,7 @@ public class ConnectionUtils {
                 stmt.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -90,7 +88,7 @@ public class ConnectionUtils {
                 rs.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConectionUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 }
