@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de92be63-ec0b-4785-9199-21f77bc387e9">
 	<property name="ireport.zoom" value="0.8264462809917362"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="81"/>
+	<property name="ireport.y" value="0"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -34,7 +34,7 @@
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 80 Y 90]]></text>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES MENOR A 70]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="203" y="113" width="54" height="20" uuid="1872011d-4c3b-4629-b060-a20c19e00f5d"/>
