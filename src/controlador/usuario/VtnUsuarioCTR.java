@@ -61,7 +61,7 @@ public class VtnUsuarioCTR {
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
 
         //Inicializamos las listas con las consultas
-        listaUsuarios = UsuarioBD.SelectAll();
+        listaUsuarios = UsuarioBD.selectAll();
         cargarTabla(listaUsuarios);
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
@@ -204,7 +204,7 @@ public class VtnUsuarioCTR {
 
     private void setObjFromTable(int fila) {
 
-        listaUsuarios = UsuarioBD.SelectAll();
+        listaUsuarios = UsuarioBD.selectAll();
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
 
@@ -239,7 +239,7 @@ public class VtnUsuarioCTR {
 
                     modelo.eliminar(Username);
 
-                    cargarTabla(UsuarioBD.SelectAll());
+                    cargarTabla(UsuarioBD.selectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
@@ -273,7 +273,7 @@ public class VtnUsuarioCTR {
 
     private void btnActualizarActionPerformance(ActionEvent e) {
 
-        cargarTabla(UsuarioBD.SelectAll());
+        cargarTabla(UsuarioBD.selectAll());
 
     }
 

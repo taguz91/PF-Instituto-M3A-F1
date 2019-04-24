@@ -63,7 +63,7 @@ public class UsuarioBD extends UsuarioMD {
         System.out.println();
 
         try {
-            return ConnectionUtils.insert(INSERT, stmt, pool.getConnection(), parametros);
+            return ConnectionUtils.ejecutar(INSERT, stmt, pool.getConnection(), parametros);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;

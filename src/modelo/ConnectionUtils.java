@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class ConnectionUtils {
 
-    public static boolean insert(String sql, PreparedStatement stmt, Connection conn, Map<Integer, Object> parametros) {
+    public static boolean ejecutar(String sql, PreparedStatement stmt, Connection conn, Map<Integer, Object> parametros) {
         boolean proceso = false;
 
         try {
