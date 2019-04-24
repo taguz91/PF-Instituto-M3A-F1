@@ -44,6 +44,7 @@ public class FrmAccesosEditarCTR {
         
         vista.show();
         desktop.getDpnlPrincipal().add(vista);
+        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
         try {
             vista.setSelected(true);
         } catch (PropertyVetoException e) {
