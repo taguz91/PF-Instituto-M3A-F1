@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="0.9313819845887331"/>
-	<property name="ireport.x" value="539"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="504"/>
+	<property name="ireport.y" value="96"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
-			<style mode="Opaque" forecolor="#006600" backcolor="#99FF99"/>
+			<style mode="Opaque" forecolor="#006600" backcolor="#66FF66"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("REPROBADO")]]></conditionExpression>
@@ -35,12 +35,13 @@
 	p_alu.persona_identificacion,
 	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "Apellidos_al",
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "Nombres_al",
-	ROUND("AlumnoCurso".almn_curso_nota_final,0) AS "NotaFinal",
+	"AlumnoCurso".almn_curso_nota_final,
 	"Materias".materia_nombre,
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido|| ' ' || "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre AS "PROFESOR",
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
 	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
   per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
@@ -82,7 +83,8 @@ WHERE
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido || ' ' || "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre,
+	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
   per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
@@ -93,7 +95,7 @@ WHERE
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="Apellidos_al" class="java.lang.String"/>
 	<field name="Nombres_al" class="java.lang.String"/>
-	<field name="NotaFinal" class="java.math.BigDecimal"/>
+	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -187,11 +189,6 @@ WHERE
 				<reportElement x="315" y="81" width="215" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="1118" y="92" width="234" height="20" uuid="09aafc1f-4f13-4055-9e81-b53de544e13a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
