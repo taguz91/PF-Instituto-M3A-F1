@@ -77,14 +77,14 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
             numMatricula = 0;
         }
 
-        System.out.println("Id a actualizar" + malla.getId());
-        System.out.println("Notas " + nota1);
-        System.out.println("Notas " + nota2);
-        System.out.println("Notas " + nota3);
-        System.out.println("ID CARRERA " + malla.getAlumnoCarrera().getId());
-        System.out.println("Estado: " + frmMalla.getLblEstado().getText());
-        System.out.println("Numero de matricula " + numMatricula);
-        boolean guardar = false;
+//        System.out.println("Id a actualizar" + malla.getId());
+//        System.out.println("Notas " + nota1);
+//        System.out.println("Notas " + nota2);
+//        System.out.println("Notas " + nota3);
+//        System.out.println("ID CARRERA " + malla.getAlumnoCarrera().getId());
+//        System.out.println("Estado: " + frmMalla.getLblEstado().getText());
+//        System.out.println("Numero de matricula " + numMatricula);
+        boolean guardar = true;
 
         if (!Validar.esNota(nota1 + "") && !Validar.esNota(nota2 + "") && !Validar.esNota(nota3 + "")) {
             guardar = false;
