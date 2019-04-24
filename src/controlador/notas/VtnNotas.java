@@ -651,11 +651,6 @@ public class VtnNotas {
                     reportes.generarReporteCompleto();
                     desktop.getLblEstado().setText("COMPLETADO");
                     break;
-                
-                case 5:
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                    reportes.ReportePrueba2();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                 default:
                     break;
