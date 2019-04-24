@@ -46,9 +46,9 @@ public class ConexionesCTR extends Thread {
 
     public void recetear(String mensaje) {
         this.msg = mensaje;
-        System.out.println("Se receteara. Segundos: "+segundos);
+        //System.out.println("Se receteara. Segundos: "+segundos);
         segundos = 0;
-        System.out.println("Se receteeo. Segundos: "+segundos);
+        //System.out.println("Se receteeo. Segundos: "+segundos);
     }
     
     public void dormir(int seg){

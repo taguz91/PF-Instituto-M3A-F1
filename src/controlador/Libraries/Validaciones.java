@@ -2,6 +2,8 @@ package controlador.Libraries;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -265,6 +267,17 @@ public class Validaciones {
                 }
             }
         });
+    }
+
+    public static boolean validarPalabras(List<String> palabrasValidas, String palabra) {
+        boolean valido = false;
+        if (!palabrasValidas
+                .stream()
+                .filter(item -> item.equalsIgnoreCase(palabra))
+                .collect(Collectors.toList()).isEmpty()) {
+            return true;
+        }
+        return valido;
     }
 
 }
