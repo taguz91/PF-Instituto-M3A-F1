@@ -23,7 +23,7 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 	<field name="docente_tipo_tiempo" class="java.lang.String"/>
 	<field name="nombres" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
-	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_foto" class="java.io.InputStream"/>
 	<field name="persona_celular" class="java.lang.String"/>
 	<field name="persona_correo" class="java.lang.String"/>
 	<field name="docente_fecha_fin" class="java.sql.Date"/>
@@ -90,7 +90,7 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 			</textField>
 			<image>
 				<reportElement x="420" y="10" width="116" height="170"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{persona_foto}]]></imageExpression>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="152" width="71" height="20"/>

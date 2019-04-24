@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.143588810000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="iddocente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idperiodolectivo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  distinct (per.persona_primer_nombre||' '||per.persona_segundo_nombre||' '||per.persona_primer_apellido||' '|| per.persona_segundo_apellido) as docente,
+p.prd_lectivo_nombre,c.curso_nombre,m.dia_sesion,m.hora_inicio_sesion,m.hora_fin_sesion,
+extract(hours from  m.hora_fin_sesion - m.hora_inicio_sesion)as horas_diarias,mt.materia_nombre,
+CASE
+  WHEN (m.dia_sesion = '1')  THEN 'LUNES'
+  WHEN (m.dia_sesion = '2')  THEN 'MARTES'
+  WHEN (m.dia_sesion = '3')  THEN 'MIERCOLES'
+  WHEN (m.dia_sesion = '4')  THEN 'JUEVES'
+  WHEN (m.dia_sesion = '5')  THEN 'VIERNES'
+  WHEN (m.dia_sesion = '6')  THEN 'SABADO'
+  ELSE 'N/A'
+ END AS DIA_SEMANA
+FROM ((public."SesionClase" m JOIN public."Cursos" c USING(id_curso)) 
+JOIN public."PeriodoLectivo" p USING(id_prd_lectivo)
+
+JOIN public."Carreras" carr USING(id_carrera)
+JOIN public."Materias" mt USING (id_materia)	
+JOIN public."Docentes" d USING(id_docente)
+JOIN public. "Personas" per USING (id_persona))
+WHERE d.id_docente =  $P{iddocente}
+AND p.prd_lectivo_nombre=$P{idperiodolectivo}
+AND d.docente_activo = true 
+AND per.persona_activa =true
+ORDER BY m.dia_sesion;]]>
+	</queryString>
+	<field name="docente" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="dia_sesion" class="java.lang.Integer"/>
+	<field name="hora_inicio_sesion" class="java.sql.Time"/>
+	<field name="hora_fin_sesion" class="java.sql.Time"/>
+	<field name="horas_diarias" class="java.lang.Double"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="dia_semana" class="java.lang.String"/>
+	<variable name="horas_diarias_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{horas_diarias}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="213" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="121" width="548" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Horas de Docencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="101" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="161" width="57" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Docente: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="61" y="161" width="419" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="182" width="370" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="181" width="106" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo Lectivo: ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="22" width="551" height="99"/>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="335" y="51" width="207" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="46" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="371" y="0" width="107" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia de la semana]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="217" y="0" width="81" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ inicio ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="478" y="0" width="77" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="46" y="0" width="171" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="298" y="0" width="73" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ finalizacion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="63" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="73" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{hora_fin_sesion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="107" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dia_semana}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="0" width="77" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{horas_diarias}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="20" width="553" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="217" y="0" width="81" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{hora_inicio_sesion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="1" width="152" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="371" y="0" width="117" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total Horas Semanales:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="488" y="0" width="67" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{horas_diarias_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
