@@ -19,7 +19,7 @@ import vista.curso.PnlHorarioClase;
 public class PnlHorarioCursoCTR {
 
     private final PnlHorarioClase pnl;
-    private CursoMD curso;
+    private final CursoMD curso;
     private final SesionClaseBD bd;
     private ArrayList<SesionClaseMD> sesionLunes, sesionMartes, sesionMiercoles, sesionJueves, sesionViernes,
             sesionSabado;
@@ -165,7 +165,6 @@ public class PnlHorarioCursoCTR {
                     + s.getCurso().getId_materia().getCodigo() + "<br>"
                     + s.getCurso().getId_docente().getNombreCorto() + "</center></html>",
                     i, dia);
-
         }
 
     }

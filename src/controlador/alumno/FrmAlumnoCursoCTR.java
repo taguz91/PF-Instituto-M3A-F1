@@ -589,7 +589,8 @@ public class FrmAlumnoCursoCTR {
 
     /**
      * Se llena la tabla con las materias,excluyendo las que ya se matriculo.
-     *
+     * Tambien excluimos las materias ya seleccionadas.
+     * Tambien se descarta las materias cursadas
      * @param cursos
      */
     private void llenarTblMatPen(ArrayList<CursoMD> cursos) {
@@ -632,7 +633,6 @@ public class FrmAlumnoCursoCTR {
                 } else {
                     llenarTblMateriasPendientes(cursos);
                 }
-
             }
         }
     }
@@ -814,7 +814,7 @@ public class FrmAlumnoCursoCTR {
         //Pasamos todos las materias que nos quedan en la tabla cursos 
         //La rrellenamos en cursos seleccionados
         cursosPen.forEach(c -> {
-            horario = sesion.cargarHorarioCurso(c.getId_curso());
+            horario = sesion.cargarHorarioCurso(c);
             if (c.getCurso_nombre().charAt(0) != 'C') {
                 if (chocanHoras(horario)) {
                     c.setCurso_nombre("C-" + c.getCurso_nombre());
@@ -840,7 +840,7 @@ public class FrmAlumnoCursoCTR {
             cursosPen.add(cursosSelec.get(posMat));
             //Eliminamos el horario de esta materia 
             if (cursosSelec.get(posMat).getCurso_nombre().charAt(0) != 'C') {
-                horario = sesion.cargarHorarioCurso(cursosSelec.get(posMat).getId_curso());
+                horario = sesion.cargarHorarioCurso(cursosSelec.get(posMat));
                 quitarHorarioAlmn(horario);
             }
             //Eliminamos la materia que fue pasada 
@@ -942,6 +942,14 @@ public class FrmAlumnoCursoCTR {
      * Imprimimos el horario de del alumno
      */
     public void horarioAlmn() {
+        PnlHorarioClase pnl = new PnlHorarioClase();
+        JDInfoHorario jd = new JDInfoHorario(vtnPrin, false); 
+        CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
+        PnlHorarioAlmnCTR ctr = new PnlHorarioAlmnCTR(horarioAlmn, pnl);
+        ctr.iniciar();
+        jd.setVisible(true);
+        ctrPrin.eventoJDCerrar(jd);
+        
         System.out.println("||||||||||||||||||||||||||||||||||||");
         System.out.println("Horario del alumno: ");
         horarioAlmn.forEach(h -> {

@@ -119,13 +119,13 @@ public class SesionClaseBD extends SesionClaseMD {
     
     /**
      * Cargamos el horario de un curso.
-     * @param idCurso
+     * @param curso
      * @return 
      */
-    public ArrayList<SesionClaseMD> cargarHorarioCurso(int idCurso) {
+    public ArrayList<SesionClaseMD> cargarHorarioCurso(CursoMD curso) {
         sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
-                + "	WHERE id_curso = " + idCurso + ";";
+                + "	WHERE id_curso = " + curso.getId_curso() + ";";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         ResultSet rs = conecta.sql(sql);
         //System.out.println(sql);
@@ -133,6 +133,7 @@ public class SesionClaseBD extends SesionClaseMD {
             try {
                 while (rs.next()) {
                     SesionClaseMD s = new SesionClaseMD();
+                    s.setCurso(curso);
                     s.setDia(rs.getInt("dia_sesion"));
                     s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
                     s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
