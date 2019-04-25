@@ -376,6 +376,8 @@ public class FrmAlumnoCursoCTR {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0) {
             buscadoresEstado(true);
+//            frmAlmCurso.getLblNumMatriculas().setText(
+//                    matri.numMaticulados(periodos.get(posPrd - 1).getId_PerioLectivo())+"");
         } else {
             buscadoresEstado(false);
         }
