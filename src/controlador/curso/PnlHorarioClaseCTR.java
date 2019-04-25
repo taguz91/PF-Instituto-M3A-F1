@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
@@ -17,7 +18,7 @@ import vista.curso.PnlHorarioClase;
 public class PnlHorarioClaseCTR {
 
     private final PnlHorarioClase pnl;
-    private final CursoMD curso;
+    private CursoMD curso;
     private final SesionClaseBD bd;
     private ArrayList<SesionClaseMD> sesionLunes, sesionMartes, sesionMiercoles, sesionJueves, sesionViernes,
             sesionSabado;
@@ -33,7 +34,7 @@ public class PnlHorarioClaseCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>"};
-    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00","20:00"};
+    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
     private final String[] hvc = {
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
@@ -41,16 +42,19 @@ public class PnlHorarioClaseCTR {
         "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>"};
-    private final String[] hn = {"10:00", "11:00", "12:00", "13:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
+    private final String[] hn = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
-       
+        "<html>08:00<br>09:00</html>",
+        "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
+        "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>",
         "<html>20:00<br>21:00</html>",
-        "<html>21:00<br>22:00</html>"};
+        "<html>21:00<br>22:00</html>",
+        "<html>22:00<br>23:00</html>"};
     private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
@@ -144,7 +148,7 @@ public class PnlHorarioClaseCTR {
         }
 
         for (int i = 0; i < hSelec.length; i++) {
-            
+
             //System.out.print("Hora: "+hSelec[i]+" : "+tranformar(s.getHoraFin())+ " Igual: "+hSelec[i].equals(tranformar(s.getHoraFin())));
             if (hSelec[i].equals(tranformar(s.getHoraFin()))) {
                 posF = i;
@@ -154,7 +158,7 @@ public class PnlHorarioClaseCTR {
         }
 
         for (int i = posI; i < posF; i++) {
-            mdTbl.setValueAt(s.getId()+"%Clase", i, dia);
+            mdTbl.setValueAt(s.getId() + "%Clase", i, dia);
         }
 
     }
@@ -211,7 +215,7 @@ public class PnlHorarioClaseCTR {
         SesionClaseMD s = null;
         if (posFila >= 0 && posColum > 0) {
             if (pnl.getTblHorario().getValueAt(posFila, posColum) != null) {
-                 
+
             }
         }
         return s;
@@ -224,7 +228,7 @@ public class PnlHorarioClaseCTR {
     public String[] getjSelec() {
         return jSelec;
     }
-    
+
     public String[] gettSelec() {
         return tSelec;
     }

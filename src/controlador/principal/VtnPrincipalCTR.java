@@ -35,6 +35,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
@@ -189,7 +190,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
-        InitPermisosTester();
+        InitPermisosTesterYDocente();
     }
 
     /**
@@ -459,12 +460,12 @@ public class VtnPrincipalCTR {
             ctrVtn.iniciar();
         }
     }
-    
-    public void abrirVtnAlmnRetirados(){
-        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados(); 
+
+    public void abrirVtnAlmnRetirados() {
+        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn); 
+            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn);
             ctr.iniciar();
         }
     }
@@ -636,8 +637,9 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrin, conexion);
-        cp.iniciarControlaador();
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        cP.iniciaControlador();
+
     }
 
     private void controladorIngreso() {
@@ -734,6 +736,10 @@ public class VtnPrincipalCTR {
         });
     }
 
+    /**
+     * Indicamos que cerramos la ventana para que merme el numero de ventanas
+     * abiertas.
+     */
     public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
@@ -1091,10 +1097,10 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void InitPermisosTester() {
+    private void InitPermisosTesterYDocente() {
         System.out.println("Estamos en modo pruebas = " + pruebas);
         if (!pruebas) {
-            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
+            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
                 vtnPrin.getMnIngresar().setEnabled(false);
                 vtnPrin.getPnlMenu().setVisible(false);
                 vtnPrin.getMnCtPersona().setEnabled(false);
@@ -1108,12 +1114,25 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtMatricula().setEnabled(false);
                 vtnPrin.getMnCtDocenteMateria().setEnabled(false);
                 vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-                vtnPrin.getMnCtSilabos().setEnabled(false);
                 vtnPrin.getMnCtPlandeClase().setEnabled(false);
                 vtnPrin.getMnCtUsuarios().setEnabled(false);
                 vtnPrin.getMnCtRoles().setEnabled(false);
                 vtnPrin.getMnCtHistorialUsers().setEnabled(false);
-                vtnPrin.getMnNotas().setEnabled(false);
+                vtnPrin.getMnCtAccesos().setEnabled(false);
+                vtnPrin.getMnCtMiPerfil().setEnabled(false);
+                if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
+                    vtnPrin.getMnNotas().setEnabled(true);
+                    vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
+                    vtnPrin.getMnCtTipoNotas().setEnabled(false);
+                    vtnPrin.getMnCtActivarNotas().setEnabled(false);
+                    vtnPrin.getMnCtMallaAlumno().setEnabled(false);
+                    vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+                    vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+                    vtnPrin.getMnCtSilabos().setEnabled(true);
+                } else {
+                    vtnPrin.getMnNotas().setEnabled(false);
+                }
+
             }
         } else {
             System.out.println("Entre en la base de datos pruebas");

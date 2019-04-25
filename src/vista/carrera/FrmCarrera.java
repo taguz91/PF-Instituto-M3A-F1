@@ -63,6 +63,10 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
     public JButton getBtnGuardarContinuar() {
         return btnGuardarContinuar;
     }
+
+    public JTextField getTxtSemanas() {
+        return txtSemanas;
+    }
     
 
     /**
@@ -90,6 +94,8 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jdFechaInicio = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        txtSemanas = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -108,15 +114,15 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         lblErrorCodigo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCodigo.setText("Solo debe ingresar letras.");
         jPanel1.add(lblErrorCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 260, -1));
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 90, 25));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 90, 25));
 
-        jPanel1.add(cmbModalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 170, -1));
+        jPanel1.add(cmbModalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 150, 25));
 
         jLabel5.setText("Modalidad:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
         jLabel1.setText("Código:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
         jLabel3.setText("Fecha inicio:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
@@ -127,7 +133,7 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Nombre:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 31, 420, 25));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 31, 430, 25));
 
         tblDocentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,25 +145,31 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblDocentes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 420, 90));
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 270, 25));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 430, 90));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 310, 25));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 30, -1));
-        jPanel1.add(jdFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 120, 25));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 30, -1));
+        jPanel1.add(jdFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 110, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 290));
+        jLabel2.setText("Semanas:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 70, -1));
+
+        txtSemanas.setToolTipText("Numero de semanas que tendra la carrera");
+        jPanel1.add(txtSemanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 50, 25));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 290));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGuardar.setText("Guardar");
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 100, -1));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 440, 10));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 100, -1));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 460, 10));
 
         btnGuardarContinuar.setText("Guardar y continuar");
-        jPanel2.add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        jPanel2.add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 450, 50));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 460, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -169,6 +181,7 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardarContinuar;
     private javax.swing.JComboBox<String> cmbModalidad;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -184,5 +197,6 @@ public class FrmCarrera extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSemanas;
     // End of variables declaration//GEN-END:variables
 }

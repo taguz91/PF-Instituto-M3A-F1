@@ -29,11 +29,6 @@ public class CarrerasBDS extends CarreraMD {
         this.conexion = conexion;
     }
 
-    public CarrerasBDS(ConexionBD conexion, int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        super(id, codigo, nombre, fechaInicio, fechaFin, modalidad, coordinador);
-        this.conexion = conexion;
-    }
-
     public static List<CarreraMD> consultar(ConexionBD conexion, String clave) {
 
         List<CarreraMD> carreras = new ArrayList<>();
@@ -65,7 +60,6 @@ public class CarrerasBDS extends CarreraMD {
 
         } catch (SQLException ex) {
             Logger.getLogger(CarrerasBDS.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
         return carreras;

@@ -6,6 +6,7 @@
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
+import static controlador.silabo.ControladorSilaboCRUD.x;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -14,6 +15,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -61,6 +67,16 @@ import vista.silabos.frmGestionSilabo.CheckListItem;
 import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmReferencias;
 import vista.silabos.frmSilabos;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import java.util.HashMap;
+import java.util.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -147,7 +163,7 @@ public class ControladorSilaboC {
             periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
             //configuracion.getCmbPeriodo().removeAllItems();
             configuracion.getCmbAsignatura().removeAllItems();
-            System.out.println("-----------------" + periodosCarrera.get(0).getNombre_PerLectivo());
+            System.out.println("-------------------" + periodosCarrera.get(0).getNombre_PerLectivo());
             cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId_PerioLectivo());
             //cargarComboPeriodos(carreraSeleccionada.get().getId());
 
@@ -162,15 +178,14 @@ public class ControladorSilaboC {
             if (configuracion.getCmbPeriodo().getItemCount() > 0) {
 
                 System.out.println("-----------------------------entro");
-                for (SilaboMD s: silabosAnteriores){
-                    System.out.println(materiaSeleccionada.get().getId()+" - "+s.getIdMateria()+" - "+s.getIdPeriodoLectivo().getNombre_PerLectivo()+" - "+configuracion.getCmbPeriodo().getSelectedItem().toString());
+                for (SilaboMD s : silabosAnteriores) {
+                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre_PerLectivo() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
                 }
                 Optional<SilaboMD> silaboSeleccionado = silabosAnteriores.stream().
-                        filter(s -> s.getIdMateria().getId()==(materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                         findFirst();
                 silaboAnterior = silaboSeleccionado.get();
             }
-            
 
             silaboNuevo = new SilaboBD(conexion, materiaSeleccionada.get(), periodosCarrera.stream().findFirst().get());
 
@@ -327,9 +342,6 @@ public class ControladorSilaboC {
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             cargarReferencias(referenciasSilabo);
-            
-           
-           
 
         }
 
@@ -345,8 +357,8 @@ public class ControladorSilaboC {
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
-        
-         gestion.getCmbUnidad().setSelectedIndex(0);
+
+        gestion.getCmbUnidad().setSelectedIndex(0);
 
         gestion.getCmbUnidad().addActionListener(new ActionListener() {
             @Override
@@ -1498,7 +1510,10 @@ public class ControladorSilaboC {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
+                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            }
+
         });
 
         modeloBase = new DefaultListModel<>();
@@ -1615,14 +1630,38 @@ public class ControladorSilaboC {
 
     }
 
+
+
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
         insertarUnidades();
-
         insertarReferencias();
+       // exportarPDF();
 
+    
     }
+//    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
+//        String sql = "UPDATE \"Silabo\"VALUES (?)";
+//        //Creamos una cadena para después prepararla
+//        PreparedStatement stmt = conexion.prepareStatement(sql);
+//        File archivo = new File("../PF-Instituto-M3A-F1/"+silabo.getIdMateria().getNombre()+".pdf");
+//        //ruta puede ser: "c://archivo"
+//        FileInputStream fis = new FileInputStream(archivo);
+//        //Lo convertimos en un Stream
+//        stmt.setBinaryStream(1, fis, (int) archivo.length());
+//        //Asignamos el Stream al Statement
+//        stmt.execute();
+    
+//    File file = new File("myimage.gif");
+//FileInputStream fis = new FileInputStream(file);
+//PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
+//ps.setString(1, file.getName());
+//ps.setBinaryStream(2, fis, (int)file.length());
+//ps.executeUpdate();
+//ps.close();
+//fis.close();
+//    }
 
     public boolean validarCampos() {
 

@@ -121,6 +121,7 @@ CREATE TABLE "Carreras"(
   "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true',
+  "carrera_semanas" smallint DEFAULT 0,
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
@@ -205,6 +206,7 @@ CREATE TABLE "EjesFormacion"(
 	"id_carrera" integer NOT NULL,
 	"eje_codigo" character varying(10) NOT NULL,
 	"eje_nombre" character varying(100) NOT NULL,
+	"eje_estado" BOOLEAN DEFAULT TRUE,
 	CONSTRAINT eje_formacion_pk PRIMARY KEY ("id_eje")
 ) WITH (OIDS = FALSE);
 

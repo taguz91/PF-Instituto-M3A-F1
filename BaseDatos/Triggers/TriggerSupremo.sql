@@ -67,6 +67,7 @@ EXECUTE PROCEDURE cierre_prd_backup();
 
 --Una funcion que me llena las notas *
 --Solo debo pasar el id del periodo
+/*
 CREATE OR REPLACE FUNCTION llenar_cursos()
 RETURNS VOID AS $llenar_cursos$
 DECLARE
@@ -102,7 +103,7 @@ BEGIN
   RETURN;
 END;
 $llenar_cursos$ LANGUAGE plpgsql;
-
+*/
 --Ahora al cerrar el periodo se migra las notas
 
 --Creamos un trigger
@@ -156,9 +157,10 @@ BEGIN
       END IF;
       RAISE NOTICE 'Curso o reprobo : % Nota: %', estado, reg.almn_curso_nota_final;
 
-      IF num_matricula = 1 THEN
+      IF num_matricula = 1 OR num_matricula = 0 THEN
 		    UPDATE public."MallaAlumno"
-		        SET  malla_almn_nota1 = reg.almn_curso_nota_final, malla_almn_estado=estado
+		        SET  malla_almn_nota1 = reg.almn_curso_nota_final, malla_almn_estado=estado,
+						malla_almn_num_matricula = num_matricula
 		        WHERE id_materia = reg.id_materia
 		        AND id_almn_carrera = (
 		          SELECT id_almn_carrera
@@ -262,3 +264,6 @@ SELECT id_malla_alumno, id_materia, ma.id_almn_carrera,
 UPDATE public."PeriodoLectivo"
   SET  prd_lectivo_estado=false
   WHERE id_prd_lectivo = 2;
+
+  --Desarrollo fue 1074 alactualizar
+  --Sistemas fue 1271 al cerrar

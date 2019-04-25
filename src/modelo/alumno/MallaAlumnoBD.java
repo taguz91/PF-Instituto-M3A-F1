@@ -67,41 +67,41 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         }
     }
 
-    public void actualizarNumMatricula(int idAlumno, int idCarrera, int idMateria) {
-        String nsql = "UPDATE public.\"MallaAlumno\"\n"
-                + "SET malla_almn_num_matricula = ( SELECT malla_almn_num_matricula + 1\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ")\n"
-                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ");";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Se actualizo la malla");
-        }
-    }
+//    public void actualizarNumMatricula(int idAlumno, int idCarrera, int idMateria) {
+//        String nsql = "UPDATE public.\"MallaAlumno\"\n"
+//                + "SET malla_almn_num_matricula = ( SELECT malla_almn_num_matricula + 1\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ")\n"
+//                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ");";
+//        if (conecta.nosql(nsql) == null) {
+//            System.out.println("Se actualizo la malla");
+//        }
+//    }
 
-    public void actualizarEstadoMallaAlmn(int idAlumno, int idCarrera, int idMateria) {
-        String nsql = "UPDATE public.\"MallaAlumno\"\n"
-                + "SET malla_almn_estado = 'M'\n"
-                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ");";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Se actualizo la malla");
-        }
-    }
+//    public void actualizarEstadoMallaAlmn(int idAlumno, int idCarrera, int idMateria) {
+//        String nsql = "UPDATE public.\"MallaAlumno\"\n"
+//                + "SET malla_almn_estado = 'M'\n"
+//                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ");";
+//        if (conecta.nosql(nsql) == null) {
+//            System.out.println("Se actualizo la malla");
+//        }
+//    }
 
     public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
