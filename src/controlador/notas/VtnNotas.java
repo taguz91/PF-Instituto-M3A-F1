@@ -118,7 +118,7 @@ public class VtnNotas {
             cargarComboMaterias();
         });
 
-        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
+        //vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
