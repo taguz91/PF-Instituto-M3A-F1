@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d1ae156b-2c46-4ae4-b008-0c2173d147de">
 	<property name="ireport.zoom" value="0.9313819845887331"/>
-	<property name="ireport.x" value="291"/>
+	<property name="ireport.x" value="690"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
@@ -40,10 +40,10 @@
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
 	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
 	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
-  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
 	
@@ -83,9 +83,9 @@ WHERE
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
 	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
-  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
 	

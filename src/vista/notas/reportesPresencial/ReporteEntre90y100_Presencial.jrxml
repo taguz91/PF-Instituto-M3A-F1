@@ -40,10 +40,10 @@
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
 	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
 	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
-  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
 	
@@ -83,9 +83,9 @@ WHERE
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
-	"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
 	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
-  per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
 	
