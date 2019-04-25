@@ -261,8 +261,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                             jd.getBtnCancelar().setVisible(true);
                             break;
                         case 1:
-                            idSesion = 0;
+                            idSesion = sesion.getId();
                             bd.eliminar(idSesion);
+                            pnl.getTblHorario().setValueAt(null, posFil, posColum);
                             ctrHClase.actualizar(sesion.getDia());
                             break;
                         default:

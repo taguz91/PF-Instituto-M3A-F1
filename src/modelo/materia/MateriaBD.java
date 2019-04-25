@@ -124,16 +124,31 @@ public class MateriaBD extends MateriaMD {
             rs.close();
             return carrera;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
+            System.out.println("No se pudieron consultar carreras");
             System.out.println(ex.getMessage());
             return null;
         }
     }
 
-//    public EjeFormacionMD filtrarIdEje(String nombre){
-//        String sql = "SELECT id_";
-//        
-//    }
+    public EjeFormacionMD filtrarIdEje(String nombre) {
+        String sql = "SELECT id_eje FROM public.\"EjesFormacion\" WHERE eje_nombre LIKE '" + nombre + "';";
+        EjeFormacionMD eje = new EjeFormacionMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                eje.setId(rs.getInt("id_eje"));
+            }
+            rs.close();
+            return eje;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar ejes");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+    }
+
+
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {
         sql = "SELECT id_materia, materia_codigo,"

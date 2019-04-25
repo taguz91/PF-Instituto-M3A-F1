@@ -132,7 +132,6 @@ public class PnlHorarioClaseCTR {
             sesiones.forEach(s -> {
                 //System.out.print("Dia "+dia+" "+s.getHoraIni()+" / "+s.getHoraFin());
                 buscarClm(s, dia);
-                System.out.println("");
             });
         }
     }
@@ -144,17 +143,14 @@ public class PnlHorarioClaseCTR {
                 posI = i;
                 break;
             }
-            System.out.println("");
         }
 
         for (int i = 0; i < hSelec.length; i++) {
-
             //System.out.print("Hora: "+hSelec[i]+" : "+tranformar(s.getHoraFin())+ " Igual: "+hSelec[i].equals(tranformar(s.getHoraFin())));
             if (hSelec[i].equals(tranformar(s.getHoraFin()))) {
                 posF = i;
                 break;
             }
-            System.out.println("");
         }
 
         for (int i = posI; i < posF; i++) {

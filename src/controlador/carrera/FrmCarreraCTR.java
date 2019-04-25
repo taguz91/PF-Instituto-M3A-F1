@@ -19,6 +19,7 @@ import modelo.persona.DocenteMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.TxtVLetras;
+import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.Validar;
 import vista.carrera.FrmCarrera;
 import vista.principal.VtnPrincipal;
@@ -97,21 +98,22 @@ public class FrmCarreraCTR {
                 frmCarrera.getLblErrorNombre()));
         frmCarrera.getTxtCodigo().addKeyListener(new TxtVLetras(frmCarrera.getTxtCodigo(),
                 frmCarrera.getLblErrorCodigo()));
+        frmCarrera.getTxtSemanas().addKeyListener(new TxtVNumeros(frmCarrera.getTxtSemanas()));
     }
 
     private void ocultarErrores() {
         frmCarrera.getLblErrorCodigo().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
-    
-    private void guardarYSalir(){
+
+    private void guardarYSalir() {
         guardar();
         frmCarrera.dispose();
         ctrPrin.cerradoJIF();
         ctrPrin.abrirVtnCarrera();
     }
-    
-    private void guardarYContinuar(){
+
+    private void guardarYContinuar() {
         guardar();
         borrarCampos();
     }
@@ -127,6 +129,7 @@ public class FrmCarreraCTR {
 
         String nombre = frmCarrera.getTxtNombre().getText();
         String codigo = frmCarrera.getTxtCodigo().getText();
+        String semanas = frmCarrera.getTxtSemanas().getText();
 
         String modalidad = frmCarrera.getCmbModalidad().getSelectedItem().toString();
         int posCoord = frmCarrera.getTblDocentes().getSelectedRow();
@@ -143,6 +146,10 @@ public class FrmCarreraCTR {
             guardar = false;
         }
 
+        if (!Validar.esNumeros(semanas)) {
+            guardar = false;
+        }
+
         if (posCoord < 0) {
             guardar = false;
         }
@@ -154,6 +161,7 @@ public class FrmCarreraCTR {
             car.setModalidad(modalidad);
             car.setNombre(nombre);
             car.setCoordinador(docentes.get(posCoord));
+            car.setNumSemanas(Integer.parseInt(semanas));
             if (editar) {
                 car.editarCarrera(idCarrera);
                 editar = false;
@@ -194,7 +202,8 @@ public class FrmCarreraCTR {
         frmCarrera.getJdFechaInicio().setCalendar(fechaIni);
 
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
-        System.out.println("Coordinador: "+carrera.getCoordinador().getIdentificacion());
+        frmCarrera.getTxtSemanas().setText(carrera.getNumSemanas() + "");
+        System.out.println("Coordinador: " + carrera.getCoordinador().getIdentificacion());
         if (carrera.getCoordinador().getIdentificacion() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
