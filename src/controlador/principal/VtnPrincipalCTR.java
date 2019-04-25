@@ -1114,7 +1114,6 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtMatricula().setEnabled(false);
                 vtnPrin.getMnCtDocenteMateria().setEnabled(false);
                 vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-                vtnPrin.getMnCtSilabos().setEnabled(false);
                 vtnPrin.getMnCtPlandeClase().setEnabled(false);
                 vtnPrin.getMnCtUsuarios().setEnabled(false);
                 vtnPrin.getMnCtRoles().setEnabled(false);
@@ -1129,6 +1128,7 @@ public class VtnPrincipalCTR {
                     vtnPrin.getMnCtMallaAlumno().setEnabled(false);
                     vtnPrin.getMnCtListaAlumnos().setEnabled(false);
                     vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+                    vtnPrin.getMnCtSilabos().setEnabled(true);
                 } else {
                     vtnPrin.getMnNotas().setEnabled(false);
                 }
