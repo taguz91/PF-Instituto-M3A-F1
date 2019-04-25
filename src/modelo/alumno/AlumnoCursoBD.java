@@ -430,6 +430,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "SET \n"
                 + "almn_curso_nota_final = " + getNotaFinal() + ", \n"
                 + "almn_curso_estado = '" + getEstado() + "',\n"
+                + "almn_curso_asistencia = '" + getAsistencia() + "',\n"
                 + "almn_curso_num_faltas = " + getNumFalta() + "\n"
                 + "WHERE \n"
                 + "id_almn_curso = " + getId() + ";";
