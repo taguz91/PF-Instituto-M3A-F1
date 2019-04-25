@@ -19,7 +19,7 @@ a.alumno_pension,
 CASE WHEN alumno_pension=true THEN 'Posee'
 	ELSE 'No tiene'
 	END AS pension,
-	CASE WHEN alumno_trabaja=true THEN 'trabaja'
+CASE WHEN alumno_trabaja=true THEN 'trabaja'
 	ELSE 'No trabaja'
 	END AS trabaja,
 a.alumno_ocupacion,

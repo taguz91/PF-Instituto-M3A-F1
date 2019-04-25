@@ -126,3 +126,57 @@ UPDATE public."MallaAlumno"
 	) AND malla_almn_estado = 'R';
 
 --154 actualizados en sistemas en el ultimo periodo
+
+--Actualizamos el numero dematricula si esta 0  
+--4 es de SDS
+--8 es de TAS
+--9 es de Entrenamiento 
+
+UPDATE public."MallaAlumno"
+SET malla_almn_num_matricula = malla_almn_num_matricula + 1
+WHERE id_almn_carrera IN (
+	SELECT id_almn_carrera
+	FROM public."AlumnosCarrera"
+	WHERE id_alumno IN (
+		SELECT id_alumno
+		FROM public."AlumnoCurso" ac, public."Cursos" c
+		WHERE ac.id_curso = c.id_curso AND
+		c.id_prd_lectivo = 4
+	) AND id_carrera = (
+		SELECT id_carrera
+		FROM public."PeriodoLectivo"
+		WHERE id_prd_lectivo = 4
+	)
+) AND id_materia IN (
+	SELECT id_materia
+	FROM public."AlumnoCurso" ac, public."Cursos" c
+	WHERE ac.id_curso = c.id_curso AND
+	c.id_prd_lectivo = 4
+) AND malla_almn_estado = 'M' AND 
+malla_almn_num_matricula = 0;
+
+---TAS
+
+
+UPDATE public."MallaAlumno"
+SET malla_almn_num_matricula = malla_almn_num_matricula + 1
+WHERE id_almn_carrera IN (
+	SELECT id_almn_carrera
+	FROM public."AlumnosCarrera"
+	WHERE id_alumno IN (
+		SELECT id_alumno
+		FROM public."AlumnoCurso" ac, public."Cursos" c
+		WHERE ac.id_curso = c.id_curso AND
+		c.id_prd_lectivo = 8
+	) AND id_carrera = (
+		SELECT id_carrera
+		FROM public."PeriodoLectivo"
+		WHERE id_prd_lectivo = 8
+	)
+) AND id_materia IN (
+	SELECT id_materia
+	FROM public."AlumnoCurso" ac, public."Cursos" c
+	WHERE ac.id_curso = c.id_curso AND
+	c.id_prd_lectivo = 8
+) AND malla_almn_estado = 'M' AND 
+malla_almn_num_matricula = 0;
