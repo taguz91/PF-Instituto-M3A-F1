@@ -190,7 +190,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
-        InitPermisosTester();
+        InitPermisosTesterYDocente();
     }
 
     /**
@@ -654,7 +654,7 @@ public class VtnPrincipalCTR {
         VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario);
+            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario, rolSeleccionado);
             vtnCtr.Init();
         } else {
             errorNumVentanas();
@@ -1097,10 +1097,10 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void InitPermisosTester() {
+    private void InitPermisosTesterYDocente() {
         System.out.println("Estamos en modo pruebas = " + pruebas);
         if (!pruebas) {
-            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER")) {
+            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
                 vtnPrin.getMnIngresar().setEnabled(false);
                 vtnPrin.getPnlMenu().setVisible(false);
                 vtnPrin.getMnCtPersona().setEnabled(false);
@@ -1114,12 +1114,25 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtMatricula().setEnabled(false);
                 vtnPrin.getMnCtDocenteMateria().setEnabled(false);
                 vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-                vtnPrin.getMnCtSilabos().setEnabled(false);
                 vtnPrin.getMnCtPlandeClase().setEnabled(false);
                 vtnPrin.getMnCtUsuarios().setEnabled(false);
                 vtnPrin.getMnCtRoles().setEnabled(false);
                 vtnPrin.getMnCtHistorialUsers().setEnabled(false);
-                vtnPrin.getMnNotas().setEnabled(false);
+                vtnPrin.getMnCtAccesos().setEnabled(false);
+                vtnPrin.getMnCtMiPerfil().setEnabled(false);
+                if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
+                    vtnPrin.getMnNotas().setEnabled(true);
+                    vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
+                    vtnPrin.getMnCtTipoNotas().setEnabled(false);
+                    vtnPrin.getMnCtActivarNotas().setEnabled(false);
+                    vtnPrin.getMnCtMallaAlumno().setEnabled(false);
+                    vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+                    vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+                    vtnPrin.getMnCtSilabos().setEnabled(true);
+                } else {
+                    vtnPrin.getMnNotas().setEnabled(false);
+                }
+
             }
         } else {
             System.out.println("Entre en la base de datos pruebas");

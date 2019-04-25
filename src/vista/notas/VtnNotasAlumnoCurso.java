@@ -165,13 +165,15 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblNotas);
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
             tblNotas.getColumnModel().getColumn(0).setMinWidth(30);
