@@ -20,6 +20,7 @@ SET lugar_nombre = TRIM(lugar_nombre);
 SELECT * FROM public."Lugares"
 WHERE id_lugar_referencia = 1;
 
+ALTER TABLE public."Notas" ADD UNIQUE(id_almn_curso, id_tipo_nota);
 
 --Ingresar notas para entrenamiento deportivo
 INSERT INTO public."Notas"
