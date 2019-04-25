@@ -146,9 +146,9 @@ public class VtnPrdLectivoCTR {
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
-            if(periodos.get(i).isEstado_PerLectivo() == true){
+            if (periodos.get(i).isEstado_PerLectivo() == true) {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
-            } else{
+            } else {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
             }
 
@@ -192,9 +192,9 @@ public class VtnPrdLectivoCTR {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
-                if(periodos.get(i).isEstado_PerLectivo() == true){
-                vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
-                } else{
+                if (periodos.get(i).isEstado_PerLectivo() == true) {
+                    vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
+                } else {
                     vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
                 }
             }
@@ -305,29 +305,42 @@ public class VtnPrdLectivoCTR {
             JOptionPane.showMessageDialog(null, "Seleccione un Período Lectivo");
         } else {
             periodo = capturarFila();
-            String num = bdPerLectivo.alumnosMatriculados(periodo.getCarrera().getId());
-            int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
-            int result = JOptionPane.showConfirmDialog(null, "ADVERTENCIA!!\n"
-                    + "Está a punto de Cerrar un Período Lectivo\n"
-                    + "Al hacer esto se pasaran las notas de todos los estudiantes matriculados en la carrera de " + periodo.getCarrera().getNombre() + "\n"
-                    + "A la Malla General, esto quiere decir que las notas de " + num + " Alumnos serán cambiadas de lugar, esta acción es irreversible\n"
-                    + "Si está de acuerdo con realizar esta acción deberá disponer de una excelente conexión a Internet\n"
-                    + "Este proceso se tardará algunos minutos\n"
-                    + "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
-            if (result == 0) {
-                if (periodo.isEstado_PerLectivo() == false) {
-                    JOptionPane.showMessageDialog(null, "Este Período Lectivo ya fue cerrado");
-                } else {
-                    if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
-                        JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
-                        llenarTabla();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
+            if (periodo.isEstado_PerLectivo() == false) {
+                int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "El Período Lectivo que seleccionó esta Cerrado\n ¿Desea Abrir este Período Lectivo? ", " Abrir Período Lectivo ", dialog);
+                if (result == 0) {
+                    if(bdPerLectivo.abrirPeriodo(periodo.getId_PerioLectivo()) == true){
+                        JOptionPane.showMessageDialog(null, "Período Lectivo Abierto Satisfactoriamente");
+                    } else{
+                        JOptionPane.showMessageDialog(null, "No se pudo abrir este Período Lectivo");
                     }
                 }
+            } else {
+                String num = bdPerLectivo.alumnosMatriculados(periodo.getCarrera().getId());
+                int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "ADVERTENCIA!!\n"
+                        + "Está a punto de Cerrar un Período Lectivo\n"
+                        + "Al hacer esto se pasaran las notas de todos los estudiantes matriculados en la carrera de " + periodo.getCarrera().getNombre() + "\n"
+                        + "A la Malla General, esto quiere decir que las notas de " + num + " Alumnos serán cambiadas de lugar, esta acción es irreversible\n"
+                        + "Si está de acuerdo con realizar esta acción deberá disponer de una excelente conexión a Internet\n"
+                        + "Este proceso se tardará algunos minutos\n"
+                        + "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
+                if (result == 0) {
+                    if (periodo.isEstado_PerLectivo() == false) {
+                        JOptionPane.showMessageDialog(null, "Este Período Lectivo ya fue cerrado");
+                    } else {
+                        if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
+                            JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
+                            llenarTabla();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
+                        }
+                    }
 
+                }
             }
         }
+        llenarTabla();
     }
 
     //Inicia los permisos a la Base de Datos
