@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53d62d52-505e-42a2-9bde-46dbba0fea6d">
 	<property name="ireport.zoom" value="0.6830134553650712"/>
-	<property name="ireport.x" value="48"/>
+	<property name="ireport.x" value="14"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
@@ -171,7 +171,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="114" width="257" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
+				<reportElement x="273" y="114" width="324" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
