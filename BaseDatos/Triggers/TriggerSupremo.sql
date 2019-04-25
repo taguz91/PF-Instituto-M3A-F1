@@ -57,53 +57,13 @@ BEGIN
 END;
 $cierre_prd_backup$ LANGUAGE plpgsql;
 
-
 CREATE TRIGGER cierre_prd_backup
 BEFORE UPDATE OF prd_lectivo_estado
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE cierre_prd_backup();
 
---Luego de cerrar el periodo se le consulta las notas
 
---Una funcion que me llena las notas *
---Solo debo pasar el id del periodo
-/*
-CREATE OR REPLACE FUNCTION llenar_cursos()
-RETURNS VOID AS $llenar_cursos$
-DECLARE
-  materia INTEGER := 0;
-  reg RECORD;
-  cursos_prd CURSOR FOR SELECT id_curso, id_materia , c.id_prd_lectivo, id_carrera
-  FROM public."Cursos" c, public."PeriodoLectivo" pl
-  WHERE
-  c.id_prd_lectivo = 4  AND
-  pl.id_prd_lectivo = c.id_prd_lectivo ORDER BY id_materia;
-BEGIN
-  OPEN cursos_prd;
-  FETCH cursos_prd INTO reg;
-  WHILE ( FOUND ) LOOP
-    RAISE NOTICE 'Curso: %', reg.id_curso;
-    RAISE NOTICE 'Materia: %', reg.id_materia;
-    IF materia <> reg.id_materia THEN
-        materia := reg.id_materia;
-        INSERT INTO public."AlumnoCurso"(
-        id_alumno, id_curso, almn_curso_nota_final)
-        SELECT id_alumno, reg.id_curso, floor(random()* (90-25 + 1) + 25)
-        FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
-        WHERE ac.id_carrera = reg.id_carrera AND
-        ma.id_almn_carrera = ac.id_almn_carrera AND
-        ma.id_materia = reg.id_materia AND
-        malla_almn_estado = 'M';
-        RAISE NOTICE 'SE INSERTO';
-    ELSE
-      RAISE NOTICE 'Ya se registro en esta materia: %', materia;
-    END IF;
-    FETCH cursos_prd INTO reg;
-  END LOOP;
-  RETURN;
-END;
-$llenar_cursos$ LANGUAGE plpgsql;
-*/
+
 --Ahora al cerrar el periodo se migra las notas
 
 --Creamos un trigger
@@ -200,9 +160,8 @@ AFTER UPDATE OF prd_lectivo_estado
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE pasar_notas();
 
---Cuando se abre el periodo nuevamente todo regresa a como era antes
 
---	DROP FUNCTION backup_notas_prd();
+--Cuando se abre el periodo nuevamente todo regresa a como era antes
 CREATE OR REPLACE FUNCTION backup_notas_prd()
 RETURNS TRIGGER AS $backup_notas_prd$
 DECLARE
@@ -248,6 +207,47 @@ AFTER UPDATE OF prd_lectivo_estado
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE backup_notas_prd();
 
+
+
+--Una funcion que me llena las notas *
+--Solo debo pasar el id del periodo
+/*
+CREATE OR REPLACE FUNCTION llenar_cursos()
+RETURNS VOID AS $llenar_cursos$
+DECLARE
+  materia INTEGER := 0;
+  reg RECORD;
+  cursos_prd CURSOR FOR SELECT id_curso, id_materia , c.id_prd_lectivo, id_carrera
+  FROM public."Cursos" c, public."PeriodoLectivo" pl
+  WHERE
+  c.id_prd_lectivo = 4  AND
+  pl.id_prd_lectivo = c.id_prd_lectivo ORDER BY id_materia;
+BEGIN
+  OPEN cursos_prd;
+  FETCH cursos_prd INTO reg;
+  WHILE ( FOUND ) LOOP
+    RAISE NOTICE 'Curso: %', reg.id_curso;
+    RAISE NOTICE 'Materia: %', reg.id_materia;
+    IF materia <> reg.id_materia THEN
+        materia := reg.id_materia;
+        INSERT INTO public."AlumnoCurso"(
+        id_alumno, id_curso, almn_curso_nota_final)
+        SELECT id_alumno, reg.id_curso, floor(random()* (90-25 + 1) + 25)
+        FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac
+        WHERE ac.id_carrera = reg.id_carrera AND
+        ma.id_almn_carrera = ac.id_almn_carrera AND
+        ma.id_materia = reg.id_materia AND
+        malla_almn_estado = 'M';
+        RAISE NOTICE 'SE INSERTO';
+    ELSE
+      RAISE NOTICE 'Ya se registro en esta materia: %', materia;
+    END IF;
+    FETCH cursos_prd INTO reg;
+  END LOOP;
+  RETURN;
+END;
+$llenar_cursos$ LANGUAGE plpgsql;
+*/
 --Demostracion
 
 --Malla de los alumnos que se eliminara

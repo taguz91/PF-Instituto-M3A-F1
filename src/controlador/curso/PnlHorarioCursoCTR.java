@@ -162,7 +162,7 @@ public class PnlHorarioCursoCTR {
 
         for (int i = posI; i < posF; i++) {
             mdTbl.setValueAt("<html> <center>" + s.getId() + "" + s.getCurso().getId_curso() + "<br>"
-                    + s.getCurso().getId_materia().getCodigo() + "<br>"
+                    + s.getCurso().getId_materia().getNombre()+ "<br>"
                     + s.getCurso().getId_docente().getNombreCorto() + "</center></html>",
                     i, dia);
         }

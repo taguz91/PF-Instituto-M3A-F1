@@ -23,6 +23,7 @@ public class PnlHorarioAlmnCTR {
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
+        "---------------------------",
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
         "<html>16:00<br>17:00</html>",
@@ -42,13 +43,13 @@ public class PnlHorarioAlmnCTR {
 
     public void iniciar() {
         iniciaTbl();
-        
+
         llenarTbl(sesiones);
     }
 
     private void iniciaTbl() {
         String[][] datos = {};
-        String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+        String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, t);
         formatoTbl(pnl.getTblHorario());
@@ -90,7 +91,7 @@ public class PnlHorarioAlmnCTR {
     private void buscarClm(SesionClaseMD s) {
         int posI = -1, posF = -1;
         int dia = s.getDia();
-
+        
         for (int i = 0; i < hm.length; i++) {
             if (hm[i].equals(tranformar(s.getHoraIni()))) {
                 posI = i;
@@ -107,28 +108,16 @@ public class PnlHorarioAlmnCTR {
 
         if (posI >= 0 && posF >= 0) {
             for (int i = posI; i < posF; i++) {
-                mdTbl.setValueAt("<html> <center>" + s.getId() + "" + s.getCurso().getId_curso() + "<br>"
-                        + s.getCurso().getId_materia().getCodigo() + "<br>"
-                        + s.getCurso().getId_docente().getNombreCorto() + "</center></html>",
+                mdTbl.setValueAt("<html> <center>" + s.getId() + "" + s.getCurso().getId_curso() + " | "
+                        + s.getCurso().getCurso_capacidad() + "<br>"
+                        + s.getCurso().getId_materia().getNombre() + "</center></html>",
                         i, dia);
             }
         }
     }
 
     private String tranformar(LocalTime hora) {
-        String horaString, minutoString;
-        if (hora.getHour() < 10) {
-            horaString = "0" + hora.getHour();
-        } else {
-            horaString = "" + hora.getHour();
-        }
-
-        if (hora.getMinute() < 10) {
-            minutoString = "0" + hora.getMinute();
-        } else {
-            minutoString = "" + hora.getMinute();
-        }
-        return horaString + ":" + minutoString;
+        return hora.toString();
     }
 
 }

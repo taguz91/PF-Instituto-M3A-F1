@@ -25,8 +25,9 @@ WHERE id_alumno IN (
 
 
 SELECT malla_almn_estado, malla_almn_num_matricula,
-persona_primer_nombre, persona_primer_apellido,
-materia_nombre, materia_ciclo
+persona_primer_nombre, persona_segundo_nombre,
+persona_primer_apellido, persona_segundo_apellido,
+materia_nombre, materia_ciclo, malla_almn_nota1
 FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac,
 public."Alumnos" a, public."Personas" p, public."Materias" m
 WHERE ma.id_almn_carrera IN (
@@ -79,7 +80,7 @@ WHERE id_almn_carrera IN (
 
 --Actualizamos de nuestra carrera
 UPDATE public."MallaAlumno"
-	SET malla_almn_estado = 'M'
+	SET malla_almn_estado = 'M', malla_almn_num_matricula = malla_almn_num_matricula + 1
 	WHERE id_almn_carrera IN (
 		SELECT id_almn_carrera
 		FROM public."AlumnosCarrera"
@@ -103,7 +104,7 @@ UPDATE public."MallaAlumno"
 --107 actualizados  en desarrollo en el ultimo periodo
 --Para TAS
 	UPDATE public."MallaAlumno"
-	SET malla_almn_estado = 'M'
+	SET malla_almn_estado = 'M', malla_almn_num_matricula = malla_almn_num_matricula + 1
 	WHERE id_almn_carrera IN (
 		SELECT id_almn_carrera
 		FROM public."AlumnosCarrera"
@@ -124,4 +125,4 @@ UPDATE public."MallaAlumno"
 		c.id_prd_lectivo = 8
 	) AND malla_almn_estado = 'R';
 
---154 actualizados en sistemas en el ultimo periodo 
+--154 actualizados en sistemas en el ultimo periodo
