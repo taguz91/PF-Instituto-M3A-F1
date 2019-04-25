@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1ba8782d-fd31-496f-9bef-7ee9c1a028a5">
-	<property name="ireport.zoom" value="1.1000000000000083"/>
-	<property name="ireport.x" value="922"/>
+	<property name="ireport.zoom" value="0.5644739300537817"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
@@ -654,37 +654,37 @@ WHERE
 		<band height="33" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="178" splitType="Stretch">
+		<band height="126" splitType="Stretch">
 			<staticText>
-				<reportElement x="966" y="138" width="100" height="20" uuid="f89ecf3b-d737-4184-a0c5-ef418aa3b046"/>
+				<reportElement x="936" y="90" width="100" height="20" uuid="f89ecf3b-d737-4184-a0c5-ef418aa3b046"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COORDINADOR]]></text>
 			</staticText>
 			<line>
-				<reportElement x="383" y="106" width="234" height="1" uuid="4bf2decc-54ee-4472-a51c-ca0c520f78e4"/>
+				<reportElement x="353" y="58" width="234" height="1" uuid="4bf2decc-54ee-4472-a51c-ca0c520f78e4"/>
 			</line>
 			<staticText>
-				<reportElement x="450" y="138" width="100" height="20" uuid="c40dca8f-8254-4f1c-bef4-a86b67ad30ed"/>
+				<reportElement x="420" y="90" width="100" height="20" uuid="c40dca8f-8254-4f1c-bef4-a86b67ad30ed"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1338" y="98" width="166" height="20" uuid="f5290292-2e9a-49fd-92f3-110bbfaa94ec"/>
+				<reportElement x="1308" y="50" width="166" height="20" uuid="f5290292-2e9a-49fd-92f3-110bbfaa94ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="900" y="107" width="234" height="1" uuid="5466a149-5829-4822-a671-5eb0acb74d89"/>
+				<reportElement x="870" y="59" width="234" height="1" uuid="5466a149-5829-4822-a671-5eb0acb74d89"/>
 			</line>
 			<textField>
-				<reportElement x="900" y="118" width="234" height="20" uuid="a2803359-aaf2-47f1-9421-81ebe30f34a1"/>
+				<reportElement x="870" y="70" width="234" height="20" uuid="a2803359-aaf2-47f1-9421-81ebe30f34a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="383" y="118" width="234" height="20" uuid="15677e46-4e03-4041-beaf-bbfb155473e2"/>
+				<reportElement x="353" y="70" width="234" height="20" uuid="15677e46-4e03-4041-beaf-bbfb155473e2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
