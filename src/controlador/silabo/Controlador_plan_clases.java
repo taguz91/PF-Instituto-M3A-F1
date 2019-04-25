@@ -97,8 +97,9 @@ public class Controlador_plan_clases {
             public void mouseClicked(MouseEvent event ){
                 
                 int index=fPlanClase.getJlisRecursos().locationToIndex(event.getPoint());
-               // CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
-                
+                CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
+                        item.setSelected(!item.isSelected());
+                        fPlanClase.getJlisRecursos().repaint(fPlanClase.getJlisRecursos().getCellBounds(index, index));
             }
          });
      }

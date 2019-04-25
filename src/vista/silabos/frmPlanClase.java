@@ -189,7 +189,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         this.jSeparator1 = jSeparator1;
     }
 
-    public JList<String> getJlisRecursos() {
+    public JList getJlisRecursos() {
         return jlisRecursos;
     }
 
