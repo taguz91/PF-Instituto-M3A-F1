@@ -31,6 +31,7 @@ import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
+import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.notas.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
@@ -45,6 +46,7 @@ public class VtnNotas {
     private static VtnNotasAlumnoCurso vista;
     private AlumnoCursoBD modelo;
     private UsuarioBD usuario;
+    private static RolBD rolSeleccionado;
 
     //LISTAS
     private static Map<String, DocenteMD> listaDocentes;
@@ -64,12 +66,13 @@ public class VtnNotas {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario) {
+    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, RolBD rolSeleccionado) {
         vista.setValorMinimo(70);
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
+        this.rolSeleccionado = rolSeleccionado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
@@ -79,7 +82,11 @@ public class VtnNotas {
 
         tablaNotas = (DefaultTableModel) vista.getTblNotas().getModel();
 
-        listaDocentes = DocenteBD.selectAll();
+        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+            listaDocentes = DocenteBD.selectAll(usuario.getUsername());
+        } else {
+            listaDocentes = DocenteBD.selectAll();
+        }
 
         new Thread(() -> {
             activarForm(false);
@@ -89,6 +96,7 @@ public class VtnNotas {
             cargarComboCiclo();
             cargarComboMaterias();
             InitEventos();
+
             activarForm(true);
         }).start();
 
@@ -113,6 +121,8 @@ public class VtnNotas {
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
+
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
@@ -191,6 +201,10 @@ public class VtnNotas {
                     String materia = vista.getCmbAsignatura().getSelectedItem().toString();
                     String value = tablaNotas.getValueAt(getSelectedRow(), 14).toString();
 
+                    if (value.isEmpty()) {
+                        value = "0";
+                    }
+
                     if (Validaciones.isInt(value)) {
                         int faltas = (int) Middlewares.conversor(value);
                         setFaltas(materia, faltas);
@@ -202,22 +216,27 @@ public class VtnNotas {
                     refreshTabla();
                     break;
                 case 16:
-                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRow(), 16).toString();
+                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRow(), 16).toString().toLowerCase();
 
                     List<String> palabrasValidas = new ArrayList();
-
+                    if (asistencia.isEmpty()) {
+                        asistencia = "";
+                    }
                     palabrasValidas.add("RETIRADO");
-                    palabrasValidas.add("R");
                     palabrasValidas.add("ASISTE");
-                    palabrasValidas.add("A");
                     palabrasValidas.add("DESERTOR");
-                    palabrasValidas.add("D");
                     palabrasValidas.add("NO ASISTE");
-                    palabrasValidas.add("N");
 
                     if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+                        if (asistencia.contains("retirado")) {
+                            vista.getTblNotas().setValueAt("RETIRADO", getSelectedRow(), 13);
+                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
+                            vista.getTblNotas().setValueAt("REPROBADO", getSelectedRow(), 13);
+                        }
+                        sumarColumnas();
                         editar();
                     }
+                    refreshTabla();
 
                     break;
                 default:
@@ -297,7 +316,6 @@ public class VtnNotas {
         double examenSupletorio = 0;
 
         double notaFinal = 0;
-        String estado = "";
 
         aporte1 = Middlewares.conversor(tablaNotas.getValueAt(fila, 6).toString());
         examenInterCiclo = Middlewares.conversor(tablaNotas.getValueAt(fila, 7).toString());
@@ -328,7 +346,8 @@ public class VtnNotas {
             }
             vista.getTblNotas().setValueAt(porcentaje, getSelectedRow(), 15);
             String estado = vista.getTblNotas().getValueAt(getSelectedRow(), 13).toString();
-            if (!estado.equalsIgnoreCase("RETIRADO")) {
+            String asistencia = vista.getTblNotas().getValueAt(getSelectedRow(), 16).toString();
+            if (!estado.equalsIgnoreCase("RETIRADO") && asistencia.equalsIgnoreCase("RETIRADO")) {
                 if (porcentaje >= 25) {
                     vista.getTblNotas().setValueAt("REPROBADO", getSelectedRow(), 13);
                 } else {
@@ -351,7 +370,7 @@ public class VtnNotas {
             vista.getCmbDocente().addItem(key);
 
         });
-
+        tablaNotas.setRowCount(0);
     }
 
     private void cargarComboPeriodos() {
@@ -364,7 +383,7 @@ public class VtnNotas {
                 .forEach(obj -> {
                     vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
                 });
-
+        tablaNotas.setRowCount(0);
     }
 
     private static void setLblCarrera() {
@@ -375,6 +394,7 @@ public class VtnNotas {
                 .forEach(obj -> {
                     vista.getLblCarrera().setText(obj.getCarrera().getNombre());
                 });
+
     }
 
     private void cargarComboCiclo() {
@@ -389,6 +409,7 @@ public class VtnNotas {
         } catch (NullPointerException e) {
             Middlewares.bugProcessor(vista);
         }
+        tablaNotas.setRowCount(0);
     }
 
     private void cargarComboMaterias() {
@@ -419,7 +440,7 @@ public class VtnNotas {
             Middlewares.bugProcessor(e, vista);
             vista.getCmbAsignatura().removeAllItems();
         }
-
+        tablaNotas.setRowCount(0);
     }
 
     private static void refreshTabla() {
@@ -449,8 +470,21 @@ public class VtnNotas {
         AlumnoCursoBD alumno = listaNotas.get(fila);
 
         alumno.setEstado(vista.getTblNotas().getValueAt(fila, 13).toString());
-        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString()));
-        alumno.setAsistencia(vista.getTblNotas().getValueAt(fila, 16).toString());
+        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString().toUpperCase()));
+        String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
+
+        if (asistencia.contains("desertor")) {
+            alumno.setAsistencia("Desertor");
+        }
+        if (asistencia.contains("asiste")) {
+            alumno.setAsistencia("Asiste");
+        }
+        if (asistencia.contains("retirado")) {
+            alumno.setAsistencia("Retirado");
+        }
+        if (asistencia.contains("no asiste")) {
+            alumno.setAsistencia("No Asiste");
+        }
 
         alumno.getNotas().stream()
                 .filter(buscar("APORTE 1"))
@@ -546,9 +580,17 @@ public class VtnNotas {
     }
 
     private static void activarForm(boolean estado) {
-        vista.getTxtBuscar().setEnabled(estado);
-        vista.getBtnBuscar().setEnabled(estado);
-        vista.getCmbDocente().setEnabled(estado);
+
+        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+            vista.getTxtBuscar().setVisible(false);
+            vista.getBtnBuscar().setVisible(false);
+            vista.getCmbDocente().setEnabled(false);
+        } else {
+            vista.getTxtBuscar().setEnabled(estado);
+            vista.getBtnBuscar().setEnabled(estado);
+            vista.getCmbDocente().setEnabled(estado);
+        }
+
         vista.getCmbPeriodoLectivo().setEnabled(estado);
         vista.getCmbCiclo().setEnabled(estado);
         vista.getCmbAsignatura().setEnabled(estado);
@@ -642,18 +684,21 @@ public class VtnNotas {
                 .forEach(setPorcentajeVetor(row, faltas, obj));
 
         row.add(16, obj.getAsistencia());
+
         tablaNotas.addRow(row);
 
     }
 
-    private static Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
+    private static Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, double faltas, AlumnoCursoBD alumno) {
         return obj -> {
 
-            int horaPresenciales = obj.getHorasPresenciales();
+            double horaPresenciales = obj.getHorasPresenciales();
+
             int porcentaje = 0;
 
             if (horaPresenciales != 0) {
-                porcentaje = (faltas * 100) / horaPresenciales;
+
+                porcentaje = (int) Math.ceil(((faltas * 100) / horaPresenciales));
             }
 
             double notaSupletorio = (Double) row.get(11);
@@ -667,14 +712,15 @@ public class VtnNotas {
                 validarAprobado(alumno, examenFinal, porcentaje, row);
             }
 
-            row.add(14, faltas);
+            row.add(14, (int) faltas);
 
             row.add(15, porcentaje);
         };
     }
 
     private static void validarAprobado(AlumnoCursoBD alumno, double notaValidar, int porcentaje, List<Object> row) {
-        if (!alumno.getEstado().equalsIgnoreCase("RETIRADO")) {
+        if (!alumno.getEstado().equalsIgnoreCase("RETIRADO") || !alumno.getAsistencia().equalsIgnoreCase("RETIRADO")) {
+
             int notaFinal = (Integer) row.get(12);
 
             TipoDeNotaMD rango = getRango("EXAMEN SUPLETORIO");
