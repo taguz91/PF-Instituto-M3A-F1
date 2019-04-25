@@ -153,6 +153,8 @@ public class FrmAlumnoCursoCTR {
         TblEstilo.formatoTbl(frmAlmCurso.getTblMateriasPen());
         TblEstilo.formatoTblMatricula(frmAlmCurso.getTblMateriasSelec());
         TblEstilo.formatoTbl(frmAlmCurso.getTblAlumnos());
+        //Tamaño de la cedula del estudiante
+        TblEstilo.columnaMedida(frmAlmCurso.getTblAlumnos(), 0, 100);
 
         //Tamaño de el nombre curso 
         TblEstilo.columnaMedida(frmAlmCurso.getTblMateriasSelec(), 1, 50);

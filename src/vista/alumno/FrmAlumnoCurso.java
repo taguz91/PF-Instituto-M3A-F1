@@ -122,13 +122,6 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         lblErrorBuscar = new javax.swing.JLabel();
         lblErrorPrdLectivo = new javax.swing.JLabel();
-        btnMtCursadas = new javax.swing.JButton();
-        btnReprobadas = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        btnAnuladas = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        lblNumMatriculas = new javax.swing.JLabel();
-        btnPendientes = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMateriasSelec = new javax.swing.JTable();
@@ -147,6 +140,16 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnError = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        lblNumMatriculas = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnMtCursadas = new javax.swing.JButton();
+        btnPendientes = new javax.swing.JButton();
+        btnReprobadas = new javax.swing.JButton();
+        btnAnuladas = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtMatriculadosCurso = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -158,7 +161,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
 
         cmbPrdLectivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        jPanel1.add(cmbPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 35, 485, -1));
+        jPanel1.add(cmbPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 35, 460, -1));
 
         jLabel2.setText("Seleccione un alumno:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 70, -1, -1));
@@ -173,13 +176,13 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblAlumnos);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 482, 106));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 430, 106));
 
         txtBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 92, 482, 23));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 92, 430, 23));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(506, 92, 30, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 30, -1));
 
         lblErrorBuscar.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorBuscar.setText("No debe ingresar caracteres especiales");
@@ -188,25 +191,6 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
         jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 12, 311, -1));
-
-        btnMtCursadas.setText("Cursadas");
-        jPanel1.add(btnMtCursadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 92, 100, -1));
-
-        btnReprobadas.setText("Reprobadas");
-        jPanel1.add(btnReprobadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 162, 100, -1));
-
-        jLabel5.setText("Ver marterias:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 70, -1, -1));
-
-        btnAnuladas.setText("Anuladas");
-        jPanel1.add(btnAnuladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 198, 100, -1));
-
-        jLabel7.setText("Número matriculas:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 12, -1, -1));
-        jPanel1.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 35, 40, 29));
-
-        btnPendientes.setText("Pendientes");
-        jPanel1.add(btnPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 127, 100, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -224,7 +208,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblMateriasSelec);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 74, 311, 158));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 74, 330, 158));
 
         tblMateriasPen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,13 +247,13 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel2.add(btnRegresarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 200, 40, -1));
 
         jLabel6.setText("Ver horarios:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 23, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, 30));
 
         btnHorarioCurso.setText("Curso");
-        jPanel2.add(btnHorarioCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 17, 70, -1));
+        jPanel2.add(btnHorarioCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 70, -1));
 
         btnHorarioAlmn.setText("Alumno");
-        jPanel2.add(btnHorarioAlmn, new org.netbeans.lib.awtextra.AbsoluteConstraints(616, 17, -1, -1));
+        jPanel2.add(btnHorarioAlmn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
         btnGuardar.setText("Guardar");
 
@@ -295,6 +279,32 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGap(5, 5, 5))
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(105, 105, 105))); // NOI18N
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setText("Número matriculas:");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, 29));
+
+        jLabel5.setText("Ver marterias:");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        btnMtCursadas.setText("Cursadas");
+        jPanel4.add(btnMtCursadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 100, -1));
+
+        btnPendientes.setText("Pendientes");
+        jPanel4.add(btnPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 100, -1));
+
+        btnReprobadas.setText("Reprobadas");
+        jPanel4.add(btnReprobadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 100, -1));
+
+        btnAnuladas.setText("Anuladas");
+        jPanel4.add(btnAnuladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 100, -1));
+
+        jLabel8.setText("Matriculas en el curso:");
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 170, -1));
+        jPanel4.add(txtMatriculadosCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 150, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -302,18 +312,24 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
@@ -346,9 +362,11 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -359,5 +377,6 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblMateriasPen;
     private javax.swing.JTable tblMateriasSelec;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JLabel txtMatriculadosCurso;
     // End of variables declaration//GEN-END:variables
 }
