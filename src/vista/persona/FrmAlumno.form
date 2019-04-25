@@ -176,12 +176,18 @@
         <Component class="javax.swing.JComboBox" name="CmBx_ForMadre">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="11">
                 <StringItem index="0" value="|SELECCIONE|"/>
-                <StringItem index="1" value="PRIMARIA"/>
-                <StringItem index="2" value="SECUNDARIA"/>
-                <StringItem index="3" value="SUPERIOR"/>
-                <StringItem index="4" value="NINGUNO"/>
+                <StringItem index="1" value="CENTRO DE ALFABETIZACI&#xd3;N"/>
+                <StringItem index="2" value="JARD&#xcd;N DE INFANTES"/>
+                <StringItem index="3" value="PRIMARIA"/>
+                <StringItem index="4" value="EDUCACI&#xd3;N B&#xc1;SICA"/>
+                <StringItem index="5" value="SECUNDARIA"/>
+                <StringItem index="6" value="EDUCACI&#xd3;N MEDIA"/>
+                <StringItem index="7" value="SUPERIOR NO UNIVERSITARIO"/>
+                <StringItem index="8" value="SUPERIOR UNIVERSITARIO"/>
+                <StringItem index="9" value="POST-GRADO"/>
+                <StringItem index="10" value="NINGUNO"/>
               </StringArray>
             </Property>
           </Properties>
@@ -300,15 +306,24 @@
         <Component class="javax.swing.JComboBox" name="CmBx_ForPadre">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="11">
                 <StringItem index="0" value="|SELECCIONE|"/>
-                <StringItem index="1" value="PRIMARIA"/>
-                <StringItem index="2" value="SECUNDARIA"/>
-                <StringItem index="3" value="SUPERIOR"/>
-                <StringItem index="4" value="NINGUNO"/>
+                <StringItem index="1" value="CENTRO DE ALFABETIZACI&#xd3;N"/>
+                <StringItem index="2" value="JARD&#xcd;N DE INFANTES"/>
+                <StringItem index="3" value="PRIMARIA"/>
+                <StringItem index="4" value="EDUCACI&#xd3;N B&#xc1;SICA"/>
+                <StringItem index="5" value="SECUNDARIA"/>
+                <StringItem index="6" value="EDUCACI&#xd3;N MEDIA"/>
+                <StringItem index="7" value="SUPERIOR NO UNIVERSITARIO"/>
+                <StringItem index="8" value="SUPERIOR UNIVERSITARIO"/>
+                <StringItem index="9" value="POST-GRADO"/>
+                <StringItem index="10" value="NINGUNO"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CmBx_ForPadreActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

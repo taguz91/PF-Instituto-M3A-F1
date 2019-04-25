@@ -134,7 +134,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         CmBx_SecEconomico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
         jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 260, 340, -1));
 
-        CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR", "NINGUNO" }));
+        CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "JARDÍN DE INFANTES", "PRIMARIA", "EDUCACIÓN BÁSICA", "SECUNDARIA", "EDUCACIÓN MEDIA", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "POST-GRADO", "NINGUNO" }));
         jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 300, 340, -1));
 
         CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "ESPOSO/A", "OTRO" }));
@@ -161,7 +161,12 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, 194, -1));
         jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 194, -1));
 
-        CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "PRIMARIA", "SECUNDARIA", "SUPERIOR", "NINGUNO" }));
+        CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "JARDÍN DE INFANTES", "PRIMARIA", "EDUCACIÓN BÁSICA", "SECUNDARIA", "EDUCACIÓN MEDIA", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "POST-GRADO", "NINGUNO" }));
+        CmBx_ForPadre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmBx_ForPadreActionPerformed(evt);
+            }
+        });
         jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 200, -1));
 
         jLabel14.setText("Trabaja:");
@@ -284,6 +289,10 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private void Txt_TlSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_TlSuperiorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Txt_TlSuperiorActionPerformed
+
+    private void CmBx_ForPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmBx_ForPadreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CmBx_ForPadreActionPerformed
 
     public JButton getBtn_Buscar() {
         return Btn_Buscar;
