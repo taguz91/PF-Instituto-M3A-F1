@@ -758,6 +758,7 @@ public class FrmAlumnoCursoCTR {
 
     /**
      * Llenar materias pendientes
+     * @param cursos
      */
     public void llenarTblMateriasPendientes(ArrayList<CursoMD> cursos) {
         //Antes validamos que esos cursos ya no esten el materia seleccionados 

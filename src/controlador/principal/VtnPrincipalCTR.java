@@ -460,12 +460,12 @@ public class VtnPrincipalCTR {
             ctrVtn.iniciar();
         }
     }
-    
-    public void abrirVtnAlmnRetirados(){
-        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados(); 
+
+    public void abrirVtnAlmnRetirados() {
+        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn); 
+            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(conecta, vtnPrin, this, vtn);
             ctr.iniciar();
         }
     }
@@ -637,9 +637,9 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP=new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
         cP.iniciaControlador();
-        
+
     }
 
     private void controladorIngreso() {
@@ -736,6 +736,10 @@ public class VtnPrincipalCTR {
         });
     }
 
+    /**
+     * Indicamos que cerramos la ventana para que merme el numero de ventanas
+     * abiertas.
+     */
     public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
