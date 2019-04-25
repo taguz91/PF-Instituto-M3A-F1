@@ -18,6 +18,7 @@ import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboBD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboMD;

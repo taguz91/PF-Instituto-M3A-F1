@@ -79,6 +79,18 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
+    
+    public boolean abrirPeriodo(int id){
+        String sql = "UPDATE public.\"PeriodoLectivo\" SET\n"
+                + " prd_lectivo_estado = true"
+                + " WHERE id_prd_lectivo = " + id + ";";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     public List<PeriodoLectivoMD> periodoDocente(String aguja) {
         String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"

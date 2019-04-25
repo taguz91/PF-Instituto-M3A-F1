@@ -146,5 +146,35 @@ public class MatriculaBD extends MatriculaMD {
             return null;
         }
     }
+    
+    /**
+     * Numero de matriculas hechas en un periodo lectivo
+     * @param idPrd
+     */
+    public int numMaticulados(int idPrd){
+        int num = 0;
+        sql = "SELECT count(*) public.\"AlumnoCurso\"\n"
+                + "WHERE id_curso IN(\n"
+                + "  SELECT id_curso\n"
+                + "  FROM public.\"Cursos\"\n"
+                + "  WHERE id_prd_lectivo = "+idPrd+"\n"
+                + ")";
+        ResultSet rs = conecta.sql(sql); 
+        if (rs != null) {
+            try {
+                while(rs.next()){
+                    num = rs.getInt(1);
+                }
+                return num;
+            } catch (SQLException e) {
+                System.out.println("No podemos obetener el numero de matriculados en un periodo \n"
+                +e.getMessage());
+                return 0;
+            }
+        }else{
+            return 0;
+        }
+    }
+    
 
 }
