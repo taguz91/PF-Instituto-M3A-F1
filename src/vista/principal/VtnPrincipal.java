@@ -350,6 +350,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnCtAlmnRetirados() {
         return mnCtAlmnRetirados;
     }
+
+    public JMenu getMnTipoNotas() {
+        return mnTipoNotas;
+    }
+    
     
     
     /**
