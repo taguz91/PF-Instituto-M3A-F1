@@ -171,6 +171,7 @@ BEFORE INSERT OR UPDATE
 ON public."Personas" FOR EACH ROW
 EXECUTE PROCEDURE historial_personas();
 
+/*
 --Tabla lugares 11
 CREATE OR REPLACE FUNCTION historial_lugares()
 RETURNS TRIGGER AS $historial_lugares$
@@ -187,6 +188,11 @@ CREATE TRIGGER auditoria_lugares
 BEFORE INSERT OR UPDATE
 ON public."Lugares" FOR EACH ROW
 EXECUTE PROCEDURE historial_lugares();
+
+DROP TRIGGER auditoria_lugares ON public."Lugares";
+DROP FUNCTION historial_lugares;
+*/
+
 
 --Tabla alumnos 12
 CREATE OR REPLACE FUNCTION historial_alumnos()
