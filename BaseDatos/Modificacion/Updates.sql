@@ -19,3 +19,48 @@ SET lugar_nombre = TRIM(lugar_nombre);
 
 SELECT * FROM public."Lugares"
 WHERE id_lugar_referencia = 1;
+
+ALTER TABLE public."Notas" ADD UNIQUE(id_almn_curso, id_tipo_nota);
+
+--Ingresar notas para entrenamiento deportivo
+INSERT INTO public."Notas"
+
+CREATE OR REPLACE FUNCTION llenar_notas_periodo()
+RETURNS VOID AS $llenar_notas_periodo$
+DECLARE
+	total INTEGER := 0;
+	ingresados INTEGER := 0;
+  prd INTEGER := 4;
+
+  reg RECORD;
+  almns_cursos CURSOR FOR  SELECT id_almn_curso
+  FROM public."AlumnoCurso" WHERE id_curso IN(
+    SELECT id_curso
+    FROM public."Cursos"
+    WHERE id_prd_lectivo = prd;
+  );
+BEGIN
+  SELECT count(*)
+  FROM public."AlumnoCurso" WHERE id_curso IN(
+    SELECT id_curso
+    FROM public."Cursos"
+    WHERE id_prd_lectivo = prd;
+  );
+
+    OPEN almns_cursos;
+    FETCH almns_cursos INTO reg;
+
+    WHILE ( FOUND ) LOOP
+			ingresados := ingresados + 1;
+      INSERT INTO public."Notas"(
+        id_almn_curso, id_tipo_nota)
+      SELECT re.id_almn_curso, id_tipo_nota
+      FROM public."TipoDeNota"
+      WHERE id_prd_lectivo = prd;
+      FETCH almns_cursos INTO reg;
+    END LOOP;
+		RAISE NOTICE 'Total de inserts: % Todos se ingreasaron: %', ingresados, total = ingresados;
+
+  RETURN;
+END;
+$llenar_notas_periodo$ LANGUAGE plpgsql;
