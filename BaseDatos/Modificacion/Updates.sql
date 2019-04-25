@@ -68,3 +68,14 @@ BEGIN
   RETURN;
 END;
 $llenar_notas_periodo$ LANGUAGE plpgsql;
+
+--Cursos que son los que se dupli id materia 18
+SELECT * FROM public."Cursos"
+WHERE id_prd_lectivo = 8 AND id_jornada = 1
+AND curso_ciclo = 3
+
+--Borramos ete curso porque nuncaabrio 
+DELETE FROM public."Cursos"
+WHERE id_curso = 287;
+
+--Acualizamoscon el id 312
