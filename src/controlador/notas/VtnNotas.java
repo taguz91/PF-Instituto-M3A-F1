@@ -31,6 +31,7 @@ import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
+import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.notas.VtnNotasAlumnoCurso;
 import vista.principal.VtnPrincipal;
@@ -45,6 +46,7 @@ public class VtnNotas {
     private static VtnNotasAlumnoCurso vista;
     private AlumnoCursoBD modelo;
     private UsuarioBD usuario;
+    private static RolBD rolSeleccionado;
 
     //LISTAS
     private static Map<String, DocenteMD> listaDocentes;
@@ -64,12 +66,13 @@ public class VtnNotas {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario) {
+    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, RolBD rolSeleccionado) {
         vista.setValorMinimo(70);
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
+        this.rolSeleccionado = rolSeleccionado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
@@ -79,7 +82,11 @@ public class VtnNotas {
 
         tablaNotas = (DefaultTableModel) vista.getTblNotas().getModel();
 
-        listaDocentes = DocenteBD.selectAll();
+        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+            listaDocentes = DocenteBD.selectAll(usuario.getUsername());
+        } else {
+            listaDocentes = DocenteBD.selectAll();
+        }
 
         new Thread(() -> {
             activarForm(false);
@@ -89,6 +96,7 @@ public class VtnNotas {
             cargarComboCiclo();
             cargarComboMaterias();
             InitEventos();
+
             activarForm(true);
         }).start();
 
@@ -113,7 +121,7 @@ public class VtnNotas {
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
-        
+
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
@@ -548,9 +556,17 @@ public class VtnNotas {
     }
 
     private static void activarForm(boolean estado) {
-        vista.getTxtBuscar().setEnabled(estado);
-        vista.getBtnBuscar().setEnabled(estado);
-        vista.getCmbDocente().setEnabled(estado);
+
+        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+            vista.getTxtBuscar().setVisible(false);
+            vista.getBtnBuscar().setVisible(false);
+            vista.getCmbDocente().setEnabled(false);
+        } else {
+            vista.getTxtBuscar().setEnabled(estado);
+            vista.getBtnBuscar().setEnabled(estado);
+            vista.getCmbDocente().setEnabled(estado);
+        }
+
         vista.getCmbPeriodoLectivo().setEnabled(estado);
         vista.getCmbCiclo().setEnabled(estado);
         vista.getCmbAsignatura().setEnabled(estado);
@@ -797,4 +813,3 @@ public class VtnNotas {
     // </editor-fold>  
 
 }
-
