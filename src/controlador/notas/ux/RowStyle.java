@@ -33,12 +33,10 @@ public class RowStyle extends DefaultTableCellRenderer {
             } else {
                 setForeground(new Color(0, 0, 0));
             }
-            
+
             table.setSelectionBackground(Color.lightGray);
-            table.setSelectionForeground(Color.lightGray);
-            
-            
-            
+            //table.setSelectionForeground(Color.lightGray);
+
         } catch (NumberFormatException | NullPointerException e) {
 
         }
