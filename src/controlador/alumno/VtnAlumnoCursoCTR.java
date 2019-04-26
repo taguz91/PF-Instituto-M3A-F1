@@ -102,12 +102,6 @@ public class VtnAlumnoCursoCTR {
                 } else if (b.length() == 0) {
                     cargarAlumnosCurso();
                 }
-                /*
-                if (b.length() > 2) {
-                    buscar(b);
-                } else if (b.length() == 0) {
-                    cargarAlumnosCurso();
-                }*/
             }
         });
         vtnAlmnCurso.getBtnbuscar().addActionListener(e -> buscar(vtnAlmnCurso.getTxtbuscar().getText().trim()));

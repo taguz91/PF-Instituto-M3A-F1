@@ -244,19 +244,9 @@ public class FrmAlumnoCursoCTR {
         if (posPrd < 1) {
             guardar = false;
         }
-
-        System.out.println("Antes de borrar teniamos: " + cursosSelec.size());
-        //Borro los choques de horas  
-//        cursosSelec.forEach(c -> {
-//            if (c.getCurso_nombre().charAt(0) == 'C') {
-//                if (cursosSelec.remove(c)) {
-//                    System.out.println("Eliminamos: " + c.getCurso_nombre() + " Materia: "
-//                            + c.getId_materia().getNombre());
-//                }
-//            }
-//        });
+        
+        //Se borra todas las materias que tienen un choque de horas
         borrarChoques(cursosSelec);
-        System.out.println("Despues de borrar tenemos: " + cursosSelec.size());
 
         if (guardar) {
             //Se limpia la variable antes de guardar 
@@ -292,18 +282,10 @@ public class FrmAlumnoCursoCTR {
                         matri.setPeriodo(periodos.get(posPrd - 1));
                         matri.ingresar();
                     }
-                    System.out.println("Ingresaremos " + cursosSelec.size() + " cursos.");
-
+                    //Imprimimos el reporte de matricula
                     llamaReporteMatricula(alumnosCarrera.get(posAlm).getAlumno().getIdentificacion(),
                             periodos.get(posPrd - 1).getId_PerioLectivo());
                 }
-
-                System.out.println("-----------------------------");
-                System.out.println("H O R A R I O");
-                horarioAlmn.forEach(h -> {
-                    System.out.println("Dia: " + h.getDia() + "--" + h.getHoraIni() + " || " + h.getHoraFin());
-                });
-                System.out.println("-----------------------------");
             }
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "El formulario contiene errores.");
@@ -472,8 +454,8 @@ public class FrmAlumnoCursoCTR {
         mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAlmn).getId());
 
         //Si no esta matriculado miramos la materias que a cursado 
-//        materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
-//System.out.println("Materias cusadas desde BD: "+materiasAlmn.size());
+        //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+        //System.out.println("Materias cusadas desde BD: "+materiasAlmn.size());
         materiasAlmn = filtrarMalla(mallaCompleta, "C");
         System.out.println("Materias cursadas con mi funcion. " + materiasAlmn.size());
         if (materiasAlmn != null) {
@@ -489,30 +471,24 @@ public class FrmAlumnoCursoCTR {
 //        mallaPerdidas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "R");
 //        System.out.println("Materias que peridad  BD " + mallaPerdidas.size());
         mallaPerdidas = filtrarMalla(mallaCompleta, "R");
-        System.out.println("Materias perdidadas desde funcion: " + mallaPerdidas.size());
 
         //Buscamos las materias en las que ya esta matriculado para borrarlas de la tabla
 //        mallaMatriculadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "M");
 //        System.out.println("Se encuentra matriculado en BD: " + mallaMatriculadas.size());
         mallaMatriculadas = filtrarMalla(mallaCompleta, "M");
-        System.out.println("Matriculadas  desde funcion: " + mallaMatriculadas.size());
 
         //BUscamos todas las materias en las que se anulo un alumno 
 //        mallaAnuladas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "A");
 //        System.out.println("Numero de materias anuladas: BD " + mallaAnuladas.size());
         //Materias anuladas en 
         mallaAnuladas = filtrarMalla(mallaCompleta, "A");
-        System.out.println("Materias anuladas desde funcion: " + mallaAnuladas.size());
 
         //Buscamos las pendientes 
 //        mallaPendientes = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "P");
 //        System.out.println("NUmero de pendientes: BD " + mallaPendientes.size());
         mallaPendientes = filtrarMalla(mallaCompleta, "P");
-        System.out.println("Materias pendientes desde: funcion " + mallaPendientes.size());
-        //Buscamos todas las materias en las que ya a cursado  para borrarlas de la tabla
-        //mallaCursadas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
+
         mallaCursadas = materiasAlmn;
-        System.out.println("Ah cursado " + mallaCursadas.size());
 
         if (mallaPerdidas.size() > 0) {
             frmAlmCurso.getBtnReprobadas().setVisible(true);
@@ -548,10 +524,6 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnPendientes().setVisible(false);
         }
 
-//        if (mallaPerdidas.isEmpty() && mallaAnuladas.isEmpty()) {
-//            cicloReprobado++;
-//        }
-        System.out.println("Curso hasta: " + cicloCursado + " Reprobo: " + cicloReprobado);
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
@@ -710,8 +682,6 @@ public class FrmAlumnoCursoCTR {
             }
         }
 
-        System.out.println("Numero de cursos: " + cursos.size());
-        System.out.println("Esto se va a eliminar: ");
         for (int i : posElim) {
             System.out.print(i + "  ");
         }

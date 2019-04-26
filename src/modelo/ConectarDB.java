@@ -1,6 +1,7 @@
 package modelo;
 
 import controlador.principal.ConexionesCTR;
+import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -10,11 +11,13 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.propiedades.Propiedades;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -31,11 +34,14 @@ public class ConectarDB {
     private ConexionesCTR ctrCt;
     //"Transaccion de tipo read commited
     //Se ven solo las modificaciones ya guardadas hechas por otras transacciones
+    //Para cambiar el estado de un mause cuando se hace una consulta.
+    private VtnPrincipal vtnPrin;
 
     /**
      * Base de datos de prueba
+     *
      * @param user
-     * @param pass 
+     * @param pass
      */
     public ConectarDB(String user, String pass) {
         try {
@@ -45,6 +51,7 @@ public class ConectarDB {
             url = "jdbc:postgresql://35.193.226.187:5432/BDcierre";
             this.user = user;
             this.pass = pass;
+            this.vtnPrin = null;
 
             //ct = DriverManager.getConnection(url, user, pass);
             ct = DriverManager.getConnection(url, user, pass);
@@ -66,11 +73,11 @@ public class ConectarDB {
             //Nos conectamos
             this.user = user;
             this.pass = pass;
-            conecta();
+            this.vtnPrin = null;
+            this.url = generarURL();
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Contructor ConectarBD");
-            //ct = ResourceManager.getConnection();
             //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
@@ -96,21 +103,13 @@ public class ConectarDB {
             ctrCt.matarHilo();
             return null;
         } finally {
-
             ctrCt.recetear("Terminando de preparar un statamente.");
-//            try {
-//                ct.close();
-//                System.out.println("Cerramos conexion: Luego de hacer hacer un prepared statement");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion");
-//            }
         }
     }
 
     public SQLException nosql(String noSql) {
         try {
-            //Variable para las transacciones
-            //ct = ResourceManager.getConnection();
+            cursorCarga();
             if (ct.isClosed()) {
                 ct = DriverManager.getConnection(url, user, pass);
                 ctrCt = new ConexionesCTR(ct);
@@ -118,7 +117,7 @@ public class ConectarDB {
             }
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
-            st.execute(noSql);
+            st.executeUpdate(noSql);
             System.out.println("---------NSQL-----------");
             System.out.println("Afecto a: " + st.getUpdateCount());
             System.out.println();
@@ -136,14 +135,10 @@ public class ConectarDB {
             return e;
         } finally {
             try {
-                //Cerramos la consulta
+                cursorNormal();
+                //Cerramos el statement
                 st.close();
                 ctrCt.recetear("Terminando de ejecutar una transaccion.");
-//                //Si todo salio bienn retornamos nulo
-//                ct.close();
-//                if (ct.isClosed()) {
-//                    System.out.println("CERRAMOS CONEXION: Despues de realizar una transaccion.");
-//                }
             } catch (SQLException ex) {
                 System.out.println("NO SE CERRARON LAS CONEXIONES");
             }
@@ -152,6 +147,7 @@ public class ConectarDB {
 
     public ResultSet sql(String sql) {
         try {
+            cursorCarga();
             //Iniciamos la variable para las transacciones
             //ct = ResourceManager.getConnection();
             if (ct.isClosed()) {
@@ -164,13 +160,13 @@ public class ConectarDB {
             //Ejecutamos la consulta
             rs = st.executeQuery(sql);
             metaData = rs.getMetaData();
-//            System.out.println("--------SQL----------");
-//            System.out.println(ct.getSchema());
-//            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
-//            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
-//            System.out.println("Nombre Base de datos: " + ct.getCatalog());
-//            System.out.println();
-//            System.out.println("------------------");
+            System.out.println("--------SQL----------");
+            System.out.println(ct.getSchema());
+            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
+            System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
+            System.out.println("Nombre Base de datos: " + ct.getCatalog());
+            System.out.println();
+            System.out.println("------------------");
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
@@ -178,12 +174,7 @@ public class ConectarDB {
             return null;
         } finally {
             ctrCt.recetear("Terminando de realizar una consulta.");
-//            try {
-//                ct.close();
-//                System.out.println("CERRAMOS CONEXION: Despues de hacer una consulta");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion.");
-//            }
+            cursorNormal();
         }
     }
 
@@ -194,7 +185,6 @@ public class ConectarDB {
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
                 ct = DriverManager.getConnection(url, user, pass);
-
                 return ct;
             } else {
                 System.out.println("Esta abierta la conexion.");
@@ -210,12 +200,9 @@ public class ConectarDB {
 
     }
 
-    private void conecta() {
-        this.url = ResourceManager.generarURL();
-    }
-
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         try {
+            cursorCarga();
             if (ct.isClosed()) {
                 ct = DriverManager.getConnection(url, user, pass);
                 ctrCt = new ConexionesCTR(ct);
@@ -233,12 +220,30 @@ public class ConectarDB {
             JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
         } finally {
             ctrCt.recetear("Terminando de imprimir un reporte.");
-//            try {
-//                ct.close();
-//                System.out.println("CERRAMOS CONEXION: Despues de imprimir un reporte.");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion. Al imprimir un reporte.");
-//            }
+            cursorNormal();
         }
+    }
+
+    private String generarURL() {
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
+    }
+
+    private void cursorCarga() {
+        if (vtnPrin != null) {
+            vtnPrin.setCursor(new Cursor(3));
+        }
+    }
+
+    private void cursorNormal() {
+        if (vtnPrin != null) {
+            vtnPrin.setCursor(new Cursor(0));
+        }
+    }
+
+    public void setVtnPrin(VtnPrincipal vtnPrin) {
+        this.vtnPrin = vtnPrin;
     }
 }
