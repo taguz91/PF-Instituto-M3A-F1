@@ -90,7 +90,6 @@ public class ConectarDB {
         } catch (SQLException e) {
             System.out.println("No se pudo preparar el statement. " + e.getMessage());
             ctrCt.matarHilo();
-            sqlPS(nsql);
             return null;
         } finally {
 
@@ -113,7 +112,6 @@ public class ConectarDB {
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("nosql Clase: ConectarBD");
             }
-            ct.setAutoCommit(false);
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.execute(noSql);
@@ -127,18 +125,10 @@ public class ConectarDB {
             System.out.println("No hay id");
             System.out.println("--------------------");
             //idGenerado = st.getGeneratedKeys().getInt(0);
-            ct.commit();
             return null;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la accion " + e.getMessage());
             ctrCt.matarHilo();
-            try {
-                //Se vuelve a llamar a la clase
-                ct.rollback();
-                System.out.println("Se hizo rollback");
-            } catch (SQLException ex) {
-                System.out.println("NO SE Pudo hacer rollback " + ex.getMessage());
-            }
             return e;
         } finally {
             try {
@@ -181,8 +171,6 @@ public class ConectarDB {
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
             ctrCt.matarHilo();
-            //Se vuelve a llamar a la clase
-            sql(sql);
             return null;
         } finally {
             ctrCt.recetear("Terminando de realizar una consulta.");
