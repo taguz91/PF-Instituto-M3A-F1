@@ -212,7 +212,7 @@ public class LoginCTR {
                 if (entrar) {
                     iniciarModoDesarrollo("ROOT", "RUTH");
                 } else if (c.length() == 0) {
-                    LoginGenerico();
+                    clickDevMode();
                 } else {
                     JOptionPane.showMessageDialog(null, "Esponja es mejor que corras!!!", "Error",
                             JOptionPane.WARNING_MESSAGE);
@@ -223,8 +223,11 @@ public class LoginCTR {
     }
 
     private void iniciarModoDesarrollo(String user, String pass) {
+
         USERNAME = user;
         PASSWORD = pass;
+        ResourceManager.USERNAME = USERNAME;
+        ResourceManager.PASSWORD = PASSWORD;
 
         modelo.setUsername(user);
         modelo.setPassword(pass);
