@@ -158,7 +158,7 @@ public class VtnSelectRolCTR {
     private void ingresar() {
 
         setObjFromCombo();
-
+        
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
         vtn.iniciar();
         logConexion();
