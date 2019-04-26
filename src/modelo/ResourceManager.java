@@ -43,14 +43,17 @@ public class ResourceManager {
 
         }
 
-//        if (conn != null) {
-//            //cerrarSesion();
-//
-//            //conn.close();
-//            resetConn();
-//        }
-        JDBC_URL = generarURL();
-        conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        if (conn.isClosed()) {
+
+            System.out.println("CLOSE");
+
+            conn = null;
+            resetConn();
+        }
+        if (conn == null) {
+            System.out.println("null");
+            resetConn();
+        }
 
         return conn;
 
@@ -60,8 +63,8 @@ public class ResourceManager {
         try {
             JDBC_URL = generarURL();
 
-//            USERNAME = Propiedades.getUserProp("username");
-//            PASSWORD = Propiedades.getUserProp("password");
+            USERNAME = Propiedades.getUserProp("username");
+            PASSWORD = Propiedades.getUserProp("password");
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         } catch (SQLException ex) {
             System.out.println("INTENTE NUEVAMENTE");
@@ -102,7 +105,6 @@ public class ResourceManager {
 
             stmt.execute(Statement);
 
-            conn.close();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
