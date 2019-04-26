@@ -32,7 +32,11 @@ public class ConectarDB {
     //"Transaccion de tipo read commited
     //Se ven solo las modificaciones ya guardadas hechas por otras transacciones
 
-    //BD En cloud
+    /**
+     * Base de datos de prueba
+     * @param user
+     * @param pass 
+     */
     public ConectarDB(String user, String pass) {
         try {
             //Cargamos el driver
