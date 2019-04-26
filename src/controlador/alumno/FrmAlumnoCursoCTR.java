@@ -1021,6 +1021,7 @@ public class FrmAlumnoCursoCTR {
         JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
         CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
         PnlHorarioAlmnCTR ctr = new PnlHorarioAlmnCTR(horarioAlmn, pnl);
+        jd.setTitle("Horario Alumno ");
         ctr.iniciar();
         jd.setVisible(true);
         ctrPrin.eventoJDCerrar(jd);
