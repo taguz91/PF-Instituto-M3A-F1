@@ -172,6 +172,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblNotas.setSelectionBackground(new java.awt.Color(102, 102, 102));
         tblNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblNotas);

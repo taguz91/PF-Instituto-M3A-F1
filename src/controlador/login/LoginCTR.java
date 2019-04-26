@@ -9,14 +9,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
-import modelo.propiedades.Propiedades;
+import modelo.ResourceManager;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
@@ -81,6 +79,7 @@ public class LoginCTR {
         });
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
+        vista.getBtnDevMode().addActionListener(e -> clickDevMode());
 
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
@@ -115,17 +114,15 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-
+                vista.getTxtPassword().setEnabled(false);
+                vista.getTxtUsername().setEnabled(false);
+                vista.getBtnIngresar().setEnabled(false);
                 Middlewares.setLoadCursorInWindow(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
-
-                Map<Object, Object> properties = new HashMap<>();
-                properties.put("username", USERNAME);
-                properties.put("password", PASSWORD);
-
-                Propiedades.generateUserProperties(properties);
+                ResourceManager.USERNAME = USERNAME;
+                ResourceManager.PASSWORD = PASSWORD;
 
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
@@ -141,8 +138,11 @@ public class LoginCTR {
 
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
-
+                        ResourceManager.cerrarConexion();
                     } else {
+                        vista.getTxtPassword().setEnabled(false);
+                        vista.getTxtUsername().setEnabled(false);
+                        vista.getBtnIngresar().setEnabled(false);
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
@@ -158,7 +158,7 @@ public class LoginCTR {
     }
 
     private void LoginGenerico() {
-
+        boolean entrar = true;
         JPasswordField pass = new JPasswordField();
         int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -168,55 +168,100 @@ public class LoginCTR {
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("soyyo")) {
-
-                USERNAME = "ROOT";
-                PASSWORD = "RUTH";
-
-                modelo.setUsername("ROOT");
-                modelo.setPassword("RUTH");
-
-                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
-                ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-                System.out.println("Conexion " + conecta.getConecction());
-                try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
-
-                    if (!Lista.isEmpty()) {
-
-                        modelo.setPersona(Lista.get(0).getPersona());
-
-                        vista.dispose();
-
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
-                        vtn.Init();
-
-                    } else {
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    }
-
-                } catch (NullPointerException e) {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+            if (c.length() > 3) {
+                if (c.charAt(c.length() - 1) != c.charAt(1)) {
+                    entrar = false;
                 }
-                if (conecta.getConecction() != null) {
-                    vista.dispose();
+
+                if (c.charAt(c.length() - 2) != c.charAt(2)) {
+                    entrar = false;
+                }
+
+                if (entrar) {
+                    iniciarModoDesarrollo("ROOT", "RUTH");
+                } else if (c.length() == 0) {
+                    LoginGenerico();
                 } else {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("No se puede conectar.");
+                    JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
+                            JOptionPane.WARNING_MESSAGE);
                 }
-
-            } else if (c.length() == 0) {
-                LoginGenerico();
-            } else {
-                JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
-                        JOptionPane.WARNING_MESSAGE);
             }
-        }
 
+        }
     }
 
+    //Ingreso como desarrollador
+    private void clickDevMode() {
+        boolean entrar = true;
+        JPasswordField pass = new JPasswordField();
+        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese una contraseña!",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        pass.setFocusable(true);
+        pass.requestFocus();
+        pass.selectAll();
+
+        if (o == JOptionPane.OK_OPTION) {
+            String c = new String(pass.getPassword());
+            if (c.length() > 3) {
+                if (c.charAt(c.length() - 1) != c.charAt(0)) {
+                    entrar = false;
+                }
+                if (c.charAt(c.length() - 3) != c.charAt(2)) {
+                    entrar = false;
+                }
+                if (entrar) {
+                    iniciarModoDesarrollo("ROOT", "RUTH");
+                } else if (c.length() == 0) {
+                    clickDevMode();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esponja es mejor que corras!!!", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        }
+    }
+
+    private void iniciarModoDesarrollo(String user, String pass) {
+
+        USERNAME = user;
+        PASSWORD = pass;
+        ResourceManager.USERNAME = USERNAME;
+        ResourceManager.PASSWORD = PASSWORD;
+
+        modelo.setUsername(user);
+        modelo.setPassword(pass);
+
+        ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
+        try {
+            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+            if (!Lista.isEmpty()) {
+                modelo.setPersona(Lista.get(0).getPersona());
+                vista.dispose();
+                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
+                vtn.Init();
+
+            } else {
+                vista.getLblAvisos().setVisible(true);
+                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+            }
+        } catch (NullPointerException e) {
+            vista.getLblAvisos().setVisible(true);
+            vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+        }
+        if (conecta.getConecction("Obtenemos la conexion desde modo desarrollo.") != null) {
+            vista.dispose();
+        } else {
+            vista.getLblAvisos().setVisible(true);
+            vista.getLblAvisos().setText("No se puede conectar.");
+        }
+    }
+
+    /**
+     * Recibimos la contraseña para ingresar al sistema
+     *
+     * @param e
+     */
     //Procesadores de eventos
     private void btnIngresarActionPerformance(ActionEvent e) {
         Login();

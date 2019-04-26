@@ -125,7 +125,7 @@ public class VtnMallaAlumnoCTR {
                 if (e.getKeyCode() == 10) {
                     buscarMalla(b);
                 } else if (b.length() == 0) {
-                    mdlTbl.setRowCount(0); 
+                    mdlTbl.setRowCount(0);
                 }
                 /*
                 if (a.length() >= 10) {
@@ -459,17 +459,15 @@ public class VtnMallaAlumnoCTR {
 
         JasperReport jr;
         String path = "/vista/reportes/repMalaAlumno.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("consulta", mallaAlm.getSql());
-            System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Malla de Alumno");
+            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Malla de Alumno");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

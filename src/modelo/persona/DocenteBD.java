@@ -732,9 +732,11 @@ public class DocenteBD extends DocenteMD {
                 + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'"
+                + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
+        
         
         
         
@@ -783,7 +785,8 @@ public class DocenteBD extends DocenteMD {
                 + "\"public\".\"Docentes\"\n"
                 + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE \n"
-                + "docente_activo IS TRUE";
+                + "docente_activo IS TRUE\n"
+                + "ORDER BY \"public\".\"Personas\".persona_primer_apellido ASC";
 
         Map<String, DocenteMD> lista = new HashMap<>();
 

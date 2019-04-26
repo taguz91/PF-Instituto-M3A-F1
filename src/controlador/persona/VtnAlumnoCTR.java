@@ -6,10 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -20,14 +17,10 @@ import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
-import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
@@ -78,9 +71,9 @@ public class VtnAlumnoCTR {
             public void keyReleased(KeyEvent e) {
 
                 if (e.getKeyCode() == 10) {
-                   
+
                     buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
-                } 
+                }
             }
         };
 
@@ -101,11 +94,11 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
         vtnAlumno.getBtn_Materias().addActionListener(e -> abrirVtnMaterias());
-        vtnAlumno.getCbx_Filtrar().addActionListener(new ActionListener(){
+        vtnAlumno.getCbx_Filtrar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String palabra = vtnAlumno.getCbx_Filtrar().getSelectedItem().toString();
-                switch(palabra){
+                switch (palabra) {
                     case "ALUMNOS ELMINADOS":
                         llenarElimanados();
                         vtnAlumno.getBtn_Materias().setVisible(false);
@@ -145,7 +138,6 @@ public class VtnAlumnoCTR {
 //               }
 //            }
 //        });
-
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
@@ -160,19 +152,19 @@ public class VtnAlumnoCTR {
         ctrPrin.cerradoJIF();
     }
 
-    public void abrirVtnMaterias(){
+    public void abrirVtnMaterias() {
         //AlumnoMD al = capturarFila();
         mdAlumno = capturarFila();
-        if(mdAlumno == null){
+        if (mdAlumno == null) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
-        } else{
+        } else {
             VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
             VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno, conecta);
             materias.iniciarVentana();
         }
     }
 
-    public void iniciarComponentes(){
+    public void iniciarComponentes() {
         vtnAlumno.getBtn_Materias().setVisible(false);
         //vtnAlumno.getCbx_Filtrar().setVisible(false);
     }
@@ -204,7 +196,7 @@ public class VtnAlumnoCTR {
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
 
-    public void llenarElimanados(){
+    public void llenarElimanados() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
         for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
@@ -225,7 +217,7 @@ public class VtnAlumnoCTR {
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
 
-    public void llenarRetirados(){
+    public void llenarRetirados() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
         for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
@@ -398,17 +390,16 @@ public class VtnAlumnoCTR {
     public void llamaReporteAlumno() {
         JasperReport jr;
         String path = "/vista/reportes/repAlumnos.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Alumnos");
+            conecta.mostrarReporte(jr, null, "Reporte de Alumnos");
+//            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Alumnos");
 
         } catch (JRException ex) {
-JOptionPane.showMessageDialog(null, "error" + ex);
+            JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
 

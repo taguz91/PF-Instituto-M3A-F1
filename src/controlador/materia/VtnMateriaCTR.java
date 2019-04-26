@@ -1,7 +1,5 @@
 package controlador.materia;
 
-import controlador.carrera.VtnCarreraCTR;
-import controlador.persona.FrmPersonaCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -10,8 +8,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -22,20 +18,15 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
-import modelo.persona.PersonaMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.materia.FrmMaterias;
 import vista.materia.FrmRequisitos;
 import vista.materia.VtnMateria;
-import vista.persona.FrmPersona;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -256,10 +247,11 @@ public class VtnMateriaCTR {
             parametro.put("consulta", materia.getSql());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Materias por Carrera");
+            conecta.mostrarReporte(jr, parametro, "Reporte de Materias por Carrera");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Materias por Carrera");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
