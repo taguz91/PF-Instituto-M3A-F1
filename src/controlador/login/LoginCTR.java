@@ -122,12 +122,9 @@ public class LoginCTR {
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
+                ResourceManager.USERNAME = USERNAME;
+                ResourceManager.PASSWORD = PASSWORD;
 
-                Map<Object, Object> properties = new HashMap<>();
-                properties.put("username", USERNAME);
-                properties.put("password", PASSWORD);
-
-                Propiedades.generateUserProperties(properties);
 
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
@@ -140,7 +137,7 @@ public class LoginCTR {
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
-                        ResourceManager.cerrarConexion();
+
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
 
