@@ -122,6 +122,55 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         return consultarAlumnoCarreraTbl(sql);
     }
 
+    public ArrayList<AlumnoCarreraMD> buscarAlumnoCarreraParaFrm(int idCarrera, String aguja) {
+        String sql = "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido, persona_identificacion \n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
+                + "WHERE a.id_alumno = ac.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "ac.id_carrera = " + idCarrera + " AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
+                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' OR \n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%') "
+                + "AND persona_activa = true;";
+        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                    ac.setId(rs.getInt("id_almn_carrera"));
+                    AlumnoMD al = new AlumnoMD();
+                    CarreraMD c = new CarreraMD();
+                    c.setId(rs.getInt("id_carrera"));
+                    al.setId_Alumno(rs.getInt("id_alumno"));
+                    al.setIdPersona(rs.getInt("id_persona"));
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
+
+                    ac.setCarrera(c);
+                    ac.setAlumno(al);
+
+                    alms.add(ac);
+                }
+                rs.close();
+                return alms;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         ResultSet rs = conecta.sql(sql);

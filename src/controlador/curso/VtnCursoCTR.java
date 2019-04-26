@@ -24,11 +24,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -164,8 +161,10 @@ public class VtnCursoCTR {
             FrmCurso frmCurso = new FrmCurso();
             FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
             ctrFrmCurso.iniciar();
-            cursoEdit = curso.buscarCurso(
-                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
+            ctrPrin.eventoInternal(frmCurso);
+//            cursoEdit = curso.buscarCurso(
+//                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
+            cursoEdit = cursos.get(fila);
             ctrFrmCurso.editar(cursoEdit);
             vtnCurso.dispose();
             ctrPrin.cerradoJIF();
@@ -278,10 +277,11 @@ public class VtnCursoCTR {
             // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Lista de estudiantes");
+            conecta.mostrarReporte(jr, parametro, "Lista de estudiantes");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Lista de estudiantes");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

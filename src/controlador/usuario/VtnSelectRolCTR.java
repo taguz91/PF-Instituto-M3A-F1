@@ -158,7 +158,7 @@ public class VtnSelectRolCTR {
     private void ingresar() {
 
         setObjFromCombo();
-
+        
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
         vtn.iniciar();
         logConexion();
@@ -185,7 +185,6 @@ public class VtnSelectRolCTR {
                         Thread.sleep(30);
                         pw.println(" [" + fecha.now() + "]");
                         pw.println("Cerrado? R: " + ResourceManager.getConnection().isClosed());
-                        pw.println("Cerrado? C: " + conexion.getConecction().isClosed());
 
                         //System.out.println("Conectado R: " + ResourceManager.getConnection().isClosed());
 

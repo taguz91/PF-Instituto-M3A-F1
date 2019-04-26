@@ -24,11 +24,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.principal.VtnPrincipal;
@@ -244,14 +241,10 @@ public class VtnCarreraCTR {
         } else {
             int posPrd = nmPrd.indexOf(np);
             //Se le resta 1 porque al inicio se agrega uno mas
-            posPrd = posPrd - 1;
-            System.out.println("El peridodo esta en la pos: " + posPrd);
-            System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
+            //posPrd = posPrd - 1;
 
             JasperReport jr;
             String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
-            File dir = new File("./");
-            System.out.println("Direccion: " + dir.getAbsolutePath());
             try {
                 // int posFila = vtn.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
@@ -259,10 +252,11 @@ public class VtnCarreraCTR {
                 parametro.put("idPeriodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-                JasperViewer view = new JasperViewer(print, false);
-                view.setVisible(true);
-                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
+                conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//                JasperViewer view = new JasperViewer(print, false);
+//                view.setVisible(true);
+//                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
