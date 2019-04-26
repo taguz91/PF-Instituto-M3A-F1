@@ -102,6 +102,14 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     public JLabel getLblNumMatriculas() {
         return lblNumMatriculas;
     }
+
+    public JLabel getLblNumMatriculasClases() {
+        return lblNumMatriculasClases;
+    }
+
+    public JLabel getLblNumMatriculasCurso() {
+        return lblNumMatriculasCurso;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -149,7 +157,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnReprobadas = new javax.swing.JButton();
         btnAnuladas = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtMatriculadosCurso = new javax.swing.JLabel();
+        lblNumMatriculasCurso = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblNumMatriculasClases = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -176,21 +186,21 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblAlumnos);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 430, 106));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 460, 106));
 
         txtBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 92, 430, 23));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 30, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 30, 25));
 
         lblErrorBuscar.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorBuscar.setText("No debe ingresar caracteres especiales");
-        jPanel1.add(lblErrorBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 70, 362, -1));
+        jPanel1.add(lblErrorBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 300, -1));
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
-        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 12, 311, -1));
+        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 260, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -282,9 +292,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(105, 105, 105))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setText("Número matriculas:");
-        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, 29));
+        jLabel7.setText("Número de matriculas:");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 20));
+        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 40, 20));
 
         jLabel5.setText("Ver marterias:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
@@ -303,7 +313,11 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Matriculas en el curso:");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 170, -1));
-        jPanel4.add(txtMatriculadosCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 150, 20));
+        jPanel4.add(lblNumMatriculasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 150, 20));
+
+        jLabel9.setText("Número de matriculas en clases:");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, 20));
+        jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 40, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -363,6 +377,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -373,10 +388,11 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblErrorBuscar;
     private javax.swing.JLabel lblErrorPrdLectivo;
     private javax.swing.JLabel lblNumMatriculas;
+    private javax.swing.JLabel lblNumMatriculasClases;
+    private javax.swing.JLabel lblNumMatriculasCurso;
     private javax.swing.JTable tblAlumnos;
     private javax.swing.JTable tblMateriasPen;
     private javax.swing.JTable tblMateriasSelec;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JLabel txtMatriculadosCurso;
     // End of variables declaration//GEN-END:variables
 }

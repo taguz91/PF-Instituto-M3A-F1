@@ -187,7 +187,7 @@ public class VtnPrincipalCTR {
         registroIngreso(vtnPrin);
         //carga.iniciar();
         //Le pasamos el icono  
-        vtnPrin.setTitle("PF M3A");
+        vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
         InitPermisosTesterYDocente();
@@ -198,6 +198,8 @@ public class VtnPrincipalCTR {
      * animaciones.
      */
     public void iniciar() {
+        //Le pasamos dependencias a conectar
+        conecta.setVtnPrin(vtnPrin);
         //Agregamos el panel de bienvenida  
         vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
         //Se le pasa el nombre de usuario que inicio sesio  

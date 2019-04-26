@@ -278,10 +278,11 @@ public class VtnCursoCTR {
             // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Lista de estudiantes");
+            conecta.mostrarReporte(jr, parametro, "Lista de estudiantes");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Lista de estudiantes");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
