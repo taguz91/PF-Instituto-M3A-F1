@@ -25,6 +25,10 @@ public class ConnDBPool {
     private static final HikariConfig config;
     private static final HikariDataSource ds;
 
+    private Connection conn;
+    private PreparedStatement stmt;
+    private ResultSet rs;
+
     static {
 
         config = new HikariConfig();
@@ -138,8 +142,6 @@ public class ConnDBPool {
             } else {
                 stmt = prepararStatement(sql, conn, parametros);
             }
-
-            System.out.println("------------->");
 
             rs = stmt.executeQuery();
         } catch (SQLException e) {
