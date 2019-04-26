@@ -342,7 +342,7 @@ public class DocenteBD extends DocenteMD {
                 doc.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 doc.setIdDocente(rs.getInt("id_docente"));
                 doc.setIdPersona(rs.getInt("id_persona"));
-                
+
                 docentes.add(doc);
             }
             rs.close();
@@ -714,6 +714,63 @@ public class DocenteBD extends DocenteMD {
 
     }
 
+    public static HashMap<String, DocenteMD> selectAll(String username) {
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Docentes\".id_docente,\n"
+                + "\"public\".\"Docentes\".docente_codigo,\n"
+                + "\"public\".\"Docentes\".docente_activo,\n"
+                + "\"public\".\"Docentes\".docente_en_funcion\n"
+                + "FROM\n"
+                + "\"public\".\"Personas\"\n"
+                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'"
+                + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
+
+        HashMap<String, DocenteMD> lista = new HashMap<>();
+        
+        
+        
+        
+        ResultSet rs = ResourceManager.Query(SELECT);
+
+        try {
+
+            while (rs.next()) {
+
+                DocenteMD docente = new DocenteMD();
+
+                docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdPersona(rs.getInt("id_persona"));
+                docente.setCodigo(rs.getString("docente_codigo"));
+                docente.setIdentificacion(rs.getString("persona_identificacion"));
+                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                String key = docente.getIdentificacion() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido();
+
+                lista.put(key, docente);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+
+    }
+
     public static Map<String, DocenteMD> selectDocentes() {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Personas\".persona_identificacion,\n"
@@ -728,7 +785,8 @@ public class DocenteBD extends DocenteMD {
                 + "\"public\".\"Docentes\"\n"
                 + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE \n"
-                + "docente_activo IS TRUE";
+                + "docente_activo IS TRUE\n"
+                + "ORDER BY \"public\".\"Personas\".persona_primer_apellido ASC";
 
         Map<String, DocenteMD> lista = new HashMap<>();
 

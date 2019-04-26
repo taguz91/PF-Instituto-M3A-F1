@@ -67,42 +67,40 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         }
     }
 
-    public void actualizarNumMatricula(int idAlumno, int idCarrera, int idMateria) {
-        String nsql = "UPDATE public.\"MallaAlumno\"\n"
-                + "SET malla_almn_num_matricula = ( SELECT malla_almn_num_matricula + 1\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ")\n"
-                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ");";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Se actualizo la malla");
-        }
-    }
-
-    public void actualizarEstadoMallaAlmn(int idAlumno, int idCarrera, int idMateria) {
-        String nsql = "UPDATE public.\"MallaAlumno\"\n"
-                + "SET malla_almn_estado = 'M'\n"
-                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
-                + "	FROM public.\"MallaAlumno\"\n"
-                + "	WHERE id_almn_carrera = (\n"
-                + "		SELECT id_almn_carrera\n"
-                + "		FROM public.\"AlumnosCarrera\"\n"
-                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
-                + "	AND id_materia = " + idMateria + ");";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Se actualizo la malla");
-        }
-    }
-
+//    public void actualizarNumMatricula(int idAlumno, int idCarrera, int idMateria) {
+//        String nsql = "UPDATE public.\"MallaAlumno\"\n"
+//                + "SET malla_almn_num_matricula = ( SELECT malla_almn_num_matricula + 1\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ")\n"
+//                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ");";
+//        if (conecta.nosql(nsql) == null) {
+//            System.out.println("Se actualizo la malla");
+//        }
+//    }
+//    public void actualizarEstadoMallaAlmn(int idAlumno, int idCarrera, int idMateria) {
+//        String nsql = "UPDATE public.\"MallaAlumno\"\n"
+//                + "SET malla_almn_estado = 'M'\n"
+//                + "WHERE id_malla_alumno=( SELECT id_malla_alumno\n"
+//                + "	FROM public.\"MallaAlumno\"\n"
+//                + "	WHERE id_almn_carrera = (\n"
+//                + "		SELECT id_almn_carrera\n"
+//                + "		FROM public.\"AlumnosCarrera\"\n"
+//                + "		WHERE id_alumno = " + idAlumno + " AND id_carrera = " + idCarrera + ") \n"
+//                + "	AND id_materia = " + idMateria + ");";
+//        if (conecta.nosql(nsql) == null) {
+//            System.out.println("Se actualizo la malla");
+//        }
+//    }
     public ArrayList<MallaAlumnoMD> cargarMallasTbl() {
         sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, malla_almn_nota1, malla_almn_nota2, malla_almn_nota3, \n"
@@ -184,16 +182,37 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
         }
     }
 
-    //Aqui unicamente buscamos las materias que tiene un alumno, y su ciclo 
+    /**
+     * Buscamos las materias de un alumno filtradas por estado.
+     *
+     * @param idAlumnoCarrera
+     * @param estado
+     * @return
+     */
     public ArrayList<MallaAlumnoMD> buscarMateriasAlumnoPorEstado(int idAlumnoCarrera, String estado) {
-        String sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
                 + "malla_almn_num_matricula, \n"
-                + "materia_nombre\n"
+                + "materia_nombre, malla_almn_estado \n"
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Materias\" m\n"
                 + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
                 + "m.id_materia = ma.id_materia AND\n"
                 + "ac.id_almn_carrera = " + idAlumnoCarrera + "\n"
                 + "AND malla_almn_estado = '" + estado.charAt(0) + "';";
+        return consultarMallaParaEstado();
+    }
+
+    public ArrayList<MallaAlumnoMD> buscarMallaAlumnoParaEstado(int idAlumnoCarrera) {
+        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
+                + "malla_almn_num_matricula, \n"
+                + "materia_nombre, malla_almn_estado \n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "m.id_materia = ma.id_materia AND\n"
+                + "ac.id_almn_carrera = " + idAlumnoCarrera + ";";
+        return consultarMallaParaEstado();
+    }
+
+    private ArrayList<MallaAlumnoMD> consultarMallaParaEstado() {
         ArrayList<MallaAlumnoMD> mallas = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -209,6 +228,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     mll.setAlumnoCarrera(a);
                     mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
                     mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
+                    mll.setEstado(rs.getString("malla_almn_estado"));
 
                     mallas.add(mll);
                 }

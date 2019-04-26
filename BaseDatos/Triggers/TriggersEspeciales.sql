@@ -20,7 +20,7 @@ EXECUTE PROCEDURE actualiza_nom_prd();
 --Para borrar los triggers si es necesario
 --DROP TRIGGER inicia_ingreso_notas ON public."Cursos";
 --DROP FUNCTION iniciar_ingreso_notas;
-
+/*
 CREATE OR REPLACE FUNCTION iniciar_ingreso_notas()
 RETURNS TRIGGER AS $iniciar_ingreso_notas$
 BEGIN
@@ -34,7 +34,7 @@ CREATE TRIGGER inicia_ingreso_notas
 AFTER INSERT
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_ingreso_notas();
-
+*/
 --Trigger para cuando se ingresa un alumno en un curso
 CREATE OR REPLACE FUNCTION actualiza_malla_matricula()
 RETURNS TRIGGER AS $actualiza_malla_matricula$
@@ -68,6 +68,7 @@ ON public."AlumnoCurso" FOR EACH ROW
 EXECUTE PROCEDURE actualiza_malla_matricula();
 
 --Al volver reactivar una persona se activa tambien en docente o alumno
+/*
 CREATE OR REPLACE FUNCTION persona_activada()
 RETURNS TRIGGER AS $persona_activada$
 BEGIN
@@ -96,7 +97,7 @@ $persona_activada$ LANGUAGE plpgsql;
 CREATE TRIGGER auditoria_persona_activa
 BEFORE UPDATE OF persona_activa
 ON public."Personas" FOR EACH ROW
-EXECUTE PROCEDURE persona_activada();
+EXECUTE PROCEDURE persona_activada();*/
 
 --Iniciar malla al inscribir un alumno en un curso
 

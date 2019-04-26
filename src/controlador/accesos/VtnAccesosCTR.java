@@ -30,6 +30,7 @@ public class VtnAccesosCTR {
     private final ConectarDB conecta;
 
     private final VtnPrincipalCTR ctrPrin;
+    private String Pk;
 
     //Listas
     private List<AccesosMD> listaAccesosbd;
@@ -164,14 +165,18 @@ public class VtnAccesosCTR {
         int fila = vista.getTblAccesosDeRol().getSelectedRow();
         
         if (fila != -1) {
-            setObjFromTable(fila);
+            setObjFromTable(fila);           
             FrmAccesosEditarCTR form = new FrmAccesosEditarCTR(desktop, new FrmAccesosEditar(), modelo, conecta);
             form.Init();
         }else{
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
-        }
-        
-        
+        }if (modelo.editar(Pk)) {
+                JOptionPane.showMessageDialog(desktop, "SE HA EDITADO EL ACCESO CORRECTAMENTE");
+                vista.dispose();
+            }else{
+                JOptionPane.showMessageDialog(desktop, "DATOS NO EDITADOS");
+            }
+             
     }
 
 }

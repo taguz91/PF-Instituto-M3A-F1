@@ -92,7 +92,7 @@ public class MateriasBDS extends MateriaMD {
         return materias;
 
     }
-    public static List<MateriaMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona ) {
+    public static List<MateriaMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona,String periodo_nombe ) {
 
         List<MateriaMD> materias = new ArrayList<>();
         try {
@@ -107,10 +107,11 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND pr.prd_lectivo_nombre=?");
 
             st.setString(1, carrera);
             st.setInt(2, id_persona);
+            st.setString(3, periodo_nombe);
 
             System.out.println(st);
             ResultSet rs = st.executeQuery();

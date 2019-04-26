@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -60,6 +61,7 @@ public class LoginCTR {
         vista.getTxtUsername().addKeyListener(eventoText());
 
         vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
+        vista.getBtnDevMode().addActionListener(e -> clickDevMode());
 
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
@@ -133,7 +135,7 @@ public class LoginCTR {
     }
 
     private void LoginGenerico() {
-
+        boolean entrar = true;
         JPasswordField pass = new JPasswordField();
         int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -143,15 +145,25 @@ public class LoginCTR {
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("soyyo")) {
+            if (c.length() > 3) {
+                if (c.charAt(c.length() - 1) != c.charAt(1)) {
+                    entrar = false;
+                }
 
                 String USERNAME = "ROOT";
                 String PASSWORD = "RUTH";
 
                 modelo = new UsuarioBD();
 
-                modelo.setUsername("ROOT");
-                modelo.setPassword("RUTH");
+                if (entrar) {
+                    iniciarModoDesarrollo("ROOT", "RUTH");
+                } else if (c.length() == 0) {
+                    LoginGenerico();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
 
                 //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
                 ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
@@ -161,35 +173,39 @@ public class LoginCTR {
 
                     if (modelo != null) {
 
-                        vista.dispose();
-
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
-                        vtn.Init();
-
-                    } else {
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    }
-
-                } catch (NullPointerException e) {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                }
-                if (conecta.getConecction() != null) {
-                    vista.dispose();
-                } else {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("No se puede conectar.");
-                }
-
-            } else if (c.length() == 0) {
-                LoginGenerico();
-            } else {
-                JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
-                        JOptionPane.WARNING_MESSAGE);
-            }
         }
+    }
 
+    private void iniciarModoDesarrollo(String user, String pass) {
+        USERNAME = user;
+        PASSWORD = pass;
+
+        modelo.setUsername(user);
+        modelo.setPassword(pass);
+
+        ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
+        try {
+            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+            if (!Lista.isEmpty()) {
+                modelo.setPersona(Lista.get(0).getPersona());
+                vista.dispose();
+                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
+                vtn.Init();
+
+            } else {
+                vista.getLblAvisos().setVisible(true);
+                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+            }
+        } catch (NullPointerException e) {
+            vista.getLblAvisos().setVisible(true);
+            vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+        }
+        if (conecta.getConecction("Obtenemos la conexion desde modo desarrollo.") != null) {
+            vista.dispose();
+        } else {
+            vista.getLblAvisos().setVisible(true);
+            vista.getLblAvisos().setText("No se puede conectar.");
+        }
     }
 
     //EVENTOS

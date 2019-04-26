@@ -38,7 +38,7 @@ public class ConexionBD {
 
     public void conectar() {
 
-        con = conecta.getConecction();
+        con = conecta.getConecction("Clase conexion de andres");
         url = generarURL();
         System.out.println("Establecida la conexión con la base de datos");
 
@@ -65,7 +65,7 @@ public class ConexionBD {
             if (con != null) {
                 if (con.isClosed()) {
                     System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
-                    con = conecta.getConecction();
+                    con = conecta.getConecction("Funcion getCon de andresss");
                 }
             }
         } catch (SQLException ex) {

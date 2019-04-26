@@ -44,20 +44,31 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
+    /**
+     * La sentencia que se va a enviar se le manda un string vacio.
+     */
+    public void borrarMatricula() {
+        nsqlMatri = "";
+    }
+
     public void agregarMatricula(int idAlmn, int idCurso) {
         String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
                 + "id_alumno, id_curso)\n"
                 + "VALUES (" + idAlmn + ", " + idCurso + ");";
         nsqlMatri = nsqlMatri + nsql;
-        System.out.println("Matricula: " + nsqlMatri);
     }
 
-    public void guardarAlmnCurso() {
+    public boolean guardarAlmnCurso() {
         System.out.println("-------------");
         System.out.println("Matricula completa: " + nsqlMatri);
-//        if (conecta.nosql(nsqlMatri) == null) {
-//            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
-//        }
+        if (conecta.nosql(nsqlMatri) == null) {
+            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No pudimos matricular al alumno, revise \n"
+                    + "su conexion a internet.");
+            return false;
+        }
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
@@ -161,7 +172,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre \n"
                 + "	|| ' ' || persona_primer_apellido || ' ' || persona_segundo_apellido \n"
                 + "	ILIKE '%" + aguja + "%'  \n"
-                + "OR persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%') \n"
+                + "OR persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%') \n"
                 + "AND prd_lectivo_estado = true;";
         return consultaParaTblRetirados(sql);
     }
@@ -178,7 +189,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "a.id_alumno = ac.id_alumno AND \n"
                 + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "c.id_prd_lectivo = "+idPrd+" \n"
+                + "c.id_prd_lectivo = " + idPrd + " \n"
                 + "AND prd_lectivo_estado = true;";
         return consultaParaTblRetirados(sql);
     }
@@ -201,8 +212,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                     MateriaMD m = new MateriaMD();
                     m.setNombre(rs.getString("materia_nombre"));
-                    
-                    PeriodoLectivoMD p = new PeriodoLectivoMD(); 
+
+                    PeriodoLectivoMD p = new PeriodoLectivoMD();
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
                     c.setId_prd_lectivo(p);
 
@@ -368,8 +379,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
                 + "\"public\".\"Cursos\".curso_nombre = '" + cursoNombre + "' AND\n"
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
+                //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"
                 + "ORDER BY\n"
-                + "\"public\".\"Personas\".persona_primer_apellido ASC";
+                + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
 
         System.out.println(SELECT);
 
@@ -418,6 +430,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "SET \n"
                 + "almn_curso_nota_final = " + getNotaFinal() + ", \n"
                 + "almn_curso_estado = '" + getEstado() + "',\n"
+                + "almn_curso_asistencia = '" + getAsistencia() + "',\n"
                 + "almn_curso_num_faltas = " + getNumFalta() + "\n"
                 + "WHERE \n"
                 + "id_almn_curso = " + getId() + ";";

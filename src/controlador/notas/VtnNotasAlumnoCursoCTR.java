@@ -550,6 +550,7 @@ public class VtnNotasAlumnoCursoCTR {
     }
 
     private void btnImprimir(ActionEvent e) {
+        
         new Thread(() -> {
 
             int r = JOptionPane.showOptionDialog(vista,
@@ -559,7 +560,7 @@ public class VtnNotasAlumnoCursoCTR {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
-                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo", "Prueba2"}, "Cancelar");
 
             Effects.setLoadCursor(vista);
 
@@ -603,9 +604,12 @@ public class VtnNotasAlumnoCursoCTR {
                     reportes.generarReporteCompleto();
                     desktop.getLblEstado().setText("COMPLETADO");
                     break;
+                
 
                 default:
                     break;
+                    
+                
             }
 
             try {
@@ -655,5 +659,7 @@ public class VtnNotasAlumnoCursoCTR {
         }
 
     }
+    
+    
 
 }

@@ -24,11 +24,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
 import vista.principal.VtnPrincipal;
@@ -71,7 +68,7 @@ public class VtnCarreraCTR {
 
     public void iniciar() {
         vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
-        String titutlo[] = {"id", "Codigo", "Nombre", "Fecha Inicio", "Modalidad", "Coordinador"};
+        String titutlo[] = {"id", "Codigo", "Nombre", "Fecha Inicio", "Modalidad", "Semanas", "Coordinador"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titutlo);
         vtnCarrera.getTblMaterias().setModel(mdTbl);
@@ -80,6 +77,7 @@ public class VtnCarreraCTR {
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 1, 50);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 3, 90);
         TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 4, 90);
+        TblEstilo.columnaMedida(vtnCarrera.getTblMaterias(), 5, 80);
 
         cargarCarreras();
         //Le damos accion al btn editar
@@ -93,7 +91,7 @@ public class VtnCarreraCTR {
             }
         });
         vtnCarrera.getBtnReporteAlumnoCarrera().addActionListener(e -> llamaReporteAlumnoCarrera());
-        vtnCarrera.getBtnReporteDocente().addActionListener(e->botonDocentes());
+        vtnCarrera.getBtnReporteDocente().addActionListener(e -> botonDocentes());
         vtnCarrera.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -103,12 +101,6 @@ public class VtnCarreraCTR {
                 } else if (b.length() == 0) {
                     cargarCarreras();
                 }
-                /*
-                if (b.length() > 2) {
-                    buscar(b);
-                } else if (b.length() == 0) {
-                    cargarCarreras();
-                }*/
             }
         });
         vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
@@ -132,9 +124,14 @@ public class VtnCarreraCTR {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
             FrmCarrera frmCarrera = new FrmCarrera();
+            ctrPrin.eventoInternal(frmCarrera);
             FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, ctrPrin);
             ctrFrmCarrera.iniciar();
             ctrFrmCarrera.editar(carreras.get(fila));
+            ctrPrin.cerradoJIF();
+            vtnCarrera.dispose();
+        }else{
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una carrera primero.");
         }
     }
 
@@ -168,13 +165,15 @@ public class VtnCarreraCTR {
             carreras.forEach((c) -> {
                 if (c.getCoordinador().getPrimerNombre() == null) {
                     Object valoresSD[] = {c.getId(), c.getCodigo(), c.getNombre(),
-                        c.getFechaInicio(), c.getModalidad(), "SIN COORDINADOR "};
+                        c.getFechaInicio(), c.getModalidad(), c.getNumSemanas(), "SIN COORDINADOR "};
                     mdTbl.addRow(valoresSD);
                 } else {
                     Object valoresCD[] = {c.getId(), c.getCodigo(), c.getNombre(),
-                        c.getFechaInicio(), c.getModalidad(), c.getCoordinador().getPrimerApellido()
+                        c.getFechaInicio(), c.getModalidad(), c.getNumSemanas(),
+                        c.getCoordinador().getPrimerApellido()
                         + " " + c.getCoordinador().getSegundoApellido() + " "
-                        + c.getCoordinador().getPrimerNombre() + " " + c.getCoordinador().getSegundoNombre()};
+                        + c.getCoordinador().getPrimerNombre() + " "
+                        + c.getCoordinador().getSegundoNombre()};
                     mdTbl.addRow(valoresCD);
                 }
             });
@@ -198,23 +197,19 @@ public class VtnCarreraCTR {
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de alumnos por Carrera");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Alumnos por Carrera");
-
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
- public void botonDocentes() {
+
+    public void botonDocentes() {
         int s = JOptionPane.showOptionDialog(vtnCarrera,
                 "Reporte de Docentes por periodo LEctivo\n"
                 + "¿Elegir el tipo de Reporte?", "REPORTE DOCENTES",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
-                new Object[]{"Elegir Periodo","Cancelar"}, "Cancelar");
+                new Object[]{"Elegir Periodo", "Cancelar"}, "Cancelar");
         switch (s) {
             case 0:
                 seleccionarPeriodo();
@@ -246,31 +241,29 @@ public class VtnCarreraCTR {
         } else {
             int posPrd = nmPrd.indexOf(np);
             //Se le resta 1 porque al inicio se agrega uno mas
-            posPrd = posPrd - 1;
-            System.out.println("El peridodo esta en la pos: " + posPrd);
-            System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
+            //posPrd = posPrd - 1;
 
             JasperReport jr;
             String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
-            File dir = new File("./");
-            System.out.println("Direccion: " + dir.getAbsolutePath());
             try {
-               // int posFila = vtn.getTblDocente().getSelectedRow();
+                // int posFila = vtn.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
-              //  parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
+                //  parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
                 parametro.put("idPeriodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-                JasperViewer view = new JasperViewer(print, false);
-                view.setVisible(true);
-                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
+                conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//                JasperViewer view = new JasperViewer(print, false);
+//                view.setVisible(true);
+//                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
         }
     }
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

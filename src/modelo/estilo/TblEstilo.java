@@ -2,6 +2,7 @@ package modelo.estilo;
 
 import controlador.estilo.TblRenderClase;
 import controlador.estilo.TblRenderFocusClm;
+import controlador.estilo.TblRenderMateriasMatricula;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -64,9 +65,9 @@ public class TblEstilo {
     public static void formatoTblConColor(JTable tbl) {
         JTableHeader tblHead = tbl.getTableHeader();
 
-        tblHead.setBackground(new Color(49, 79, 117));
-        tblHead.setForeground(new Color(255, 255, 255));
-        tblHead.setOpaque(false);
+//        tblHead.setBackground(new Color(49, 79, 117));
+//        tblHead.setForeground(new Color(255, 255, 255));
+//        tblHead.setOpaque(false);
         tblHead.setFont(new Font("Arial", Font.PLAIN, 16));
         //Para que no se pueda reordenar las columnas 
         tblHead.setReorderingAllowed(false);
@@ -88,9 +89,9 @@ public class TblEstilo {
     public static void formatoTblFocus(JTable tbl) {
         JTableHeader tblHead = tbl.getTableHeader();
 
-        tblHead.setBackground(new Color(49, 79, 117));
-        tblHead.setForeground(new Color(255, 255, 255));
-        tblHead.setOpaque(false);
+//        tblHead.setBackground(new Color(49, 79, 117));
+//        tblHead.setForeground(new Color(255, 255, 255));
+//        tblHead.setOpaque(false);
         tblHead.setFont(new Font("Arial", Font.PLAIN, 16));
         //Para que no se pueda reordenar las columnas 
         tblHead.setReorderingAllowed(false);
@@ -118,9 +119,9 @@ public class TblEstilo {
     public static void formatoTblHCurso(JTable tbl) {
         JTableHeader tblHead = tbl.getTableHeader();
 
-        tblHead.setBackground(new Color(49, 79, 117));
-        tblHead.setForeground(new Color(255, 255, 255));
-        tblHead.setOpaque(false);
+//        tblHead.setBackground(new Color(49, 79, 117));
+//        tblHead.setForeground(new Color(255, 255, 255));
+//        tblHead.setOpaque(false);
         tblHead.setFont(new Font("Arial", Font.PLAIN, 16));
         //Para que no se pueda reordenar las columnas 
         tblHead.setReorderingAllowed(false);
@@ -157,5 +158,10 @@ public class TblEstilo {
             }
         };
         return modelo;
+    }
+    
+    public static void formatoTblMatricula(JTable tbl){
+        formatoTbl(tbl);
+        tbl.getColumnModel().getColumn(1).setCellRenderer(new TblRenderMateriasMatricula(1));
     }
 }

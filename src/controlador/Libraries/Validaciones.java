@@ -273,7 +273,7 @@ public class Validaciones {
         boolean valido = false;
         if (!palabrasValidas
                 .stream()
-                .filter(item -> item.equalsIgnoreCase(palabra))
+                .filter(item -> item.toUpperCase().contains(palabra.toUpperCase()))
                 .collect(Collectors.toList()).isEmpty()) {
             return true;
         }

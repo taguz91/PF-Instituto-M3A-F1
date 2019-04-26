@@ -441,12 +441,13 @@ public class VtnHistorialUserCTR {
             parametro.put("consulta", sql);
             //System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Historial Usuario");
-            System.out.println("Reporte cargado");
-            vtnH.setCursor(new Cursor(0));
+            conecta.mostrarReporte(jr, parametro, "Reporte de Hisotorial Usuario");;
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Historial Usuario");
+//            System.out.println("Reporte cargado");
+//            vtnH.setCursor(new Cursor(0));
 
         } catch (JRException ex) {
             System.out.println("No se pudo realizar el reporte.");
