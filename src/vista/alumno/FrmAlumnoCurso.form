@@ -455,7 +455,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#xfa;mero matriculas:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de matriculas:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -466,7 +466,7 @@
         <Component class="javax.swing.JLabel" name="lblNumMatriculas">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="20" width="80" height="20"/>
+              <AbsoluteConstraints x="130" y="20" width="80" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
