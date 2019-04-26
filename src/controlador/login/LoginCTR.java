@@ -97,13 +97,7 @@ public class LoginCTR {
         if (c.length() > 1 && c.length() <= 2) {
             if (c.equalsIgnoreCase("J.")) {
                 vista.getTxtUsername().setText("JOHNNY");
-                vista.getTxtPassword().setText("ROOT");
-            } else if (c.equalsIgnoreCase("R.")) {
-                vista.getTxtUsername().setText("ROOT");
-                vista.getTxtPassword().setText("RUTH");
-            } else if (c.equalsIgnoreCase("P.")) {
-                vista.getTxtUsername().setText("postgres");
-                vista.getTxtPassword().setText("Holapostgres");
+                vista.getTxtPassword().setText("DEV");
             }
         }
     }
@@ -114,9 +108,6 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-                vista.getTxtPassword().setEnabled(false);
-                vista.getTxtUsername().setEnabled(false);
-                vista.getBtnIngresar().setEnabled(false);
                 Middlewares.setLoadCursorInWindow(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
@@ -135,14 +126,12 @@ public class LoginCTR {
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
+                        ResourceManager.cerrarConexion();
 
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
-                        ResourceManager.cerrarConexion();
                     } else {
-                        vista.getTxtPassword().setEnabled(false);
-                        vista.getTxtUsername().setEnabled(false);
-                        vista.getBtnIngresar().setEnabled(false);
+
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
