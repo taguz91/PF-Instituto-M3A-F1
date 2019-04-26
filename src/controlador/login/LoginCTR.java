@@ -9,15 +9,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
-import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
@@ -117,14 +114,15 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-
+                vista.getTxtPassword().setEnabled(false);
+                vista.getTxtUsername().setEnabled(false);
+                vista.getBtnIngresar().setEnabled(false);
                 Middlewares.setLoadCursorInWindow(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
                 ResourceManager.USERNAME = USERNAME;
                 ResourceManager.PASSWORD = PASSWORD;
-
 
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
@@ -140,8 +138,11 @@ public class LoginCTR {
 
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
-
+                        ResourceManager.cerrarConexion();
                     } else {
+                        vista.getTxtPassword().setEnabled(false);
+                        vista.getTxtUsername().setEnabled(false);
+                        vista.getBtnIngresar().setEnabled(false);
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
@@ -211,7 +212,7 @@ public class LoginCTR {
                 if (entrar) {
                     iniciarModoDesarrollo("ROOT", "RUTH");
                 } else if (c.length() == 0) {
-                    LoginGenerico();
+                    clickDevMode();
                 } else {
                     JOptionPane.showMessageDialog(null, "Esponja es mejor que corras!!!", "Error",
                             JOptionPane.WARNING_MESSAGE);
@@ -222,8 +223,11 @@ public class LoginCTR {
     }
 
     private void iniciarModoDesarrollo(String user, String pass) {
+
         USERNAME = user;
         PASSWORD = pass;
+        ResourceManager.USERNAME = USERNAME;
+        ResourceManager.PASSWORD = PASSWORD;
 
         modelo.setUsername(user);
         modelo.setPassword(pass);

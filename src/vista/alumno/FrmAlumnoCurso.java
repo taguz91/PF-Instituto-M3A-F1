@@ -196,11 +196,11 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         lblErrorBuscar.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorBuscar.setText("No debe ingresar caracteres especiales");
-        jPanel1.add(lblErrorBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 310, -1));
+        jPanel1.add(lblErrorBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 300, -1));
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
-        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 311, -1));
+        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 260, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -289,12 +289,12 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGap(5, 5, 5))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(105, 105, 105))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(105, 105, 105))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Número de matriculas:");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 20));
-        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 80, 20));
+        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 40, 20));
 
         jLabel5.setText("Ver marterias:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
@@ -317,7 +317,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Número de matriculas en clases:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, 20));
-        jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 40, 20));
+        jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 40, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
