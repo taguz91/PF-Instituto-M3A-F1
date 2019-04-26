@@ -199,7 +199,7 @@ public class LoginCTR {
                     entrar = false;
                 }
                 if (entrar) {
-                    iniciarModoDesarrollo("ROOT", "RUTH");
+                    iniciarModoDesarrollo("JOHNNY", "DEV");
                 } else if (c.length() == 0) {
                     clickDevMode();
                 } else {
