@@ -231,7 +231,6 @@ public class LoginCTR {
         modelo.setPassword(pass);
 
         ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-        System.out.println("Conexion " + conecta.getConecction());
         try {
             List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
             if (!Lista.isEmpty()) {
@@ -248,7 +247,7 @@ public class LoginCTR {
             vista.getLblAvisos().setVisible(true);
             vista.getLblAvisos().setText("Revise la Informacion Ingresada");
         }
-        if (conecta.getConecction() != null) {
+        if (conecta.getConecction("Obtenemos la conexion desde modo desarrollo.") != null) {
             vista.dispose();
         } else {
             vista.getLblAvisos().setVisible(true);

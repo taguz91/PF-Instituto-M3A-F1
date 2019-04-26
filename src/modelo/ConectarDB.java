@@ -178,8 +178,10 @@ public class ConectarDB {
         }
     }
 
-    public Connection getConecction() {
+    public Connection getConecction(String mensaje) {
         try {
+            System.out.println("~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$~");
+            System.out.println("OBTENEMOS CONEXION "+mensaje);
             if (ct.isClosed()) {
                 System.out.println("La conexion fue cerrada no podemos retornarla. Debemos abrir una nueva");
                 ctrCt = new ConexionesCTR(ct);
@@ -189,7 +191,6 @@ public class ConectarDB {
             } else {
                 System.out.println("Esta abierta la conexion.");
                 ctrCt.recetear("SE recea al devolver la conexion.");
-
                 return ct;
             }
         } catch (SQLException ex) {

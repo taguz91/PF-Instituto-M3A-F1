@@ -1,20 +1,15 @@
 package controlador.persona;
 
-import controlador.carrera.VtnCarreraCTR;
 import controlador.docente.JDFinContratacionCTR;
-import controlador.docente.VtnFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -31,13 +26,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
-import vista.docente.JDFinContratacion;
-import vista.docente.VtnFinContratacion;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
@@ -192,7 +182,6 @@ public class VtnDocenteCTR {
 
     public void editar() {
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        System.out.println(posFila + " metodo editar de vtnDocenteCTR");
         if (!vtnDocente.getCbxDocentesEliminados().isSelected()) {
             if (posFila >= 0) {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
@@ -286,7 +275,6 @@ public class VtnDocenteCTR {
     public void eliminarDocente() {
         DocenteMD docentemd = new DocenteMD();
         int posFila = vtnDocente.getTblDocente().getSelectedRow();
-        System.out.println(posFila + " metodo eliminar de vtnDocenteCTR");
         if (posFila >= 0) {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar un Docente? ", " Eliminar Docente ", dialog);
@@ -312,18 +300,17 @@ public class VtnDocenteCTR {
     public void llamaReporteDocente() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentes.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             int posFila = vtnDocente.getTblDocente().getSelectedRow();
             Map parametro = new HashMap();
             parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Docente");
+            conecta.mostrarReporte(jr, parametro, "Reporte de Docente");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
              JOptionPane.showMessageDialog(null, "error" + ex);
@@ -333,18 +320,18 @@ public class VtnDocenteCTR {
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentesCarrera.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             int posFila = vtnDocente.getTblDocente().getSelectedRow();
             Map parametro = new HashMap();
             parametro.put("id", docentesMD.get(posFila).getIdDocente());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Materias del Docente");
+            conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
+//            
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
@@ -383,7 +370,6 @@ public class VtnDocenteCTR {
                 "Lista de periodos lectivos", "Periodos lectivos",
                 JOptionPane.QUESTION_MESSAGE, null,
                 nmPrd.toArray(), "Seleccione");
-        System.out.println("Selecciono " + np);
         //Se es null significa que no selecciono nada
         if (np == null) {
             botonReporteMateria();
@@ -392,15 +378,10 @@ public class VtnDocenteCTR {
             seleccionarPeriodo();
         } else {
             int posPrd = nmPrd.indexOf(np);
-            //Se le resta 1 porque al inicio se agrega uno mas
-            posPrd = posPrd - 1;
-            System.out.println("El peridodo esta en la pos: " + posPrd);
-            System.out.println("Id del periodo " + periodos.get(posPrd).getId_PerioLectivo());
 
             JasperReport jr;
             String path = "/vista/reportes/repDocenteCarreraPeriodo.jasper";
-            File dir = new File("./");
-            System.out.println("Direccion: " + dir.getAbsolutePath());
+
             try {
                 int posFila = vtnDocente.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
@@ -408,10 +389,11 @@ public class VtnDocenteCTR {
                 parametro.put("periodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-                JasperViewer view = new JasperViewer(print, false);
-                view.setVisible(true);
-                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
+                conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//                JasperViewer view = new JasperViewer(print, false);
+//                view.setVisible(true);
+//                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
