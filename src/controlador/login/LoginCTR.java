@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -139,7 +140,7 @@ public class LoginCTR {
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
-
+                        ResourceManager.cerrarConexion();
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
                         vtn.Init();
 

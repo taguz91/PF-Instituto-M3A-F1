@@ -1,8 +1,5 @@
 package modelo;
 
-import controlador.login.LoginCTR;
-import java.io.File;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -126,7 +123,7 @@ public class ResourceManager {
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery(Query);
-            
+
             return rs;
 
         } catch (SQLException | NullPointerException e) {
@@ -185,4 +182,16 @@ public class ResourceManager {
     public static void setConecct(Connection cn) {
         ResourceManager.conn = cn;
     }
+
+    public static void cerrarConexion() {
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null;
+            } catch (SQLException ex) {
+                Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }
