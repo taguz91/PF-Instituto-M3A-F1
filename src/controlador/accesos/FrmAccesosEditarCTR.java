@@ -1,9 +1,7 @@
 
 package controlador.accesos;
 
-import controlador.Libraries.Middlewares;
-import controlador.notas.VtnActivarNotasCTR;
-import controlador.principal.VtnPrincipalCTR;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
@@ -13,7 +11,6 @@ import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import vista.accesos.FrmAccesosEditar;
-import vista.accesos.VtnAccesos;
 import vista.principal.VtnPrincipal;
 
 public class FrmAccesosEditarCTR {
@@ -44,7 +41,7 @@ public class FrmAccesosEditarCTR {
         
         vista.show();
         desktop.getDpnlPrincipal().add(vista);
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         try {
             vista.setSelected(true);
         } catch (PropertyVetoException e) {

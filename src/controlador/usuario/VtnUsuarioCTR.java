@@ -1,6 +1,5 @@
 package controlador.usuario;
 
-import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
@@ -66,7 +65,7 @@ public class VtnUsuarioCTR {
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
-        InitPermisos();
+//        InitPermisos();
         InitEventos();
 
         try {

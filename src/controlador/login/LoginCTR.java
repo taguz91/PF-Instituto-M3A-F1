@@ -4,16 +4,12 @@ import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -55,12 +51,12 @@ public class LoginCTR {
 
     private void InitEventos() {
         vista.getBtnIngresar().addActionListener(e -> login());
-        
+
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
         vista.getTxtPassword().addKeyListener(eventoText());
+
         vista.getTxtUsername().addKeyListener(eventoText());
 
-        vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
         vista.getBtnDevMode().addActionListener(e -> clickDevMode());
 
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
@@ -134,86 +130,7 @@ public class LoginCTR {
 
     }
 
-    private void LoginGenerico() {
-        boolean entrar = true;
-        JPasswordField pass = new JPasswordField();
-        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        pass.setFocusable(true);
-        pass.requestFocus();
-        pass.selectAll();
-
-        if (o == JOptionPane.OK_OPTION) {
-            String c = new String(pass.getPassword());
-            if (c.length() > 3) {
-                if (c.charAt(c.length() - 1) != c.charAt(1)) {
-                    entrar = false;
-                }
-
-                String USERNAME = "ROOT";
-                String PASSWORD = "RUTH";
-
-                modelo = new UsuarioBD();
-
-                if (entrar) {
-                    iniciarModoDesarrollo("ROOT", "RUTH");
-                } else if (c.length() == 0) {
-                    LoginGenerico();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
-                ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-                System.out.println("Conexion " + conecta.getConecction());
-                try {
-                    modelo = modelo.selectWhereUsernamePassword();
-
-                    if (modelo != null) {
-
-        }
-    }
-
-    private void iniciarModoDesarrollo(String user, String pass) {
-        USERNAME = user;
-        PASSWORD = pass;
-
-        modelo.setUsername(user);
-        modelo.setPassword(pass);
-
-        ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-        try {
-            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
-            if (!Lista.isEmpty()) {
-                modelo.setPersona(Lista.get(0).getPersona());
-                vista.dispose();
-                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
-                vtn.Init();
-
-            } else {
-                vista.getLblAvisos().setVisible(true);
-                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-            }
-        } catch (NullPointerException e) {
-            vista.getLblAvisos().setVisible(true);
-            vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-        }
-        if (conecta.getConecction("Obtenemos la conexion desde modo desarrollo.") != null) {
-            vista.dispose();
-        } else {
-            vista.getLblAvisos().setVisible(true);
-            vista.getLblAvisos().setText("No se puede conectar.");
-        }
-    }
-
     //EVENTOS
-
-    private void btnIngSUActionPerformance(ActionEvent e) {
-        LoginGenerico();
-    }
-
     private KeyAdapter eventoText() {
         return new KeyAdapter() {
             @Override
@@ -223,5 +140,9 @@ public class LoginCTR {
                 }
             }
         };
+    }
+
+    private void clickDevMode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

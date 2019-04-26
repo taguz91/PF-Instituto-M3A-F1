@@ -71,17 +71,15 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
 
-        return selectSimple(SELECT);
+        return selectSimple(SELECT, null);
 
     }
 
-    private static List<UsuarioMD> selectSimple(String QUERY) {
+    private static List<UsuarioMD> selectSimple(String QUERY, Map<Integer, Object> parametros) {
         List<UsuarioMD> lista = new ArrayList<>();
         try {
-            conn = pool.getConnection();
-            stmt = conn.prepareStatement(QUERY);
-            System.out.println(stmt);
-            rs = stmt.executeQuery();
+
+            rs = pool.ejecutarQuery(QUERY, pool.getConnection(), parametros);
 
             while (rs.next()) {
                 UsuarioMD usuario = new UsuarioMD();
@@ -182,7 +180,7 @@ public class UsuarioBD extends UsuarioMD {
                 + "WHERE\n"
                 + "\"public\".\"Usuarios\".usu_estado IS FALSE;";
 
-        return selectSimple(SELECT);
+        return selectSimple(SELECT, null);
     }
 
     public static String SelectNewUsername() {
