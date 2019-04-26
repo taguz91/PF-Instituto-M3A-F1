@@ -2,8 +2,6 @@
 package controlador.accesos;
 
 import controlador.Libraries.Middlewares;
-import controlador.notas.VtnActivarNotasCTR;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
@@ -13,7 +11,6 @@ import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import vista.accesos.FrmAccesosEditar;
-import vista.accesos.VtnAccesos;
 import vista.principal.VtnPrincipal;
 
 public class FrmAccesosEditarCTR {
