@@ -67,7 +67,7 @@ public class VtnUsuarioCTR {
 
         Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
 
-        InitPermisos();
+        //InitPermisos();
         InitEventos();
 
         try {
