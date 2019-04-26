@@ -167,7 +167,7 @@ public class LoginCTR {
                 }
 
                 if (entrar) {
-                    iniciarModoDesarrollo("ROOT", "RUTH");
+                    iniciarModoDesarrollo("JOHNNY", "DEV");
                 } else if (c.length() == 0) {
                     LoginGenerico();
                 } else {
