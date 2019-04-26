@@ -19,8 +19,8 @@ public class ResourceManager {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
     private static String JDBC_URL = "";
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+    public static String USERNAME = "";
+    public static String PASSWORD = "";
     private static Driver driver = null;
 
     private static Connection conn = null;
@@ -43,18 +43,14 @@ public class ResourceManager {
 
         }
 
-        if (conn != null) {
-            //cerrarSesion();
-
-            //conn.close();
-            //resetConn();
-        }
-
-        if (conn == null || conn.isClosed()) {
-            //cerrarSesion();
-            resetConn();
-            System.out.println("Se inicio la conexion. En resource manager");
-        }
+//        if (conn != null) {
+//            //cerrarSesion();
+//
+//            //conn.close();
+//            resetConn();
+//        }
+        JDBC_URL = generarURL();
+        conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         return conn;
 
@@ -64,9 +60,8 @@ public class ResourceManager {
         try {
             JDBC_URL = generarURL();
 
-            USERNAME = Propiedades.getUserProp("username");
-            PASSWORD = Propiedades.getUserProp("password");
-
+//            USERNAME = Propiedades.getUserProp("username");
+//            PASSWORD = Propiedades.getUserProp("password");
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         } catch (SQLException ex) {
             System.out.println("INTENTE NUEVAMENTE");
