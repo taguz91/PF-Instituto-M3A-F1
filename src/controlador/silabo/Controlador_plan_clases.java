@@ -191,6 +191,7 @@ public class Controlador_plan_clases {
            modeloRecursos.addElement(new CheckListItem(lista_recurso.getNombre_recursos()));
        }
        fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+       
    }
     
    private void pasarElementospanel(){
@@ -233,5 +234,8 @@ public class Controlador_plan_clases {
             modelo3.remove(indice);
         }
     }
+    
+    
+    
 }
 
