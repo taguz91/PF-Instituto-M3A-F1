@@ -1079,8 +1079,8 @@ public class FrmAlumnoCursoCTR {
         requisitos.forEach(m -> {
             if (m.getMateria().getId() == idMateria && m.getTipo().equals(tipo)) {
                 filtrados.add(m);
-                System.out.println(m.getMateria().getId() + "\n"
-                        + m.getMateriaRequisito().getNombre());
+//                System.out.println(m.getMateria().getId() + "\n"
+//                        + m.getMateriaRequisito().getNombre());
             }
         });
         return filtrados;
