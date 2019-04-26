@@ -688,7 +688,7 @@ public class FrmAlumnoCursoCTR {
             for (int j = 0; j < requisitosFiltrados.size(); j++) {
                 estadoMateria = estadoMateriaEnMalla(requisitosFiltrados.get(j).getMateriaRequisito().getId());
                 if (estadoMateria != null) {
-                    if (estadoMateria.equals("R")) {
+                    if (!estadoMateria.equals("C")) {
                         posElim[i] = i + 1;
                     }
                 }
