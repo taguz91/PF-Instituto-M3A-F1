@@ -161,8 +161,10 @@ public class VtnCursoCTR {
             FrmCurso frmCurso = new FrmCurso();
             FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
             ctrFrmCurso.iniciar();
-            cursoEdit = curso.buscarCurso(
-                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
+            ctrPrin.eventoInternal(frmCurso);
+//            cursoEdit = curso.buscarCurso(
+//                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
+            cursoEdit = cursos.get(fila);
             ctrFrmCurso.editar(cursoEdit);
             vtnCurso.dispose();
             ctrPrin.cerradoJIF();
