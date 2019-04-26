@@ -53,7 +53,7 @@
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_foto" class="java.io.InputStream"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
