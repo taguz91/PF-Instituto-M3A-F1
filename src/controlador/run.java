@@ -47,7 +47,7 @@ public class run {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             System.out.println("No enconramos ninugn LOOK AND FIELD " + ex.getMessage());
         }
-        return true;
+        return encontrado;
     }
     
 }
