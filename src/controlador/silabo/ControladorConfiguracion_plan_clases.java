@@ -193,8 +193,7 @@ private void clickCmbCarreras(){
            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
            } else {
-               JOptionPane.showMessageDialog(frm_cong_PlanClase, "Este silabo no esta asignado a ningún curso!");
-              
+              JOptionPane.showMessageDialog(null, "ESTA MATERIA NO ESTA ASIGNADA CON EL NUEVO PERIODO LECTIVO", "Aviso", JOptionPane.ERROR_MESSAGE);                      
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
            }
                
