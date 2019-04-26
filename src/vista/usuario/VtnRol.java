@@ -94,13 +94,10 @@ public class VtnRol extends javax.swing.JInternalFrame {
         jLabel1.setText("Buscar");
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
 
         btnEditar.setText("Editar");
-        btnEditar.setEnabled(false);
 
         btnIngresar.setText("Ingresar");
-        btnIngresar.setEnabled(false);
 
         tabRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,10 +133,8 @@ public class VtnRol extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
 
         btnVerPermisos.setText("Ver Permisos ");
-        btnVerPermisos.setEnabled(false);
 
         btnEditarPermisos.setText("Editar Permisos ");
-        btnEditarPermisos.setEnabled(false);
 
         lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));

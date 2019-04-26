@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="5"/>
+	<property name="ireport.y" value="160"/>
 	<parameter name="cedula" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -14,12 +14,13 @@
                 ||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as alumno,
 				 pd.persona_primer_apellido ||' '|| pd.persona_segundo_apellido
                 ||' '|| pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
-  materia_codigo, materia_nombre, p.persona_identificacion, c.carrera_nombre,
+  materia_codigo, materia_nombre, p.persona_identificacion, c.carrera_nombre,mall.malla_almn_num_matricula,
 				m.id_materia, g.curso_ciclo,g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre,p.persona_foto
 						FROM public."Alumnos" a,
 						public."Personas" p, public."Materias" m, public."Carreras" c,
 						public."Cursos" g, public."AlumnoCurso" acur, public."PeriodoLectivo" pl, 
-						public."Jornadas" j, public."Docentes" d, public."Personas" pd
+						public."Jornadas" j, public."Docentes" d, public."Personas" pd,
+						public."MallaAlumno" mall, public."AlumnosCarrera" ac
               				  WHERE  a.id_alumno = acur.id_alumno 
 									AND c.id_carrera =pl.id_carrera 
 									AND  p.id_persona = a.id_persona 
@@ -32,8 +33,13 @@
 									AND p.persona_identificacion=$P{cedula}
 									AND j.id_jornada = g.id_jornada
 									AND d.id_docente = g.id_docente
-									AND pd.id_persona = d.id_persona						
-									AND g.id_prd_lectivo = $P{idPeriodo};]]>
+									AND pd.id_persona = d.id_persona
+									AND mall.id_materia =  g.id_materia
+									AND malla_almn_estado = 'M'
+									AND g.id_prd_lectivo = $P{idPeriodo}
+									AND ac.id_carrera = c.id_carrera 
+									AND ac.id_alumno = a.id_alumno 
+									AND mall.id_almn_carrera = ac.id_almn_carrera;]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -41,6 +47,7 @@
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="malla_almn_num_matricula" class="java.lang.Integer"/>
 	<field name="id_materia" class="java.lang.Integer"/>
 	<field name="curso_ciclo" class="java.lang.Integer"/>
 	<field name="curso_paralelo" class="java.lang.String"/>
@@ -80,14 +87,7 @@
 	<pageHeader>
 		<band height="140" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="11" width="53" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Código:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="129" y="11" width="94" height="20"/>
+				<reportElement x="0" y="11" width="79" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -135,17 +135,15 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="223" y="11" width="174" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<image>
 				<reportElement x="438" y="1" width="117" height="126"/>
 				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
 			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="79" y="11" width="318" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -161,12 +159,12 @@
 				<text><![CDATA[Id]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="79" y="0" width="192" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="79" y="0" width="132" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Materia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="271" y="0" width="167" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="211" y="0" width="176" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Profesor]]></text>
 			</staticText>
@@ -188,6 +186,11 @@
 			<line>
 				<reportElement x="0" y="20" width="555" height="1"/>
 			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="387" y="0" width="51" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -195,55 +198,62 @@
 			<textField>
 				<reportElement x="22" y="0" width="57" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="0" width="192" height="20"/>
+				<reportElement x="79" y="0" width="144" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="505" y="0" width="50" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_paralelo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="478" y="0" width="27" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_ciclo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="438" y="0" width="40" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre_jornada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="271" y="0" width="167" height="20"/>
+				<reportElement x="223" y="0" width="164" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="22" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="20" width="555" height="1"/>
 			</line>
+			<textField>
+				<reportElement x="387" y="0" width="51" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{malla_almn_num_matricula}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

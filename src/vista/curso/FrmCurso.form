@@ -161,7 +161,7 @@
         <Component class="javax.swing.JFormattedTextField" name="txtCapacidad">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="200" width="30" height="-1"/>
+              <AbsoluteConstraints x="90" y="200" width="30" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -376,7 +376,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="200" y="370" width="-1" height="-1"/>
+          <AbsoluteConstraints x="150" y="370" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
