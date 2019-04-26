@@ -33,8 +33,6 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
             return false;
         }
     }
-    
-
 
     public void eliminar(int idRequisito) {
         String nsql = "DELETE FROM public.\"MateriaRequisitos\" \n"
@@ -73,6 +71,40 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
                 + "WHERE mr.id_materia = " + idMateria + " AND tipo_requisito = 'C' AND\n"
                 + "m.id_materia = id_materia_requisito;";
         return consultarMaterias(sql);
+    }
+
+    public ArrayList<MateriaRequisitoMD> buscarRequisitosPorCarrera(int idCarrera) {
+        String sql = "SELECT id_requisito, mr.id_materia, id_materia_requisito, \n"
+                + "materia_nombre, tipo_requisito \n"
+                + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m \n"
+                + "WHERE mr.id_materia_requisito = m.id_materia AND\n"
+                + "m.id_carrera = "+idCarrera+" ORDER BY id_materia;";
+        ArrayList<MateriaRequisitoMD> requisitos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    MateriaRequisitoMD mtr = new MateriaRequisitoMD();
+                    mtr.setId(rs.getInt("id_requisito"));
+                    MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    mtr.setMateria(m);
+                    MateriaMD mr = new MateriaMD();
+                    mr.setId(rs.getInt("id_materia_requisito"));
+                    mr.setNombre(rs.getString("materia_nombre"));
+                    mtr.setMateriaRequisito(mr);
+                    mtr.setTipo(rs.getString("tipo_requisito"));
+
+                    requisitos.add(mtr);
+                }
+                return requisitos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar materias requisitos" + e.getMessage());
+            return null;
+        }
     }
 
     private ArrayList<MateriaRequisitoMD> consultarMaterias(String sql) {

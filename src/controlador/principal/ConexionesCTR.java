@@ -28,10 +28,10 @@ public class ConexionesCTR extends Thread {
                 //System.out.println("SEgundos: "+segundos);
                 segundos++;
             }
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            System.out.println("------------------------------");
             System.out.println("Se cerrara la conexion. Se receteo por ultima: \n" + msg);
             ct.close();
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            System.out.println("------------------------------");
         } catch (SQLException ex) {
             System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             System.out.println("No se pudo cerrar la conexion." + ex.getMessage());

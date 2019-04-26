@@ -263,14 +263,7 @@ public class FrmAlumnoCursoCTR {
             if (r == JOptionPane.YES_OPTION) {
                 if (almnCurso.guardarAlmnCurso()) {
                     //Reiniciamos todo 
-                    frmAlmCurso.getTxtBuscar().setText("");
-                    frmAlmCurso.getCmbCurso().removeAllItems();
-                    mdAlm.setRowCount(0);
-                    mdMatPen.setRowCount(0);
-                    mdMatSelec.setRowCount(0);
-                    cursosSelec = new ArrayList();
-                    frmAlmCurso.getBtnReprobadas().setVisible(false);
-
+                    limpiarFrm();
                     //Se ingresa matricula
                     MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
                             periodos.get(posPrd - 1).getId_PerioLectivo());
@@ -290,6 +283,20 @@ public class FrmAlumnoCursoCTR {
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "El formulario contiene errores.");
         }
+    }
+
+    /**
+     * Limpiamos todo el formulario
+     */
+    private void limpiarFrm() {
+        frmAlmCurso.getTxtBuscar().setText("");
+        frmAlmCurso.getCmbCurso().removeAllItems();
+        mdAlm.setRowCount(0);
+        mdMatPen.setRowCount(0);
+        mdMatSelec.setRowCount(0);
+        cursosSelec = new ArrayList();
+        frmAlmCurso.getBtnReprobadas().setVisible(false);
+        frmAlmCurso.getBtnAnuladas().setVisible(false);
     }
 
     /**
@@ -362,6 +369,8 @@ public class FrmAlumnoCursoCTR {
                     matri.numMaticulados(periodos.get(posPrd - 1).getId_PerioLectivo()) + "");
             frmAlmCurso.getLblNumMatriculasClases().setText(
                     matri.numMaticuladosClases(periodos.get(posPrd - 1).getId_PerioLectivo()) + "");
+            limpiarFrm();
+
         } else {
             buscadoresEstado(false);
         }
@@ -376,7 +385,7 @@ public class FrmAlumnoCursoCTR {
     private void buscarAlumnos(String aguja) {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0 && Validar.esLetrasYNumeros(aguja)) {
-            alumnosCarrera = almCar.buscarAlumnoCarrera(periodos.get(posPrd - 1).getCarrera().getId(),
+            alumnosCarrera = almCar.buscarAlumnoCarreraParaFrm(periodos.get(posPrd - 1).getCarrera().getId(),
                     aguja);
             llenarTblAlumnos(alumnosCarrera);
         }
@@ -397,8 +406,11 @@ public class FrmAlumnoCursoCTR {
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posAl >= 0) {
+            //Buscamos la malla completa
+            mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAl).getId());
             //Vemos si el alumno esta matriculado en una materia
-            materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAl).getId(), "M");
+            //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAl).getId(), "M");
+            materiasAlmn = filtrarMalla(mallaCompleta, "M");
             if (!materiasAlmn.isEmpty()) {
                 //Borramos los cursos que posiblemente carguemos antes
                 frmAlmCurso.getCmbCurso().removeAllItems();
@@ -450,8 +462,6 @@ public class FrmAlumnoCursoCTR {
         mdMatSelec.setRowCount(0);
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 1;
-        //Buscamos la malla completa
-        mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAlmn).getId());
 
         //Si no esta matriculado miramos la materias que a cursado 
         //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
@@ -479,7 +489,7 @@ public class FrmAlumnoCursoCTR {
 
         //BUscamos todas las materias en las que se anulo un alumno 
 //        mallaAnuladas = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "A");
-//        System.out.println("Numero de materias anuladas: BD " + mallaAnuladas.size());
+//        System.out.println("de materias anuladas: BD " + mallaAnuladas.size());
         //Materias anuladas en 
         mallaAnuladas = filtrarMalla(mallaCompleta, "A");
 
@@ -599,6 +609,8 @@ public class FrmAlumnoCursoCTR {
             cursosPen = cur.buscarCursosPorNombreYPrdLectivo(
                     frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
                     periodos.get(posPrd - 1).getId_PerioLectivo());
+            //Cargamos todos los requisitos de este ciclo en esta carrera
+            requisitos = matReq.buscarRequisitosPorCarrera(periodos.get(posPrd - 1).getCarrera().getId());
             clasificarMateriasPendientes(cursosPen);
         } else {
             mdMatPen.setRowCount(0);
@@ -664,20 +676,30 @@ public class FrmAlumnoCursoCTR {
      * cursos que tiene materias que puede tomar.
      */
     private void llenarTblConRequisitosPasados(ArrayList<CursoMD> cursos) {
-        MallaAlumnoMD requisito;
+        ArrayList<MateriaRequisitoMD> requisitosFiltrados;
+        //MallaAlumnoMD requisito;
         //Si se quiere matricular en un ciclo inferior o igual a 3 debemos revisar si
         //Paso los requisitos
+        //P significa Pre-requisito
         int[] posElim = new int[cursos.size()];
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
         for (int i = 0; i < cursos.size(); i++) {
-            requisitos = matReq.buscarPreRequisitos(cursos.get(i).getId_materia().getId());
-            for (int j = 0; j < requisitos.size(); j++) {
-                estadoMateria = estadoMateriaEnMalla(requisitos.get(j).getMateriaRequisito().getId());
+            requisitosFiltrados = filtrarRequisitos(cursos.get(i).getId_materia().getId(), "P");
+            for (int j = 0; j < requisitosFiltrados.size(); j++) {
+                estadoMateria = estadoMateriaEnMalla(requisitosFiltrados.get(j).getMateriaRequisito().getId());
                 if (estadoMateria != null) {
                     if (estadoMateria.equals("R")) {
                         posElim[i] = i + 1;
                     }
                 }
+//            requisitos = matReq.buscarPreRequisitos(cursos.get(i).getId_materia().getId());
+//            for (int j = 0; j < requisitos.size(); j++) {
+//                estadoMateria = estadoMateriaEnMalla(requisitos.get(j).getMateriaRequisito().getId());
+//                if (estadoMateria != null) {
+//                    if (estadoMateria.equals("R")) {
+//                        posElim[i] = i + 1;
+//                    }
+//                }
 //                requisito = mallaAlm.buscarMateriaEstado(alumnosCarrera.get(posAl).getId(),
 //                        requisitos.get(j).getMateriaRequisito().getId());
 //                if (requisito.getEstado() != null) {
@@ -724,26 +746,32 @@ public class FrmAlumnoCursoCTR {
      */
     private void llenarTblConCoRequisitos(ArrayList<CursoMD> cursos) {
 
-        MallaAlumnoMD requisito;
+        //MallaAlumnoMD requisito;
+        ArrayList<MateriaRequisitoMD> requisitosFiltrados;
         int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
         int[] posElim = new int[cursos.size()];
         boolean matricula;
 
         for (int i = 0; i < cursos.size(); i++) {
-            requisitos = matReq.buscarCoRequisitos(cursos.get(i).getId_materia().getId());
+            requisitosFiltrados = filtrarRequisitos(cursos.get(i).getId_materia().getId(), "C");
             matricula = true;
-            if (requisitos.size() > 0) {
+            if (requisitosFiltrados.size() > 0) {
                 matricula = false;
             }
-            for (int j = 0; j < requisitos.size(); j++) {
-                estadoMateria = estadoMateriaEnMalla(requisitos.get(j).getMateriaRequisito().getId());
+//            requisitosFiltrados = matReq.buscarCoRequisitos(cursos.get(i).getId_materia().getId());
+//            matricula = true;
+//            if (requisitosFiltrados.size() > 0) {
+//                matricula = false;
+//            }
+            for (int j = 0; j < requisitosFiltrados.size(); j++) {
+                estadoMateria = estadoMateriaEnMalla(requisitosFiltrados.get(j).getMateriaRequisito().getId());
 
                 if (!estadoMateria.equals("C")
                         && !estadoMateria.equals("R")
                         && !estadoMateria.equals("M")) {
                     for (int k = 0; k < cursos.size(); k++) {
                         if (cursos.get(k).getId_materia().getNombre().
-                                equals(requisitos.get(j).getMateriaRequisito().getNombre())) {
+                                equals(requisitosFiltrados.get(j).getMateriaRequisito().getNombre())) {
                             matricula = true;
                             break;
                         }
@@ -1042,4 +1070,20 @@ public class FrmAlumnoCursoCTR {
         });
         return estadoMateria;
     }
+
+    /**
+     * Buscamos el requisito de esta materia
+     */
+    private ArrayList<MateriaRequisitoMD> filtrarRequisitos(int idMateria, String tipo) {
+        ArrayList<MateriaRequisitoMD> filtrados = new ArrayList<>();
+        requisitos.forEach(m -> {
+            if (m.getMateria().getId() == idMateria && m.getTipo().equals(tipo)) {
+                filtrados.add(m);
+                System.out.println(m.getMateria().getId() + "\n"
+                        + m.getMateriaRequisito().getNombre());
+            }
+        });
+        return filtrados;
+    }
+
 }

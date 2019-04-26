@@ -186,7 +186,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblAlumnos);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 430, 106));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 121, 460, 106));
 
         txtBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 92, 430, 23));
