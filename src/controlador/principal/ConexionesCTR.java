@@ -24,8 +24,7 @@ public class ConexionesCTR extends Thread {
 
             while (segundos < 130) {
                 dormir(1000);
-                System.out.println("Sigue contando: "+segundos);
-                //System.out.println("SEgundos: "+segundos);
+                //System.out.println("Sigue contando: "+segundos);
                 segundos++;
             }
             System.out.println("------------------------------");
