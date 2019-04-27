@@ -29,7 +29,7 @@ public class PnlHorarioCursoCTR {
     private final String[] tn = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
     private final String[] hm = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00"};
     private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
-    private final String[] hn = {"8:00", "9:00", "10:00", "11:00", "12:00", "13:00", 
+    private final String[] hn = {"8:00", "9:00", "10:00", "11:00", "12:00", "13:00",
         "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hmc = {
         "<html>07:00<br>08:00</html>",
@@ -52,6 +52,7 @@ public class PnlHorarioCursoCTR {
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
         "---------------------------",
+        "<html>16:00<br>17:00</html>",
         "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>",
@@ -72,7 +73,7 @@ public class PnlHorarioCursoCTR {
         this.curso = new CursoMD();
         this.curso.setCurso_nombre(nomCurso);
         //Inciamos el periodo para pasarle 
-        PeriodoLectivoMD p = new PeriodoLectivoMD(); 
+        PeriodoLectivoMD p = new PeriodoLectivoMD();
         p.setId_PerioLectivo(idPrd);
         this.curso.setId_prd_lectivo(p);
     }
@@ -164,7 +165,7 @@ public class PnlHorarioCursoCTR {
 
         for (int i = posI; i < posF; i++) {
             mdTbl.setValueAt("<html> <center>" + s.getId() + "" + s.getCurso().getId_curso() + "<br>"
-                    + s.getCurso().getId_materia().getNombre()+ "<br>"
+                    + s.getCurso().getId_materia().getNombre() + "<br>"
                     + s.getCurso().getId_docente().getNombreCorto() + "</center></html>",
                     i, dia);
         }

@@ -69,9 +69,6 @@ public class VtnDocenteCTR {
         this.permisos = permisos;
         this.prd = new PeriodoLectivoBD(conecta);
         //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Docentes");
-        ctrPrin.setIconJIFrame(vtnDocente);
         docente = new DocenteBD(conecta);
         per = new PersonaBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
@@ -102,9 +99,6 @@ public class VtnDocenteCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnDocente.getTxtBuscar().getText().toUpperCase().trim();
-                /*if (b.length() > 2) {
-                    buscaIncremental(vtnDocente.getTxtBuscar().getText().toUpperCase());
-                }*/
                 if (e.getKeyCode() == 10) {
                     buscaIncremental(b);
                 } else if (b.length() == 0) {
@@ -123,9 +117,6 @@ public class VtnDocenteCTR {
                 validarBotonesReportes();
             }
         });
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Docentes");
     }
 
     private void cargarDocentes() {

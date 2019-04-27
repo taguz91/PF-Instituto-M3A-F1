@@ -36,6 +36,8 @@ public class ConectarDB {
     //Se ven solo las modificaciones ya guardadas hechas por otras transacciones
     //Para cambiar el estado de un mause cuando se hace una consulta.
     private VtnPrincipal vtnPrin;
+    //Nombre de la tabla solo para testear 
+    private String tabla;
 
     /**
      * Base de datos de prueba
@@ -56,13 +58,13 @@ public class ConectarDB {
             //ct = DriverManager.getConnection(url, user, pass);
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Constructor conectarBD");
+            ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
             ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
-            System.out.println("No se puede conectar.");
+            System.out.println("No se puede conectar." + ex.getMessage());
         }
     }
 
@@ -77,7 +79,7 @@ public class ConectarDB {
             this.url = generarURL();
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Contructor ConectarBD");
+            ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
             //ct = DriverManager.getConnection(url, user, pass);
 
             ResourceManager.setConecct(ct);
@@ -170,13 +172,14 @@ public class ConectarDB {
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
             System.out.println();
             System.out.println("------------------");
+            tabla = metaData.getTableName(1);
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
             ctrCt.matarHilo();
             return null;
         } finally {
-            ctrCt.recetear("Terminando de realizar una consulta.");
+            ctrCt.recetear("Terminando de realizar una consulta en: "+tabla);
             cursorNormal();
         }
     }
@@ -184,19 +187,21 @@ public class ConectarDB {
     public Connection getConecction(String mensaje) {
         try {
             System.out.println("~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$~");
-            System.out.println("OBTENEMOS CONEXION "+mensaje);
+            System.out.println("OBTENEMOS CONEXION " + mensaje);
             if (ct.isClosed()) {
                 System.out.println("La conexion fue cerrada no podemos retornarla. Debemos abrir una nueva");
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
+                ctrCt.agregarSegundos(60);
                 ct = DriverManager.getConnection(url, user, pass);
                 return ct;
             } else {
                 System.out.println("Esta abierta la conexion.");
-                ctrCt.recetear("SE recea al devolver la conexion.");
+                ctrCt.recetear("Se recetea al devolver la conexion.");
+                ctrCt.agregarSegundos(60);
                 return ct;
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | NullPointerException ex ) {
             System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
             ctrCt.matarHilo();
             return null;
