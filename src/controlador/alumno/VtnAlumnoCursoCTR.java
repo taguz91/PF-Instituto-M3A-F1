@@ -221,7 +221,7 @@ public class VtnAlumnoCursoCTR {
         if (posPrd > 0) {
             cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
             vtnAlmnCurso.getCmbCursos().removeAllItems();
-            if (!cursos.isEmpty()) {
+            if (cursos != null) {
                 vtnAlmnCurso.getCmbCursos().addItem("Todos");
                 cursos.forEach(c -> {
                     vtnAlmnCurso.getCmbCursos().addItem(c);

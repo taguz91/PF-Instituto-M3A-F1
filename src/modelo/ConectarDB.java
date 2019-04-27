@@ -36,6 +36,8 @@ public class ConectarDB {
     //Se ven solo las modificaciones ya guardadas hechas por otras transacciones
     //Para cambiar el estado de un mause cuando se hace una consulta.
     private VtnPrincipal vtnPrin;
+    //Nombre de la tabla solo para testear 
+    private String tabla;
 
     /**
      * Base de datos de prueba
@@ -170,13 +172,14 @@ public class ConectarDB {
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
             System.out.println();
             System.out.println("------------------");
+            tabla = metaData.getTableName(1);
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
             ctrCt.matarHilo();
             return null;
         } finally {
-            ctrCt.recetear("Terminando de realizar una consulta.");
+            ctrCt.recetear("Terminando de realizar una consulta en: "+tabla);
             cursorNormal();
         }
     }

@@ -62,9 +62,6 @@ public class VtnCursoCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Cursos");
         this.prd = new PeriodoLectivoBD(conecta);
         ctrPrin.setIconJIFrame(vtnCurso);
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
@@ -105,9 +102,6 @@ public class VtnCursoCTR {
         //Validacion del buscador 
         vtnCurso.getBtnBuscar().addKeyListener(new TxtVBuscador(vtnCurso.getTxtBuscar(),
                 vtnCurso.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Cursos");
         vtnCurso.getTblCurso().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -130,14 +124,6 @@ public class VtnCursoCTR {
                 } else if (b.length() == 0) {
                     cargarCursos();
                 }
-
-//                if (Validar.esLetras(b)) {
-//                    if (b.length() > 2) {
-//                        buscar(b);
-//                    } else if (b.length() == 0) {
-//                        cargarCursos();
-//                    }
-//                }
             }
         });
     }

@@ -53,10 +53,6 @@ public class VtnDocenteMateriaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Docentes Materia");
-        ctrPrin.setIconJIFrame(vtnDm);
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(vtnDm);
         vtnDm.show();
@@ -73,6 +69,7 @@ public class VtnDocenteMateriaCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDm.getTblDocentesMateria().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDm.getTblDocentesMateria());
+        TblEstilo.columnaMedida(vtnDm.getTblDocentesMateria(), 0, 100);
         //Desabilitamos el combo de materia y ciclo, se activaran al escoger una carrera
         estadoCmbCicloYMateria(false);
         llenarCmbCarrera();
@@ -86,10 +83,6 @@ public class VtnDocenteMateriaCTR {
                 } else if (b.length() == 0) {
                     cargarDocenteMaterias();
                 }
-                /*
-                if (a.length() > 2) {
-                    buscar(a);
-                }*/
             }
         });
         //Validacion del buscar
@@ -105,9 +98,6 @@ public class VtnDocenteMateriaCTR {
         vtnDm.getBtnEliminar().addActionListener(e -> eliminar());
 
         cargarDocenteMaterias();
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Docentes materia");
     }
 
     /**

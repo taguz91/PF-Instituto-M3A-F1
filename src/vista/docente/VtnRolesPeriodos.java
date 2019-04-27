@@ -165,10 +165,10 @@ public class VtnRolesPeriodos extends javax.swing.JInternalFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnIngresar))
                 .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
