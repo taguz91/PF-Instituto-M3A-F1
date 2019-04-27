@@ -24,7 +24,7 @@ public class ConexionesCTR extends Thread {
 
             while (segundos < 130) {
                 dormir(1000);
-                //System.out.println("Sigue contando: "+segundos);
+                System.out.println("Sigue contando: "+segundos);
                 //System.out.println("SEgundos: "+segundos);
                 segundos++;
             }
@@ -62,6 +62,10 @@ public class ConexionesCTR extends Thread {
         } catch (InterruptedException ex) {
             System.out.println("El hilo no se pudo dormir. " + ex.getMessage());
         }
+    }
+    
+    public void agregarSegundos(int seg){
+        this.segundos = seg;
     }
 
     public void matarHilo() {

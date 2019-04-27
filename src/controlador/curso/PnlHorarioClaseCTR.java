@@ -51,6 +51,7 @@ public class PnlHorarioClaseCTR {
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
         "--------------------------",
+        "<html>16:00<br>17:00</html>",
         "<html>17:00<br>18:00</html>",
         "<html>18:00<br>19:00</html>",
         "<html>19:00<br>20:00</html>",
