@@ -70,7 +70,7 @@ public class VtnAlumnosRetiradosCTR extends DependenciasVtnCTR {
         String observacion = JOptionPane.showInputDialog(
                 "Ingrese la razon de porque se retira \n"
                 + almnCursos.get(posFila).getAlumno().getNombreCorto() + " de: \n"
-                + almnCursos.get(posFila).getCurso().getId_materia().getNombre());
+                + almnCursos.get(posFila).getCurso().getMateria().getNombre());
         System.out.println("Esta es mi observacion.");
         if (Validar.esLetras(observacion)) {
             acrb.setAlumnoCurso(almnCursos.get(posFila));
@@ -243,9 +243,9 @@ public class VtnAlumnosRetiradosCTR extends DependenciasVtnCTR {
         mdTblAC.setRowCount(0);
         if (almns != null) {
             almns.forEach(a -> {
-                Object[] v = {a.getCurso().getId_prd_lectivo().getNombre_PerLectivo(),
+                Object[] v = {a.getCurso().getPeriodo().getNombre_PerLectivo(),
                     a.getAlumno().getNombreCorto(),
-                    a.getCurso().getId_materia().getNombre(),
+                    a.getCurso().getMateria().getNombre(),
                     a.getEstado()};
                 mdTblAC.addRow(v);
             });
@@ -261,9 +261,9 @@ public class VtnAlumnosRetiradosCTR extends DependenciasVtnCTR {
         mdTblACR.setRowCount(0);
         if (almns != null) {
             almns.forEach(a -> {
-                Object[] v = {a.getAlumnoCurso().getCurso().getId_prd_lectivo().getNombre_PerLectivo(),
+                Object[] v = {a.getAlumnoCurso().getCurso().getPeriodo().getNombre_PerLectivo(),
                     a.getAlumnoCurso().getAlumno().getNombreCorto(),
-                    a.getAlumnoCurso().getCurso().getId_materia().getNombre(),
+                    a.getAlumnoCurso().getCurso().getMateria().getNombre(),
                     a.getFecha(), a.getObservacion()};
                 System.out.println("leeemos");
                 mdTblACR.addRow(v);

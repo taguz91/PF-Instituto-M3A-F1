@@ -420,11 +420,11 @@ public class VtnNotas {
             CursoMD curso = new CursoMD();
             DocenteMD docente = new DocenteMD();
             docente.setIdDocente(getIdDocente());
-            curso.setId_docente(docente);
+            curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
             periodo.setId_PerioLectivo(getIdPeriodoLectivo());
-            curso.setId_prd_lectivo(periodo);
-            curso.setCurso_nombre(vista.getCmbCiclo().getSelectedItem().toString());
+            curso.setPeriodo(periodo);
+            curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
             listaMaterias = MateriaBD.selectWhere(curso);
 

@@ -98,7 +98,7 @@ public class ControladorConfiguracion_plan_clases {
     }
     private CursoMD cursos_seleccionado(){
         Optional<CursoMD> cursoSeleccionado=cursosSilabo.stream().
-                filter(s -> s.getCurso_nombre().equals(frm_cong_PlanClase.getCmb_Cursos().getSelectedItem().toString())).
+                filter(s -> s.getNombre().equals(frm_cong_PlanClase.getCmb_Cursos().getSelectedItem().toString())).
                 findFirst();
         return cursoSeleccionado.get();
     }
@@ -159,7 +159,7 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getCmb_Cursos().removeAllItems();
         if (cursos!=null) {
             cursos.forEach(cs->{
-                frm_cong_PlanClase.getCmb_Cursos().addItem(String.valueOf(cs.getCurso_nombre()));
+                frm_cong_PlanClase.getCmb_Cursos().addItem(String.valueOf(cs.getNombre()));
             });
         } else {
             System.out.println("NO tiene");

@@ -24,7 +24,7 @@ public class SesionClaseBD extends SesionClaseMD {
     public void ingresar() {
         nsql = "INSERT INTO public.\"SesionClase\"(\n"
                 + "	id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion)\n"
-                + "	VALUES (" + getCurso().getId_curso() + ", " + getDia() + ", "
+                + "	VALUES (" + getCurso().getId() + ", " + getDia() + ", "
                 + "'" + getHoraIni() + "', '" + getHoraFin() + "');";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
@@ -66,7 +66,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 while (rs.next()) {
                     CursoMD c = new CursoMD();
                     s.setId(rs.getInt("id_sesion"));
-                    c.setId_curso(rs.getInt("id_curso"));
+                    c.setId(rs.getInt("id_curso"));
                     s.setCurso(c);
                     s.setDia(rs.getInt("dia_sesion"));
                     s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
@@ -125,7 +125,7 @@ public class SesionClaseBD extends SesionClaseMD {
     public ArrayList<SesionClaseMD> cargarHorarioCurso(CursoMD curso) {
         sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
-                + "	WHERE id_curso = " + curso.getId_curso() + ";";
+                + "	WHERE id_curso = " + curso.getId() + ";";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         ResultSet rs = conecta.sql(sql);
         //System.out.println(sql);
@@ -189,7 +189,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
                     s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
                     CursoMD c = new CursoMD();
-                    c.setId_curso(rs.getInt("id_curso"));
+                    c.setId(rs.getInt("id_curso"));
                     MateriaMD m = new MateriaMD();
                     m.setNombre(rs.getString("materia_nombre"));
                     m.setCodigo(rs.getString("materia_codigo"));
@@ -197,8 +197,8 @@ public class SesionClaseBD extends SesionClaseMD {
                     d.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     d.setPrimerApellido(rs.getString("persona_primer_apellido"));
 
-                    c.setId_docente(d);
-                    c.setId_materia(m);
+                    c.setDocente(d);
+                    c.setMateria(m);
                     s.setCurso(c);
 
                     sesiones.add(s);

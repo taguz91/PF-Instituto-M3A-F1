@@ -559,9 +559,9 @@ public class MateriaBD extends MateriaMD {
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
                 + "WHERE\n"
-                + "\"Cursos\".id_docente = " + curso.getId_docente().getIdDocente() + " AND\n"
-                + "\"Cursos\".id_prd_lectivo = '" + curso.getId_prd_lectivo().getId_PerioLectivo() + "' AND \n"
-                + "\"Cursos\".curso_nombre = '" + curso.getCurso_nombre() + "'";
+                + "\"Cursos\".id_docente = " + curso.getDocente().getIdDocente() + " AND\n"
+                + "\"Cursos\".id_prd_lectivo = '" + curso.getPeriodo().getId_PerioLectivo() + "' AND \n"
+                + "\"Cursos\".curso_nombre = '" + curso.getNombre() + "'";
         
         System.out.println(SELECT);
         

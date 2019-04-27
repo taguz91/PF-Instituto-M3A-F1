@@ -185,7 +185,7 @@ public class VtnAlumnoCursoCTR {
                 Object[] valores = {a.getAlumno().getIdentificacion(),
                     a.getAlumno().getPrimerNombre()
                     + " " + a.getAlumno().getPrimerApellido(),
-                    a.getCurso().getCurso_nombre()};
+                    a.getCurso().getNombre()};
                 mdTbl.addRow(valores);
             });
             vtnAlmnCurso.getLblResultados().setText(almns.size() + " Resultados obtenidos.");
