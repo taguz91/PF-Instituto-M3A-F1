@@ -29,6 +29,7 @@ public class UsuarioBD extends UsuarioMD {
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
         super(username, password, estado, idPersona);
+        
     }
 
     public UsuarioBD() {
