@@ -238,10 +238,10 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
         String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
-                + "curso_capacidad, curso_ciclo, ("
-                + " SELECT count(*)\n"
-                + " FROM public.\"AlumnoCurso\"\n"
-                + " WHERE id_curso = c.id_curso) \n"
+                + "curso_capacidad, curso_ciclo, "
+                + "( SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso) \n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
                 + "WHERE curso_nombre = '" + nombre + "' AND\n"
                 + "m.id_materia = c.id_materia AND\n"
@@ -260,6 +260,7 @@ public class CursoBD extends CursoMD {
                     c.setCapacidad(rs.getInt("curso_capacidad"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
                     c.setNombre(nombre);
+                    c.setNumMatriculados(rs.getInt(6));
 
                     cursos.add(c);
                 }
