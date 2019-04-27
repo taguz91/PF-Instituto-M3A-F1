@@ -35,10 +35,10 @@ public class ConnDBPool {
         config.setJdbcUrl(generarURL());
 
         //String username = Propiedades.getUserProp("username");
-        config.setUsername("ROOT");
+        config.setUsername("JOHNNY");
 
         //String password = Propiedades.getUserProp("password");
-        config.setPassword("RUTH");
+        config.setPassword("DEV");
 
         config.setMaximumPoolSize(5);
         config.addDataSourceProperty("cachePrepStmts", "true");
@@ -71,9 +71,8 @@ public class ConnDBPool {
     }
 
     public boolean ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
-
         PreparedStatement stmt = null;
-
+        conn = getConnection();
         try {
 
             if (parametros == null) {
@@ -94,6 +93,7 @@ public class ConnDBPool {
             return false;
         } finally {
             close(conn);
+            close(stmt);
         }
     }
 
@@ -135,7 +135,8 @@ public class ConnDBPool {
     public ResultSet ejecutarQuery(String sql, Connection conn, Map<Integer, Object> parametros) {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-
+        this.stmt = stmt;
+        this.conn = conn;
         try {
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);
@@ -144,13 +145,11 @@ public class ConnDBPool {
             }
 
             rs = stmt.executeQuery();
+            this.rs = rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
-        } finally {
-            close(stmt);
         }
-
         return rs;
     }
 
@@ -183,5 +182,11 @@ public class ConnDBPool {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void close() {
+        close(conn);
+        close(stmt);
+        close(rs);
     }
 }

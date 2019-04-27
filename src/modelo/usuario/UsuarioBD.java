@@ -103,9 +103,7 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
-            pool.close(stmt);
-            pool.close(rs);
+            pool.close();
         }
         return lista;
     }
