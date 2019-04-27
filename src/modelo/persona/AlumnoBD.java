@@ -35,7 +35,7 @@ public class AlumnoBD extends AlumnoMD {
                 + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
                 + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
                 + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
-                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', '" + getNivel_Academico() + "', " + isPension() + ", "
+                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
         if (conecta.nosql(nsql) == null) {
@@ -54,8 +54,7 @@ public class AlumnoBD extends AlumnoMD {
     public boolean editarAlumno(int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
                 + " id_sec_economico = " + getSectorEconomico().getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
-                + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = '" + getNivel_Academico()
-                + "', alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja()
+                + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = null, alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja()
                 + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
                 + "', alumno_parentesco_contacto = '" + getParentesco_Contacto() + "', alumno_numero_contacto = '" + getContacto_Emergencia() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
