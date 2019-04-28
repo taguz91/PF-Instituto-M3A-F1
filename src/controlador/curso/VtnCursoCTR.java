@@ -223,14 +223,14 @@ public class VtnCursoCTR {
         if (cursos != null) {
             cursos.forEach((c) -> {
                 Object valores[] = {
-                    c.getId_curso(),
-                    c.getId_prd_lectivo().getNombre_PerLectivo(),
-                    c.getId_materia().getNombre(),
-                    c.getId_docente().getPrimerNombre() + " "
-                    + c.getId_docente().getPrimerApellido(),
-                    c.getCurso_ciclo(),
-                    c.getCurso_nombre(),
-                    c.getCurso_capacidad()
+                    c.getId(),
+                    c.getPeriodo().getNombre_PerLectivo(),
+                    c.getMateria().getNombre(),
+                    c.getDocente().getPrimerNombre() + " "
+                    + c.getDocente().getPrimerApellido(),
+                    c.getCiclo(),
+                    c.getNombre(),
+                    c.getCapacidad()
                 };
                 mdTbl.addRow(valores);
             });
@@ -259,7 +259,7 @@ public class VtnCursoCTR {
         try {
             posFila = vtnCurso.getTblCurso().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("curso", cursos.get(posFila).getId_curso());
+            parametro.put("curso", cursos.get(posFila).getId());
             // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
@@ -290,16 +290,16 @@ public class VtnCursoCTR {
 
         if (posCur >= 0) {
             String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
-            int num = curso.numAlumnos(cursos.get(posCur).getId_curso());
+            int num = curso.numAlumnos(cursos.get(posCur).getId());
             int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere "
                     + vtnCurso.getBtnEliminar().getText().toLowerCase() + " el curso " + nom + "\n"
                     + "Se " + vtnCurso.getBtnEliminar().getText().toLowerCase()
                     + "an todos los alumnos de este curso: " + num);
             if (r == JOptionPane.YES_OPTION) {
                 if (vtnCurso.getCbxEliminados().isSelected()) {
-                    curso.activarCurso(cursos.get(posCur).getId_curso());
+                    curso.activarCurso(cursos.get(posCur).getId());
                 } else {
-                    curso.eliminarCurso(cursos.get(posCur).getId_curso());
+                    curso.eliminarCurso(cursos.get(posCur).getId());
                 }
                 verCursosEliminados();
             }

@@ -52,7 +52,7 @@ public class JDMateriasCursoCTR {
 
     private void buscar() {
         cursos = cur.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
-                almCurso.getCurso().getCurso_nombre());
+                almCurso.getCurso().getNombre());
         System.out.println("Numero de cursos devuletos "+cursos.size());
         llenarTbl(cursos);
     }
@@ -61,9 +61,9 @@ public class JDMateriasCursoCTR {
         mdTbl.setRowCount(0);
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
-                Object[] v = {c.getId_materia().getNombre(),
-                    c.getId_docente().getPrimerNombre() + " "
-                    + c.getId_docente().getPrimerApellido()};
+                Object[] v = {c.getMateria().getNombre(),
+                    c.getDocente().getPrimerNombre() + " "
+                    + c.getDocente().getPrimerApellido()};
                 mdTbl.addRow(v);
             });
         }

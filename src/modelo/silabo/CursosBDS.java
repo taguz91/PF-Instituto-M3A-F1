@@ -44,8 +44,8 @@ public class CursosBDS extends CursoMDS{
 
             while (rs.next()) {
                 CursoMD cur=new CursoMD();
-                cur.setId_curso(rs.getInt(1));
-                cur.setCurso_nombre(rs.getString(2));
+                cur.setId(rs.getInt(1));
+                cur.setNombre(rs.getString(2));
                 
                 cursos.add(cur);
             }

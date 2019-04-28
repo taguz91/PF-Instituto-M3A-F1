@@ -29,9 +29,7 @@ public class MatriculaBD extends MatriculaMD {
 
         System.out.println("SE matricula: ");
         System.out.println(nsql);
-        if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
-        } else {
+        if (conecta.nosql(nsql) != null) {
             JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
                     + "compruebe su conexion a internet.");
         }

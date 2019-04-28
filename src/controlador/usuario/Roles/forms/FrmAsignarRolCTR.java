@@ -1,6 +1,6 @@
 package controlador.usuario.Roles.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class FrmAsignarRolCTR {
         vista.getLblUsuario().setText(usuario.getUsername());
 
         try {
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+            Effects.centerFrame(vista, desktop.getDpnlPrincipal());
             desktop.getDpnlPrincipal().add(vista);
             vista.show();
             vista.setSelected(true);

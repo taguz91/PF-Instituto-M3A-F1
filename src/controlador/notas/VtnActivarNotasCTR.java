@@ -1,6 +1,6 @@
 package controlador.notas;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -56,17 +56,17 @@ public class VtnActivarNotasCTR {
         InitEventos();
 
         new Thread(() -> {
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
             listaPeriodos = PeriodoLectivoBD.SelectAll();
             cargarComboPeriodos();
             setSelectedItemInCombo();
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
         }).start();
 
         try {
             vista.show();
             desktop.getDpnlPrincipal().add(vista);
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+            Effects.centerFrame(vista, desktop.getDpnlPrincipal());
             vista.setSelected(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +109,7 @@ public class VtnActivarNotasCTR {
             public void keyReleased(KeyEvent e) {
                 if (modelo.editar(modelo.getIdIngresoNotas())) {
                     refreshTabla();
-                    Middlewares.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
+
                 }
 
                 System.out.println(modelo);
@@ -172,7 +172,7 @@ public class VtnActivarNotasCTR {
         new Thread(() -> {
             if (cargarTabla) {
 
-                Middlewares.setLoadCursor(vista);
+                Effects.setLoadCursor(vista);
 
                 cargarTabla = false;
 
@@ -186,9 +186,8 @@ public class VtnActivarNotasCTR {
 
                 cargarTabla = true;
 
-                Middlewares.setDefaultCursor(vista);
+                Effects.setDefaultCursor(vista);
 
-                Middlewares.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
             }
 
         }).start();
@@ -208,11 +207,11 @@ public class VtnActivarNotasCTR {
         tablaActivarNotas.addRow(new Object[]{
             tablaActivarNotas.getDataVector().size() + 1,
             obj.getIdIngresoNotas(),
-            obj.getCurso().getId_prd_lectivo().getNombre_PerLectivo(),
-            obj.getCurso().getCurso_nombre(),
-            obj.getCurso().getId_materia().getNombre(),
-            obj.getCurso().getId_docente().getPrimerNombre() + " " + obj.getCurso().getId_docente().getSegundoNombre(),
-            obj.getCurso().getId_docente().getPrimerApellido() + " " + obj.getCurso().getId_docente().getSegundoApellido(),
+            obj.getCurso().getPeriodo().getNombre_PerLectivo(),
+            obj.getCurso().getNombre(),
+            obj.getCurso().getMateria().getNombre(),
+            obj.getCurso().getDocente().getPrimerNombre() + " " + obj.getCurso().getDocente().getSegundoNombre(),
+            obj.getCurso().getDocente().getPrimerApellido() + " " + obj.getCurso().getDocente().getSegundoApellido(),
             obj.isNotaPrimerInterCiclo(),
             obj.isNotaExamenInteCiclo(),
             obj.isNotaSegundoInterCiclo(),

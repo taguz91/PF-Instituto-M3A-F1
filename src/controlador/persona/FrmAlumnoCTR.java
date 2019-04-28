@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -29,6 +30,8 @@ import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.CmbValidar;
+import modelo.validaciones.TxtVLetras;
+import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -89,7 +92,6 @@ public class FrmAlumnoCTR {
         //Validaciones de los Combo Box
         CmbValidar combo_TipoColegio = new CmbValidar(frmAlumno.getCmBx_TipoColegio(), frmAlumno.getLbl_ErrTipColegio());
         CmbValidar combo_TipoBachi = new CmbValidar(frmAlumno.getCmBx_TipoBachillerato(), frmAlumno.getLbl_ErrTipBachillerato());
-        CmbValidar combo_NivAcade = new CmbValidar(frmAlumno.getCmBx_NvAcademico(), frmAlumno.getLbl_ErrNvAcademico());
         CmbValidar combo_SectEcono = new CmbValidar(frmAlumno.getCmBx_SecEconomico(), frmAlumno.getLbl_ErrSecEconomico());
         CmbValidar combo_ForPadre = new CmbValidar(frmAlumno.getCmBx_ForPadre(), frmAlumno.getLbl_ErrForPadre());
         CmbValidar combo_ForMadre = new CmbValidar(frmAlumno.getCmBx_ForMadre(), frmAlumno.getLbl_ErrForMadre());
@@ -184,7 +186,13 @@ public class FrmAlumnoCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 2;
-                validarComponentes(frmAlumno.getTxt_Ocupacion().getText());
+                String nombre = frmAlumno.getTxt_Ocupacion().getText();
+                if(nombre.equalsIgnoreCase("Est")){
+                    frmAlumno.getTxt_Ocupacion().setText("Estudiante");
+                } else if(nombre.equalsIgnoreCase("Tra")){
+                    frmAlumno.getTxt_Ocupacion().setText("Estudiante y Empleado");
+                }
+                validarComponentes(nombre);
                 habilitarGuardar();
             }
         };
@@ -254,6 +262,18 @@ public class FrmAlumnoCTR {
             public void keyReleased(KeyEvent e) {
             }
         };
+        
+        KeyListener validarPalabras = new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char car = e.getKeyChar();
+                if (!Validar.esLetras(car + "")) {
+                    e.consume();
+                }
+                habilitarGuardar();
+            }
+        };
+        
+       
 
         frmAlumno.getCbx_Identificacion().addActionListener(new ActionListener() {
             @Override
@@ -275,19 +295,32 @@ public class FrmAlumnoCTR {
                 }
             }
         });
+        
+        KeyListener anios = new KeyAdapter(){
+            public void keyTyped(KeyEvent e) {
+                String palabra = frmAlumno.getTxt_Anios().getText().trim();
+                char car = e.getKeyChar();
+                if (!Validar.esNumeros(car + "")) {
+                    e.consume();
+                }
+                if (palabra != null) {
+                    if (palabra.length() >= 4) {
+                        e.consume();
+                    }
+                }
+            }
+        };
+        
 
         iniciaDatos(); //Captura los datos en Listas para su utilizacion
         habilitarGuardar(); //Compara si es que lo componentes estan llenos para habilitar el Boton Guardar
         iniciarSectores(); //Inserta los sectores existenten en el Combo Box
-        iniciarAnios(); //Se da un rango de años para insertar en el Formulario
         iniciarComponentes();
         //Se añaden los eventos a los componentes
         frmAlumno.getCmBx_TipoColegio().addActionListener(combo_TipoColegio);
         frmAlumno.getCmBx_TipoColegio().addPropertyChangeListener(habilitar_Guardar);
         frmAlumno.getCmBx_TipoBachillerato().addActionListener(combo_TipoBachi);
         frmAlumno.getCmBx_TipoBachillerato().addPropertyChangeListener(habilitar_Guardar);
-        frmAlumno.getCmBx_NvAcademico().addActionListener(combo_NivAcade);
-        frmAlumno.getCmBx_NvAcademico().addPropertyChangeListener(habilitar_Guardar);
         frmAlumno.getCmBx_SecEconomico().addActionListener(combo_SectEcono);
         frmAlumno.getCmBx_SecEconomico().addPropertyChangeListener(habilitar_Guardar);
         frmAlumno.getCmBx_ForPadre().addActionListener(combo_ForPadre);
@@ -302,6 +335,10 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Ocupacion().addKeyListener(ocupacion);
         frmAlumno.getTxt_NomContacto().addKeyListener(nombre_Contacto);
         frmAlumno.getTxt_ConEmergency().addKeyListener(num_Contacto);
+        frmAlumno.getTxt_TituloSuperior().addKeyListener(validarPalabras);
+        frmAlumno.getChkBx_EdcSuperior().addActionListener(e -> activarSuperior());
+        frmAlumno.getChkBx_Trabaja().addActionListener(e -> activarSectores());
+        frmAlumno.getTxt_Anios().addKeyListener(anios);
 
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
@@ -332,7 +369,6 @@ public class FrmAlumnoCTR {
                 && frmAlumno.getLbl_ErrForMadre().isVisible() == false
                 && frmAlumno.getLbl_ErrForPadre().isVisible() == false
                 && frmAlumno.getLbl_ErrNomContacto().isVisible() == false
-                && frmAlumno.getLbl_ErrNvAcademico().isVisible() == false
                 && frmAlumno.getLbl_ErrOcupacion().isVisible() == false
                 && frmAlumno.getLbl_ErrParentesco().isVisible() == false
                 && frmAlumno.getLbl_ErrSecEconomico().isVisible() == false
@@ -401,8 +437,7 @@ public class FrmAlumnoCTR {
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
                             frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
-                            frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(alumno.getAnio_graduacion()));
-                            frmAlumno.getCmBx_NvAcademico().setSelectedItem(alumno.getNivel_Academico());
+                            frmAlumno.getTxt_Anios().setText(alumno.getAnio_graduacion());
                             frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
                             frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
                             SectorEconomicoMD sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico());
@@ -484,7 +519,6 @@ public class FrmAlumnoCTR {
         contacto_Emergencia = frmAlumno.getTxt_ConEmergency().getText();
         tipo_Colegio = frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString();
         tipo_Bachillerato = frmAlumno.getCmBx_TipoBachillerato().getSelectedItem().toString();
-        nivel_Academico = frmAlumno.getCmBx_NvAcademico().getSelectedItem().toString();
         sector_Economico = frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString();
         parentesco = frmAlumno.getCmBx_Parentesco().getSelectedItem().toString();
 
@@ -509,10 +543,9 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Nombre().setToolTipText("El nombre se filtrará automáticamente");
         frmAlumno.getCmBx_TipoColegio().setToolTipText("Seleccione el Tipo de la Institución a la que cursó");
         frmAlumno.getCmBx_TipoBachillerato().setToolTipText("Seleccione el Tipo de Bachillerato que cursó");
-        frmAlumno.getCmBx_NvAcademico().setToolTipText("Seleccione hasta que Nivel Académico alcanzó");
         frmAlumno.getTxt_TlSuperior().setToolTipText("Ingrese el Título de Bachiller");
         frmAlumno.getTxt_Ocupacion().setToolTipText("Ingrese si tiene una Ocupación");
-        frmAlumno.getSpnr_Anio().setToolTipText("Ingrese el Año en el consiguió el Título de Bachiller");
+        frmAlumno.getTxt_Anios().setToolTipText("Ingrese el Año en el consiguió el Título de Bachiller");
         frmAlumno.getCmBx_SecEconomico().setToolTipText("Seleccione un Sector si trabaja, sino seleccione \"Ninguno\"");
         frmAlumno.getCmBx_ForPadre().setToolTipText("Seleccione el Nivel de Formación del Padre");
         frmAlumno.getCmBx_ForMadre().setToolTipText("Seleccione el Nivel de Formación de la Madre");
@@ -526,7 +559,6 @@ public class FrmAlumnoCTR {
         frmAlumno.getLbl_ErrTipColegio().setVisible(false);
         frmAlumno.getLbl_ErrTipBachillerato().setVisible(false);
         frmAlumno.getLbl_ErrTiSuperior().setVisible(false);
-        frmAlumno.getLbl_ErrNvAcademico().setVisible(false);
         frmAlumno.getLbl_ErrOcupacion().setVisible(false);
         frmAlumno.getLbl_ErrSecEconomico().setVisible(false);
         frmAlumno.getLbl_ErrForPadre().setVisible(false);
@@ -537,19 +569,33 @@ public class FrmAlumnoCTR {
         frmAlumno.getLbl_ErrTipoIdenti().setVisible(false);
         frmAlumno.getTxt_Nombre().setEnabled(false);
         frmAlumno.getTxt_Cedula().setEnabled(false);
+        frmAlumno.getLbl_TSuperior().setVisible(false);
+        frmAlumno.getLbl_ErrorTSuperior().setVisible(false);
+        frmAlumno.getTxt_TituloSuperior().setVisible(false);
+        frmAlumno.getCmBx_SecEconomico().setEnabled(false);
         //frmAlumno.getBtn_Guardar().setEnabled(false);
     }
-
-    //Sirve para insertar un rango de años
-    public void iniciarAnios() {
-        SpinnerNumberModel s = new SpinnerNumberModel();
-        s.setMinimum(1980);
-        s.setMaximum(2018);
-        s.setStepSize(1);
-        frmAlumno.getSpnr_Anio().setModel(s);
-        frmAlumno.getSpnr_Anio().setValue(1980);
+    
+    private void activarSuperior() {
+        boolean superior = frmAlumno.getChkBx_EdcSuperior().isSelected();
+        desactivarSuperior(superior);
+    }
+    
+    private void desactivarSuperior(boolean estado) {
+        frmAlumno.getLbl_TSuperior().setVisible(estado);
+        frmAlumno.getTxt_TituloSuperior().setVisible(estado);
+    }
+    
+    private void activarSectores(){
+        boolean esSector = frmAlumno.getChkBx_Trabaja().isSelected();
+        desactivarSectores(esSector);
+    }
+    
+    private void desactivarSectores(boolean estado){
+        frmAlumno.getCmBx_SecEconomico().setEnabled(estado);
     }
 
+    
     /**
      * Inicia los Sectores extraídos de la Lista en el Combo box
      */
@@ -622,11 +668,10 @@ public class FrmAlumnoCTR {
                 + " " + persona.getPrimerApellido() + " " + persona.getSegundoApellido());
         frmAlumno.getCmBx_TipoColegio().setSelectedItem(persona.getTipo_Colegio());
         frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(persona.getTipo_Bachillerato());
-        frmAlumno.getCmBx_NvAcademico().setSelectedItem(persona.getNivel_Academico());
         frmAlumno.getTxt_TlSuperior().setText(persona.getTitulo_Superior());
         frmAlumno.getChkBx_EdcSuperior().setSelected(persona.isEducacion_Superior());
         frmAlumno.getTxt_Ocupacion().setText(persona.getOcupacion());
-        frmAlumno.getSpnr_Anio().setValue(Integer.valueOf(persona.getAnio_graduacion()));
+        frmAlumno.getTxt_Anios().setText(persona.getAnio_graduacion());
         frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
         frmAlumno.getChkBx_Trabaja().setSelected(persona.isTrabaja());
         frmAlumno.getCmBx_SecEconomico().setSelectedItem(sectorE.capturarSector(persona.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico().toUpperCase());
@@ -644,12 +689,11 @@ public class FrmAlumnoCTR {
         //frmAlumno.getTxt_Nombre().setText("");
         frmAlumno.getCmBx_TipoColegio().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_TipoBachillerato().setSelectedItem("|SELECCIONE|");
-        frmAlumno.getCmBx_NvAcademico().setSelectedItem("|SELECCIONE|");
         frmAlumno.getTxt_TlSuperior().setText("");
         frmAlumno.getChkBx_EdcSuperior().setSelected(false);
         frmAlumno.getTxt_Ocupacion().setText("");
         frmAlumno.getChkBx_Pension().setSelected(false);
-        frmAlumno.getSpnr_Anio().setValue(1980); //Valor no predefinido
+        frmAlumno.getTxt_Anios().setText("");
         frmAlumno.getChkBx_Trabaja().setSelected(false);
         frmAlumno.getCmBx_SecEconomico().setSelectedItem("|SELECCIONE|");
         frmAlumno.getCmBx_ForPadre().setSelectedItem("|SELECCIONE|");
@@ -672,10 +716,9 @@ public class FrmAlumnoCTR {
         persona.setSectorEconomico(sector);
         persona.setTipo_Colegio(frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString());
         persona.setTipo_Bachillerato(frmAlumno.getCmBx_TipoBachillerato().getSelectedItem().toString());
-        persona.setAnio_graduacion(frmAlumno.getSpnr_Anio().getValue().toString());
+        persona.setAnio_graduacion(frmAlumno.getTxt_Anios().getText());
         persona.setEducacion_Superior(frmAlumno.getChkBx_EdcSuperior().isSelected());
         persona.setTitulo_Superior(frmAlumno.getTxt_TlSuperior().getText().toUpperCase());
-        persona.setNivel_Academico(frmAlumno.getCmBx_NvAcademico().getSelectedItem().toString());
         persona.setPension(frmAlumno.getChkBx_Pension().isSelected());
         persona.setOcupacion(frmAlumno.getTxt_Ocupacion().getText().toUpperCase());
         persona.setTrabaja(frmAlumno.getChkBx_Trabaja().isSelected());
