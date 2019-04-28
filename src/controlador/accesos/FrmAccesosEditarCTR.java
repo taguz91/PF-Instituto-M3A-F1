@@ -1,7 +1,7 @@
 
 package controlador.accesos;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
@@ -41,7 +41,7 @@ public class FrmAccesosEditarCTR {
         
         vista.show();
         desktop.getDpnlPrincipal().add(vista);
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         try {
             vista.setSelected(true);
         } catch (PropertyVetoException e) {
