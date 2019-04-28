@@ -48,7 +48,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
 
     public void iniciar() {
         //Iniciamos la tabla
-        String[] t = {"Periodo","Cedula", "Alumno", "Fecha",};
+        String[] t = {"Periodo", "Cedula", "Alumno", "Fecha",};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
         //Tamaño de columnas 
@@ -60,6 +60,16 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         iniciarAcciones();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
+    }
+
+    private void clickEditar() {
+        posFila = vtnMatri.getTblMatricula().getSelectedRow();
+        if (posFila >= 0) {
+            JDEditarMatriculaCTR ctr = new JDEditarMatriculaCTR(conecta, vtnPrin, ctrPrin, matriculas.get(posFila));
+            ctr.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila primero.");
+        }
     }
 
     private void clickImprimirReporte() {
@@ -76,11 +86,11 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             @Override
             public void keyReleased(KeyEvent e) {
 
-              if (e.getKeyCode() == 10) {
-                  buscar(vtnMatri.getTxtBuscar().getText().trim());
-              } else if (vtnMatri.getTxtBuscar().getText().length() == 0) {
-                  cargarMatriculas();
-              }
+                if (e.getKeyCode() == 10) {
+                    buscar(vtnMatri.getTxtBuscar().getText().trim());
+                } else if (vtnMatri.getTxtBuscar().getText().length() == 0) {
+                    cargarMatriculas();
+                }
             }
         });
     }
@@ -96,6 +106,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
         vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirReporte());
         vtnMatri.getBtnIngresar().addActionListener(e -> abrirFrm());
+        vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
     }
 
     private void cargarMatriculas() {
@@ -129,7 +140,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         if (matriculas != null) {
             matriculas.forEach(m -> {
                 Object[] v = {m.getPeriodo().getNombre_PerLectivo(),
-                    m.getAlumno().getIdentificacion(), 
+                    m.getAlumno().getIdentificacion(),
                     m.getAlumno().getNombreCompleto(),
                     m.getSoloFecha(), m.getSoloHora()};
                 mdTbl.addRow(v);
@@ -140,7 +151,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         }
     }
 
-    private void abrirFrm(){
+    private void abrirFrm() {
         ctrPrin.abrirFrmMatricula();
     }
 
@@ -150,7 +161,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
-            System.out.println(parametro);
             conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

@@ -37,7 +37,6 @@ public class FrmTipoNotaAgregar extends AbstracForm {
             if (setObj().insertar()) {
                 String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
-                Effects.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Effects.SUCCESS_COLOR);
                 vtnPadre.cargarTabla();
                 vista.dispose();
             } else {

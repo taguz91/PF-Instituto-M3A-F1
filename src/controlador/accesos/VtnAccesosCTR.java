@@ -1,7 +1,6 @@
 package controlador.accesos;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Effects;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
@@ -106,7 +105,7 @@ public class VtnAccesosCTR {
 
                 Effects.setDefaultCursor(vista);
 
-                Effects.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
+
             }
 
         }).start();

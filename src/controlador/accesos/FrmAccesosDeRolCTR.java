@@ -343,7 +343,7 @@ public class FrmAccesosDeRolCTR {
             vista.dispose();
             JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
 
-            Effects.setTextInLabel(desktop.getLblEstado(), "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase(), 2);
+
 
             Effects.setDefaultCursor(vista);
 

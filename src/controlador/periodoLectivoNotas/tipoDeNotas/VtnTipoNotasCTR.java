@@ -2,6 +2,7 @@ package controlador.periodoLectivoNotas.tipoDeNotas;
 
 import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaAgregar;
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;

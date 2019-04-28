@@ -16,7 +16,7 @@ import modelo.persona.PersonaMD;
  *
  * @author MrRainx
  */
-public class UsuarioBD extends UsuarioMD {
+public final class UsuarioBD extends UsuarioMD {
 
     private static ConnDBPool pool = null;
 
@@ -36,6 +36,16 @@ public class UsuarioBD extends UsuarioMD {
 
     public UsuarioBD() {
     }
+
+    public UsuarioBD(UsuarioMD obj) {
+        setUsername(obj.getUsername());
+        setPassword(obj.getPassword());
+        setEstado(obj.isEstado());
+        setPersona(obj.getPersona());
+    }
+
+    private static final String TABLA = " \"Usuarios\" ";
+    private static final String PRIMARY_KEY = " usu_username ";
 
     public boolean insertar() {
 
@@ -179,62 +189,6 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios\".usu_estado IS FALSE;";
 
         return selectSimple(SELECT, null);
-    }
-
-    public static String SelectNewUsername() {
-
-        String SELECT = "SELECT\n"
-                + "    \"Usuarios\".usu_username\n"
-                + "   FROM \"Usuarios\" \n"
-                + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username LIKE '%USER%'\n"
-                + "ORDER BY\n"
-                + "\"public\".\"Usuarios\".usu_username";
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-        List<UsuarioMD> lista = new ArrayList<>();
-
-        try {
-            while (rs.next()) {
-                UsuarioMD usuario = new UsuarioMD();
-                usuario.setUsername(rs.getString("usu_username"));
-                lista.add(usuario);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        String username = "";
-
-        for (UsuarioMD usuarioMD : lista) {
-            username = usuarioMD.getUsername();
-        }
-        String inicio = "USER-";
-
-        if (!username.contains("USER")) {
-
-            username = inicio + "0001";
-
-        } else {
-            username = username.substring(5);
-
-            int numero = Integer.parseInt(username);
-            numero++;
-
-            if (numero < 10) {
-                username = inicio + "000" + numero;
-            } else if (numero < 99 && numero > 10) {
-                username = inicio + "00" + numero;
-            } else if (numero >= 99 & numero < 999) {
-                username = inicio + "0" + numero;
-            } else {
-                username = inicio + numero;
-            }
-
-        }
-
-        return username;
     }
 
     public boolean editar(String Pk) {

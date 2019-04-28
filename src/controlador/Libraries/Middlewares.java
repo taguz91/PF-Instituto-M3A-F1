@@ -1,22 +1,9 @@
 package controlador.Libraries;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyVetoException;
 import java.io.File;
-import static java.lang.Thread.sleep;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import modelo.ResourceManager;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,8 +16,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author MrRainx
  */
-public class Middlewares {
-    
+public final class Middlewares {
 
     /**
      *
@@ -84,37 +70,10 @@ public class Middlewares {
         }
     }
 
-
-
     public static String getProjectPath() {
         String path = new File(".").getAbsolutePath();
         return path.substring(0, path.length() - 1);
     }
-
-    public static void placeHolder(JLabel component, String placeholderText) {
-
-        component.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-                if (component.getText().equalsIgnoreCase(placeholderText)) {
-                    component.setText("");
-                }
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (placeholderText.equalsIgnoreCase(component.getText())) {
-                    //AGREGAR COLORES
-                }
-            }
-        });
-
-    }
-
-
-
 
     public static double conversor(String texto) {
         return Math.round(Double.valueOf(texto) * 10) / 10d;

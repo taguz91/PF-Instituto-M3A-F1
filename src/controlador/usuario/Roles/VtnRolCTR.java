@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.usuario.Roles;
 
 import controlador.Libraries.Effects;
-import controlador.usuario.Roles.forms.FrmRolCTR;
+import controlador.usuario.Roles.forms.FrmRolAdd;
 import controlador.accesos.FrmAccesosDeRolCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
@@ -15,14 +10,11 @@ import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosBD;
-import modelo.accesos.AccesosMD;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
 import vista.accesos.FrmAccesosDeRol;
 import vista.principal.VtnPrincipal;
-import vista.usuario.FrmRol;
 import vista.usuario.VtnRol;
 
 /**
@@ -44,13 +36,18 @@ public class VtnRolCTR {
     private static DefaultTableModel tabla;
 
     private boolean cargarTabla = true;
-
+    
     public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo, RolBD rol) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
         this.permisos = rol;
     }
+
+    public VtnRol getVista() {
+        return vista;
+    }
+    
 
     //Inits
     public void Init() {
@@ -61,7 +58,7 @@ public class VtnRolCTR {
 
         tabla = (DefaultTableModel) vista.getTabRoles().getModel();
 
-        //InitPermisos();
+        InitPermisos();
         cargarTabla();
 
         try {
@@ -76,34 +73,34 @@ public class VtnRolCTR {
 
     private void InitPermisos() {
 
-        vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
+        vista.getBtnActualizar().addActionListener(e -> cargarTabla());
         vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
 
         vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
         vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
 
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
+        vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
 
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-
-            if (obj.getNombre().equals("ROLES-Agregar")) {
-                vista.getBtnIngresar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("ROLES-Editar")) {
-                vista.getBtnEditar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("ROLES-Eliminar")) {
-                vista.getBtnEliminar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("ROLES-Ver-Permisos")) {
-                vista.getBtnVerPermisos().setEnabled(true);
-            }
-            if (obj.getNombre().equals("ROLES-Editar-Permisos")) {
-                vista.getBtnEditarPermisos().setEnabled(true);
-            }
-        }
+//        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+//
+//            if (obj.getNombre().equals("ROLES-Agregar")) {
+//                vista.getBtnIngresar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("ROLES-Editar")) {
+//                vista.getBtnEditar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("ROLES-Eliminar")) {
+//                vista.getBtnEliminar().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("ROLES-Ver-Permisos")) {
+//                vista.getBtnVerPermisos().setEnabled(true);
+//            }
+//            if (obj.getNombre().equals("ROLES-Editar-Permisos")) {
+//                vista.getBtnEditarPermisos().setEnabled(true);
+//            }
+//        }
 
     }
 
@@ -159,8 +156,7 @@ public class VtnRolCTR {
                     .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
                     .collect(Collectors.toList());
 
-            lista.forEach(VtnRolCTR::agregarFila);
-
+//            lista.forEach(VtnRolCTR::agregarFila);
             vista.getLblResultados().setText(lista.size() + " Resultados Obtenidos");
         }
 
@@ -170,17 +166,6 @@ public class VtnRolCTR {
 
         modelo.setId((Integer) vista.getTabRoles().getValueAt(fila, 1));
         modelo.setNombre((String) vista.getTabRoles().getValueAt(fila, 2));
-
-    }
-
-    private void btnActualizarActionPerformance(ActionEvent e) {
-        cargarTabla();
-    }
-
-    private void btnIngresarActionPerformance(ActionEvent e) {
-
-        FrmRolCTR ingresar = new FrmRolCTR(desktop, new FrmRol(), new RolBD(), "Agregar");
-        ingresar.Init();
 
     }
 
@@ -198,8 +183,8 @@ public class VtnRolCTR {
 
             } else {
 
-                FrmRolCTR editar = new FrmRolCTR(desktop, new FrmRol(), modelo, "Editar");
-                editar.Init();
+//                FrmRolAdd editar = new FrmRolAdd(desktop, new FrmRol(), modelo, "Editar");
+//                editar.Init();
             }
 
         } else {

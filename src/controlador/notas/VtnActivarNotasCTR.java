@@ -1,7 +1,6 @@
 package controlador.notas;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -110,7 +109,6 @@ public class VtnActivarNotasCTR {
             public void keyReleased(KeyEvent e) {
                 if (modelo.editar(modelo.getIdIngresoNotas())) {
                     refreshTabla();
-                    Effects.setTextInLabel(vista.getLblDatosCorrectos(), "Datos actualizados correctamente", 2);
                 }
 
                 System.out.println(modelo);
@@ -189,7 +187,6 @@ public class VtnActivarNotasCTR {
 
                 Effects.setDefaultCursor(vista);
 
-                Effects.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
             }
 
         }).start();

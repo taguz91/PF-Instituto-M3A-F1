@@ -298,10 +298,6 @@ public class VtnDocenteCTR {
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Docente");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
              JOptionPane.showMessageDialog(null, "error" + ex);
@@ -318,11 +314,6 @@ public class VtnDocenteCTR {
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
-//            
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

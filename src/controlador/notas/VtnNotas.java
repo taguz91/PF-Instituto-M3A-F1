@@ -128,7 +128,7 @@ public class VtnNotas {
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
-        Validaciones.validarNumerosEnJTEXTField(vista.getTxtBuscar());
+        vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
@@ -409,7 +409,6 @@ public class VtnNotas {
                         vista.getCmbCiclo().addItem(obj + "");
                     });
         } catch (NullPointerException e) {
-            Effects.bugProcessor(vista);
         }
         tablaNotas.setRowCount(0);
     }
@@ -439,7 +438,6 @@ public class VtnNotas {
 
             validarCombos();
         } catch (NullPointerException e) {
-            Effects.bugProcessor(e, vista);
             vista.getCmbAsignatura().removeAllItems();
         }
         tablaNotas.setRowCount(0);
@@ -635,7 +633,6 @@ public class VtnNotas {
                     Effects.setDefaultCursor(vista);
 
                 } catch (NullPointerException e) {
-                    Effects.bugProcessor(vista);
                 }
                 cargarTabla = true;
                 vista.getTblNotas().setEnabled(true);
@@ -816,7 +813,7 @@ public class VtnNotas {
             try {
                 sleep(5000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(VtnNotasAlumnoCursoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VtnNotas.class.getName()).log(Level.SEVERE, null, ex);
             }
             desktop.getLblEstado().setText("");
             Effects.setDefaultCursor(vista);

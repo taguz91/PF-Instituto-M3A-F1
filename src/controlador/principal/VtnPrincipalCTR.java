@@ -215,11 +215,10 @@ public class VtnPrincipalCTR {
         //Iniciamos los shortcuts 
 
         iniciarAtajosTeclado();
-        agregarEstilos(); 
+        agregarEstilos();
 
         //Acciones de las ventanas de consulta
         //Para el estilo 
-
         //Para abrir las ventanas consulta
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
@@ -670,13 +669,13 @@ public class VtnPrincipalCTR {
         estilos = new ArrayList();
         ButtonGroup btnsEstilo = new ButtonGroup();
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName()); 
+            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName());
             mi.addActionListener(e -> estiloVtn(info.getName()));
-            estilos.add(info.getName()); 
-            vtnPrin.getMnEstilo().add(mi); 
+            estilos.add(info.getName());
+            vtnPrin.getMnEstilo().add(mi);
             btnsEstilo.add(mi);
         }
-        
+
     }
 
     /**
@@ -919,7 +918,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuarios(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado);
         vtn.Init();
     }
 

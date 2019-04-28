@@ -94,6 +94,7 @@ public class LoginCTR {
                     }
                     Effects.setDefaultCursorInWindow(vista);
                 } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     Effects.setDefaultCursorInWindow(vista);
@@ -101,7 +102,16 @@ public class LoginCTR {
 
             }).start();
         }
+    }
 
+    /**
+     * Recibimos la contraseña para ingresar al sistema
+     *
+     * @param e
+     */
+    //Procesadores de eventos
+    private void btnIngresarActionPerformance(ActionEvent e) {
+        Login();
     }
 
     //EVENTOS
