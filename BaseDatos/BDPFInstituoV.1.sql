@@ -52,6 +52,7 @@ CREATE TABLE "Personas"(
   "persona_tipo_residencia" character varying(30),
   "persona_fecha_nacimiento" date,
   "persona_activa" BOOLEAN DEFAULT 'true',
+  "persona_categoria_migratoria" character varying(50),
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
 

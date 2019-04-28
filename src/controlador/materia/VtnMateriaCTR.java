@@ -68,10 +68,6 @@ public class VtnMateriaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Materias");
-        ctrPrin.setIconJIFrame(vtnMateria);
         this.materia = new MateriaBD(conecta);
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
@@ -116,13 +112,6 @@ public class VtnMateriaCTR {
         vtnMateria.getBtnIngresarMateria().addActionListener(e -> ingresarMaterias());
         vtnMateria.getBtnEditarMateria().addActionListener(e -> editarMaterias());
         vtnMateria.getBtnEliminarMateria().addActionListener(e -> eliminarMaterias());
-
-//        vtnMateria.getCmbCarreras().addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                validarBotonesReportes();
-//            }
-//        });
         vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
         //Iniciamos el buscador
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
@@ -140,8 +129,6 @@ public class VtnMateriaCTR {
         vtnMateria.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMateria.getTxtBuscar(),
                 vtnMateria.getBtnBuscar()));
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Docentes");
     }
 
     /**
@@ -237,22 +224,14 @@ public class VtnMateriaCTR {
     }
 
     public void llamaReporteMaterias() {
-
         JasperReport jr;
         String path = "/vista/reportes/repMaterias.jasper";
-        File dir = new File("./");
-        System.out.println("Dirección: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("consulta", materia.getSql());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Materias por Carrera");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Materias por Carrera");
-
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -278,15 +257,6 @@ public class VtnMateriaCTR {
 //            }
         }
     }
-
-//    public void validarBotonesReportes() {
-//        int selecTabl = vtnMateria.getCmbCarreras().getSelectedIndex();
-//        if (selecTabl > 0) {
-//            vtnMateria.getBtnReporteMaterias().setEnabled(true);
-//        } else {
-//            vtnMateria.getBtnReporteMaterias().setEnabled(false);
-//        }
-//    }
 
     public void abrirFrmRequisito() {
         int fila = vtnMateria.getTblMateria().getSelectedRow();

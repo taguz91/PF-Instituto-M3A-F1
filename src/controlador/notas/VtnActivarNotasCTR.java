@@ -5,7 +5,6 @@ import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
@@ -210,11 +209,11 @@ public class VtnActivarNotasCTR {
         tablaActivarNotas.addRow(new Object[]{
             tablaActivarNotas.getDataVector().size() + 1,
             obj.getIdIngresoNotas(),
-            obj.getCurso().getId_prd_lectivo().getNombre_PerLectivo(),
-            obj.getCurso().getCurso_nombre(),
-            obj.getCurso().getId_materia().getNombre(),
-            obj.getCurso().getId_docente().getPrimerNombre() + " " + obj.getCurso().getId_docente().getSegundoNombre(),
-            obj.getCurso().getId_docente().getPrimerApellido() + " " + obj.getCurso().getId_docente().getSegundoApellido(),
+            obj.getCurso().getPeriodo().getNombre_PerLectivo(),
+            obj.getCurso().getNombre(),
+            obj.getCurso().getMateria().getNombre(),
+            obj.getCurso().getDocente().getPrimerNombre() + " " + obj.getCurso().getDocente().getSegundoNombre(),
+            obj.getCurso().getDocente().getPrimerApellido() + " " + obj.getCurso().getDocente().getSegundoApellido(),
             obj.isNotaPrimerInterCiclo(),
             obj.isNotaExamenInteCiclo(),
             obj.isNotaSegundoInterCiclo(),

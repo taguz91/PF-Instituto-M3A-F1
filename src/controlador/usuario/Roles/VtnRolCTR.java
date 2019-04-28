@@ -61,7 +61,7 @@ public class VtnRolCTR {
 
         tabla = (DefaultTableModel) vista.getTabRoles().getModel();
 
-        InitPermisos();
+        //InitPermisos();
         cargarTabla();
 
         try {

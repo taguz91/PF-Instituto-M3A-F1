@@ -211,10 +211,10 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
 
     private void cargarDatos() {
         //Titulo de la ventana 
-        jd.setTitle("Horario - " + curso.getId_materia().getNombre() + " - " + curso.getCurso_nombre());
-        jd.getLblPrd().setText(curso.getId_prd_lectivo().getNombre_PerLectivo());
-        jd.getLblMateria().setText(curso.getId_materia().getNombre());
-        switch (curso.getCurso_nombre().charAt(0)) {
+        jd.setTitle("Horario - " + curso.getMateria().getNombre() + " - " + curso.getNombre());
+        jd.getLblPrd().setText(curso.getPeriodo().getNombre_PerLectivo());
+        jd.getLblMateria().setText(curso.getMateria().getNombre());
+        switch (curso.getNombre().charAt(0)) {
             case 'M':
                 jornada = "MATUTINA";
                 break;
@@ -229,9 +229,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                 break;
         }
         jd.getLblJornada().setText(jornada);
-        jd.getLblDocente().setText(curso.getId_docente().getNombreCorto());
-        jd.getLblCurso().setText(curso.getCurso_nombre());
-        jd.getLblCapacidad().setText(curso.getCurso_capacidad() + "");
+        jd.getLblDocente().setText(curso.getDocente().getNombreCorto());
+        jd.getLblCurso().setText(curso.getNombre());
+        jd.getLblCapacidad().setText(curso.getCapacidad() + "");
     }
 
     private void clickTbl() {

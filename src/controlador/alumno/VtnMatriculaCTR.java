@@ -11,15 +11,13 @@ import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
+import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.alumno.VtnMatricula;
 import vista.principal.VtnPrincipal;
 
@@ -50,9 +48,11 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
 
     public void iniciar() {
         //Iniciamos la tabla
-        String[] t = {"Periodo", "Alumno", "Fecha", "Hora"};
+        String[] t = {"Periodo","Cedula", "Alumno", "Fecha",};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
+        //Tamaño de columnas 
+        TblEstilo.columnaMedida(vtnMatri.getTblMatricula(), 1, 100);
 
         llenarCmbPrd();
         cargarMatriculas();
@@ -81,12 +81,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
               } else if (vtnMatri.getTxtBuscar().getText().length() == 0) {
                   cargarMatriculas();
               }
-              /*
-                if (vtnMatri.getTxtBuscar().getText().trim().length() > 2) {
-                    buscar(vtnMatri.getTxtBuscar().getText().trim());
-                } else if (vtnMatri.getTxtBuscar().getText().trim().length() == 0) {
-                    cargarMatriculas();
-                }*/
             }
         });
     }
@@ -135,6 +129,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         if (matriculas != null) {
             matriculas.forEach(m -> {
                 Object[] v = {m.getPeriodo().getNombre_PerLectivo(),
+                    m.getAlumno().getIdentificacion(), 
                     m.getAlumno().getNombreCompleto(),
                     m.getSoloFecha(), m.getSoloHora()};
                 mdTbl.addRow(v);
