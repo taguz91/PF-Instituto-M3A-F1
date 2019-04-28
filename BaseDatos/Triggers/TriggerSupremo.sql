@@ -191,7 +191,6 @@ BEGIN
 				malla_almn_nota1= reg.malla_almn_nota1,
 				malla_almn_nota2= reg.malla_almn_nota2,
 				malla_almn_nota3= reg.malla_almn_nota3,
-				malla_almn_estado= reg.malla_almn_estado,
 				malla_alm_observacion= reg.malla_alm_observacion
 				WHERE id_malla_alumno= reg.id_malla_alumno;
       FETCH backup_notas INTO reg;

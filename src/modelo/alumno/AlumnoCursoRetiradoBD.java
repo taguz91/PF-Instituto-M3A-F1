@@ -30,7 +30,7 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                 + " '" + getObservacion() + "');";
 
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, getAlumnoCurso().getCurso().getId_materia().getNombre()
+            JOptionPane.showMessageDialog(null, getAlumnoCurso().getCurso().getMateria().getNombre()
                     + " fue retirado de: \n"
                     + getAlumnoCurso().getAlumno().getNombreCorto());
         }
@@ -185,7 +185,7 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     ac.setId(rs.getInt("id_almn_curso"));
                     r.setFecha(rs.getTimestamp("retiro_fecha").toLocalDateTime());
                     r.setObservacion(rs.getString("retiro_observacion"));
-                    c.setId_curso(rs.getInt("id_curso"));
+                    c.setId(rs.getInt("id_curso"));
                     m.setNombre(rs.getString("materia_nombre"));
                     a.setId_Alumno(rs.getInt("id_alumno"));
                     a.setIdentificacion(rs.getString("persona_identificacion"));
@@ -193,8 +193,8 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
 
-                    c.setId_materia(m);
-                    c.setId_prd_lectivo(p);
+                    c.setMateria(m);
+                    c.setPeriodo(p);
                     ac.setCurso(c);
                     ac.setAlumno(a);
 

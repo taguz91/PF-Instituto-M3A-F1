@@ -730,7 +730,7 @@ public class FrmPersonaCTR {
         numCasa = frmPersona.getTxtNumeroCasa().getText().trim().toUpperCase();
         sector = frmPersona.getTxtSector().getText().trim().toUpperCase();
         zonaResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString().trim().toUpperCase();
-        correo = frmPersona.getTxtCorreo().getText().trim().toUpperCase();
+        correo = frmPersona.getTxtCorreo().getText().trim();
 
         if (guardar) {
 

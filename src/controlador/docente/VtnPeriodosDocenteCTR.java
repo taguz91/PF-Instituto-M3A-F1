@@ -93,8 +93,8 @@ public class VtnPeriodosDocenteCTR {
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
-            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
         }
     }
 

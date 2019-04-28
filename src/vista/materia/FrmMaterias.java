@@ -45,7 +45,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         txtCodigoMateria = new javax.swing.JTextField();
         cbTipoAcreditacion = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        lblCategoriaMateria = new javax.swing.JLabel();
         lblActivo = new javax.swing.JLabel();
         lblCiclo = new javax.swing.JLabel();
         chBNucleo = new javax.swing.JCheckBox();
@@ -54,7 +53,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblCategoriaMateria4 = new javax.swing.JLabel();
         lblCategoriaMateria5 = new javax.swing.JLabel();
         cbMateriaTipo = new javax.swing.JComboBox<>();
-        cbCategoria = new javax.swing.JComboBox<>();
         txtCreditos = new javax.swing.JTextField();
         cbEjeFormacion = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -67,7 +65,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorCreditos = new javax.swing.JLabel();
         lblErrorEjeFormacion = new javax.swing.JLabel();
         lblErrorMateriaTipo = new javax.swing.JLabel();
-        lblErrorCategoria = new javax.swing.JLabel();
         lblErrorTipoAcreditacion = new javax.swing.JLabel();
         Cbx_Ciclo = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
@@ -142,7 +139,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 690, 40));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 690, 40));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -156,51 +153,40 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         });
         jPanel3.add(txtCodigoMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 177, 20));
 
-        cbTipoAcreditacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Tipos" }));
-        jPanel3.add(cbTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 177, 178, -1));
+        cbTipoAcreditacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "C", "T", "H" }));
+        jPanel3.add(cbTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 178, -1));
 
         jLabel4.setText("Eje de Formación *");
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
-        lblCategoriaMateria.setText("Categoría");
-        jPanel3.add(lblCategoriaMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 128, -1, -1));
-
         lblActivo.setText("Materia Núcleo");
-        jPanel3.add(lblActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 229, -1, 21));
+        jPanel3.add(lblActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, -1, 21));
 
         lblCiclo.setText("Ciclo *");
         jPanel3.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
-        jPanel3.add(chBNucleo, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 229, -1, -1));
+        jPanel3.add(chBNucleo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, -1, -1));
 
         lblCategoriaMateria1.setText("Tipo de Acreditación *");
-        jPanel3.add(lblCategoriaMateria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 180, -1, -1));
+        jPanel3.add(lblCategoriaMateria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, -1, -1));
 
         lblCategoriaMateria2.setText("Materia Tipo");
         jPanel3.add(lblCategoriaMateria2, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 72, -1, -1));
 
         lblCategoriaMateria4.setText("Créditos *");
-        jPanel3.add(lblCategoriaMateria4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        jPanel3.add(lblCategoriaMateria4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, -1, -1));
 
         lblCategoriaMateria5.setText("Código de Materia *");
         jPanel3.add(lblCategoriaMateria5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
-        cbMateriaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
+        cbMateriaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "M", "C", "S" }));
         jPanel3.add(cbMateriaTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 70, 178, -1));
-
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "BÁSICO", "PROFESIONAL", "TITULACIÓN" }));
-        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCategoriaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(cbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 125, 178, -1));
 
         txtCreditos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCreditosActionPerformed(evt);
             }
         });
-        jPanel3.add(txtCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 176, -1));
+        jPanel3.add(txtCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 176, -1));
 
         cbEjeFormacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
         cbEjeFormacion.addActionListener(new java.awt.event.ActionListener() {
@@ -246,7 +232,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
         lblErrorCreditos.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCreditos.setText("Ingrese solo números");
-        jPanel3.add(lblErrorCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, -1, 20));
+        jPanel3.add(lblErrorCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, -1, 20));
 
         lblErrorEjeFormacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorEjeFormacion.setText("Seleccione un Eje de Formación");
@@ -256,13 +242,9 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorMateriaTipo.setText("Seleccion un Tipo");
         jPanel3.add(lblErrorMateriaTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 99, -1, -1));
 
-        lblErrorCategoria.setForeground(new java.awt.Color(204, 0, 0));
-        lblErrorCategoria.setText("Seleccione una Categoría");
-        jPanel3.add(lblErrorCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 154, -1, -1));
-
         lblErrorTipoAcreditacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorTipoAcreditacion.setText("Seleccione un Tipo de Acreditación");
-        jPanel3.add(lblErrorTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
+        jPanel3.add(lblErrorTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
 
         Cbx_Ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Ciclo 1", "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" }));
         jPanel3.add(Cbx_Ciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 170, -1));
@@ -360,7 +342,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblTeoricas4.setText("Descripción de la Materia *");
         jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
-        lblTeoricas6.setText("Organización Curricular *");
+        lblTeoricas6.setText("Unidad de Organización Curricular *");
         jPanel5.add(lblTeoricas6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         lblTeoricas7.setText("Campo de Formación *");
@@ -384,7 +366,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorCampoFormacion.setText("Ingrese solo letras");
         jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
-        Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "ejemplo" }));
+        Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "UNIDAD BÁSICA", "UNIDAD PROFESIONAL", "UNIDAD DE TITULACIÓN" }));
         Cbx_OrgCurricular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Cbx_OrgCurricularActionPerformed(evt);
@@ -392,12 +374,12 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         });
         jPanel5.add(Cbx_OrgCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 220, -1));
 
-        Cbx_CamFormacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "EJEMPLO" }));
+        Cbx_CamFormacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "INTEGRACIÓN DE SABERES, CONTEXTOS Y CULTURA", "COMUNICACIÓN Y LENGUAJES ", "FUNDAMENTOS TEÓRICOS", "ADAPTACIÓN E INNOVACIÓN TECNOLÓGICA" }));
         jPanel5.add(Cbx_CamFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 220, -1));
 
         jTPMaterias.addTab("Finalización", jPanel5);
 
-        getContentPane().add(jTPMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 690, 360));
+        getContentPane().add(jTPMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 690, 340));
         jTPMaterias.getAccessibleContext().setAccessibleName("Datos Relevantes");
 
         pack();
@@ -422,10 +404,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
     private void txtNombreMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreMateriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreMateriaActionPerformed
-
-    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void txtTotalHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalHorasActionPerformed
         // TODO add your handling code here:
@@ -461,14 +439,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
     public void setCbCarrera(JComboBox<String> cbCarrera) {
         this.cbCarrera = cbCarrera;
-    }
-
-    public JComboBox<String> getCbCategoria() {
-        return cbCategoria;
-    }
-
-    public void setCbCategoria(JComboBox<String> cbCategoria) {
-        this.cbCategoria = cbCategoria;
     }
 
     public JComboBox<String> getCbEjeFormacion() {
@@ -557,14 +527,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
 
     public void setLblErrorCarrera(JLabel lblErrorCarrera) {
         this.lblErrorCarrera = lblErrorCarrera;
-    }
-
-    public JLabel getLblErrorCategoria() {
-        return lblErrorCategoria;
-    }
-
-    public void setLblErrorCategoria(JLabel lblErrorCategoria) {
-        this.lblErrorCategoria = lblErrorCategoria;
     }
 
     public JLabel getLblErrorCodigoMateria() {
@@ -832,7 +794,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbCarrera;
-    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbEjeFormacion;
     private javax.swing.JComboBox<String> cbMateriaTipo;
     private javax.swing.JComboBox<String> cbTipoAcreditacion;
@@ -850,7 +811,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTPMaterias;
     private javax.swing.JLabel lblActivo;
     private javax.swing.JLabel lblAutoEvaluacion;
-    private javax.swing.JLabel lblCategoriaMateria;
     private javax.swing.JLabel lblCategoriaMateria1;
     private javax.swing.JLabel lblCategoriaMateria2;
     private javax.swing.JLabel lblCategoriaMateria4;
@@ -858,7 +818,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCiclo;
     private javax.swing.JLabel lblErrorCampoFormacion;
     private javax.swing.JLabel lblErrorCarrera;
-    private javax.swing.JLabel lblErrorCategoria;
     private javax.swing.JLabel lblErrorCodigoMateria;
     private javax.swing.JLabel lblErrorCreditos;
     private javax.swing.JLabel lblErrorDescripcionMateria;

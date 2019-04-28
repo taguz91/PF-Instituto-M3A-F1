@@ -2,8 +2,6 @@ package controlador.persona;
 
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -35,7 +33,7 @@ import vista.principal.VtnPrincipal;
  * @author Johnny
  */
 public class VtnPersonaCTR {
-    
+
     private final PersonaBD dbp;
     private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
@@ -48,7 +46,7 @@ public class VtnPersonaCTR {
     private final String tipoPersonas[] = {"Docente", "Alumno"};
     //Para permisos
     String[] accesos = {"Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"};
-    
+
     public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
             ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
         this.vtnPrin = vtnPrin;
@@ -56,8 +54,6 @@ public class VtnPersonaCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
         ctrPrin.estadoCargaVtn("Personas");
         ctrPrin.setIconJIFrame(vtnPersona);
         vtnPrin.getDpnlPrincipal().add(vtnPersona);
@@ -65,24 +61,21 @@ public class VtnPersonaCTR {
         //Iniciamos la clase persona
         dbp = new PersonaBD(conecta);
     }
-    
+
     public void iniciar() {
-        
-        vtnPersona.getChBx_PerEliminada().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (vtnPersona.getChBx_PerEliminada().isSelected() == true) {
-                    filtrarEliminados();
-                    vtnPersona.getBtnEditar().setEnabled(false);
-                    vtnPersona.getBtnEliminar().setEnabled(false);
-                } else {
-                    cargarTipoPersona();
-                    vtnPersona.getBtnEditar().setEnabled(true);
-                    vtnPersona.getBtnEliminar().setEnabled(true);
-                }
+
+        vtnPersona.getChBx_PerEliminada().addActionListener(e -> {
+            if (vtnPersona.getChBx_PerEliminada().isSelected()) {
+                filtrarEliminados();
+                vtnPersona.getBtnEditar().setEnabled(false);
+                vtnPersona.getBtnEliminar().setEnabled(false);
+            } else {
+                cargarTipoPersona();
+                vtnPersona.getBtnEditar().setEnabled(true);
+                vtnPersona.getBtnEliminar().setEnabled(true);
             }
         });
-        
+
         vtnPersona.getBtnReportePersona().setEnabled(false);
         cargarCmbTipoPersonas();
         //Inicializamos el error para que no se vea
@@ -90,11 +83,11 @@ public class VtnPersonaCTR {
         //Le pasamos accion a los botones
         vtnPersona.getBtnIngresar().addActionListener(e -> ingresar());
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
-        
+
         vtnPersona.getBtnEliminar().addActionListener(e -> eliminar());
         String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
         String datos[][] = {};
-        
+
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         //Pasamos el modelo a la tabla
         vtnPersona.getTblPersona().setModel(mdTbl);
@@ -129,46 +122,41 @@ public class VtnPersonaCTR {
         });
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Personas");
-        //Detenemos la animacion de carga.
-        //ctrPrin.carga.detener();
     }
-    
+
     private void cargarCmbTipoPersonas() {
-        
+
         vtnPersona.getCmbTipoPersona().removeAllItems();
         vtnPersona.getCmbTipoPersona().addItem("Todos");
         for (String t : tipoPersonas) {
             vtnPersona.getCmbTipoPersona().addItem(t);
         }
-        
+
     }
-    
+
     private void cargarTipoPersona() {
         String tipo = vtnPersona.getCmbTipoPersona().getSelectedItem().toString();
-        
+
         switch (tipo) {
-            
+
             case "Docente":
                 personas = dbp.cargarDocentes();
                 cargarLista();
                 break;
-            
+
             case "Alumno":
                 personas = dbp.cargarAlumnos();
                 cargarLista();
                 break;
-            
+
             default:
                 personas = dbp.cargarPersonas();
                 cargarLista();
                 break;
         }
-        
+
     }
-    
+
     public void filtrarEliminados() {
         List<PersonaMD> personas;
         personas = dbp.filtrarEliminados();
@@ -182,8 +170,8 @@ public class VtnPersonaCTR {
                     p.getFechaNacimiento()};
                 mdTbl.addRow(valores);
             });
-                    vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
-        }else{
+            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+        } else {
             vtnPersona.getLblResultados().setText("0 resultados obtenidos.");
         }
 
@@ -220,7 +208,7 @@ public class VtnPersonaCTR {
             }
             cargarLista();
         }
-        
+
     }
 
     //Damos accion al boton de guardar
@@ -247,11 +235,7 @@ public class VtnPersonaCTR {
             vtnPersona.getLblError().setVisible(true);
         }
     }
-    
-    private void activarPersona() {
-        
-    }
-    
+
     private void eliminar() {
         int posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
@@ -275,24 +259,20 @@ public class VtnPersonaCTR {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA PERSONA");
         }
     }
-    
+
     public void llamaReportePersona() {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
             Map parametro = new HashMap();
             parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
-            
+
             conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Persona");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     private void InitPermisos() {
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
@@ -313,7 +293,7 @@ public class VtnPersonaCTR {
 //            }
         }
     }
-    
+
     public void validarBotonesReportes() {
         int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
         if (selecTabl >= 0) {

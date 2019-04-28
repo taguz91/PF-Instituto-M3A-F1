@@ -59,10 +59,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     }
 
     public boolean guardarAlmnCurso() {
-        System.out.println("-------------");
-        System.out.println("Matricula completa: " + nsqlMatri);
         if (conecta.nosql(nsqlMatri) == null) {
-            JOptionPane.showMessageDialog(null, "Matriculamos al alumno correctamente.");
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "No pudimos matricular al alumno, revise \n"
@@ -202,7 +199,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 while (rs.next()) {
                     AlumnoCursoMD ac = new AlumnoCursoMD();
                     CursoMD c = new CursoMD();
-                    c.setId_curso(rs.getInt("id_curso"));
+                    c.setId(rs.getInt("id_curso"));
                     ac.setId(rs.getInt("id_almn_curso"));
                     ac.setEstado(rs.getString("almn_curso_estado"));
                     AlumnoMD a = new AlumnoMD();
@@ -215,9 +212,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                    c.setId_prd_lectivo(p);
+                    c.setPeriodo(p);
 
-                    c.setId_materia(m);
+                    c.setMateria(m);
                     ac.setAlumno(a);
                     ac.setCurso(c);
 
@@ -307,7 +304,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 while (rs.next()) {
                     AlumnoCursoMD a = new AlumnoCursoMD();
                     CursoMD cu = new CursoMD();
-                    cu.setCurso_nombre(rs.getString("curso_nombre"));
+                    cu.setNombre(rs.getString("curso_nombre"));
                     AlumnoMD al = new AlumnoMD();
                     al.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
@@ -416,7 +413,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 lista.add(alumnoCurso);
             }
             rs.close();
-            ResourceManager.getConnection().close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

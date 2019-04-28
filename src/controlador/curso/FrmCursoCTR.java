@@ -258,13 +258,13 @@ public class FrmCursoCTR {
 
             String nombre = jornadas.get(posJrd - 1).getNombre().charAt(0) + "" + ciclo + "" + paralelo;
 
-            curso.setCurso_capacidad(Integer.parseInt(capacidad));
-            curso.setCurso_ciclo(ciclo);
-            curso.setCurso_jornada(jornadas.get(posJrd - 1));
-            curso.setCurso_nombre(nombre);
-            curso.setId_docente(docentes.get(posDoc - 1));
-            curso.setId_materia(materias.get(posMat - 1));
-            curso.setId_prd_lectivo(periodos.get(posPrd - 1));
+            curso.setCapacidad(Integer.parseInt(capacidad));
+            curso.setCiclo(ciclo);
+            curso.setJornada(jornadas.get(posJrd - 1));
+            curso.setNombre(nombre);
+            curso.setDocente(docentes.get(posDoc - 1));
+            curso.setMateria(materias.get(posMat - 1));
+            curso.setPeriodo(periodos.get(posPrd - 1));
             curso.setParalelo(paralelo);
 
             if (!editando) {
@@ -284,16 +284,38 @@ public class FrmCursoCTR {
 
     public void editar(CursoMD c) {
         editando = true;
-        idCurso = c.getId_curso();
-
-        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getId_prd_lectivo().getNombre_PerLectivo());
-        frmCurso.getCbxJornada().setSelectedItem(c.getCurso_jornada().getNombre());
-        frmCurso.getCbxCiclo().setSelectedItem(c.getCurso_ciclo() + "");
-        frmCurso.getCbxParalelo().setSelectedItem(c.getParalelo());
-        frmCurso.getCbxMateria().setSelectedItem(c.getId_materia().getNombre());
-        frmCurso.getCbxDocente().setSelectedItem(c.getId_docente().getPrimerNombre() + " "
-                + c.getId_docente().getPrimerApellido());
-        frmCurso.getTxtCapacidad().setText(c.getCurso_capacidad() + "");
+        idCurso = c.getId();
+        int j = 0; 
+        switch(c.getNombre().charAt(0)){
+            case 'M':
+                j = 1; 
+                break;
+            case 'V':
+                j = 2;
+                break; 
+            case 'N':
+                j = 3;
+                break;
+        }
+        
+        System.out.println("Nombre prd: "+c.getPeriodo().getNombre_PerLectivo());
+        System.out.println("Ciclo: "+c.getCiclo());
+        System.out.println("Paralelo: "+c.getNombre().charAt(2));
+        System.out.println("Materia: "+c.getMateria().getNombre());
+        System.out.println("Docente: "+c.getDocente().getPrimerNombre()+ " "
+                + c.getDocente().getPrimerApellido());
+        System.out.println("Capacidad: "+c.getCapacidad());
+        //Ocultamos el btn de guardar y continuar
+        frmCurso.getBtnGuardarContinuar().setVisible(false);
+        
+        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getPeriodo().getNombre_PerLectivo());
+        frmCurso.getCbxJornada().setSelectedIndex(j);
+        frmCurso.getCbxCiclo().setSelectedItem(c.getCiclo() + "");
+        frmCurso.getCbxParalelo().setSelectedItem(c.getNombre().charAt(2)+"");
+        frmCurso.getCbxMateria().setSelectedItem(c.getMateria().getNombre());
+        frmCurso.getCbxDocente().setSelectedItem(c.getDocente().getPrimerNombre() + " "
+                + c.getDocente().getPrimerApellido());
+        frmCurso.getTxtCapacidad().setText(c.getCapacidad() + "");
 
     }
 

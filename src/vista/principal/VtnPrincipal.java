@@ -151,18 +151,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnOpciones;
     }
 
-    public JRadioButtonMenuItem getMnRbtnMetal() {
-        return mnRbtnMetal;
-    }
-
-    public JRadioButtonMenuItem getMnRbtnNimbus() {
-        return mnRbtnNimbus;
-    }
-
-    public JRadioButtonMenuItem getMnRbtnWindows() {
-        return mnRbtnWindows;
-    }
-
     public JPanel getPnlMenu() {
         return pnlMenu;
     }
@@ -442,9 +430,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgActivarNotas1 = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
-        mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
-        mnRbtnNimbus = new javax.swing.JRadioButtonMenuItem();
-        mnRbtnMetal = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -604,11 +589,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEstado)
-                    .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblEstado)
+            .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel2.setBackground(new java.awt.Color(47, 76, 113));
@@ -888,20 +870,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnOpciones.setText("Opciones");
 
         mnEstilo.setText("Estilo");
-
-        btngEstilo.add(mnRbtnWindows);
-        mnRbtnWindows.setSelected(true);
-        mnRbtnWindows.setText("Windows");
-        mnEstilo.add(mnRbtnWindows);
-
-        btngEstilo.add(mnRbtnNimbus);
-        mnRbtnNimbus.setText("Nimbus");
-        mnEstilo.add(mnRbtnNimbus);
-
-        btngEstilo.add(mnRbtnMetal);
-        mnRbtnMetal.setText("Metal");
-        mnEstilo.add(mnRbtnMetal);
-
         mnOpciones.add(mnEstilo);
 
         menuCrud.add(mnOpciones);
@@ -932,7 +900,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(dpnlPrincipal)
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -1028,9 +996,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnNotas;
     private javax.swing.JMenu mnNotas1;
     private javax.swing.JMenu mnOpciones;
-    private javax.swing.JRadioButtonMenuItem mnRbtnMetal;
-    private javax.swing.JRadioButtonMenuItem mnRbtnNimbus;
-    private javax.swing.JRadioButtonMenuItem mnRbtnWindows;
     private javax.swing.JMenu mnTipoNotas;
     private javax.swing.JPanel pnlMenu;
     // End of variables declaration//GEN-END:variables

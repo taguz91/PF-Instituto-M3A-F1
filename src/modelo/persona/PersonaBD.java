@@ -456,33 +456,6 @@ public class PersonaBD extends PersonaMD {
         return consultarParaReferencia(sql);
     }
 
-    //Este meotod nos devolvera una gran cantidad de personas 
-    //de nuestra base de datos dependiendo de la setencia sql 
-    //que se le envie
-    private ArrayList<PersonaMD> consultar(String sql) {
-        ArrayList<PersonaMD> pers = new ArrayList();
-        PersonaMD p;
-        ResultSet rs = conecta.sql(sql);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    p = obtenerPersonaSinValidar(rs);
-                    if (p != null) {
-                        pers.add(p);
-                    }
-                }
-                rs.close();
-                return pers;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     private PersonaMD consultarParaReferencia(String sql) {
         PersonaMD p = new PersonaMD();
         ResultSet rs = conecta.sql(sql);

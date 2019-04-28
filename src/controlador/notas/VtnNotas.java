@@ -19,6 +19,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -47,6 +48,7 @@ public class VtnNotas {
     private AlumnoCursoBD modelo;
     private UsuarioBD usuario;
     private static RolBD rolSeleccionado;
+    private ConectarDB conectar;
 
     //LISTAS
     private static Map<String, DocenteMD> listaDocentes;
@@ -119,7 +121,6 @@ public class VtnNotas {
         });
 
         //vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
-
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
@@ -419,11 +420,11 @@ public class VtnNotas {
             CursoMD curso = new CursoMD();
             DocenteMD docente = new DocenteMD();
             docente.setIdDocente(getIdDocente());
-            curso.setId_docente(docente);
+            curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
             periodo.setId_PerioLectivo(getIdPeriodoLectivo());
-            curso.setId_prd_lectivo(periodo);
-            curso.setCurso_nombre(vista.getCmbCiclo().getSelectedItem().toString());
+            curso.setPeriodo(periodo);
+            curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
             listaMaterias = MateriaBD.selectWhere(curso);
 
