@@ -1163,4 +1163,8 @@ public class VtnPrincipalCTR {
         });
     }
 
+    public UsuarioBD getUsuario() {
+        return usuario;
+    }
+
 }
