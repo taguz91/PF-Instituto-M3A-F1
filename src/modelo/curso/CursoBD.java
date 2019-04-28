@@ -235,7 +235,13 @@ public class CursoBD extends CursoMD {
                 + "persona_activa = true AND docente_activo = true;";
         return consultarCursos(sql);
     }
-
+    
+    /**
+     * Para consultar los cursos para un formulario
+     * @param nombre
+     * @param idPrdLectivo
+     * @return 
+     */
     public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
         String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
                 + "curso_capacidad, curso_ciclo, "
@@ -327,48 +333,6 @@ public class CursoBD extends CursoMD {
             }
         } catch (SQLException e) {
             System.out.println("No pudimos consultar cursos por alumno. ");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-    
-    /**
-     * Buscamos los cursos en los que esta matriculado un alumno,
-     * en un ciclo.
-     * @param idAlm
-     * @param idPrd
-     * @return 
-     */
-    public ArrayList<CursoMD> buscarCursosAlmPeriodo(int idAlm, int idPrd) {
-        String sql = "SELECT id_almn_curso, c.id_curso, \n"
-                + "c.id_materia, materia_nombre, curso_nombre, "
-                + "curso_ciclo\n"
-                + "FROM public.\"AlumnoCurso\" ac, public.\"Cursos\" c, \n"
-                + "public.\"Materias\" m \n"
-                + "	WHERE c.id_curso = ac.id_curso\n"
-                + "	AND m.id_materia = c.id_materia\n"
-                + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + ";";
-        ArrayList<CursoMD> cursos = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    CursoMD c = new CursoMD();
-                    c.setId(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD();
-                    m.setNombre(rs.getString("materia_nombre"));
-                    c.setMateria(m);
-                    c.setNombre(rs.getString("curso_nombre"));
-                    c.setCiclo(rs.getInt("curso_ciclo"));
-
-                    cursos.add(c);
-                }
-                return cursos;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos por alumno y periodo    ");
             System.out.println(e.getMessage());
             return null;
         }

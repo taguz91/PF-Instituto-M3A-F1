@@ -161,7 +161,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
-            System.out.println(parametro);
             conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
