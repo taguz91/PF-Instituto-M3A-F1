@@ -35,15 +35,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     public AlumnoCursoBD() {
     }
 
-    public void ingresarAlmnCurso(int idAlmn, int idCurso) {
-        String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
-                + "id_alumno, id_curso)\n"
-                + "VALUES (" + idAlmn + ", " + idCurso + ");";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Se ingresao correctamente el alumno en el curso");
-        }
-    }
-
     /**
      * La sentencia que se va a enviar se le manda un string vacio.
      */
@@ -152,6 +143,53 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             return null;
         }
     }
+    
+      
+    /**
+     * Buscamos los cursos en los que esta matriculado un alumno,
+     * en un ciclo.
+     * @param idAlm
+     * @param idPrd
+     * @return 
+     */
+    public ArrayList<CursoMD> buscarCursosAlmPeriodo(int idAlm, int idPrd) {
+        String sql = "SELECT id_almn_curso, c.id_curso, \n"
+                + "c.id_materia, materia_nombre, curso_nombre, "
+                + "curso_ciclo\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Cursos\" c, \n"
+                + "public.\"Materias\" m \n"
+                + "	WHERE c.id_curso = ac.id_curso\n"
+                + "	AND m.id_materia = c.id_materia\n"
+                + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + ";";
+        ArrayList<CursoMD> cursos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    AlumnoCursoMD ac = new AlumnoCursoMD();
+                    ac.setId(rs.getInt("id_almn_curso"));
+                    CursoMD c = new CursoMD();
+                    c.setId(rs.getInt("id_curso"));
+                    MateriaMD m = new MateriaMD();
+                    m.setNombre(rs.getString("materia_nombre"));
+                    c.setMateria(m);
+                    c.setNombre(rs.getString("curso_nombre"));
+                    c.setCiclo(rs.getInt("curso_ciclo"));
+                    ac.setCurso(c);
+                    
+                    cursos.add(c);
+                }
+                return cursos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos por alumno y periodo    ");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 
     public ArrayList<AlumnoCursoMD> buscarClasesAlumnoCurso(String aguja) {
         String sql = "SELECT ac.id_almn_curso, almn_curso_estado, \n"

@@ -331,6 +331,48 @@ public class CursoBD extends CursoMD {
             return null;
         }
     }
+    
+    /**
+     * Buscamos los cursos en los que esta matriculado un alumno,
+     * en un ciclo.
+     * @param idAlm
+     * @param idPrd
+     * @return 
+     */
+    public ArrayList<CursoMD> buscarCursosAlmPeriodo(int idAlm, int idPrd) {
+        String sql = "SELECT id_almn_curso, c.id_curso, \n"
+                + "c.id_materia, materia_nombre, curso_nombre, "
+                + "curso_ciclo\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Cursos\" c, \n"
+                + "public.\"Materias\" m \n"
+                + "	WHERE c.id_curso = ac.id_curso\n"
+                + "	AND m.id_materia = c.id_materia\n"
+                + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + ";";
+        ArrayList<CursoMD> cursos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    CursoMD c = new CursoMD();
+                    c.setId(rs.getInt("id_curso"));
+                    MateriaMD m = new MateriaMD();
+                    m.setNombre(rs.getString("materia_nombre"));
+                    c.setMateria(m);
+                    c.setNombre(rs.getString("curso_nombre"));
+                    c.setCiclo(rs.getInt("curso_ciclo"));
+
+                    cursos.add(c);
+                }
+                return cursos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar cursos por alumno y periodo    ");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     public ArrayList<String> cargarNombreCursos() {
         String sql = "SELECT DISTINCT curso_nombre\n"
@@ -346,7 +388,30 @@ public class CursoBD extends CursoMD {
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
-
+    
+    /**
+     * Cargamos los el nombre de los cursos por periodo
+     * @param idPrdLectivo
+     * @param ciclo
+     * @return 
+     */
+    public ArrayList<String> cargarNombreCursosPorPeriodoCiclo(int idPrdLectivo, int ciclo) {
+        String sql = "SELECT DISTINCT curso_nombre\n"
+                + "FROM public.\"Cursos\" "
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "AND curso_ciclo = "+ciclo+ " \n"
+                + "ORDER BY curso_nombre;";
+        return consultarNombreCursos(sql);
+    }
+    
+    /**
+     * Cargamos el nombre de cursos por periodo, 
+     * restringiendo por ciclos.
+     * @param idPrdLectivo
+     * @param cicloReprobado
+     * @param cicloCursado
+     * @return 
+     */
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int cicloReprobado, int cicloCursado) {
         String sql = "SELECT DISTINCT curso_nombre, curso_ciclo\n"
                 + "FROM public.\"Cursos\" "
