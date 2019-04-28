@@ -1,5 +1,6 @@
 package controlador.Libraries;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -280,4 +281,16 @@ public class Validaciones {
         return valido;
     }
 
+    public static KeyAdapter validarSoloLetrasYnumeros() {
+        return new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char caracter = e.getKeyChar();
+                if (!Character.isDigit(caracter) || !Character.isLetter(caracter)) {
+                    Toolkit.getDefaultToolkit().beep();
+                    e.consume();
+                }
+            }
+        };
+    }
 }

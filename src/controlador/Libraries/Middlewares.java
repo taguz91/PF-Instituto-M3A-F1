@@ -141,28 +141,6 @@ public class Middlewares {
         return path.substring(0, path.length() - 1);
     }
 
-    public static void placeHolder(JLabel component, String placeholderText) {
-
-        component.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-                if (component.getText().equalsIgnoreCase(placeholderText)) {
-                    component.setText("");
-                }
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (placeholderText.equalsIgnoreCase(component.getText())) {
-                    //AGREGAR COLORES
-                }
-            }
-        });
-
-    }
-
     public static void setTextInLabelWithColor(JLabel component, String text, int time, Color color) {
         new Thread(() -> {
             try {

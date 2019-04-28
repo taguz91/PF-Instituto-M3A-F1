@@ -1,8 +1,7 @@
 package controlador.usuario.forms;
 
 import controlador.Libraries.Middlewares;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import controlador.Libraries.Validaciones;
 import java.beans.PropertyVetoException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -18,21 +17,15 @@ import vista.usuario.FrmUsuario;
  */
 public abstract class AbstracForm {
 
-    private VtnPrincipal desktop;
-    private FrmUsuario vista;
+    private final VtnPrincipal desktop;
+    private final FrmUsuario vista;
 
     //LISTAS
     private Map<String, DocenteMD> listaPersonas;
 
-    public AbstracForm() {
-    }
-
-    public void setDesktop(VtnPrincipal desktop) {
+    public AbstracForm(VtnPrincipal desktop) {
         this.desktop = desktop;
-    }
-
-    public void setVista(FrmUsuario vista) {
-        this.vista = vista;
+        this.vista = new FrmUsuario();
     }
 
     public void Init() {
@@ -40,26 +33,28 @@ public abstract class AbstracForm {
         InitEventos();
 
         new Thread(() -> {
-            listaPersonas = DocenteBD.selectDocentes();
-            cargarComoPersonas();
-
+            
             Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
             try {
                 vista.setSelected(true);
+                desktop.getDpnlPrincipal().add(vista);
+                vista.show();
             } catch (PropertyVetoException ex) {
-                Logger.getLogger(FrmUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmUsuarioAdd.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            desktop.getDpnlPrincipal().add(vista);
-            vista.show();
+            
         }).start();
 
+        listaPersonas = DocenteBD.selectDocentes();
+        cargarComoPersonas();
     }
 
     private void InitEventos() {
         //VALIDACIONES
 
-        vista.getTxtUsername().addKeyListener();
+        vista.getTxtUsername().addKeyListener(Validaciones.validarSoloLetrasYnumeros());
+        vista.getTxtPassword().addKeyListener(Validaciones.validarSoloLetrasYnumeros());
 
     }
 
@@ -72,6 +67,7 @@ public abstract class AbstracForm {
                     .forEach(obj -> {
                         if (vista.isVisible()) {
                             vista.getCmbPersona().addItem(obj.getKey());
+                            System.out.println("-------");
                         } else {
                             listaPersonas = null;
                         }
@@ -90,13 +86,4 @@ public abstract class AbstracForm {
     }
 
     //EVENTOS
-    private KeyAdapter validarCaracteres() {
-        return new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                
-            }
-        };
-    }
-
 }

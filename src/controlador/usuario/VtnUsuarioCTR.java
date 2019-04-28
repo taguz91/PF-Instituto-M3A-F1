@@ -1,9 +1,8 @@
 package controlador.usuario;
 
-import controlador.usuario.forms.FrmUsuarioCTR;
+import controlador.usuario.forms.FrmUsuarioAdd;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.Libraries.Middlewares;
-import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,7 +23,6 @@ import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.FrmAsignarRoles;
-import vista.usuario.FrmUsuario;
 import vista.usuario.VtnUsuario;
 
 /**
@@ -263,7 +261,7 @@ public class VtnUsuarioCTR {
 
             setObjFromTable(fila);
 
-            FrmUsuarioCTR form = new FrmUsuarioCTR(desktop, new FrmUsuario(), modelo, "Editar", conexion);
+            FrmUsuarioAdd form = new FrmUsuarioAdd(desktop);
 
             form.Init();
 
@@ -281,7 +279,7 @@ public class VtnUsuarioCTR {
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmUsuarioCTR frm = new FrmUsuarioCTR(desktop, new FrmUsuario(), new UsuarioBD(), "Agregar", conexion);
+        FrmUsuarioAdd frm = new FrmUsuarioAdd(desktop);
         frm.Init();
 
     }
