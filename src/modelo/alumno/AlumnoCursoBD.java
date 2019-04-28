@@ -24,7 +24,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     private ConectarDB conecta;
     private AlumnoBD alm;
     private CursoBD cur;
-    String nsqlMatri = "";
+    private String nsqlMatri = "", nsqlMatriUpdate = "";
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -57,6 +57,30 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                     + "su conexion a internet.");
             return false;
         }
+    }
+
+    public void agregarUpdate(int idAlmnCurso, int idCurso) {
+        String nsql = "UPDATE public.\"AlumnoCurso\"\n"
+                + "	SET id_curso=" + idCurso + "\n"
+                + "	WHERE id_almn_curso =" + idAlmnCurso + "; \n";
+        nsqlMatriUpdate = nsqlMatriUpdate + nsql;
+    }
+    
+    public boolean actualizarMatricula(){
+        System.out.println(nsqlMatriUpdate);
+        if (conecta.nosql(nsqlMatriUpdate) == null) {
+            JOptionPane.showMessageDialog(null, "Editamos correctamente la matricula.");
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "No pudimos editar la matricula, revise \n"
+                    + "su conexion a internet.");
+            return false;
+        }
+//        return true;
+    }
+    
+    public void borrarActualizarMatricula(){
+        nsqlMatriUpdate = "";
     }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
@@ -143,16 +167,15 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             return null;
         }
     }
-    
-      
+
     /**
-     * Buscamos los cursos en los que esta matriculado un alumno,
-     * en un ciclo.
+     * Buscamos los cursos en los que esta matriculado un alumno, en un ciclo.
+     *
      * @param idAlm
      * @param idPrd
-     * @return 
+     * @return
      */
-    public ArrayList<CursoMD> buscarCursosAlmPeriodo(int idAlm, int idPrd) {
+    public ArrayList<AlumnoCursoMD> buscarCursosAlmPeriodo(int idAlm, int idPrd) {
         String sql = "SELECT id_almn_curso, c.id_curso, \n"
                 + "c.id_materia, materia_nombre, curso_nombre, "
                 + "curso_ciclo\n"
@@ -161,7 +184,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	WHERE c.id_curso = ac.id_curso\n"
                 + "	AND m.id_materia = c.id_materia\n"
                 + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + ";";
-        ArrayList<CursoMD> cursos = new ArrayList();
+        ArrayList<AlumnoCursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -171,13 +194,14 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                     CursoMD c = new CursoMD();
                     c.setId(rs.getInt("id_curso"));
                     MateriaMD m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
                     m.setNombre(rs.getString("materia_nombre"));
                     c.setMateria(m);
                     c.setNombre(rs.getString("curso_nombre"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
                     ac.setCurso(c);
-                    
-                    cursos.add(c);
+
+                    cursos.add(ac);
                 }
                 return cursos;
             } else {
@@ -189,7 +213,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             return null;
         }
     }
-
 
     public ArrayList<AlumnoCursoMD> buscarClasesAlumnoCurso(String aguja) {
         String sql = "SELECT ac.id_almn_curso, almn_curso_estado, \n"
