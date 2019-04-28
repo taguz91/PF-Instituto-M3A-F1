@@ -19,11 +19,14 @@ import modelo.persona.PersonaMD;
 public class UsuarioBD extends UsuarioMD {
 
     private static ConnDBPool pool = null;
-    private static PreparedStatement stmt = null;
+
+    private static Connection conn = null;
+
     private static ResultSet rs = null;
 
     static {
         pool = new ConnDBPool();
+        conn = pool.getConnection();
     }
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -50,7 +53,7 @@ public class UsuarioBD extends UsuarioMD {
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
 
-        return pool.ejecutar(INSERT, pool.getConnection(), parametros);
+        return pool.ejecutar(INSERT, conn, parametros);
 
     }
 
@@ -79,7 +82,7 @@ public class UsuarioBD extends UsuarioMD {
         List<UsuarioMD> lista = new ArrayList<>();
         try {
 
-            rs = pool.ejecutarQuery(QUERY, pool.getConnection(), parametros);
+            rs = pool.ejecutarQuery(QUERY, conn, parametros);
 
             while (rs.next()) {
                 UsuarioMD usuario = new UsuarioMD();
@@ -131,7 +134,7 @@ public class UsuarioBD extends UsuarioMD {
             parametros.put(1, getUsername());
             parametros.put(2, getPassword());
 
-            rs = pool.ejecutarQuery(SELECT, pool.getConnection(), parametros);
+            rs = pool.ejecutarQuery(SELECT, conn, parametros);
 
             while (rs.next()) {
                 usuario = new UsuarioBD();

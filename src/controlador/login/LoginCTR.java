@@ -57,26 +57,6 @@ public class LoginCTR {
 
         vista.getTxtUsername().addKeyListener(eventoText());
 
-        vista.getBtnDevMode().addActionListener(e -> clickDevMode());
-
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String txt = vista.getTxtUsername().getText().trim();
-                if (txt.length() <= 2) {
-                    ingresoVeloz(txt);
-                }
-            }
-        });
-    }
-
-    private void ingresoVeloz(String c) {
-        if (c.length() > 1 && c.length() <= 2) {
-            if (c.equalsIgnoreCase("J.")) {
-                vista.getTxtUsername().setText("JOHNNY");
-                //vista.getTxtPassword().
-            }
-        }
     }
 
     //METODOS DE APOYO
@@ -105,7 +85,7 @@ public class LoginCTR {
                     if (modelo != null) {
 
                         vista.dispose();
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conectar, icono, ista, false);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("JOHNNY", "DEV", "Login"), icono, ista, false);
                         vtn.Init();
                     } else {
 
@@ -136,7 +116,4 @@ public class LoginCTR {
         };
     }
 
-    private void clickDevMode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

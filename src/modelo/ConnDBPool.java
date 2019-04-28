@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -35,12 +30,12 @@ public class ConnDBPool {
         config.setJdbcUrl(generarURL());
 
         //String username = Propiedades.getUserProp("username");
-        config.setUsername("JOHNNY");
+        config.setUsername("ROOT");
 
         //String password = Propiedades.getUserProp("password");
-        config.setPassword("DEV");
+        config.setPassword("DEVROOT");
 
-        config.setMaximumPoolSize(5);
+        config.setMaximumPoolSize(3);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -153,12 +148,6 @@ public class ConnDBPool {
 
     public void close() {
         try {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
             if (conn != null) {
                 conn.close();
             }

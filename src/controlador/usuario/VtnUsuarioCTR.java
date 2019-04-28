@@ -1,5 +1,6 @@
 package controlador.usuario;
 
+import controlador.usuario.forms.FrmUsuarioCTR;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;

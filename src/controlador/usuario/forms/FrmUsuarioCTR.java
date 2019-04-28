@@ -1,4 +1,4 @@
-package controlador.usuario;
+package controlador.usuario.forms;
 
 import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
@@ -81,8 +81,6 @@ public class FrmUsuarioCTR {
             vista.show();
         }).start();
 
-
-
     }
 
     private void InitEditar() {
@@ -95,7 +93,7 @@ public class FrmUsuarioCTR {
                 .filter(item -> item.getValue().getIdPersona() == modelo.getPersona().getIdPersona())
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    
+
                     vista.getCmbPersona().setSelectedItem(obj.getKey());
 
                 });
@@ -218,8 +216,10 @@ public class FrmUsuarioCTR {
 
             setModelo();
 
-            FrmAsignarRolCTR formAsignar = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar-Roles-Usuario");
-            formAsignar.Init();
+            System.out.println(modelo.insertar() + "SE INSERTO CORRECTAMENTE EL NUEVO USUARIO");
+
+//            FrmAsignarRolCTR formAsignar = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar-Roles-Usuario");
+//            formAsignar.Init();
             vista.dispose();
 
         } else {
