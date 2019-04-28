@@ -1,4 +1,4 @@
-package controlador.usuario;
+package controlador.usuario.forms;
 
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.Libraries.Middlewares;
@@ -24,18 +24,16 @@ import vista.usuario.FrmUsuario;
  *
  * @author USUARIO
  */
-public class FrmUsuarioCTR {
+public class FrmUsuarioCTR extends AbstracForm{
 
-    private final VtnPrincipal desktop;
-    private final FrmUsuario vista;
+
     private final UsuarioBD modelo;
-    private final String Funcion;
 
 
     /*
         Listas
      */
-    private Map<String, DocenteMD> listaPersonas;
+
 
     private String Pk;
 
@@ -50,40 +48,7 @@ public class FrmUsuarioCTR {
     }
 
     //INICIADORES
-    public void Init() {
 
-        InitEventos();
-
-        new Thread(() -> {
-            listaPersonas = DocenteBD.selectDocentes();
-            cargarComoPersonas();
-            if (Funcion.equals("Agregar")) {
-                vista.setTitle("Agregar Un Nuevo Usuario");
-                USER = UsuarioBD.SelectNewUsername();
-                vista.getTxtUsername().setText(USER);
-            } else {
-                vista.setTitle("Editar Un Usuario");
-
-                vista.getBtnGuardar().setText("Guardar");
-
-                Pk = modelo.getUsername();
-                InitEditar();
-            }
-
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-            try {
-                vista.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(FrmUsuarioCTR.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            desktop.getDpnlPrincipal().add(vista);
-            vista.show();
-        }).start();
-
-
-
-    }
 
     private void InitEditar() {
 
@@ -107,50 +72,9 @@ public class FrmUsuarioCTR {
 
     }
 
-    private void InitEventos() {
-
-        vista.getBtnBuscarPer().addActionListener(e -> btnBuscarActionPerformance(e));
-
-        if (Funcion.equals("Agregar")) {
-            vista.getBtnGuardar().addActionListener(e -> btnAgregarActionPerformance(e));
-        } else {
-            vista.getBtnGuardar().addActionListener(e -> btnEditarActionPerformance(e));
-        }
-
-        vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
-
-        vista.getBtnResetear().addActionListener(e -> btnResetarActionPerformance(e));
-
-        vista.getBtnBuscarPer().addActionListener(e -> btnBuscarAtionPerformance(e));
-
-        vista.getTxtBuscarPer().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtBuscarPerOnKeyReleased(e);
-            }
-        });
-
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                txtUsernameOnKeyTyped(e);
-            }
-        });
-
-        vista.getChxDefinido().addActionListener(e -> chxDefinido(e));
-
-    }
 
     //METODOS DE APOYO
-    private void cargarComoPersonas() {
-        listaPersonas
-                .entrySet()
-                .stream()
-                .forEach(obj -> {
-                    vista.getCmbPersona().addItem(obj.getKey());
-                });
 
-    }
 
     private void buscarPersona() {
 
@@ -255,28 +179,7 @@ public class FrmUsuarioCTR {
         }
     }
 
-    private void btnResetarActionPerformance(ActionEvent e) {
 
-        vista.getTxtUsername().setText("");
-        vista.getTxtPassword().setText("");
-        vista.getTxtBuscarPer().setText("");
-        vista.getCmbPersona().setSelectedIndex(0);
-
-    }
-
-    private void btnBuscarAtionPerformance(ActionEvent e) {
-
-        buscarPersona();
-
-    }
-
-    private void txtBuscarPerOnKeyReleased(KeyEvent e) {
-
-        if (e.getKeyCode() == 10) {
-            buscarPersona();
-        }
-
-    }
 
     private void txtUsernameOnKeyTyped(KeyEvent e) {
 
@@ -298,17 +201,4 @@ public class FrmUsuarioCTR {
 
     }
 
-    private void chxDefinido(ActionEvent e) {
-
-        boolean seleccion = vista.getChxDefinido().isSelected();
-
-        if (seleccion) {
-            vista.getTxtUsername().setText("");
-            vista.getTxtUsername().setEditable(true);
-        } else {
-            vista.getTxtUsername().setEditable(false);
-            vista.getTxtUsername().setText(USER);
-        }
-
-    }
 }

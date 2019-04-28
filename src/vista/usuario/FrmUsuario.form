@@ -41,8 +41,6 @@
                       <Component id="lblUsername" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtUsername" min="-2" pref="150" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="chxDefinido" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="lblPassword" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -82,7 +80,6 @@
                   <Component id="txtPassword" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="lblUsername" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="lblPassword" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="chxDefinido" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -176,11 +173,6 @@
     <Component class="javax.swing.JButton" name="btnResetear">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reset"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="chxDefinido">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Definir"/>
       </Properties>
     </Component>
   </SubComponents>
