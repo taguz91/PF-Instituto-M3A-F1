@@ -2,12 +2,15 @@ package controlador.usuario.forms;
 
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
-import java.beans.PropertyVetoException;
+import controlador.excepciones.BreakException;
+import controlador.usuario.VtnUsuarioCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modelo.persona.DocenteBD;
-import modelo.persona.DocenteMD;
+import javax.swing.JOptionPane;
+import modelo.persona.PersonaBD;
+import modelo.persona.PersonaMD;
+import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.FrmUsuario;
 
@@ -18,72 +21,150 @@ import vista.usuario.FrmUsuario;
 public abstract class AbstracForm {
 
     private final VtnPrincipal desktop;
-    private final FrmUsuario vista;
+    protected FrmUsuario vista;
+    protected UsuarioBD modelo;
+    protected VtnUsuarioCTR vtnPadre;
 
     //LISTAS
-    private Map<String, DocenteMD> listaPersonas;
+    private Map<String, PersonaMD> listaPersonas;
 
-    public AbstracForm(VtnPrincipal desktop) {
+    public AbstracForm(VtnPrincipal desktop, VtnUsuarioCTR vtnPadre) {
         this.desktop = desktop;
+        this.vtnPadre = vtnPadre;
         this.vista = new FrmUsuario();
     }
 
-    public void Init() {
+    public void setModelo(UsuarioBD modelo) {
+        this.modelo = modelo;
+    }
 
-        InitEventos();
+    public synchronized void Init() {
 
         new Thread(() -> {
-            
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
-            try {
-                vista.setSelected(true);
-                desktop.getDpnlPrincipal().add(vista);
-                vista.show();
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(FrmUsuarioAdd.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            
+            activarFormulario(false);
+            listaPersonas = PersonaBD.selectAll();
+            cargarComoPersonas();
+            activarFormulario(true);
         }).start();
 
-        listaPersonas = DocenteBD.selectDocentes();
-        cargarComoPersonas();
+        Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        InitEventos();
     }
 
     private void InitEventos() {
         //VALIDACIONES
 
         vista.getTxtUsername().addKeyListener(Validaciones.validarSoloLetrasYnumeros());
+
         vista.getTxtPassword().addKeyListener(Validaciones.validarSoloLetrasYnumeros());
+
+        vista.getTxtBuscarPer().addKeyListener(Validaciones.validarNumeros());
+
+        vista.getTxtBuscarPer().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    vista.getCmbPersona().setSelectedItem(buscarPersona(vista.getTxtBuscarPer().getText()).getKey());
+
+                }
+            }
+        });
+
+        vista.getBtnBuscarPer().addActionListener(e -> vista.getCmbPersona().setSelectedItem(buscarPersona(vista.getTxtBuscarPer().getText()).getKey()));
+
+        vista.getBtnResetear().addActionListener(e -> resetForm());
+
+        vista.getBtnCancelar().addActionListener(e -> {
+            vista.dispose();
+            destruirVariables();
+        });
+
+        vista.getBtnGuardar().addActionListener(e -> guardar());
 
     }
 
     //METODOS DE APOYO
     private void cargarComoPersonas() {
+
         try {
             listaPersonas
                     .entrySet()
                     .stream()
                     .forEach(obj -> {
-                        if (vista.isVisible()) {
+                        if (!vista.isClosed()) {
                             vista.getCmbPersona().addItem(obj.getKey());
-                            System.out.println("-------");
                         } else {
-                            listaPersonas = null;
+                            throw new BreakException();
                         }
                     });
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("VENTANA CERRADA.. CARGA DE PERSONAS CANCELADA");
+
+        } catch (BreakException e) {
+            destruirVariables();
         }
 
     }
 
     private void resetForm() {
-        vista.getTxtUsername().setText("");
+        if (!vista.getTxtUsername().getText().equals("ROOT")) {
+            vista.getTxtUsername().setText("");
+        }
         vista.getTxtPassword().setText("");
         vista.getTxtBuscarPer().setText("");
         vista.getCmbPersona().setSelectedIndex(0);
     }
 
+    private void activarFormulario(boolean estado) {
+        vista.getTxtUsername().setEnabled(estado);
+        vista.getTxtPassword().setEnabled(estado);
+        vista.getCmbPersona().setEnabled(estado);
+        vista.getTxtBuscarPer().setEnabled(estado);
+        vista.getBtnResetear().setEnabled(estado);
+        vista.getBtnGuardar().setEnabled(estado);
+    }
+
+    private void destruirVariables() {
+        modelo = null;
+        vista = null;
+        listaPersonas = null;
+        System.gc();
+    }
+
+    protected UsuarioBD setObj() {
+        modelo = new UsuarioBD();
+
+        modelo.setUsername(vista.getTxtUsername().getText());
+
+        modelo.setPassword(vista.getTxtPassword().getText());
+
+        modelo.setPersona(buscarPersona(vista.getTxtBuscarPer().getText()).getValue());
+
+        modelo.setEstado(true);
+
+        return modelo;
+    }
+
+    private Map.Entry<String, PersonaMD> buscarPersona(String aguja) {
+        return listaPersonas
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getIdentificacion().contains(aguja))
+                .findAny()
+                .get();
+    }
+
+    protected boolean validarFormulario() {
+        if (!vista.getTxtUsername().getText().isEmpty()) {
+            if (!vista.getTxtPassword().getText().isEmpty()) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(vista, "INGRESE UNA CONTRASEñA".toUpperCase());
+            }
+        } else {
+            JOptionPane.showMessageDialog(vista, "INGRESE UN NOMBRE DE USUARIO");
+        }
+        return false;
+    }
+
     //EVENTOS
+    public abstract void guardar();
 }

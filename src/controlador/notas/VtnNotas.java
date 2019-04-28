@@ -127,7 +127,7 @@ public class VtnNotas {
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 
-        Validaciones.validarNumerosEnJTEXTField(vista.getTxtBuscar());
+        vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
 
         vista.getBtnBuscar().addActionListener(e -> btnBuscar(e));
 

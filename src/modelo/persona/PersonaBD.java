@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -781,86 +782,53 @@ public class PersonaBD extends PersonaMD {
         return lista;
     }
 
-    public List<PersonaMD> filtrarEliminados(){
-        String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n" +
-                        "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n" +
-                        "WHERE persona_activa = 'false' ORDER BY persona_primer_apellido ASC;";
+    public List<PersonaMD> filtrarEliminados() {
+        String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n"
+                + "WHERE persona_activa = 'false' ORDER BY persona_primer_apellido ASC;";
         return consultarParaTabla(nsql);
     }
 
-    public static PersonaMD selectNombresApellidosWhere(int idAlumno) {
+    public static Map<String, PersonaMD> selectAll() {
         String SELECT = "SELECT\n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre\n"
+                + "\"public\".\"Personas\".id_persona,\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre\n"
                 + "FROM\n"
-                + "\"Personas\"\n"
-                + "INNER JOIN \"Alumnos\" ON \"Alumnos\".id_persona = \"Personas\".id_persona\n"
-                + "WHERE\n"
-                + "\"Alumnos\".id_alumno = " + idAlumno;
+                + "\"public\".\"Personas\"";
+        Map<String, PersonaMD> map = new HashMap<>();
 
         ResultSet rs = ResourceManager.Query(SELECT);
-
-        PersonaMD persona = new PersonaMD();
         try {
-
             while (rs.next()) {
-                persona.setIdentificacion(rs.getString("persona_identificacion"));
-                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return persona;
-
-    }
-
-    public static PersonaMD selectWhere(int idPersona) {
-
-        String SELECT = "SELECT\n"
-                + "\"Personas\".persona_identificacion,\n"
-                + "\"Personas\".persona_primer_apellido,\n"
-                + "\"Personas\".persona_segundo_apellido,\n"
-                + "\"Personas\".persona_primer_nombre,\n"
-                + "\"Personas\".persona_segundo_nombre,\n"
-                + "\"Personas\".id_persona\n"
-                + "FROM\n"
-                + "\"Personas\"\n"
-                + "WHERE \n"
-                + "\"Personas\".id_persona = " + idPersona;
-
-        PersonaMD persona = new PersonaMD();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-
-            while (rs.next()) {
-
+                PersonaMD persona = new PersonaMD();
                 persona.setIdPersona(rs.getInt("id_persona"));
-                persona.setIdentificacion(rs.getString("persona_identificacion"));
-                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-            }
-            rs.close();
 
+                String identificacion = rs.getString("persona_identificacion");
+                String primerApellido = rs.getString("persona_primer_apellido");
+                String segundoApellido = rs.getString("persona_segundo_apellido");
+                String primerNombre = rs.getString("persona_primer_nombre");
+                String segundoNombre = rs.getString("persona_segundo_nombre");
+
+                persona.setSegundoNombre(segundoNombre);
+                persona.setIdentificacion(identificacion);
+                persona.setPrimerApellido(primerApellido);
+                persona.setSegundoApellido(segundoApellido);
+                persona.setPrimerNombre(primerNombre);
+
+                String key = identificacion + " " + primerApellido + " " + segundoApellido + " " + primerNombre + " " + segundoNombre;
+
+                map.put(key, persona);
+
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return persona;
-
+        return map;
     }
 
 }

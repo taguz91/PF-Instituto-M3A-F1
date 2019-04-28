@@ -72,13 +72,10 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         btnResetear = new javax.swing.JButton();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setTitle("Crear Usuarios");
 
         lblUsername.setText("Username");
-
-        txtUsername.setEditable(false);
 
         lblPassword.setText("Password");
 
@@ -89,8 +86,6 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
 
         btnBuscarPer.setText("Buscar");
-
-        cmbPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una Persona" }));
 
         lblBuscarPer1.setText("Filtrar Persona");
 

@@ -55,6 +55,10 @@ public class VtnUsuarioCTR {
         this.conexion = conexion;
     }
 
+    public VtnUsuario getVista() {
+        return vista;
+    }
+
     //Inits
     public void Init() {
         //Inicializamos la tabla
@@ -261,7 +265,7 @@ public class VtnUsuarioCTR {
 
             setObjFromTable(fila);
 
-            FrmUsuarioAdd form = new FrmUsuarioAdd(desktop);
+            FrmUsuarioAdd form = new FrmUsuarioAdd(desktop, this);
 
             form.Init();
 
@@ -279,7 +283,7 @@ public class VtnUsuarioCTR {
 
     private void btnIngresarActionPerformance(ActionEvent e) {
 
-        FrmUsuarioAdd frm = new FrmUsuarioAdd(desktop);
+        FrmUsuarioAdd frm = new FrmUsuarioAdd(desktop, this);
         frm.Init();
 
     }

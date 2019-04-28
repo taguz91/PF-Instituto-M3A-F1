@@ -258,39 +258,39 @@ public class Validaciones {
         return Double.parseDouble(Number);
     }
 
-    public static void validarNumerosEnJTEXTField(JComponent component) {
-        component.addKeyListener(new KeyAdapter() {
+    public static KeyAdapter validarNumeros() {
+        return new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
+
                 if (!Character.isDigit(e.getKeyChar())) {
                     e.consume();
-                    component.getToolkit().beep();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
-        });
+        };
     }
 
     public static boolean validarPalabras(List<String> palabrasValidas, String palabra) {
-        boolean valido = false;
-        if (!palabrasValidas
+        return !palabrasValidas
                 .stream()
                 .filter(item -> item.toUpperCase().contains(palabra.toUpperCase()))
-                .collect(Collectors.toList()).isEmpty()) {
-            return true;
-        }
-        return valido;
+                .collect(Collectors.toList()).isEmpty();
     }
 
     public static KeyAdapter validarSoloLetrasYnumeros() {
         return new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
+
                 char caracter = e.getKeyChar();
-                if (!Character.isDigit(caracter) || !Character.isLetter(caracter)) {
+
+                if (!Character.isDigit(caracter) && !Character.isLetter(caracter)) {
                     Toolkit.getDefaultToolkit().beep();
                     e.consume();
                 }
             }
+
         };
     }
 }

@@ -156,6 +156,7 @@ public class Middlewares {
 
     public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
         try {
+            centerFrame(component, desktop);
             desktop.add(component);
             component.setSelected(true);
             component.setVisible(true);
