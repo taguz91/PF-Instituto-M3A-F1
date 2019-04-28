@@ -71,7 +71,6 @@ public class ConnDBPool {
     }
 
     public boolean ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
-        PreparedStatement stmt = null;
         conn = getConnection();
         try {
 
@@ -90,15 +89,14 @@ public class ConnDBPool {
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            close();
             return false;
         } finally {
-            close(conn);
-            close(stmt);
+            close();
         }
     }
 
     private PreparedStatement prepararStatement(String sql, Connection conn, Map<Integer, Object> parametros) throws SQLException {
-        PreparedStatement stmt = null;
 
         stmt = conn.prepareStatement(sql);
 
@@ -133,60 +131,39 @@ public class ConnDBPool {
     }
 
     public ResultSet ejecutarQuery(String sql, Connection conn, Map<Integer, Object> parametros) {
-        ResultSet rs = null;
-        PreparedStatement stmt = null;
-        this.stmt = stmt;
-        this.conn = conn;
+
         try {
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);
             } else {
                 stmt = prepararStatement(sql, conn, parametros);
             }
-
             rs = stmt.executeQuery();
-            this.rs = rs;
+
+            parametros = null;
+            System.out.println("*******************************");
+            System.out.println("*QUERY Ejecutado Correctamente*");
+            System.out.println("*******************************");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
-        } 
+        }
         return rs;
     }
 
-    public void close(Connection conn) {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public void close(PreparedStatement stmt) {
+    public void close() {
         try {
             if (stmt != null) {
                 stmt.close();
             }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public void close(ResultSet rs) {
-        try {
             if (rs != null) {
                 rs.close();
+            }
+            if (conn != null) {
+                conn.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    public void close() {
-        close(conn);
-        close(stmt);
-        close(rs);
     }
 }

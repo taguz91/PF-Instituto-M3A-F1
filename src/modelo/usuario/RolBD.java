@@ -67,8 +67,8 @@ public class RolBD extends RolMD {
         List<RolMD> Lista = new ArrayList<>();
 
         try {
-            stmt = pool.getConnection().prepareStatement(Query);
-            rs = stmt.executeQuery();
+            
+            rs = pool.ejecutarQuery(Query, pool.getConnection(), null);
             while (rs.next()) {
                 RolMD rol = new RolMD();
 
@@ -83,9 +83,7 @@ public class RolBD extends RolMD {
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            pool.close(pool.getConnection());
-            pool.close(rs);
-            pool.close(stmt);
+            pool.close();
         }
 
         return Lista;

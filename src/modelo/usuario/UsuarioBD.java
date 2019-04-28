@@ -19,7 +19,6 @@ import modelo.persona.PersonaMD;
 public class UsuarioBD extends UsuarioMD {
 
     private static ConnDBPool pool = null;
-    private static Connection conn = null;
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
@@ -29,7 +28,7 @@ public class UsuarioBD extends UsuarioMD {
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
         super(username, password, estado, idPersona);
-        
+
     }
 
     public UsuarioBD() {
@@ -126,14 +125,13 @@ public class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
         UsuarioBD usuario = null;
         try {
-            conn = pool.getConnection();
 
-            stmt = conn.prepareStatement(SELECT);
+            Map<Integer, Object> parametros = new HashMap<>();
 
-            stmt.setString(1, getUsername());
-            stmt.setString(2, getPassword());
+            parametros.put(1, getUsername());
+            parametros.put(2, getPassword());
 
-            rs = stmt.executeQuery();
+            rs = pool.ejecutarQuery(SELECT, pool.getConnection(), parametros);
 
             while (rs.next()) {
                 usuario = new UsuarioBD();
@@ -154,9 +152,7 @@ public class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(rs);
-            pool.close(conn);
-            pool.close(stmt);
+            pool.close();
         }
 
         return usuario;
