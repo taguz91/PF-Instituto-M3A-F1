@@ -1,6 +1,6 @@
 package controlador.usuario.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.excepciones.BreakException;
 import controlador.usuario.VtnUsuarioCTR;
@@ -20,13 +20,13 @@ import vista.usuario.FrmUsuario;
  */
 public abstract class AbstracForm {
 
-    private final VtnPrincipal desktop;
+    protected final VtnPrincipal desktop;
     protected FrmUsuario vista;
     protected UsuarioBD modelo;
     protected VtnUsuarioCTR vtnPadre;
 
     //LISTAS
-    private Map<String, PersonaMD> listaPersonas;
+    protected Map<String, PersonaMD> listaPersonas;
 
     public AbstracForm(VtnPrincipal desktop, VtnUsuarioCTR vtnPadre) {
         this.desktop = desktop;
@@ -34,21 +34,17 @@ public abstract class AbstracForm {
         this.vista = new FrmUsuario();
     }
 
-    public void setModelo(UsuarioBD modelo) {
-        this.modelo = modelo;
-    }
-
     public synchronized void Init() {
 
         new Thread(() -> {
-            activarFormulario(false);
-            listaPersonas = PersonaBD.selectAll();
-            cargarComoPersonas();
-            activarFormulario(true);
+            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+            InitEventos();
         }).start();
+        activarFormulario(false);
+        listaPersonas = PersonaBD.selectAll();
+        cargarComoPersonas();
+        activarFormulario(true);
 
-        Middlewares.addInDesktopPane(vista, desktop.getDpnlPrincipal());
-        InitEventos();
     }
 
     private void InitEventos() {
@@ -85,7 +81,6 @@ public abstract class AbstracForm {
 
     //METODOS DE APOYO
     private void cargarComoPersonas() {
-
         try {
             listaPersonas
                     .entrySet()
@@ -129,7 +124,7 @@ public abstract class AbstracForm {
         System.gc();
     }
 
-    protected UsuarioBD setObj() {
+    protected UsuarioBD getObj() {
         modelo = new UsuarioBD();
 
         modelo.setUsername(vista.getTxtUsername().getText());

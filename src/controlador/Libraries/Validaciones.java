@@ -14,7 +14,7 @@ import javax.swing.text.JTextComponent;
  *
  * @author MrRainx
  */
-public class Validaciones {
+public final class Validaciones {
 
     public static int NUMERO_ENTERO = 0;
     public static int NUMERO_DECIMAL = 1;
@@ -282,15 +282,11 @@ public class Validaciones {
         return new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-
                 char caracter = e.getKeyChar();
-
                 if (!Character.isDigit(caracter) && !Character.isLetter(caracter)) {
-                    Toolkit.getDefaultToolkit().beep();
                     e.consume();
                 }
             }
-
         };
     }
 }

@@ -1,9 +1,10 @@
 package controlador.usuario.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
-import modelo.usuario.UsuarioBD;
+import modelo.usuario.RolesDelUsuarioBD;
 import vista.principal.VtnPrincipal;
+import vista.usuario.FrmAsignarRoles;
 
 /**
  *
@@ -18,11 +19,10 @@ public class FrmUsuarioAdd extends AbstracForm {
     @Override
     public void guardar() {
         if (validarFormulario()) {
-            if (setObj().insertar()) {
-                vtnPadre.cargarTabla(UsuarioBD.SelectAll());
-                Middlewares.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA ", 3);
-            }
 
+            FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), getObj(), "Asignar-Roles-Usuario");
+            form.Init();
+            vista.dispose();
         }
     }
 

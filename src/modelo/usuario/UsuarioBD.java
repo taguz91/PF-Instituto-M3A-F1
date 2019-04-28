@@ -11,13 +11,20 @@ import modelo.persona.PersonaMD;
  *
  * @author MrRainx
  */
-public class UsuarioBD extends UsuarioMD {
+public final class UsuarioBD extends UsuarioMD {
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
         super(username, password, estado, idPersona);
     }
 
     public UsuarioBD() {
+    }
+
+    public UsuarioBD(UsuarioMD obj) {
+        setUsername(obj.getUsername());
+        setPassword(obj.getPassword());
+        setEstado(obj.isEstado());
+        setPersona(obj.getPersona());
     }
 
     private static final String TABLA = " \"Usuarios\" ";
