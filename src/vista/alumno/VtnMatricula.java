@@ -28,8 +28,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return btnEditar;
     }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
+    public JButton getBtnAnular() {
+        return btnAnular;
     }
 
     public JButton getBtnImprimirFicha() {
@@ -75,7 +75,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnIngresar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
         cbxEliminados = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         cmbPeriodos = new javax.swing.JComboBox<>();
@@ -101,8 +101,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
         btnEditar.setText("Editar");
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
+        btnAnular.setText("Anular");
 
         cbxEliminados.setText("Ver eliminados");
         cbxEliminados.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -132,11 +131,11 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbxEliminados)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
+                        .addComponent(btnAnular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIngresar)))
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,7 +147,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnIngresar)
                             .addComponent(btnEditar)
-                            .addComponent(btnEliminar))
+                            .addComponent(btnAnular))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBuscar)
@@ -227,9 +226,9 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnImprimirFicha;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JCheckBox cbxEliminados;

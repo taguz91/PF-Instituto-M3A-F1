@@ -62,6 +62,16 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         iniciarBuscador();
     }
 
+    private void clickAnular() {
+        posFila = vtnMatri.getTblMatricula().getSelectedRow();
+        if (posFila >= 0) {
+            JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(conecta, vtnPrin, ctrPrin, matriculas.get(posFila));
+            ctr.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila primero.");
+        }
+    }
+
     private void clickEditar() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
@@ -107,6 +117,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirReporte());
         vtnMatri.getBtnIngresar().addActionListener(e -> abrirFrm());
         vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
+        vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
     }
 
     private void cargarMatriculas() {

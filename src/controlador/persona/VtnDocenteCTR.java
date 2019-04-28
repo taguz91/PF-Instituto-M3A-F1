@@ -2,7 +2,6 @@ package controlador.persona;
 
 import controlador.docente.JDFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -133,17 +132,17 @@ public class VtnDocenteCTR {
         }
     }
 
-    public void llenarTabla(ArrayList<DocenteMD> docentesMD) {
+    public void llenarTabla(ArrayList<DocenteMD> docentesM) {
         mdTbl.setRowCount(0);
-        if (docentesMD != null) {
-            docentesMD.forEach(d -> {
+        if (docentesM != null) {
+            docentesM.forEach(d -> {
                 Object[] valores = {d.getCodigo(), d.getPrimerApellido() + " "
                     + d.getSegundoApellido() + " " + d.getPrimerNombre()
                     + " " + d.getSegundoNombre(),
                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
                 mdTbl.addRow(valores);
             });
-            vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
+            vtnDocente.getLblResultados().setText(String.valueOf(docentesM.size()) + " Resultados obtenidos.");
         } else {
             vtnDocente.getLblResultados().setText("0 Resultados obtenidos.");
         }
