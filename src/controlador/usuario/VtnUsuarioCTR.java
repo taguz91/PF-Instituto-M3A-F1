@@ -38,7 +38,7 @@ public class VtnUsuarioCTR {
     //Modelo de la tabla
     private static DefaultTableModel tablaUsuarios;
 
-    private boolean cargaTabla = true;
+    private boolean cargar = true;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos) {
         this.desktop = desktop;
@@ -71,7 +71,7 @@ public class VtnUsuarioCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmUsuarioAdd(desktop, this).Init());
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.SelectAll()));
+        vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.selectAll()));
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
         vista.getBtnVerRoles().addActionListener(e -> btnVerRoles(e));
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -121,7 +121,7 @@ public class VtnUsuarioCTR {
 
                 vista.getTxtBuscar().setEnabled(false);
 
-                cargaTabla = false;
+                cargar = false;
 
                 Effects.setLoadCursor(vista);
 
@@ -138,7 +138,7 @@ public class VtnUsuarioCTR {
 
                 vista.getTxtBuscar().setEnabled(true);
 
-                cargaTabla = true;
+                cargar = true;
             }).start();
 
         } else {

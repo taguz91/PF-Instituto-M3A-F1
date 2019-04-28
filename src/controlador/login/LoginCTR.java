@@ -56,6 +56,7 @@ public class LoginCTR {
         vista.getTxtPassword().addKeyListener(eventoText());
 
         vista.getTxtUsername().addKeyListener(eventoText());
+        vista.getBtnIngresar().addActionListener(e -> login());
 
     }
 
@@ -66,7 +67,7 @@ public class LoginCTR {
 
             new Thread(() -> {
 
-                Effects.setLoadCursorInWindow(vista);
+                Effects.setLoadCursor(vista);
                 modelo = new UsuarioBD();
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
@@ -92,26 +93,16 @@ public class LoginCTR {
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-                    Effects.setDefaultCursorInWindow(vista);
+                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
                     Effects.setDefaultCursor(vista);
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    Effects.setDefaultCursorInWindow(vista);
+                    Effects.setDefaultCursor(vista);
                 }
 
             }).start();
         }
-    }
-
-    /**
-     * Recibimos la contraseña para ingresar al sistema
-     *
-     * @param e
-     */
-    //Procesadores de eventos
-    private void btnIngresarActionPerformance(ActionEvent e) {
-        Login();
     }
 
     //EVENTOS
