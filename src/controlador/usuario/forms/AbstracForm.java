@@ -117,7 +117,7 @@ public abstract class AbstracForm {
         vista.getBtnGuardar().setEnabled(estado);
     }
 
-    private void destruirVariables() {
+    protected void destruirVariables() {
         modelo = null;
         vista = null;
         listaPersonas = null;
@@ -131,7 +131,14 @@ public abstract class AbstracForm {
 
         modelo.setPassword(vista.getTxtPassword().getText());
 
-        modelo.setPersona(buscarPersona(vista.getTxtBuscarPer().getText()).getValue());
+        modelo.setPersona(listaPersonas
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().contains(vista.getCmbPersona().getSelectedItem().toString()))
+                .findAny()
+                .get()
+                .getValue()
+        );
 
         modelo.setEstado(true);
 

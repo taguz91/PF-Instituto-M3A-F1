@@ -3,19 +3,14 @@ package controlador.usuario;
 import controlador.usuario.forms.FrmUsuarioAdd;
 import controlador.usuario.Roles.forms.FrmAsignarRolCTR;
 import controlador.Libraries.Effects;
-import controlador.excepciones.BreakException;
 import controlador.usuario.forms.FrmUsuarioUpdt;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyVetoException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.usuario.RolMD;
@@ -74,11 +69,11 @@ public class VtnUsuarioCTR {
     private void InitEventos() {
 
         vista.getBtnIngresar().addActionListener(e -> new FrmUsuarioAdd(desktop, this).Init());
-        vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-        vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
+        vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
+        vista.getBtnEditar().addActionListener(e -> btnEditar(e));
         vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.SelectAll()));
-        vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRolesActionPerformance(e));
-        vista.getBtnVerRoles().addActionListener(e -> btnVerRolesActionPerformance(e));
+        vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
+        vista.getBtnVerRoles().addActionListener(e -> btnVerRoles(e));
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -173,7 +168,7 @@ public class VtnUsuarioCTR {
 
     }
 
-    private static void agregarFila(UsuarioMD obj) throws BreakException {
+    private static void agregarFila(UsuarioMD obj) {
         tablaUsuarios.addRow(new Object[]{
             tablaUsuarios.getDataVector().size() + 1,
             obj.getUsername(),
@@ -190,16 +185,18 @@ public class VtnUsuarioCTR {
     private UsuarioBD setObjFromTable(int fila) {
 
         String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
-
-        return new UsuarioBD(listaUsuarios.stream()
+        modelo = null;
+        modelo = new UsuarioBD(listaUsuarios.stream()
                 .filter(item -> item.getUsername().equals(username))
                 .findAny()
                 .get());
 
+        return modelo;
+
     }
 
     //EVENTOS 
-    private void btnEliminarActionPerformance(ActionEvent e) {
+    private void btnEliminar(ActionEvent e) {
 
         int fila = vista.getTblUsuario().getSelectedRow();
 
@@ -231,7 +228,7 @@ public class VtnUsuarioCTR {
 
     }
 
-    private void btnEditarActionPerformance(ActionEvent e) {
+    private void btnEditar(ActionEvent e) {
 
         int fila = vista.getTblUsuario().getSelectedRow();
 
@@ -249,7 +246,7 @@ public class VtnUsuarioCTR {
 
     }
 
-    private void btnAsignarRolesActionPerformance(ActionEvent e) {
+    private void btnAsignarRoles(ActionEvent e) {
 
         int fila = vista.getTblUsuario().getSelectedRow();
 
@@ -268,7 +265,7 @@ public class VtnUsuarioCTR {
 
     }
 
-    private void btnVerRolesActionPerformance(ActionEvent e) {
+    private void btnVerRoles(ActionEvent e) {
 
         int fila = vista.getTblUsuario().getSelectedRow();
 

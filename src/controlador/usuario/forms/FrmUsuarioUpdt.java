@@ -19,8 +19,16 @@ public class FrmUsuarioUpdt extends AbstracForm {
     }
 
     public void setModelo(UsuarioBD modelo) {
+        this.modelo = null;
         this.modelo = modelo;
         this.Pk = modelo.getUsername();
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println(modelo);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
         setForm();
     }
 
@@ -43,10 +51,11 @@ public class FrmUsuarioUpdt extends AbstracForm {
     public void guardar() {
         if (validarFormulario()) {
             if (getObj().editar(Pk)) {
-                vtnPadre.cargarTabla(UsuarioBD.SelectAll());
-                String message = "SE HA EDITADO AL USUARIO" + modelo.getUsername();
+                String message = "SE HA EDITADO AL USUARIO: " + modelo.getUsername();
                 Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
                 vista.dispose();
+                destruirVariables();
+                vtnPadre.cargarTabla(UsuarioBD.SelectAll());
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
             }
