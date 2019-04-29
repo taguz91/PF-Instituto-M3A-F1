@@ -149,6 +149,23 @@ public class MateriaBD extends MateriaMD {
             return null;
         }
     }
+    
+    public MateriaMD capturarIDMaterias(String nombre){
+        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '" + nombre + "';";
+        MateriaMD m = new MateriaMD();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                m.setId(rs.getInt("id_materia"));
+            }
+            rs.close();
+            return m;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar ejes");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 
     //para mostrar datos de la materia
     public ArrayList<MateriaMD> cargarMaterias() {

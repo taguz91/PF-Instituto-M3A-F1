@@ -854,7 +854,10 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Nombre().setFont(negrita);
         String sector = sectorE.capturarSector(persona.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico().toUpperCase();
         ProfesionMD profesion = new ProfesionMD();
-        profesion = bdAlumno.capturarProfesiones(persona.getIdPersona());
+//        if(){
+//            
+//        }
+//        profesion = bdAlumno.capturarProfesiones(persona.getIdPersona());
         if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
             frmAlumno.getCbx_Identificacion().setSelectedItem("CÉDULA");
         } else {
