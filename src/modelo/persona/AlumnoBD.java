@@ -45,6 +45,21 @@ public class AlumnoBD extends AlumnoMD {
             return false;
         }
     }
+    
+    public boolean guardarTitulo(){
+        String nsql = "INSERT INTO public.\"Profesiones\"(\n"
+                + "	 id_titulo, titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado, alumno_anio_graduacion"
+                + "	VALUES ( " + getIdPersona() + ", "  + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
+                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
+                + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
+        if (conecta.nosql(nsql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     /**
      * Este método edita a un Alumno de la Base de Datos, pueden ser todos estos atributos
@@ -595,7 +610,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Alumnos\" a, public.\"Personas\" p \n"
                 + "WHERE p.id_persona = a.id_persona AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR "
+                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%' OR \n"
                 + "	persona_identificacion ILIKE '%"+aguja+"%') "
                 + "AND persona_activa = true;";
         return consultarAlumnos(sql);

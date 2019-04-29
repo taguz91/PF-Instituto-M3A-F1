@@ -1,7 +1,7 @@
 package controlador.periodoLectivoNotas.tipoDeNotas;
 
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaAgregar;
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -52,7 +52,7 @@ public class VtnTipoNotasCTR {
     public void Init() {
         vista.setVisible(true);
 
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();

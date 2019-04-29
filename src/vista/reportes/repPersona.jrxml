@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="cedula" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -87,163 +87,189 @@ where persona_identificacion=$P{cedula};]]>
 			<staticText>
 				<reportElement x="22" y="13" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Identificación:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="56" width="111" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombres y Apellidos:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="99" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Celular:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="140" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Teléfono:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="183" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Correo:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="261" y="229" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de Sangre:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="422" y="229" width="46" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Género:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="261" y="275" width="33" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Etnia:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="275" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado Civil:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="229" width="111" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de nacimiento:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="143" y="13" width="135" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="56" width="226" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="99" width="157" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_celular}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="140" width="157" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="183" width="226" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_correo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="341" y="229" width="29" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_tipo_sangre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="481" y="229" width="62" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_genero}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="341" y="275" width="71" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_etnia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="275" width="105" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_estado_civil}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="229" width="105" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_fecha_nacimiento}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="429" y="13" width="116" height="170"/>
-				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="421" y="275" width="38" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Idioma:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="481" y="275" width="62" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_idioma_raiz}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="261" y="321" width="65" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar Natal:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="22" y="321" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar Residencia:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="341" y="321" width="144" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{lugarnatal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="321" width="105" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{lugarresidencia}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="412" y="56" width="117" height="126"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<pageFooter>

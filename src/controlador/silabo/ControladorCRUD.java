@@ -182,6 +182,7 @@ public class ControladorCRUD {
                 }
 
                 modeloTabla.addRow(new Object[]{
+                    
                     smd.getIdMateria().getNombre(),
                     smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
                     estado,
@@ -224,7 +225,7 @@ public class ControladorCRUD {
 
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            new SilaboBD(conexion).eliminar(seleccionarSilabo());
+            new SilaboBD(conexion).eliminarLogico(seleccionarSilabo());
             JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
         }
 

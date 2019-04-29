@@ -1,6 +1,6 @@
 package controlador.login;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -106,7 +106,7 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-                Middlewares.setLoadCursorInWindow(vista);
+                Effects.setLoadCursor(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
@@ -119,9 +119,9 @@ public class LoginCTR {
                 properties.put("password", PASSWORD);
 
                 Propiedades.generateUserProperties(properties);
-                
+
                 ResourceManager.setConecct(conectar.getConecction("Al iniciar la aplicacion"));
-                
+
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
 
@@ -140,8 +140,9 @@ public class LoginCTR {
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-
+                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
@@ -149,7 +150,6 @@ public class LoginCTR {
             }).start();
         }
     }
-
 
     /**
      * Recibimos la contraseña para ingresar al sistema

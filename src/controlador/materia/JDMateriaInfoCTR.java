@@ -163,7 +163,7 @@ public class JDMateriaInfoCTR {
     }
 
     private void llenarTblCoRequisitos() {
-        coRequisitos = matRe.buscarCoRequisitos(m.getId());
+        coRequisitos = matRe.buscarCoRequisitosDe(m.getId());
         mdTblCo.setRowCount(0);
         if (coRequisitos != null) {
             coRequisitos.forEach(mt -> {
@@ -174,7 +174,7 @@ public class JDMateriaInfoCTR {
     }
 
     private void llenarTblPreRequisitos() {
-        preRequisitos = matRe.buscarPreRequisitos(m.getId());
+        preRequisitos = matRe.buscarPreRequisitosDe(m.getId());
         mdTblPre.setRowCount(0);
         if (preRequisitos != null) {
             preRequisitos.forEach(mt -> {

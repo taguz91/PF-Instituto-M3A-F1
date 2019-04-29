@@ -57,7 +57,7 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
         }
     }
 
-    public ArrayList<MateriaRequisitoMD> buscarPreRequisitos(int idMateria) {
+    public ArrayList<MateriaRequisitoMD> buscarPreRequisitosDe(int idMateria) {
         String sql = "SELECT id_requisito, mr.id_materia_requisito, materia_nombre\n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
                 + "WHERE mr.id_materia = " + idMateria + " AND tipo_requisito = 'P' AND\n"
@@ -65,7 +65,13 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
         return consultarMaterias(sql);
     }
 
-    public ArrayList<MateriaRequisitoMD> buscarCoRequisitos(int idMateria) {
+    /**
+     * Buscamos los co-requisitos de una materia
+     *
+     * @param idMateria
+     * @return
+     */
+    public ArrayList<MateriaRequisitoMD> buscarCoRequisitosDe(int idMateria) {
         String sql = "SELECT id_requisito, mr.id_materia_requisito, materia_nombre\n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
                 + "WHERE mr.id_materia = " + idMateria + " AND tipo_requisito = 'C' AND\n"
@@ -73,12 +79,47 @@ public class MateriaRequisitoBD extends MateriaRequisitoMD {
         return consultarMaterias(sql);
     }
 
+    /**
+     * Buscamos todas las materias que son necesaria que este este co requisito
+     *
+     * @param idMateria
+     * @return
+     */
+    public ArrayList<MateriaRequisitoMD> buscarDeQueEsCorequisito(int idMateria) {
+        String sql = "SELECT id_requisito, mr.id_materia_requisito, mr.id_materia, materia_nombre\n"
+                + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m\n"
+                + "WHERE mr.id_materia_requisito = " + idMateria + " AND tipo_requisito = 'C' AND\n"
+                + "m.id_materia = mr.id_materia;";
+        ArrayList<MateriaRequisitoMD> requisitos = new ArrayList();
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    MateriaRequisitoMD mtr = new MateriaRequisitoMD();
+                    mtr.setId(rs.getInt("id_requisito"));
+                    MateriaMD mt = new MateriaMD();
+                    mt.setId(rs.getInt("id_materia"));
+                    mt.setNombre(rs.getString("materia_nombre"));
+                    mtr.setMateria(mt);
+
+                    requisitos.add(mtr);
+                }
+                return requisitos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar materias requisitos " + e.getMessage());
+            return null;
+        }
+    }
+
     public ArrayList<MateriaRequisitoMD> buscarRequisitosPorCarrera(int idCarrera) {
         String sql = "SELECT id_requisito, mr.id_materia, id_materia_requisito, \n"
                 + "materia_nombre, tipo_requisito \n"
                 + "FROM public.\"MateriaRequisitos\" mr, public.\"Materias\" m \n"
                 + "WHERE mr.id_materia_requisito = m.id_materia AND\n"
-                + "m.id_carrera = "+idCarrera+" ORDER BY id_materia;";
+                + "m.id_carrera = " + idCarrera + " ORDER BY id_materia;";
         ArrayList<MateriaRequisitoMD> requisitos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
