@@ -49,6 +49,7 @@ public class PersonaMD {
     private String sector;
     private String idioma;
     private String tipoResidencia;
+    private String categoriaMigratoria;
     private boolean personaActiva;
 
     //33 atributos
@@ -57,7 +58,15 @@ public class PersonaMD {
     }
 
     //Constructor con todos los atributos de la clase Persona
-    public PersonaMD(int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+    public PersonaMD(int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia,
+            Image foto, String identificacion, String primerApellido, String segundoApellido,
+            String primerNombre, String segundoNombre, LocalDate fechaNacimiento,
+            String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz,
+            String tipoSangre, String telefono, String celular, String correo,
+            LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad,
+            byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal,
+            String numeroCasa, String calleSecundaria, String referencia, String sector,
+            String idioma, String tipoResidencia, String categoriaMigratoria, boolean personaActiva) {
         this.idPersona = idPersona;
         this.lugarNatal = lugarNatal;
         this.lugarResidencia = lugarResidencia;
@@ -89,10 +98,19 @@ public class PersonaMD {
         this.sector = sector;
         this.idioma = idioma;
         this.tipoResidencia = tipoResidencia;
+        this.categoriaMigratoria = categoriaMigratoria;
         this.personaActiva = personaActiva;
     }
 
-    public PersonaMD(LugarMD lugarNatal, LugarMD lugarResidencia, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
+    public PersonaMD(LugarMD lugarNatal, LugarMD lugarResidencia, String identificacion,
+            String primerApellido, String segundoApellido, String primerNombre,
+            String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo,
+            String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre,
+            String telefono, String celular, String correo, LocalDate fechaRegistro,
+            boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad,
+            String carnetConadis, String callePrincipal, String numeroCasa,
+            String calleSecundaria, String referencia, String sector, String idioma,
+            String tipoResidencia, String categoriaMigratoria, boolean personaActiva) {
         this.lugarNatal = lugarNatal;
         this.lugarResidencia = lugarResidencia;
         this.identificacion = identificacion;
@@ -122,6 +140,7 @@ public class PersonaMD {
         this.sector = sector;
         this.idioma = idioma;
         this.tipoResidencia = tipoResidencia;
+        this.categoriaMigratoria = categoriaMigratoria;
         this.personaActiva = personaActiva;
     }
 
@@ -163,6 +182,14 @@ public class PersonaMD {
 
     public void setLugarResidencia(LugarMD lugarResidencia) {
         this.lugarResidencia = lugarResidencia;
+    }
+
+    public String getCategoriaMigratoria() {
+        return categoriaMigratoria;
+    }
+
+    public void setCategoriaMigratoria(String categoriaMigratoria) {
+        this.categoriaMigratoria = categoriaMigratoria;
     }
 
     public Image getFoto() {
@@ -430,6 +457,7 @@ public class PersonaMD {
         this.sector = per.getSector();
         this.idioma = per.getIdioma();
         this.tipoResidencia = per.getTipoResidencia();
+        this.categoriaMigratoria = per.getCategoriaMigratoria();
         this.personaActiva = per.isPersonaActiva();
 
     }
@@ -444,7 +472,22 @@ public class PersonaMD {
 
     @Override
     public String toString() {
-        return "PersonaMD{" + "file=" + file + ", logBytes=" + logBytes + ", idPersona=" + idPersona + ", lugarNatal=" + lugarNatal + ", lugarResidencia=" + lugarResidencia + ", foto=" + foto + ", identificacion=" + identificacion + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido + ", primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", etnia=" + etnia + ", idiomaRaiz=" + idiomaRaiz + ", tipoSangre=" + tipoSangre + ", telefono=" + telefono + ", celular=" + celular + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + ", discapacidad=" + discapacidad + ", tipoDiscapacidad=" + tipoDiscapacidad + ", porcentajeDiscapacidad=" + porcentajeDiscapacidad + ", carnetConadis=" + carnetConadis + ", callePrincipal=" + callePrincipal + ", numeroCasa=" + numeroCasa + ", calleSecundaria=" + calleSecundaria + ", referencia=" + referencia + ", sector=" + sector + ", idioma=" + idioma + ", tipoResidencia=" + tipoResidencia + ", personaActiva=" + personaActiva + '}';
+        return "PersonaMD{" + "file=" + file + ", logBytes=" + logBytes + ", idPersona="
+                + idPersona + ", lugarNatal=" + lugarNatal + ", lugarResidencia="
+                + lugarResidencia + ", foto=" + foto + ", identificacion="
+                + identificacion + ", primerApellido=" + primerApellido + ", segundoApellido="
+                + segundoApellido + ", primerNombre=" + primerNombre + ", segundoNombre="
+                + segundoNombre + ", fechaNacimiento=" + fechaNacimiento + ", genero="
+                + genero + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", etnia="
+                + etnia + ", idiomaRaiz=" + idiomaRaiz + ", tipoSangre=" + tipoSangre + ", telefono="
+                + telefono + ", celular=" + celular + ", correo=" + correo + ", fechaRegistro="
+                + fechaRegistro + ", discapacidad=" + discapacidad + ", tipoDiscapacidad="
+                + tipoDiscapacidad + ", porcentajeDiscapacidad=" + porcentajeDiscapacidad + ", carnetConadis="
+                + carnetConadis + ", callePrincipal=" + callePrincipal + ", numeroCasa="
+                + numeroCasa + ", calleSecundaria=" + calleSecundaria + ", referencia="
+                + referencia + ", sector=" + sector + ", idioma=" + idioma + ", tipoResidencia="
+                + tipoResidencia + ", categoriaMigratoria=" + categoriaMigratoria + ", personaActiva="
+                + personaActiva + '}';
     }
 
     public ProfesionMD getProfesion() {

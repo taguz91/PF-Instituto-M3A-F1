@@ -72,7 +72,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
                     + "AND m.materia_nombre ILIKE '%" + clave[1] + "%'\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND s.estado_silabo<>-1");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[2]));
@@ -204,6 +204,24 @@ public class SilaboBD extends SilaboMD {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
+                    + "	WHERE id_silabo=?");
+
+            st.setInt(1, s.getIdSilabo());
+
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void eliminarLogico(SilaboMD s) {
+
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
+                    + "	SET estado_silabo=-1"
                     + "	WHERE id_silabo=?");
 
             st.setInt(1, s.getIdSilabo());

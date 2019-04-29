@@ -83,6 +83,14 @@
                 <Property name="text" type="java.lang.String" value="Matricula"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnRetirados">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Delete_File_20px_1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Matriculas Anuladas"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtListaAlumnos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -99,11 +107,6 @@
                 <Property name="text" type="java.lang.String" value="Malla alumnos"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnRetirados">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Alumnos retirados"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtDocenteMateria">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -114,6 +117,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtRolesPeriodo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
               <Events>
@@ -287,6 +293,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>
@@ -607,6 +616,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnIngresarRol">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Permanent_Job_25px.png"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
