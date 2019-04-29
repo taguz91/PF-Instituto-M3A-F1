@@ -792,17 +792,17 @@ public class FrmAlumnoCTR {
                     if (bdAlumno.guardarTitulo(profesion) == true) {
                         profesion.setId_Titulo(bdAlumno.idProfesion(profesion.getTitulo_nombre()).getId_Titulo());
                         if (bdAlumno.guardarTituloAuxiliar(profesion, bdAlumno.getIdPersona())) {
-                            JOptionPane.showMessageDialog(null, "Datos grabados correctamente con Nivel Superior");
+                            JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                             botonreporteAlumno();
                             frmAlumno.dispose();
                             ctrPrin.cerradoJIF();
                         } else {
                             reiniciarComponentes(frmAlumno);
-                            JOptionPane.showMessageDialog(null, "Error en grabar los datos con Observacion");
+                            JOptionPane.showMessageDialog(null, "Error en grabar los datos del Título Superior");
                         }
                     } else {
                         reiniciarComponentes(frmAlumno);
-                        JOptionPane.showMessageDialog(null, "Error en grabar los datos con Título Superior");
+                        JOptionPane.showMessageDialog(null, "Error en grabar los datos del Título Superior");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
