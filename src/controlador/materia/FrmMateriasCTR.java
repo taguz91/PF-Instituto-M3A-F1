@@ -457,7 +457,7 @@ public class FrmMateriasCTR {
 
             if (editar) {
                 
-                if(materia.editarMateria(materiaBD.filtrarIdCarrera(frmMaterias.getCbCarrera().getSelectedItem().toString(), 0).getId())){
+                if(materia.editarMateria(materiaBD.capturarIDMaterias(materia.getNombre()).getId())){
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
                     frmMaterias.dispose();
                 } else{
