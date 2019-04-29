@@ -120,7 +120,6 @@ public class FrmPersonaCTR {
         iniciarValidaciones();
 
         //Cuando se realice una accion en alguno de esos combos
-
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
         frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito());
         frmPersona.getCmbPaisReside().addActionListener(e -> cargarProvinciasResidencia());
