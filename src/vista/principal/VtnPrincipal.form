@@ -293,6 +293,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>

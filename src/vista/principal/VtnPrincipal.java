@@ -834,6 +834,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgDocenteMt.setText("Materia docente");
         mnIngresar.add(mnIgDocenteMt);
 
+        mnIgRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Permanent_Job_20px.png"))); // NOI18N
         mnIgRolesPeriodo.setText("Roles periodo");
         mnIngresar.add(mnIgRolesPeriodo);
 
