@@ -485,8 +485,8 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
 //        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
 
-        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
-                frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
+//        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
+//                frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
