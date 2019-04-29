@@ -392,9 +392,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMateria = new javax.swing.JMenuItem();
         mnCtInscripcion = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
+        mnCtAlmnRetirados = new javax.swing.JMenuItem();
         mnCtListaAlumnos = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
-        mnCtAlmnRetirados = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
@@ -489,6 +489,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnConsultarSilabo.setToolTipText("Consultar Silabo");
         btnConsultarSilabo.setFocusPainted(false);
 
+        btnIngresarRol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Permanent_Job_25px.png"))); // NOI18N
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
@@ -719,6 +720,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMatricula.setText("Matricula");
         mnTipoNotas.add(mnCtMatricula);
 
+        mnCtAlmnRetirados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Delete_File_20px_1.png"))); // NOI18N
+        mnCtAlmnRetirados.setText("Matriculas Anuladas");
+        mnTipoNotas.add(mnCtAlmnRetirados);
+
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
         mnCtListaAlumnos.setText("Lista alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
@@ -727,13 +732,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno.setText("Malla alumnos");
         mnTipoNotas.add(mnCtMallaAlumno);
 
-        mnCtAlmnRetirados.setText("Alumnos retirados");
-        mnTipoNotas.add(mnCtAlmnRetirados);
-
         mnCtDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_20px.png"))); // NOI18N
         mnCtDocenteMateria.setText("Materia docentes");
         mnTipoNotas.add(mnCtDocenteMateria);
 
+        mnCtRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Permanent_Job_20px.png"))); // NOI18N
         mnCtRolesPeriodo.setText("Roles periodo");
         mnCtRolesPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
