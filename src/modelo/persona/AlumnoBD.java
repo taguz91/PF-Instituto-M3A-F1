@@ -610,7 +610,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Alumnos\" a, public.\"Personas\" p \n"
                 + "WHERE p.id_persona = a.id_persona AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR "
+                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%' OR \n"
                 + "	persona_identificacion ILIKE '%"+aguja+"%') "
                 + "AND persona_activa = true;";
         return consultarAlumnos(sql);

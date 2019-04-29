@@ -1,6 +1,6 @@
 package controlador.accesos;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
@@ -50,16 +50,16 @@ public class VtnAccesosCTR {
         tablaAccesos = (DefaultTableModel) vista.getTblAccesosDeRol().getModel();
 
         new Thread(() -> {
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
             listaAccesosbd = AccesosBD.SelectAll();
             cargarTabla(listaAccesosbd);
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
         }).start();
 
         try {
             vista.show();
             desktop.getDpnlPrincipal().add(vista);
-            Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+            Effects.centerFrame(vista, desktop.getDpnlPrincipal());
             vista.setSelected(true);
 
         } catch (PropertyVetoException ex) {
@@ -89,7 +89,7 @@ public class VtnAccesosCTR {
         new Thread(() -> {
             if (cargarTabla) {
 
-                Middlewares.setLoadCursor(vista);
+                Effects.setLoadCursor(vista);
 
                 cargarTabla = false;
 
@@ -103,9 +103,9 @@ public class VtnAccesosCTR {
 
                 cargarTabla = true;
 
-                Middlewares.setDefaultCursor(vista);
+                Effects.setDefaultCursor(vista);
 
-                Middlewares.setTextInLabel(desktop.getLblEstado(), "COMPLETADO", 2);
+
             }
 
         }).start();

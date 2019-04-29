@@ -78,20 +78,10 @@ public class PnlHorarioAlmnCTR {
         }
     }
 
-    private ArrayList<SesionClaseMD> sesionesDia(ArrayList<SesionClaseMD> sesiones, int dia) {
-        ArrayList<SesionClaseMD> sd = new ArrayList<>();
-        sesiones.forEach(s -> {
-            if (s.getDia() == dia) {
-                sd.add(s);
-            }
-        });
-        return sd;
-    }
-
     private void buscarClm(SesionClaseMD s) {
         int posI = -1, posF = -1;
         int dia = s.getDia();
-        
+
         for (int i = 0; i < hm.length; i++) {
             if (hm[i].equals(tranformar(s.getHoraIni()))) {
                 posI = i;

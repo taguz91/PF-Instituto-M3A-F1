@@ -104,5 +104,9 @@ public class CursoMD {
     public void setNumMatriculados(int numMatriculados) {
         this.numMatriculados = numMatriculados;
     }
+    
+    public int getCapaciadActual(){
+        return capacidad - numMatriculados;
+    }
 
 }
