@@ -23,19 +23,19 @@ import modelo.lugar.LugarBD;
  * @author Lina
  */
 public class PersonaBD extends PersonaMD {
-
+    
     private final ConectarDB conecta;
     //Se usaran estas clases para consultar
     private final LugarBD lugar;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
-
+    
     public PersonaBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.lugar = new LugarBD(conecta);
     }
-
+    
     public void insertarPersona() {
 
         //Aqui id_persona ya no va porque es autoincrementable
@@ -50,7 +50,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                 + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -60,8 +60,8 @@ public class PersonaBD extends PersonaMD {
                 + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "');";
-
+                + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
+        
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
                     + "id_lugar_natal, id_lugar_residencia,"
@@ -72,7 +72,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -82,14 +82,15 @@ public class PersonaBD extends PersonaMD {
                     + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                     + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "');";
+                    + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
         }
-
+        
         if (conecta.nosql(nsql) == null) {
             System.out.println("Se guardo correctamente");
         }
     }
 
+    //persona_categoria_migratoria
     public void insertarPersonaConFoto() {
         //Aqui id_persona ya no va porque es autoincrementable
         String nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -100,7 +101,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
                 + "persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -109,8 +110,8 @@ public class PersonaBD extends PersonaMD {
                 + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "');";
-
+                + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
+        
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
                     + "id_lugar_natal, id_lugar_residencia, persona_foto,"
@@ -121,7 +122,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -131,9 +132,9 @@ public class PersonaBD extends PersonaMD {
                     + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                     + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "');";
+                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         }
-
+        
         PreparedStatement ps = conecta.sqlPS(nsql);
         if (ps != null) {
             try {
@@ -166,9 +167,10 @@ public class PersonaBD extends PersonaMD {
                 + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                 + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                 + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
-
+        
         if (isDiscapacidad()) {
             sql = "UPDATE public.\"Personas\" SET\n"
                     + " id_lugar_natal = " + getLugarNatal().getId()
@@ -189,12 +191,13 @@ public class PersonaBD extends PersonaMD {
                     + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                     + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                     + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                     + " WHERE id_persona = " + aguja + ";";
         }
-
+        
         System.out.println(sql);
-
+        
         if (conecta.nosql(sql) == null) {
             System.out.println("Se edito correctamente");
             return true;
@@ -203,7 +206,7 @@ public class PersonaBD extends PersonaMD {
             return false;
         }
     }
-
+    
     public void editarPersonaConFoto(int aguja) {
         String nsql = "UPDATE public.\"Personas\" SET\n"
                 + " id_lugar_natal = " + getLugarNatal().getId()
@@ -222,9 +225,10 @@ public class PersonaBD extends PersonaMD {
                 + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                 + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                 + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
-
+        
         if (isDiscapacidad()) {
             nsql = "UPDATE public.\"Personas\" SET\n"
                     + " id_lugar_natal = " + getLugarNatal().getId()
@@ -245,10 +249,11 @@ public class PersonaBD extends PersonaMD {
                     + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                     + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                     + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                     + " WHERE id_persona = " + aguja + ";";
         }
-
+        
         PreparedStatement ps = conecta.sqlPS(nsql);
         if (ps != null) {
             try {
@@ -263,7 +268,7 @@ public class PersonaBD extends PersonaMD {
             }
         }
     }
-
+    
     public boolean activarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa = 'true'"
@@ -275,7 +280,7 @@ public class PersonaBD extends PersonaMD {
             System.out.println("Error");
             return false;
         }
-
+        
     }
 
     // Utilizamos la sentencia update para modificar el estado de una persona
@@ -284,7 +289,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
-
+        
         if (conecta.nosql(sql) == null) {
             return true;
         } else {
@@ -299,7 +304,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE id_persona = '" + idpersona + "';";
-
+        
         if (conecta.nosql(sql) == null) {
             return true;
         } else {
@@ -318,7 +323,7 @@ public class PersonaBD extends PersonaMD {
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' ORDER BY persona_primer_apellido ASC;";
         return consultarParaTabla(sql);
     }
-
+    
     public ArrayList<PersonaMD> buscar(String aguja) {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
@@ -341,7 +346,7 @@ public class PersonaBD extends PersonaMD {
                 + "	WHERE \"Personas\".id_persona = \"Alumnos\".id_persona AND persona_activa = true;";
         return consultarParaTabla(sql);
     }
-
+    
     public ArrayList<PersonaMD> cargarDocentes() {
         String sql = "SELECT \"Personas\".id_persona, \n"
                 + "persona_identificacion, persona_primer_apellido, \n"
@@ -366,13 +371,13 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " id_persona = " + idPersona + ";";
-
+        
         return consultarPor(sql);
     }
-
+    
     public PersonaMD buscarPersona(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -386,13 +391,13 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " persona_identificacion ='" + identificacion + "'";
-
+        
         return consultarPor(sql);
     }
-
+    
     public PersonaMD buscarPersonaNoActiva(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -406,13 +411,13 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'false' AND"
                 + " persona_identificacion ='" + identificacion + "'";
-
+        
         return consultarPor(sql);
     }
-
+    
     public PersonaMD existePersona(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -426,10 +431,10 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE \n"
                 + " persona_identificacion ='" + identificacion + "'";
-
+        
         return consultarPor(sql);
     }
 
@@ -441,10 +446,10 @@ public class PersonaBD extends PersonaMD {
                 + " persona_celular "
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " id_persona = " + idPersona + ";";
-
+        
         return consultarParaReferencia(sql);
     }
-
+    
     public PersonaMD buscarPersonaParaReferencia(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -453,10 +458,10 @@ public class PersonaBD extends PersonaMD {
                 + " persona_celular "
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " persona_identificacion ='" + identificacion + "'";
-
+        
         return consultarParaReferencia(sql);
     }
-
+    
     private PersonaMD consultarParaReferencia(String sql) {
         PersonaMD p = new PersonaMD();
         ResultSet rs = conecta.sql(sql);
@@ -483,7 +488,7 @@ public class PersonaBD extends PersonaMD {
             return null;
         }
     }
-
+    
     private ArrayList<PersonaMD> consultarParaTabla(String sql) {
         ArrayList<PersonaMD> pers = new ArrayList();
         PersonaMD p;
@@ -533,7 +538,7 @@ public class PersonaBD extends PersonaMD {
             return null;
         }
     }
-
+    
     private PersonaMD obtenerPersona(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
@@ -561,13 +566,13 @@ public class PersonaBD extends PersonaMD {
                     }
                 }
             }
-
+            
             persona.setIdentificacion(rs.getString("persona_identificacion"));
             persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
             persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
             persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
             persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
+            
             if (rs.wasNull()) {
                 persona.setGenero(null);
             } else {
@@ -580,35 +585,35 @@ public class PersonaBD extends PersonaMD {
             persona.setEtnia(rs.getString("persona_etnia"));
             persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
             persona.setTipoSangre(rs.getString("persona_tipo_sangre"));
-
+            
             if (rs.wasNull()) {
                 persona.setTelefono(null);
             } else {
                 persona.setTelefono(rs.getString("persona_telefono"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setCelular(null);
             } else {
                 persona.setCelular(rs.getString("persona_celular"));
             }
-
+            
             persona.setCorreo(rs.getString("persona_correo"));
             persona.setFechaRegistro(rs.getDate("persona_fecha_registro").toLocalDate());
             persona.setDiscapacidad(rs.getBoolean("persona_discapacidad"));
-
+            
             if (rs.wasNull()) {
                 persona.setTipoDiscapacidad(rs.getString(null));
             } else {
                 persona.setTipoDiscapacidad(rs.getString("persona_tipo_discapacidad"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setPorcentajeDiscapacidad(0);
             } else {
                 persona.setPorcentajeDiscapacidad(rs.getInt("persona_porcenta_discapacidad"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setCarnetConadis(null);
             } else {
@@ -621,33 +626,33 @@ public class PersonaBD extends PersonaMD {
                 persona.setCallePrincipal(rs.getString("persona_calle_principal"));
             }*/
             persona.setCallePrincipal(rs.getString("persona_calle_principal"));
-
+            
             if (rs.wasNull()) {
                 persona.setNumeroCasa(null);
             } else {
                 persona.setNumeroCasa(rs.getString("persona_numero_casa"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setCalleSecundaria(null);
             } else {
                 persona.setCalleSecundaria(rs.getString("persona_calle_secundaria"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setReferencia(null);
             } else {
                 persona.setReferencia(rs.getString("persona_referencia"));
             }
-
+            
             if (rs.wasNull()) {
                 persona.setSector(null);
             } else {
                 persona.setSector(rs.getString("persona_sector"));
             }
-
+            
             persona.setIdioma(rs.getString("persona_idioma"));
-
+            
             if (rs.wasNull()) {
                 persona.setTipoResidencia(null);
             } else {
@@ -657,7 +662,13 @@ public class PersonaBD extends PersonaMD {
             //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
             persona.setPersonaActiva(rs.getBoolean("persona_activa"));
-
+            
+            if (rs.wasNull()) {
+                persona.setCategoriaMigratoria(null);
+            } else {
+                persona.setCategoriaMigratoria(rs.getString("persona_categoria_migratoria"));
+            }
+            
             return persona;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener persona");
@@ -665,7 +676,7 @@ public class PersonaBD extends PersonaMD {
             return null;
         }
     }
-
+    
     private PersonaMD obtenerPersonaSinValidar(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
@@ -675,7 +686,7 @@ public class PersonaBD extends PersonaMD {
             //Buscamos el lugar que corresponde a cada cosa
             persona.setLugarNatal(lugar.buscar(rs.getInt("id_lugar_natal")));
             persona.setLugarResidencia(lugar.buscar(rs.getInt("id_lugar_residencia")));
-
+            
             is = rs.getBinaryStream("persona_foto");
             //Pasamos la imagen
             if (is != null) {
@@ -688,13 +699,13 @@ public class PersonaBD extends PersonaMD {
                     System.out.println("Error al pasar la foto: " + ex.getMessage());
                 }
             }
-
+            
             persona.setIdentificacion(rs.getString("persona_identificacion"));
             persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
             persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
             persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
             persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
+            
             persona.setGenero(rs.getString("persona_genero"));
 
             //Aqui solo cojemos la letra de la posicion 0 porque solo recibe un char
@@ -703,21 +714,21 @@ public class PersonaBD extends PersonaMD {
             persona.setEtnia(rs.getString("persona_etnia"));
             persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
             persona.setTipoSangre(rs.getString("persona_tipo_sangre"));
-
+            
             persona.setTelefono(rs.getString("persona_telefono"));
-
+            
             persona.setCelular(rs.getString("persona_celular"));
-
+            
             persona.setCorreo(rs.getString("persona_correo"));
             persona.setFechaRegistro(rs.getDate("persona_fecha_registro").toLocalDate());
             persona.setDiscapacidad(rs.getBoolean("persona_discapacidad"));
-
+            
             persona.setTipoDiscapacidad(rs.getString("persona_tipo_discapacidad"));
-
+            
             persona.setPorcentajeDiscapacidad(rs.getInt("persona_porcenta_discapacidad"));
             persona.setCarnetConadis(rs.getString("persona_carnet_conadis"));
             persona.setCallePrincipal(rs.getString("persona_calle_principal"));
-
+            
             persona.setNumeroCasa(rs.getString("persona_numero_casa"));
             persona.setCalleSecundaria(rs.getString("persona_calle_secundaria"));
             persona.setReferencia(rs.getString("persona_referencia"));
@@ -729,7 +740,8 @@ public class PersonaBD extends PersonaMD {
             //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
             persona.setPersonaActiva(rs.getBoolean("persona_activa"));
-
+            persona.setCategoriaMigratoria(rs.getString("persona_categoria_migratoria"));
+            
             return persona;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener persona");
@@ -737,9 +749,9 @@ public class PersonaBD extends PersonaMD {
             return null;
         }
     }
-
+    
     public static List<PersonaMD> selectWhereUsername(String username) {
-
+        
         String SELECT = "SELECT\n"
                 + "\"public\".\"Personas\".id_persona,\n"
                 + "\"public\".\"Personas\".persona_primer_apellido,\n"
@@ -752,36 +764,35 @@ public class PersonaBD extends PersonaMD {
                 + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
-
+        
         List<PersonaMD> lista = new ArrayList<>();
-
+        
         ResultSet rs = ResourceManager.Query(SELECT);
-
+        
         try {
-
+            
             while (rs.next()) {
                 PersonaMD persona = new PersonaMD();
-
+                
                 persona.setIdPersona(rs.getInt("id_persona"));
                 persona.setIdentificacion(rs.getString("persona_identificacion"));
                 persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
+                
                 lista.add(persona);
-
+                
             }
-
+            
         } catch (SQLException e) {
-
+            
             System.out.println(e.getMessage());
-
+            
         }
-
+        
         return lista;
     }
-
     public List<PersonaMD> filtrarEliminados() {
         String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n"
@@ -830,5 +841,5 @@ public class PersonaBD extends PersonaMD {
 
         return map;
     }
-
+    
 }

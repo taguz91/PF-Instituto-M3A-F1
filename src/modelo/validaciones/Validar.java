@@ -116,11 +116,11 @@ public class Validar {
     }
 
     public static boolean esCorreo(String entrada) {
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+$");
+        return entrada.matches("[A-Za-z0-9\\.{1}\\_{1}\\-{1}]+@{1}[a-zA-Z]+\\.{1}+[a-zA-Z]+$");
     }
 
     public static boolean esCorreoAr(String entrada) {
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+\\.+[a-zA-Z]+$");
+        return entrada.matches("[A-Za-z0-9\\.{1}\\_{1}\\-{1}]+@{1}[a-zA-Z]+\\.{1}+[a-zA-Z]+\\.{1}+[a-zA-Z]+$");
     }
 
     public static boolean esNota(String entrada) {
