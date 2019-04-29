@@ -1,6 +1,5 @@
 package modelo.curso;
 
-import java.util.Objects;
 import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -12,81 +11,82 @@ import modelo.persona.DocenteMD;
  */
 public class CursoMD {
 
-    private int id_curso;
-    private MateriaMD id_materia;
-    private PeriodoLectivoMD id_prd_lectivo;
-    private DocenteMD id_docente;
-    private String curso_nombre;
-    private JornadaMD curso_jornada;
-    private int curso_capacidad;
-    private int curso_ciclo;
+    private int id;
+    private MateriaMD materia;
+    private PeriodoLectivoMD periodo;
+    private DocenteMD docente;
+    private String nombre;
+    private JornadaMD jornada;
+    private int capacidad;
+    private int ciclo;
     private String paralelo; 
+    private int numMatriculados;
 
     public CursoMD() {
     }
 
-    public int getId_curso() {
-        return id_curso;
+    public int getId() {
+        return id;
     }
 
-    public void setId_curso(int id_curso) {
-        this.id_curso = id_curso;
+    public void setId(int id_curso) {
+        this.id = id_curso;
     }
 
-    public MateriaMD getId_materia() {
-        return id_materia;
+    public MateriaMD getMateria() {
+        return materia;
     }
 
-    public void setId_materia(MateriaMD id_materia) {
-        this.id_materia = id_materia;
+    public void setMateria(MateriaMD id_materia) {
+        this.materia = id_materia;
     }
 
-    public PeriodoLectivoMD getId_prd_lectivo() {
-        return id_prd_lectivo;
+    public PeriodoLectivoMD getPeriodo() {
+        return periodo;
     }
 
-    public void setId_prd_lectivo(PeriodoLectivoMD id_prd_lectivo) {
-        this.id_prd_lectivo = id_prd_lectivo;
+    public void setPeriodo(PeriodoLectivoMD periodo) {
+        this.periodo = periodo;
     }
 
-    public DocenteMD getId_docente() {
-        return id_docente;
+    public DocenteMD getDocente() {
+        return docente;
     }
 
-    public void setId_docente(DocenteMD id_docente) {
-        this.id_docente = id_docente;
+    public void setDocente(DocenteMD docente) {
+        this.docente = docente;
     }
 
-    public String getCurso_nombre() {
-        return curso_nombre;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setCurso_nombre(String curso_nombre) {
-        this.curso_nombre = curso_nombre;
+    public void setNombre(String curso_nombre) {
+        this.nombre = curso_nombre;
     }
 
-    public JornadaMD getCurso_jornada() {
-        return curso_jornada;
+    public JornadaMD getJornada() {
+        return jornada;
     }
 
-    public void setCurso_jornada(JornadaMD curso_jornada) {
-        this.curso_jornada = curso_jornada;
+    public void setJornada(JornadaMD jornada) {
+        this.jornada = jornada;
     }
 
-    public int getCurso_capacidad() {
-        return curso_capacidad;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setCurso_capacidad(int curso_capacidad) {
-        this.curso_capacidad = curso_capacidad;
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
-    public int getCurso_ciclo() {
-        return curso_ciclo;
+    public int getCiclo() {
+        return ciclo;
     }
 
-    public void setCurso_ciclo(int curso_ciclo) {
-        this.curso_ciclo = curso_ciclo;
+    public void setCiclo(int ciclo) {
+        this.ciclo = ciclo;
     }
 
     public String getParalelo() {
@@ -97,59 +97,16 @@ public class CursoMD {
         this.paralelo = paralelo;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.id_curso;
-        hash = 97 * hash + Objects.hashCode(this.id_materia);
-        hash = 97 * hash + Objects.hashCode(this.id_prd_lectivo);
-        hash = 97 * hash + Objects.hashCode(this.id_docente);
-        hash = 97 * hash + Objects.hashCode(this.curso_nombre);
-        hash = 97 * hash + Objects.hashCode(this.curso_jornada);
-        hash = 97 * hash + this.curso_capacidad;
-        hash = 97 * hash + this.curso_ciclo;
-        return hash;
+    public int getNumMatriculados() {
+        return numMatriculados;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CursoMD other = (CursoMD) obj;
-        if (this.id_curso != other.id_curso) {
-            return false;
-        }
-        if (!Objects.equals(this.id_materia, other.id_materia)) {
-            return false;
-        }
-        if (!Objects.equals(this.id_prd_lectivo, other.id_prd_lectivo)) {
-            return false;
-        }
-        if (!Objects.equals(this.id_docente, other.id_docente)) {
-            return false;
-        }
-        if (!Objects.equals(this.curso_nombre, other.curso_nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.curso_jornada, other.curso_jornada)) {
-            return false;
-        }
-        if (this.curso_capacidad != other.curso_capacidad) {
-            return false;
-        }
-        if (this.curso_ciclo != other.curso_ciclo) {
-            return false;
-        }
-        return true;
+    public void setNumMatriculados(int numMatriculados) {
+        this.numMatriculados = numMatriculados;
     }
-
-    @Override
-    public String toString() {
-        return "Curso{" + "id_curso=" + id_curso + ", id_materia=" + id_materia + ", id_prd_lectivo=" + id_prd_lectivo + ", id_docente=" + id_docente + ", curso_nombre=" + curso_nombre + ", curso_jornada=" + curso_jornada + ", curso_capacidad=" + curso_capacidad + ", curso_ciclo=" + curso_ciclo + '}';
+    
+    public int getCapaciadActual(){
+        return capacidad - numMatriculados;
     }
 
 }

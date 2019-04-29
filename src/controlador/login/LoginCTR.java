@@ -1,6 +1,6 @@
 package controlador.login;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
 import modelo.propiedades.Propiedades;
@@ -81,9 +79,6 @@ public class LoginCTR {
             }
         });
 
-        vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-        vista.getBtnDevMode().addActionListener(e -> clickDevMode());
-
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
@@ -100,7 +95,7 @@ public class LoginCTR {
         if (c.length() > 1 && c.length() <= 2) {
             if (c.equalsIgnoreCase("J.")) {
                 vista.getTxtUsername().setText("JOHNNY");
-                vista.getTxtPassword().setText("DEV");
+                //vista.getTxtPassword().
             }
         }
     }
@@ -111,7 +106,7 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-                Middlewares.setLoadCursorInWindow(vista);
+                Effects.setLoadCursor(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
@@ -124,9 +119,9 @@ public class LoginCTR {
                 properties.put("password", PASSWORD);
 
                 Propiedades.generateUserProperties(properties);
-                
-                ResourceManager.setConecct(conectar.getConecction(""));
-                
+
+                ResourceManager.setConecct(conectar.getConecction("Al iniciar la aplicacion"));
+
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
 
@@ -145,115 +140,14 @@ public class LoginCTR {
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-
+                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
 
             }).start();
-        }
-
-    }
-
-    private void LoginGenerico() {
-        boolean entrar = true;
-        JPasswordField pass = new JPasswordField();
-        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        pass.setFocusable(true);
-        pass.requestFocus();
-        pass.selectAll();
-
-        if (o == JOptionPane.OK_OPTION) {
-            String c = new String(pass.getPassword());
-            if (c.length() > 3) {
-                if (c.charAt(c.length() - 1) != c.charAt(1)) {
-                    entrar = false;
-                }
-
-                if (c.charAt(c.length() - 2) != c.charAt(2)) {
-                    entrar = false;
-                }
-
-                if (entrar) {
-                    iniciarModoDesarrollo("JOHNNY", "DEV");
-                } else if (c.length() == 0) {
-                    LoginGenerico();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-        }
-    }
-
-    //Ingreso como desarrollador
-    private void clickDevMode() {
-        boolean entrar = true;
-        JPasswordField pass = new JPasswordField();
-        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese una contraseña!",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        pass.setFocusable(true);
-        pass.requestFocus();
-        pass.selectAll();
-
-        if (o == JOptionPane.OK_OPTION) {
-            String c = new String(pass.getPassword());
-            if (c.length() > 3) {
-                if (c.charAt(c.length() - 1) != c.charAt(0)) {
-                    entrar = false;
-                }
-                if (c.charAt(c.length() - 3) != c.charAt(2)) {
-                    entrar = false;
-                }
-                if (entrar) {
-                    iniciarModoDesarrollo("JOHNNY", "DEV");
-                } else if (c.length() == 0) {
-                    clickDevMode();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esponja es mejor que corras!!!", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-        }
-    }
-
-    private void iniciarModoDesarrollo(String user, String pass) {
-
-        USERNAME = user;
-        PASSWORD = pass;
-        ResourceManager.USERNAME = USERNAME;
-        ResourceManager.PASSWORD = PASSWORD;
-
-        modelo.setUsername(user);
-        modelo.setPassword(pass);
-
-        ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-        try {
-            List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
-            if (!Lista.isEmpty()) {
-                modelo.setPersona(Lista.get(0).getPersona());
-                vista.dispose();
-                VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
-                vtn.Init();
-                ResourceManager.cerrarConexion();
-
-            } else {
-                vista.getLblAvisos().setVisible(true);
-                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-            }
-        } catch (NullPointerException e) {
-            vista.getLblAvisos().setVisible(true);
-            vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-        }
-        if (conecta.getConecction("Obtenemos la conexion desde modo desarrollo.") != null) {
-            vista.dispose();
-        } else {
-            vista.getLblAvisos().setVisible(true);
-            vista.getLblAvisos().setText("No se puede conectar.");
         }
     }
 
@@ -273,10 +167,6 @@ public class LoginCTR {
             Login();
         }
 
-    }
-
-    private void btnIngSUActionPerformance(ActionEvent e) {
-        LoginGenerico();
     }
 
     /**

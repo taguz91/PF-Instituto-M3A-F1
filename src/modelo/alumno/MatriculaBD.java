@@ -29,9 +29,7 @@ public class MatriculaBD extends MatriculaMD {
 
         System.out.println("SE matricula: ");
         System.out.println(nsql);
-        if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Matricula realizada con exito.");
-        } else {
+        if (conecta.nosql(nsql) != null) {
             JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
                     + "compruebe su conexion a internet.");
         }
@@ -40,7 +38,8 @@ public class MatriculaBD extends MatriculaMD {
     public ArrayList<MatriculaMD> cargarMatriculas() {
         sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
                 + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre\n"
+                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre, "
+                + "persona_identificacion \n"
                 + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
                 + "public.\"Alumnos\" a, public.\"Personas\" p\n"
                 + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
@@ -52,7 +51,8 @@ public class MatriculaBD extends MatriculaMD {
     public ArrayList<MatriculaMD> cargarMatriculasPorPrd(int idPrd) {
         sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
                 + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre\n"
+                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre, "
+                + "persona_identificacion \n"
                 + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
                 + "public.\"Alumnos\" a, public.\"Personas\" p\n"
                 + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
@@ -102,7 +102,8 @@ public class MatriculaBD extends MatriculaMD {
     public ArrayList<MatriculaMD> buscarMatriculas(String aguja) {
         sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
                 + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre\n"
+                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre, "
+                + "persona_identificacion \n"
                 + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
                 + "public.\"Alumnos\" a, public.\"Personas\" p\n"
                 + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
@@ -134,6 +135,7 @@ public class MatriculaBD extends MatriculaMD {
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    a.setIdentificacion(rs.getString("persona_identificacion"));
                     m.setAlumno(a);
                     m.setPeriodo(p);
 

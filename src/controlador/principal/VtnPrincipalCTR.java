@@ -1,6 +1,6 @@
 package controlador.principal;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
@@ -23,7 +23,6 @@ import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotas;
-import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -36,7 +35,6 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
-import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -47,13 +45,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -214,13 +215,10 @@ public class VtnPrincipalCTR {
         //Iniciamos los shortcuts 
 
         iniciarAtajosTeclado();
+        agregarEstilos();
 
         //Acciones de las ventanas de consulta
         //Para el estilo 
-        vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());
-        vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
-        vtnPrin.getMnRbtnWindows().addActionListener(e -> estiloVtn());
-
         //Para abrir las ventanas consulta
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
@@ -662,20 +660,30 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
     }
+    private ArrayList<String> estilos;
+
+    /**
+     * Iniciamos todos los tipos de estilo del sistema
+     */
+    private void agregarEstilos() {
+        estilos = new ArrayList();
+        ButtonGroup btnsEstilo = new ButtonGroup();
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName());
+            mi.addActionListener(e -> estiloVtn(info.getName()));
+            estilos.add(info.getName());
+            vtnPrin.getMnEstilo().add(mi);
+            btnsEstilo.add(mi);
+        }
+
+    }
 
     /**
      * Se ejecuta al seleccionar un estilo en el menu de opciones. Obtendra el
      * nombre del estilo elejido y actualizara la ventana, para mostrarlo.
      */
-    private void estiloVtn() {
-        String estilo = "Windows";
-
-        if (vtnPrin.getMnRbtnMetal().isSelected()) {
-            estilo = "Metal";
-        } else if (vtnPrin.getMnRbtnNimbus().isSelected()) {
-            estilo = "Nimbus";
-        }
-
+    private void estiloVtn(String estilo) {
+        System.out.println(estilo);
         try {
             VtnPrincipal.setDefaultLookAndFeelDecorated(true);
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -703,7 +711,7 @@ public class VtnPrincipalCTR {
      * @see errorNumVentanas()
      */
     public void eventoInternal(JInternalFrame internal) {
-        Middlewares.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        Effects.centerFrame(internal, vtnPrin.getDpnlPrincipal());
         setIconJIFrame(internal);
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -910,7 +918,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuarios(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado);
         vtn.Init();
     }
 
@@ -1150,6 +1158,10 @@ public class VtnPrincipalCTR {
             }
 
         });
+    }
+
+    public UsuarioBD getUsuario() {
+        return usuario;
     }
 
 }

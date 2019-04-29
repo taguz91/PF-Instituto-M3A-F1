@@ -111,19 +111,19 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 ingreso.setNotaExamenDeRecuperacion(rs.getBoolean("nota_examen_de_recuperacion"));
 
                 CursoMD curso = new CursoMD();
-                curso.setId_curso(rs.getInt("id_curso"));
-                curso.setCurso_nombre(rs.getString("curso_nombre"));
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("curso_nombre"));
 
                 MateriaMD materia = new MateriaMD();
                 materia.setId(rs.getInt("id_materia"));
                 materia.setNombre(rs.getString("materia_nombre"));
                 materia.setCodigo(rs.getString("materia_codigo"));
-                curso.setId_materia(materia);//GUARDAMOS LA MATERIA EN EL CURSO
+                curso.setMateria(materia);//GUARDAMOS LA MATERIA EN EL CURSO
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                curso.setId_prd_lectivo(periodo);//GUARDAMOS EL PERIODO
+                curso.setPeriodo(periodo);//GUARDAMOS EL PERIODO
 
                 DocenteMD docente = new DocenteMD();
                 docente.setIdDocente(rs.getInt("id_docente"));
@@ -132,7 +132,7 @@ public class IngresoNotasBD extends IngresoNotasMD {
                 docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                curso.setId_docente(docente);//GUARDAMOS AL DOCENTE
+                curso.setDocente(docente);//GUARDAMOS AL DOCENTE
 
                 ingreso.setCurso(curso);//GUARDAMOS EL CURSO
                 lista.add(ingreso);

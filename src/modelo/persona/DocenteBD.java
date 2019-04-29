@@ -241,15 +241,15 @@ public class DocenteBD extends DocenteMD {
                 + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
 
         ResultSet rs = conecta.sql(nsql);
-        List<CursoMD> lista = new ArrayList<CursoMD>();
+        List<CursoMD> lista = new ArrayList<>();
 
         try {
             while (rs.next()) {
                 CursoMD c = new CursoMD();
                 MateriaMD m = new MateriaMD();
                 m.setNombre(rs.getString("materia_nombre"));
-                c.setId_materia(m);
-                c.setCurso_nombre(rs.getString("curso_nombre"));
+                c.setMateria(m);
+                c.setNombre(rs.getString("curso_nombre"));
                 lista.add(c);
 
             }
@@ -273,7 +273,6 @@ public class DocenteBD extends DocenteMD {
                 + "	AND public.\"DocentesMateria\".id_docente = public.\"Docentes\".id_docente\n"
                 + "	AND public.\"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
                 + "	GROUP BY \"Docentes\".id_docente, \"Materias\".id_carrera ORDER BY id_docente;";
-        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -576,7 +575,6 @@ public class DocenteBD extends DocenteMD {
                 + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura\n"
                 + "FROM public.\"Docentes\" WHERE "
                 + " docente_activo=false and docente_codigo ='" + identificacion + "'";
-        //System.out.println(sql);
         return consultarPor(sql);
     }
 
@@ -770,53 +768,4 @@ public class DocenteBD extends DocenteMD {
         return lista;
 
     }
-
-    public static Map<String, DocenteMD> selectDocentes() {
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Personas\".persona_identificacion,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"Personas\".id_persona,\n"
-                + "\"public\".\"Docentes\".id_docente,\n"
-                + "\"public\".\"Docentes\".docente_codigo\n"
-                + "FROM\n"
-                + "\"public\".\"Docentes\"\n"
-                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
-                + "WHERE \n"
-                + "docente_activo IS TRUE\n"
-                + "ORDER BY \"public\".\"Personas\".persona_primer_apellido ASC";
-
-        Map<String, DocenteMD> lista = new HashMap<>();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-            while (rs.next()) {
-
-                DocenteMD docente = new DocenteMD();
-                docente.setIdDocente(rs.getInt("id_docente"));
-                docente.setIdentificacion(rs.getString("persona_identificacion"));
-                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
-                docente.setIdPersona(rs.getInt("id_persona"));
-
-                docente.setCodigo(rs.getString("docente_codigo"));
-
-                String key = docente.getIdentificacion() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre();
-
-                lista.put(key, docente);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return lista;
-    }
-
 }

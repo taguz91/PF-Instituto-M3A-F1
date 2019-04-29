@@ -59,11 +59,6 @@ public class VtnAlumnoCarreraCTR {
         this.carr = new CarreraBD(conecta);
         this.permisos = permisos;
         this.ctrPrin = ctrPrin;
-
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos por carrera");
-        ctrPrin.setIconJIFrame(vtnAlmCar);
         vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
         vtnAlmCar.show();
     }
@@ -97,12 +92,6 @@ public class VtnAlumnoCarreraCTR {
                 } else if (b.length() == 0) {
                     cargarAlmnsCarrera();
                 }
-                /*
-                if (b.length() > 2) {
-                    buscar(b);
-                } else if (b.length() == 0) {
-                    cargarAlmnsCarrera();
-                }*/
             }
         });
         vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
@@ -111,9 +100,6 @@ public class VtnAlumnoCarreraCTR {
         //Validacion buscar
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
         //ctrPrin.carga.detener();
     }
 
