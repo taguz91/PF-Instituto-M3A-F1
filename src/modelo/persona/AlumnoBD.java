@@ -49,7 +49,7 @@ public class AlumnoBD extends AlumnoMD {
     public boolean guardarTitulo(){
         String nsql = "INSERT INTO public.\"Profesiones\"(\n"
                 + "	 id_titulo, titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado, alumno_anio_graduacion"
-                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "	VALUES ( " + getIdPersona() + ", "  + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
