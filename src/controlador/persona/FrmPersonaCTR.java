@@ -2,7 +2,6 @@ package controlador.persona;
 
 import com.toedter.calendar.JDateChooser;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -69,7 +68,7 @@ public class FrmPersonaCTR {
         "Coreano", "Griego", "Ruso", "Noruego", "Nynorsk", "Húngaro", "Tailandés",
         "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH",
         "Neerlandés", "Letón", "Italiano", "Eslovaco", "Lituano", "Italiano",
-        "Macedonio", "Bielorruso", "Esloveno", "Indonesio",};
+        "Macedonio", "Bielorruso", "Esloveno", "Indonesio"};
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -98,10 +97,6 @@ public class FrmPersonaCTR {
         this.frmPersona = frmPersona;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Persona");
-        ctrPrin.setIconJIFrame(frmPersona);
         //Inicializamos persona
         this.persona = new PersonaBD(conecta);
         this.lug = new LugarBD(conecta);
@@ -123,6 +118,9 @@ public class FrmPersonaCTR {
         desactivarCategoriaMigratoria(false);
         //Cuando se realice una accion en alguno de esos combos 
         iniciarValidaciones();
+
+        //Cuando se realice una accion en alguno de esos combos
+
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
         frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito());
         frmPersona.getCmbPaisReside().addActionListener(e -> cargarProvinciasResidencia());
@@ -147,16 +145,19 @@ public class FrmPersonaCTR {
             }
         });
 
+        //Validacion de la cedula
         valCe = new TxtVCedula(frmPersona.getTxtIdentificacion(), frmPersona.getLblErrorIdentificacion());
+        frmPersona.getTxtIdentificacion().addKeyListener(valCe);
+
         frmPersona.getCmbTipoId().addActionListener(e -> tipoID());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Persona");
-        cerrarandoVtn();
+        cerrarVtn();
     }
 
-//Metodo para cerrar una ventana sin que se muestre el mensaje de cedula no valida
-    public void cerrarandoVtn() {
+    /**
+     * Metodo para cerrar una ventana sin que se muestre el mensaje de cedula no
+     * valida
+     */
+    private void cerrarVtn() {
         frmPersona.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
@@ -178,7 +179,6 @@ public class FrmPersonaCTR {
                 && frmPersona.getLblErrorCorreo().isVisible() == false
                 && frmPersona.getLblErrorEstadoCivil().isVisible() == false
                 && frmPersona.getLblErrorEtnia().isVisible() == false
-                //&& frmPersona.getLblErrorFecNac().isVisible() == false
                 && frmPersona.getLblErrorGenero().isVisible() == false
                 && frmPersona.getLblErrorIdentificacion().isVisible() == false
                 && frmPersona.getLblErrorIdioma().isVisible() == false
@@ -214,24 +214,17 @@ public class FrmPersonaCTR {
         String cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
-            if (cedula.length() == 10) {
-                if (!modelo.validaciones.Validar.esCedula(cedula)) {
+            if (valCe.isValidarCedula()) {
+                if (!Validar.esCedula(cedula)) {
                     errorCedula = true;
                     frmPersona.getLblErrorIdentificacion().setText("Cédula incorrecta.");
                     frmPersona.getLblErrorIdentificacion().setVisible(true);
+                } else {
+                    frmPersona.getLblErrorIdentificacion().setVisible(false);
                 }
-            } else if (cedula.length() < 10) {
-                errorCedula = true;
-                frmPersona.getLblErrorIdentificacion().setText("La cédula lleva 10 números.");
-                frmPersona.getLblErrorIdentificacion().setVisible(true);
-            } else {
-                frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
 
-            if (errorCedula == false) {
-                //Cambiamos el estado del cursos  
-                vtnPrin.setCursor(new Cursor(3));
-
+            if (!errorCedula) {
                 PersonaMD per = persona.existePersona(cedula);
                 editar = true;
                 if (per != null) {
@@ -249,19 +242,15 @@ public class FrmPersonaCTR {
                     } else if (per.isPersonaActiva()) {
                         editar(per);
                         numAccion = 2;
+                        iniciarValidaciones();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Persona no registrada, ingrese sus datos");
                     numAccion = 0;
                     borrarCampos();
                     ocultarErrores();
                     editar = false;
+                    iniciarValidaciones();
                 }
-                //Cambiamos el estado del mouse
-                vtnPrin.setCursor(new Cursor(0));
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese una Cedúla Valida");
             }
         } else {
             borrarCampos();
@@ -273,17 +262,23 @@ public class FrmPersonaCTR {
     private void tipoID() {
         int pos = frmPersona.getCmbTipoId().getSelectedIndex();
         frmPersona.getTxtIdentificacion().setEnabled(false);
-        if (pos == 1) {
-            frmPersona.getTxtIdentificacion().addKeyListener(valCe);
-            //Activamos el campo para ingresar los datos
-            frmPersona.getTxtIdentificacion().setEnabled(true);
-        } else if (pos == 2) {
-            frmPersona.getTxtIdentificacion().removeKeyListener(valCe);
-            frmPersona.getTxtIdentificacion().setBorder(
-                    javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-            frmPersona.getLblErrorIdentificacion().setVisible(false);
-            //Activamos el campo para ingresar los datos
-            frmPersona.getTxtIdentificacion().setEnabled(true);
+        switch (pos) {
+            case 1:
+                //Activamos el campo para ingresar los datos
+                valCe.activarValidacion();
+                frmPersona.getTxtIdentificacion().setEnabled(true);
+                break;
+            case 2:
+                valCe.desactivarValidacion();
+                frmPersona.getTxtIdentificacion().setBorder(
+                        javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+                frmPersona.getLblErrorIdentificacion().setVisible(false);
+                //Activamos el campo para ingresar los datos
+                frmPersona.getTxtIdentificacion().setEnabled(true);
+                break;
+            default:
+                frmPersona.getTxtIdentificacion().setEnabled(false);
+                break;
         }
     }
 

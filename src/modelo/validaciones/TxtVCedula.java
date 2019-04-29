@@ -15,6 +15,7 @@ public class TxtVCedula extends KeyAdapter {
     private final JTextField txt;
     private final JLabel lbl;
     private String ingreso;
+    private boolean validarCedula = true;
 
     public TxtVCedula(JTextField txt) {
         this.txt = txt;
@@ -28,21 +29,23 @@ public class TxtVCedula extends KeyAdapter {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        ingreso = txt.getText().trim();
+        if (validarCedula) {
+            ingreso = txt.getText().trim();
 
-        if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
-            txt.setSize(txt.getWidth(), 20);
-            txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
-            if (!Validar.esCedula(ingreso)) {
-                txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
-                if (lbl != null) {
-                    lbl.setVisible(true);
-                }
+            if (e.getKeyCode() != 10 && e.getKeyCode() != 127 && ingreso.length() > 0) {
+                txt.setSize(txt.getWidth(), 20);
+                txt.setPreferredSize(new Dimension(txt.getWidth(), 20));
+                if (!Validar.esCedula(ingreso)) {
+                    txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
+                    if (lbl != null) {
+                        lbl.setVisible(true);
+                    }
 
-            } else {
-                txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-                if (lbl != null) {
-                    lbl.setVisible(false);
+                } else {
+                    txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+                    if (lbl != null) {
+                        lbl.setVisible(false);
+                    }
                 }
             }
         }
@@ -50,14 +53,29 @@ public class TxtVCedula extends KeyAdapter {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        char car = e.getKeyChar();
-        if (car < '0' || car > '9') {
-            e.consume();
-        }
-        if (ingreso != null) {
-            if (ingreso.length() >= 10) {
+        if (validarCedula) {
+            char car = e.getKeyChar();
+            if (car < '0' || car > '9') {
                 e.consume();
             }
+            if (ingreso != null) {
+                if (ingreso.length() >= 10) {
+                    e.consume();
+                }
+            }
         }
+
+    }
+
+    public void desactivarValidacion() {
+        validarCedula = false;
+    }
+
+    public void activarValidacion() {
+        validarCedula = true;
+    }
+
+    public boolean isValidarCedula() {
+        return validarCedula;
     }
 }
