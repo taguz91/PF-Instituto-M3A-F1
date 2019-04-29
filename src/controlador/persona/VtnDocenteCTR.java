@@ -2,7 +2,6 @@ package controlador.persona;
 
 import controlador.docente.JDFinContratacionCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -69,9 +68,6 @@ public class VtnDocenteCTR {
         this.permisos = permisos;
         this.prd = new PeriodoLectivoBD(conecta);
         //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Docentes");
-        ctrPrin.setIconJIFrame(vtnDocente);
         docente = new DocenteBD(conecta);
         per = new PersonaBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnDocente);
@@ -102,9 +98,6 @@ public class VtnDocenteCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnDocente.getTxtBuscar().getText().toUpperCase().trim();
-                /*if (b.length() > 2) {
-                    buscaIncremental(vtnDocente.getTxtBuscar().getText().toUpperCase());
-                }*/
                 if (e.getKeyCode() == 10) {
                     buscaIncremental(b);
                 } else if (b.length() == 0) {
@@ -123,9 +116,6 @@ public class VtnDocenteCTR {
                 validarBotonesReportes();
             }
         });
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Docentes");
     }
 
     private void cargarDocentes() {
@@ -142,17 +132,17 @@ public class VtnDocenteCTR {
         }
     }
 
-    public void llenarTabla(ArrayList<DocenteMD> docentesMD) {
+    public void llenarTabla(ArrayList<DocenteMD> docentesM) {
         mdTbl.setRowCount(0);
-        if (docentesMD != null) {
-            docentesMD.forEach(d -> {
+        if (docentesM != null) {
+            docentesM.forEach(d -> {
                 Object[] valores = {d.getCodigo(), d.getPrimerApellido() + " "
                     + d.getSegundoApellido() + " " + d.getPrimerNombre()
                     + " " + d.getSegundoNombre(),
                     d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
                 mdTbl.addRow(valores);
             });
-            vtnDocente.getLblResultados().setText(String.valueOf(docentesMD.size()) + " Resultados obtenidos.");
+            vtnDocente.getLblResultados().setText(String.valueOf(docentesM.size()) + " Resultados obtenidos.");
         } else {
             vtnDocente.getLblResultados().setText("0 Resultados obtenidos.");
         }
@@ -307,10 +297,6 @@ public class VtnDocenteCTR {
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Docente");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
              JOptionPane.showMessageDialog(null, "error" + ex);
@@ -327,11 +313,6 @@ public class VtnDocenteCTR {
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
-//            
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Materias del Docente");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

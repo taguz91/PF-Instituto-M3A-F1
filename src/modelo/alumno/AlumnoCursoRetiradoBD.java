@@ -28,11 +28,9 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                 + "	id_almn_curso, retiro_observacion)\n"
                 + "	VALUES (" + getAlumnoCurso().getId() + ", "
                 + " '" + getObservacion() + "');";
-
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, getAlumnoCurso().getCurso().getId_materia().getNombre()
-                    + " fue retirado de: \n"
-                    + getAlumnoCurso().getAlumno().getNombreCorto());
+            JOptionPane.showMessageDialog(null, "Anulada la matricula de: \n"
+                    + getAlumnoCurso().getCurso().getMateria().getNombre());
         }
     }
 
@@ -180,12 +178,12 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     CursoMD c = new CursoMD();
                     MateriaMD m = new MateriaMD();
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    
+
                     r.setId(rs.getInt("id_retirado"));
                     ac.setId(rs.getInt("id_almn_curso"));
                     r.setFecha(rs.getTimestamp("retiro_fecha").toLocalDateTime());
                     r.setObservacion(rs.getString("retiro_observacion"));
-                    c.setId_curso(rs.getInt("id_curso"));
+                    c.setId(rs.getInt("id_curso"));
                     m.setNombre(rs.getString("materia_nombre"));
                     a.setId_Alumno(rs.getInt("id_alumno"));
                     a.setIdentificacion(rs.getString("persona_identificacion"));
@@ -193,18 +191,18 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
 
-                    c.setId_materia(m);
-                    c.setId_prd_lectivo(p);
+                    c.setMateria(m);
+                    c.setPeriodo(p);
                     ac.setCurso(c);
                     ac.setAlumno(a);
 
                     r.setAlumnoCurso(ac);
-                    
-                    retirados.add(r); 
+
+                    retirados.add(r);
                 }
                 return retirados;
             } catch (SQLException e) {
-                System.out.println("No se pudo consultar alumnos retirados."+e.getMessage());
+                System.out.println("No se pudo consultar alumnos retirados." + e.getMessage());
                 return null;
             }
         } else {

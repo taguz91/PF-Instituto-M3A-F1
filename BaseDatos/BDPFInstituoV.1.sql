@@ -52,6 +52,7 @@ CREATE TABLE "Personas"(
   "persona_tipo_residencia" character varying(30),
   "persona_fecha_nacimiento" date,
   "persona_activa" BOOLEAN DEFAULT 'true',
+  "persona_categoria_migratoria" character varying(50),
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
 
@@ -153,6 +154,25 @@ CREATE TABLE "Lugares"(
   "lugar_nivel" integer NOT NULL,
   "id_lugar_referencia" integer,
   CONSTRAINT lugar_pk PRIMARY KEY ("id_lugar")
+) WITH (OIDS = FALSE);
+
+--Profesiones
+CREATE TABLE "Profesiones"(
+  "id_titulo" serial NOT NULL,
+  "titulo_nombre" character varying(75) NOT NULL,
+  "titulo_abrev" character varying(20) NOT NULL,
+  "titulo_institucion" character varying(75),
+  "titulo_estado" boolean,
+  CONSTRAINT profesion_pk PRIMARY KEY ("id_titulo")
+) WITH (OIDS = FALSE);
+
+--PersonaProfesiones
+CREATE TABLE "PersonaProfesiones"(
+  "id_persona_profesion" serial NOT NULL,
+  "id_persona" integer NOT NULL,
+  "id_titulo" integer NOT NULL UNIQUE,
+  "id_persona_profesion_observacion" character varying(100),
+  CONSTRAINT persona_profesion_pk PRIMARY KEY ("id_persona_profesion")
 ) WITH (OIDS = FALSE);
 
 --Cursos
@@ -827,7 +847,13 @@ ALTER TABLE "Alumnos" ADD CONSTRAINT "alumnos_fk2"
 FOREIGN KEY ("id_sec_economico") REFERENCES "SectorEconomico"("id_sec_economico")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk1"
+FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk2"
+FOREIGN KEY ("id_titulo") REFERENCES "Profesiones"("id_titulo")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "Docentes" ADD CONSTRAINT "docentes_fk1"
 FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")

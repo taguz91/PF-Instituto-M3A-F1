@@ -31,7 +31,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
 "	 id_curso, id_unidad, observaciones,\n" +
 "	 ,fecha_revision, fecha_generacion, fecha_cierre)\n" +
 "	VALUES (?, ?, ?, ?, ?, ?, ?)");
-            st.setInt(1, getId_curso().getId_curso());
+            st.setInt(1, getId_curso().getId());
             st.setInt(2, getId_unidad().getIdUnidad());
             st.setString(3, getObservaciones());
 //            st.setDate(4, java.sql.Date.valueOf(getFecha_revision()));

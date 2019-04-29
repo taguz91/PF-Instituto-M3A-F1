@@ -148,7 +148,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReset">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Resetear"/>
+        <Property name="text" type="java.lang.String" value="Reset"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>

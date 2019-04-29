@@ -29,7 +29,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="360" width="690" height="40"/>
+          <AbsoluteConstraints x="10" y="350" width="690" height="40"/>
         </Constraint>
       </Constraints>
 
@@ -85,7 +85,7 @@
       </AccessibilityProperties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="10" width="690" height="360"/>
+          <AbsoluteConstraints x="10" y="10" width="690" height="340"/>
         </Constraint>
       </Constraints>
 
@@ -127,9 +127,11 @@
             <Component class="javax.swing.JComboBox" name="cbTipoAcreditacion">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
+                  <StringArray count="4">
                     <StringItem index="0" value="SELECCIONE"/>
-                    <StringItem index="1" value="Tipos"/>
+                    <StringItem index="1" value="C"/>
+                    <StringItem index="2" value="T"/>
+                    <StringItem index="3" value="H"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -138,7 +140,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="487" y="177" width="178" height="-1"/>
+                  <AbsoluteConstraints x="480" y="130" width="178" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -152,23 +154,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblCategoriaMateria">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Categor&#xed;a"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="352" y="128" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="javax.swing.JLabel" name="lblActivo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Materia N&#xfa;cleo"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="352" y="229" width="-1" height="21"/>
+                  <AbsoluteConstraints x="350" y="180" width="-1" height="21"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -185,7 +177,7 @@
             <Component class="javax.swing.JCheckBox" name="chBNucleo">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="487" y="229" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="480" y="180" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -195,7 +187,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="352" y="180" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="350" y="130" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -215,7 +207,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="280" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="350" y="230" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -232,8 +224,11 @@
             <Component class="javax.swing.JComboBox" name="cbMateriaTipo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
+                  <StringArray count="4">
                     <StringItem index="0" value="SELECCIONE"/>
+                    <StringItem index="1" value="M"/>
+                    <StringItem index="2" value="C"/>
+                    <StringItem index="3" value="S"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -246,36 +241,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbCategoria">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="SELECCIONE"/>
-                    <StringItem index="1" value="B&#xc1;SICO"/>
-                    <StringItem index="2" value="PROFESIONAL"/>
-                    <StringItem index="3" value="TITULACI&#xd3;N"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCategoriaActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="485" y="125" width="178" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="javax.swing.JTextField" name="txtCreditos">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCreditosActionPerformed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="150" y="280" width="176" height="-1"/>
+                  <AbsoluteConstraints x="480" y="230" width="176" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -400,7 +372,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="150" y="300" width="-1" height="20"/>
+                  <AbsoluteConstraints x="480" y="250" width="-1" height="20"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -430,19 +402,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblErrorCategoria">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="cc" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Seleccione una Categor&#xed;a"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="485" y="154" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="javax.swing.JLabel" name="lblErrorTipoAcreditacion">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -452,7 +411,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="480" y="200" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="480" y="150" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -777,7 +736,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblTeoricas6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Organizaci&#xf3;n Curricular *"/>
+                <Property name="text" type="java.lang.String" value="Unidad de Organizaci&#xf3;n Curricular *"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -857,9 +816,11 @@
             <Component class="javax.swing.JComboBox" name="Cbx_OrgCurricular">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
+                  <StringArray count="4">
                     <StringItem index="0" value="SELECCIONE"/>
-                    <StringItem index="1" value="ejemplo"/>
+                    <StringItem index="1" value="UNIDAD B&#xc1;SICA"/>
+                    <StringItem index="2" value="UNIDAD PROFESIONAL"/>
+                    <StringItem index="3" value="UNIDAD DE TITULACI&#xd3;N"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -878,9 +839,12 @@
             <Component class="javax.swing.JComboBox" name="Cbx_CamFormacion">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
+                  <StringArray count="5">
                     <StringItem index="0" value="SELECCIONE"/>
-                    <StringItem index="1" value="EJEMPLO"/>
+                    <StringItem index="1" value="INTEGRACI&#xd3;N DE SABERES, CONTEXTOS Y CULTURA"/>
+                    <StringItem index="2" value="COMUNICACI&#xd3;N Y LENGUAJES "/>
+                    <StringItem index="3" value="FUNDAMENTOS TE&#xd3;RICOS"/>
+                    <StringItem index="4" value="ADAPTACI&#xd3;N E INNOVACI&#xd3;N TECNOL&#xd3;GICA"/>
                   </StringArray>
                 </Property>
               </Properties>

@@ -12,6 +12,14 @@ public class Validar {
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\s\\/]+");
     }
 
+    public static boolean esLetras2(String cadena){
+        return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\,\\s\\/]+");
+    }
+    
+    public static boolean esLetras3(String cadena){
+        return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\.\\s\\/]+");
+    }
+    
     public static boolean esObservacion(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍ\\.,ÓÚÑñ\\-\\s]+");
@@ -108,11 +116,11 @@ public class Validar {
     }
 
     public static boolean esCorreo(String entrada) {
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+$");
+        return entrada.matches("[A-Za-z0-9\\.{1}\\_{1}\\-{1}]+@{1}[a-zA-Z]+\\.{1}+[a-zA-Z]+$");
     }
 
     public static boolean esCorreoAr(String entrada) {
-        return entrada.matches("[A-Za-z0-9\\.\\_\\-]+@[a-zA-Z]+\\.+[a-zA-Z]+\\.+[a-zA-Z]+$");
+        return entrada.matches("[A-Za-z0-9\\.{1}\\_{1}\\-{1}]+@{1}[a-zA-Z]+\\.{1}+[a-zA-Z]+\\.{1}+[a-zA-Z]+$");
     }
 
     public static boolean esNota(String entrada) {
@@ -132,7 +140,7 @@ public class Validar {
     }
 
     public static boolean esCarnetConadis(String entrada) {
-        return entrada.matches("[0-9]{1,4}+\\.+[0-9]{1,6}");
+        return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,6}");
     }
     
     public static boolean esHora(String entrada){
