@@ -1246,11 +1246,6 @@ public class FrmPersonaCTR {
             System.out.println("parametro del reporte" + parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
-
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Persona");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

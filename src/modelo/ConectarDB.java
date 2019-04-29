@@ -179,7 +179,7 @@ public class ConectarDB {
             ctrCt.matarHilo();
             return null;
         } finally {
-            ctrCt.recetear("Terminando de realizar una consulta en: "+tabla);
+            ctrCt.recetear("Terminando de realizar una consulta en: " + tabla);
             cursorNormal();
         }
     }
@@ -201,7 +201,7 @@ public class ConectarDB {
                 ctrCt.agregarSegundos(60);
                 return ct;
             }
-        } catch (SQLException | NullPointerException ex ) {
+        } catch (SQLException | NullPointerException ex) {
             System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
             ctrCt.matarHilo();
             return null;
