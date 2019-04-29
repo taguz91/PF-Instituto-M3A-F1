@@ -50,7 +50,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                 + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -60,7 +60,7 @@ public class PersonaBD extends PersonaMD {
                 + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
+                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -72,7 +72,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -82,7 +82,7 @@ public class PersonaBD extends PersonaMD {
                     + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                     + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
+                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         }
         
         if (conecta.nosql(nsql) == null) {
@@ -101,7 +101,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
                 + "persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -110,7 +110,7 @@ public class PersonaBD extends PersonaMD {
                 + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "','" + getCategoriaMigratoria() + "');";
+                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -122,7 +122,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
