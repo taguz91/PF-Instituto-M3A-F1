@@ -45,6 +45,21 @@ public class AlumnoBD extends AlumnoMD {
             return false;
         }
     }
+    
+    public boolean guardarTitulo(){
+        String nsql = "INSERT INTO public.\"Profesiones\"(\n"
+                + "	 id_titulo, titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado, alumno_anio_graduacion"
+                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
+                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
+                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
+                + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
+        if (conecta.nosql(nsql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     /**
      * Este método edita a un Alumno de la Base de Datos, pueden ser todos estos atributos
