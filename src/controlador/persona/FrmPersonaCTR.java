@@ -551,14 +551,19 @@ public class FrmPersonaCTR {
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
 //        FechaNaci = frmPersona.getJdfechaNacimiento().getCalendar().toString();
-        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-        TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-        CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-        PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+//        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
+//        if (Discapacidad) {
+//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
+//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
+//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
+//        }
+
         TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
         categoriaMigratoria = frmPersona.getCbxCategoriaMigratoria().isSelected();
-        comboCategoriaMigratoria = frmPersona.getCmbCategoriaMigratoria().getSelectedItem().toString();
+//        if (categoriaMigratoria) {
+//            comboCategoriaMigratoria = frmPersona.getCmbCategoriaMigratoria().getSelectedItem().toString();
+//        }
 
         if (confirmaError() == false) {
             if (TipoId.equals("SELECCIONE") == false
@@ -574,17 +579,17 @@ public class FrmPersonaCTR {
                     //      && FechaNaci.equals("") == false
                     && TipoResidencia.equals("SELECCIONE") == false
                     && CallePrin.equals("") == false) {
-                if (Discapacidad == true && TipoDiscapacidad.equals("SELECCIONE") == false
-                        && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
-                    if (categoriaMigratoria == true && comboCategoriaMigratoria.equals("SELECCIONE") == false) {
-                        frmPersona.getBtnGuardarPersona().setEnabled(true);
-                    } else {
-                        frmPersona.getBtnGuardarPersona().setEnabled(false);
-                    }
-                    frmPersona.getBtnGuardarPersona().setEnabled(true);
-                } else {
-                    frmPersona.getBtnGuardarPersona().setEnabled(false);
-                }
+//                if (Discapacidad == true && TipoDiscapacidad.equals("SELECCIONE") == false
+//                        && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
+////                    if (categoriaMigratoria == true && comboCategoriaMigratoria.equals("SELECCIONE") == false) {
+////                        frmPersona.getBtnGuardarPersona().setEnabled(true);
+////                    } else {
+////                        frmPersona.getBtnGuardarPersona().setEnabled(false);
+////                    }
+//                    frmPersona.getBtnGuardarPersona().setEnabled(true);
+//                } else {
+//                    frmPersona.getBtnGuardarPersona().setEnabled(false);
+//                }
 
                 frmPersona.getBtnGuardarPersona().setEnabled(true);
             } else {
@@ -756,7 +761,7 @@ public class FrmPersonaCTR {
             }
 
             carnetConadis = frmPersona.getTxtCarnetConadis().getText().trim();
-            if (!Validar.esNumeros(carnetConadis)) {
+            if (!Validar.esCarnetConadis(carnetConadis)) {
                 guardar = false;
                 frmPersona.getLblErrorCarnetConadis().setVisible(true);
             } else {
@@ -1048,7 +1053,11 @@ public class FrmPersonaCTR {
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
 
         frmPersona.getCmbCategoriaMigratoria().setSelectedItem(per.getCategoriaMigratoria());
-
+//        if(){
+//            
+//        }else{
+//            
+//        }
         //Cargar foto
         if (per.getFoto() != null) {
             Image icono = per.getFoto().getScaledInstance(frmPersona.getLblFoto().getWidth(),
