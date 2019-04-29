@@ -22,7 +22,7 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
 
     public List<SectorEconomicoMD> capturarSectores() {
         List<SectorEconomicoMD> sectores = new ArrayList();
-        String sql = "SELECT id_sec_economico, sec_economico_descripcion FROM public.\"SectorEconomico\";";
+        String sql = "SELECT id_sec_economico, sec_economico_descripcion FROM public.\"SectorEconomico\" WHERE id_sec_economico > 0;";
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {

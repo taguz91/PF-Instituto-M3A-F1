@@ -79,8 +79,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
-    
-    public boolean abrirPeriodo(int id){
+
+    public boolean abrirPeriodo(int id) {
         String sql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
@@ -481,6 +481,23 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+
+    public LocalDate buscarFechaInicioPrd(int idPrd) {
+        LocalDate fi = null;
+        String sql = "SELECT prd_lectivo_fecha_inicio \n"
+                + "FROM public.\"PeriodoLectivo\"\n"
+                + "WHERE id_prd_lectivo = " + idPrd + ";";
+        ResultSet rs = conecta.sql(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    fi = rs.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return fi;
     }
 
     public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {

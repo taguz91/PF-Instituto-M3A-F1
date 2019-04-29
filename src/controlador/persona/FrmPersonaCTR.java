@@ -484,8 +484,8 @@ public class FrmPersonaCTR {
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
 //        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
 
-        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
-                frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
+//        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
+//                frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
         frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
@@ -1399,11 +1399,6 @@ public class FrmPersonaCTR {
             System.out.println("parametro del reporte" + parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
-
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Persona");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

@@ -20,6 +20,7 @@ public class PersonaMD {
     //private TipoPersonaMD tipo;//Se elimino de la base de datos
     private LugarMD lugarNatal;
     private LugarMD lugarResidencia;
+    private ProfesionMD profesion;
     private Image foto;
     private String identificacion;
     private String primerApellido;
@@ -489,4 +490,13 @@ public class PersonaMD {
                 + personaActiva + '}';
     }
 
+    public ProfesionMD getProfesion() {
+        return profesion;
+    }
+
+    public void setProfesion(ProfesionMD profesion) {
+        this.profesion = profesion;
+    }
+
+    
 }
