@@ -120,7 +120,6 @@ public class FrmPersonaCTR {
         iniciarValidaciones();
 
         //Cuando se realice una accion en alguno de esos combos
-
         frmPersona.getCmbNacionalidad().addActionListener(e -> cargarDistritosPais());
         frmPersona.getCmbProvincia().addActionListener(e -> cargarCiudadesDistrito());
         frmPersona.getCmbPaisReside().addActionListener(e -> cargarProvinciasResidencia());
@@ -1048,6 +1047,8 @@ public class FrmPersonaCTR {
         frmPersona.getTxtCarnetConadis().setText(per.getCarnetConadis());
         frmPersona.getTxtPorcentaje().setText(per.getPorcentajeDiscapacidad() + "");
 
+        frmPersona.getCmbCategoriaMigratoria().setSelectedItem(per.getCategoriaMigratoria());
+
         //Cargar foto
         if (per.getFoto() != null) {
             Image icono = per.getFoto().getScaledInstance(frmPersona.getLblFoto().getWidth(),
@@ -1351,6 +1352,8 @@ public class FrmPersonaCTR {
         frmPersona.getCmbProvinciaReside().setSelectedIndex(0);
         frmPersona.getCmbCantonReside().setSelectedIndex(0);
         frmPersona.getCmbParroquiaReside().setSelectedIndex(0);
+        frmPersona.getCbxCategoriaMigratoria().setSelected(false);
+        frmPersona.getCmbCategoriaMigratoria().setSelectedIndex(0);
     }
 
     public void borrarCamposConId() {
