@@ -20,6 +20,7 @@ public class PersonaMD {
     //private TipoPersonaMD tipo;//Se elimino de la base de datos
     private LugarMD lugarNatal;
     private LugarMD lugarResidencia;
+    private ProfesionMD profesion;
     private Image foto;
     private String identificacion;
     private String primerApellido;
@@ -446,4 +447,13 @@ public class PersonaMD {
         return "PersonaMD{" + "file=" + file + ", logBytes=" + logBytes + ", idPersona=" + idPersona + ", lugarNatal=" + lugarNatal + ", lugarResidencia=" + lugarResidencia + ", foto=" + foto + ", identificacion=" + identificacion + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido + ", primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", etnia=" + etnia + ", idiomaRaiz=" + idiomaRaiz + ", tipoSangre=" + tipoSangre + ", telefono=" + telefono + ", celular=" + celular + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + ", discapacidad=" + discapacidad + ", tipoDiscapacidad=" + tipoDiscapacidad + ", porcentajeDiscapacidad=" + porcentajeDiscapacidad + ", carnetConadis=" + carnetConadis + ", callePrincipal=" + callePrincipal + ", numeroCasa=" + numeroCasa + ", calleSecundaria=" + calleSecundaria + ", referencia=" + referencia + ", sector=" + sector + ", idioma=" + idioma + ", tipoResidencia=" + tipoResidencia + ", personaActiva=" + personaActiva + '}';
     }
 
+    public ProfesionMD getProfesion() {
+        return profesion;
+    }
+
+    public void setProfesion(ProfesionMD profesion) {
+        this.profesion = profesion;
+    }
+
+    
 }

@@ -16,8 +16,8 @@ public class AlumnoBD extends AlumnoMD {
     private final PersonaBD per;
 
     /**
-     * 
-     * @param conecta 
+     *
+     * @param conecta
      */
     public AlumnoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -25,7 +25,9 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     /**
-     * Este método guarda el Alumno en la Base de Datos con todos estos atributos
+     * Este método guarda el Alumno en la Base de Datos con todos estos
+     * atributos
+     *
      * @param s. Se tiene que pasar un objeto de la Clase de SectorEconomicoMD
      * @return Retorna una boolean dependiendo del guardado del Alumno
      */
@@ -45,14 +47,12 @@ public class AlumnoBD extends AlumnoMD {
             return false;
         }
     }
-    
-    public boolean guardarTitulo(){
+
+    public boolean guardarTitulo(ProfesionMD p) {
         String nsql = "INSERT INTO public.\"Profesiones\"(\n"
-                + "	 id_titulo, titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado, alumno_anio_graduacion"
-                + "	VALUES ( " + getIdPersona() + ", "  + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
-                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
-                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
-                + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
+                + "	 titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado)\n"
+                + "	VALUES ( '" + p.getTitulo_nombre() + "', '" + p.getTitulo_abreviatura() + "', '" + p.getTitulo_institucion() + "', "
+                + " true);";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {
@@ -61,8 +61,22 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
 
+    public boolean guardarTituloAuxiliar(ProfesionMD p, int id) {
+        String sql = "INSERT INTO public.\"PersonaProfesiones\"(\n"
+                + "	 id_persona, id_titulo, persona_profesion_observacion)\n"
+                + "	VALUES ( " + id + ", " + p.getId_Titulo() + ", '" + p.getTitulo_observacion() + "');";
+        if (conecta.nosql(sql) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
     /**
-     * Este método edita a un Alumno de la Base de Datos, pueden ser todos estos atributos
+     * Este método edita a un Alumno de la Base de Datos, pueden ser todos estos
+     * atributos
+     *
      * @param aguja. Se tiene que pasar un int como la Id de persona
      * @return Retorna un boolean según el resultado de la Edición
      */
@@ -83,9 +97,11 @@ public class AlumnoBD extends AlumnoMD {
 
     /**
      * Este metodo Elimina al Alumno, bueno basándose en el campo Activo
+     *
      * @param a. Se pasa un objeto de la Clase AlumnoMD
      * @param aguja. Se para un int como Id de la Persona
-     * @return Retorna un boolean dependiendo de que si la acción es correcta o no
+     * @return Retorna un boolean dependiendo de que si la acción es correcta o
+     * no
      */
     public boolean eliminarAlumno(AlumnoMD a, int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
@@ -98,9 +114,47 @@ public class AlumnoBD extends AlumnoMD {
             return false;
         }
     }
+    
+    public ProfesionMD idProfesion(String nombre){
+        String sql = "SELECT id_titulo FROM public.\"Profesiones\" WHERE titulo_nombre LIKE '" + nombre + "';";
+        ResultSet rs = conecta.sql(sql);
+        ProfesionMD p = new ProfesionMD();
+        try {
+            while (rs.next()) {
+                p.setId_Titulo(rs.getInt("id_titulo"));
+            }
+            rs.close();
+            return p;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public ProfesionMD capturarProfesiones(int id_persona){
+        String sql = "SELECT p.titulo_nombre, p.titulo_abrev FROM public.\"Profesiones\" p JOIN public.\"PersonaProfesiones\" a USING(id_titulo)\n" +
+        "WHERE a.id_persona = " + id_persona + ";";
+        ResultSet rs = conecta.sql(sql);
+        ProfesionMD p = new ProfesionMD();
+        try {
+            while (rs.next()) {
+                p.setTitulo_nombre(rs.getString("titulo_nombre"));
+                p.setTitulo_abreviatura(rs.getString("titulo_abrev"));
+            }
+            rs.close();
+            return p;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 
     /**
-     * Este método filtra todos los Alumnos activos que están en la Base de Datos
+     * Este método filtra todos los Alumnos activos que están en la Base de
+     * Datos
+     *
      * @return Retorna una Lista con los Alumnos filtrados
      */
     public List<PersonaMD> llenarTabla() {
@@ -138,7 +192,9 @@ public class AlumnoBD extends AlumnoMD {
 
     /**
      * Este método captura una Persona dependiendo del parametro que se envie
-     * @param aguja. Se envia un String como forma de búsqueda para filtrar a esa Persona
+     *
+     * @param aguja. Se envia un String como forma de búsqueda para filtrar a
+     * esa Persona
      * @return Retorna una Lista con los datos de la Persona filtrada
      */
     public List<PersonaMD> capturarPersona(String aguja) {
@@ -172,7 +228,9 @@ public class AlumnoBD extends AlumnoMD {
 
     /**
      * Este método filtra una Persona activa pasando una cédula como parámetro
-     * @param aguja. Debe pasarse un String como la cédula de la Persona a filtrar
+     *
+     * @param aguja. Debe pasarse un String como la cédula de la Persona a
+     * filtrar
      * @return Retorna un objeto de la Clase PersonaMD con los datos filtrados
      */
     public PersonaMD filtrarPersona(String aguja) {
@@ -198,17 +256,19 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
     /**
-     * Este método filtra en un Lista todos los Alumnos eliminados en la Base de Datos
+     * Este método filtra en un Lista todos los Alumnos eliminados en la Base de
+     * Datos
+     *
      * @return Retorna una Lista de la Clase PersonaMD con los datos filtrados
      */
-    public List<PersonaMD> llenarEliminados(){
-        String nsql = "SELECT p.id_persona, p.persona_identificacion,\n" +
-"                p.persona_primer_nombre, p.persona_segundo_nombre,\n" +
-"                p.persona_primer_apellido, p.persona_segundo_apellido,\n" +
-"                p.persona_correo FROM public.\"Personas\" p JOIN public.\"Alumnos\" USING(id_persona)\n" +
-"				WHERE persona_activa = 'false';";
+    public List<PersonaMD> llenarEliminados() {
+        String nsql = "SELECT p.id_persona, p.persona_identificacion,\n"
+                + "                p.persona_primer_nombre, p.persona_segundo_nombre,\n"
+                + "                p.persona_primer_apellido, p.persona_segundo_apellido,\n"
+                + "                p.persona_correo FROM public.\"Personas\" p JOIN public.\"Alumnos\" USING(id_persona)\n"
+                + "				WHERE persona_activa = 'false';";
         List<PersonaMD> lista = new ArrayList<PersonaMD>();
         ResultSet rs = conecta.sql(nsql);
         PersonaMD m = new PersonaMD();
@@ -231,7 +291,9 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     /**
-     * Este método extrae los datos personales y datos de Alumno de una Persona en específico
+     * Este método extrae los datos personales y datos de Alumno de una Persona
+     * en específico
+     *
      * @param aguja. Se debe insertar un int como la Id de la Persona
      * @return Retorna un objeto de la Clase AlumnoMD con los datos filtrados
      */
@@ -258,41 +320,41 @@ public class AlumnoBD extends AlumnoMD {
                 a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 numero = rs.getInt("id_alumno");
-                if(numero == null){
+                if (numero == null) {
                     a.setId_Alumno(0);
-                } else{
+                } else {
                     a.setId_Alumno(numero);
                 }
                 numero = rs.getInt("id_sec_economico");
-                if(numero == null){
+                if (numero == null) {
                     sector.setId_SecEconomico(0);
                     a.setSectorEconomico(sector);
-                } else{
+                } else {
                     sector.setId_SecEconomico(numero);
                     a.setSectorEconomico(sector);
                 }
                 palabra = rs.getString("alumno_tipo_colegio");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setTipo_Colegio("|SELECCIONE|");
-                } else{
+                } else {
                     a.setTipo_Colegio(rs.getString("alumno_tipo_colegio"));
                 }
                 palabra = rs.getString("alumno_tipo_bachillerato");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setTipo_Bachillerato("|SELECCIONE|");
-                } else{
+                } else {
                     a.setTipo_Bachillerato(palabra);
                 }
                 palabra = rs.getString("alumno_anio_graduacion");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setAnio_graduacion("1980");
-                } else{
+                } else {
                     a.setAnio_graduacion(palabra);
                 }
                 palabra = String.valueOf(rs.getBoolean("alumno_educacion_superior"));
-                if(palabra == null){
-                  a.setEducacion_Superior(false);  
-                } else{
+                if (palabra == null) {
+                    a.setEducacion_Superior(false);
+                } else {
                     a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
                 }
 //                if (rs.wasNull()) {
@@ -301,21 +363,21 @@ public class AlumnoBD extends AlumnoMD {
 //                    a.setEducacion_Superior(rs.getBoolean("alumno_educacion_superior"));
 //                }
                 palabra = rs.getString("alumno_titulo_superior");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setTitulo_Superior(null);
-                } else{
+                } else {
                     a.setTitulo_Superior(palabra);
                 }
                 palabra = rs.getString("alumno_nivel_academico");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setNivel_Academico("|SELECCIONE|");
-                } else{
+                } else {
                     a.setNivel_Academico(palabra);
                 }
                 palabra = String.valueOf(rs.getBoolean("alumno_pension"));
-                if(palabra == null){
+                if (palabra == null) {
                     a.setPension(false);
-                } else{
+                } else {
                     a.setPension(rs.getBoolean("alumno_pension"));
                 }
 //                if (rs.wasNull()) {
@@ -324,15 +386,15 @@ public class AlumnoBD extends AlumnoMD {
 //                    a.setPension(rs.getBoolean("alumno_pension"));
 //                }
                 palabra = rs.getString("alumno_ocupacion");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setOcupacion(null);
-                } else{
+                } else {
                     a.setOcupacion(palabra);
                 }
                 palabra = String.valueOf(rs.getBoolean("alumno_trabaja"));
-                if(palabra == null){
+                if (palabra == null) {
                     a.setTrabaja(false);
-                } else{
+                } else {
                     a.setTrabaja(rs.getBoolean("alumno_trabaja"));
                 }
 //                if (rs.wasNull()) {
@@ -341,33 +403,33 @@ public class AlumnoBD extends AlumnoMD {
 //                    a.setTrabaja(rs.getBoolean("alumno_trabaja"));
 //                }
                 palabra = rs.getString("alumno_nivel_formacion_padre");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setFormacion_Padre("|SELECCIONE|");
-                } else{
+                } else {
                     a.setFormacion_Padre(palabra);
                 }
                 palabra = rs.getString("alumno_nivel_formacion_madre");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setFormacion_Madre("|SELECCIONE|");
-                } else{
+                } else {
                     a.setFormacion_Madre(palabra);
                 }
                 palabra = rs.getString("alumno_numero_contacto");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setContacto_Emergencia(null);
-                } else{
+                } else {
                     a.setContacto_Emergencia(palabra);
                 }
                 palabra = rs.getString("alumno_parentesco_contacto");
-                if(palabra == null){
+                if (palabra == null) {
                     a.setParentesco_Contacto("|SELECCIONE|");
-                } else{
+                } else {
                     a.setParentesco_Contacto(palabra);
                 }
                 palabra = rs.getString("alumno_nombre_contacto_emergencia");
-                if(palabra == null){
-                   a.setNom_Contacto(null); 
-                } else{
+                if (palabra == null) {
+                    a.setNom_Contacto(null);
+                } else {
                     a.setNom_Contacto(palabra);
                 }
             }
@@ -378,10 +440,13 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
     /**
-     * Este método extrae los datos personales y datos de Alumno de una Persona en específico
-     * @param cedula. Se debe insertar un String como Cédula para filtrar a la Persona
+     * Este método extrae los datos personales y datos de Alumno de una Persona
+     * en específico
+     *
+     * @param cedula. Se debe insertar un String como Cédula para filtrar a la
+     * Persona
      * @return Retorna un objeto de la Clase AlumnoMD con los datos filtrados
      */
     public AlumnoMD buscarPersonaxCedula(String cedula) {
@@ -396,7 +461,7 @@ public class AlumnoBD extends AlumnoMD {
         ResultSet rs = conecta.sql(sql);
         try {
             AlumnoMD a = new AlumnoMD();
-            
+
             while (rs.next()) {
                 SectorEconomicoMD sector = new SectorEconomicoMD();
                 a.setIdPersona(rs.getInt("id_persona"));
@@ -494,7 +559,9 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     /**
-     * Este método extrae todos las IDs de un Alumno (Persona, Alumno) en específico
+     * Este método extrae todos las IDs de un Alumno (Persona, Alumno) en
+     * específico
+     *
      * @param idAlumno. Se debe insertar un int como Id de Alumno
      * @return Retorna un objeto de la Clase AlumnoMD con los datos filtrados
      */
@@ -522,18 +589,19 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
     /**
      * Este método filtra a los Alumnos que se han retidado en alguna materia
+     *
      * @return Retorna una Lista de la Clase AlumnoMD con los datos filtrados
      */
-    public List<AlumnoMD> filtrarRetirados(){
-        String nsql = "SELECT DISTINCT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre,\n" +
-                    "p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo, a.id_alumno\n" +
-                    "FROM ((public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)) JOIN public.\"AlumnosCarrera\" c USING(id_alumno))\n" +
-                    "JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n" +
-                    "WHERE malla_almn_estado LIKE 'A' AND a.alumno_activo = 'true' AND p.persona_activa = 'true' "
-                    + "ORDER BY p.persona_primer_apellido ASC;";
+    public List<AlumnoMD> filtrarRetirados() {
+        String nsql = "SELECT DISTINCT p.id_persona, p.persona_identificacion, p.persona_primer_nombre, p.persona_segundo_nombre,\n"
+                + "p.persona_primer_apellido, p.persona_segundo_apellido, p.persona_correo, a.id_alumno\n"
+                + "FROM ((public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)) JOIN public.\"AlumnosCarrera\" c USING(id_alumno))\n"
+                + "JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n"
+                + "WHERE malla_almn_estado LIKE 'A' AND a.alumno_activo = 'true' AND p.persona_activa = 'true' "
+                + "ORDER BY p.persona_primer_apellido ASC;";
         List<AlumnoMD> lista = new ArrayList();
         ResultSet rs = conecta.sql(nsql);
         try {
@@ -557,17 +625,19 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
+
     /**
      * Este método consulta las Materias en las un Alumno esta Ausentado
+     *
      * @param ID. Se debe insertar un int como la Id de la Persona a filtrar
-     * @return Retorna una Lista de la clase MallaAlumnoMD con las Materias filtradas 
+     * @return Retorna una Lista de la clase MallaAlumnoMD con las Materias
+     * filtradas
      */
-    public List<MallaAlumnoMD> consultarMaterias(int ID){
+    public List<MallaAlumnoMD> consultarMaterias(int ID) {
         List<MallaAlumnoMD> lista = new ArrayList();
-        String nsql = "SELECT m.materia_nombre, d.malla_almn_estado FROM ((public.\"Alumnos\" a JOIN public.\"AlumnosCarrera\" c USING(id_alumno)) \n" +
-                        "JOIN public.\"MallaAlumno\" d USING(id_almn_carrera)) JOIN public.\"Materias\" m USING(id_materia)\n" +
-                        "WHERE a.id_persona = " + ID + " AND malla_almn_estado LIKE 'A';";
+        String nsql = "SELECT m.materia_nombre, d.malla_almn_estado FROM ((public.\"Alumnos\" a JOIN public.\"AlumnosCarrera\" c USING(id_alumno)) \n"
+                + "JOIN public.\"MallaAlumno\" d USING(id_almn_carrera)) JOIN public.\"Materias\" m USING(id_materia)\n"
+                + "WHERE a.id_persona = " + ID + " AND malla_almn_estado LIKE 'A';";
         ResultSet rs = conecta.sql(nsql);
         try {
             while (rs.next()) {
@@ -589,6 +659,7 @@ public class AlumnoBD extends AlumnoMD {
 
     /**
      * Este método filtra todos los Alumnos activos
+     *
      * @return Retorna un ArrayList de la Clase AlumnoMD con los datos filtrados
      */
     public ArrayList<AlumnoMD> cargarAlumnos() {
@@ -598,8 +669,11 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     /**
-     * Este método busca a las Personas Activas según el parámetro que se le mande
-     * @param aguja. Se debe insertar un String según el atributo de búsqueda para filtrar al Alumno
+     * Este método busca a las Personas Activas según el parámetro que se le
+     * mande
+     *
+     * @param aguja. Se debe insertar un String según el atributo de búsqueda
+     * para filtrar al Alumno
      * @return Retorna un ArrayList de la Clase AlumnoMD con los datos filtrados
      */
     public ArrayList<AlumnoMD> buscarAlumnos(String aguja) {
@@ -610,16 +684,18 @@ public class AlumnoBD extends AlumnoMD {
                 + "FROM public.\"Alumnos\" a, public.\"Personas\" p \n"
                 + "WHERE p.id_persona = a.id_persona AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%"+aguja+"%' OR "
-                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%"+aguja+"%' OR \n"
-                + "	persona_identificacion ILIKE '%"+aguja+"%') "
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
+                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' OR \n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%') "
                 + "AND persona_activa = true;";
         return consultarAlumnos(sql);
     }
 
     /**
      * Este método extrae los datos de la consulta mandada como parámetro
-     * @param sql. Debe insertar un String como parámetro con la consulta requerida
+     *
+     * @param sql. Debe insertar un String como parámetro con la consulta
+     * requerida
      * @return Retorna una Lista de la clase AlumnoMD con los datos extraídos
      */
     private ArrayList<AlumnoMD> consultarAlumnos(String sql) {
