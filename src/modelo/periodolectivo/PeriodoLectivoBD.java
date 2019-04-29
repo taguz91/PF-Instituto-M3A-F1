@@ -618,7 +618,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "	\"public\".\"Carreras\".carrera_nombre \n"
+                + "	\"public\".\"Carreras\".carrera_nombre, \n"
+                + "	\"public\".\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "	\"public\".\"PeriodoLectivo\"\n"
                 + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
@@ -642,6 +643,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 String key = rs.getString("prd_lectivo_nombre") + " " + rs.getString("carrera_nombre");
