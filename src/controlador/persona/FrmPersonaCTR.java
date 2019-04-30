@@ -1017,11 +1017,11 @@ public class FrmPersonaCTR {
         } else {
             frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         }
-        if (per.getTipoDiscapacidad() == null) {
-            frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
-        } else {
-            frmPersona.getCmbTipoResidencia().setSelectedItem(per.getTipoResidencia());
-        }
+//        if (per.getTipoDiscapacidad() == null) {
+//            frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
+//        } else {
+//            frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
+//        }
 
         //Discapacidad
         if (per.isDiscapacidad() == false) {
@@ -1049,6 +1049,7 @@ public class FrmPersonaCTR {
             frmPersona.getCmbCategoriaMigratoria().setSelectedItem("SELECCIONE");
         } else {
             frmPersona.getCbxCategoriaMigratoria().isSelected();
+            activarCategoriaMigratoria();
             frmPersona.getCmbCategoriaMigratoria().setSelectedItem(per.getCategoriaMigratoria());
         }
 
