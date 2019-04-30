@@ -924,18 +924,26 @@ public class FrmPersonaCTR {
                 if (idPersona > 0) {
                     System.out.println("idPersona" + idPersona);
                     if (fis != null) {
-                        per.editarPersonaConFoto(idPersona);
-                        JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
-                        botonreportepersona();
-                        borrarCamposConId();
-                        ocultarErrores();
+                        if (per.editarPersonaConFoto(idPersona)) {
+                            JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                            botonreportepersona();
+                            borrarCamposConId();
+                            ocultarErrores();
+                        } else {
+                            JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
+                                    + "Revise su conexion a internet. ");
+                        }
 
                     } else {
-                        per.editarPersona(idPersona);
-                        JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
-                        botonreportepersona();
-                        borrarCamposConId();
-                        ocultarErrores();
+                        if (per.editarPersona(idPersona)) {
+                            JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                            botonreportepersona();
+                            borrarCamposConId();
+                            ocultarErrores();
+                        } else {
+                            JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
+                                    + "Revise su conexion a internet. ");
+                        }
 
                     }
                     editar = false;
