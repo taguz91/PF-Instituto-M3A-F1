@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0e954edf-be77-40d3-9e68-d337632247a0">
-	<property name="ireport.zoom" value="0.699761070314601"/>
-	<property name="ireport.x" value="274"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.650000000000003"/>
+	<property name="ireport.x" value="1142"/>
+	<property name="ireport.y" value="472"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -66,8 +66,7 @@ FROM
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
 	
 WHERE
-	"PeriodoLectivo".prd_lectivo_estado = true 
-	AND "Cursos".id_docente = $P{id_docente}
+	"Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
@@ -109,51 +108,51 @@ WHERE
 	<title>
 		<band height="231" splitType="Stretch">
 			<staticText>
-				<reportElement x="1046" y="92" width="56" height="20" uuid="95bc9b2c-3fc6-4609-9aad-6ec97c33af27"/>
+				<reportElement x="1046" y="92" width="72" height="20" uuid="95bc9b2c-3fc6-4609-9aad-6ec97c33af27"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="203" y="148" width="41" height="20" uuid="deae0bd5-6ada-4b7a-9b23-9c1f0f61e755"/>
+				<reportElement x="203" y="147" width="41" height="20" uuid="deae0bd5-6ada-4b7a-9b23-9c1f0f61e755"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="1" width="1520" height="45" forecolor="#006699" uuid="dbffd25f-9212-402d-a2a5-c0ea5e297879"/>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="dbffd25f-9212-402d-a2a5-c0ea5e297879"/>
 				<textElement textAlignment="Center">
-					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+					<font fontName="DejaVu Sans" size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="597" y="61" width="293" height="20" uuid="cb37a6e8-53bf-4648-a9de-2f94e6179080"/>
 				<textElement textAlignment="Center">
-					<font size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES MENOR A 70]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="203" y="113" width="54" height="20" uuid="b3d73ccb-3846-4b69-a7e5-99cab0211ef6"/>
+				<reportElement x="203" y="112" width="66" height="20" uuid="b3d73ccb-3846-4b69-a7e5-99cab0211ef6"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="203" y="81" width="97" height="20" uuid="37a5d1fb-73ce-416d-a5c1-54b2b39cadd5"/>
+				<reportElement x="203" y="80" width="120" height="20" uuid="37a5d1fb-73ce-416d-a5c1-54b2b39cadd5"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1046" y="124" width="72" height="20" uuid="d5c2337c-10f9-4cfe-8794-ebc61e04cf05"/>
+				<reportElement x="1046" y="124" width="88" height="20" uuid="d5c2337c-10f9-4cfe-8794-ebc61e04cf05"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
@@ -165,7 +164,7 @@ WHERE
 				<reportElement x="0" y="210" width="1520" height="1" uuid="407839f7-0212-4c2c-83a6-99ff47b535d4"/>
 			</line>
 			<textField>
-				<reportElement x="1142" y="124" width="244" height="20" uuid="d4becdac-27a6-4478-9dbb-428799343eed"/>
+				<reportElement x="1153" y="127" width="327" height="20" uuid="d4becdac-27a6-4478-9dbb-428799343eed"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
@@ -175,17 +174,17 @@ WHERE
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="113" width="334" height="20" uuid="6b8974f2-8305-41ba-aa89-ec9d8069855e"/>
+				<reportElement x="280" y="112" width="334" height="20" uuid="6b8974f2-8305-41ba-aa89-ec9d8069855e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="81" width="189" height="20" uuid="957f6d9b-5e6a-4f19-8894-fccb392268d0"/>
+				<reportElement x="333" y="81" width="219" height="20" uuid="957f6d9b-5e6a-4f19-8894-fccb392268d0"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1142" y="92" width="244" height="20" uuid="d032302a-b029-4379-9305-425cccc3b054"/>
+				<reportElement x="1134" y="92" width="346" height="20" uuid="d032302a-b029-4379-9305-425cccc3b054"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
@@ -205,7 +204,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
@@ -218,7 +217,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[NOTA FINAL]]></text>
 			</staticText>
@@ -231,7 +230,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
@@ -244,7 +243,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
@@ -256,7 +255,9 @@ WHERE
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[N° MATRÍCULA]]></text>
 			</staticText>
 			<staticText>
@@ -268,7 +269,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
@@ -281,7 +282,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ESTADO]]></text>
 			</staticText>
@@ -289,17 +290,6 @@ WHERE
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="388" y="0" width="44" height="20" uuid="25897a31-2fdf-4d80-8885-75a59244f8b6"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{id_alumno}.toString()]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="432" y="0" width="100" height="20" uuid="4749a83d-3a58-40a8-a8fd-25b480fbd810"/>
 				<box>
@@ -366,6 +356,17 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{N° Matricula}.toString()]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="388" y="0" width="44" height="20" uuid="ac447352-ec8b-45ac-9c0f-8d6ce50f85fd"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -381,7 +382,9 @@ WHERE
 			</line>
 			<staticText>
 				<reportElement x="434" y="126" width="100" height="20" uuid="136b2830-b94f-41f4-86ae-ef8bbda72028"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
@@ -392,9 +395,11 @@ WHERE
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="950" y="126" width="100" height="20" uuid="2368d485-c9d9-40dd-a2c6-29ff632ac6a3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[COORDINADOR]]></text>
+				<reportElement x="884" y="126" width="234" height="20" uuid="2368d485-c9d9-40dd-a2c6-29ff632ac6a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
 			</staticText>
 			<line>
 				<reportElement x="884" y="95" width="234" height="1" uuid="f7edfd62-b26a-4426-bd19-2fc9b8dbed5c"/>
