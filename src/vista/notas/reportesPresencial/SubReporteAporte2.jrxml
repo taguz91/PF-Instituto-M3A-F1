@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="100" pageHeight="842" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="790809cb-6002-49d3-8e0d-996119f95632">
 	<property name="ireport.zoom" value="4.1772481694156625"/>
-	<property name="ireport.x" value="24"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_alumno" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -36,8 +36,7 @@ FROM
   INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
 	INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota 	
 WHERE
-	"PeriodoLectivo".prd_lectivo_estado = true 
-	AND "Alumnos".id_alumno = $P{id_alumno}
+	"Alumnos".id_alumno = $P{id_alumno}
 	AND "Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}

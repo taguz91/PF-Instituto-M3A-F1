@@ -1,6 +1,6 @@
 package controlador.principal;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
@@ -23,7 +23,6 @@ import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotas;
-import controlador.notas.VtnNotasAlumnoCursoCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -36,7 +35,6 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
-import controlador.silabo.ControladorConfiguracion_plan_clases;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -193,7 +191,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
-        InitPermisosTesterYDocente();
+        //InitPermisosTesterYDocente();
     }
 
     /**
@@ -217,11 +215,10 @@ public class VtnPrincipalCTR {
         //Iniciamos los shortcuts 
 
         iniciarAtajosTeclado();
-        agregarEstilos(); 
+        agregarEstilos();
 
         //Acciones de las ventanas de consulta
         //Para el estilo 
-
         //Para abrir las ventanas consulta
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
@@ -672,13 +669,13 @@ public class VtnPrincipalCTR {
         estilos = new ArrayList();
         ButtonGroup btnsEstilo = new ButtonGroup();
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName()); 
+            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName());
             mi.addActionListener(e -> estiloVtn(info.getName()));
-            estilos.add(info.getName()); 
-            vtnPrin.getMnEstilo().add(mi); 
+            estilos.add(info.getName());
+            vtnPrin.getMnEstilo().add(mi);
             btnsEstilo.add(mi);
         }
-        
+
     }
 
     /**
@@ -714,7 +711,7 @@ public class VtnPrincipalCTR {
      * @see errorNumVentanas()
      */
     public void eventoInternal(JInternalFrame internal) {
-        Middlewares.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        Effects.centerFrame(internal, vtnPrin.getDpnlPrincipal());
         setIconJIFrame(internal);
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
@@ -921,7 +918,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuarios(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado);
         vtn.Init();
     }
 
@@ -1113,26 +1110,8 @@ public class VtnPrincipalCTR {
     private void InitPermisosTesterYDocente() {
         System.out.println("Estamos en modo pruebas = " + pruebas);
         if (!pruebas) {
+
             if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
-                vtnPrin.getMnIngresar().setEnabled(false);
-                vtnPrin.getPnlMenu().setVisible(false);
-                vtnPrin.getMnCtPersona().setEnabled(false);
-                vtnPrin.getMnCtDocente().setEnabled(false);
-                vtnPrin.getMnCtAlumno().setEnabled(false);
-                vtnPrin.getMnCtCarrera().setEnabled(false);
-                vtnPrin.getMnCtCurso().setEnabled(false);
-                vtnPrin.getMnCtPrdLectivo().setEnabled(false);
-                vtnPrin.getMnCtMateria().setEnabled(false);
-                vtnPrin.getMnCtInscripcion().setEnabled(false);
-                vtnPrin.getMnCtMatricula().setEnabled(false);
-                vtnPrin.getMnCtDocenteMateria().setEnabled(false);
-                vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-                vtnPrin.getMnCtPlandeClase().setEnabled(true);
-                vtnPrin.getMnCtUsuarios().setEnabled(false);
-                vtnPrin.getMnCtRoles().setEnabled(false);
-                vtnPrin.getMnCtHistorialUsers().setEnabled(false);
-                vtnPrin.getMnCtAccesos().setEnabled(false);
-                vtnPrin.getMnCtMiPerfil().setEnabled(false);
                 if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
                     vtnPrin.getMnNotas().setEnabled(true);
                     vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
@@ -1151,6 +1130,40 @@ public class VtnPrincipalCTR {
             System.out.println("Entre en la base de datos pruebas");
             vtnPrin.setTitle("PF M3A | Modo Pruebas Activado");
         }
+
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("SECRETARIA")) {
+
+            vtnPrin.getMnIngresar().setEnabled(false);
+            vtnPrin.getPnlMenu().setVisible(false);
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtCarrera().setEnabled(false);
+            vtnPrin.getMnCtCurso().setEnabled(false);
+            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+            vtnPrin.getMnCtMateria().setEnabled(false);
+            vtnPrin.getMnCtInscripcion().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+            vtnPrin.getMnCtPlandeClase().setEnabled(true);
+            vtnPrin.getMnCtUsuarios().setEnabled(false);
+            vtnPrin.getMnCtRoles().setEnabled(false);
+            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+            vtnPrin.getMnCtAccesos().setEnabled(false);
+            vtnPrin.getMnCtMiPerfil().setEnabled(false);
+
+            vtnPrin.getMnCtPersona().setEnabled(true);
+            vtnPrin.getMnCtAlumno().setEnabled(true);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(true);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(true);
+            vtnPrin.getMnCtMatricula().setEnabled(true);
+            vtnPrin.getMnCtListaAlumnos().setEnabled(true);
+            vtnPrin.getMnCtMallaAlumno().setEnabled(true);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(true);
+            vtnPrin.getMnCtDocente().setEnabled(true);
+        }
+
     }
 
     private void registroIngreso(JFrame vtn) {
@@ -1161,6 +1174,10 @@ public class VtnPrincipalCTR {
             }
 
         });
+    }
+
+    public UsuarioBD getUsuario() {
+        return usuario;
     }
 
 }

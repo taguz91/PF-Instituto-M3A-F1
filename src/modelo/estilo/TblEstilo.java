@@ -62,6 +62,20 @@ public class TblEstilo {
         tblHead.setDefaultRenderer(hedRender);
     }
 
+    public static void formatoTblMultipleSelec(JTable tbl) {
+        JTableHeader tblHead = tbl.getTableHeader();
+        //Para que no se pueda reordenar las columnas 
+        tblHead.setReorderingAllowed(false);
+        //Para que no se pueda cambiar su longitud  
+        tblHead.setResizingAllowed(false);
+        //Centramos los titulos de las tablas 
+        DefaultTableCellRenderer hedRender = (DefaultTableCellRenderer) tblHead.getDefaultRenderer();
+        //Centramos los textos
+        hedRender.setHorizontalAlignment(JLabel.CENTER);
+        //Le pasamos el render a nuestro table head
+        tblHead.setDefaultRenderer(hedRender);
+    }
+
     public static void formatoTblConColor(JTable tbl) {
         JTableHeader tblHead = tbl.getTableHeader();
 
@@ -159,8 +173,8 @@ public class TblEstilo {
         };
         return modelo;
     }
-    
-    public static void formatoTblMatricula(JTable tbl){
+
+    public static void formatoTblMatricula(JTable tbl) {
         formatoTbl(tbl);
         tbl.getColumnModel().getColumn(1).setCellRenderer(new TblRenderMateriasMatricula(1));
     }

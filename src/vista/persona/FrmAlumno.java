@@ -88,6 +88,9 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         Txt_TituloSuperior = new javax.swing.JTextField();
         Lbl_ErrorTSuperior = new javax.swing.JLabel();
         Txt_Anios = new javax.swing.JTextField();
+        Lbl_AbvTitulo = new javax.swing.JLabel();
+        Txt_Abreviatura = new javax.swing.JTextField();
+        Lbl_ErrAnio = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -140,10 +143,10 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jLabel21.setText("Parentesco Contacto *");
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, -1, 20));
 
-        jLabel20.setText("Formacion Madre ");
+        jLabel20.setText("Formacion Madre *");
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, -1, 20));
 
-        jLabel15.setText("Sector Económico *");
+        jLabel15.setText("Sector Económico ");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, -1, 20));
 
         jLabel6.setText("Año de Bachiller *");
@@ -167,18 +170,24 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 250, -1));
 
         jLabel14.setText("Trabaja");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, -1, 20));
-        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, 20));
+
+        ChkBx_Trabaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChkBx_TrabajaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, -1, -1));
         jPanel1.add(Txt_Ocupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 250, -1));
 
-        jLabel13.setText("Ocupacion:");
+        jLabel13.setText("Ocupacion *");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel12.setText("Bono de Desarrollo Humano");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
         jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
 
-        jLabel19.setText("Formacion Padre ");
+        jLabel19.setText("Formacion Padre *");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         jLabel22.setText("Nombre Contacto *");
@@ -186,16 +195,16 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         jLabel23.setText("Contacto Emergencia *");
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, 20));
-        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, -1, -1));
+        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
 
         jLabel7.setText("Educación Superior: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
 
         jLabel4.setText("Tipo de Colegio *");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 20));
 
         CmBx_TipoColegio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "FISCAL", "FISCOMISIONAL", "PRIVADA", "MUNICIPAL", "OTROS" }));
-        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 230, -1));
+        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 250, -1));
 
         Btn_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
         jPanel1.add(Btn_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 31, -1));
@@ -206,7 +215,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
 
         Lbl_ErrTipColegio.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipColegio.setText("Seleccione un Colegio");
-        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 130, -1));
+        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, -1));
 
         Lbl_ErrTipBachillerato.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipBachillerato.setText("Seleccione un Bachillerato");
@@ -256,23 +265,37 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         jPanel1.add(Lbl_ErrTipoIdenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 210, -1));
 
         Lbl_TSuperior.setText("Título Superior");
-        jPanel1.add(Lbl_TSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, -1));
-        jPanel1.add(Txt_TituloSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 270, -1));
+        jPanel1.add(Lbl_TSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+
+        Txt_TituloSuperior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Txt_TituloSuperiorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Txt_TituloSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 250, -1));
 
         Lbl_ErrorTSuperior.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrorTSuperior.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrorTSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
+        jPanel1.add(Lbl_ErrorTSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
         jPanel1.add(Txt_Anios, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 120, -1));
+
+        Lbl_AbvTitulo.setText("Abreviatura del Título");
+        jPanel1.add(Lbl_AbvTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, -1));
+        jPanel1.add(Txt_Abreviatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 120, -1));
+
+        Lbl_ErrAnio.setForeground(new java.awt.Color(204, 0, 0));
+        Lbl_ErrAnio.setText("Ingrese un valor válido");
+        jPanel1.add(Lbl_ErrAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -289,6 +312,14 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private void CmBx_ForPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmBx_ForPadreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CmBx_ForPadreActionPerformed
+
+    private void Txt_TituloSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_TituloSuperiorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Txt_TituloSuperiorActionPerformed
+
+    private void ChkBx_TrabajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChkBx_TrabajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ChkBx_TrabajaActionPerformed
 
     public JButton getBtn_Buscar() {
         return Btn_Buscar;
@@ -730,6 +761,30 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         this.Txt_Anios = Txt_Anios;
     }
 
+    public JLabel getLbl_AbvTitulo() {
+        return Lbl_AbvTitulo;
+    }
+
+    public void setLbl_AbvTitulo(JLabel Lbl_AbvTitulo) {
+        this.Lbl_AbvTitulo = Lbl_AbvTitulo;
+    }
+
+    public JTextField getTxt_Abreviatura() {
+        return Txt_Abreviatura;
+    }
+
+    public void setTxt_Abreviatura(JTextField Txt_Abreviatura) {
+        this.Txt_Abreviatura = Txt_Abreviatura;
+    }
+
+    public JLabel getLbl_ErrAnio() {
+        return Lbl_ErrAnio;
+    }
+
+    public void setLbl_ErrAnio(JLabel Lbl_ErrAnio) {
+        this.Lbl_ErrAnio = Lbl_ErrAnio;
+    }
+
     
 
     
@@ -747,6 +802,8 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> CmBx_SecEconomico;
     private javax.swing.JComboBox<String> CmBx_TipoBachillerato;
     private javax.swing.JComboBox<String> CmBx_TipoColegio;
+    private javax.swing.JLabel Lbl_AbvTitulo;
+    private javax.swing.JLabel Lbl_ErrAnio;
     private javax.swing.JLabel Lbl_ErrCedula;
     private javax.swing.JLabel Lbl_ErrConEmergencia;
     private javax.swing.JLabel Lbl_ErrForMadre;
@@ -761,6 +818,7 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_ErrTipoIdenti;
     private javax.swing.JLabel Lbl_ErrorTSuperior;
     private javax.swing.JLabel Lbl_TSuperior;
+    private javax.swing.JTextField Txt_Abreviatura;
     private javax.swing.JTextField Txt_Anios;
     private javax.swing.JTextField Txt_Cedula;
     private javax.swing.JTextField Txt_ConEmergency;

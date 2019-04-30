@@ -112,7 +112,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Buscar:");
 
-        btnReset.setText("Resetear");
+        btnReset.setText("Reset");
         btnReset.setEnabled(false);
 
         btnCancelar.setText("Cancelar");

@@ -79,8 +79,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
-    
-    public boolean abrirPeriodo(int id){
+
+    public boolean abrirPeriodo(int id) {
         String sql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
@@ -483,6 +483,23 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
+    public LocalDate buscarFechaInicioPrd(int idPrd) {
+        LocalDate fi = null;
+        String sql = "SELECT prd_lectivo_fecha_inicio \n"
+                + "FROM public.\"PeriodoLectivo\"\n"
+                + "WHERE id_prd_lectivo = " + idPrd + ";";
+        ResultSet rs = conecta.sql(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    fi = rs.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return fi;
+    }
+
     public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
@@ -601,7 +618,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "	\"public\".\"Carreras\".carrera_nombre \n"
+                + "	\"public\".\"Carreras\".carrera_nombre, \n"
+                + "	\"public\".\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "	\"public\".\"PeriodoLectivo\"\n"
                 + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
@@ -625,6 +643,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 String key = rs.getString("prd_lectivo_nombre") + " " + rs.getString("carrera_nombre");

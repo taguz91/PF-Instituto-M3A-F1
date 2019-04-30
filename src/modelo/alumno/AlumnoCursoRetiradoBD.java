@@ -28,11 +28,9 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                 + "	id_almn_curso, retiro_observacion)\n"
                 + "	VALUES (" + getAlumnoCurso().getId() + ", "
                 + " '" + getObservacion() + "');";
-
         if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, getAlumnoCurso().getCurso().getMateria().getNombre()
-                    + " fue retirado de: \n"
-                    + getAlumnoCurso().getAlumno().getNombreCorto());
+            JOptionPane.showMessageDialog(null, "Anulada la matricula de: \n"
+                    + getAlumnoCurso().getCurso().getMateria().getNombre());
         }
     }
 
@@ -180,7 +178,7 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     CursoMD c = new CursoMD();
                     MateriaMD m = new MateriaMD();
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    
+
                     r.setId(rs.getInt("id_retirado"));
                     ac.setId(rs.getInt("id_almn_curso"));
                     r.setFecha(rs.getTimestamp("retiro_fecha").toLocalDateTime());
@@ -199,12 +197,12 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     ac.setAlumno(a);
 
                     r.setAlumnoCurso(ac);
-                    
-                    retirados.add(r); 
+
+                    retirados.add(r);
                 }
                 return retirados;
             } catch (SQLException e) {
-                System.out.println("No se pudo consultar alumnos retirados."+e.getMessage());
+                System.out.println("No se pudo consultar alumnos retirados." + e.getMessage());
                 return null;
             }
         } else {

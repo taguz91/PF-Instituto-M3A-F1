@@ -1,6 +1,5 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Middlewares;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -36,7 +35,6 @@ public class FrmTipoNotaAgregar extends AbstracForm {
             if (setObj().insertar()) {
                 String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
-                Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
                 vtnPadre.cargarTabla();
                 vista.dispose();
             } else {
