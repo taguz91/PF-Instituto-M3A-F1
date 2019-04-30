@@ -230,7 +230,7 @@ public class VtnNotas {
                         } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
                             vista.getTblNotas().setValueAt("REPROBADO", getSelectedRow(), 13);
                         }
-                        sumarColumnas();
+                        sumarColumnasTradicionales();
                         editar();
                     }
                     refreshTabla();
@@ -263,7 +263,7 @@ public class VtnNotas {
             if (!rango.getNombre().equalsIgnoreCase("EXAMEN FINAL")) {
                 if (value >= 0 && value <= rango.getValorMaximo()) {
                     datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
-                    sumarColumnas();
+                    sumarColumnasTradicionales();
                     editar();
                     refreshTabla();
 
@@ -276,13 +276,13 @@ public class VtnNotas {
 
                     if (value >= rango.getValorMinimo() && value <= rango.getValorMaximo()) {
                         datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
-                        sumarColumnas();
+                        sumarColumnasTradicionales();
                         editar();
                         refreshTabla();
                     } else {
                         datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
                         datos.setValueAt("REPROBADO", getSelectedRow(), 13);
-                        sumarColumnas();
+                        sumarColumnasTradicionales();
                         editar();
                         refreshTabla();
                     }
@@ -301,7 +301,7 @@ public class VtnNotas {
         refreshTabla();
     }
 
-    private static void sumarColumnas() {
+    private static void sumarColumnasTradicionales() {
         int fila = getSelectedRow();
 
         double aporte1 = 0;
@@ -603,30 +603,26 @@ public class VtnNotas {
                 vista.getTblNotas().setEnabled(false);
                 Effects.setLoadCursor(vista);
 
-                try {
+                desktop.getLblEstado().setText("CARGANDO NOTAS");
+                String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
+                String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
+                String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 
-                    desktop.getLblEstado().setText("CARGANDO NOTAS");
-                    String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
-                    String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-                    String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+                activarForm(false);
 
-                    activarForm(false);
+                listaNotas = null;
 
-                    listaNotas = new ArrayList<>();
+                listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), nombrePeriodo);
 
-                    listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), nombrePeriodo);
+                listaNotas.stream().forEach(VtnNotas::agregarFilas);
 
-                    listaNotas.stream().forEach(VtnNotas::agregarFilas);
+                activarForm(true);
 
-                    activarForm(true);
+                vista.getLblResultados().setText(listaNotas.size() + " Resultados");
 
-                    vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+                desktop.getLblEstado().setText("");
+                Effects.setDefaultCursor(vista);
 
-                    desktop.getLblEstado().setText("");
-                    Effects.setDefaultCursor(vista);
-
-                } catch (NullPointerException e) {
-                }
                 cargarTabla = true;
                 vista.getTblNotas().setEnabled(true);
                 vista.getBtnImprimir().setEnabled(true);
@@ -726,7 +722,22 @@ public class VtnNotas {
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
     private void cargarTablaDuales() {
-        
+
+        if (cargarTabla) {
+            new Thread(() -> {
+                RowStyle row = new RowStyle(13);
+                vista.getTblNotas().setDefaultRenderer(Object.class, row);
+
+                cargarTabla = false;
+                tablaNotas.setRowCount(0);
+                vista.getTabDuales().setEnabled(false);
+                Effects.setLoadCursor(vista);
+
+            }).start();
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
+        }
+
     }
 
     // </editor-fold>  
@@ -740,10 +751,12 @@ public class VtnNotas {
                     .findAny()
                     .get().getCarrera().getModalidad();
 
+            System.out.println("----->" + modalidad);
+
             if (modalidad.equalsIgnoreCase("TRADICIONAL")) {
                 cargarTablaTradicionales();
             } else if (modalidad.equalsIgnoreCase("DUAL")) {
-
+                cargarTablaDuales();
             } else if (modalidad.equalsIgnoreCase("DUAL FOCALIZADA")) {
 
             }

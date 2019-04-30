@@ -283,6 +283,7 @@
     <Container class="javax.swing.JTabbedPane" name="tabPane">
       <Properties>
         <Property name="tabLayoutPolicy" type="int" value="1"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>

@@ -533,7 +533,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
-                carrera.setNombre(rs.getString("carrera_modalidad"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 periodo.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));

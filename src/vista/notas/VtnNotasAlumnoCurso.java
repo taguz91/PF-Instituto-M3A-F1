@@ -170,6 +170,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lblHoras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         tabPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabPane.setEnabled(false);
 
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
