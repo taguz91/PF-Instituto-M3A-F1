@@ -202,7 +202,7 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            String Username = (String) vista.getTblUsuario().getValueAt(fila, 0);
+            String Username = (String) vista.getTblUsuario().getValueAt(fila, 1);
 
             if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");
