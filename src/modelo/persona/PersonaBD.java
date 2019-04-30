@@ -31,11 +31,19 @@ public class PersonaBD extends PersonaMD {
     //Esto se usara para cargar las fotos 
     InputStream is;
 
+    /**
+     *
+     * @param conecta
+     */
     public PersonaBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.lugar = new LugarBD(conecta);
     }
 
+    /**
+     * Este método guarda a la Persona en la Base de Datos con todos estos
+     * atributos
+     */
     public void insertarPersona() {
 
         //Aqui id_persona ya no va porque es autoincrementable
@@ -148,7 +156,13 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
-    //Sentencia para editar una Persona
+    /**
+     * Este método edita a una Persona que no tiene foto de la Base de Datos con
+     * todos estos atributos
+     *
+     * @param aguja Se tiene que pasar un int como la Id de persona
+     * @return Retorna un boolean según el resultado de la Edición
+     */
     public boolean editarPersona(int aguja) {
         String sql = "UPDATE public.\"Personas\" SET\n"
                 + " id_lugar_natal = " + getLugarNatal().getId()
@@ -229,6 +243,12 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     * Este método edita a una Persona que si tiene foto de la Base de Datos con
+     * todos estos atributos
+     *
+     * @param aguja Se tiene que pasar un int como la Id de persona
+     */
     public void editarPersonaConFoto(int aguja) {
         String nsql = "UPDATE public.\"Personas\" SET\n"
                 + " id_lugar_natal = " + getLugarNatal().getId()
@@ -313,6 +333,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public boolean activarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa = 'true'"
@@ -329,6 +354,11 @@ public class PersonaBD extends PersonaMD {
 
     // Utilizamos la sentencia update para modificar el estado de una persona
     // y no eliminarla por completo con parametro por identidicacion
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public boolean eliminarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
@@ -359,6 +389,10 @@ public class PersonaBD extends PersonaMD {
 
     //Consultamos todos las personas en nuestro sistema 
     //que no esten eliminadas
+    /**
+     *
+     * @return
+     */
     public ArrayList<PersonaMD> cargarPersonas() {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
@@ -402,6 +436,11 @@ public class PersonaBD extends PersonaMD {
     }
 
     //Buscar Persona con aguja
+    /**
+     *
+     * @param idPersona
+     * @return
+     */
     public PersonaMD buscarPersona(int idPersona) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -422,6 +461,11 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public PersonaMD buscarPersona(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -442,6 +486,11 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public PersonaMD buscarPersonaNoActiva(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -583,6 +632,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param rs
+     * @return
+     */
     private PersonaMD obtenerPersona(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
@@ -721,6 +775,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param rs
+     * @return
+     */
     private PersonaMD obtenerPersonaSinValidar(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
