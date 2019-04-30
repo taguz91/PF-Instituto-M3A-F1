@@ -353,6 +353,7 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getTxtBuscar().setEnabled(estado);
         frmAlmCurso.getBtnBuscar().setEnabled(estado);
         frmAlmCurso.getBtnMtCursadas().setEnabled(estado);
+        frmAlmCurso.getBtnPendientes().setEnabled(estado);
     }
 
     /**

@@ -22,6 +22,7 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.materia.MateriaBD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
@@ -58,6 +59,9 @@ public class VtnMallaAlumnoCTR {
     private ArrayList<CarreraMD> carreras = new ArrayList();
     //Modelo de la tabla
     private DefaultTableModel mdlTbl;
+    //Ciclos de una carrera
+    private ArrayList<Integer> ciclos;
+    private final MateriaBD mat;
 
     //Para saber el alumno seleccionado
     private int posFila = -1;
@@ -71,9 +75,7 @@ public class VtnMallaAlumnoCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
         //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Malla alumnos");
-        ctrPrin.setIconJIFrame(vtnMallaAlm);
+        this.mat = new MateriaBD(conecta);
         this.almCar = new AlumnoCarreraBD(conecta);
         this.mallaAlm = new MallaAlumnoBD(conecta);
         this.car = new CarreraBD(conecta);
@@ -108,9 +110,14 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getCmbAlumnos().setEnabled(false);
         vtnMallaAlm.getCmbEstado().setEnabled(false);
 
-        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
-        vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
-        vtnMallaAlm.getCmbEstado().addActionListener(e -> cargarPorEstado());
+//        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
+//        vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
+//        vtnMallaAlm.getCmbEstado().addActionListener(e -> cargarPorEstado());
+        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCombo());
+        vtnMallaAlm.getCmbAlumnos().addActionListener(e -> clickCombo());
+        vtnMallaAlm.getCmbEstado().addActionListener(e -> clickCombo());
+        vtnMallaAlm.getCmbCiclo().addActionListener(e -> clickCombo());
+
         vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
@@ -264,10 +271,6 @@ public class VtnMallaAlumnoCTR {
     private void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         if (posAlm > 0) {
-            //Cambiamos el estado del cursos
-            vtnPrin.setCursor(new Cursor(3));
-            ctrPrin.estadoCargaVtn("Malla alumnos");
-
             mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
 
             vtnMallaAlm.getCmbEstado().setEnabled(true);
@@ -282,9 +285,6 @@ public class VtnMallaAlumnoCTR {
 
             llenarTbl(mallas);
             cargarCmbEstado();
-            //Cuando termina de cargar todo se le vuelve a su estado normal.
-            vtnPrin.setCursor(new Cursor(0));
-            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         } else {
             //Borramos todos los datos de la tabla si no se selecciona ninguno
             mdlTbl.setRowCount(0);
@@ -329,10 +329,6 @@ public class VtnMallaAlumnoCTR {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
         if (posAlm > 0 && posEst > 0) {
-            //Cambiamos el estado del cursos
-            vtnPrin.setCursor(new Cursor(3));
-            ctrPrin.estadoCargaVtn("Malla alumnos");
-
             mallas = mallaAlm.cargarMallaAlumnoPorEstado(
                     alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
             llenarTbl(mallas);
@@ -342,6 +338,65 @@ public class VtnMallaAlumnoCTR {
         } else if (posAlm > 0) {
             cargarPorAlumno();
         }
+    }
+
+    /**
+     * Al dar click en un combo se evalua en todas las posiciones que se dio
+     * click a un combo y se carga por estado
+     */
+    private void clickCombo() {
+        int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
+        int ciclo = vtnMallaAlm.getCmbCiclo().getSelectedIndex();
+        int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
+        int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
+        if (posAlm < 1) {
+            if (posCar > 0 && ciclo > 0 && posEst > 0) {
+                //Cargamos la malla por carrera
+                mallas = mallaAlm.cargarMallaPorCarreraCicloEstado(
+                        carreras.get(posCar - 1).getId(), ciclo, cmbEstado[posEst]);
+                llenarTbl(mallas);
+            } else if (posCar > 0 && ciclo > 0 && posEst == 0) {
+                //Cargamos la malla por carrera
+                mallas = mallaAlm.cargarMallaPorCarreraCiclo(carreras.get(posCar - 1).getId(), ciclo);
+                llenarTbl(mallas);
+            } else if (posCar > 0 && posEst > 0 && ciclo == 0) {
+                //Cargamos la malla por carrera
+                mallas = mallaAlm.cargarMallaPorCarreraEstado(carreras.get(posCar - 1).getId(), cmbEstado[posEst]);
+                llenarTbl(mallas);
+            } else if (posCar > 0) {
+                //Cargamos la malla por carrera
+                //mallas = mallaAlm.cargarMallaPorCarrera(carreras.get(posCar - 1).getId());
+                vtnMallaAlm.getCmbAlumnos().setEnabled(true);
+                vtnMallaAlm.getCmbEstado().setEnabled(true);
+                cargarCmbEstado();
+                ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
+                cargarCmbCiclos(ciclos);
+                //llenarTbl(mallas);
+            } else {
+                vtnMallaAlm.getCmbAlumnos().removeAllItems();
+                vtnMallaAlm.getCmbAlumnos().setEnabled(false);
+                vtnMallaAlm.getCmbEstado().setEnabled(false);
+                vtnMallaAlm.getCmbCiclo().removeAllItems();
+                vtnMallaAlm.getCmbEstado().removeAllItems();
+            }
+        } else {
+            if (posEst > 0 && ciclo > 0) {
+                mallas = mallaAlm.cargarMallaAlumnoPorEstadoCiclo(
+                        alumnos.get(posAlm - 1).getId(), ciclo, cmbEstado[posEst]);
+                llenarTbl(mallas);
+            } else if (posEst > 0 && ciclo == 0) {
+                mallas = mallaAlm.cargarMallaAlumnoPorEstado(
+                        alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
+                llenarTbl(mallas);
+            } else if (ciclo > 0 && posEst == 0) {
+                mallas = mallaAlm.cargarMallaAlumnoPorCiclo(
+                        alumnos.get(posAlm - 1).getId(), ciclo);
+                llenarTbl(mallas);
+            } else {
+                cargarPorAlumno();
+            }
+        }
+
     }
 
     /**
@@ -395,11 +450,26 @@ public class VtnMallaAlumnoCTR {
         if (posCar > 0) {
             vtnMallaAlm.getCmbAlumnos().setEnabled(true);
             cargarCmbEstado();
+            ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
+            cargarCmbCiclos(ciclos);
         } else {
             vtnMallaAlm.getCmbAlumnos().removeAllItems();
             vtnMallaAlm.getCmbAlumnos().setEnabled(false);
             vtnMallaAlm.getCmbEstado().removeAllItems();
         }
+    }
+
+    /**
+     * Cargamos el combo de ciclos
+     *
+     * @param ciclos
+     */
+    private void cargarCmbCiclos(ArrayList<Integer> ciclos) {
+        vtnMallaAlm.getCmbCiclo().removeAllItems();
+        vtnMallaAlm.getCmbCiclo().addItem("Todos");
+        ciclos.forEach((c) -> {
+            vtnMallaAlm.getCmbCiclo().addItem(c + "");
+        });
     }
 
     /**
