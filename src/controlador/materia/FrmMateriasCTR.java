@@ -48,6 +48,7 @@ public class FrmMateriasCTR {
     private boolean guardar = false, siguiente = false, anterior = false;
     private int acceso = 0;
     private boolean editar = false;
+    private String nombre_Materia;
     private ArrayList<CarreraMD> listaCarrera;
     private ArrayList<EjeFormacionMD> listaEje;
     private final CarreraBD carBD = null;
@@ -456,8 +457,8 @@ public class FrmMateriasCTR {
             materia.setMateriaNucleo(materiaNucleo);
 
             if (editar) {
-                
-                if(materia.editarMateria(materiaBD.capturarIDMaterias(materia.getNombre()).getId())){
+                System.out.println("materia" + materia.getNombre());
+                if(materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia).getId())){
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
                     frmMaterias.dispose();
                 } else{
@@ -576,7 +577,7 @@ public class FrmMateriasCTR {
     public void editarMaterias(MateriaMD matEditar) {
 
         editar = true;
-
+        nombre_Materia = matEditar.getNombre();
         frmMaterias.getTxtCodigoMateria().setText(matEditar.getCodigo());
         frmMaterias.getTxtNombreMateria().setText(matEditar.getNombre());
 
