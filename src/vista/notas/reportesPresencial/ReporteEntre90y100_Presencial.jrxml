@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53d62d52-505e-42a2-9bde-46dbba0fea6d">
 	<property name="ireport.zoom" value="1.000000000000001"/>
 	<property name="ireport.x" value="442"/>
-	<property name="ireport.y" value="238"/>
+	<property name="ireport.y" value="205"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -66,8 +66,7 @@ FROM
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
 	
 WHERE
-	"PeriodoLectivo".prd_lectivo_estado = true 
-	AND "Cursos".id_docente = $P{id_docente}
+	"Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
