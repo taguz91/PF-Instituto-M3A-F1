@@ -143,3 +143,12 @@ pa.id_persona = a.id_persona AND
 d.id_docente = c.id_docente AND
 pd.id_persona = d.id_persona AND
 almn_curso_nota_final = 0 ORDER BY docentes, curso_nombre;
+
+--Consultamos las matriculas hechas en un periodo 
+SELECT persona_identificacion, persona_primer_nombre || ' ' ||persona_segundo_nombre AS nombres, 
+persona_primer_apellido || ' ' || persona_segundo_apellido AS apellidos, 
+matricula_fecha 
+FROM public."MatricuLa" m , public."Alumnos" a, public."Personas" p 
+WHERE a.id_alumno = m.id_alumno AND 
+p.id_persona = a.id_persona AND 
+m.id_prd_lectivo = 21
