@@ -24,7 +24,7 @@ WHERE
 	AND "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019' 
 	AND "Cursos".curso_nombre= 'M2B' 
 	AND "public"."Materias".materia_nombre = 'ALGEBRA Y TRIGONOMETRÍA'
-	AND UPPER("AlumnoCurso".almn_curso_estado) = 'APROBADO']]>
+	AND UPPER("AlumnoCurso".almn_curso_estado) = 'RETIRADO']]>
 	</queryString>
 	<field name="ESTADO" class="java.lang.Long"/>
 	<detail>
