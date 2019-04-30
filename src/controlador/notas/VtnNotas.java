@@ -4,13 +4,7 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
-import datechooser.beans.customizer.PropertyDescriptorsHolder;
-import datechooser.beans.customizer.render.CellRenderer;
-import groovy.model.DefaultTableColumn;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditorSupport;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +16,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
@@ -54,10 +46,8 @@ public class VtnNotas {
 
     private VtnPrincipal desktop;
     private static VtnNotasAlumnoCurso vista;
-    private AlumnoCursoBD modelo;
     private UsuarioBD usuario;
     private static RolBD rolSeleccionado;
-    private ConectarDB conectar;
 
     //LISTAS
     private static Map<String, DocenteMD> listaDocentes;
@@ -77,11 +67,10 @@ public class VtnNotas {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, AlumnoCursoBD modelo, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         vista.setValorMinimo(70);
         this.desktop = desktop;
         this.vista = vista;
-        this.modelo = modelo;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
     }
@@ -110,11 +99,7 @@ public class VtnNotas {
 
             activarForm(true);
         }).start();
-        
-        
-        
-        
-        
+
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
     }
@@ -551,16 +536,14 @@ public class VtnNotas {
     }
 
     private static int getIdDocente() {
-        listaDocentes
+        return listaDocentes
                 .entrySet()
                 .stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocente().getSelectedItem().toString())))
-                .collect(Collectors.toList())
-                .forEach(entry -> {
-                    idDocente = entry.getValue().getIdDocente();
-                });
-
-        return idDocente;
+                .findAny()
+                .get()
+                .getValue()
+                .getIdDocente();
 
     }
 
@@ -607,7 +590,7 @@ public class VtnNotas {
         vista.getTblNotas().setEnabled(estado);
     }
 
-    private void cargarTabla() {
+    private void cargarTablaTradicionales() {
         new Thread(() -> {
 
             if (cargarTabla) {
@@ -653,14 +636,6 @@ public class VtnNotas {
 
     }
 
-    private static Consumer<NotasBD> agregar(Vector<Object> row, int posicion) {
-        return (objNota) -> {
-            //System.out.println(objNota);
-
-            row.add(posicion, objNota.getNotaValor());
-        };
-    }
-
     private static void agregarFilas(AlumnoCursoBD obj) {
 
         Vector<Object> row = new Vector<>();
@@ -672,14 +647,12 @@ public class VtnNotas {
         row.add(4, obj.getAlumno().getPrimerNombre());
         row.add(5, obj.getAlumno().getSegundoNombre());
 
-        System.out.println(obj.getId());
-
-        obj.getNotas().stream().filter(buscar("APORTE 1")).forEach(agregar(row, 6));
-        obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).forEach(agregar(row, 7));
-        obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).forEach(agregar(row, 8));
-        obj.getNotas().stream().filter(buscar("APORTE 2")).forEach(agregar(row, 9));
-        obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).forEach(agregar(row, 10));
-        obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).forEach(agregar(row, 11));
+        row.add(6, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("APORTE 1")).findAny().get().getNotaValor());
+        row.add(7, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN INTERCICLO")).findAny().get().getNotaValor());
+        row.add(8, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("NOTA INTERCICLO")).findAny().get().getNotaValor());
+        row.add(9, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("APORTE 2")).findAny().get().getNotaValor());
+        row.add(10, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN FINAL")).findAny().get().getNotaValor());
+        row.add(11, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN SUPLETORIO")).findAny().get().getNotaValor());
 
         int notaFinal = (int) Middlewares.conversor("" + obj.getNotaFinal());
 
@@ -751,10 +724,30 @@ public class VtnNotas {
     }
 
     // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
+    private void cargarTablaDuales() {
+        
+    }
+
+    // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            cargarTabla();
+
+            String modalidad = listaPeriodos
+                    .stream()
+                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                    .findAny()
+                    .get().getCarrera().getModalidad();
+
+            if (modalidad.equalsIgnoreCase("TRADICIONAL")) {
+                cargarTablaTradicionales();
+            } else if (modalidad.equalsIgnoreCase("DUAL")) {
+
+            } else if (modalidad.equalsIgnoreCase("DUAL FOCALIZADA")) {
+
+            }
+
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
@@ -834,16 +827,17 @@ public class VtnNotas {
 
     private void btnBuscar(ActionEvent e) {
         activarForm(false);
-        Map<String, DocenteMD> map = listaDocentes
-                .entrySet()
-                .stream()
-                .filter(item -> item.getValue().getIdentificacion().equalsIgnoreCase(vista.getTxtBuscar().getText())).collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
-        map.entrySet()
-                .stream()
-                .forEach(entry -> {
-                    vista.getCmbDocente().setSelectedItem(entry.getKey());
-                });
+        vista.getCmbDocente()
+                .setSelectedItem(
+                        listaDocentes
+                                .entrySet()
+                                .stream()
+                                .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscar().getText()))
+                                .findAny()
+                                .get()
+                                .getKey()
+                );
 
         activarForm(true);
     }
