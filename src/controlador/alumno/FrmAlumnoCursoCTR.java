@@ -259,15 +259,14 @@ public class FrmAlumnoCursoCTR {
             cursosSelec.forEach(c -> {
                 //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
                 almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId());
-                materiasMatricula =materiasMatricula +numMateria+": "+c.getMateria().getNombre() + "   Curso: " + c.getNombre()
+                materiasMatricula = materiasMatricula + numMateria + ": " + c.getMateria().getNombre() + "   Curso: " + c.getNombre()
                         + "    \n";
                 numMateria++;
             });
 
-
-            int r = JOptionPane.showConfirmDialog(vtnPrin,"Se matricula a: \n"
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Se matricula a: \n"
                     + alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
-                    + "Periodo: \n"+periodos.get(posPrd - 1).getNombre_PerLectivo()+"\n"
+                    + "Periodo: \n" + periodos.get(posPrd - 1).getNombre_PerLectivo() + "\n"
                     + "En las siguientes materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
                 if (almnCurso.guardarAlmnCurso()) {
@@ -513,6 +512,11 @@ public class FrmAlumnoCursoCTR {
 
         mallaCursadas = materiasAlmn;
 
+        //Si no perdio ninguna se le suba al ciclo en que se perdio uno
+        if (cicloCursado == cicloReprobado) {
+            cicloReprobado++;
+        }
+
         if (mallaPerdidas.size() > 0) {
             frmAlmCurso.getBtnReprobadas().setVisible(true);
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
@@ -525,11 +529,6 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
 
-        //Si no perdio ninguna se le suba al ciclo en que se perdio uno
-        if (cicloCursado == cicloReprobado) {
-            cicloReprobado++;
-        }
-
         if (mallaAnuladas.size() > 0) {
             frmAlmCurso.getBtnAnuladas().setVisible(true);
             mallaAnuladas.forEach(m -> {
@@ -540,6 +539,9 @@ public class FrmAlumnoCursoCTR {
         } else {
             frmAlmCurso.getBtnAnuladas().setVisible(false);
         }
+
+        System.out.println("Este ciclo reprobo " + cicloReprobado);
+        System.out.println("Este ciclo curso: " + cicloCursado);
 
         if (mallaPendientes.size() > 0) {
             frmAlmCurso.getBtnPendientes().setVisible(true);
