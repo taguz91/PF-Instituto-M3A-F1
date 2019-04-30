@@ -164,26 +164,7 @@ public class PersonaBD extends PersonaMD {
      * @return Retorna un boolean según el resultado de la Edición
      */
     public boolean editarPersona(int aguja) {
-        String sql = "UPDATE public.\"Personas\" SET\n"
-                + " id_lugar_natal = " + getLugarNatal().getId()
-                + ", id_lugar_residencia = " + getLugarResidencia().getId()
-                + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                + "', persona_fecha_registro = '" + getFechaRegistro()
-                + "', persona_calle_principal = '"
-                + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                + " WHERE id_persona = " + aguja + ";";
+        String sql;
 
         if (isDiscapacidad()) {
             sql = "UPDATE public.\"Personas\" SET\n"
@@ -232,8 +213,6 @@ public class PersonaBD extends PersonaMD {
                     + " WHERE id_persona = " + aguja + ";";
         }
 
-        System.out.println(sql);
-
         if (conecta.nosql(sql) == null) {
             System.out.println("Se edito correctamente");
             return true;
@@ -248,33 +227,15 @@ public class PersonaBD extends PersonaMD {
      * todos estos atributos
      *
      * @param aguja Se tiene que pasar un int como la Id de persona
+     * @return 
      */
-    public void editarPersonaConFoto(int aguja) {
-        String nsql = "UPDATE public.\"Personas\" SET\n"
-                + " id_lugar_natal = " + getLugarNatal().getId()
-                + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ?"
-                + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                + "', persona_fecha_registro = '" + getFechaRegistro()
-                + "', persona_calle_principal = '"
-                + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                + " WHERE id_persona = " + aguja + ";";
+    public boolean editarPersonaConFoto(int aguja) {
+        String nsql;
 
         if (isDiscapacidad()) {
             nsql = "UPDATE public.\"Personas\" SET\n"
                     + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ?"
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ? "
                     + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
                     + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
                     + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
@@ -297,7 +258,7 @@ public class PersonaBD extends PersonaMD {
         } else {
             nsql = "UPDATE public.\"Personas\" SET\n"
                     + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ? "
                     + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
                     + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
                     + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
@@ -324,12 +285,14 @@ public class PersonaBD extends PersonaMD {
                 ps.setBinaryStream(1, getFile(), getLogBytes());
                 ps.execute();
                 ps.close();
+                return true; 
                 //JOptionPane.showMessageDialog(null, "Persona editada correctamente");
             } catch (SQLException e) {
-                System.out.println("No se pudo editar persona con foto");
-                System.out.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "No se pudo editar persona con foto");
+                System.out.println("No se pudo editar persona con foto" + e.getMessage());
+                return false;
             }
+        }else{
+            return false;
         }
     }
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="100" pageHeight="842" columnWidth="60" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 
+
+	count("AlumnoCurso".almn_curso_estado) AS "ESTADO"
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
+	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+	
+WHERE
+	"Cursos".id_docente = 49 
+	AND "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019' 
+	AND "Cursos".curso_nombre= 'M2B' 
+	AND "public"."Materias".materia_nombre = 'ALGEBRA Y TRIGONOMETRÍA'
+	AND UPPER("AlumnoCurso".almn_curso_estado) = 'APROBADO']]>
+	</queryString>
+	<field name="ESTADO" class="java.lang.Long"/>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="60" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
