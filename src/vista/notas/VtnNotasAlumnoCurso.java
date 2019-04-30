@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -99,6 +100,10 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
     public JScrollPane getTabDuales() {
         return tabDuales;
+    }
+
+    public JTabbedPane getTabPane() {
+        return tabPane;
     }
 
     @SuppressWarnings("unchecked")
