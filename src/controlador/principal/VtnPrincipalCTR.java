@@ -191,7 +191,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
         //InitPermisos();
-        InitPermisosTesterYDocente();
+        //InitPermisosTesterYDocente();
     }
 
     /**

@@ -531,7 +531,7 @@ public class FrmAlumnoCTR {
 //                                frmAlumno.getTxt_Nombre().setText(alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()
 //                                        + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
                             ProfesionMD profesion = new ProfesionMD();
-                            profesion = bdAlumno.capturarProfesiones(alumno.getIdPersona());
+//                            profesion = bdAlumno.capturarProfesiones(alumno.getIdPersona());
                             frmAlumno.getCmBx_TipoColegio().setSelectedItem(alumno.getTipo_Colegio());
                             frmAlumno.getCmBx_TipoBachillerato().setSelectedItem(alumno.getTipo_Bachillerato());
                             frmAlumno.getTxt_Anios().setText(alumno.getAnio_graduacion());
@@ -854,7 +854,9 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Nombre().setFont(negrita);
         String sector = sectorE.capturarSector(persona.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico().toUpperCase();
         ProfesionMD profesion = new ProfesionMD();
-        profesion = bdAlumno.capturarProfesiones(persona.getIdPersona());
+//        if(bdAlumno.existeProfesion(persona.getIdPersona()) != null){
+//            profesion = bdAlumno.capturarProfesiones(persona.getIdPersona());
+//        }
         if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
             frmAlumno.getCbx_Identificacion().setSelectedItem("CÉDULA");
         } else {
@@ -870,6 +872,11 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Ocupacion().setText(persona.getOcupacion());
         frmAlumno.getTxt_Anios().setText(persona.getAnio_graduacion());
         frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
+        if(persona.isTrabaja() == true){
+            frmAlumno.getCmBx_SecEconomico().setEnabled(true);
+        } else{
+            frmAlumno.getCmBx_SecEconomico().setEnabled(false);
+        }
         frmAlumno.getChkBx_Trabaja().setSelected(persona.isTrabaja());
         if (sector.equals("NINGUNO")) {
             frmAlumno.getCmBx_SecEconomico().setSelectedIndex(0);

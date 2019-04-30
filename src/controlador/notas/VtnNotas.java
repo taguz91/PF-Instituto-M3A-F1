@@ -4,7 +4,13 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.notas.ux.RowStyle;
+import datechooser.beans.customizer.PropertyDescriptorsHolder;
+import datechooser.beans.customizer.render.CellRenderer;
+import groovy.model.DefaultTableColumn;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditorSupport;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +22,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
@@ -102,16 +110,18 @@ public class VtnNotas {
 
             activarForm(true);
         }).start();
-
+        
+        
+        
+        
+        
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
     }
 
     private void InitEventos() {
 
-        vista.getCmbDocente().addActionListener(e -> {
-            cargarComboPeriodos();
-        });
+        vista.getCmbDocente().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivo().addActionListener(e -> {
             cargarComboCiclo();
         });

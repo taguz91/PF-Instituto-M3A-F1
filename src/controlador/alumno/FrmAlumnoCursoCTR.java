@@ -92,6 +92,8 @@ public class FrmAlumnoCursoCTR {
     private final MateriaRequisitoBD matReq;
     //Matricula 
     private final MatriculaBD matri;
+    //Numero de materia matricula:
+    private int numMateria = 0;
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -253,15 +255,19 @@ public class FrmAlumnoCursoCTR {
             //Se limpia la variable antes de guardar 
             almnCurso.borrarMatricula();
             materiasMatricula = "";
+            numMateria = 1;
             cursosSelec.forEach(c -> {
                 //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
                 almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId());
-                materiasMatricula = materiasMatricula + c.getMateria().getNombre() + "   Curso: " + c.getNombre()
+                materiasMatricula = materiasMatricula + numMateria + ": " + c.getMateria().getNombre() + "   Curso: " + c.getNombre()
                         + "    \n";
+                numMateria++;
             });
 
-            int r = JOptionPane.showConfirmDialog(vtnPrin, alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
-                    + "Sera matricula en estas materias: \n" + materiasMatricula);
+            int r = JOptionPane.showConfirmDialog(vtnPrin, "Se matricula a: \n"
+                    + alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
+                    + "Periodo: \n" + periodos.get(posPrd - 1).getNombre_PerLectivo() + "\n"
+                    + "En las siguientes materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
                 if (almnCurso.guardarAlmnCurso()) {
                     //Reiniciamos todo 
@@ -346,6 +352,7 @@ public class FrmAlumnoCursoCTR {
         frmAlmCurso.getTxtBuscar().setEnabled(estado);
         frmAlmCurso.getBtnBuscar().setEnabled(estado);
         frmAlmCurso.getBtnMtCursadas().setEnabled(estado);
+        frmAlmCurso.getBtnPendientes().setEnabled(estado);
     }
 
     /**
@@ -466,7 +473,7 @@ public class FrmAlumnoCursoCTR {
         cursosSelec = new ArrayList<>();
         mdMatSelec.setRowCount(0);
         //Se reinciia el ciclo en el que esta matriculado
-        cicloCursado = 1;
+        cicloCursado = 0;
 
         //Si no esta matriculado miramos la materias que a cursado 
         //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAlmn).getId(), "C");
@@ -505,6 +512,11 @@ public class FrmAlumnoCursoCTR {
 
         mallaCursadas = materiasAlmn;
 
+        //Si no perdio ninguna se le suba al ciclo en que se perdio uno
+        if (cicloCursado == cicloReprobado) {
+            cicloReprobado++;
+        }
+
         if (mallaPerdidas.size() > 0) {
             frmAlmCurso.getBtnReprobadas().setVisible(true);
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
@@ -517,11 +529,6 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnReprobadas().setVisible(false);
         }
 
-        //Si no perdio ninguna se le suba al ciclo en que se perdio uno
-        if (cicloCursado == cicloReprobado) {
-            cicloReprobado++;
-        }
-
         if (mallaAnuladas.size() > 0) {
             frmAlmCurso.getBtnAnuladas().setVisible(true);
             mallaAnuladas.forEach(m -> {
@@ -532,6 +539,9 @@ public class FrmAlumnoCursoCTR {
         } else {
             frmAlmCurso.getBtnAnuladas().setVisible(false);
         }
+
+        System.out.println("Este ciclo reprobo " + cicloReprobado);
+        System.out.println("Este ciclo curso: " + cicloCursado);
 
         if (mallaPendientes.size() > 0) {
             frmAlmCurso.getBtnPendientes().setVisible(true);

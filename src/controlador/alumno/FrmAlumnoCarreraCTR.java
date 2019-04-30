@@ -128,9 +128,9 @@ public class FrmAlumnoCarreraCTR {
         if (!matriculado) {
             int posAlm = frmAlmCarrera.getTblAlumnos().getSelectedRow();
             int posCar = frmAlmCarrera.getCmbCarreras().getSelectedIndex();
-            
+
             boolean guardar = !buscarSiEstaMatriculado(posAlm);
-            
+
             if (posAlm < 0 || posCar < 1) {
                 guardar = false;
                 frmAlmCarrera.getLblError().setVisible(true);
@@ -139,13 +139,19 @@ public class FrmAlumnoCarreraCTR {
             }
 
             if (guardar) {
-                almnCarrera.setAlumno(alumnos.get(posAlm));
-                almnCarrera.setCarrera(carreras.get(posCar - 1));
-                if (almnCarrera.guardar()) {
 
-                    frmAlmCarrera.dispose();
-                    ctrPrin.cerradoJIF();
+                int r = JOptionPane.showConfirmDialog(vtnPrin, "Se matricula a: \n"
+                        + alumnos.get(posAlm).getNombreCompleto() + "\n En: \n"
+                        + carreras.get(posCar - 1).getNombre());
+                if (r == JOptionPane.YES_OPTION) {
+                    almnCarrera.setAlumno(alumnos.get(posAlm));
+                    almnCarrera.setCarrera(carreras.get(posCar - 1));
+                    if (almnCarrera.guardar()) {
+
+                        frmAlmCarrera.dispose();
+                        ctrPrin.cerradoJIF();
 //                ctrPrin.abrirVtnAlumnoCarrera();
+                    }
                 }
             }
         } else {
