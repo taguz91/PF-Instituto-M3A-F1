@@ -108,7 +108,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="29" y="58" width="147" height="124"/>
-				<imageExpression class="java.lang.String"><![CDATA["vista/notas/reportesUB/logo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="191" y="70" width="122" height="20"/>

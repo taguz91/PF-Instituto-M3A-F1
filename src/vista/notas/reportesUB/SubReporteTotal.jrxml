@@ -34,9 +34,8 @@ FROM
 WHERE
 	"Cursos".id_docente =  $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
-	AND "Cursos".curso_nombre= $P{curso_nombre}
-	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND UPPER("AlumnoCurso".almn_curso_estado) = 'APROBADO']]>
+	AND "Cursos".curso_nombre=  $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}]]>
 	</queryString>
 	<field name="ESTADO" class="java.lang.Long"/>
 	<detail>

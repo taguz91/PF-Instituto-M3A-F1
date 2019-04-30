@@ -3,18 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_docente" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="prd_lectivo_nombre" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="curso_nombre" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="materia_nombre" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
 
@@ -32,10 +20,10 @@ FROM
   INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
 	
 WHERE
-	"Cursos".id_docente =  $P{id_docente}
-	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
-	AND "Cursos".curso_nombre= $P{curso_nombre}
-	AND "public"."Materias".materia_nombre = $P{materia_nombre}
+	"Cursos".id_docente = 49 
+	AND "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019' 
+	AND "Cursos".curso_nombre= 'M2B' 
+	AND "public"."Materias".materia_nombre = 'ALGEBRA Y TRIGONOMETRÍA'
 	AND UPPER("AlumnoCurso".almn_curso_estado) = 'APROBADO']]>
 	</queryString>
 	<field name="ESTADO" class="java.lang.Long"/>
