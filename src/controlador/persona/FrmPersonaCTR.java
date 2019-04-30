@@ -529,6 +529,7 @@ public class FrmPersonaCTR {
     private void capturarFotoWebCam() {
         WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
         ctrCam.iniciarCamara();
+        habilitarBtnGuardar();
     }
 
     //Metodo para habilitar el boton guardar despues de que todos los campos obligatorios estén llenos
