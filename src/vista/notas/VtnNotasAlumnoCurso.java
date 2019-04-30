@@ -18,6 +18,20 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     public VtnNotasAlumnoCurso() {
 
         initComponents();
+        tabDuales.setVisible(false);
+        jTable1.setVisible(false);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("----------->");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+
+//        tabPane.setVisible(false);
 
     }
 
@@ -74,7 +88,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     }
 
     public JScrollPane getjScrollPane2() {
-        return jScrollPane2;
+        return tabDuales;
     }
 
     public boolean[] canEdit = new boolean[]{
@@ -96,7 +110,14 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     public JLabel getLblHoras() {
         return lblHoras;
     }
-    
+
+    public JScrollPane getTabTradicionales() {
+        return tabTradicionales;
+    }
+
+    public JScrollPane getTabDuales() {
+        return tabDuales;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -118,15 +139,20 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         lblResultados = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblNotas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lblHoras = new javax.swing.JLabel();
+        tabPane = new javax.swing.JTabbedPane();
+        tabDuales = new javax.swing.JScrollPane();
+        tblNotas = new javax.swing.JTable();
+        tabTradicionales = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Notas");
+        setMaximumSize(new java.awt.Dimension(1243, 500));
+        setMinimumSize(new java.awt.Dimension(1243, 500));
 
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
@@ -156,6 +182,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Horas Presenciales:");
+
+        lblHoras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -175,7 +206,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         tblNotas.setSelectionBackground(new java.awt.Color(102, 102, 102));
         tblNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblNotas.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tblNotas);
+        tabDuales.setViewportView(tblNotas);
         if (tblNotas.getColumnModel().getColumnCount() > 0) {
             tblNotas.getColumnModel().getColumn(0).setMinWidth(30);
             tblNotas.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -203,20 +234,32 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(16).setMaxWidth(70);
         }
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Horas Presenciales:");
+        tabPane.addTab("Carrera Tradicional", tabDuales);
 
-        lblHoras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabTradicionales.setViewportView(jTable1);
+
+        tabPane.addTab("Carrera Dual", tabTradicionales);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tabPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +301,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(64, 64, 64)
                                         .addComponent(btnBuscar)))))
-                        .addGap(0, 181, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -300,8 +343,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                             .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -320,7 +363,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbDocente;
     private javax.swing.JComboBox<String> cmbPeriodoLectivo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblHoras;
@@ -330,6 +373,9 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbl_ciclo;
     private javax.swing.JLabel lbl_docente;
     private javax.swing.JLabel lbl_periodolectivo;
+    private javax.swing.JScrollPane tabDuales;
+    private javax.swing.JTabbedPane tabPane;
+    private javax.swing.JScrollPane tabTradicionales;
     private javax.swing.JTable tblNotas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

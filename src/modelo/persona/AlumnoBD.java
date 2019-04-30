@@ -132,6 +132,23 @@ public class AlumnoBD extends AlumnoMD {
         }
     }
     
+    public ProfesionMD existeProfesion(int idPersona){
+        String sql = "SELECT id_titulo FROM public.\"PersonaProfesiones\" WHERE id_persona = " + idPersona + ";";
+        ResultSet rs = conecta.sql(sql);
+        ProfesionMD p = new ProfesionMD();
+        try {
+            while (rs.next()) {
+                p.setId_Titulo(rs.getInt("id_titulo"));
+            }
+            rs.close();
+            return p;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
     public ProfesionMD capturarProfesiones(int id_persona){
         String sql = "SELECT p.titulo_nombre, p.titulo_abrev FROM public.\"Profesiones\" p JOIN public.\"PersonaProfesiones\" a USING(id_titulo)\n" +
         "WHERE a.id_persona = " + id_persona + ";";
