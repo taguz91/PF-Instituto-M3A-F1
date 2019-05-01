@@ -559,7 +559,7 @@ public class FrmPersonaCTR {
 //            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
 //        }
 
-        TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
+//        TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
         categoriaMigratoria = frmPersona.getCbxCategoriaMigratoria().isSelected();
 //        if (categoriaMigratoria) {
@@ -578,7 +578,7 @@ public class FrmPersonaCTR {
                     && TipoSangre.equals("SELECCIONE") == false
                     && Etnia.equals("SELECCIONE") == false
                     //      && FechaNaci.equals("") == false
-                    && TipoResidencia.equals("SELECCIONE") == false
+                 //   && TipoResidencia.equals("SELECCIONE") == false
                     && CallePrin.equals("") == false) {
 //                if (Discapacidad == true && TipoDiscapacidad.equals("SELECCIONE") == false
 //                        && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {

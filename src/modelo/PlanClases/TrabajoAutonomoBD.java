@@ -28,18 +28,19 @@ public class TrabajoAutonomoBD extends TrabajoAutonomoMD{
         super(id_evaluacion, id_plan_clases);
         this.conexion = conexion;
     }
-    public void insertarTrabajoAutonomo(EvaluacionSilaboMD es){
+    public boolean insertarTrabajoAutonomo(EvaluacionSilaboMD es,TrabajoAutonomoMD ta){
         try {
             PreparedStatement st=conexion.getCon().prepareStatement("INSERT INTO public.\"TrabajoAutonomo\"(\n" +
                     "	id_evaluacion, id_plan_clases, autonomo_plan)\n" +
                     "	VALUES (?, SELECT MAX(id_plan_clases) from public.\"PlandeClases\", ?)");
             st.setInt(1, es.getIdEvaluacion());
-            st.setString(2, getAutonomo_plan_descripcion());
+            st.setString(2, ta.getAutonomo_plan_descripcion());
             st.executeUpdate();
             System.out.println(st);
         } catch (SQLException ex) {
             Logger.getLogger(TrabajoAutonomoBD.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return true;
     }
     
     
