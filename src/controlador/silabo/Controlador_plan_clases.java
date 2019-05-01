@@ -366,7 +366,7 @@ public class Controlador_plan_clases {
     
     public boolean guardar_plan_de_clase(){
         plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
-        plan_claseMD.getId_curso().setId_curso(curso.getId_curso());
+        plan_claseMD.getId_curso().setId(curso.getId());
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
         new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
