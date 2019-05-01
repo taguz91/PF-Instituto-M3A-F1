@@ -6,6 +6,7 @@
 package vista.silabos;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,13 +49,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         this.btnNuevoPLC = btnNuevoPLC;
     }
 
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
-    }
+   
 
     public JLabel getLbBuscarPLC() {
         return lbBuscarPLC;
@@ -72,12 +67,30 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         this.tlbTablaPLC = tlbTablaPLC;
     }
 
+   
+
     public JTextField getTxtBuscarPLC() {
         return txtBuscarPLC;
     }
 
     public void setTxtBuscarPLC(JTextField txtBuscarPLC) {
         this.txtBuscarPLC = txtBuscarPLC;
+    }
+
+    public JComboBox<String> getCmbJornadas() {
+        return CmbJornadas;
+    }
+
+    public void setCmbJornadas(JComboBox<String> CmbJornadas) {
+        this.CmbJornadas = CmbJornadas;
+    }
+
+    public JComboBox<String> getCmb_Carreras() {
+        return Cmb_Carreras;
+    }
+
+    public void setCmb_Carreras(JComboBox<String> Cmb_Carreras) {
+        this.Cmb_Carreras = Cmb_Carreras;
     }
 
     /**
@@ -94,7 +107,11 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         btnNuevoPLC = new javax.swing.JButton();
         btnEditarPLC = new javax.swing.JButton();
         btnEliminarPLC = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        Cmb_Carreras = new javax.swing.JComboBox<>();
+        Carreras = new javax.swing.JLabel();
+        CmbJornadas = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tlbTablaPLC = new javax.swing.JTable();
 
         setClosable(true);
@@ -109,20 +126,27 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
         btnEliminarPLC.setText("Eliminar");
 
+        Carreras.setText("Carrera");
+
+        jLabel2.setText("Jornada");
+
         tlbTablaPLC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Carrera", "Jornada", "Docente", "Materia", "Plan de Clase N°", "Unidad"
+                "Docente", "Materia", "Plan de Clase N°", "Unidad"
             }
-        ));
-        jScrollPane1.setViewportView(tlbTablaPLC);
-        if (tlbTablaPLC.getColumnModel().getColumnCount() > 0) {
-            tlbTablaPLC.getColumnModel().getColumn(5).setMinWidth(50);
-            tlbTablaPLC.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tlbTablaPLC.getColumnModel().getColumn(5).setMaxWidth(50);
-        }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tlbTablaPLC);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,19 +154,27 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbBuscarPLC)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbBuscarPLC)
+                            .addComponent(Carreras)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarPLC, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevoPLC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditarPLC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarPLC)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Cmb_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBuscarPLC, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
+                                .addComponent(btnNuevoPLC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEditarPLC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminarPLC))
+                            .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +189,16 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                         .addComponent(txtBuscarPLC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lbBuscarPLC)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Cmb_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Carreras))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -200,10 +240,14 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Carreras;
+    private javax.swing.JComboBox<String> CmbJornadas;
+    private javax.swing.JComboBox<String> Cmb_Carreras;
     private javax.swing.JButton btnEditarPLC;
     private javax.swing.JButton btnEliminarPLC;
     private javax.swing.JButton btnNuevoPLC;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbBuscarPLC;
     private javax.swing.JTable tlbTablaPLC;
     private javax.swing.JTextField txtBuscarPLC;

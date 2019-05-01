@@ -194,7 +194,7 @@ public class ControladorCRUD {
 
         } catch (Exception e) {
             
-            JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
+               JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
             crud.dispose();    
             
         }
