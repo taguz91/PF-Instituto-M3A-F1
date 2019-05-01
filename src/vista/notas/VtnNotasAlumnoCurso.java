@@ -106,6 +106,10 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         return tabPane;
     }
 
+    public JTable getTblNotasDuales() {
+        return tblNotasDuales;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -175,7 +179,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lblHoras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         tabPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        tabPane.setEnabled(false);
 
         tblNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,11 +236,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Nota Final", "Ex. Recuperacion", "Total Ciclo", "Estado", "Faltas", "Asistencia"
+                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Nota Final", "Ex. Recuperacion", "D.G.I.F.", "C.T.E.", "C.T.A.", "S.T.F.P.", "NOTA FINAL", "Estado", "Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, false, true, true, true, true, true, true, true
+                false, false, false, false, false, false, false, true, false, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

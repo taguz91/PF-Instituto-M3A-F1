@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -82,7 +83,7 @@ public class VtnNotas {
         vista.canEdit[1] = true;
 
         tablaNotasTradicionales = (DefaultTableModel) vista.getTblNotas().getModel();
-
+        tablaNotasDuales = (DefaultTableModel) vista.getTblNotasDuales().getModel();
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
             listaDocentes = DocenteBD.selectAll(usuario.getUsername());
         } else {
@@ -153,6 +154,49 @@ public class VtnNotas {
     /*
         METODOS DE CARGA
      */
+    private static int getIdPeriodoLectivo() {
+        try {
+            String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+
+            listaPeriodos
+                    .stream()
+                    .filter(item -> item.getNombre_PerLectivo().equals(periodo))
+                    .collect(Collectors.toList())
+                    .forEach(obj -> {
+                        idPeriodoLectivo = obj.getId_PerioLectivo();
+                    });
+
+        } catch (NullPointerException e) {
+        }
+        return idPeriodoLectivo;
+    }
+
+    private static int getSelectedRow() {
+        return vista.getTblNotas().getSelectedRow();
+    }
+
+    private static int getSelectedColum() {
+        return vista.getTblNotas().getSelectedColumn();
+    }
+
+    private static void activarForm(boolean estado) {
+
+        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+            vista.getTxtBuscar().setVisible(false);
+            vista.getBtnBuscar().setVisible(false);
+            vista.getCmbDocente().setEnabled(false);
+        } else {
+            vista.getTxtBuscar().setEnabled(estado);
+            vista.getBtnBuscar().setEnabled(estado);
+            vista.getCmbDocente().setEnabled(estado);
+        }
+
+        vista.getCmbPeriodoLectivo().setEnabled(estado);
+        vista.getCmbCiclo().setEnabled(estado);
+        vista.getCmbAsignatura().setEnabled(estado);
+        vista.getTblNotas().setEnabled(estado);
+    }
+
     private void carlcularNotas(TableModel datos) {
 
         try {
@@ -211,7 +255,7 @@ public class VtnNotas {
                         JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMEROS ENTEROS!!");
                     }
 
-                    refreshTabla();
+                    refreshTabla(agregarFilasTradicionales());
                     break;
                 case 16:
                     String asistencia = vista.getTblNotas().getValueAt(getSelectedRow(), 16).toString().toLowerCase();
@@ -234,7 +278,7 @@ public class VtnNotas {
                         sumarColumnasTradicionales();
                         editar();
                     }
-                    refreshTabla();
+                    refreshTabla(agregarFilasTradicionales());
 
                     break;
                 default:
@@ -266,11 +310,10 @@ public class VtnNotas {
                     datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
                     sumarColumnasTradicionales();
                     editar();
-                    refreshTabla();
+                    refreshTabla(agregarFilasTradicionales());
 
                 } else {
                     errorDeNota(rango);
-                    refreshTabla();
                 }
             } else {
                 if (value >= 0 && value <= rango.getValorMaximo()) {
@@ -279,13 +322,13 @@ public class VtnNotas {
                         datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
                         sumarColumnasTradicionales();
                         editar();
-                        refreshTabla();
+                        refreshTabla(agregarFilasTradicionales());
                     } else {
                         datos.setValueAt(Middlewares.conversor(nota), getSelectedRow(), getSelectedColum());
                         datos.setValueAt("REPROBADO", getSelectedRow(), 13);
                         sumarColumnasTradicionales();
                         editar();
-                        refreshTabla();
+                        refreshTabla(agregarFilasTradicionales());
                     }
                 } else {
                     errorDeNota(rango);
@@ -293,13 +336,13 @@ public class VtnNotas {
             }
         } else {
             mensajeDeError();
-            refreshTabla();
+
         }
     }
 
     private static void errorDeNota(TipoDeNotaMD rango) {
         JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo());
-        refreshTabla();
+        refreshTabla(agregarFilasTradicionales());
     }
 
     private static void sumarColumnasTradicionales() {
@@ -358,6 +401,7 @@ public class VtnNotas {
     private static void mensajeDeError() {
         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO CORRECTO "
                 + "\n       EJEMPLO (15.6)");
+        refreshTabla(agregarFilasTradicionales());
     }
 
     private void cargarComboDocente() {
@@ -439,11 +483,13 @@ public class VtnNotas {
         tablaNotasTradicionales.setRowCount(0);
     }
 
-    private static void refreshTabla() {
+    private static void refreshTabla(Function<AlumnoCursoBD, Void> funcion) {
         System.out.println("REFRESH");
         activarForm(false);
         tablaNotasTradicionales.setRowCount(0);
-        //listaNotas.stream().forEach(VtnNotas::agregarFilas);
+        listaNotas.stream().forEach(obj -> {
+            funcion.apply(obj);
+        });
         activarForm(true);
     }
 
@@ -548,59 +594,16 @@ public class VtnNotas {
 
     }
 
-    private static int getIdPeriodoLectivo() {
-        try {
-            String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-
-            listaPeriodos
-                    .stream()
-                    .filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .collect(Collectors.toList())
-                    .forEach(obj -> {
-                        idPeriodoLectivo = obj.getId_PerioLectivo();
-                    });
-
-        } catch (NullPointerException e) {
-        }
-        return idPeriodoLectivo;
-    }
-
-    private static int getSelectedRow() {
-        return vista.getTblNotas().getSelectedRow();
-    }
-
-    private static int getSelectedColum() {
-        return vista.getTblNotas().getSelectedColumn();
-    }
-
-    private static void activarForm(boolean estado) {
-
-        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
-            vista.getTxtBuscar().setVisible(false);
-            vista.getBtnBuscar().setVisible(false);
-            vista.getCmbDocente().setEnabled(false);
-        } else {
-            vista.getTxtBuscar().setEnabled(estado);
-            vista.getBtnBuscar().setEnabled(estado);
-            vista.getCmbDocente().setEnabled(estado);
-        }
-
-        vista.getCmbPeriodoLectivo().setEnabled(estado);
-        vista.getCmbCiclo().setEnabled(estado);
-        vista.getCmbAsignatura().setEnabled(estado);
-        vista.getTblNotas().setEnabled(estado);
-    }
-
-    private void cargarTabla(Function<AlumnoCursoBD, Void> funcion) {
+    private void cargarTabla(Function<AlumnoCursoBD, Void> funcion, DefaultTableModel tabla, JTable Jtable, int fila) {
         new Thread(() -> {
 
             if (cargarTabla) {
-                RowStyle row = new RowStyle(13);
+                RowStyle row = new RowStyle(fila);
 
-                vista.getTblNotas().setDefaultRenderer(Object.class, row);
+                Jtable.setDefaultRenderer(Object.class, row);
 
                 cargarTabla = false;
-                tablaNotasTradicionales.setRowCount(0);
+                tabla.setRowCount(0);
                 vista.getTblNotas().setEnabled(false);
                 Effects.setLoadCursor(vista);
 
@@ -699,12 +702,14 @@ public class VtnNotas {
             row.add(4, obj.getAlumno().getPrimerNombre());
             row.add(5, obj.getAlumno().getSegundoNombre());
 
-            row.add(6, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("APORTE 1")).findAny().get().getNotaValor());
-            row.add(7, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN INTERCICLO")).findAny().get().getNotaValor());
-            row.add(8, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("NOTA INTERCICLO")).findAny().get().getNotaValor());
-            row.add(9, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("APORTE 2")).findAny().get().getNotaValor());
-            row.add(10, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN FINAL")).findAny().get().getNotaValor());
-            row.add(11, obj.getNotas().stream().filter(item -> item.getTipoDeNota().getNombre().contains("EXAMEN SUPLETORIO")).findAny().get().getNotaValor());
+            System.out.println(obj.getId() + "<------------------");
+
+            row.add(6, obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor());
+            row.add(7, obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor());
+            row.add(8, obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor());
+            row.add(9, obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor());
+            row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).findAny().get().getNotaValor());
 
             int notaFinal = (int) Middlewares.conversor("" + obj.getNotaFinal());
 
@@ -728,12 +733,33 @@ public class VtnNotas {
         return obj -> {
             Vector<Object> row = new Vector<>();
 
-            row.add(0, tablaNotasTradicionales.getDataVector().size() + 1);
+            row.add(0, tablaNotasDuales.getDataVector().size() + 1);
             row.add(1, obj.getAlumno().getIdentificacion());
             row.add(2, obj.getAlumno().getPrimerApellido());
             row.add(3, obj.getAlumno().getSegundoApellido());
             row.add(4, obj.getAlumno().getPrimerNombre());
             row.add(5, obj.getAlumno().getSegundoNombre());
+
+            row.add(6, obj.getNotas().stream().filter(buscar("G. DE AULA 1")).findAny().get().getNotaValor());
+            row.add(7, obj.getNotas().stream().filter(buscar("G. DE AULA 2")).findAny().get().getNotaValor());
+            row.add(8, obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor());
+            row.add(9, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
+            row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotas().stream().filter(buscar("NOTA FINAL CICLO")).findAny().get().getNotaValor());
+            row.add(12, obj.getNotas().stream().filter(buscar("D. G. I. F.")).findAny().get().getNotaValor());
+            row.add(13, obj.getNotas().stream().filter(buscar("C. T. E.")).findAny().get().getNotaValor());
+            row.add(14, obj.getNotas().stream().filter(buscar("C. T. A.")).findAny().get().getNotaValor());
+            row.add(15, obj.getNotas().stream().filter(buscar("S. T. F. P.")).findAny().get().getNotaValor());
+            //row.add(11, obj.getNotas().stream().filter(buscar("NOTA FINAL")).findAny().get().getNotaValor());
+
+            row.add(16, obj.getNotaFinal());
+            row.add(17, obj.getEstado());
+            row.add(18, obj.getNumFalta());
+
+            row.add(19, obj.getAsistencia());
+
+            tablaNotasDuales.addRow(row);
+
             return null;
         };
     }
@@ -750,12 +776,21 @@ public class VtnNotas {
                     .get().getCarrera().getModalidad();
 
             if (modalidad.equalsIgnoreCase("TRADICIONAL")) {
+                System.out.println("TRADICIONAL");
                 vista.getTabPane().setSelectedIndex(0);
-                cargarTabla(agregarFilasTradicionales());
+                cargarTabla(agregarFilasTradicionales(), tablaNotasTradicionales, vista.getTblNotas(), 13);
             } else if (modalidad.equalsIgnoreCase("DUAL")) {
                 vista.getTabPane().setSelectedIndex(1);
-                cargarTabla(agregarFilasDuales());
+
+                System.out.println("DUAL");
+
+                cargarTabla(agregarFilasDuales(), tablaNotasDuales, vista.getTblNotasDuales(), 17);
             } else if (modalidad.equalsIgnoreCase("DUAL FOCALIZADA")) {
+                vista.getTabPane().setSelectedIndex(1);
+
+                System.out.println("DUAL FOCALIZADA");
+
+                cargarTabla(agregarFilasDuales(), tablaNotasDuales, vista.getTblNotasDuales(), 17);
 
             }
 
@@ -840,14 +875,13 @@ public class VtnNotas {
         activarForm(false);
 
         vista.getCmbDocente()
-                .setSelectedItem(
-                        listaDocentes
-                                .entrySet()
-                                .stream()
-                                .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscar().getText()))
-                                .findAny()
-                                .get()
-                                .getKey()
+                .setSelectedItem(listaDocentes
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscar().getText()))
+                        .findFirst()
+                        .get()
+                        .getKey()
                 );
 
         activarForm(true);
