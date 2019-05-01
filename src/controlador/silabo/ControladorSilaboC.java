@@ -121,6 +121,7 @@ public class ControladorSilaboC {
     private List<ReferenciasMD> biblioteca;
 
     private List<ReferenciaSilaboMD> referenciasSilabo;
+    
 
     private DefaultListModel modeloBase;
 

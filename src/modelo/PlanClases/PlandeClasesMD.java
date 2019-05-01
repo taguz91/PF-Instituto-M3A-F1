@@ -7,6 +7,8 @@ package modelo.PlanClases;
 
 import java.time.LocalDate;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
+import modelo.persona.PersonaMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
@@ -22,14 +24,26 @@ public class PlandeClasesMD {
    private LocalDate fecha_generacion;
    private LocalDate fecha_cierre;
 
+   //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
+   private MateriaMD id_materia;
+   private PersonaMD id_persona;
     public PlandeClasesMD() {
         this.id_curso=new CursoMD();
         this.id_unidad=new UnidadSilaboMD();
+        this.id_materia=new MateriaMD();
+        this.id_persona=new PersonaMD();
     }
 
     public PlandeClasesMD(CursoMD id_curso, UnidadSilaboMD id_unidad) {
         this.id_curso = id_curso;
         this.id_unidad = id_unidad;
+    }
+
+    public PlandeClasesMD(CursoMD id_curso, UnidadSilaboMD id_unidad, MateriaMD id_materia, PersonaMD id_persona) {
+        this.id_curso = id_curso;
+        this.id_unidad = id_unidad;
+        this.id_materia = id_materia;
+        this.id_persona = id_persona;
     }
 
     public Integer getId_plan_clases() {
@@ -86,6 +100,22 @@ public class PlandeClasesMD {
 
     public void setFecha_cierre(LocalDate fecha_cierre) {
         this.fecha_cierre = fecha_cierre;
+    }
+
+    public MateriaMD getId_materia() {
+        return id_materia;
+    }
+
+    public void setId_materia(MateriaMD id_materia) {
+        this.id_materia = id_materia;
+    }
+
+    public PersonaMD getId_persona() {
+        return id_persona;
+    }
+
+    public void setId_persona(PersonaMD id_persona) {
+        this.id_persona = id_persona;
     }
     
    

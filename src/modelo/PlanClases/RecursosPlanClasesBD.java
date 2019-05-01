@@ -19,18 +19,19 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         super(id_plan_clases, id_recursos);
         this.conexion = conexion;
     }
-    public void insertarRecursosPlanClases(RecursosMD e){
+    public boolean insertarRecursosPlanClases(RecursosPlanClasesMD rP){
         
         try {
             PreparedStatement st=conexion.getCon().prepareStatement("INSERT INTO public.\"RecursosPlanClases\"(\n" +
                     "	 id_plan_clases, id_recurso)\n" +
-                    "	VALUES ( SELECT MAX(id_plan_clases) from public.\"PlandeClases), ?)");
-            st.setInt(1, e.getId_recurso());
+                    "	VALUES ( (SELECT MAX(id_plan_clases) from public.\"PlandeClases\"), ?)");
+            st.setInt(1, rP.getId_recursos().getId_recurso());
             st.executeUpdate();
             System.out.println(st);
         } catch (SQLException ex) {
             Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return  true;
     }
     
 }
