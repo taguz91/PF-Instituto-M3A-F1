@@ -232,6 +232,16 @@ public class ConectarDB {
             cursorNormal();
         }
     }
+    
+    public void cerrarConexion(){
+        try {
+            if (!ct.isClosed()) {
+                ct.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Un error ocurrimio mientras se cerraba conexion. "+e.getMessage());
+        }
+    }
 
     private String generarURL() {
         String ip = Propiedades.getPropertie("ip");
