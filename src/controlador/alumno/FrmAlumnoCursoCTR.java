@@ -320,13 +320,11 @@ public class FrmAlumnoCursoCTR {
         mdMatPen.setRowCount(0);
         mdMatSelec.setRowCount(0);
         cursosSelec = new ArrayList();
+        horarioAlmn = new ArrayList<>();
         frmAlmCurso.getBtnReprobadas().setVisible(false);
         frmAlmCurso.getBtnAnuladas().setVisible(false);
         frmAlmCurso.getBtnPendientes().setEnabled(false);
         frmAlmCurso.getBtnMtCursadas().setEnabled(false);
-        horarioAlmn = new ArrayList<>();
-        cursosSelec = new ArrayList<>();
-
     }
 
     /**
@@ -436,7 +434,11 @@ public class FrmAlumnoCursoCTR {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posAl >= 0) {
             //Limpiamos los array que estamos utilizando 
-            limpiarFrm();
+            mdMatPen.setRowCount(0);
+            mdMatSelec.setRowCount(0);
+            cursosSelec = new ArrayList();
+            horarioAlmn = new ArrayList<>();
+            
             frmAlmCurso.getBtnPendientes().setEnabled(true);
             frmAlmCurso.getBtnMtCursadas().setEnabled(true);
             //Buscamos los cursos en los que se matriculo. 
