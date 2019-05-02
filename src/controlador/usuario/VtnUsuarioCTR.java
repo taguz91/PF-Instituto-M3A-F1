@@ -127,9 +127,6 @@ public class VtnUsuarioCTR {
 
                 lista.stream()
                         .sorted((item1, item2) -> item1.getUsername().compareTo(item2.getUsername()))
-                        .onClose(() -> {
-                            System.out.println("HOLA MUNDO");
-                        })
                         .forEach(VtnUsuarioCTR::agregarFila);
 
                 vista.getLblResultados().setText(lista.size() + " Registros");

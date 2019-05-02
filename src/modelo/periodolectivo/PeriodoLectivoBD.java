@@ -506,6 +506,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
                 + "\"public\".\"Carreras\".carrera_nombre,\n"
+                + "\"public\".\"Carreras\".carrera_modalidad,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
@@ -515,7 +516,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                + "WHERE \"public\".\"Docentes\".id_docente = " + idDocente;
+                + "WHERE\n"
+                + " \"public\".\"Docentes\".id_docente = " + idDocente;
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
 
@@ -531,6 +533,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 periodo.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
@@ -588,9 +591,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public static List<PeriodoLectivoMD> SelectAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
-                + "FROM \"PeriodoLectivo\" "
-                + " WHERE prd_lectivo_estado IS TRUE";
-
+                + "FROM \"PeriodoLectivo\" ";
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(SELECT);
 

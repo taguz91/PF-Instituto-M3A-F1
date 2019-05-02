@@ -654,7 +654,7 @@ public class VtnPrincipalCTR {
         VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario, rolSeleccionado);
+            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, usuario, rolSeleccionado);
             vtnCtr.Init();
         } else {
             errorNumVentanas();

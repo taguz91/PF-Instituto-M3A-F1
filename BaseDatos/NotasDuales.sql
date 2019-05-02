@@ -1,0 +1,25 @@
+CREATE TABLE "PTI"
+(
+    id_pti serial NOT NULL PRIMARY KEY,
+    pti_nota NUMERIC(6,2) DEFAULT 0
+);
+
+
+CREATE TABLE "ALMN_PTI"
+(
+    id_almn_pti serial NOT NULL PRIMARY KEY,
+    id_almn_curso INTEGER,
+    id_pti INTEGER
+);
+
+
+ALTER TABLE "ALMN_PTI" ADD CONSTRAINT "PTI__ALMN_PTI_fk"
+FOREIGN KEY (id_pti) REFERENCES "PTI"(id_pti) ON
+DELETE CASCADE ON
+UPDATE CASCADE;
+
+
+ALTER TABLE "ALMN_PTI" ADD CONSTRAINT "ALMN_PTI__AlumnoCurso_fk"
+FOREIGN KEY (id_almn_curso) REFERENCES "AlumnoCurso"(id_almn_curso) ON
+DELETE CASCADE ON
+UPDATE CASCADE;
