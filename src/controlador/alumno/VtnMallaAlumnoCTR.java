@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +26,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.alumno.VtnMallaAlumno;
 import vista.principal.VtnPrincipal;
 
@@ -187,10 +183,11 @@ public class VtnMallaAlumnoCTR {
     }
 
     private void InitPermisosTester() {
-//        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
-//            vtnMallaAlm.getBtnIngNota().setEnabled(false);
-//            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
-//        }
+        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+            vtnMallaAlm.getBtnIngNota().setEnabled(false);
+            vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
+            vtnMallaAlm.getTxtBuscar().setEnabled(false);
+        }
     }
 
     public void actualizarVtn(MallaAlumnoMD m) {
@@ -433,9 +430,14 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
             vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
-            carreras.forEach(c -> {
-                vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
-            });
+            if (!permisos.getNombre().equalsIgnoreCase("TESTER")) {
+                carreras.forEach(c -> {
+                    vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
+                });
+            } else {
+                vtnMallaAlm.getCmbCarreras().addItem("TAS");
+            }
+
         }
     }
 
