@@ -251,7 +251,7 @@ public class CursoBD extends CursoMD {
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
                 + "WHERE curso_nombre = '" + nombre + "' AND\n"
                 + "m.id_materia = c.id_materia AND\n"
-                + "id_prd_lectivo = " + idPrdLectivo + ";";
+                + "id_prd_lectivo = " + idPrdLectivo + " AND curso_activo = true;";
         ArrayList<CursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
