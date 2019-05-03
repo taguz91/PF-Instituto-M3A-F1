@@ -47,12 +47,7 @@ public abstract class AbstracForm {
         "TOTAL GESTION",
         "EXAMEN FINAL",
         "EXAMEN DE RECUPERACION",
-        "NOTA FINAL CICLO",
-        "D. G. I. F.",
-        "C. T. E.",
-        "C. T. A.",
-        "S. T. F. P.",
-        "NOTA FINAL",
+        "NOTA FINAL"
     };
 
     protected boolean COMPLETED = false;

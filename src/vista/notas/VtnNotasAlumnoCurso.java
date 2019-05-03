@@ -236,11 +236,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "Asistencia"
+                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

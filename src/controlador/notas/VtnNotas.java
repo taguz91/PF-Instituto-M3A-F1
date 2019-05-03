@@ -722,6 +722,51 @@ public class VtnNotas {
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
+    private void sumarColumnasDuales() {
+        int fila = getSelectedRowDuales();
+
+        double gAula1 = 0;
+        double gAula2 = 0;
+        double totalGAula = 0;
+
+        double examenFinal = 0;
+        double examenRecuperacion = 0;
+        double notaFinal = 0;
+
+        gAula1 = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 6).toString());
+        gAula2 = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 7).toString());
+
+        totalGAula = gAula1 + gAula2;
+        tablaNotasDuales.setValueAt(totalGAula, fila, 8);
+
+        examenFinal = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 9).toString());
+        examenRecuperacion = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 10).toString());
+
+        if (examenRecuperacion != 0) {
+            notaFinal = examenRecuperacion + totalGAula;
+        } else {
+            notaFinal = examenFinal + totalGAula;
+        }
+
+        tablaNotasDuales.setValueAt(Math.round(notaFinal), fila, 11);
+
+    }
+
+    private void sumarColumnas(DefaultTableModel tabla, int filaSelecionada, int columa1, int columa2, int columaRespuesta, String forma) {
+
+        double valor1 = Middlewares.conversor(tabla.getValueAt(filaSelecionada, columa1).toString());
+        double valor2 = Middlewares.conversor(tabla.getValueAt(filaSelecionada, columa2).toString());
+
+        double suma = valor1 + valor2;
+
+        if (forma.equalsIgnoreCase("INT")) {
+            tabla.setValueAt(Math.round(suma), filaSelecionada, columaRespuesta);
+        } else if (forma.equalsIgnoreCase("DOUBLE")) {
+            tabla.setValueAt(Middlewares.conversor(suma + ""), filaSelecionada, columaRespuesta);
+        }
+
+    }
+
     private void cacularNotasDuales(DefaultTableModel tablaNotasDuales) {
         try {
             String nombreNota = "";
