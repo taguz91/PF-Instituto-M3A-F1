@@ -175,7 +175,8 @@ public class CursoBD extends CursoMD {
                 + "p.id_persona = d.id_persona \n"
                 + "AND C.id_prd_lectivo = " + idPrdLectivo + " AND \n"
                 + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
-                + "prd_lectivo_activo = true;";
+                + "prd_lectivo_activo = true "
+                + "AND curso_activo = true;";
         return consultarCursos(sql);
     }
 
@@ -192,7 +193,8 @@ public class CursoBD extends CursoMD {
                 + "d.id_docente = c.id_docente AND \n"
                 + "p.id_persona = d.id_persona \n"
                 + "AND curso_nombre = '" + nombre + "' AND \n"
-                + " pl.id_prd_lectivo = c.id_prd_lectivo;";
+                + " pl.id_prd_lectivo = c.id_prd_lectivo AND "
+                + "curso_activo = true;";
         return consultarCursos(sql);
     }
 
@@ -211,7 +213,8 @@ public class CursoBD extends CursoMD {
                 + "AND curso_nombre = '" + nombre + "' AND \n"
                 + "c.id_prd_lectivo = " + idPrdLectivo + " AND \n"
                 + "pl.id_prd_lectivo = c.id_prd_lectivo AND \n"
-                + "prd_lectivo_activo = true;";
+                + "prd_lectivo_activo = true "
+                + "AND curso_activo = true;";
         return consultarCursos(sql);
     }
 
@@ -232,7 +235,8 @@ public class CursoBD extends CursoMD {
                 + "persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' || "
                 + "persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%'\n"
                 + "OR persona_identificacion ILIKE '%" + aguja + "%') AND \n"
-                + "persona_activa = true AND docente_activo = true;";
+                + "persona_activa = true AND docente_activo = true "
+                + "AND curso_activo = true;";
         return consultarCursos(sql);
     }
     
@@ -305,7 +309,7 @@ public class CursoBD extends CursoMD {
                 + "	ac.id_alumno = a.id_alumno) AND\n"
                 + "m.id_materia = c.id_materia AND\n"
                 + "d.id_docente = c.id_docente AND\n"
-                + "p.id_persona = d.id_persona;\n";
+                + "p.id_persona = d.id_persona AND curso_activo = true ;";
         ArrayList<CursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -340,15 +344,16 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<String> cargarNombreCursos() {
         String sql = "SELECT DISTINCT curso_nombre\n"
-                + "FROM public.\"Cursos\" "
-                + "ORDER BY curso_nombre;";
+                + "FROM public.\"Cursos\" \n"
+                + "WHERE curso_activo = true \n"
+                + "ORDER BY curso_nombre ;";
         return consultarNombreCursos(sql);
     }
 
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo) {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\" "
-                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " AND  curso_activo = true \n"
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
@@ -363,7 +368,7 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
-                + "AND curso_ciclo = "+ciclo+ " \n"
+                + "AND curso_ciclo = "+ciclo+ " AND curso_activo = true\n"
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
@@ -381,6 +386,7 @@ public class CursoBD extends CursoMD {
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
                 + "AND curso_ciclo >= " + cicloReprobado + " AND curso_ciclo <= " + (cicloCursado + 1) + " "
+                + "AND curso_activo = true "
                 + "ORDER BY curso_ciclo;";
         return consultarNombreCursos(sql);
     }
@@ -388,7 +394,8 @@ public class CursoBD extends CursoMD {
     public CursoMD buscarCurso(int idCurso) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
-                + "	FROM public.\"Cursos\" WHERE \"Cursos\".id_curso = " + idCurso + ";";
+                + "	FROM public.\"Cursos\" WHERE \"Cursos\".id_curso = " + idCurso + "  "
+                + "AND curso_activo = true ;";
         return consultarCurso(sql);
     }
 
@@ -485,30 +492,6 @@ public class CursoBD extends CursoMD {
             }
         } catch (SQLException e) {
             System.out.println("No se pudo consultar curso curso ");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    private CursoMD obtenerCurso(ResultSet rs) {
-        CursoMD c = new CursoMD();
-        try {
-            c.setId(rs.getInt("id_curso"));
-            MateriaMD m = mat.buscarMateriaPorReferencia(rs.getInt("id_materia"));
-            c.setMateria(m);
-            PeriodoLectivoMD p = prd.buscarPerido(rs.getInt("id_prd_lectivo"));
-            c.setPeriodo(p);
-            DocenteMD d = doc.buscarDocenteParaReferencia(rs.getInt("id_docente"));
-            c.setDocente(d);
-            JornadaMD j = jrd.buscarJornada(rs.getInt("id_jornada"));
-            c.setJornada(j);
-            c.setNombre(rs.getString("curso_nombre"));
-            c.setCapacidad(rs.getInt("curso_capacidad"));
-            c.setCiclo(rs.getInt("curso_ciclo"));
-            c.setParalelo(rs.getString("curso_paralelo"));
-            return c;
-        } catch (SQLException e) {
-            System.out.println("No pudimos obtener curso");
             System.out.println(e.getMessage());
             return null;
         }
