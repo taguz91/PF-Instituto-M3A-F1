@@ -248,10 +248,9 @@ public class VtnNotas {
                 .entrySet()
                 .stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocente().getSelectedItem().toString())))
+                .map(c -> c.getValue().getIdDocente())
                 .findAny()
-                .get()
-                .getValue()
-                .getIdDocente();
+                .get();
 
     }
 
@@ -281,11 +280,10 @@ public class VtnNotas {
     }
 
     private int getIdPeriodoLectivo() {
-        int idPeriodoLectivo = -1;
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 
-            idPeriodoLectivo = listaPeriodos
+            return listaPeriodos
                     .stream()
                     .filter(item -> item.getNombre_PerLectivo().equals(periodo))
                     .map(c -> c.getId_PerioLectivo())
@@ -293,7 +291,7 @@ public class VtnNotas {
                     .orElse(-1);
         } catch (NullPointerException e) {
         }
-        return idPeriodoLectivo;
+        return -1;
     }
 
     private int getSelectedRowTrad() {
