@@ -3,6 +3,8 @@ package controlador.Libraries;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
@@ -107,6 +109,20 @@ public class Effects {
                         funcion.apply(null);
                     }
                 }
+            }
+        });
+    }
+
+    public static void btnHover(JButton btnIngresar, JLabel lblBtnHover, Color enterColor, Color exitColor) {
+        btnIngresar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblBtnHover.setBackground(enterColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblBtnHover.setBackground(exitColor);
             }
         });
     }
