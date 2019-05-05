@@ -127,9 +127,6 @@ public class VtnUsuarioCTR {
 
                 lista.stream()
                         .sorted((item1, item2) -> item1.getUsername().compareTo(item2.getUsername()))
-                        .onClose(() -> {
-                            System.out.println("HOLA MUNDO");
-                        })
                         .forEach(VtnUsuarioCTR::agregarFila);
 
                 vista.getLblResultados().setText(lista.size() + " Registros");
@@ -202,7 +199,7 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            String Username = vista.getTblUsuario().getValueAt(fila, 1).toString();
+            String Username = (String) vista.getTblUsuario().getValueAt(fila, 1);
 
             if (Username.equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE ELIMINAR AL USUARIO ROOT!!!");

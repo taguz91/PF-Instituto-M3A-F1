@@ -36,8 +36,7 @@ FROM
   INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
 	INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota 	
 WHERE
-	"PeriodoLectivo".prd_lectivo_estado = true 
-	AND "Alumnos".id_alumno = $P{id_alumno}
+	"Alumnos".id_alumno = $P{id_alumno}
 	AND "Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}

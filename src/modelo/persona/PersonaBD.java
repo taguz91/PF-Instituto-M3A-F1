@@ -31,11 +31,19 @@ public class PersonaBD extends PersonaMD {
     //Esto se usara para cargar las fotos 
     InputStream is;
 
+    /**
+     *
+     * @param conecta
+     */
     public PersonaBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.lugar = new LugarBD(conecta);
     }
 
+    /**
+     * Este método guarda a la Persona en la Base de Datos con todos estos
+     * atributos
+     */
     public void insertarPersona() {
 
         //Aqui id_persona ya no va porque es autoincrementable
@@ -50,7 +58,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                 + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -60,7 +68,7 @@ public class PersonaBD extends PersonaMD {
                 + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "');";
+                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
 
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -72,7 +80,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -82,7 +90,7 @@ public class PersonaBD extends PersonaMD {
                     + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                     + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "');";
+                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         }
 
         if (conecta.nosql(nsql) == null) {
@@ -90,6 +98,7 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    //persona_categoria_migratoria
     public void insertarPersonaConFoto() {
         //Aqui id_persona ya no va porque es autoincrementable
         String nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -100,7 +109,7 @@ public class PersonaBD extends PersonaMD {
                 + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
                 + "persona_calle_principal, persona_numero_casa, "
                 + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                 + "VALUES (" + getLugarNatal().getId() + ", "
                 + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                 + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -109,7 +118,7 @@ public class PersonaBD extends PersonaMD {
                 + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '"
                 + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                 + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "');";
+                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
 
         if (isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
@@ -121,7 +130,7 @@ public class PersonaBD extends PersonaMD {
                     + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
                     + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
                     + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento )\n"
+                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
                     + "VALUES (" + getLugarNatal().getId() + ", "
                     + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
                     + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
@@ -131,7 +140,7 @@ public class PersonaBD extends PersonaMD {
                     + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
                     + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "');";
+                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         }
 
         PreparedStatement ps = conecta.sqlPS(nsql);
@@ -147,7 +156,13 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
-    //Sentencia para editar una Persona
+    /**
+     * Este método edita a una Persona que no tiene foto de la Base de Datos con
+     * todos estos atributos
+     *
+     * @param aguja Se tiene que pasar un int como la Id de persona
+     * @return Retorna un boolean según el resultado de la Edición
+     */
     public boolean editarPersona(int aguja) {
         String sql = "UPDATE public.\"Personas\" SET\n"
                 + " id_lugar_natal = " + getLugarNatal().getId()
@@ -166,7 +181,8 @@ public class PersonaBD extends PersonaMD {
                 + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                 + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                 + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
 
         if (isDiscapacidad()) {
@@ -189,7 +205,30 @@ public class PersonaBD extends PersonaMD {
                     + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                     + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                     + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
+                    + " WHERE id_persona = " + aguja + ";";
+        } else {
+            sql = "UPDATE public.\"Personas\" SET\n"
+                    + " id_lugar_natal = " + getLugarNatal().getId()
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
+                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
+                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = false"
+                    + ", persona_tipo_discapacidad = null , persona_porcenta_discapacidad = 0 "
+                    + ", persona_carnet_conadis = null, persona_calle_principal = '"
+                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                     + " WHERE id_persona = " + aguja + ";";
         }
 
@@ -204,6 +243,12 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     * Este método edita a una Persona que si tiene foto de la Base de Datos con
+     * todos estos atributos
+     *
+     * @param aguja Se tiene que pasar un int como la Id de persona
+     */
     public void editarPersonaConFoto(int aguja) {
         String nsql = "UPDATE public.\"Personas\" SET\n"
                 + " id_lugar_natal = " + getLugarNatal().getId()
@@ -222,7 +267,8 @@ public class PersonaBD extends PersonaMD {
                 + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                 + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                 + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
 
         if (isDiscapacidad()) {
@@ -245,7 +291,30 @@ public class PersonaBD extends PersonaMD {
                     + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
                     + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
                     + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento() + "'\n"
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
+                    + " WHERE id_persona = " + aguja + ";";
+        } else {
+            nsql = "UPDATE public.\"Personas\" SET\n"
+                    + " id_lugar_natal = " + getLugarNatal().getId()
+                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
+                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
+                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
+                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
+                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
+                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
+                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
+                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
+                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
+                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = false"
+                    + ", persona_tipo_discapacidad = null , persona_porcenta_discapacidad = 0 "
+                    + ", persona_carnet_conadis = null, persona_calle_principal = '"
+                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
+                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
+                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
+                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
+                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
+                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
                     + " WHERE id_persona = " + aguja + ";";
         }
 
@@ -264,6 +333,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public boolean activarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa = 'true'"
@@ -280,6 +354,11 @@ public class PersonaBD extends PersonaMD {
 
     // Utilizamos la sentencia update para modificar el estado de una persona
     // y no eliminarla por completo con parametro por identidicacion
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public boolean eliminarPersonaIdentificacion(String identificacion) {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
@@ -310,6 +389,10 @@ public class PersonaBD extends PersonaMD {
 
     //Consultamos todos las personas en nuestro sistema 
     //que no esten eliminadas
+    /**
+     *
+     * @return
+     */
     public ArrayList<PersonaMD> cargarPersonas() {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
@@ -353,6 +436,11 @@ public class PersonaBD extends PersonaMD {
     }
 
     //Buscar Persona con aguja
+    /**
+     *
+     * @param idPersona
+     * @return
+     */
     public PersonaMD buscarPersona(int idPersona) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -366,13 +454,18 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " id_persona = " + idPersona + ";";
 
         return consultarPor(sql);
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public PersonaMD buscarPersona(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -386,13 +479,18 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
                 + " persona_identificacion ='" + identificacion + "'";
 
         return consultarPor(sql);
     }
 
+    /**
+     *
+     * @param identificacion
+     * @return
+     */
     public PersonaMD buscarPersonaNoActiva(String identificacion) {
         String sql = "SELECT id_persona, id_lugar_natal, "
                 + "id_lugar_residencia, persona_foto, persona_identificacion,"
@@ -406,7 +504,7 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'false' AND"
                 + " persona_identificacion ='" + identificacion + "'";
 
@@ -426,7 +524,7 @@ public class PersonaBD extends PersonaMD {
                 + " persona_calle_principal, persona_numero_casa,"
                 + " persona_calle_secundaria, persona_referencia, "
                 + "persona_sector, persona_idioma, persona_tipo_residencia, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_activa, persona_categoria_migratoria \n"
                 + "FROM public.\"Personas\" WHERE \n"
                 + " persona_identificacion ='" + identificacion + "'";
 
@@ -534,6 +632,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param rs
+     * @return
+     */
     private PersonaMD obtenerPersona(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
@@ -658,6 +761,12 @@ public class PersonaBD extends PersonaMD {
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
             persona.setPersonaActiva(rs.getBoolean("persona_activa"));
 
+            if (rs.wasNull()) {
+                persona.setCategoriaMigratoria(null);
+            } else {
+                persona.setCategoriaMigratoria(rs.getString("persona_categoria_migratoria"));
+            }
+
             return persona;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener persona");
@@ -666,6 +775,11 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    /**
+     *
+     * @param rs
+     * @return
+     */
     private PersonaMD obtenerPersonaSinValidar(ResultSet rs) {
         PersonaMD persona = new PersonaMD();
         try {
@@ -729,6 +843,7 @@ public class PersonaBD extends PersonaMD {
             //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
             persona.setPersonaActiva(rs.getBoolean("persona_activa"));
+            persona.setCategoriaMigratoria(rs.getString("persona_categoria_migratoria"));
 
             return persona;
         } catch (SQLException e) {

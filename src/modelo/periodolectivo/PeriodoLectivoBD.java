@@ -79,8 +79,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
-    
-    public boolean abrirPeriodo(int id){
+
+    public boolean abrirPeriodo(int id) {
         String sql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
@@ -483,12 +483,30 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
+    public LocalDate buscarFechaInicioPrd(int idPrd) {
+        LocalDate fi = null;
+        String sql = "SELECT prd_lectivo_fecha_inicio \n"
+                + "FROM public.\"PeriodoLectivo\"\n"
+                + "WHERE id_prd_lectivo = " + idPrd + ";";
+        ResultSet rs = conecta.sql(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    fi = rs.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return fi;
+    }
+
     public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
                 + "\"public\".\"Carreras\".carrera_nombre,\n"
+                + "\"public\".\"Carreras\".carrera_modalidad,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
@@ -498,7 +516,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
-                + "WHERE \"public\".\"Docentes\".id_docente = " + idDocente;
+                + "WHERE\n"
+                + " \"public\".\"Docentes\".id_docente = " + idDocente;
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
 
@@ -514,6 +533,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 periodo.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
@@ -571,9 +591,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public static List<PeriodoLectivoMD> SelectAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
-                + "FROM \"PeriodoLectivo\" "
-                + " WHERE prd_lectivo_estado IS TRUE";
-
+                + "FROM \"PeriodoLectivo\" ";
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         ResultSet rs = ResourceManager.Query(SELECT);
 
@@ -601,7 +619,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
                 + "	\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "	\"public\".\"Carreras\".carrera_nombre \n"
+                + "	\"public\".\"Carreras\".carrera_nombre, \n"
+                + "	\"public\".\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "	\"public\".\"PeriodoLectivo\"\n"
                 + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
@@ -625,6 +644,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
                 String key = rs.getString("prd_lectivo_nombre") + " " + rs.getString("carrera_nombre");

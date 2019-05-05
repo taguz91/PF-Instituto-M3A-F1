@@ -65,21 +65,21 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	WHERE id_almn_curso =" + idAlmnCurso + "; \n";
         nsqlMatriUpdate = nsqlMatriUpdate + nsql;
     }
-    
-    public boolean actualizarMatricula(){
+
+    public boolean actualizarMatricula() {
         System.out.println(nsqlMatriUpdate);
         if (conecta.nosql(nsqlMatriUpdate) == null) {
             JOptionPane.showMessageDialog(null, "Editamos correctamente la matricula.");
             return true;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No pudimos editar la matricula, revise \n"
                     + "su conexion a internet.");
             return false;
         }
 //        return true;
     }
-    
-    public void borrarActualizarMatricula(){
+
+    public void borrarActualizarMatricula() {
         nsqlMatriUpdate = "";
     }
 
@@ -183,7 +183,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "public.\"Materias\" m \n"
                 + "	WHERE c.id_curso = ac.id_curso\n"
                 + "	AND m.id_materia = c.id_materia\n"
-                + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + ";";
+                + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + " "
+                + "     AND almn_curso_estado <> 'RETIRADO';";
         ArrayList<AlumnoCursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -408,7 +409,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, String nombrePeriodo) {
+    public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"AlumnoCurso\".id_alumno,\n"
@@ -434,7 +435,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Alumnos\".id_persona = \"public\".\"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombrePeriodo + "' AND\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo + " AND\n"
                 + "\"public\".\"Cursos\".curso_nombre = '" + cursoNombre + "' AND\n"
                 + "\"public\".\"Materias\".materia_nombre = '" + nombreMateria + "'\n"
                 //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"

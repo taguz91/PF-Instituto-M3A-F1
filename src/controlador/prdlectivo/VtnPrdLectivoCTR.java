@@ -76,6 +76,9 @@ public class VtnPrdLectivoCTR {
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(),
                 vtnPrdLectivo.getBtnBuscar()));
         TblEstilo.formatoTbl(vtnPrdLectivo.getTblPrdLectivo());
+        TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 3, 120);
+        TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 4, 120);
+        TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 5, 100);
         //Llenamos la tabla 
         cargarPeriodos();
     }

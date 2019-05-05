@@ -78,3 +78,62 @@ CREATE TRIGGER migracion_notas
 AFTER INSERT ON "AlumnoCurso2"
 FOR EACH ROW
 EXECUTE PROCEDURE migrar_notas();
+
+
+/*
+    BORRAR NOTAS ERRONEAS
+*/
+
+--BUSCAR NOTAS
+SELECT
+"public"."Notas".nota_valor,
+"public"."TipoDeNota".tipo_nota_nombre,
+"public"."Notas".id_nota,
+"public"."PeriodoLectivo".prd_lectivo_nombre,
+"public"."Carreras".carrera_nombre
+FROM
+"public"."PeriodoLectivo"
+INNER JOIN "public"."Cursos" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."AlumnoCurso" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
+INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota
+INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
+WHERE
+"public"."PeriodoLectivo".id_prd_lectivo = 2
+
+
+--ELIMINAR NOTAS
+
+
+DELETE 
+FROM
+	"Notas" 
+WHERE
+"Notas".id_nota IN (
+SELECT
+"public"."Notas".id_nota
+FROM
+"public"."PeriodoLectivo"
+INNER JOIN "public"."Cursos" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."AlumnoCurso" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
+INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota
+INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
+WHERE
+"public"."PeriodoLectivo".id_prd_lectivo = 20
+);
+
+/*
+    VERIFICAR CANTIDAD DE NOTAS
+    PORPERIODO LECTIVO
+*/
+
+SELECT
+"count"(*)
+FROM
+"public"."PeriodoLectivo"
+INNER JOIN "public"."Cursos" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."AlumnoCurso" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
+WHERE
+"PeriodoLectivo".id_prd_lectivo = 

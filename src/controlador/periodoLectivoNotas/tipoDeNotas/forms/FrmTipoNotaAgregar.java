@@ -1,7 +1,5 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Effects;
-import controlador.Libraries.Middlewares;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;

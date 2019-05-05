@@ -19,7 +19,6 @@ CREATE TABLE "MallaAlumnoBackup"(
 
 CREATE OR REPLACE FUNCTION cierre_prd_backup()
 RETURNS TRIGGER AS $cierre_prd_backup$
---Declaramos un cursor
 BEGIN
 	IF new.prd_lectivo_estado = FALSE AND old.prd_lectivo_num_cierre < 1 THEN
 	 --Buscamos todos los alumnos para insertarlos en la tabla copia
