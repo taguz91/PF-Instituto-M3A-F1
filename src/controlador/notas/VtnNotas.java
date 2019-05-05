@@ -47,26 +47,21 @@ import vista.principal.VtnPrincipal;
  */
 public class VtnNotas {
 
-    private VtnPrincipal desktop;
-    private static VtnNotasAlumnoCurso vista;
-    private UsuarioBD usuario;
-    private static RolBD rolSeleccionado;
+    private final VtnPrincipal desktop;
+    private VtnNotasAlumnoCurso vista;
+    private final UsuarioBD usuario;
+    private final RolBD rolSeleccionado;
 
     //LISTAS
-    private static Map<String, DocenteMD> listaDocentes;
-    private static List<PeriodoLectivoMD> listaPeriodos;
-    private static List<AlumnoCursoBD> listaNotas;
-    private static List<MateriaMD> listaMaterias;
-    private static List<TipoDeNotaMD> listaValidaciones;
+    private Map<String, DocenteMD> listaDocentes;
+    private List<PeriodoLectivoMD> listaPeriodos;
+    private List<AlumnoCursoBD> listaNotas;
+    private List<MateriaMD> listaMaterias;
+    private List<TipoDeNotaMD> listaValidaciones;
 
     //TABLA
-    private static DefaultTableModel tablaNotasTrad;
-    private static DefaultTableModel tablaNotasDuales;
-
-    //VARIABLES DE BUSQUEDA
-    protected static int idDocente = -1;
-    protected static int idPeriodoLectivo = -1;
-    protected static int idCurso = -1;
+    private DefaultTableModel tablaNotasTrad;
+    private DefaultTableModel tablaNotasDuales;
 
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
@@ -124,18 +119,9 @@ public class VtnNotas {
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
-        vista.getBtnBuscar().addActionListener(e -> btnBuscar());
-        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == 10) {
-                    String texto = vista.getTxtBuscar().getText();
-                    if (texto.length() >= 10) {
-                        btnBuscar();
-                    }
-                }
-            }
-        });
+        vista.getBtnBuscar().addActionListener(e -> buscarDocente());
+
+        Effects.pressEnter(vista.getTxtBuscar(), buscarDocente());
 
         vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
 
@@ -200,7 +186,7 @@ public class VtnNotas {
         tablaNotasTrad.setRowCount(0);
     }
 
-    private static void setLblCarrera() {
+    private void setLblCarrera() {
         listaPeriodos
                 .stream()
                 .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
@@ -257,7 +243,7 @@ public class VtnNotas {
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
-    private static int getIdDocente() {
+    private int getIdDocente() {
         return listaDocentes
                 .entrySet()
                 .stream()
@@ -269,13 +255,13 @@ public class VtnNotas {
 
     }
 
-    private static void mensajeDeError() {
+    private void mensajeDeError() {
         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO CORRECTO "
                 + "\n       EJEMPLO (15.6)");
 
     }
 
-    private static void refreshTabla(Function<AlumnoCursoBD, Void> funcion, DefaultTableModel tabla) {
+    private void refreshTabla(Function<AlumnoCursoBD, Void> funcion, DefaultTableModel tabla) {
         System.out.println("REFRESH");
         activarForm(false);
         tabla.setRowCount(0);
@@ -294,40 +280,39 @@ public class VtnNotas {
         }
     }
 
-    private static int getIdPeriodoLectivo() {
+    private int getIdPeriodoLectivo() {
+        int idPeriodoLectivo = -1;
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 
-            listaPeriodos
+            idPeriodoLectivo = listaPeriodos
                     .stream()
                     .filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .collect(Collectors.toList())
-                    .forEach(obj -> {
-                        idPeriodoLectivo = obj.getId_PerioLectivo();
-                    });
-
+                    .map(c -> c.getId_PerioLectivo())
+                    .findAny()
+                    .orElse(-1);
         } catch (NullPointerException e) {
         }
         return idPeriodoLectivo;
     }
 
-    private static int getSelectedRowTrad() {
+    private int getSelectedRowTrad() {
         return vista.getTblNotas().getSelectedRow();
     }
 
-    private static int getSelectedColumTrad() {
+    private int getSelectedColumTrad() {
         return vista.getTblNotas().getSelectedColumn();
     }
 
-    private static int getSelectedRowDuales() {
+    private int getSelectedRowDuales() {
         return vista.getTblNotasDuales().getSelectedRow();
     }
 
-    private static int getSelectedColumDuales() {
+    private int getSelectedColumDuales() {
         return vista.getTblNotasDuales().getSelectedColumn();
     }
 
-    private static void activarForm(boolean estado) {
+    private void activarForm(boolean estado) {
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
             vista.getTxtBuscar().setVisible(false);
@@ -441,7 +426,7 @@ public class VtnNotas {
         }
     }
 
-    private static void setFaltas(String materia, int faltas) {
+    private void setFaltas(String materia, int faltas) {
         listaMaterias
                 .stream()
                 .filter(item -> item.getNombre().equals(materia))
@@ -450,7 +435,7 @@ public class VtnNotas {
 
     }
 
-    private static void guardarBDTrad(String nota, String nombreNota) {
+    private void guardarBDTrad(String nota, String nombreNota) {
         if (Validaciones.isDecimal(nota)) {
             double value = Middlewares.conversor(nota);
 
@@ -491,12 +476,12 @@ public class VtnNotas {
         }
     }
 
-    private static void errorDeNota(TipoDeNotaMD rango) {
+    private void errorDeNota(TipoDeNotaMD rango) {
         JOptionPane.showMessageDialog(vista, "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo());
         refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
     }
 
-    private static void sumarColumnasTrad() {
+    private void sumarColumnasTrad() {
         int fila = getSelectedRowTrad();
 
         double aporte1 = 0;
@@ -528,7 +513,7 @@ public class VtnNotas {
 
     }
 
-    private static Consumer<MateriaMD> setPorcentaje(int faltas) {
+    private Consumer<MateriaMD> setPorcentaje(int faltas) {
         return obj -> {
 
             int horasMateria = obj.getHorasPresenciales();
@@ -549,7 +534,7 @@ public class VtnNotas {
         };
     }
 
-    private static void editarTrad() {
+    private void editarTrad() {
         vista.getTblNotas().setEnabled(false);
         int fila = getSelectedRowTrad();
 
@@ -603,22 +588,21 @@ public class VtnNotas {
         vista.getTblNotas().setEnabled(true);
     }
 
-    private static TipoDeNotaMD getRango(String nombreNota) {
+    private TipoDeNotaMD getRango(String nombreNota) {
 
-        List<TipoDeNotaMD> listaTemporal = listaValidaciones
+        return listaValidaciones
                 .stream()
                 .filter(item -> item.getNombre().equals(nombreNota))
-                .collect(Collectors.toList());
-
-        return listaTemporal.get(0);
+                .findFirst()
+                .get();
 
     }
 
-    private static Predicate<NotasBD> buscar(String busqueda) {
+    private Predicate<NotasBD> buscar(String busqueda) {
         return item -> item.getTipoDeNota().getNombre().equals(busqueda);
     }
 
-    private static Consumer<NotasBD> editarNota(int columna) {
+    private Consumer<NotasBD> editarNota(int columna) {
         return obj -> {
             String text = vista.getTblNotas().getValueAt(getSelectedRowTrad(), columna).toString();
             obj.setNotaValor(Middlewares.conversor(text));
@@ -668,7 +652,7 @@ public class VtnNotas {
 
     }
 
-    private static Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, double faltas, AlumnoCursoBD alumno) {
+    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, double faltas, AlumnoCursoBD alumno) {
         return obj -> {
 
             double horaPresenciales = obj.getHorasPresenciales();
@@ -697,7 +681,7 @@ public class VtnNotas {
         };
     }
 
-    private static void validarAprobado(AlumnoCursoBD alumno, double notaValidar, int porcentaje, List<Object> row) {
+    private void validarAprobado(AlumnoCursoBD alumno, double notaValidar, int porcentaje, List<Object> row) {
         if (!alumno.getEstado().equalsIgnoreCase("RETIRADO") || !alumno.getAsistencia().equalsIgnoreCase("RETIRADO")) {
 
             int notaFinal = (Integer) row.get(12);
@@ -786,7 +770,7 @@ public class VtnNotas {
         }
     }
 
-    private static void guardarDBDuales(String nota) {
+    private void guardarDBDuales(String nota) {
         if (Validaciones.isDecimal(nota)) {
 
         } else {
@@ -795,7 +779,7 @@ public class VtnNotas {
         }
     }
 
-    private static Function<AlumnoCursoBD, Void> agregarFilasTradicionales() {
+    private Function<AlumnoCursoBD, Void> agregarFilasTradicionales() {
 
         return (obj) -> {
             Vector<Object> row = new Vector<>();
@@ -834,7 +818,7 @@ public class VtnNotas {
         };
     }
 
-    private static Function<AlumnoCursoBD, Void> agregarFilasDuales() {
+    private Function<AlumnoCursoBD, Void> agregarFilasDuales() {
         return obj -> {
             Vector<Object> row = new Vector<>();
 
@@ -906,7 +890,7 @@ public class VtnNotas {
 
             Effects.setLoadCursor(vista);
 
-            ReportesCTR reportes = new ReportesCTR(vista, idDocente);
+            ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
 
             switch (r) {
                 case 0:
@@ -963,7 +947,7 @@ public class VtnNotas {
 
     }
 
-    private void btnBuscar() {
+    private Function<Void, Void> buscarDocente() {
         activarForm(false);
 
         vista.getCmbDocente()
@@ -977,6 +961,7 @@ public class VtnNotas {
                 );
 
         activarForm(true);
+        return null;
     }
     // </editor-fold>  
 
