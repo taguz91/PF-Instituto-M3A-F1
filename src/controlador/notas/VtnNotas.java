@@ -86,19 +86,17 @@ public class VtnNotas {
             listaDocentes = DocenteBD.selectAll();
         }
 
-        new Thread(() -> {
-            activarForm(false);
-            cargarComboDocente();
-            cargarComboPeriodos();
-            setLblCarrera();
-            cargarComboCiclo();
-            cargarComboMaterias();
-            InitEventos();
-
-            activarForm(true);
-        }).start();
-
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+
+        activarForm(false);
+        cargarComboDocente();
+        cargarComboPeriodos();
+        setLblCarrera();
+        cargarComboCiclo();
+        cargarComboMaterias();
+        InitEventos();
+
+        activarForm(true);
 
     }
 
