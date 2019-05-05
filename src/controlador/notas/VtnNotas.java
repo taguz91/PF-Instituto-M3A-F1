@@ -67,7 +67,6 @@ public class VtnNotas {
     private boolean cargarTabla = true;
 
     public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
-        vista.setValorMinimo(70);
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
@@ -770,6 +769,8 @@ public class VtnNotas {
 
     private void guardarDBDuales(String nota) {
         if (Validaciones.isDecimal(nota)) {
+
+            sumarColumnas(tablaNotasDuales, getSelectedRowDuales(), 6, 7, 8, "DOUBLE");
 
         } else {
             mensajeDeError();

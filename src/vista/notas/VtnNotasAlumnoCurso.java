@@ -14,7 +14,7 @@ import javax.swing.JTextField;
  */
 public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
-    private double valorMinimo;
+
 
     public VtnNotasAlumnoCurso() {
 
@@ -82,13 +82,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
     };
 
-    public double getValorMinimo() {
-        return valorMinimo;
-    }
-
-    public void setValorMinimo(double valorMinimo) {
-        this.valorMinimo = valorMinimo;
-    }
 
     public JLabel getLblResultados() {
         return lblResultados;
