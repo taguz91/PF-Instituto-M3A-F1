@@ -780,11 +780,19 @@ public class VtnNotasCTR {
                     guardarDBDuales(examenRecuperacion, nombreNota, columna);
 
                     break;
-                case 13:
+
+                case 12:
+                    String estado = tablaNotasDuales.getValueAt(fila, columna).toString();
+                    AlumnoCursoBD alumno = listaNotas.get(fila);
+                    alumno.setEstado(estado);
+                    alumno.editar();
+                    break;
+
+                case 13://FALTAS
                     String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
                     if (Validaciones.isInt(faltas)) {
                         int faltasTabla = Integer.valueOf(faltas);
-                        editarFaltas(fila, columna, faltasTabla, tablaNotasTrad);
+                        editarFaltas(fila, columna, faltasTabla, tablaNotasDuales);
                     } else {
                         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO ENTERO");
                     }

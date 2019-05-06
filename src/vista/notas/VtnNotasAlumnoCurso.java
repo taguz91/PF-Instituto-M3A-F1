@@ -239,7 +239,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
