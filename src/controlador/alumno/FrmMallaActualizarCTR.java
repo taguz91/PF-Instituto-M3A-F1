@@ -76,14 +76,7 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
         } else {
             numMatricula = 0;
         }
-
-//        System.out.println("Id a actualizar" + malla.getId());
-//        System.out.println("Notas " + nota1);
-//        System.out.println("Notas " + nota2);
-//        System.out.println("Notas " + nota3);
-//        System.out.println("ID CARRERA " + malla.getAlumnoCarrera().getId());
-//        System.out.println("Estado: " + frmMalla.getLblEstado().getText());
-//        System.out.println("Numero de matricula " + numMatricula);
+        
         boolean guardar = true;
 
         if (!Validar.esNota(nota1 + "") && !Validar.esNota(nota2 + "") && !Validar.esNota(nota3 + "")) {
@@ -94,14 +87,14 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
                 vtnPrin.setEnabled(true);
                 ctrMalla.actualizarVtn(malla);
                 frmMalla.dispose();
-            };
+            }
         }
     }
 
     private void clickEstados() {
         posEstado = frmMalla.getCmbEstado().getSelectedIndex();
         if (posEstado > 0) {
-            frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).toString().charAt(0) + "");
+            frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).charAt(0) + "");
         }
     }
 

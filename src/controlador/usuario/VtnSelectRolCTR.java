@@ -99,6 +99,7 @@ public class VtnSelectRolCTR {
         if (conexion.nosql(nsql) == null) {
             System.out.println("Salimos del sistema como: " + usuario.getUsername());
         }
+        conexion.cerrarConexion();
     }
 
     //Inits

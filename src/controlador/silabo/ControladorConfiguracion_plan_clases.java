@@ -49,7 +49,7 @@ public class ControladorConfiguracion_plan_clases {
 
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
-        frm_cong_PlanClase.setTitle("Configuración Plan de Clases");
+        frm_cong_PlanClase.setTitle("CREAR UN PLAN DE CLASE");
         frm_cong_PlanClase.show();
 
         frm_cong_PlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - frm_cong_PlanClase.getSize().width) / 2,
@@ -123,7 +123,6 @@ public class ControladorConfiguracion_plan_clases {
         });
         }
     }
-    
     private void LLENAR_COMBO_SILABOS(List<MateriaMD> materias){
         frm_cong_PlanClase.getCmb_silabos().removeAllItems();
         if(materias !=null){

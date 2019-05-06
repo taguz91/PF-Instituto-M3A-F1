@@ -274,6 +274,8 @@ public class ControladorSilaboU {
                                 findFirst();
 
                         estrategiasSilabo.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
+                        
+                        System.out.println(estrategiasSilabo.size()+"------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>><< TAMAÑO DEL ARRAY LIST");
 
                         System.out.println(estrategiaSeleccionada.get().getDescripcionEstrategia() + " - " + unidadSeleccionada.getNumeroUnidad());
 
@@ -801,6 +803,15 @@ public class ControladorSilaboU {
                 }
             }
 
+        });
+        
+        gestion.getBtnGuardar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               new SilaboBD(conexion).eliminar(silabo);
+                guardarSilabo();
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+            }
         });
 
         mostrarUnidad();

@@ -103,7 +103,7 @@ public class SilaboBD extends SilaboMD {
         return silabos;
     }
 
-    /*public void eliminar() {
+    public void eliminar() {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
@@ -117,7 +117,8 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }*/
+    }
+    
     public void actualizar() {
 
         try {
@@ -363,7 +364,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE m.id_materia=?\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND s.estado_silabo<>-1");
 
             st.setInt(1, clave[0]);
             st.setInt(2, clave[1]);
@@ -391,5 +392,27 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return silabos;
+    }
+    
+    
+    public static SilaboMD consultarUltimo(ConexionBD conexion,int id){
+        SilaboMD silabo = null;
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia=?");
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                silabo = new SilaboMD();
+
+                silabo.setIdSilabo(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return silabo;
     }
 }

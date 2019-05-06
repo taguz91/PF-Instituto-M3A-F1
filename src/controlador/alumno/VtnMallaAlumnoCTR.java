@@ -130,10 +130,6 @@ public class VtnMallaAlumnoCTR {
                 } else if (b.length() == 0) {
                     mdlTbl.setRowCount(0);
                 }
-                /*
-                if (a.length() >= 10) {
-                    buscarMalla(a);
-                }*/
             }
         });
         vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());
@@ -177,8 +173,6 @@ public class VtnMallaAlumnoCTR {
 //        System.out.println("El tiempo que tardó en buscar malla alumnos es: "
 //                + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
         //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Malla alumnos");
         InitPermisosTester();
     }
 
@@ -215,15 +209,8 @@ public class VtnMallaAlumnoCTR {
      * Cargamos todas las mallas de un alumno
      */
     private void cargarMallas() {
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Malla alumnos");
-
         mallas = mallaAlm.cargarMallasTbl();
         llenarTbl(mallas);
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Malla alumnos");
     }
 
     /**
@@ -250,15 +237,8 @@ public class VtnMallaAlumnoCTR {
      */
     private void buscarMalla(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            //Cambiamos el estado del cursos
-            vtnPrin.setCursor(new Cursor(3));
-            ctrPrin.estadoCargaVtn("Malla alumnos");
-
             mallas = mallaAlm.buscarMallaAlumno(aguja);
             llenarTbl(mallas);
-            //Cuando termina de cargar todo se le vuelve a su estado normal.
-            vtnPrin.setCursor(new Cursor(0));
-            ctrPrin.estadoCargaVtnFin("Malla alumnos");
         }
     }
 
@@ -340,6 +320,11 @@ public class VtnMallaAlumnoCTR {
     /**
      * Al dar click en un combo se evalua en todas las posiciones que se dio
      * click a un combo y se carga por estado
+     *
+     * Al hacer click en un combo de carreras, se activa el combo de alumnos y
+     * se carga el combo de estado, si no se selecciona una carrera, se
+     * desactiva el combo y se eliminan todos los items del combo alumnos y
+     * estado.
      */
     private void clickCombo() {
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
@@ -442,26 +427,6 @@ public class VtnMallaAlumnoCTR {
     }
 
     /**
-     * Al hacer click en un combo de carreras, se activa el combo de alumnos y
-     * se carga el combo de estado, si no se selecciona una carrera, se
-     * desactiva el combo y se eliminan todos los items del combo alumnos y
-     * estado.
-     */
-    private void clickCmbCarrera() {
-        int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
-        if (posCar > 0) {
-            vtnMallaAlm.getCmbAlumnos().setEnabled(true);
-            cargarCmbEstado();
-            ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
-            cargarCmbCiclos(ciclos);
-        } else {
-            vtnMallaAlm.getCmbAlumnos().removeAllItems();
-            vtnMallaAlm.getCmbAlumnos().setEnabled(false);
-            vtnMallaAlm.getCmbEstado().removeAllItems();
-        }
-    }
-
-    /**
      * Cargamos el combo de ciclos
      *
      * @param ciclos
@@ -528,7 +493,6 @@ public class VtnMallaAlumnoCTR {
      * Llamamos al reporte de la malla alumno
      */
     public void llamaReporteMallaALumno() {
-
         JasperReport jr;
         String path = "/vista/reportes/repMalaAlumno.jasper";
         try {
@@ -536,10 +500,6 @@ public class VtnMallaAlumnoCTR {
             parametro.put("consulta", mallaAlm.getSql());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Malla de Alumno");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
