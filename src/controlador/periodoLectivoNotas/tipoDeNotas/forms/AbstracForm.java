@@ -46,10 +46,14 @@ public abstract class AbstracForm {
         "G. DE AULA 2",
         "TOTAL GESTION",
         "EXAMEN FINAL",
-        "NOTA FINAL CICLO",
         "EXAMEN DE RECUPERACION",
-        "NOTA TOTAL CICLO",
-        "NOTA TOTAL PRACTICAS"};
+        "NOTA FINAL CICLO",
+        "D. G. I. F.",
+        "C. T. E.",
+        "C. T. A.",
+        "S. T. F. P.",
+        "NOTA FINAL",
+    };
 
     protected boolean COMPLETED = false;
 
