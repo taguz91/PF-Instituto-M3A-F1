@@ -211,7 +211,7 @@ public class ControladorCRUD {
                 filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
         
-       /* List<PeriodoLectivoMD>periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
+        /*List<PeriodoLectivoMD>periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
         periodosCarrera.stream().findFirst().get();
         
         if (silaboSeleccionado.get().getIdPeriodoLectivo())*/
@@ -232,7 +232,7 @@ public class ControladorCRUD {
 
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            new SilaboBD(conexion).eliminarLogico(seleccionarSilabo());
+            new SilaboBD(conexion).eliminar(seleccionarSilabo());
             JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
         }
 
