@@ -126,5 +126,29 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         }
         return evaluaciones;
     }
+     public static List<EvaluacionSilaboMD> recuperar_id_Unidad_plan_de_clase(ConexionBD conexion,int id_unidad) {
+         List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
+        try {
+            
+            PreparedStatement st = conexion.getCon().prepareStatement("select es.id_evaluacion from \"EvaluacionSilabo\" es \n" +
+"join \"TipoActividad\" t on es.id_tipo_actividad=t.id_tipo_actividad where es.id_tipo_actividad=4 AND es.id_unidad=?");
+            st.setInt(1, id_unidad);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                EvaluacionSilaboMD e = new EvaluacionSilaboMD();
+                e.setIdEvaluacion(rs.getInt(1));
+
+                evaluaciones.add(e);
+            }
+           
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbEvaluacionSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return evaluaciones;
+    }
 
 }

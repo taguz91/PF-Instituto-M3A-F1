@@ -22,6 +22,8 @@ import modelo.PlanClases.RecursosBD;
 import modelo.PlanClases.RecursosMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
+import modelo.PlanClases.TrabajoAutonomoBD;
+import modelo.PlanClases.TrabajoAutonomoMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -48,7 +50,9 @@ public class Controlador_plan_clases {
     private frmPlanClase fPlanClase;
     private SilaboMD silabo;
     private CursoMD curso;
+    private TrabajoAutonomoMD trabajo_autonoMD;
     private RecursosPlanClasesMD recursos_planMD;
+    private List<EvaluacionSilaboMD> lista_evualacion_unidad;
     private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas;
     private List<RecursosPlanClasesMD> lista_recursoMD;
     private List<RecursosPlanClasesMD> lista_recursoMD1;
@@ -127,8 +131,7 @@ public class Controlador_plan_clases {
                                 filter(r -> r.getNombre_recursos().equals(recurso)).findFirst();
                         
                         lista_recursoMD1.add(new RecursosPlanClasesMD(recursoSeleccionado.get()));
-                        System.out.println(recursoSeleccionado.get().getId_recurso()+"------------------------>>>>><< ID RECURSO");
-                        System.out.println(lista_recursoMD1.size()+"------------------>>>>>>>>>>>>>><TAMAÑ0 ARRAYLIST<>()");
+                       
                         System.out.println(recursoSeleccionado.get().getNombre_recursos()+"-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     }
                 }
@@ -226,6 +229,7 @@ public class Controlador_plan_clases {
             fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
         }
     }
+    
     private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
         modelo=new DefaultListModel();
@@ -234,9 +238,8 @@ public class Controlador_plan_clases {
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
     }
- 
-   
-   private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
+    
+    private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
      DefaultListModel modeloRecursos = new DefaultListModel();
      fPlanClase.getJlisRecursos().setCellRenderer(new CheckListRenderer());
@@ -302,6 +305,7 @@ public class Controlador_plan_clases {
             fPlanClase.getListConsolidacionPC().setModel(modelo3);
         }
     }
+  
     private void eliminarElementopanel(){
         try{
         String indice;
@@ -354,11 +358,6 @@ public class Controlador_plan_clases {
         }
     }
      
-
-    
-   
-    
-    
     public boolean guardar_plan_de_clase(){
         plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
         plan_claseMD.getId_curso().setId(curso.getId());
@@ -366,6 +365,7 @@ public class Controlador_plan_clases {
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
         new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
         insertarRecursosPlanClases();
+        insertarTrabajoAutonomo();
         return true;
     }
     private void insertarRecursosPlanClases(){
@@ -379,8 +379,15 @@ public class Controlador_plan_clases {
         
     }
     
-    private void insertarEstrategiasMetodologicas(){
-        
+    private void insertarTrabajoAutonomo(){
+        lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
+        for (EvaluacionSilaboMD evaluacionSilaboMD : lista_evualacion_unidad) {
+            trabajo_autonoMD=new TrabajoAutonomoMD();
+            trabajo_autonoMD.getId_evaluacion().setIdEvaluacion(evaluacionSilaboMD.getIdEvaluacion());
+            trabajo_autonoMD.setAutonomo_plan_descripcion(fPlanClase.getTxrTrabajoAutonomo().getText());
+            
+            new TrabajoAutonomoBD(conexion).insertarTrabajoAutonomo1(trabajo_autonoMD);
+        }
     }
      
     public EstrategiasUnidadMD estrategiaSeleccionado(){

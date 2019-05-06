@@ -66,5 +66,27 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         }
         return recursos;
     }
+       public  static List<RecursosPlanClasesMD>  consultarRecursosPlanClase(ConexionBD conexion,int id_plan_clase){
+        List<RecursosPlanClasesMD> recursos=new ArrayList<>();
+        
+         try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("select r.id_recurso,r.nombre_recursos from \"Recursos\" r join \"RecursosPlanClases\" rp on r.id_recurso=rp.id_recurso \n" +
+            "where rp.id_plan_clases=? ");
+            st.setInt(1, id_plan_clase);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                RecursosPlanClasesMD re=new RecursosPlanClasesMD();
+                re.getId_recursos().setId_recurso(rs.getInt(1));
+                re.getId_recursos().setNombre_recursos(rs.getString(2));
+                recursos.add(re);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return recursos;
+    }
     
 }
