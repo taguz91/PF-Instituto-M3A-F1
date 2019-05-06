@@ -39,6 +39,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
     }
 
+    public JButton getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public void setBtnGuardar(JButton btnGuardar) {
+        this.btnGuardar = btnGuardar;
+    }
+   
+
     public JLabel getLblEliminarUnidad() {
         return lblEliminarUnidad;
     }
@@ -954,7 +963,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAgregarUnidad = new javax.swing.JLabel();
         lblAgregarEstrategia = new javax.swing.JLabel();
         txtNuevaEstrategia = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1363,8 +1372,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txtNuevaEstrategia.setEnabled(false);
         pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 430, -1));
 
-        jButton1.setText("Guardar");
-        pnlUnidad.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 340, -1, -1));
+        btnGuardar.setText("Guardar");
+        pnlUnidad.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 570, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1441,6 +1450,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAgregarAD;
     private javax.swing.JButton btnAgregarP;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitarA;
     private javax.swing.JButton btnQuitarAC;
     private javax.swing.JButton btnQuitarAD;
@@ -1457,7 +1467,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAC;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAD;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionP;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
     private javax.swing.JLabel lblAprendizajeColaborativo;

@@ -99,7 +99,7 @@ INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."Alumno
 INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota
 INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
 WHERE
-"public"."PeriodoLectivo".id_prd_lectivo = 2
+"public"."PeriodoLectivo".id_prd_lectivo IN (1,2,3,5,6,7,10,11,,13,14,15,17,18,19,20);
 
 
 --ELIMINAR NOTAS
@@ -120,9 +120,9 @@ INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."Alumno
 INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota
 INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera
 WHERE
-"public"."PeriodoLectivo".id_prd_lectivo = 20
+"public"."PeriodoLectivo".id_prd_lectivo IN (1,2,3,5,6,7,10,11,13,14,15,17,18,19,20)
 );
-
+--IDs: 1,2,3,5,6,7,10,11,13,14,15,17,18,19,20
 /*
     VERIFICAR CANTIDAD DE NOTAS
     PORPERIODO LECTIVO
