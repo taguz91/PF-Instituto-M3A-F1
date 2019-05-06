@@ -70,3 +70,4 @@ ALTER TABLE "NotasPracticas" ADD CONSTRAINT "tipo_nota__notas_practicas__fk"
 
 
 
+0703630715=CARRANZA OCHOA ROBERTO  NATANIEL\t0995710017\trncarranza76@gmail.com\tTIEMPO COMPLETO

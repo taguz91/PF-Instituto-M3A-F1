@@ -14,14 +14,26 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
+import modelo.alumno.AlumnoCursoBD;
+import modelo.notas.NotasBD;
+import modelo.persona.AlumnoMD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -137,7 +149,6 @@ public class LoginCTR {
                     List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
                     if (!Lista.isEmpty()) {
-
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
@@ -193,5 +204,7 @@ public class LoginCTR {
             }
         });
     }
+
+
 
 }
