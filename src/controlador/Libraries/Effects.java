@@ -96,6 +96,4 @@ public class Effects {
         view.setCursor(DEFAULT_CURSOR);
     }
 
-
-
 }
