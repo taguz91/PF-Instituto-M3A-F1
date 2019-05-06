@@ -168,7 +168,7 @@ public class frmConfiguracionSilabo extends javax.swing.JInternalFrame {
 
         spnUnidades.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
-        lblPeriodo.setText("Periodo");
+        lblPeriodo.setText("Periodo Referencial");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
