@@ -750,8 +750,10 @@ public class VtnNotasCTR {
 
     private void cacularNotasDuales(DefaultTableModel tablaNotasDuales) {
         try {
+
             String nombreNota = "";
 
+            int fila = getSelectedRowDuales();
             int columna = getSelectedColumDuales();
 
             switch (columna) {
@@ -781,7 +783,8 @@ public class VtnNotasCTR {
                 case 13:
                     String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
                     if (Validaciones.isInt(faltas)) {
-                        //int faltasTabla = Math 
+                        int faltasTabla = Integer.valueOf(faltas);
+                        editarFaltas(fila, columna, faltasTabla, tablaNotasTrad);
                     } else {
                         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO ENTERO");
                     }
@@ -828,13 +831,16 @@ public class VtnNotasCTR {
                 .forEach(editarNota(fila, 8, tablaNotasDuales));
 
         alumno.setNotaFinal(Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 11).toString()));
-
         alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
         alumno.editar();
 
     }
 
-    private void editarFaltas(int fila, int columna, int faltas) {
+    private void editarFaltas(int fila, int columna, int faltas, TableModel tabla) {
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+        tabla.setValueAt(faltas, fila, columna);
+        alumno.setNumFalta(faltas);
+        alumno.editar();
 
     }
 
