@@ -38,7 +38,7 @@ FROM
 WHERE
 	"Alumnos".id_alumno = $P{id_alumno}
 	AND "Cursos".id_docente = $P{id_docente}
-	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre =$P{prd_lectivo_nombre} )
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	AND "TipoDeNota".tipo_nota_nombre = 'APORTE 1']]>
@@ -55,7 +55,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Aporte 1}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Aporte 1}.toString()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

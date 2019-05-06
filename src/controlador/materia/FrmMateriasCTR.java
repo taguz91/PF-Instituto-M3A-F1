@@ -419,9 +419,9 @@ public class FrmMateriasCTR {
         horasPresenciales = Integer.parseInt(frmMaterias.getTxtHorasPresenciales().getText().trim());
         horasAutoEstudio = Integer.parseInt(frmMaterias.getTxtHorasAutoEstudio().getText().trim());
         totalHoras = Integer.parseInt(frmMaterias.getTxtTotalHoras().getText().trim());
-        objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText().trim().toUpperCase();
-        objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText().trim().toUpperCase();
-        descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText().trim().toUpperCase();
+        objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText().trim();
+        objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText().trim();
+        descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText().trim();
         organizacionCurricular = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
         campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
 

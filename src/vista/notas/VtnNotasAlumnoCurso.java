@@ -14,7 +14,7 @@ import javax.swing.JTextField;
  */
 public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
-    private double valorMinimo;
+
 
     public VtnNotasAlumnoCurso() {
 
@@ -82,13 +82,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
     };
 
-    public double getValorMinimo() {
-        return valorMinimo;
-    }
-
-    public void setValorMinimo(double valorMinimo) {
-        this.valorMinimo = valorMinimo;
-    }
 
     public JLabel getLblResultados() {
         return lblResultados;
@@ -161,7 +154,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lbl_asignatura.setText("Asignatura:");
 
         btnImprimir.setText("Imprimir");
-        btnImprimir.setEnabled(false);
 
         btnVerNotas.setText("Ver Notas");
         btnVerNotas.setEnabled(false);
@@ -188,9 +180,16 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, true, true, false, true, true, true, false, false, true, false, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -236,11 +235,11 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "Asistencia"
+                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
