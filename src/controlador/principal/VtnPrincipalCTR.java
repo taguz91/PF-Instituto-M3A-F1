@@ -22,7 +22,7 @@ import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
-import controlador.notas.VtnNotas;
+import controlador.notas.VtnNotasCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -192,6 +192,7 @@ public class VtnPrincipalCTR {
         vtnPrin.setVisible(true);
         //InitPermisos();
         //InitPermisosTesterYDocente();
+        InitPermisosDocente();
     }
 
     /**
@@ -654,7 +655,7 @@ public class VtnPrincipalCTR {
         VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, new AlumnoCursoBD(), usuario, rolSeleccionado);
+            VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn, usuario, rolSeleccionado);
             vtnCtr.Init();
         } else {
             errorNumVentanas();
@@ -1109,28 +1110,25 @@ public class VtnPrincipalCTR {
 
     private void InitPermisosTesterYDocente() {
         System.out.println("Estamos en modo pruebas = " + pruebas);
-        if (!pruebas) {
 
-            if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
-                if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
-                    vtnPrin.getMnNotas().setEnabled(true);
-                    vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
-                    vtnPrin.getMnCtTipoNotas().setEnabled(false);
-                    vtnPrin.getMnCtActivarNotas().setEnabled(false);
-                    vtnPrin.getMnCtMallaAlumno().setEnabled(false);
-                    vtnPrin.getMnCtListaAlumnos().setEnabled(false);
-                    vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
-                    vtnPrin.getMnCtSilabos().setEnabled(true);
-                } else {
-                    vtnPrin.getMnNotas().setEnabled(false);
-                }
-
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
+            if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
+                vtnPrin.getMnNotas().setEnabled(true);
+                vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
+                vtnPrin.getMnCtTipoNotas().setEnabled(false);
+                vtnPrin.getMnCtActivarNotas().setEnabled(false);
+                vtnPrin.getMnCtMallaAlumno().setEnabled(false);
+                vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+                vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+                vtnPrin.getMnCtSilabos().setEnabled(true);
+            } else {
+                vtnPrin.getMnNotas().setEnabled(false);
             }
-        } else {
-            System.out.println("Entre en la base de datos pruebas");
-            vtnPrin.setTitle("PF M3A | Modo Pruebas Activado");
+
         }
 
+        // System.out.println("Entre en la base de datos pruebas");
+        //vtnPrin.setTitle("PF M3A | Modo Pruebas Activado");
         if (rolSeleccionado.getNombre().equalsIgnoreCase("SECRETARIA")) {
 
             vtnPrin.getMnIngresar().setEnabled(false);
@@ -1162,8 +1160,48 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtMallaAlumno().setEnabled(true);
             vtnPrin.getMnCtDocenteMateria().setEnabled(true);
             vtnPrin.getMnCtDocente().setEnabled(true);
+
         }
 
+    }
+
+    private void InitPermisosDocente() {
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("Docente")) {
+
+            vtnPrin.getMnIngresar().setEnabled(false);
+            vtnPrin.getPnlMenu().setVisible(false);
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtCarrera().setEnabled(false);
+            vtnPrin.getMnCtCurso().setEnabled(false);
+            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+            vtnPrin.getMnCtMateria().setEnabled(false);
+            vtnPrin.getMnCtInscripcion().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+            vtnPrin.getMnCtPlandeClase().setEnabled(true);
+            vtnPrin.getMnCtUsuarios().setEnabled(false);
+            vtnPrin.getMnCtRoles().setEnabled(false);
+            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+            vtnPrin.getMnCtAccesos().setEnabled(false);
+            vtnPrin.getMnCtMiPerfil().setEnabled(false);
+
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+            vtnPrin.getMnCtMallaAlumno().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(true);
+            vtnPrin.getMnCtMateria().setEnabled(true);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
+            vtnPrin.getMnCtTipoNotas().setEnabled(false);
+            vtnPrin.getMnCtActivarNotas().setEnabled(false);
+        }
     }
 
     private void registroIngreso(JFrame vtn) {

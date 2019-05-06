@@ -9,11 +9,11 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Johnny
  */
-public class TblRenderMateriasMatricula extends DefaultTableCellRenderer {
+public class TblRenderMatricula extends DefaultTableCellRenderer {
 
     private final int clm;
 
-    public TblRenderMateriasMatricula(int clm) {
+    public TblRenderMatricula(int clm) {
         this.clm = clm;
     }
 

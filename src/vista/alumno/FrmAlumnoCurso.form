@@ -464,9 +464,14 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNumMatriculas">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="horizontalTextPosition" type="int" value="4"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="180" y="20" width="40" height="20"/>
+              <AbsoluteConstraints x="200" y="20" width="30" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -506,7 +511,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="130" width="100" height="-1"/>
+              <AbsoluteConstraints x="10" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -516,17 +521,17 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="130" y="130" width="100" height="-1"/>
+              <AbsoluteConstraints x="130" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Matriculas en el curso:"/>
+            <Property name="text" type="java.lang.String" value="Numero de matriculas: "/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="170" width="170" height="-1"/>
+              <AbsoluteConstraints x="10" y="150" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -548,9 +553,14 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNumMatriculasClases">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="horizontalTextPosition" type="int" value="4"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="190" y="40" width="40" height="20"/>
+              <AbsoluteConstraints x="200" y="40" width="30" height="20"/>
             </Constraint>
           </Constraints>
         </Component>

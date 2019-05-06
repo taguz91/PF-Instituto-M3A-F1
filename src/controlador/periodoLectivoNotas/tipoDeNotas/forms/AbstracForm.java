@@ -46,12 +46,10 @@ public abstract class AbstracForm {
         "G. DE AULA 2",
         "TOTAL GESTION",
         "EXAMEN FINAL",
-        "NOTA FINAL CICLO",
         "EXAMEN DE RECUPERACION",
-        "NOTA TOTAL CICLO",
-        "NOTA TOTAL PRACTICAS"};
+        "NOTA FINAL"
+    };
 
-    protected boolean COMPLETED = false;
 
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
@@ -79,7 +77,6 @@ public abstract class AbstracForm {
         cargarComboCarreras();
 //        cargarCmbNombreNota(carrerasTradicionales);
         InitEventos();
-        COMPLETED = true;
     }
 
     private void InitEventos() {

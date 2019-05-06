@@ -83,4 +83,23 @@ public class CursosBDS extends CursoMDS{
         }
         return  cursos;
      }
+      public static List<CursoMD> ConsultarCurso(ConexionBD conexion){
+         List<CursoMD> cursos=new ArrayList<>();
+        try {
+            PreparedStatement st = conexion.getCon().prepareCall("select id_curso,curso_nombre from \"Cursos\"");
+            
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                CursoMD cur=new CursoMD();
+                cur.setId(rs.getInt(1));
+                cur.setNombre(rs.getString(2));
+                cursos.add(cur);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  cursos;
+     }
 }

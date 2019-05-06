@@ -1,7 +1,6 @@
 package controlador.curso;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -43,7 +42,6 @@ public class VtnCursoCTR {
     private final RolMD permisos;
 
     private final CursoBD curso;
-    private CursoMD cursoEdit;
     private ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     private DefaultTableModel mdTbl;
@@ -133,28 +131,46 @@ public class VtnCursoCTR {
      * Abrimos el formulario para ingresar un curso
      */
     public void abrirFrmCurso() {
-        ctrPrin.abrirFrmCurso();
-        vtnCurso.dispose();
-        ctrPrin.cerradoJIF();
+        FrmCurso frmCurso = new FrmCurso();
+        ctrPrin.eventoInternal(frmCurso);
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin, this);
+        ctrFrmCurso.iniciar();
+        vtnCurso.setVisible(false);
     }
 
     /**
      * Al seleccionar un curso se puede editar.
      */
     private void editarCurso() {
-        int fila = vtnCurso.getTblCurso().getSelectedRow();
-        if (fila >= 0) {
+        posFila = vtnCurso.getTblCurso().getSelectedRow();
+        if (posFila >= 0) {
             FrmCurso frmCurso = new FrmCurso();
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin, this);
             ctrFrmCurso.iniciar();
             ctrPrin.eventoInternal(frmCurso);
-//            cursoEdit = curso.buscarCurso(
-//                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
-            cursoEdit = cursos.get(fila);
-            ctrFrmCurso.editar(cursoEdit);
-            vtnCurso.dispose();
-            ctrPrin.cerradoJIF();
+            ctrFrmCurso.editar(cursos.get(posFila));
+            vtnCurso.setVisible(false);
         }
+    }
+
+    /**
+     * Actualizamos la ventana luego de hacer una accion, eliminar editar etc.
+     */
+    public void actualizarVtn() {
+        int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
+        int posCur = vtnCurso.getCmbCurso().getSelectedIndex();
+        if (vtnCurso.getTxtBuscar().getText().length() > 0) {
+            buscar(vtnCurso.getTxtBuscar().getText().trim());
+        } else {
+            if (posPrd > 0 && posCur > 0) {
+                cargarCursosPorNombre();
+            } else if (posPrd > 0) {
+                cargarCursosPorPeriodo();
+            }else{
+                cargarCursos();
+            }
+        }
+        vtnCurso.setVisible(true);
     }
 
     /**

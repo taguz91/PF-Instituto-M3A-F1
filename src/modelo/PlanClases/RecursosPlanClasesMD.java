@@ -16,6 +16,10 @@ public class RecursosPlanClasesMD {
         this.id_plan_clases = id_plan_clases;
         this.id_recursos = id_recursos;
     }
+
+    public RecursosPlanClasesMD(RecursosMD id_recursos) {
+        this.id_recursos = id_recursos;
+    }
     
 
     public Integer getId_recursos_plan_clases() {
@@ -40,6 +44,11 @@ public class RecursosPlanClasesMD {
 
     public void setId_recursos(RecursosMD id_recursos) {
         this.id_recursos = id_recursos;
+    }
+
+    @Override
+    public String toString() {
+        return "RecursosPlanClasesMD{" + "id_recursos_plan_clases=" + id_recursos_plan_clases + ", id_plan_clases=" + id_plan_clases + ", id_recursos=" + id_recursos + '}';
     }
     
     
