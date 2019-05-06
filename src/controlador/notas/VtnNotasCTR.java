@@ -564,11 +564,7 @@ public class VtnNotasCTR {
 
         alumno.setEstado(vista.getTblNotas().getValueAt(fila, 13).toString());
 
-        System.out.println("-");
-
-        String pruebas = String.valueOf(tablaNotasTrad.getValueAt(fila, 14));
-
-        System.out.println("-------->" + pruebas);
+        alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
 
         String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
 
@@ -673,7 +669,7 @@ public class VtnNotasCTR {
 
     }
 
-    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, double faltas, AlumnoCursoBD alumno) {
+    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
         return obj -> {
 
             double horaPresenciales = obj.getHorasPresenciales();

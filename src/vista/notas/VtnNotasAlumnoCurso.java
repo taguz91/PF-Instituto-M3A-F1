@@ -181,9 +181,16 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, true, true, false, true, true, true, false, false, true, false, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -214,6 +221,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
             tblNotas.getColumnModel().getColumn(13).setMinWidth(85);
             tblNotas.getColumnModel().getColumn(13).setMaxWidth(85);
+            tblNotas.getColumnModel().getColumn(14).setMinWidth(50);
+            tblNotas.getColumnModel().getColumn(14).setMaxWidth(50);
             tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
             tblNotas.getColumnModel().getColumn(15).setMaxWidth(60);
             tblNotas.getColumnModel().getColumn(16).setMinWidth(70);

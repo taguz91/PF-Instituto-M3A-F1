@@ -319,7 +319,7 @@
                     <Column editable="true" title="Ex. Recuperacion" type="java.lang.Object"/>
                     <Column editable="false" title="Not. Final" type="java.lang.Object"/>
                     <Column editable="false" title="Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="Faltas" type="java.lang.Object"/>
+                    <Column editable="true" title="Faltas" type="java.lang.Integer"/>
                     <Column editable="false" title="% Faltas" type="java.lang.Object"/>
                     <Column editable="true" title="Asistencia" type="java.lang.Object"/>
                   </Table>
@@ -396,7 +396,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="50" minWidth="50" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
