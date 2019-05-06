@@ -50,7 +50,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author MrRainx
  */
-public class VtnNotas {
+public class VtnNotasCTR {
 
     private final VtnPrincipal desktop;
     private final VtnNotasAlumnoCurso vista;
@@ -71,7 +71,7 @@ public class VtnNotas {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
@@ -521,7 +521,6 @@ public class VtnNotas {
         } else {
             notaFinal = totalInterciclo + aporte2 + examenFinal;
         }
-
         tablaNotasTrad.setValueAt(Math.round(notaFinal), fila, 12);
 
     }
@@ -634,7 +633,6 @@ public class VtnNotas {
 
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-            //String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
 
             activarForm(false);
 
@@ -957,7 +955,7 @@ public class VtnNotas {
             try {
                 sleep(500);
             } catch (InterruptedException ex) {
-                Logger.getLogger(VtnNotas.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VtnNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
             }
             desktop.getLblEstado().setText("");
             Effects.setDefaultCursor(vista);

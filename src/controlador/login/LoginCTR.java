@@ -2,7 +2,7 @@ package controlador.login;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
-import controlador.notas.VtnNotas;
+import controlador.notas.VtnNotasCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;

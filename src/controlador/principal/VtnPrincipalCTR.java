@@ -22,7 +22,7 @@ import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
-import controlador.notas.VtnNotas;
+import controlador.notas.VtnNotasCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -654,7 +654,7 @@ public class VtnPrincipalCTR {
         VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnNotas vtnCtr = new VtnNotas(vtnPrin, vtn, usuario, rolSeleccionado);
+            VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn, usuario, rolSeleccionado);
             vtnCtr.Init();
         } else {
             errorNumVentanas();
