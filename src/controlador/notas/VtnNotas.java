@@ -72,7 +72,6 @@ public class VtnNotas {
     private boolean cargarTabla = true;
 
     public VtnNotas(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
-        vista.setValorMinimo(70);
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
