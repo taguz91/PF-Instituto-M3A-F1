@@ -364,7 +364,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE m.id_materia=?\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND s.estado_silabo<>-1");
 
             st.setInt(1, clave[0]);
             st.setInt(2, clave[1]);
