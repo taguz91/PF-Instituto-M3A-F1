@@ -6,7 +6,7 @@ SELECT
 	persona_correo AS "Correo", 
 	persona_telefono AS "Telefono",
 	materia_nombre AS "MATERIA",
-	lugar_nombre AS "Ciudad"
+	lc.lugar_nombre AS "Ciudad"
 	malla_almn_num_matricula AS "NUMERO DE MATRICULA",
 	curso_nombre AS "CURSO",
 	almn_curso_nota_final AS "NOTA FINAL" 
@@ -18,7 +18,8 @@ FROM
 	PUBLIC."AlumnosCarrera" ar,
 	PUBLIC."Personas" P,
 	PUBLIC."Alumnos" A, 
-	public."Lugares" l
+	public."Lugares" l, 
+	public."Lugares" lc
 WHERE
 	C.id_curso = ac.id_curso 
 	AND C.id_prd_lectivo = 4 
@@ -30,7 +31,7 @@ WHERE
 	AND A.id_alumno = ac.id_alumno 
 	AND P.id_persona = A.id_persona
 	AND P.id_lugar_residencia = l.id_lugar
-	AND l.id_lugar = l.id_lugar_referencia 
+	AND lc.id_lugar = l.id_lugar_referencia 
 ORDER BY P.persona_identificacion
 
 
