@@ -5,10 +5,11 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select id_materia,materia_nombre from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='C' and id_materia=$P!{parameter1})]]>
+		<![CDATA[select id_materia,materia_nombre,materia_codigo from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='C' and id_materia=$P!{parameter1})]]>
 	</queryString>
 	<field name="id_materia" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="materia_codigo" class="java.lang.String"/>
 	<variable name="variable1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -81,7 +82,7 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{id_materia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="181" height="47" uuid="040b4a4a-845d-4975-a623-0a7ce957545e"/>
