@@ -62,7 +62,7 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Silabo\" AS s ON s.id_materia=m.id_materia\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "AND s.id_prd_lectivo=?");
+                    + "AND s.id_prd_lectivo=? AND s.estado_silabo<>-1");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
