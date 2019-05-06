@@ -349,18 +349,6 @@ public class VtnNotasCTR {
                     nombreNota = "APORTE 1";
 
                     String aporte1 = datos.getValueAt(getSelectedRowTrad(), getSelectedColumTrad()).toString();
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println(aporte1);
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("");
 
                     guardarBDTrad(aporte1, nombreNota);
 
@@ -404,7 +392,11 @@ public class VtnNotasCTR {
 
                     if (Validaciones.isInt(value)) {
                         int faltas = (int) Middlewares.conversor(value);
-                        setFaltas(materia, faltas);
+                        listaMaterias
+                                .stream()
+                                .filter(item -> item.getNombre().equals(materia))
+                                .collect(Collectors.toList())
+                                .forEach(setPorcentaje(faltas));
                         editarTrad();
                     } else {
                         JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMEROS ENTEROS!!");
@@ -446,18 +438,7 @@ public class VtnNotasCTR {
         }
     }
 
-    private void setFaltas(String materia, int faltas) {
-        listaMaterias
-                .stream()
-                .filter(item -> item.getNombre().equals(materia))
-                .collect(Collectors.toList())
-                .forEach(setPorcentaje(faltas));
-
-    }
-
     private void guardarBDTrad(String nota, String nombreNota) {
-
-        System.out.println("GUARDAR TRAD");
 
         if (Validaciones.isDecimal(nota)) {
             double value = Middlewares.conversor(nota);
@@ -507,15 +488,15 @@ public class VtnNotasCTR {
     private void sumarColumnasTrad() {
         int fila = getSelectedRowTrad();
 
-        double aporte1 = 0;
-        double examenInterCiclo = 0;
-        double totalInterciclo = 0;
+        double aporte1;
+        double examenInterCiclo;
+        double totalInterciclo;
 
-        double aporte2 = 0;
-        double examenFinal = 0;
-        double examenSupletorio = 0;
+        double aporte2;
+        double examenFinal;
+        double examenSupletorio;
 
-        double notaFinal = 0;
+        double notaFinal;
 
         aporte1 = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 6).toString());
         examenInterCiclo = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 7).toString());
@@ -564,14 +545,7 @@ public class VtnNotasCTR {
 
         alumno.setEstado(vista.getTblNotas().getValueAt(fila, 13).toString());
 
-        System.out.println("-");
-
-        String faltasText = tablaNotasTrad.getValueAt(fila, 14).toString();
-
-        System.out.println("-------->" + faltasText);
-
-        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString()));
-        System.out.println("--");
+        alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
 
         String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
 
@@ -591,27 +565,27 @@ public class VtnNotasCTR {
         alumno.getNotas().stream()
                 .filter(buscar("APORTE 1"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(6));
+                .forEach(editarNota(fila, 6, tablaNotasTrad));
         alumno.getNotas().stream()
                 .filter(buscar("EXAMEN INTERCICLO"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(7));
+                .forEach(editarNota(fila, 7, tablaNotasTrad));
         alumno.getNotas().stream()
                 .filter(buscar("NOTA INTERCICLO"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(8));
+                .forEach(editarNota(fila, 8, tablaNotasTrad));
         alumno.getNotas().stream()
                 .filter(buscar("APORTE 2"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(9));
+                .forEach(editarNota(fila, 9, tablaNotasTrad));
         alumno.getNotas().stream()
                 .filter(buscar("EXAMEN FINAL"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(10));
+                .forEach(editarNota(fila, 10, tablaNotasTrad));
         alumno.getNotas().stream()
                 .filter(buscar("EXAMEN SUPLETORIO"))
                 .collect(Collectors.toList())
-                .forEach(editarNota(11));
+                .forEach(editarNota(fila, 11, tablaNotasTrad));
 
         alumno.setNotaFinal(Middlewares.conversor(vista.getTblNotas().getValueAt(fila, 12).toString()));
 
@@ -631,9 +605,9 @@ public class VtnNotasCTR {
         return item -> item.getTipoDeNota().getNombre().equals(busqueda);
     }
 
-    private Consumer<NotasBD> editarNota(int columna) {
+    private Consumer<NotasBD> editarNota(int fila, int columna, TableModel tabla) {
         return obj -> {
-            String text = vista.getTblNotas().getValueAt(getSelectedRowTrad(), columna).toString();
+            String text = tabla.getValueAt(fila, columna).toString();
             obj.setNotaValor(Middlewares.conversor(text));
             obj.editar();
         };
@@ -676,7 +650,7 @@ public class VtnNotasCTR {
 
     }
 
-    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, double faltas, AlumnoCursoBD alumno) {
+    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
         return obj -> {
 
             double horaPresenciales = obj.getHorasPresenciales();
@@ -760,36 +734,6 @@ public class VtnNotasCTR {
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
-    private void sumarColumnasDuales() {
-        int fila = getSelectedRowDuales();
-
-        double gAula1 = 0;
-        double gAula2 = 0;
-        double totalGAula = 0;
-
-        double examenFinal = 0;
-        double examenRecuperacion = 0;
-        double notaFinal = 0;
-
-        gAula1 = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 6).toString());
-        gAula2 = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 7).toString());
-
-        totalGAula = gAula1 + gAula2;
-        tablaNotasDuales.setValueAt(totalGAula, fila, 8);
-
-        examenFinal = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 9).toString());
-        examenRecuperacion = Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 10).toString());
-
-        if (examenRecuperacion != 0) {
-            notaFinal = examenRecuperacion + totalGAula;
-        } else {
-            notaFinal = examenFinal + totalGAula;
-        }
-
-        tablaNotasDuales.setValueAt(Math.round(notaFinal), fila, 11);
-
-    }
-
     private void sumarColumnas(DefaultTableModel tabla, int filaSelecionada, int columa1, int columa2, int columaRespuesta, String forma) {
 
         double valor1 = Middlewares.conversor(tabla.getValueAt(filaSelecionada, columa1).toString());
@@ -806,31 +750,44 @@ public class VtnNotasCTR {
 
     private void cacularNotasDuales(DefaultTableModel tablaNotasDuales) {
         try {
+
             String nombreNota = "";
 
-            switch (getSelectedColumDuales()) {
+            int fila = getSelectedRowDuales();
+            int columna = getSelectedColumDuales();
+
+            switch (columna) {
                 case 6:
-                    nombreNota = "G. AULA 1";
+                    nombreNota = "G. DE AULA 1";
                     String Gaula1 = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
-                    guardarDBDuales(Gaula1);
+                    guardarDBDuales(Gaula1, nombreNota, columna);
                     break;
                 case 7:
-                    nombreNota = "G. AULA 2";
+                    nombreNota = "G. DE AULA 2";
                     String Gaula2 = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
-                    guardarDBDuales(Gaula2);
+                    guardarDBDuales(Gaula2, nombreNota, columna);
 
                     break;
                 case 9:
-                    nombreNota = "G. AULA 2";
+                    nombreNota = "EXAMEN FINAL";
                     String examenFinal = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
-                    guardarDBDuales(examenFinal);
+                    guardarDBDuales(examenFinal, nombreNota, columna);
 
                     break;
                 case 10:
-                    nombreNota = "G. AULA 2";
+                    nombreNota = "EXAMEN DE RECUPERACION";
                     String examenRecuperacion = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
-                    guardarDBDuales(examenRecuperacion);
+                    guardarDBDuales(examenRecuperacion, nombreNota, columna);
 
+                    break;
+                case 13:
+                    String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
+                    if (Validaciones.isInt(faltas)) {
+                        int faltasTabla = Integer.valueOf(faltas);
+                        editarFaltas(fila, columna, faltasTabla, tablaNotasTrad);
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO ENTERO");
+                    }
                     break;
                 default:
                     break;
@@ -839,7 +796,7 @@ public class VtnNotasCTR {
         }
     }
 
-    private void guardarDBDuales(String nota) {
+    private void guardarDBDuales(String nota, String tipoNota, int columna) {
         int fila = getSelectedRowDuales();
         if (Validaciones.isDecimal(nota)) {
 
@@ -850,10 +807,41 @@ public class VtnNotasCTR {
             } else {
                 sumarColumnas(tablaNotasDuales, fila, 8, 9, 11, "INT");
             }
+
+            editarDuales(fila, columna, tipoNota);
+
         } else {
             mensajeDeError();
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
         }
+    }
+
+    private void editarDuales(int fila, int columna, String tipoNota) {
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+
+        alumno.getNotas()
+                .stream()
+                .filter(buscar(tipoNota))
+                .collect(Collectors.toList())
+                .forEach(editarNota(fila, columna, tablaNotasDuales));
+        alumno.getNotas()
+                .stream()
+                .filter(buscar("TOTAL GESTION"))
+                .collect(Collectors.toList())
+                .forEach(editarNota(fila, 8, tablaNotasDuales));
+
+        alumno.setNotaFinal(Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 11).toString()));
+        alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
+        alumno.editar();
+
+    }
+
+    private void editarFaltas(int fila, int columna, int faltas, TableModel tabla) {
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+        tabla.setValueAt(faltas, fila, columna);
+        alumno.setNumFalta(faltas);
+        alumno.editar();
+
     }
 
     private Function<AlumnoCursoBD, Void> agregarFilasDuales() {
@@ -872,14 +860,14 @@ public class VtnNotasCTR {
             row.add(8, obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor());
             row.add(9, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
             row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor());
-            row.add(11, obj.getNotas().stream().filter(buscar("NOTA FINAL CICLO")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotaFinal());
 
             System.out.println(obj.getNotas().stream().filter(buscar("NOTA FINAL CICLO")).findAny().get().getNotaValor());
 
             row.add(12, obj.getEstado());
             row.add(13, obj.getNumFalta());
-
-            row.add(14, obj.getAsistencia());
+            row.add(14, 0);
+            row.add(15, obj.getAsistencia());
 
             tablaNotasDuales.addRow(row);
 
