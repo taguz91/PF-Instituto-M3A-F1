@@ -16,7 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.CarrerasBDS;
+import modelo.silabo.PeriodoLectivoBDS;
 
 import modelo.silabo.SilaboMD;
 import modelo.silabo.SilaboBD;
@@ -208,6 +210,11 @@ public class ControladorCRUD {
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
                 filter(s -> s.getIdSilabo()==Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                 findFirst();
+        
+       /* List<PeriodoLectivoMD>periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
+        periodosCarrera.stream().findFirst().get();
+        
+        if (silaboSeleccionado.get().getIdPeriodoLectivo())*/
 
         return silaboSeleccionado.get();
     }
