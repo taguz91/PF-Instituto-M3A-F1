@@ -191,7 +191,7 @@ public class FrmMateriasCTR {
                 }
                 break;
             case 3:
-                frmMaterias.getBtn_Anterior().setVisible(true);
+               // frmMaterias.getBtn_Anterior().setVisible(true);
                 if (anterior == true) {
                     frmMaterias.getjTPMaterias().setSelectedIndex(2);
 //                    habilitarGuardar();
