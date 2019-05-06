@@ -9,7 +9,6 @@ import java.beans.PropertyVetoException;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -97,18 +96,6 @@ public class Effects {
         view.setCursor(DEFAULT_CURSOR);
     }
 
-    public static void pressEnter(JTextComponent component, Function<Void, Void> funcion) {
-        component.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == 10) {
-                    String texto = component.getText();
-                    if (texto.length() >= 10) {
-                        funcion.apply(null);
-                    }
-                }
-            }
-        });
-    }
+
 
 }

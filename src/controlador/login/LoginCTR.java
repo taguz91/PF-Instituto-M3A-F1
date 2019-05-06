@@ -1,6 +1,8 @@
 package controlador.login;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
+import controlador.notas.VtnNotas;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,9 +11,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -46,6 +53,7 @@ public class LoginCTR {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
         this.ista = icono.getImage();
         vista.setIconImage(ista);
+
     }
 
     //Inits
