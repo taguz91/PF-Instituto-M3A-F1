@@ -7,12 +7,7 @@ import controlador.notas.ux.RowStyle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import static java.lang.Thread.sleep;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -354,6 +349,18 @@ public class VtnNotasCTR {
                     nombreNota = "APORTE 1";
 
                     String aporte1 = datos.getValueAt(getSelectedRowTrad(), getSelectedColumTrad()).toString();
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println(aporte1);
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("");
 
                     guardarBDTrad(aporte1, nombreNota);
 
@@ -449,6 +456,9 @@ public class VtnNotasCTR {
     }
 
     private void guardarBDTrad(String nota, String nombreNota) {
+
+        System.out.println("GUARDAR TRAD");
+
         if (Validaciones.isDecimal(nota)) {
             double value = Middlewares.conversor(nota);
 
@@ -553,7 +563,16 @@ public class VtnNotasCTR {
         AlumnoCursoBD alumno = listaNotas.get(fila);
 
         alumno.setEstado(vista.getTblNotas().getValueAt(fila, 13).toString());
-        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString().toUpperCase()));
+
+        System.out.println("-");
+
+        String faltasText = tablaNotasTrad.getValueAt(fila, 14).toString();
+
+        System.out.println("-------->" + faltasText);
+
+        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString()));
+        System.out.println("--");
+
         String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
 
         if (asistencia.contains("desertor")) {
