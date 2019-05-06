@@ -214,8 +214,6 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
             tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
             tblNotas.getColumnModel().getColumn(13).setMinWidth(85);
             tblNotas.getColumnModel().getColumn(13).setMaxWidth(85);
-            tblNotas.getColumnModel().getColumn(14).setMinWidth(50);
-            tblNotas.getColumnModel().getColumn(14).setMaxWidth(50);
             tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
             tblNotas.getColumnModel().getColumn(15).setMaxWidth(60);
             tblNotas.getColumnModel().getColumn(16).setMinWidth(70);

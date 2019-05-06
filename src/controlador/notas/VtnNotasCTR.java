@@ -566,12 +566,9 @@ public class VtnNotasCTR {
 
         System.out.println("-");
 
-        String faltasText = tablaNotasTrad.getValueAt(fila, 14).toString();
+        String pruebas = String.valueOf(tablaNotasTrad.getValueAt(fila, 14));
 
-        System.out.println("-------->" + faltasText);
-
-        alumno.setNumFalta(Integer.valueOf(vista.getTblNotas().getValueAt(fila, 14).toString()));
-        System.out.println("--");
+        System.out.println("-------->" + pruebas);
 
         String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
 
