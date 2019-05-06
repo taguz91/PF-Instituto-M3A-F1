@@ -32,12 +32,12 @@ public class RecursosBD extends RecursosMD {
 
     
     
-    public  static List<RecursosMD>  consultarRecursos(ConexionBD conexion,String nombre_recurso){
+    public  static List<RecursosMD>  consultarRecursos(ConexionBD conexion){
         List<RecursosMD> recursos=new ArrayList<>();
         
          try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' order by nombre_recursos ");
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\"");
 
             ResultSet rs = st.executeQuery();
 

@@ -45,6 +45,11 @@ public class RecursosPlanClasesMD {
     public void setId_recursos(RecursosMD id_recursos) {
         this.id_recursos = id_recursos;
     }
+
+    @Override
+    public String toString() {
+        return "RecursosPlanClasesMD{" + "id_recursos_plan_clases=" + id_recursos_plan_clases + ", id_plan_clases=" + id_plan_clases + ", id_recursos=" + id_recursos + '}';
+    }
     
     
     

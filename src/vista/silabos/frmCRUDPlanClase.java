@@ -5,6 +5,7 @@
  */
 package vista.silabos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,6 +24,8 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
      */
     public frmCRUDPlanClase() {
         initComponents();
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnEditarPLC() {
@@ -43,6 +46,14 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
     public JButton getBtnNuevoPLC() {
         return btnNuevoPLC;
+    }
+
+    public JComboBox<String> getCmb_periodos() {
+        return Cmb_periodos;
+    }
+
+    public void setCmb_periodos(JComboBox<String> Cmb_periodos) {
+        this.Cmb_periodos = Cmb_periodos;
     }
 
     public void setBtnNuevoPLC(JButton btnNuevoPLC) {
@@ -113,6 +124,8 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tlbTablaPLC = new javax.swing.JTable();
+        Cmb_periodos = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,11 +148,11 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Docente", "Materia", "Plan de Clase N°", "Unidad"
+                "Docente", "Materia", "Curso", "Plan de Clase N°", "Unidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -147,6 +160,8 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tlbTablaPLC);
+
+        jLabel3.setText("Periodo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,6 +175,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbBuscarPLC)
                             .addComponent(Carreras)
+                            .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +189,9 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                                 .addComponent(btnEditarPLC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminarPLC))
-                            .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(CmbJornadas, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE)
+                                .addComponent(Cmb_periodos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -194,11 +212,17 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                     .addComponent(Carreras))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Cmb_periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -243,10 +267,12 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Carreras;
     private javax.swing.JComboBox<String> CmbJornadas;
     private javax.swing.JComboBox<String> Cmb_Carreras;
+    private javax.swing.JComboBox<String> Cmb_periodos;
     private javax.swing.JButton btnEditarPLC;
     private javax.swing.JButton btnEliminarPLC;
     private javax.swing.JButton btnNuevoPLC;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbBuscarPLC;
     private javax.swing.JTable tlbTablaPLC;

@@ -2,7 +2,10 @@
 package modelo.PlanClases;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
@@ -19,6 +22,12 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         super(id_plan_clases, id_recursos);
         this.conexion = conexion;
     }
+
+    public RecursosPlanClasesBD(ConexionBD conexion, RecursosMD id_recursos) {
+        super(id_recursos);
+        this.conexion = conexion;
+    }
+    
     public boolean insertarRecursosPlanClases(RecursosPlanClasesMD rP){
         
         try {
@@ -32,6 +41,30 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
             Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return  true;
+    }
+    
+       public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion,String nombre_recurso){
+        List<RecursosPlanClasesMD> recursos=new ArrayList<>();
+        
+         try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' order by nombre_recursos ");
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                RecursosPlanClasesMD re=new RecursosPlanClasesMD();
+                re.getId_recursos().setId_recurso(rs.getInt(1));
+                re.getId_recursos().setNombre_recursos(rs.getString(2));
+                re.getId_recursos().setTipo_recurso(rs.getString(3));
+                
+                recursos.add(re);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return recursos;
     }
     
 }

@@ -51,13 +51,13 @@ public class Controlador_plan_clases {
     private RecursosPlanClasesMD recursos_planMD;
     private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas;
     private List<RecursosPlanClasesMD> lista_recursoMD;
+    private List<RecursosPlanClasesMD> lista_recursoMD1;
     private UnidadSilaboMD unidadsilabo;
     private List<CursoMDS> lista_curso;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
     private DefaultListModel modelo;
-    private List<RecursosMD> lista_recursos; 
     
     //JLIST 
     ArrayList array=new ArrayList();
@@ -91,12 +91,11 @@ public class Controlador_plan_clases {
             
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);
-           lista_recursoMD=new ArrayList();
           fPlanClase.getTxt_buscarPCL().addKeyListener(new KeyAdapter(){
               @Override
             public void keyReleased(KeyEvent ke) {
-           lista_recursos=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
-           CargarRecursos(lista_recursos);
+           lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+           CargarRecursos(lista_recursoMD);
 
             }
           });
@@ -111,12 +110,12 @@ public class Controlador_plan_clases {
         fPlanClase.getJlisRecursos().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event ){
-                
+                lista_recursoMD1=new ArrayList();
                 int index=fPlanClase.getJlisRecursos().locationToIndex(event.getPoint());
                 CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
                         item.setSelected(!item.isSelected());
                         fPlanClase.getJlisRecursos().repaint(fPlanClase.getJlisRecursos().getCellBounds(index, index));
-                        lista_recursos=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+                        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
                     
                     
                  
@@ -124,14 +123,12 @@ public class Controlador_plan_clases {
                     CheckListItem item2=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(i);
                     if(item2.isSelected()){
                         String recurso= fPlanClase.getJlisRecursos().getModel().getElementAt(i).toString();
-                        Optional<RecursosMD> recursoSeleccionado=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText()).stream().
+                        Optional<RecursosMD> recursoSeleccionado=RecursosBD.consultarRecursos(conexion).stream().
                                 filter(r -> r.getNombre_recursos().equals(recurso)).findFirst();
-                        recursos_planMD=new RecursosPlanClasesMD();
-                        recursos_planMD.getId_recursos().setId_recurso(recursoSeleccionado.get().getId_recurso());
                         
-                        lista_recursoMD.add(new RecursosPlanClasesMD(recursoSeleccionado.get()));
-                        System.out.println(lista_recursoMD.size()+"------------------>>>>>>>>>>>>>><TAMAÑ0");
-//                        lista_recursoMD.add(recursos_planMD);
+                        lista_recursoMD1.add(new RecursosPlanClasesMD(recursoSeleccionado.get()));
+                        System.out.println(recursoSeleccionado.get().getId_recurso()+"------------------------>>>>><< ID RECURSO");
+                        System.out.println(lista_recursoMD1.size()+"------------------>>>>>>>>>>>>>><TAMAÑ0 ARRAYLIST<>()");
                         System.out.println(recursoSeleccionado.get().getNombre_recursos()+"-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     }
                 }
@@ -168,15 +165,12 @@ public class Controlador_plan_clases {
      lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEstrategiasUnidad(lista_estrategiasSilabo);
         
-        for (EstrategiasUnidadMD estU : lista_estrategiasSilabo) {
-            System.out.println(estU.getIdEstrategia().getIdEstrategia()+" iddddddddddddddd _____________ estrategia");
-        }
         
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
         
-      lista_recursos=RecursosBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
-      CargarRecursos(lista_recursos);
+      lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+      CargarRecursos(lista_recursoMD);
        
       
     }
@@ -241,13 +235,14 @@ public class Controlador_plan_clases {
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
     }
  
-   private void CargarRecursos(List<RecursosMD> lista_recursos){    
+   
+   private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
      DefaultListModel modeloRecursos = new DefaultListModel();
      fPlanClase.getJlisRecursos().setCellRenderer(new CheckListRenderer());
      fPlanClase.getJlisRecursos().setModel(modeloRecursos);
-       for (RecursosMD lista_recurso : lista_recursos) {
-           modeloRecursos.addElement(new CheckListItem(lista_recurso.getNombre_recursos()));
+       for (RecursosPlanClasesMD lista_recurso_md : lista_recursoMD) {
+           modeloRecursos.addElement(new CheckListItem(lista_recurso_md.getId_recursos().getNombre_recursos()));
        }
        fPlanClase.getJlisRecursos().setModel(modeloRecursos);
        
@@ -374,7 +369,14 @@ public class Controlador_plan_clases {
         return true;
     }
     private void insertarRecursosPlanClases(){
-     new RecursosPlanClasesBD(conexion).insertarRecursosPlanClases(recursos_planMD);
+       
+        for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
+            
+            RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
+            rcp.insertarRecursosPlanClases(recursoPlam);
+            
+        }
+        
     }
     
     private void insertarEstrategiasMetodologicas(){
@@ -416,6 +418,6 @@ public class Controlador_plan_clases {
         modelo1=new DefaultListModel();
         fPlanClase.getListAnticipacionPC().setModel(modelo1);
     }
-    
 }
+
 
