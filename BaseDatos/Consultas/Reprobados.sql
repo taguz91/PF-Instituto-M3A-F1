@@ -5,8 +5,9 @@ SELECT
 	persona_primer_apellido || '  ' || persona_segundo_apellido AS "APELLIDOS",
 	persona_correo AS "Correo", 
 	persona_telefono AS "Telefono",
+	persona_celular AS "Celular",
 	materia_nombre AS "MATERIA",
-	lc.lugar_nombre AS "Ciudad"
+	lc.lugar_nombre AS "Ciudad",
 	malla_almn_num_matricula AS "NUMERO DE MATRICULA",
 	curso_nombre AS "CURSO",
 	almn_curso_nota_final AS "NOTA FINAL" 
@@ -32,6 +33,7 @@ WHERE
 	AND P.id_persona = A.id_persona
 	AND P.id_lugar_residencia = l.id_lugar
 	AND lc.id_lugar = l.id_lugar_referencia 
+	AND ac.almn_curso_estado NOT ILIKE '%RETIRADO%'
 ORDER BY P.persona_identificacion
 
 
