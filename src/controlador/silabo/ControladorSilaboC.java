@@ -1021,6 +1021,23 @@ public class ControladorSilaboC {
             }
 
         });
+        
+        gestion.getBtnGuardar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+                if (silaboNuevo.getIdSilabo()==null){
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());                   
+                }else{
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+                
+                
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+            }
+        });
 
         cargarEstrategias(unidadesSilabo.get(0));
         gestion.getCmbUnidad().setSelectedIndex(0);
@@ -1092,7 +1109,14 @@ public class ControladorSilaboC {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                guardarSilabo();
+                if (silaboNuevo.getIdSilabo()==null){
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());                   
+                }else{
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+                
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
                 configuracion.dispose();
                 gestion.dispose();
@@ -1624,7 +1648,7 @@ public class ControladorSilaboC {
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
-        ReferenciasBD r2 = new ReferenciasBD(conexion);;
+        ReferenciasBD r2 = new ReferenciasBD(conexion);
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
@@ -1635,6 +1659,7 @@ public class ControladorSilaboC {
 
     public void guardarSilabo() {
 
+        
         silaboNuevo.insertar();
         insertarUnidades();
         insertarReferencias();

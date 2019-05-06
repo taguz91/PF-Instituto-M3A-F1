@@ -802,6 +802,15 @@ public class ControladorSilaboU {
             }
 
         });
+        
+        gestion.getBtnGuardar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               new SilaboBD(conexion).eliminar(silabo);
+                guardarSilabo();
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+            }
+        });
 
         mostrarUnidad();
     }
