@@ -35,26 +35,16 @@ public class Effects {
     }
 
     public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    centerFrame(component, desktop);
-                    desktop.add(component);
-                    component.setSelected(true);
-                    component.setVisible(true);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                eliminarThread(this);
-            }
 
-            @Override
-            protected void finalize() throws Throwable {
-                System.out.println("HILO ELIMINADO");
-            }
-        };
-        thread.start();
+        try {
+            centerFrame(component, desktop);
+            desktop.add(component);
+            component.setSelected(true);
+            component.setVisible(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public static synchronized void eliminarThread(Thread thread) {
@@ -95,7 +85,5 @@ public class Effects {
     public static void setDefaultCursor(Container view) {
         view.setCursor(DEFAULT_CURSOR);
     }
-
-
 
 }
