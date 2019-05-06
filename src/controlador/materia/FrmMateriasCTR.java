@@ -601,7 +601,7 @@ public class FrmMateriasCTR {
         }
         System.out.println("nombre " + materiaBD.filtrarIdCarrera("", matEditar.getCarrera().getId()).getNombre());
         //
-        
+        System.out.println("eje " + matEditar.getEje().getId());
         if(matEditar.getEje().getId() > 40){
             frmMaterias.getCbEjeFormacion().setSelectedItem(materiaBD.filtrarIdEje("", matEditar.getEje().getId()).getNombre());
         } else{
