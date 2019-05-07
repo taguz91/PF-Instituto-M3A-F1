@@ -129,12 +129,20 @@ public abstract class AbstracForm {
         }
 
     }
+    
+    protected void validacion (){
+        String v1 = tabla.getValueAt(getRow(), getColum()).toString();
+        tabla.setValueAt(0, getRow(), 1);//Minimo
+        String v2 = tabla.getValueAt(getRow(), getColum()).toString();
+        tabla.setValueAt(0, getRow(), 2);//Maximo
+        
+
+    }
 
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
-        String v1 = tabla.getValueAt(getRow(), getColum()).toString();
-        tabla.setValueAt(0, getRow(), 1);
+        
 
     }
 
