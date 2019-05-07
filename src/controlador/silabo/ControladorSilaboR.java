@@ -90,13 +90,7 @@ public class ControladorSilaboR {
 
         });
  
-        crud.getBtnFirma().addActionListener(e -> {
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-            System.out.println("ya llegueeee");
-            abrirExe();
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        });
-
+        
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
 
         crud.getChbProgramaAnalitico().addActionListener(new ActionListener() {
@@ -176,17 +170,6 @@ public class ControladorSilaboR {
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(null, " error " + e);
-        }
-    }
-
-    public void abrirExe() {
-        System.out.println("Si esta funcionando prro");
-        Runtime objrun = Runtime.getRuntime();
-        try {
-            objrun.exec("/home/alumno/Escritorio/DirtBike2.exe");
-        } catch (IOException ex) {
-            Logger.getLogger(ControladorSilaboR.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
 
