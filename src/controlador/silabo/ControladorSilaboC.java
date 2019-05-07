@@ -1023,8 +1023,8 @@ public class ControladorSilaboC {
 
         });
 
-        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         
+        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         cargarEstrategias(unidadesSilabo.get(0));
         gestion.getCmbUnidad().setSelectedIndex(0);
     }
