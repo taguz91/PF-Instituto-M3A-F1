@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -19,6 +21,9 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.VtnAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -118,6 +123,8 @@ public class VtnAlumnoCursoCTR {
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         vtnPrin.setCursor(new Cursor(0));
         ctrPrin.estadoCargaVtnFin("Alumnos por curso");
+        //llamar al reporte
+        vtnAlmnCurso.getBtnRepAlum().addActionListener(e->validaComboReporte());
     }
 
     /**
@@ -241,8 +248,30 @@ public class VtnAlumnoCursoCTR {
             JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un alumno primero.");
         }
     }
-
+public void reporteAlumno() {
+        JasperReport jr;
+        String path = "/vista/reportes/repAlumTodoCurso.jasper";
+        try {
+            Map parametro = new HashMap();
+            parametro.put("periodo",vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
+            parametro.put("curso",vtnAlmnCurso.getCmbCursos().getSelectedItem());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+public void validaComboReporte(){
+    int pos1=vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
+    int pos2=vtnAlmnCurso.getCmbCursos().getSelectedIndex();
+    if(pos1<=0 || pos2<=0) {
+        JOptionPane.showMessageDialog(null, "Seleccione un periodo y curso");
+}else
+      reporteAlumno();
+}
     private void InitPermisos() {
+        
 
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 

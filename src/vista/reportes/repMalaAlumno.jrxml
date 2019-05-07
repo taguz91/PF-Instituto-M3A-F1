@@ -43,14 +43,14 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Instituto Superior Tecnologico del Azuay]]></text>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="99" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Mallas del Alumno:]]></text>
+				<text><![CDATA[Reporte de Malla Alumno:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="139" width="60" height="20"/>

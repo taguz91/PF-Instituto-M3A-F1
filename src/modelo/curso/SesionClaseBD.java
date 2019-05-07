@@ -33,10 +33,26 @@ public class SesionClaseBD extends SesionClaseMD {
         }
     }
 
+    public String obtenerInsert() {
+        nsql = "INSERT INTO public.\"SesionClase\"(\n"
+                + "	id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion)\n"
+                + "	VALUES (" + getCurso().getId() + ", " + getDia() + ", "
+                + "'" + getHoraIni() + "', '" + getHoraFin() + "');";
+        return nsql;
+    }
+
+    public void ingresarHorarios(String nsql) {
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar el horario correctamente.");
+        }
+    }
+
     public void editar(int idSesion) {
         nsql = "UPDATE public.\"SesionClase\"\n"
                 + "	SET  dia_sesion=" + getDia() + ", "
-                + " hora_inicio_sesion=" + getHoraIni() + ", hora_fin_sesion=" + getHoraFin() + "\n"
+                + " hora_inicio_sesion='" + getHoraIni() + "', hora_fin_sesion='" + getHoraFin() + "'\n"
                 + "	WHERE id_sesion=" + idSesion + ";";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el horario.");
@@ -116,11 +132,12 @@ public class SesionClaseBD extends SesionClaseMD {
             return null;
         }
     }
-    
+
     /**
      * Cargamos el horario de un curso.
+     *
      * @param curso
-     * @return 
+     * @return
      */
     public ArrayList<SesionClaseMD> cargarHorarioCurso(CursoMD curso) {
         sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
