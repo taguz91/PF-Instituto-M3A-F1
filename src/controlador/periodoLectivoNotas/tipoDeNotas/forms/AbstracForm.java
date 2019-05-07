@@ -189,15 +189,18 @@ public abstract class AbstracForm {
 
                     double valor1 = Middlewares.conversor(v1);
                     double valor2 = Middlewares.conversor(v2);
-                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 >= 0) {
+                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 <0) {
                         JOptionPane.showMessageDialog(vista,
                                 "EL VALOR MINIMO NO PUEDE SER MENOR AL MAXIMO\n"
                                 + "EL VALOR MAXIMO NO PUEDE SER 0\n"
                                 + "EL VALOR MINIMO Y MAXIMO NO PUEDEN SER IGUALES"
                         );
-                        cargarTabla();
+                    tabla.setValueAt(0, getRow(), 1);
+                    tabla.setValueAt(100, getRow(), 2);
                     }
 
+                }else{
+                    tabla.setValueAt(100, getRow(), 2);
                 }
             }
 
