@@ -526,12 +526,12 @@ public class FrmAlumnoCursoCTR {
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
         //Cargamos el horario del alumno  
-        if (cursosMatriculado != null) {
-            cursosMatriculado.forEach(ac -> {
-                horario = sesion.cargarHorarioCurso(ac.getCurso());
-                llenarHorarioAlmn(horario);
-            });
-        }
+//        if (cursosMatriculado != null) {
+//            cursosMatriculado.forEach(ac -> {
+//                horario = sesion.cargarHorarioCurso(ac.getCurso());
+//                llenarHorarioAlmn(horario);
+//            });
+//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
