@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConexionBD;
@@ -17,8 +18,17 @@ import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.carrera.CarreraMD;
+import modelo.curso.CursoMD;
 import modelo.jornada.JornadaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.CarrerasBDS;
+import modelo.silabo.CursoMDS;
+import modelo.silabo.CursosBDS;
+import modelo.silabo.PeriodoLectivoBDS;
+import modelo.silabo.SilaboBD;
+import modelo.silabo.SilaboMD;
+import modelo.unidadSilabo.UnidadSilaboBD;
+import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDPlanClase;
@@ -34,9 +44,15 @@ public class ControladorCRUDPlanClase {
   private ConexionBD conexion;
   private final VtnPrincipal principal;
   private frmCRUDPlanClase fCrud_plan_Clases;
+  private List<SilaboMD> silabosDocente;
   private List<CarreraMD> carreras_docente;
   private List<JornadaMD> lista_jornadas;
   private List<PlandeClasesMD> lista_plan_clases;
+   private List<PeriodoLectivoMD> periodosCarrera;
+    private List<UnidadSilaboMD> unidadesSilabo;
+   private List<CursoMD> lista_curso;
+   private int id_periodo_lectivo=-1;
+   
     public ControladorCRUDPlanClase(UsuarioBD usuario, ConexionBD conexion, VtnPrincipal principal) {
         this.usuario = usuario;
         this.conexion = conexion;
@@ -48,7 +64,7 @@ public class ControladorCRUDPlanClase {
 
         fCrud_plan_Clases = new frmCRUDPlanClase();
         principal.getDpnlPrincipal().add(fCrud_plan_Clases);
-        fCrud_plan_Clases.setTitle("Configuración Plan de Clases");
+        fCrud_plan_Clases.setTitle("PLANES DE CLASE");
         fCrud_plan_Clases.show();
 
         fCrud_plan_Clases.setLocation((principal.getDpnlPrincipal().getSize().width - fCrud_plan_Clases.getSize().width) / 2,
@@ -60,7 +76,9 @@ public class ControladorCRUDPlanClase {
         cp.iniciarControlaador();
         });
         fCrud_plan_Clases.getCmb_Carreras().addActionListener(a-> cargarPlanesDeClaseProfesor());
+        fCrud_plan_Clases.getCmb_Carreras().addActionListener(a-> CARGAR_COMBO_PERIODOS_CARRERA());
         fCrud_plan_Clases.getCmbJornadas().addActionListener(a-> cargarPlanesDeClaseProfesor());
+        fCrud_plan_Clases.getCmb_periodos().addActionListener(a-> cargarPlanesDeClaseProfesor());
         fCrud_plan_Clases.getTxtBuscarPLC().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
@@ -78,16 +96,27 @@ public class ControladorCRUDPlanClase {
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
+        fCrud_plan_Clases.getBtnEditarPLC().addActionListener((ActionEvent ae) -> {
+            int row=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+            if(row!=-1){
+                ControladorEditarPlanClases ce=new ControladorEditarPlanClases(plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
+                ce.iniciaControlador();
+            }else{
+                JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         CARGAR_COMBO_CARRERAS();
         CARGAR_JORNADAS();
         cargarPlanesDeClaseProfesor();
+        CARGAR_COMBO_PERIODOS_CARRERA();
   } 
   
   private void cargarPlanesDeClaseProfesor(){
       try {
           DefaultTableModel modelotabla;
           modelotabla=(DefaultTableModel)fCrud_plan_Clases.getTlbTablaPLC().getModel();
-          String [] parametros={fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(),fCrud_plan_Clases.getCmbJornadas().getSelectedItem().toString(),fCrud_plan_Clases.getTxtBuscarPLC().getText(),String.valueOf(usuario.getPersona().getIdPersona())};
+          String [] parametros={fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(),fCrud_plan_Clases.getCmbJornadas().getSelectedItem().toString(),fCrud_plan_Clases.getTxtBuscarPLC().getText(),String.valueOf(usuario.getPersona().getIdPersona()),
+          String.valueOf(getid_periodo())};
           lista_plan_clases=PlandeClasesBD.consultarPlanClase(conexion, parametros);
           for (int j =  fCrud_plan_Clases.getTlbTablaPLC().getModel().getRowCount()-1; j>=0;j--) {
                modelotabla.removeRow(j);
@@ -95,7 +124,7 @@ public class ControladorCRUDPlanClase {
           
           for (PlandeClasesMD plc : lista_plan_clases) {
               modelotabla.addRow(new Object[]{
-                  plc.getId_persona().getPrimerApellido()+" "+plc.getId_persona().getPrimerNombre(),plc.getId_materia().getNombre(),plc.getId_plan_clases(),plc.getId_unidad().getIdUnidad()
+                  plc.getId_persona().getPrimerApellido()+" "+plc.getId_persona().getPrimerNombre(),plc.getId_materia().getNombre(),plc.getId_curso().getNombre(),plc.getId_plan_clases(),plc.getId_unidad().getIdUnidad()
               });
           }
           
@@ -104,6 +133,20 @@ public class ControladorCRUDPlanClase {
       }
       
   }
+      
+        private void CARGAR_COMBO_PERIODOS_CARRERA(){
+        fCrud_plan_Clases.getCmb_periodos().removeAllItems();
+        List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion,fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString()); 
+        if (periodos==null){
+            JOptionPane.showMessageDialog(null, "No existen Periodos");
+        }else{
+            
+        periodos.forEach((prd) -> {
+            fCrud_plan_Clases.getCmb_periodos().addItem(prd.getNombre_PerLectivo());
+             });
+        }
+        
+    }
   
    private void CARGAR_COMBO_CARRERAS(){
         fCrud_plan_Clases.getCmb_Carreras().removeAllItems();
@@ -116,6 +159,7 @@ public class ControladorCRUDPlanClase {
             fCrud_plan_Clases.getCmb_Carreras().addItem(cmd.getNombre());
         });
         }
+        fCrud_plan_Clases.getCmb_Carreras().setSelectedIndex(0);
     }
    
    private void CARGAR_JORNADAS(){
@@ -129,16 +173,67 @@ public class ControladorCRUDPlanClase {
    private PlandeClasesMD plan_clas_selecc(){
        int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
        Optional<PlandeClasesMD> plan_clase_selec=lista_plan_clases.stream().
-               filter(pl -> pl.getId_plan_clases()==Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString())).findFirst();
+               filter(pl -> pl.getId_plan_clases()==Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
        
        return plan_clase_selec.get();
    }
-   
+   private CursoMD curso_selecc(){
+       int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+       lista_curso=CursosBDS.Consultarcursos(conexion,  usuario.getPersona().getIdPersona(), getid_periodo(),fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,1).toString());
+       System.out.println(lista_curso.get(0).getNombre()+"---------------------------ooooooooooooooooooooooooo");
+       Optional<CursoMD> curso_selecccionado=lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,2).toString())).findFirst();
+       System.out.println(curso_selecccionado.get().getNombre()+"----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
+       return curso_selecccionado.get();
+   }
    private void eliminarPlanClase(){
-       int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
+       int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este plan de clase?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             new PlandeClasesBD(conexion).eliminarPlanClase(plan_clas_selecc());
-            JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
+            JOptionPane.showMessageDialog(null, "Plan de clase eliminado correctamente");
         }
    }
+   
+   private List<PeriodoLectivoMD> cargarPeriodos(){
+          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion,fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString()); 
+          return periodos;
+     }
+   private int getid_periodo(){
+     String nombre_periodo=fCrud_plan_Clases.getCmb_periodos().getSelectedItem().toString();
+     periodosCarrera=cargarPeriodos();
+     periodosCarrera
+                .stream()
+                .filter(item -> item.getNombre_PerLectivo().equals(nombre_periodo))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                     id_periodo_lectivo= obj.getId_PerioLectivo();
+                });
+     return id_periodo_lectivo;
+  }
+   
+   public List<SilaboMD> cargar_silabo(){
+         String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
+         List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
+         
+         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
+         return silabosdocente;
+         
+    }
+    private SilaboMD silabo_seleccionado(){
+        int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+        
+        
+        silabosDocente=cargar_silabo();
+        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().filter(s-> s.getIdMateria().getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 1).toString())).
+                findFirst();
+        return silaboSeleccionado.get();
+    }
+    
+    private UnidadSilaboMD unidad_seleccionada(){
+        int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+        unidadesSilabo=UnidadSilaboBD.consultar(conexion,silabo_seleccionado().getIdSilabo() );
+        Optional<UnidadSilaboMD> unidadSeleccionada= unidadesSilabo.stream().
+                filter(s -> s.getNumeroUnidad()==Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 4).toString())).
+                findFirst();
+        return unidadSeleccionada.get();
+    }
 }

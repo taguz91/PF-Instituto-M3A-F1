@@ -71,6 +71,8 @@ import vista.silabos.frmSilabos;
 import net.sf.jasperreports.engine.JasperExportManager;
 import java.util.HashMap;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -121,7 +123,6 @@ public class ControladorSilaboC {
     private List<ReferenciasMD> biblioteca;
 
     private List<ReferenciaSilaboMD> referenciasSilabo;
-    
 
     private DefaultListModel modeloBase;
 
@@ -1022,8 +1023,88 @@ public class ControladorSilaboC {
 
         });
 
+        
+        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         cargarEstrategias(unidadesSilabo.get(0));
         gestion.getCmbUnidad().setSelectedIndex(0);
+    }
+    private boolean accion = true;
+    private boolean accion2 = true;
+    private void ejecutar( ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+                gestion.getBtnGuardar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+
+                if (silaboNuevo.getIdSilabo() == null) {
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+                } else {
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+
+                
+                
+                accion = true;
+                
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                principal.getLblEstado().setText("");
+
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                
+                gestion.getBtnGuardar().setEnabled(true);
+
+            }).start();
+        }
+
+    }
+    
+    private void ejecutar2( ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion2 = false;
+                bibliografia.getBtnFinalizar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                if (silaboNuevo.getIdSilabo() == null) {
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+                } else {
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+
+                
+                
+                accion = true;
+                
+                
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                principal.getLblEstado().setText("");
+                bibliografia.getBtnFinalizar().setEnabled(true);
+                configuracion.dispose();
+                gestion.dispose();
+                bibliografia.dispose();
+
+                principal.getMnCtSilabos().doClick();
+
+            }).start();
+        }
+
     }
 
     public void citarReferencias(SilaboBD silabo, frmReferencias bibliografia) {
@@ -1088,20 +1169,8 @@ public class ControladorSilaboC {
 
         });
 
-        bibliografia.getBtnFinalizar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                guardarSilabo();
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-                configuracion.dispose();
-                gestion.dispose();
-                bibliografia.dispose();
-
-                principal.getMnCtSilabos().doClick();
-            }
-
-        });
+       bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
+        
 
         bibliografia.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
@@ -1529,6 +1598,9 @@ public class ControladorSilaboC {
 
     public void agregarBibliografiaNoBase() {
 
+        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
+        
+        
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
@@ -1624,23 +1696,20 @@ public class ControladorSilaboC {
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
-        ReferenciasBD r2 = new ReferenciasBD(conexion);;
+        ReferenciasBD r2 = new ReferenciasBD(conexion);
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
 
     }
 
-
-
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
         insertarUnidades();
         insertarReferencias();
-       // exportarPDF();
+        // exportarPDF();
 
-    
     }
 //    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
 //        String sql = "UPDATE \"Silabo\"VALUES (?)";
@@ -1653,7 +1722,7 @@ public class ControladorSilaboC {
 //        stmt.setBinaryStream(1, fis, (int) archivo.length());
 //        //Asignamos el Stream al Statement
 //        stmt.execute();
-    
+
 //    File file = new File("myimage.gif");
 //FileInputStream fis = new FileInputStream(file);
 //PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
@@ -1663,7 +1732,6 @@ public class ControladorSilaboC {
 //ps.close();
 //fis.close();
 //    }
-
     public boolean validarCampos() {
 
         boolean control = true;
@@ -1741,4 +1809,5 @@ public class ControladorSilaboC {
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
     }
+
 }

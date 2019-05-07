@@ -67,7 +67,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
        List<PlandeClasesMD> lista_plan=new ArrayList<>();
         
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre\n" +
+            PreparedStatement st=conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre\n" +
 "       FROM \"Silabo\" AS s\n" +
 "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n" +
 "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n" +
@@ -79,12 +79,13 @@ public class PlandeClasesBD extends PlandeClasesMD {
 "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n" +
 "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n" +
 "                    WHERE crr.carrera_nombre=?\n" +
-"                    AND p.id_persona=? AND jo.nombre_jornada=? AND  m.materia_nombre ILIKE '%"+parametros[2]+"%'");
+"                    AND p.id_persona=? AND jo.nombre_jornada=? AND cr.id_prd_lectivo=? AND m.materia_nombre ILIKE '%"+parametros[2]+"%'");
             st.setString(1, parametros[0]);
             st.setInt(2, Integer.parseInt(parametros[3]));
             st.setString(3, parametros[1]);
+            st.setInt(4, Integer.parseInt(parametros[4]));
             ResultSet rs=st.executeQuery();
-            
+            System.out.println(st+"---------------------------------------------------------------------------->>>>>>>>>>>>>><");
             while(rs.next()){
                 PlandeClasesMD pl=new PlandeClasesMD();
                 pl.setId_plan_clases(rs.getInt(1));
@@ -92,6 +93,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 pl.getId_persona().setPrimerApellido(rs.getString(3));
                 pl.getId_persona().setPrimerNombre(rs.getString(4));
                 pl.getId_materia().setNombre(rs.getString(5));
+                pl.getId_curso().setNombre(rs.getString(6));
                 lista_plan.add(pl);
             }
         } catch (SQLException ex) {
@@ -112,5 +114,22 @@ public class PlandeClasesBD extends PlandeClasesMD {
         }
        
    }
+   public static List<PlandeClasesMD> consultarPlanClaseObservacion(ConexionBD conexion,int plan_clase){
+         List<PlandeClasesMD> lista_plan=new ArrayList<>();
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("select observaciones from \"PlandeClases\" where id_plan_clases=?");
+            st.setInt(1, plan_clase);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                PlandeClasesMD pc=new PlandeClasesMD();
+                pc.setObservaciones(rs.getString(1));
+                lista_plan.add(pc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista_plan;
+   }
+   
    
 }

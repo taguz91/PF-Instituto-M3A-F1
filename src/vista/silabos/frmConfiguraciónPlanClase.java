@@ -1,5 +1,6 @@
 package vista.silabos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -21,6 +22,8 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
      */
     public frmConfiguraciónPlanClase() {
         initComponents();
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JComboBox<String> getCmb_Cursos() {

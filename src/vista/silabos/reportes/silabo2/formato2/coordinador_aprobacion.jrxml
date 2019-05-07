@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="ID_CARR" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select concat(p.persona_primer_apellido,' ',p.persona_primer_nombre) as docente_coordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
+		<![CDATA[select concat(a.docente_abreviatura,' ',p.persona_primer_apellido,' ',p.persona_primer_nombre) as docente_coordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
 	</queryString>
 	<field name="docente_coordinador" class="java.lang.String"/>
 	<background>
