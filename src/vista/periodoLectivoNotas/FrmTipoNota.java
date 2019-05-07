@@ -8,6 +8,8 @@ package vista.periodoLectivoNotas;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -22,6 +24,31 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
         this.setFrameIcon(icon);
     }
+
+    public JLabel getLblCarrera() {
+        return lblCarrera;
+    }
+
+    public void setLblCarrera(JLabel lblCarrera) {
+        this.lblCarrera = lblCarrera;
+    }
+
+    public JLabel getLblNombreCarrera() {
+        return lblNombreCarrera;
+    }
+
+    public void setLblNombreCarrera(JLabel lblNombreCarrera) {
+        this.lblNombreCarrera = lblNombreCarrera;
+    }
+
+    public JTable getTblTipoNota() {
+        return tblTipoNota;
+    }
+
+    public void setTblTipoNota(JTable tblTipoNota) {
+        this.tblTipoNota = tblTipoNota;
+    }
+    
 
     public JButton getBtnCancelar() {
         return btnCancelar;
