@@ -849,7 +849,7 @@ public class ControladorSilaboU {
         if (accion) {
             new Thread(() -> {
                 accion2 = false;
-                gestion.getBtnGuardar().setEnabled(false);
+                bibliografia.getBtnFinalizar().setEnabled(false);
 
                 principal.getLblEstado().setText("Guardando silabo... Espere por favor");
 
@@ -870,7 +870,7 @@ public class ControladorSilaboU {
 
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
                 principal.getLblEstado().setText("");
-                gestion.getBtnGuardar().setEnabled(true);
+                bibliografia.getBtnFinalizar().setEnabled(true);
                 gestion.dispose();
                 bibliografia.dispose();
                 principal.getMnCtSilabos().doClick();

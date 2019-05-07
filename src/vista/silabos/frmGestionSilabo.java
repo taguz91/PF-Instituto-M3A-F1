@@ -7,6 +7,7 @@ package vista.silabos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+
 
 
 /**
@@ -1603,3 +1605,4 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     }
 
 }
+
