@@ -1600,9 +1600,7 @@ public class ControladorSilaboC {
 
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
-        
-        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
-        
+
         referenciasSilabo.add(new ReferenciaSilaboMD(complementaria, silaboNuevo));
         referenciasSilabo.add(new ReferenciaSilaboMD(linkografia, silaboNuevo));
 

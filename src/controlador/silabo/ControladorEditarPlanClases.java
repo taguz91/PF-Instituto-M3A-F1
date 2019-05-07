@@ -1,17 +1,22 @@
 
 package controlador.silabo;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import modelo.ConexionBD;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasBD;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
+import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
+import modelo.PlanClases.TrabajoAutonomoBD;
+import modelo.PlanClases.TrabajoAutonomoMD;
 import modelo.curso.CursoMD;
+import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboBD;
@@ -22,7 +27,10 @@ import modelo.silabo.SilaboMD;
 import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import vista.principal.VtnPrincipal;
+import vista.silabos.frmPlanClase.CheckListItem;
+import vista.silabos.frmPlanClase.CheckListRenderer;
 import vista.silabos.frmPlanClase;
+
 
 
 
@@ -35,26 +43,20 @@ public class ControladorEditarPlanClases {
     private SilaboMD silabo;
     private UnidadSilaboMD unidadsilabo;
     private List<CursoMDS> lista_curso;
+    private List<PlandeClasesMD> lista_plan;
+    private List<TrabajoAutonomoMD> lista_tra_aut;
     private List<RecursosPlanClasesMD> lista_recursoMD;
+    private List<RecursosPlanClasesMD> lista_recursoBD;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
+    private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas;
     private DefaultListModel modelo;
     
-    public ControladorEditarPlanClases(PlandeClasesMD planClaseMD,CursoMD curso, VtnPrincipal principal, ConexionBD conexion) {
-        this.planClaseMD = planClaseMD;
-        this.principal = principal;
-        this.conexion = conexion;
-        this.curso=curso;
-    }
-    public ControladorEditarPlanClases(CursoMD curso, VtnPrincipal principal, ConexionBD conexion) {
-       
-        this.principal = principal;
-        this.conexion = conexion;
-        this.curso=curso;
-    }
+    
 
-    public ControladorEditarPlanClases(VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+    public ControladorEditarPlanClases(PlandeClasesMD planClaseMD, VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+        this.planClaseMD = planClaseMD;
         this.principal = principal;
         this.conexion = conexion;
         this.curso = curso;
@@ -74,14 +76,7 @@ public class ControladorEditarPlanClases {
         fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
             fPlanClase.dispose();
         });
-        fPlanClase.getTxt_buscarPCL().addKeyListener(new KeyAdapter(){
-              @Override
-            public void keyReleased(KeyEvent ke) {
-           lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
-           CargarRecursos(lista_recursoMD);
-
-            }
-          });
+        
         iniciaPlanClase(planClaseMD, curso, silabo, unidadsilabo);
     }
     
@@ -92,15 +87,29 @@ public class ControladorEditarPlanClases {
          lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEstrategiasUnidad(lista_estrategiasSilabo);
         
+        for(EstrategiasUnidadMD est:lista_estrategiasSilabo){
+            System.out.println(est.getIdEstrategiaUnidad()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<---------------------------");
+        }
+        
         lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
                 
-       lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
-       CargarRecursos(lista_recursoMD);
+       lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());
+        cargarCampoObservacion(lista_plan);
         
+        lista_tra_aut=TrabajoAutonomoBD.consultarTrabajoAutonomo(conexion, planclase.getId_plan_clases());
+        cargarCampoAutonomo(lista_tra_aut);
+        
+       lista_recursoBD=RecursosPlanClasesBD.consultarRecursosPlanClase(conexion, planclase.getId_plan_clases());
+        
+       lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
+       CargarRecursos(lista_recursoMD);
+       
+       lista_estrategias_metodologicas=EstrategiasMetodologicasBD.consultarEstrategiasMetologicas(conexion, planclase.getId_plan_clases());
+        cargarEstrategiaPlanClase(lista_estrategias_metodologicas);
     }
      public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
@@ -123,6 +132,7 @@ public class ControladorEditarPlanClases {
             modelo.addElement(evaluacionSilaboMD.getInstrumento());
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
+         fPlanClase.getJlistInstrumentoEvaluacion().setEnabled(false);
     }
        public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
         for (UnidadSilaboMD lista_unidad : lista_unidades) {
@@ -161,15 +171,55 @@ public class ControladorEditarPlanClases {
             fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
         }
     }
+      
      private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
      DefaultListModel modeloRecursos = new DefaultListModel();
      fPlanClase.getJlisRecursos().setCellRenderer(new frmPlanClase.CheckListRenderer());
      fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+     
        for (RecursosPlanClasesMD lista_recurso_md : lista_recursoMD) {
            modeloRecursos.addElement(new frmPlanClase.CheckListItem(lista_recurso_md.getId_recursos().getNombre_recursos()));
        }
-       fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+        for (int i = 0; i < fPlanClase.getJlisRecursos().getModel().getSize(); i++) {
+                    CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(i);
+                    for (RecursosPlanClasesMD recursosPlanClasesMD : lista_recursoBD) {
+                             if (modeloRecursos.get(i).toString().equals(recursosPlanClasesMD.getId_recursos().getNombre_recursos())) {
+                            item.setSelected(true);
+                        }
+                       }
+                   
+                }
        
    }
+     
+     private void cargarCampoAutonomo(List<TrabajoAutonomoMD> lista_tra_aut){
+         for (TrabajoAutonomoMD trabajoAutonomoMD : lista_tra_aut) {
+             fPlanClase.getTxrTrabajoAutonomo().setText(trabajoAutonomoMD.getAutonomo_plan_descripcion());
+         }
+     }
+     private void cargarCampoObservacion(List<PlandeClasesMD> lista_pla){
+         for (PlandeClasesMD plandeClasesMD : lista_pla) {
+             fPlanClase.getTxrObservacionesPc().setText(plandeClasesMD.getObservaciones());
+         }
+     }
+     
+     private void cargarEstrategiaPlanClase(List<EstrategiasMetodologicasMD> lista_estrategias_metodo){
+         DefaultListModel modelo_Anticipacion = new DefaultListModel();
+         DefaultListModel modelo_Construcciom = new DefaultListModel();
+         DefaultListModel modelo_Consolidacion = new DefaultListModel();
+         for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
+             if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
+                 modelo_Anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+             }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
+                 modelo_Construcciom.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+             }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){
+                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+             }
+             
+         }
+                 fPlanClase.getListAnticipacionPC().setModel(modelo_Anticipacion);
+                 fPlanClase.getListConstruccionPC().setModel(modelo_Construcciom);
+                 fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+     }
 }

@@ -114,5 +114,22 @@ public class PlandeClasesBD extends PlandeClasesMD {
         }
        
    }
+   public static List<PlandeClasesMD> consultarPlanClaseObservacion(ConexionBD conexion,int plan_clase){
+         List<PlandeClasesMD> lista_plan=new ArrayList<>();
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("select observaciones from \"PlandeClases\" where id_plan_clases=?");
+            st.setInt(1, plan_clase);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                PlandeClasesMD pc=new PlandeClasesMD();
+                pc.setObservaciones(rs.getString(1));
+                lista_plan.add(pc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista_plan;
+   }
+   
    
 }
