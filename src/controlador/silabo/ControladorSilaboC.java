@@ -275,7 +275,7 @@ public class ControladorSilaboC {
         });
 
         if (configuracion.getCmbAsignatura().getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Ya ha ingresado todos los silabos correspondientes para esta carrera en el período en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No tiene silabos pendientes para esta carrera dentro del periodo en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
             configuracion.getBtnSiguiente().setEnabled(false);
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
