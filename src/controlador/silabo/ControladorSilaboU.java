@@ -990,7 +990,7 @@ public class ControladorSilaboU {
                         && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
 
                     item.setSelected(true);
-
+                    System.out.println("-------------------------------paso_por aki_   __________________");
                 }
             }
         }
@@ -1288,7 +1288,9 @@ public class ControladorSilaboU {
         int i = 0;
 
         while (nuevo && i < referenciasSilabo.size()) {
-            if (referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
+            if (referenciasSilabo.
+                    get(i).getIdReferencia().
+                    getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
                 nuevo = false;
             }
             i++;
@@ -1306,7 +1308,6 @@ public class ControladorSilaboU {
             }
 
         });
-
         modeloBase = new DefaultListModel<>();
 
         b.forEach((s) -> {
