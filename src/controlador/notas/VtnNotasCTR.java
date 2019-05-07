@@ -342,9 +342,12 @@ public class VtnNotasCTR {
     // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES">    
     private void carlcularNotasTradicionales(TableModel datos) {
 
+        int fila = getSelectedRowTrad();
+        int colum = getSelectedColumTrad();
+
         try {
             String nombreNota = "";
-            switch (getSelectedColumTrad()) {
+            switch (colum) {
                 case 6:
                     nombreNota = "APORTE 1";
 
@@ -405,28 +408,7 @@ public class VtnNotasCTR {
                     refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
                     break;
                 case 16:
-                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRowTrad(), 16).toString().toLowerCase();
-
-                    List<String> palabrasValidas = new ArrayList();
-                    if (asistencia.isEmpty()) {
-                        asistencia = "";
-                    }
-                    palabrasValidas.add("RETIRADO");
-                    palabrasValidas.add("ASISTE");
-                    palabrasValidas.add("DESERTOR");
-                    palabrasValidas.add("NO ASISTE");
-
-                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
-                        if (asistencia.contains("retirado")) {
-                            vista.getTblNotas().setValueAt("RETIRADO", getSelectedRowTrad(), 13);
-                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
-                            vista.getTblNotas().setValueAt("REPROBADO", getSelectedRowTrad(), 13);
-                        }
-                        sumarColumnasTrad();
-                        editarTrad();
-                    }
-                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
-
+                    editarAsistencia(fila, colum, tablaNotasTrad, 12, agregarFilasTradicionales());
                     break;
                 default:
                     break;
@@ -899,9 +881,8 @@ public class VtnNotasCTR {
             row.add(8, obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor());
             row.add(9, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
             row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor());
-            row.add(11, obj.getNotaFinal());
 
-            System.out.println(obj.getNotas().stream().filter(buscar("NOTA FINAL CICLO")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotaFinal());
 
             row.add(12, obj.getEstado());
             row.add(13, obj.getNumFalta());
