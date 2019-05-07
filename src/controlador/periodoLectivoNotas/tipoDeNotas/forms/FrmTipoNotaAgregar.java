@@ -24,23 +24,11 @@ public class FrmTipoNotaAgregar extends AbstracForm {
 
         vista.setTitle("Agregar Nueva Nota");
 
-        activarFormulario(true);
-
     }
 
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        if (validarFormulario()) {
-            if (setObj().insertar()) {
-                String MENSAJE = "SE HA AGREGADO EL NUEVO TIPO DE NOTA";
-                JOptionPane.showMessageDialog(vista, MENSAJE);
-                vtnPadre.cargarTabla();
-                vista.dispose();
-            } else {
-                JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
-            }
-        }
 
     }
 

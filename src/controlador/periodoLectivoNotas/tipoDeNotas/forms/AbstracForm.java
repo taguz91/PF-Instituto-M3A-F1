@@ -1,15 +1,11 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyVetoException;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -50,6 +46,8 @@ public abstract class AbstracForm {
         "NOTA FINAL"
     };
 
+    //TABLAS
+    protected DefaultTableModel tabla;
 
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
@@ -60,46 +58,22 @@ public abstract class AbstracForm {
 
     //INITS
     public void Init() {
-        new Thread(() -> {
-            try {
-                Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-                desktop.getDpnlPrincipal().add(vista);
-                vista.setSelected(true);
-                vista.show();
-            } catch (PropertyVetoException e) {
-                System.out.println(e.getMessage());
-            }
-        }).start();
-        activarFormulario(false);
+
+        tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
+
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
 
         cargarComboCarreras();
-//        cargarCmbNombreNota(carrerasTradicionales);
+
+        cargarTabla();
+
         InitEventos();
     }
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
-
-        String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
-
-        Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
-
-        Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
-
-        vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                validarValorMenor(e);
-            }
-        });
-        vista.getTxtNotaMax().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                validarValorMenor(e);
-            }
-        });
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
@@ -107,20 +81,6 @@ public abstract class AbstracForm {
     }
 
     //METODOS DE APOYO
-    protected void cargarCmbNombreNota(String[] lista) {
-        vista.getCmbTipoDeNota().removeAllItems();
-        for (String obj : lista) {
-            vista.getCmbTipoDeNota().addItem(obj);
-        }
-    }
-
-    protected void activarFormulario(boolean estado) {
-        vista.getCmbTipoDeNota().setEnabled(estado);
-        vista.getTxtNotaMax().setEnabled(estado);
-        vista.getTxtNotaMin().setEnabled(estado);
-        vista.getCmbPeriodoLectivo().setEnabled(estado);
-    }
-
     protected void cargarComboCarreras() {
 
         listaPeriodos.entrySet().stream().forEach(entry -> {
@@ -128,58 +88,30 @@ public abstract class AbstracForm {
         });
     }
 
-    protected void validarValorMenor(FocusEvent e) {
-        if (!vista.getTxtNotaMax().getText().isEmpty() && !vista.getTxtNotaMin().getText().isEmpty()) {
-
-            double minimo = Double.valueOf(vista.getTxtNotaMin().getText());
-            double maximo = Double.valueOf(vista.getTxtNotaMax().getText());
-            if (minimo > maximo) {
-                JOptionPane.showMessageDialog(vista, "EL VALOR MINIMO NO PUEDE SER MAYOR AL VALOR MAXIMO!!");
-                vista.getTxtNotaMin().setText("");
-                vista.getTxtNotaMin().requestFocus();
-            } else if (minimo == maximo) {
-                JOptionPane.showMessageDialog(vista, "LOS VALORES NO PUEDEN SER IGUALES!!");
-                vista.getTxtNotaMin().setText("");
-                vista.getTxtNotaMin().requestFocus();
-            }
-
-        }
-    }
-
-    protected boolean validarFormulario() {
-        if (!vista.getTxtNotaMax().getText().isEmpty()) {
-            if (!vista.getTxtNotaMin().getText().isEmpty()) {
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
-        }
-
-        return false;
-    }
-
-    protected TipoDeNotaBD setObj() {
-        modelo = new TipoDeNotaBD();
-
-        modelo.setNombre(vista.getCmbTipoDeNota().getSelectedItem().toString());
-        modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
-        modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
-
-        String key = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-        Map<String, PeriodoLectivoMD> map = listaPeriodos
+    protected String getModalidad() {
+        return listaPeriodos
                 .entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().equals(key))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-        map.entrySet()
-                .stream()
-                .forEach(entry -> {
-                    modelo.setPeriodoLectivo(entry.getValue());
-                });
+                .filter(item -> item.getKey().equalsIgnoreCase(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getCarrera().getModalidad())
+                .findAny()
+                .orElse("");
+    }
 
-        return modelo;
+    protected void cargarTabla() {
+
+        if (getModalidad().contains("dual")) {
+
+            Arrays.asList(carrerasDuales)
+                    .stream()
+                    .forEach(obj -> {
+                        tabla.addRow(new Object[]{obj});
+                    });
+
+        } else {
+
+        }
+
     }
 
     //PROCESADORES DE EVENTOS
@@ -202,11 +134,6 @@ public abstract class AbstracForm {
 
         String modalidad = periodo.getCarrera().getModalidad();
 
-        if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
-            cargarCmbNombreNota(carrerasTradicionales);
-        } else {
-            cargarCmbNombreNota(carrerasDuales);
-        }
-
     }
+
 }

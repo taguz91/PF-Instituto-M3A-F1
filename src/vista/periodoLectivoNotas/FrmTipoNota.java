@@ -8,7 +8,7 @@ package vista.periodoLectivoNotas;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.JTable;
 
 /**
  *
@@ -39,8 +39,6 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         this.btnGuardar = btnGuardar;
     }
 
- 
-
     public JComboBox<String> getCmbPeriodoLectivo() {
         return cmdPeriodoLectivo;
     }
@@ -49,7 +47,9 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         this.cmdPeriodoLectivo = cmdPeriodoLectivo;
     }
 
-   
+    public JTable getTblTipoNota() {
+        return tblTipoNota;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
