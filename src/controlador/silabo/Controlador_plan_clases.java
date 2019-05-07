@@ -95,14 +95,7 @@ public class Controlador_plan_clases {
             
          });
            IniciaPlanClase(silabo, curso, unidadsilabo);
-          fPlanClase.getTxt_buscarPCL().addKeyListener(new KeyAdapter(){
-              @Override
-            public void keyReleased(KeyEvent ke) {
-           lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
-           CargarRecursos(lista_recursoMD);
-
-            }
-          });
+          
       
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{
 //            pasarElementospanel();
@@ -119,7 +112,7 @@ public class Controlador_plan_clases {
                 CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
                         item.setSelected(!item.isSelected());
                         fPlanClase.getJlisRecursos().repaint(fPlanClase.getJlisRecursos().getCellBounds(index, index));
-                        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+                        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
                     
                     
                  
@@ -146,9 +139,6 @@ public class Controlador_plan_clases {
                       JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
                       fPlanClase.dispose();
                       
-                  }else{
-                       JOptionPane.showMessageDialog(fPlanClase, "Error al guardar", "Aviso", JOptionPane.ERROR_MESSAGE);
-                       
                   }
 
             }
@@ -172,7 +162,7 @@ public class Controlador_plan_clases {
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
         
-      lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
+      lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
       CargarRecursos(lista_recursoMD);
        
       
@@ -394,36 +384,29 @@ public class Controlador_plan_clases {
         String item=fPlanClase.getCmbxEstrategiasPC().getSelectedItem().toString();
         Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
                 filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(item)).findFirst();
+        System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"EstrategiaSeleccionada-------------------------------------------");
         return estrate_selecc.get();
-        
     }
     
     private void agregarEstrategiasMetologicas(){
+        DefaultListModel modelo_Anticipacion = new DefaultListModel();
+         DefaultListModel modelo_Construcciom = new DefaultListModel();
+         DefaultListModel modelo_Consolidacion = new DefaultListModel();
+         
         EstrategiasUnidadMD estrategia_selecc=estrategiaSeleccionado();
         
-        boolean nuevo=true;
-        int i=0;
-        
-        while (nuevo && i<lista_estrategiasSilabo.size()) {            
-            if(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia().equals(
-                    estrategia_selecc.getIdEstrategia().getDescripcionEstrategia())){
-                nuevo=false;
+        if (fPlanClase.getjScrollPane10().isShowing()) {
+            
+            for (int i = 0; i < lista_estrategiasSilabo.size(); i++) {
+                if(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia().equals(estrategiaSeleccionado().getIdEstrategia().getDescripcionEstrategia())){
+                    modelo_Anticipacion.addElement(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia());
+                }
             }
-            i++;
+           
+            fPlanClase.getListAnticipacionPC().setModel(modelo_Anticipacion);
         }
-        if(nuevo){
-            EstrategiasMetodologicasMD em=new EstrategiasMetodologicasMD();
-                    em.getId_estrategias_unidad().setIdEstrategiaUnidad(estrategia_selecc.getIdEstrategia().getIdEstrategia());
-                    em.setTipo_estrategias_metodologicas("Anticipacion");
-                 lista_estrategias_metodologicas.add(em);
-        }
-////        lista_estrategias_metodologicas.forEach((es) -> {
-////            if(es.getTipo_estrategias_metodologicas().equals("Anticipacion")){
-////                
-////            }
-//        });
-        modelo1=new DefaultListModel();
-        fPlanClase.getListAnticipacionPC().setModel(modelo1);
+        
+        
     }
 }
 
