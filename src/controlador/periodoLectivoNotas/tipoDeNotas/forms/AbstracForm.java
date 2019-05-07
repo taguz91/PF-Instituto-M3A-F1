@@ -137,7 +137,7 @@ public abstract class AbstracForm {
             Arrays.asList(carrerasDuales)
                     .stream()
                     .forEach(obj -> {
-                        tabla.addRow(new Object[]{obj});
+                        tabla.addRow(new Object[]{obj, 0, 100});
                     });
 
         } else {
@@ -145,7 +145,7 @@ public abstract class AbstracForm {
                 Arrays.asList(carrerasTradicionales)
                         .stream()
                         .forEach(obj -> {
-                            tabla.addRow(new Object[]{obj});
+                            tabla.addRow(new Object[]{obj,0,100});
 
                         });
 
@@ -156,8 +156,15 @@ public abstract class AbstracForm {
     }
 
     protected void validacion() {
-        String v1 = tabla.getValueAt(getRow(), 1).toString();
-        String v2 = tabla.getValueAt(getRow(), 2).toString();
+        String v1="0";
+        String v2 = "0";
+        try {
+            v1 = tabla.getValueAt(getRow(), 1).toString();
+            v2 = tabla.getValueAt(getRow(), 2).toString();
+        } catch (NullPointerException e) {
+        }
+
+        
         if (Validaciones.isDecimal(v1)) {
             if (!v2.isEmpty()) {
                 if (Validaciones.isDecimal(v2)) {
