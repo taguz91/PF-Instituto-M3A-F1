@@ -80,8 +80,8 @@ public class VtnMateriaCTR {
      */
     public void iniciar() {
         vtnMateria.getBtnRequisitos().addActionListener(e -> abrirFrmRequisito());
-       // vtnMateria.getBtnReporteMaterias().setEnabled(false);
-        String titulo[] = {"id", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
+        // vtnMateria.getBtnReporteMaterias().setEnabled(false);
+        String titulo[] = {"id", "Carrera", "Código", "Nombre", "Ciclo", "Docencia", "Prácticas", "Autónomas", "Presencial", "Total"};
         String datos[][] = {};
         //Usamos el modelo que no nos deja editar los campos
         mdTblMat = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -93,20 +93,21 @@ public class VtnMateriaCTR {
         TblEstilo.formatoTbl(vtnMateria.getTblMateria());
         //Pasamos la columna de codigo para que sea de 20
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 1, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 3, 40);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 2, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 40);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 5, 70);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 70);
         TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 40);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 70);
+        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 9, 40);
         //Iniciamos el combo de ciclos
         vtnMateria.getCmbCiclo().removeAllItems();
         vtnMateria.getCmbCiclo().addItem("Todos");
         vtnMateria.getLblError().setVisible(false);
 
+        cargarCmbCarreras();
         materias = materia.cargarMaterias();
         cargarTblMaterias();
-        cargarCmbCarreras();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
         vtnMateria.getBtnIngresarMateria().addActionListener(e -> ingresarMaterias());
@@ -202,6 +203,7 @@ public class VtnMateriaCTR {
         if (!materias.isEmpty()) {
             materias.forEach((mt) -> {
                 Object valores[] = {mt.getId(),
+                    obtenerCodigoCarrera(mt.getCarrera().getId()),
                     mt.getCodigo(), mt.getNombre(),
                     mt.getCiclo(), mt.getHorasDocencia(),
                     mt.getHorasPracticas(), mt.getHorasAutoEstudio(),
@@ -316,6 +318,17 @@ public class VtnMateriaCTR {
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA ELIMINAR A LA MATERIA");
         }
+    }
+
+    private String obtenerCodigoCarrera(int idCarrera) {
+        String cod = "";
+        for (int i = 0; i < carreras.size(); i++) {
+            if (carreras.get(i).getId() == idCarrera) {
+                cod = carreras.get(i).getCodigo();
+                break;
+            }
+        }
+        return cod;
     }
 
 }
