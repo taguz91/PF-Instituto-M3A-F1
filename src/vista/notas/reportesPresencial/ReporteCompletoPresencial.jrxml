@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.0000000000000084"/>
-	<property name="ireport.x" value="324"/>
-	<property name="ireport.y" value="116"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="550"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -46,7 +46,7 @@
 	 "Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre 
 	 AS "PROFESOR",
 	"AlumnoCurso".almn_curso_num_faltas AS "N° Faltas",
-	("AlumnoCurso".almn_curso_num_faltas * 100)/"Materias".materia_total_horas|| '%'  as "% Faltas",
+	ROUND(("AlumnoCurso".almn_curso_num_faltas * 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%'  as "% Faltas",
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula",
@@ -71,7 +71,7 @@ FROM
 	
 WHERE
 	 "Cursos".id_docente = $P{id_docente}
-	AND "PeriodoLectivo".prd_lectivo_nombre =  $P{prd_lectivo_nombre}
+	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre})
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	AND "MallaAlumno".id_materia = "Materias".id_materia
@@ -87,7 +87,7 @@ WHERE
 	"PeriodoLectivo".prd_lectivo_nombre,
 	 "Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_num_faltas,
-	("AlumnoCurso".almn_curso_num_faltas * 100)/"Materias".materia_total_horas|| '%',
+	ROUND(("AlumnoCurso".almn_curso_num_faltas * 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%',
  doc_coor.docente_abreviatura||' '|| per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"upper"("AlumnoCurso".almn_curso_estado),
@@ -139,7 +139,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="29" y="58" width="147" height="124"/>
-				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="191" y="70" width="122" height="20"/>
@@ -175,27 +175,27 @@ WHERE
 			<textField>
 				<reportElement x="328" y="70" width="244" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="288" y="102" width="398" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="265" y="137" width="41" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1138" y="113" width="275" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1138" y="81" width="275" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -425,7 +425,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{apellidos_al}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellidos_al}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="57" y="0" width="100" height="20"/>
@@ -436,7 +436,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="313" y="0" width="137" height="20"/>
@@ -447,7 +447,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombres_al}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombres_al}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1175" y="0" width="67" height="20"/>
@@ -458,7 +458,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Aprobado" x="1242" y="0" width="79" height="20"/>
@@ -469,7 +469,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1321" y="0" width="54" height="20"/>
@@ -480,7 +480,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{N° Faltas}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{N° Faltas}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1375" y="0" width="54" height="20"/>
@@ -491,7 +491,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1429" y="0" width="76" height="20"/>
@@ -502,7 +502,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{N° Matricula}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{N° Matricula}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="13" y="0" width="44" height="20"/>
@@ -513,7 +513,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="550" y="0" width="110" height="20"/>
@@ -533,7 +533,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="660" y="0" width="108" height="20"/>
@@ -553,7 +553,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="768" y="0" width="100" height="20"/>
@@ -573,7 +573,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteAporte2.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteAporte2.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="868" y="0" width="100" height="20"/>
@@ -593,7 +593,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenFinal.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenFinal.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="968" y="0" width="125" height="20"/>
@@ -613,7 +613,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenSupletorio.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenSupletorio.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement mode="Opaque" x="1093" y="0" width="82" height="20" backcolor="#FFEB9B"/>
@@ -624,7 +624,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{NotaFinal}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NotaFinal}.toString()]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="450" y="0" width="100" height="20"/>
@@ -644,7 +644,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -678,7 +678,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="874" y="60" width="234" height="1"/>
@@ -686,12 +686,12 @@ WHERE
 			<textField>
 				<reportElement x="874" y="71" width="234" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="357" y="71" width="234" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

@@ -107,7 +107,7 @@ BEGIN
   INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
   SELECT new.id_almn_carrera, id_materia, materia_ciclo
   FROM public."Materias"
-  WHERE id_carrera = new.id_carrera;
+  WHERE id_carrera = new.id_carrera AND materia_activa = true;
   RETURN NEW;
 END;
 $iniciar_malla$ LANGUAGE plpgsql;
@@ -122,7 +122,7 @@ CREATE OR REPLACE FUNCTION retirar_almn_clase()
 RETURNS TRIGGER AS $retirar_almn_clase$
 BEGIN
   UPDATE public."AlumnoCurso"
-    SET almn_curso_estado = 'RETIRADO'
+    SET almn_curso_estado = 'RETIRADO', almn_curso_activo = false
     WHERE id_almn_curso = new.id_almn_curso;
 
   UPDATE public."MallaAlumno"

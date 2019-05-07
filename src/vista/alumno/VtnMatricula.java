@@ -60,6 +60,10 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return lblNumResultados;
     }
 
+    public JButton getBtnHistoria() {
+        return btnHistoria;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,6 +88,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         tblMatricula = new javax.swing.JTable();
         btnImprimirFicha = new javax.swing.JButton();
         lblNumResultados = new javax.swing.JLabel();
+        btnHistoria = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -181,6 +186,13 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
         lblNumResultados.setText("jLabel3");
 
+        btnHistoria.setText("Historial Matrícula");
+        btnHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -192,6 +204,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNumResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnImprimirFicha)))
                 .addContainerGap())
         );
@@ -202,7 +216,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimirFicha)
-                    .addComponent(lblNumResultados))
+                    .addComponent(lblNumResultados)
+                    .addComponent(btnHistoria))
                 .addGap(5, 5, 5))
         );
 
@@ -224,11 +239,16 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHistoriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnHistoria;
     private javax.swing.JButton btnImprimirFicha;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JCheckBox cbxEliminados;

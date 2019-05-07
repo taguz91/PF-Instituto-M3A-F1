@@ -89,6 +89,7 @@
                   <Image iconType="3" name="/vista/img/icons8_Delete_File_20px_1.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Matriculas Anuladas"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtListaAlumnos">

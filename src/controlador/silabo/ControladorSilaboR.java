@@ -33,6 +33,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
+import vista.silabos.frmCargando1;
 import vista.silabos.frmSilabos;
 
 /**
@@ -60,10 +61,13 @@ public class ControladorSilaboR {
     }
 
     public void iniciarControlador() {
+        
+        
+        
         System.out.println("894814841817414");
-           System.out.println("894814841817414");
-              System.out.println("894814841817414");
-              
+        System.out.println("894814841817414");
+        System.out.println("894814841817414");
+
         crud.getBtnGenerar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -85,23 +89,16 @@ public class ControladorSilaboR {
             }
 
         });
-        //jjjjjjjjj
-//        crud.getBtnFirma().addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("ya llegueeee");
-//                abrirExe();
-//            }
-//
-//        });
+ 
         crud.getBtnFirma().addActionListener(e -> {
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             System.out.println("ya llegueeee");
             abrirExe();
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         });
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
+
         crud.getChbProgramaAnalitico().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -118,8 +115,7 @@ public class ControladorSilaboR {
             }
 
         });
-        //jjjjjjjj
-        //  crud.getBtnFirma().addActionListener(l-> abrirExe());
+        
     }
 
     public void imprimirSilabo() {
@@ -148,7 +144,7 @@ public class ControladorSilaboR {
 
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(null, "error" + e);
+            JOptionPane.showMessageDialog(null, "error " + e);
         }
 
     }
@@ -179,7 +175,7 @@ public class ControladorSilaboR {
 
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(null, " error" + e);
+            JOptionPane.showMessageDialog(null, " error " + e);
         }
     }
 
@@ -190,6 +186,45 @@ public class ControladorSilaboR {
             objrun.exec("/home/alumno/Escritorio/DirtBike2.exe");
         } catch (IOException ex) {
             Logger.getLogger(ControladorSilaboR.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+    private boolean accion = true;
+
+    private void ejecutar(ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+
+                principal.setEnabled(false);
+
+                frmCargando1 frmCargando1 = new frmCargando1();
+
+                frmCargando1.setVisible(true);
+
+                if (crud.getChbSilabo().isSelected()) {
+                    imprimirSilabo();
+
+                } else if (crud.getChbProgramaAnalitico().isSelected()) {
+                    imprimirProgramaAnalitico();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar el documento antes de imprimir");
+                }
+
+                accion = true;
+
+                principal.setEnabled(true);
+
+                frmCargando1.dispose();
+
+                crud.dispose();
+
+                principal.getBtnConsultarSilabo().doClick();
+
+            }).start();
+
         }
 
     }
