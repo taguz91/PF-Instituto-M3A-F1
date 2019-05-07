@@ -81,6 +81,14 @@ public abstract class AbstracForm {
     }
 
     //METODOS DE APOYO
+    public int getRow() {
+        return vista.getTblTipoNota().getSelectedRow();
+    }
+
+    public int getColum() {
+        return vista.getTblTipoNota().getSelectedColumn();
+    }
+
     protected void cargarComboCarreras() {
 
         listaPeriodos.entrySet().stream().forEach(entry -> {
@@ -108,29 +116,29 @@ public abstract class AbstracForm {
                     });
 
         } else {
-            if(getModalidad().toLowerCase().contains("tradicional")){
+            if (getModalidad().toLowerCase().contains("tradicional")) {
                 Arrays.asList(carrerasTradicionales)
                         .stream()
                         .forEach(obj -> {
-                        tabla.addRow(new Object [] {obj});
-                
-                });
-                      
+                            tabla.addRow(new Object[]{obj});
+
+                        });
+
             }
 
         }
 
     }
-    
- 
 
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
+
+        String v1 = tabla.getValueAt(getRow(), getColum()).toString();
+        tabla.setValueAt(0, getRow(), 1);
+
     }
 
     protected abstract void btnGuardar(ActionEvent e);
-
-  
 
 }
