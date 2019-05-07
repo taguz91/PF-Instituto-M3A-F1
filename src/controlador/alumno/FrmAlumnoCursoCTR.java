@@ -773,7 +773,7 @@ public class FrmAlumnoCursoCTR {
         if (materias != null) {
             for (int i = 0; i < materias.size(); i++) {
                 //&& materias.get(i).isMateriaNucleo()
-                if (materias.get(i).getId() == idMateria) {
+                if (materias.get(i).getId() == idMateria && materias.get(i).isMateriaNucleo()) {
                     System.out.println("Encontramos un nucleo Estructurante ");
                     perdio = true;
                     break;
