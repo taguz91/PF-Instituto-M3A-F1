@@ -780,15 +780,44 @@ public class VtnNotasCTR {
                     guardarDBDuales(examenRecuperacion, nombreNota, columna);
 
                     break;
-                case 13:
+
+                case 12:
+                    editarEstado(fila, columna, tablaNotasDuales);
+                    break;
+
+                case 13://FALTAS
                     String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
                     if (Validaciones.isInt(faltas)) {
                         int faltasTabla = Integer.valueOf(faltas);
-                        editarFaltas(fila, columna, faltasTabla, tablaNotasTrad);
+                        editarFaltas(fila, columna, faltasTabla, tablaNotasDuales);
                     } else {
                         JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO ENTERO");
                     }
                     break;
+
+                case 15:
+                    String asistencia = tablaNotasDuales.getValueAt(fila, columna).toString().toLowerCase();
+
+                    List<String> palabrasValidas = new ArrayList();
+                    if (asistencia.isEmpty()) {
+                        asistencia = "";
+                    }
+                    palabrasValidas.add("RETIRADO");
+                    palabrasValidas.add("ASISTE");
+                    palabrasValidas.add("DESERTOR");
+                    palabrasValidas.add("NO ASISTE");
+
+                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+                        if (asistencia.contains("retirado")) {
+                            tablaNotasDuales.setValueAt("RETIRADO", fila, 13);
+                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
+                            tablaNotasDuales.setValueAt("REPROBADO", fila, 13);
+                        }
+                    }
+                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
+
+                    break;
+
                 default:
                     break;
             }
@@ -873,6 +902,13 @@ public class VtnNotasCTR {
 
             return null;
         };
+    }
+
+    private void editarEstado(int fila, int columna, TableModel tabla) {
+        String estado = tabla.getValueAt(fila, columna).toString();
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+        alumno.setEstado(estado);
+        alumno.editar();
     }
 
     // </editor-fold>  
