@@ -105,6 +105,8 @@ public class VtnMallaAlumnoCTR {
         //Inciiamos los combos en falso
         vtnMallaAlm.getCmbAlumnos().setEnabled(false);
         vtnMallaAlm.getCmbEstado().setEnabled(false);
+        //Ocultamos el boton de ingresar nota porque ya no se usa  
+        vtnMallaAlm.getBtnIngNota().setVisible(false);
 
 //        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
 //        vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());

@@ -411,9 +411,21 @@ public class FrmAlumnoCursoCTR {
                     matri.numMaticuladosClases(periodos.get(posPrd - 1).getId_PerioLectivo()) + "");
             //Cargamos informacion de la carrera que usaremos.
             carrera = car.buscarPorId(periodos.get(posPrd - 1).getCarrera().getId());
+            mostrarInfoCarrera(carrera);
             limpiarFrm();
         } else {
             buscadoresEstado(false);
+        }
+    }
+
+    /**
+     * Mostramos la informacion de la carrera en la que se realiza la matricula.
+     */
+    private void mostrarInfoCarrera(CarreraMD carrera) {
+        if (carrera != null) {
+            frmAlmCurso.setTitle("Matricula | " + carrera.getNombre() + " - " + carrera.getModalidad());
+        } else {
+            frmAlmCurso.setTitle("Matricula ");
         }
     }
 
@@ -549,7 +561,7 @@ public class FrmAlumnoCursoCTR {
         mallaPendientes = filtrarMalla(mallaCompleta, "P");
 
         //Cargamos las materias de esta carrera 
-        materias = mat.cargarMateriaPorCarrera(carrera.getId());
+        materias = mat.cargarMateriaPorCarreraFrm(carrera.getId());
 
         //Si no perdio ninguna se le suba al ciclo en que perdio uno
         if (cicloCursado == cicloReprobado) {
@@ -561,8 +573,11 @@ public class FrmAlumnoCursoCTR {
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
             mallaPerdidas.forEach(m -> {
                 if (carrera.getModalidad().equals("DUAL")) {
-                    System.out.println("Estamos en una carrera dual.");
-                    perdioNE = perdioNucleoEstruncturante(m.getId());
+                    System.out.println("Estamos en una carrera dual. " + m.getMateria().getNombre());
+                    boolean p = perdioNucleoEstruncturante(m.getMateria().getId());
+                    if (!perdioNE) {
+                        perdioNE = p;
+                    }
                 }
 
                 if (m.getMallaCiclo() < cicloReprobado) {
@@ -597,7 +612,9 @@ public class FrmAlumnoCursoCTR {
 
         //Hacemos que seleccione unicamente donde perdio la dual
         if (perdioNE) {
-            cicloCursado = cicloReprobado - 1;
+            System.out.println("Ciclo en el que curso antes: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
+            cicloCursado -= 1;
+            System.out.println("Ciclo en el que curso: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
         }
 
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
@@ -753,10 +770,14 @@ public class FrmAlumnoCursoCTR {
      */
     private boolean perdioNucleoEstruncturante(int idMateria) {
         boolean perdio = false;
-        for (int i = 0; i < materias.size(); i++) {
-            if (materias.get(i).getId() == idMateria) {
-                perdio = true;
-                break;
+        if (materias != null) {
+            for (int i = 0; i < materias.size(); i++) {
+                //&& materias.get(i).isMateriaNucleo()
+                if (materias.get(i).getId() == idMateria) {
+                    System.out.println("Encontramos un nucleo Estructurante ");
+                    perdio = true;
+                    break;
+                }
             }
         }
         return perdio;
