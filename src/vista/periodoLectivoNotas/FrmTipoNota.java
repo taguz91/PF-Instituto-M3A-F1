@@ -8,7 +8,10 @@ package vista.periodoLectivoNotas;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JTable;
 
+public class  FrmTipoNota extends JInternalFrame{
     public FrmTipoNota() {
         initComponents();
 
@@ -16,22 +19,9 @@ import javax.swing.JComboBox;
         this.setFrameIcon(icon);
     }
 
-    public JLabel getLblCarrera() {
-        return lblCarrera;
-    }
+  
 
-    public void setLblCarrera(JLabel lblCarrera) {
-        this.lblCarrera = lblCarrera;
-    }
-
-    public JLabel getLblNombreCarrera() {
-        return lblNombreCarrera;
-    }
-
-    public void setLblNombreCarrera(JLabel lblNombreCarrera) {
-        this.lblNombreCarrera = lblNombreCarrera;
-    }
-
+ 
     public JTable getTblTipoNota() {
         return tblTipoNota;
     }
@@ -65,9 +55,7 @@ import javax.swing.JComboBox;
         this.cmdPeriodoLectivo = cmdPeriodoLectivo;
     }
 
-    public JTable getTblTipoNota() {
-        return tblTipoNota;
-    }
+   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,7 +109,7 @@ import javax.swing.JComboBox;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(380, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
@@ -137,11 +125,8 @@ import javax.swing.JComboBox;
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblNombreCarrera)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
