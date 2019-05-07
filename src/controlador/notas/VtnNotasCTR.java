@@ -781,10 +781,6 @@ public class VtnNotasCTR {
 
                     break;
 
-                case 12:
-                    editarEstado(fila, columna, tablaNotasDuales);
-                    break;
-
                 case 13://FALTAS
                     String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
                     if (Validaciones.isInt(faltas)) {
@@ -796,26 +792,7 @@ public class VtnNotasCTR {
                     break;
 
                 case 15:
-                    String asistencia = tablaNotasDuales.getValueAt(fila, columna).toString().toLowerCase();
-
-                    List<String> palabrasValidas = new ArrayList();
-                    if (asistencia.isEmpty()) {
-                        asistencia = "";
-                    }
-                    palabrasValidas.add("RETIRADO");
-                    palabrasValidas.add("ASISTE");
-                    palabrasValidas.add("DESERTOR");
-                    palabrasValidas.add("NO ASISTE");
-
-                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
-                        if (asistencia.contains("retirado")) {
-                            tablaNotasDuales.setValueAt("RETIRADO", fila, 13);
-                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
-                            tablaNotasDuales.setValueAt("REPROBADO", fila, 13);
-                        }
-                    }
-                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
-
+                    editarAsistencia(fila, columna, tablaNotasDuales, 12, agregarFilasDuales());
                     break;
 
                 default:
@@ -838,7 +815,7 @@ public class VtnNotasCTR {
             }
 
             editarDuales(fila, columna, tipoNota);
-
+            refreshTabla(agregarFilasDuales(), tablaNotasDuales);
         } else {
             mensajeDeError();
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
@@ -873,6 +850,39 @@ public class VtnNotasCTR {
 
     }
 
+    private void editarAsistencia(int fila, int columna, DefaultTableModel tabla, int colRespuesta, Function<AlumnoCursoBD, Void> funcion) {
+        String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+
+        List<String> palabrasValidas = new ArrayList();
+        if (asistencia.isEmpty()) {
+            asistencia = "";
+        }
+        palabrasValidas.add("RETIRADO");
+        palabrasValidas.add("ASISTE");
+        palabrasValidas.add("DESERTOR");
+        palabrasValidas.add("NO ASISTE");
+        String estado = tabla.getValueAt(fila, colRespuesta).toString();
+
+        if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+            if (asistencia.contains("retirado")) {
+                tabla.setValueAt("RETIRADO", fila, colRespuesta);
+                estado = "RETIRADO";
+            } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
+                tabla.setValueAt("REPROBADO", fila, colRespuesta);
+                estado = "REPROBADO";
+            }
+
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+            alumno.setEstado(estado);
+            alumno.setAsistencia(asistencia.toUpperCase());
+            alumno.editar();
+        } else {
+
+            refreshTabla(funcion, tabla);
+
+        }
+    }
+
     private Function<AlumnoCursoBD, Void> agregarFilasDuales() {
         return obj -> {
             Vector<Object> row = new Vector<>();
@@ -902,13 +912,6 @@ public class VtnNotasCTR {
 
             return null;
         };
-    }
-
-    private void editarEstado(int fila, int columna, TableModel tabla) {
-        String estado = tabla.getValueAt(fila, columna).toString();
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        alumno.setEstado(estado);
-        alumno.editar();
     }
 
     // </editor-fold>  
