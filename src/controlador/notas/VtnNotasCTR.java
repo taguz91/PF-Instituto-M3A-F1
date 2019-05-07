@@ -796,7 +796,7 @@ public class VtnNotasCTR {
                     break;
 
                 case 15:
-                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRowTrad(), 16).toString().toLowerCase();
+                    String asistencia = tablaNotasDuales.getValueAt(fila, columna).toString().toLowerCase();
 
                     List<String> palabrasValidas = new ArrayList();
                     if (asistencia.isEmpty()) {
