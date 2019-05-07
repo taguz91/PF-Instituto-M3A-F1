@@ -210,7 +210,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculadosPeriodo.jasper"));
             Map parametro = new HashMap();
-            parametro.put("periodo", matriculas.get(posCombo).getPeriodo().getId_PerioLectivo());
+            parametro.put("periodo", periodos.get(posCombo - 1).getId_PerioLectivo());
             System.out.println(parametro);
             conecta.mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
         } catch (JRException ex) {
