@@ -306,9 +306,39 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas, materia_activa, materia_objetivo,"
                 + "materia_descripcion,"
-                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion\n"
+                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion, materia_nucleo\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    m = obtenerMateria(rs);
+                }
+                return m;
+            } else {
+                System.out.println("No se pudo consultar carreras");
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public MateriaMD buscarMateriaxCodigo(String codigo) {
+        MateriaMD m = new MateriaMD();
+        String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
+                + " materia_nombre, materia_ciclo, materia_creditos, "
+                + "materia_tipo, materia_categoria, materia_tipo_acreditacion, "
+                + "materia_horas_docencia, materia_horas_practicas, "
+                + "materia_horas_auto_estudio, materia_horas_presencial, "
+                + "materia_total_horas, materia_activa, materia_objetivo,"
+                + "materia_descripcion,"
+                + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion, materia_nucleo\n"
+                + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
+                + "AND materia_codigo LIKE '" + codigo + "';";
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -558,6 +588,7 @@ public class MateriaBD extends MateriaMD {
             } else {
                 m.setMateriacampoformacion(palabra);
             }
+            m.setMateriaNucleo(rs.getBoolean("materia_nucleo"));
             return m;
         } catch (SQLException e) {
             System.out.println("No se pudo obtener la materia");
