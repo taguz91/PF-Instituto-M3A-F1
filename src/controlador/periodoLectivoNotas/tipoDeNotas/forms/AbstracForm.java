@@ -133,7 +133,6 @@ public abstract class AbstracForm {
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
-
         String v1 = tabla.getValueAt(getRow(), getColum()).toString();
         tabla.setValueAt(0, getRow(), 1);
 
