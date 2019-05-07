@@ -101,7 +101,6 @@ public abstract class AbstracForm {
     protected void cargarTabla() {
         tabla.setRowCount(0);
         if (getModalidad().toLowerCase().contains("dual")) {
-            System.out.println("--------->Metodo Carga tabla");
             Arrays.asList(carrerasDuales)
                     .stream()
                     .forEach(obj -> {
@@ -122,6 +121,8 @@ public abstract class AbstracForm {
         }
 
     }
+    
+ 
 
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
