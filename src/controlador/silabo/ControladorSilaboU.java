@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -805,14 +807,64 @@ public class ControladorSilaboU {
 
         });
         
-        gestion.getBtnGuardar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-               new SilaboBD(conexion).eliminar(silabo);
+        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
+
+        mostrarUnidad();
+    }
+
+    private boolean accion = true;
+    private boolean accion2 = true;
+
+    private void ejecutar(ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+                gestion.getBtnGuardar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                new SilaboBD(conexion).eliminar(silabo);
+
+                guardarSilabo();
+
+               
+                accion = true;
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                gestion.getBtnGuardar().setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                principal.getLblEstado().setText("");
+
+            }).start();
+        }
+
+    }
+
+    private void ejecutar2(ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion2 = false;
+                bibliografia.getBtnFinalizar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+
+                new SilaboBD(conexion).eliminar(silabo);
+
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-            }
-        });
+
+                principal.getLblEstado().setText("");
+                bibliografia.getBtnFinalizar().setEnabled(true);
+                gestion.dispose();
+                bibliografia.dispose();
+                principal.getMnCtSilabos().doClick();
+            }).start();
+        }
+
 
         mostrarUnidad();
     }
@@ -894,6 +946,9 @@ public class ControladorSilaboU {
 
         });
 
+        
+        bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
+        
         bibliografia.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
