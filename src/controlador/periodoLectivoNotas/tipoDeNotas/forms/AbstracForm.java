@@ -1,11 +1,17 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
+import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -78,6 +84,25 @@ public abstract class AbstracForm {
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
         vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTabla());
+
+        tabla.addTableModelListener(new TableModelListener() {
+
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+
+                    active = true;
+
+                    validarNotas();
+
+                    active = false;
+                }
+
+            }
+        });
+
     }
 
     //METODOS DE APOYO
@@ -129,23 +154,54 @@ public abstract class AbstracForm {
         }
 
     }
-    
-    protected void validacion (){
-        String v1 = tabla.getValueAt(getRow(), getColum()).toString();
-        tabla.setValueAt(0, getRow(), 1);//Minimo
-        String v2 = tabla.getValueAt(getRow(), getColum()).toString();
-        tabla.setValueAt(0, getRow(), 2);//Maximo
-        
+
+    protected void validacion() {
+        String v1 = tabla.getValueAt(getRow(), 1).toString();
+        String v2 = tabla.getValueAt(getRow(), 2).toString();
+        if (Validaciones.isDecimal(v1)) {
+            if (!v2.isEmpty()) {
+                if (Validaciones.isDecimal(v2)) {
+
+                    double valor1 = Middlewares.conversor(v1);
+                    double valor2 = Middlewares.conversor(v2);
+                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 >= 0) {
+                        JOptionPane.showMessageDialog(vista,
+                                "EL VALOR MINIMO NO PUEDE SER MENOR AL MAXIMO\n"
+                                + "EL VALOR MAXIMO NO PUEDE SER 0\n"
+                                + "EL VALOR MINIMO Y MAXIMO NO PUEDEN SER IGUALES"
+                        );
+                        cargarTabla();
+                    }
+
+                }
+            }
+
+        } else {
+            cargarTabla();
+        }
 
     }
 
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
-        
 
     }
 
     protected abstract void btnGuardar(ActionEvent e);
 
+    private void validarNotas() {
+
+        switch (getColum()) {
+            case 1:
+                validacion();
+                break;
+            case 2:
+                validacion();
+                break;
+            default:
+                break;
+        }
+
+    }
 }
