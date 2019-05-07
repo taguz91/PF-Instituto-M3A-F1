@@ -748,6 +748,19 @@ public class FrmAlumnoCursoCTR {
                         }
                     }
                 }
+            } else {
+                //Eliminamos las materias que ya curso  de nucleo estructurante
+                for (int i = 0; i < mallaCursadas.size(); i++) {
+                    for (int j = 0; j < cursos.size(); j++) {
+                        //Si es la misma materia la eliminamos de cursos
+                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId() 
+                                && !perdioNucleoEstruncturante(mallaCursadas.get(i).getMateria().getId())) {
+                            System.out.println("Ya curso y no es nucleo: " + cursos.get(j).getMateria().getNombre());
+                            cursos.remove(j);
+                            break;
+                        }
+                    }
+                }
             }
 
             //Comprabamos que el curso en el que se quiere no estan vacios 
