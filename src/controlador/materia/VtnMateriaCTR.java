@@ -1,10 +1,8 @@
 package controlador.materia;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,14 +90,14 @@ public class VtnMateriaCTR {
         //Pasamos el estilo a la tabla
         TblEstilo.formatoTbl(vtnMateria.getTblMateria());
         //Pasamos la columna de codigo para que sea de 20
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 1, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 2, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 40);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 5, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 70);
-        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 9, 40);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 1, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 2, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 4, 40);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 5, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 6, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 7, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 8, 70);
+//        TblEstilo.columnaMedida(vtnMateria.getTblMateria(), 9, 40);
         //Iniciamos el combo de ciclos
         vtnMateria.getCmbCiclo().removeAllItems();
         vtnMateria.getCmbCiclo().addItem("Todos");

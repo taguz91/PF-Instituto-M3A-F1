@@ -121,7 +121,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
             hs = horaFin.split(":");
             horaT = Integer.parseInt(hs[0]);
             minutoT = Integer.parseInt(hs[1]);
-            System.out.println(horaC + " " + horaT + " " + minutoC + " " + minutoT);
+            //System.out.println(horaC + " " + horaT + " " + minutoC + " " + minutoT);
             if (horaC > 22 || horaC < 7 || horaT > 22 || horaC < 7 || minutoC != 0 || minutoT != 0) {
                 guardar = false;
                 jd.getLblError().setText("<html>Esta fuera de rango recuerde el formato: <br>08:00 - 20:00</html>");
@@ -135,7 +135,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                 }
             }
 
-            if ((horaT - horaC) > 1) {
+            if ((horaT - horaC) > 1 && editar) {
                 jd.getLblError().setText("<html>Debe ingresar solamente una hora: <br>08:00 - 09:00</html>");
                 guardar = false;
             }
@@ -163,22 +163,31 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
         }
 
         if (guardar) {
+            String nsql = "";
 //            System.out.println(dia);
 //            System.out.println(horaIni);
 //            System.out.println(horaFin);
-            inicio = LocalTime.of(horaC, minutoC);
-            fin = LocalTime.of(horaT, minutoT);
-            bd.setCurso(curso);
-            bd.setDia(dia);
-            bd.setHoraIni(inicio);
-            bd.setHoraFin(fin);
+            for (int i = horaC; i < horaT; i++) {
+                inicio = LocalTime.of(i, minutoC);
+                fin = LocalTime.of((i + 1), minutoT);
+                bd.setCurso(curso);
+                bd.setDia(dia);
+                bd.setHoraIni(inicio);
+                bd.setHoraFin(fin);
+                nsql += bd.obtenerInsert() + "\n";
+            }
+
+            System.out.println("-----------------");
+            System.out.println(nsql);
+            System.out.println("-----------------");
+            
             if (editar) {
                 bd.editar(idSesion);
                 idSesion = 0;
                 editar = false;
                 jd.getBtnCancelar().setVisible(false);
             } else {
-                bd.ingresar();
+                bd.ingresarHorarios(nsql);
             }
 
             //Actualizamos el horario 
