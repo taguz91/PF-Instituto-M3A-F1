@@ -8,9 +8,12 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import modelo.ConexionBD;
+import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
+import modelo.PlanClases.TrabajoAutonomoBD;
+import modelo.PlanClases.TrabajoAutonomoMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -22,7 +25,10 @@ import modelo.silabo.SilaboMD;
 import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import vista.principal.VtnPrincipal;
+import vista.silabos.frmPlanClase.CheckListItem;
+import vista.silabos.frmPlanClase.CheckListRenderer;
 import vista.silabos.frmPlanClase;
+
 
 
 
@@ -35,26 +41,19 @@ public class ControladorEditarPlanClases {
     private SilaboMD silabo;
     private UnidadSilaboMD unidadsilabo;
     private List<CursoMDS> lista_curso;
+    private List<PlandeClasesMD> lista_plan;
+    private List<TrabajoAutonomoMD> lista_tra_aut;
     private List<RecursosPlanClasesMD> lista_recursoMD;
+    private List<RecursosPlanClasesMD> lista_recursoBD;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
     private DefaultListModel modelo;
     
-    public ControladorEditarPlanClases(PlandeClasesMD planClaseMD,CursoMD curso, VtnPrincipal principal, ConexionBD conexion) {
-        this.planClaseMD = planClaseMD;
-        this.principal = principal;
-        this.conexion = conexion;
-        this.curso=curso;
-    }
-    public ControladorEditarPlanClases(CursoMD curso, VtnPrincipal principal, ConexionBD conexion) {
-       
-        this.principal = principal;
-        this.conexion = conexion;
-        this.curso=curso;
-    }
+    
 
-    public ControladorEditarPlanClases(VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+    public ControladorEditarPlanClases(PlandeClasesMD planClaseMD, VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+        this.planClaseMD = planClaseMD;
         this.principal = principal;
         this.conexion = conexion;
         this.curso = curso;
@@ -98,9 +97,17 @@ public class ControladorEditarPlanClases {
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
                 
+       lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());
+        cargarCampoObservacion(lista_plan);
+        
+        lista_tra_aut=TrabajoAutonomoBD.consultarTrabajoAutonomo(conexion, planclase.getId_plan_clases());
+        cargarCampoAutonomo(lista_tra_aut);
+        
+       lista_recursoBD=RecursosPlanClasesBD.consultarRecursosPlanClase(conexion, planclase.getId_plan_clases());
+        
        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion,fPlanClase.getTxt_buscarPCL().getText());
        CargarRecursos(lista_recursoMD);
-        
+       
     }
      public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
@@ -161,15 +168,36 @@ public class ControladorEditarPlanClases {
             fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
         }
     }
+      
      private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
      DefaultListModel modeloRecursos = new DefaultListModel();
      fPlanClase.getJlisRecursos().setCellRenderer(new frmPlanClase.CheckListRenderer());
      fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+     
        for (RecursosPlanClasesMD lista_recurso_md : lista_recursoMD) {
            modeloRecursos.addElement(new frmPlanClase.CheckListItem(lista_recurso_md.getId_recursos().getNombre_recursos()));
        }
-       fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+        for (int i = 0; i < fPlanClase.getJlisRecursos().getModel().getSize(); i++) {
+                    CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(i);
+                    for (RecursosPlanClasesMD recursosPlanClasesMD : lista_recursoBD) {
+                             if (modeloRecursos.get(i).toString().equals(recursosPlanClasesMD.getId_recursos().getNombre_recursos())) {
+                            item.setSelected(true);
+                        }
+                       }
+                   
+                }
        
    }
+     
+     private void cargarCampoAutonomo(List<TrabajoAutonomoMD> lista_tra_aut){
+         for (TrabajoAutonomoMD trabajoAutonomoMD : lista_tra_aut) {
+             fPlanClase.getTxrTrabajoAutonomo().setText(trabajoAutonomoMD.getAutonomo_plan_descripcion());
+         }
+     }
+     private void cargarCampoObservacion(List<PlandeClasesMD> lista_pla){
+         for (PlandeClasesMD plandeClasesMD : lista_pla) {
+             fPlanClase.getTxrObservacionesPc().setText(plandeClasesMD.getObservaciones());
+         }
+     }
 }

@@ -72,7 +72,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
                     + "AND m.materia_nombre ILIKE '%" + clave[1] + "%'\n"
-                    + "AND p.id_persona=? AND s.estado_silabo<>-1");
+                    + "AND p.id_persona=?");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[2]));

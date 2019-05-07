@@ -990,7 +990,7 @@ public class ControladorSilaboU {
                         && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
 
                     item.setSelected(true);
-
+                    System.out.println("-------------------------------paso_por aki_   __________________");
                 }
             }
         }
