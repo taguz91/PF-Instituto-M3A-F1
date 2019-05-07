@@ -32,7 +32,10 @@
                   <Component id="jScrollPane1" pref="698" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblResultados" min="-2" pref="170" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnRepAlum" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -90,9 +93,13 @@
                   <Component id="cmbCursos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="321" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="237" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="lblResultados" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblResultados" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRepAlum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -172,6 +179,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Materias"/>
         <Property name="toolTipText" type="java.lang.String" value="Informacion de las materias que cursa en este curso."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRepAlum">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alumnos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reporte:"/>
       </Properties>
     </Component>
   </SubComponents>

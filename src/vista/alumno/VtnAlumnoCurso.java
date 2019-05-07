@@ -21,6 +21,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         return btnbuscar;
     }
 
+    public JButton getBtnRepAlum() {
+        return btnRepAlum;
+    }
+
     public VtnAlumnoCurso() {
         initComponents();
     }
@@ -69,6 +73,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbCursos = new javax.swing.JComboBox();
         btnMaterias = new javax.swing.JButton();
+        btnRepAlum = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -104,6 +110,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         btnMaterias.setText("Materias");
         btnMaterias.setToolTipText("Informacion de las materias que cursa en este curso.");
 
+        btnRepAlum.setText("Alumnos");
+
+        jLabel3.setText("Reporte:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,7 +124,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRepAlum))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblbuscar)
@@ -158,9 +171,12 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblResultados)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblResultados)
+                    .addComponent(btnRepAlum)
+                    .addComponent(jLabel3))
                 .addContainerGap())
         );
 
@@ -171,11 +187,13 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnMaterias;
+    private javax.swing.JButton btnRepAlum;
     private javax.swing.JButton btnbuscar;
     private javax.swing.JComboBox cmbCursos;
     private javax.swing.JComboBox cmbPrdLectivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JLabel lblbuscar;
