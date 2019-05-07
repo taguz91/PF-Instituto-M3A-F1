@@ -77,7 +77,7 @@ public abstract class AbstracForm {
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
-        vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTiposNotas(e));
+        vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTabla());
     }
 
     //METODOS DE APOYO
@@ -99,9 +99,9 @@ public abstract class AbstracForm {
     }
 
     protected void cargarTabla() {
-
-        if (getModalidad().contains("dual")) {
-
+        tabla.setRowCount(0);
+        if (getModalidad().toLowerCase().contains("dual")) {
+            System.out.println("--------->Metodo Carga tabla");
             Arrays.asList(carrerasDuales)
                     .stream()
                     .forEach(obj -> {
@@ -109,6 +109,15 @@ public abstract class AbstracForm {
                     });
 
         } else {
+            if(getModalidad().toLowerCase().contains("tradicional")){
+                Arrays.asList(carrerasTradicionales)
+                        .stream()
+                        .forEach(obj -> {
+                        tabla.addRow(new Object [] {obj});
+                
+                });
+                      
+            }
 
         }
 
@@ -121,19 +130,6 @@ public abstract class AbstracForm {
 
     protected abstract void btnGuardar(ActionEvent e);
 
-    private void cargarTiposNotas(ActionEvent e) {
-        String busqueda = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-
-        PeriodoLectivoMD periodo = listaPeriodos
-                .entrySet()
-                .stream()
-                .filter(item -> item.getKey().equals(busqueda))
-                .findAny()
-                .get()
-                .getValue();
-
-        String modalidad = periodo.getCarrera().getModalidad();
-
-    }
+  
 
 }
