@@ -43,12 +43,12 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         return  true;
     }
     
-       public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion,String nombre_recurso){
+       public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion){
         List<RecursosPlanClasesMD> recursos=new ArrayList<>();
         
          try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' order by nombre_recursos ");
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" order by nombre_recursos ");
 
             ResultSet rs = st.executeQuery();
 

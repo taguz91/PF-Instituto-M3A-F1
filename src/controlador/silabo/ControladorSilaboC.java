@@ -275,7 +275,7 @@ public class ControladorSilaboC {
         });
 
         if (configuracion.getCmbAsignatura().getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Ya ha ingresado todos los silabos correspondientes para esta carrera en el período en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No tiene silabos pendientes para esta carrera dentro del periodo en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
             configuracion.getBtnSiguiente().setEnabled(false);
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
@@ -1023,8 +1023,8 @@ public class ControladorSilaboC {
 
         });
 
-        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         
+        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         cargarEstrategias(unidadesSilabo.get(0));
         gestion.getCmbUnidad().setSelectedIndex(0);
     }
@@ -1071,7 +1071,7 @@ public class ControladorSilaboC {
         if (accion) {
             new Thread(() -> {
                 accion2 = false;
-                gestion.getBtnGuardar().setEnabled(false);
+                bibliografia.getBtnFinalizar().setEnabled(false);
 
                 principal.getLblEstado().setText("Guardando silabo... Espere por favor");
                 if (silaboNuevo.getIdSilabo() == null) {
@@ -1095,7 +1095,7 @@ public class ControladorSilaboC {
                 
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
                 principal.getLblEstado().setText("");
-                gestion.getBtnGuardar().setEnabled(true);
+                bibliografia.getBtnFinalizar().setEnabled(true);
                 configuracion.dispose();
                 gestion.dispose();
                 bibliografia.dispose();
@@ -1598,6 +1598,9 @@ public class ControladorSilaboC {
 
     public void agregarBibliografiaNoBase() {
 
+        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
+        
+        
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
