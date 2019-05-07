@@ -3,7 +3,6 @@ package modelo.estilo;
 import controlador.estilo.TblRenderClase;
 import controlador.estilo.TblRenderFocusClm;
 import controlador.estilo.TblRenderMatricula;
-import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -53,7 +52,7 @@ public class TblEstilo {
         //Para que no se pueda reordenar las columnas 
         tblHead.setReorderingAllowed(false);
         //Para que no se pueda cambiar su longitud  
-        tblHead.setResizingAllowed(false);
+        //tblHead.setResizingAllowed(false);
         //Centramos los titulos de las tablas 
         DefaultTableCellRenderer hedRender = (DefaultTableCellRenderer) tblHead.getDefaultRenderer();
         //Centramos los textos

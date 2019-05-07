@@ -7,6 +7,7 @@ package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
 import static controlador.silabo.ControladorSilaboCRUD.x;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -73,12 +74,15 @@ import java.util.HashMap;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+
 
 /**
  *
@@ -276,6 +280,7 @@ public class ControladorSilaboC {
 
         if (configuracion.getCmbAsignatura().getItemCount() == 0) {
             JOptionPane.showMessageDialog(null, "No tiene silabos pendientes para esta carrera dentro del periodo en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+            
             configuracion.getBtnSiguiente().setEnabled(false);
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
@@ -1022,6 +1027,15 @@ public class ControladorSilaboC {
             }
 
         });
+        
+        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke) {
+            
+                buscarEstrategias(seleccionarUnidad());
+            }
+            
+        });
 
         
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
@@ -1254,8 +1268,40 @@ public class ControladorSilaboC {
 
         gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
         gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
-
+        
+        
+        
+        
         EstrategiasAprendizajeBD.consultar(conexion).forEach((emd) -> {
+            modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
+        });
+
+        for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
+            CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
+
+            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+
+                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
+                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
+
+                    item.setSelected(true);
+
+                }
+            }
+        }
+    }
+    
+    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
+
+        DefaultListModel modeloEstrategias = new DefaultListModel();
+
+        gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
+        gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
+        
+        
+        
+        
+        EstrategiasAprendizajeBD.consultar2(conexion, gestion.getTxtBuscarEstrategia().getText()).forEach((emd) -> {
             modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
         });
 
@@ -1809,5 +1855,7 @@ public class ControladorSilaboC {
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
     }
+    
+    
 
 }
