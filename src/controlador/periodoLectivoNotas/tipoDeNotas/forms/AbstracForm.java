@@ -7,6 +7,7 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -73,9 +74,12 @@ public abstract class AbstracForm {
 
         cargarComboCarreras();
 
+        setlblCarrera();
+
         cargarTabla();
 
         InitEventos();
+
     }
 
     private void InitEventos() {
@@ -83,7 +87,10 @@ public abstract class AbstracForm {
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
-        vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTabla());
+        vista.getCmbPeriodoLectivo().addActionListener(e -> {
+            cargarTabla();
+            setlblCarrera();
+        });
 
         tabla.addTableModelListener(new TableModelListener() {
 
@@ -121,6 +128,18 @@ public abstract class AbstracForm {
         });
     }
 
+    private void setlblCarrera() {
+
+        vista.getLblNombreCarrera().setText(listaPeriodos
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getCarrera().getNombre())
+                .findFirst()
+                .orElse(""));
+
+    }
+
     protected String getModalidad() {
         return listaPeriodos
                 .entrySet()
@@ -145,7 +164,7 @@ public abstract class AbstracForm {
                 Arrays.asList(carrerasTradicionales)
                         .stream()
                         .forEach(obj -> {
-                            tabla.addRow(new Object[]{obj,0,100});
+                            tabla.addRow(new Object[]{obj, 0, 100});
 
                         });
 
@@ -156,7 +175,7 @@ public abstract class AbstracForm {
     }
 
     protected void validacion() {
-        String v1="0";
+        String v1 = "0";
         String v2 = "0";
         try {
             v1 = tabla.getValueAt(getRow(), 1).toString();
@@ -164,7 +183,6 @@ public abstract class AbstracForm {
         } catch (NullPointerException e) {
         }
 
-        
         if (Validaciones.isDecimal(v1)) {
             if (!v2.isEmpty()) {
                 if (Validaciones.isDecimal(v2)) {
