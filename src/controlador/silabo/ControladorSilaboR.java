@@ -62,10 +62,6 @@ public class ControladorSilaboR {
 
     public void iniciarControlador() {
         
-     
-
-        
- 
         
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
 

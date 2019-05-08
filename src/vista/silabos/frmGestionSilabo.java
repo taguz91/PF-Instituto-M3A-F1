@@ -41,21 +41,21 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
     }
 
-    public JLabel getLblBuscarEstrategia() {
-        return lblBuscarEstrategia;
-    }
-
-    public void setLblBuscarEstrategia(JLabel lblBuscarEstrategia) {
-        this.lblBuscarEstrategia = lblBuscarEstrategia;
-    }
-
-    public JTextField getTxtBuscarEstrategia() {
-        return txtBuscarEstrategia;
-    }
-
-    public void setTxtBuscarEstrategia(JTextField txtBuscarEstrategia) {
-        this.txtBuscarEstrategia = txtBuscarEstrategia;
-    }
+//    public JLabel getLblBuscarEstrategia() {
+//        return lblBuscarEstrategia;
+//    }
+//
+//    public void setLblBuscarEstrategia(JLabel lblBuscarEstrategia) {
+//        this.lblBuscarEstrategia = lblBuscarEstrategia;
+//    }
+//
+//    public JTextField getTxtBuscarEstrategia() {
+//        return txtBuscarEstrategia;
+//    }
+//
+//    public void setTxtBuscarEstrategia(JTextField txtBuscarEstrategia) {
+//        this.txtBuscarEstrategia = txtBuscarEstrategia;
+//    }
 
     
     
@@ -978,8 +978,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAgregarEstrategia = new javax.swing.JLabel();
         txtNuevaEstrategia = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        txtBuscarEstrategia = new javax.swing.JTextField();
-        lblBuscarEstrategia = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1391,13 +1389,13 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         scrEstrategiasPredeterminadas.setViewportView(lstEstrategiasPredeterminadas);
 
-        pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 370, 160));
+        pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 370, 220));
 
         lblNuevaEstrategia.setText("Nueva Estrategia de Enseñanza:");
         pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, -1, 20));
 
         lblEstrategiasPredeterminadas.setText("Seleccione la(s) Estrategias de Enseñanza:");
-        pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+        pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
@@ -1415,7 +1413,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
-        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 160, -1, -1));
+        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, -1, -1));
 
         txtNuevaEstrategia.setEnabled(false);
         txtNuevaEstrategia.addActionListener(new java.awt.event.ActionListener() {
@@ -1427,10 +1425,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
         pnlUnidad.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 570, -1, -1));
-        pnlUnidad.add(txtBuscarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 370, -1));
-
-        lblBuscarEstrategia.setText("Buscar Estrategia:");
-        pnlUnidad.add(lblBuscarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1533,7 +1527,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblAprendizajeColaborativo;
     private javax.swing.JLabel lblAsistidaDocente;
     private javax.swing.JLabel lblAutonoma;
-    private javax.swing.JLabel lblBuscarEstrategia;
     private javax.swing.JLabel lblContenidos;
     private javax.swing.JLabel lblEliminarUnidad;
     private javax.swing.JLabel lblEstrategiasPredeterminadas;
@@ -1598,7 +1591,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txrContenidos;
     private javax.swing.JTextArea txrObjetivos;
     private javax.swing.JTextArea txrResultados;
-    private javax.swing.JTextField txtBuscarEstrategia;
     private javax.swing.JTextField txtIndicadorA;
     private javax.swing.JTextField txtIndicadorAC;
     private javax.swing.JTextField txtIndicadorAD;

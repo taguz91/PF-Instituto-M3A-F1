@@ -1028,17 +1028,17 @@ public class ControladorSilaboC {
 
         });
         
-        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke) {
-            
-                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
-                    buscarEstrategias(seleccionarUnidad());
-                }
-                
-            }
-            
-        });
+//        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
+//            @Override
+//            public void keyReleased(KeyEvent ke) {
+//            
+//                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+//                    buscarEstrategias(seleccionarUnidad());
+//                }
+//                
+//            }
+//            
+//        });
 
         
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
@@ -1294,34 +1294,34 @@ public class ControladorSilaboC {
         }
     }
     
-    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
-
-        DefaultListModel modeloEstrategias = new DefaultListModel();
-
-        gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
-        gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
-        
-        
-        
-        
-        EstrategiasAprendizajeBD.consultar2(conexion, gestion.getTxtBuscarEstrategia().getText()).forEach((emd) -> {
-            modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
-        });
-
-        for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-            CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
-
-            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
-
-                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
-                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
-
-                    item.setSelected(true);
-
-                }
-            }
-        }
-    }
+//    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
+//
+//        DefaultListModel modeloEstrategias = new DefaultListModel();
+//
+//        gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
+//        gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
+//        
+//        
+//        
+//        
+//        EstrategiasAprendizajeBD.consultar2(conexion, gestion.getTxtBuscarEstrategia().getText()).forEach((emd) -> {
+//            modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
+//        });
+//
+//        for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
+//            CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
+//
+//            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+//
+//                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
+//                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
+//
+//                    item.setSelected(true);
+//
+//                }
+//            }
+//        }
+//    }
 
     public void agregarUnidad() {
 
