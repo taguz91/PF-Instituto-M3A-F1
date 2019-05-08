@@ -43,6 +43,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDPlanClase;
+import vista.silabos.frmCargando1;
 
 /**
  *
@@ -124,7 +125,7 @@ public class ControladorCRUDPlanClase {
         CARGAR_JORNADAS();
         cargarPlanesDeClaseProfesor();
         CARGAR_COMBO_PERIODOS_CARRERA();
-        fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> imprimir_plan());
+        fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
     }
 
     private void cargarPlanesDeClaseProfesor() {
@@ -290,5 +291,33 @@ public class ControladorCRUDPlanClase {
                 filter(s -> s.getNumeroUnidad() == Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 4).toString())).
                 findFirst();
         return unidadSeleccionada.get();
+    }
+       private boolean accion = true;
+    private void ejecutar(ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+
+                principal.setEnabled(false);
+
+                frmCargando1 frmCargando1 = new frmCargando1();
+
+                frmCargando1.setVisible(true);
+
+                imprimir_plan();
+
+                accion = true;
+
+                principal.setEnabled(true);
+
+                frmCargando1.dispose();
+
+                fCrud_plan_Clases.dispose();
+
+               
+            }).start();
+
+        }
+
     }
 }
