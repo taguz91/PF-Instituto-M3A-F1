@@ -209,6 +209,7 @@ public class FrmMateriasCTR {
                 }
                 break;
             case 3:
+
                 if (anterior == true) {
                     frmMaterias.getjTPMaterias().setSelectedIndex(2);
                     frmMaterias.getBtnGuardar().setText("Siguiente");
