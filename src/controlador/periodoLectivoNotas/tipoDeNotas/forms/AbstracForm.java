@@ -5,7 +5,9 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
@@ -52,6 +54,9 @@ public abstract class AbstracForm {
         "EXAMEN DE RECUPERACION",
         "NOTA FINAL"
     };
+
+    protected List<String> tiposNota;
+    protected List<TipoDeNotaBD> listaTipos;
 
     //TABLAS
     protected DefaultTableModel tabla;
@@ -153,7 +158,8 @@ public abstract class AbstracForm {
     protected void cargarTabla() {
         tabla.setRowCount(0);
         if (getModalidad().toLowerCase().contains("dual")) {
-            Arrays.asList(carrerasDuales)
+            tiposNota = Arrays.asList(carrerasDuales);
+            tiposNota
                     .stream()
                     .forEach(obj -> {
                         tabla.addRow(new Object[]{obj, 0, 100});
@@ -161,7 +167,8 @@ public abstract class AbstracForm {
 
         } else {
             if (getModalidad().toLowerCase().contains("tradicional")) {
-                Arrays.asList(carrerasTradicionales)
+                tiposNota = Arrays.asList(carrerasDuales);
+                tiposNota
                         .stream()
                         .forEach(obj -> {
                             tabla.addRow(new Object[]{obj, 0, 100});
@@ -171,6 +178,24 @@ public abstract class AbstracForm {
             }
 
         }
+
+    }
+
+    protected void setObjs() {
+
+        listaTipos = new ArrayList<>();
+
+        tiposNota.stream()
+                .forEach(obj -> {
+                    int index = tiposNota.indexOf(obj);
+                    TipoDeNotaBD tipo = new TipoDeNotaBD();
+                    tipo.setNombre(obj);
+                    tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
+                    tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
+                    listaTipos.add(tipo);
+
+                    System.out.println("----->" + tipo);
+                });
 
     }
 
@@ -189,17 +214,17 @@ public abstract class AbstracForm {
 
                     double valor1 = Middlewares.conversor(v1);
                     double valor2 = Middlewares.conversor(v2);
-                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 <0) {
+                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 < 0) {
                         JOptionPane.showMessageDialog(vista,
                                 "EL VALOR MINIMO NO PUEDE SER MENOR AL MAXIMO\n"
                                 + "EL VALOR MAXIMO NO PUEDE SER 0\n"
                                 + "EL VALOR MINIMO Y MAXIMO NO PUEDEN SER IGUALES"
                         );
-                    tabla.setValueAt(0, getRow(), 1);
-                    tabla.setValueAt(100, getRow(), 2);
+                        tabla.setValueAt(0, getRow(), 1);
+                        tabla.setValueAt(100, getRow(), 2);
                     }
 
-                }else{
+                } else {
                     tabla.setValueAt(100, getRow(), 2);
                 }
             }
