@@ -175,7 +175,8 @@ public class MateriaBD extends MateriaMD {
                 + "materia_horas_auto_estudio, materia_horas_presencial, "
                 + "materia_total_horas, m.id_carrera\n"
                 + "FROM public.\"Materias\" m \n"
-                + "WHERE materia_activa = 'true';";
+                + "WHERE materia_activa = 'true'"
+                + "ORDER BY materia_ciclo;";
         return consultarMateriasParaTabla(sql);
     }
 

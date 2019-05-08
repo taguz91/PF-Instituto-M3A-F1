@@ -632,11 +632,11 @@ public class FrmMateriasCTR {
 
         };
         
-        frmMaterias.getTxt_CodMateria().addFocusListener(new FocusAdapter() {
-            public void focusLost(FocusEvent e) {
-                buscarMateria();
-            }
-        });
+//        frmMaterias.getTxt_CodMateria().addFocusListener(new FocusAdapter() {
+//            public void focusLost(FocusEvent e) {
+//                buscarMateria();
+//            }
+//        });
 
 //        frmMaterias.getCbCarrera().addActionListener(new CmbValidar(
 ////                frmMaterias.getCbCarrera(), frmMaterias.getLblErrorCarrera()));
