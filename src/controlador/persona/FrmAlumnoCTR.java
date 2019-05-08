@@ -874,6 +874,7 @@ public class FrmAlumnoCTR {
         frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
         if(persona.isTrabaja() == true){
             frmAlumno.getCmBx_SecEconomico().setEnabled(true);
+            frmAlumno.getCmBx_SecEconomico().setEnabled(true);
         } else{
             frmAlumno.getCmBx_SecEconomico().setEnabled(false);
         }
