@@ -1878,6 +1878,13 @@ public class ControladorSilaboC {
             if (aprovechamiento < 60.0) {
                 control = false;
             }
+            
+            
+            if (!validarHoras()){
+                
+                control=false;
+                
+            }
 
         }
 
@@ -1913,6 +1920,30 @@ public class ControladorSilaboC {
 
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
+    }
+    
+    public boolean validarHoras(){
+        
+        int totalDocencia=0;
+        int totalPractica=0;
+        int totalAutonomo=0;
+        boolean control=false;
+        
+        for (UnidadSilaboMD umd : unidadesSilabo){
+            totalDocencia=totalDocencia+umd.getHorasDocenciaUnidad();
+            totalPractica=totalPractica+umd.getHorasPracticaUnidad();
+            totalAutonomo=totalAutonomo+umd.getHorasAutonomoUnidad();
+        }
+        
+        if (totalDocencia==silaboNuevo.getIdMateria().getHorasDocencia()&& 
+            totalPractica==silaboNuevo.getIdMateria().getHorasPracticas() && 
+            totalAutonomo==silaboNuevo.getIdMateria().getHorasAutoEstudio()){
+            
+            control=true;
+            
+        }
+        
+        return control;
     }
 
 }
