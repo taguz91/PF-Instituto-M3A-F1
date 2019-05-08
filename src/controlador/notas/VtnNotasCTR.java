@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
@@ -100,7 +99,7 @@ public class VtnNotasCTR {
         activarForm(true);
 
     }
-
+    
     private void InitEventos() {
 
         vista.getCmbDocente().addActionListener(e -> cargarComboPeriodos());
@@ -351,22 +350,14 @@ public class VtnNotasCTR {
         if (Validaciones.isInt(faltasText)) {
             int faltas = new Integer(faltasText);
 
-            int horas = getHoras();
-
-            int porcentaje = 0;
-
-            if (horas <= 0) {
-                horas = 1;
-            }
-
-            porcentaje = (faltas * 100) / horas;
+            int porcentaje = carcularPorcentaje(faltas, getHoras());
 
             tabla.setValueAt(porcentaje, fila, conPorcentaje);
 
             String estado = tabla.getValueAt(fila, colEstado).toString();
             String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
 
-            if (!estado.equalsIgnoreCase("RETIRADO") && asistencia.equalsIgnoreCase("RETIRADO")) {
+            if (!estado.equalsIgnoreCase("RETIRADO") || !asistencia.equalsIgnoreCase("RETIRADO")) {
                 if (porcentaje >= 25) {
                     vista.getTblNotas().setValueAt("REPROBADO", fila, colEstado);
                 } else {
@@ -459,11 +450,11 @@ public class VtnNotasCTR {
                     guardarBDTrad(examenFinal, nombreNota);
                     break;
                 case 11:
-                    nombreNota = "EXAMEN SUPLETORIO";
+                    nombreNota = "EXAMEN DE RECUPERACION";
 
-                    String examenSupletorio = datos.getValueAt(getSelectedRowTrad(), getSelectedColumTrad()).toString();
+                    String examenRecuperacion = datos.getValueAt(getSelectedRowTrad(), getSelectedColumTrad()).toString();
 
-                    guardarBDTrad(examenSupletorio, nombreNota);
+                    guardarBDTrad(examenRecuperacion, nombreNota);
                     break;
 
                 case 14:
@@ -494,7 +485,6 @@ public class VtnNotasCTR {
                     sumarColumnasTrad();
                     editarTrad();
                     refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
-
                 } else {
                     errorDeNota(rango);
                 }
@@ -522,6 +512,13 @@ public class VtnNotasCTR {
             refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
 
         }
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("-------------->" + Thread.activeCount());
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
     }
 
     private void errorDeNota(TipoDeNotaMD rango) {
@@ -538,7 +535,7 @@ public class VtnNotasCTR {
 
         double aporte2;
         double examenFinal;
-        double examenSupletorio;
+        double examenRecuperacion;
 
         double notaFinal;
 
@@ -549,10 +546,10 @@ public class VtnNotasCTR {
 
         aporte2 = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 9).toString());
         examenFinal = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 10).toString());
-        examenSupletorio = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 11).toString());
+        examenRecuperacion = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 11).toString());
 
-        if (examenSupletorio != 0) {
-            notaFinal = totalInterciclo + aporte2 + examenSupletorio;
+        if (examenRecuperacion != 0) {
+            notaFinal = totalInterciclo + aporte2 + examenRecuperacion;
         } else {
             notaFinal = totalInterciclo + aporte2 + examenFinal;
         }
@@ -560,17 +557,39 @@ public class VtnNotasCTR {
 
     }
 
+    private void validarAprobado(double examenFinal, double examenRecuperacion, double notaFinal, DefaultTableModel tabla, int fila, int colEstado) {
+        TipoDeNotaMD rango = null;
+        if (examenRecuperacion > 0) {
+            rango = getRango("EXAMEN DE RECUPERACION");
+            if (examenRecuperacion < rango.getValorMinimo()) {
+                tabla.setValueAt("REPROBADO", fila, colEstado);
+            } else {
+
+            }
+        }
+
+    }
+
+    private void validarExamenFinal(double notaFinal, DefaultTableModel tabla, int fila, int colEstado) {
+
+        TipoDeNotaMD rango = getRango("NOTA FINAL");
+        if (notaFinal < rango.getValorMinimo()) {
+            tabla.setValueAt("REPROBADO", fila, colEstado);
+        }
+    }
+
     private void editarTrad() {
+
         vista.getTblNotas().setEnabled(false);
         int fila = getSelectedRowTrad();
 
         AlumnoCursoBD alumno = listaNotas.get(fila);
 
-        alumno.setEstado(vista.getTblNotas().getValueAt(fila, 13).toString());
-
         alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
 
         String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
+
+        String estado = vista.getTblNotas().getValueAt(fila, 13).toString();
 
         if (asistencia.contains("desertor")) {
             alumno.setAsistencia("Desertor");
@@ -584,6 +603,12 @@ public class VtnNotasCTR {
         if (asistencia.contains("no asiste")) {
             alumno.setAsistencia("No Asiste");
         }
+
+        if (asistencia.equalsIgnoreCase("retirado")) {
+            estado = "RETIRADO";
+        }
+
+        alumno.setEstado(estado);
 
         alumno.getNotas().stream()
                 .filter(buscar("APORTE 1"))
@@ -606,7 +631,7 @@ public class VtnNotasCTR {
                 .collect(Collectors.toList())
                 .forEach(editarNota(fila, 10, tablaNotasTrad));
         alumno.getNotas().stream()
-                .filter(buscar("EXAMEN SUPLETORIO"))
+                .filter(buscar("EXAMEN DE RECUPERACION"))
                 .collect(Collectors.toList())
                 .forEach(editarNota(fila, 11, tablaNotasTrad));
 
@@ -614,6 +639,7 @@ public class VtnNotasCTR {
 
         alumno.editar();
         vista.getTblNotas().setEnabled(true);
+
     }
 
     private TipoDeNotaMD getRango(String nombreNota) {
@@ -673,49 +699,6 @@ public class VtnNotasCTR {
 
     }
 
-    private Consumer<MateriaMD> setPorcentajeVetor(Vector<Object> row, int faltas, AlumnoCursoBD alumno) {
-        return obj -> {
-
-            double horaPresenciales = obj.getHorasPresenciales();
-
-            int porcentaje = 0;
-
-            if (horaPresenciales != 0) {
-
-                porcentaje = (int) Math.ceil(((faltas * 100) / horaPresenciales));
-            }
-
-            double notaSupletorio = (Double) row.get(11);
-
-            if (notaSupletorio != 0) {
-                validarAprobado(alumno, notaSupletorio, porcentaje, row);
-            } else {
-                validarAprobado(alumno, (double) row.get(10), porcentaje, row);
-            }
-            row.add(14, faltas);
-            row.add(15, porcentaje);
-        };
-    }
-
-    private void validarAprobado(AlumnoCursoBD alumno, double notaValidar, int porcentaje, List<Object> row) {
-        if (!alumno.getEstado().equalsIgnoreCase("RETIRADO") || !alumno.getAsistencia().equalsIgnoreCase("RETIRADO")) {
-            int notaFinal = (Integer) row.get(12);
-            TipoDeNotaMD rango = getRango("EXAMEN SUPLETORIO");
-            if (notaValidar >= rango.getValorMinimo()) {
-
-                if (porcentaje >= 25 || alumno.getNotaFinal() < rango.getValorMinimo() || notaFinal < getRango("NOTA FINAL").getValorMinimo()) {
-                    row.add(13, "REPROBADO");
-                } else {
-                    row.add(13, "APROBADO");
-                }
-            } else {
-                row.add(13, "REPROBADO");
-            }
-        } else {
-            row.add(13, "RETIRADO");
-        }
-    }
-
     private Function<AlumnoCursoBD, Void> agregarFilasTradicionales() {
 
         return (obj) -> {
@@ -735,19 +718,15 @@ public class VtnNotasCTR {
             row.add(8, obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor());
             row.add(9, obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor());
             row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
-            row.add(11, obj.getNotas().stream().filter(buscar("EXAMEN SUPLETORIO")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor());
 
             int notaFinal = (int) Middlewares.conversor("" + obj.getNotaFinal());
 
             row.add(12, notaFinal);
 
-            int faltas = obj.getNumFalta();
-
-            String materia = vista.getCmbAsignatura().getSelectedItem().toString();
-
-            listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
-                    .forEach(setPorcentajeVetor(row, faltas, obj));
-
+            row.add(13, obj.getEstado());
+            row.add(14, obj.getNumFalta());
+            row.add(15, carcularPorcentaje(obj.getNumFalta(), getHoras()));
             row.add(16, obj.getAsistencia());
 
             tablaNotasTrad.addRow(row);
@@ -818,22 +797,35 @@ public class VtnNotasCTR {
         }
     }
 
-    private void guardarDBDuales(String nota, String tipoNota, int columna) {
+    private void guardarDBDuales(String notaText, String tipoNota, int columna) {
         int fila = getSelectedRowDuales();
-        if (Validaciones.isDecimal(nota)) {
+        if (Validaciones.isDecimal(notaText)) {
+            double nota = Middlewares.conversor(notaText);
 
-            sumarColumnas(tablaNotasDuales, fila, 6, 7, 8, "DOUBLE");
-            double examenRecuperacion = Double.valueOf(tablaNotasDuales.getValueAt(fila, 10).toString());
-            if (examenRecuperacion != 0) {
-                sumarColumnas(tablaNotasDuales, fila, 8, 10, 11, "INT");
+            TipoDeNotaMD rango = getRango(tipoNota);
+            if (rango.getNombre().equalsIgnoreCase("EXAMEN FINAL")) {
+                if (nota < rango.getValorMinimo()) {
+                    tablaNotasDuales.setValueAt("REPROBADO", fila, 12);
+                }
             } else {
-                sumarColumnas(tablaNotasDuales, fila, 8, 9, 11, "INT");
+
             }
+            sumarDuales(fila);
             editarDuales(fila, columna, tipoNota);
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
         } else {
             mensajeDeError();
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
+        }
+    }
+
+    private void sumarDuales(int fila) {
+        sumarColumnas(tablaNotasDuales, fila, 6, 7, 8, "DOUBLE");
+        double examenRecuperacion = Double.valueOf(tablaNotasDuales.getValueAt(fila, 10).toString());
+        if (examenRecuperacion != 0) {
+            sumarColumnas(tablaNotasDuales, fila, 8, 10, 11, "INT");
+        } else {
+            sumarColumnas(tablaNotasDuales, fila, 8, 9, 11, "INT");
         }
     }
 
@@ -853,6 +845,7 @@ public class VtnNotasCTR {
 
         alumno.setNotaFinal(Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 11).toString()));
         alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
+        alumno.setAsistencia(tablaNotasDuales.getValueAt(fila, 15).toString());
         alumno.editar();
 
     }
@@ -878,7 +871,7 @@ public class VtnNotasCTR {
 
             row.add(12, obj.getEstado());
             row.add(13, obj.getNumFalta());
-            row.add(14, 0);
+            row.add(14, carcularPorcentaje(obj.getNumFalta(), getHoras()));
             row.add(15, obj.getAsistencia());
 
             tablaNotasDuales.addRow(row);
@@ -886,6 +879,13 @@ public class VtnNotasCTR {
             return null;
 
         };
+    }
+
+    private int carcularPorcentaje(int faltas, int horas) {
+        if (horas == 0) {
+            horas = 1;
+        }
+        return (faltas * 100) / horas;
     }
 
     // </editor-fold>  

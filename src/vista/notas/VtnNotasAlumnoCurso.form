@@ -449,8 +449,8 @@
                     <Column editable="false" title="S. Apellido" type="java.lang.Object"/>
                     <Column editable="false" title="P. Nombre" type="java.lang.Object"/>
                     <Column editable="false" title="S. Nombre" type="java.lang.Object"/>
-                    <Column editable="true" title="G. Aula 1" type="java.lang.Object"/>
-                    <Column editable="true" title="G. Aula 2" type="java.lang.Object"/>
+                    <Column editable="true" title="Aporte 1" type="java.lang.Object"/>
+                    <Column editable="true" title="Aporte 2" type="java.lang.Object"/>
                     <Column editable="false" title="Total G. Aula" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. final" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. Recuperacion" type="java.lang.Object"/>

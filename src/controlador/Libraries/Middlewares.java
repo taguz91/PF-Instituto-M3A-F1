@@ -4,7 +4,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
+import java.util.function.Function;
+import javax.swing.JTable;
 import modelo.ResourceManager;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -87,4 +88,12 @@ public final class Middlewares {
             return texto.toUpperCase();
         }
     }
+
+    public static Function<JTable, Integer> getIndexOfColTbl(String name) {
+        return obj -> {
+            return obj.getColumn(name).getModelIndex();
+        };
+
+    }
+
 }
