@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="76d6c760-472d-4fbc-9bad-24cc070350b0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_plan_clase" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT autonomo_plan FROM "TrabajoAutonomo" where id_plan_clases=$P!{id_plan_clase}]]>
+	</queryString>
+	<field name="autonomo_plan" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="297" height="37" uuid="f2710b53-47b0-47b9-b5c7-1518549f9c0b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{autonomo_plan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

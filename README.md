@@ -3,3 +3,6 @@
 ## Base de Datos
 Postgres V.10 
 
+## Arquitectura de software 
+MVC
+

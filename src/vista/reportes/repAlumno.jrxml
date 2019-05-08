@@ -19,7 +19,7 @@ a.alumno_pension,
 CASE WHEN alumno_pension=true THEN 'Posee'
 	ELSE 'No tiene'
 	END AS pension,
-	CASE WHEN alumno_trabaja=true THEN 'trabaja'
+CASE WHEN alumno_trabaja=true THEN 'trabaja'
 	ELSE 'No trabaja'
 	END AS trabaja,
 a.alumno_ocupacion,
@@ -232,7 +232,7 @@ AND a.alumno_activo = true;]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nivel_formacion_madre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="239" width="335" height="20"/>
+				<reportElement x="182" y="239" width="207" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno_nombre_contacto_emergencia}]]></textFieldExpression>
 			</textField>

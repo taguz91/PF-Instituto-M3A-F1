@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="67"/>
 	<parameter name="cedula" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -23,7 +23,7 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 	<field name="docente_tipo_tiempo" class="java.lang.String"/>
 	<field name="nombres" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
-	<field name="persona_foto" class="java.lang.Object"/>
+	<field name="persona_foto" class="java.io.InputStream"/>
 	<field name="persona_celular" class="java.lang.String"/>
 	<field name="persona_correo" class="java.lang.String"/>
 	<field name="docente_fecha_fin" class="java.sql.Date"/>
@@ -90,7 +90,7 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 			</textField>
 			<image>
 				<reportElement x="420" y="10" width="116" height="170"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{persona_foto}]]></imageExpression>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="152" width="71" height="20"/>
@@ -147,6 +147,10 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 				</textElement>
 				<text><![CDATA[Fecha Contrato:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="426" y="10" width="117" height="126"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<pageFooter>

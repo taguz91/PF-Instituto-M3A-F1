@@ -48,6 +48,40 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         return txtBuscar;
     }
 
+    public JLabel getLblError() {
+        return lblError;
+    }
+
+    public void setLblError(JLabel lblError) {
+        this.lblError = lblError;
+    }
+
+    public JButton getBtnEditarMateria() {
+        return btnEditarMateria;
+    }
+
+    public void setBtnEditarMateria(JButton btnEditarMateria) {
+        this.btnEditarMateria = btnEditarMateria;
+    }
+
+    public JButton getBtnEliminarMateria() {
+        return btnEliminarMateria;
+    }
+
+    public void setBtnEliminarMateria(JButton btnEliminarMateria) {
+        this.btnEliminarMateria = btnEliminarMateria;
+    }
+
+    public JButton getBtnIngresarMateria() {
+        return btnIngresarMateria;
+    }
+
+    public void setBtnIngresarMateria(JButton btnIngresarMateria) {
+        this.btnIngresarMateria = btnIngresarMateria;
+    }
+
+    
+    
     public JComboBox<String> getCmbCarreras() {
         return cmbCarreras;
     }
@@ -73,6 +107,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMateria = new javax.swing.JTable();
+        lblError = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         cmbCarreras = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -83,6 +118,9 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         cmbCiclo = new javax.swing.JComboBox<>();
         btnInfo = new javax.swing.JButton();
         btnRequisitos = new javax.swing.JButton();
+        btnIngresarMateria = new javax.swing.JButton();
+        btnEliminarMateria = new javax.swing.JButton();
+        btnEditarMateria = new javax.swing.JButton();
         btnReporteMaterias = new javax.swing.JButton();
 
         setClosable(true);
@@ -108,15 +146,25 @@ public class VtnMateria extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblMateria);
 
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        lblError.setText("Debe seleccionar una materia de la lista");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(lblError)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Filtrar:");
@@ -133,6 +181,12 @@ public class VtnMateria extends javax.swing.JInternalFrame {
 
         btnRequisitos.setText("Requisitos");
 
+        btnIngresarMateria.setText("Ingresar");
+
+        btnEliminarMateria.setText("Eliminar");
+
+        btnEditarMateria.setText("Editar");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -147,22 +201,28 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(8, 8, 8)
-                        .addComponent(cmbCarreras, 0, 193, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(272, 272, 272))
+                        .addComponent(cmbCarreras, 0, 312, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRequisitos)
+                        .addComponent(btnIngresarMateria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInfo)
-                        .addContainerGap())))
+                        .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEditarMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRequisitos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEliminarMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,16 +236,24 @@ public class VtnMateria extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnInfo)
-                        .addComponent(btnRequisitos)))
-                .addGap(6, 6, 6)
+                        .addComponent(btnRequisitos)
+                        .addComponent(btnIngresarMateria)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarMateria)
+                            .addComponent(btnEditarMateria)))))
         );
 
         btnReporteMaterias.setText("Generar Reporte");
@@ -224,7 +292,10 @@ public class VtnMateria extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEditarMateria;
+    private javax.swing.JButton btnEliminarMateria;
     private javax.swing.JButton btnInfo;
+    private javax.swing.JButton btnIngresarMateria;
     private javax.swing.JButton btnReporteMaterias;
     private javax.swing.JButton btnRequisitos;
     private javax.swing.JComboBox<String> cmbCarreras;
@@ -235,6 +306,7 @@ public class VtnMateria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblMateria;
     private javax.swing.JTextField txtBuscar;

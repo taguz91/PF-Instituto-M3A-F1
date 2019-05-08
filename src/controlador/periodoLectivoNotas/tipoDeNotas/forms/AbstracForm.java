@@ -1,6 +1,6 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
@@ -41,7 +41,15 @@ public abstract class AbstracForm {
         "NOTA FINAL"
     };
 
-    protected boolean COMPLETED = false;
+    protected String[] carrerasDuales = {
+        "G. DE AULA 1",
+        "G. DE AULA 2",
+        "TOTAL GESTION",
+        "EXAMEN FINAL",
+        "EXAMEN DE RECUPERACION",
+        "NOTA FINAL"
+    };
+
 
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
@@ -54,7 +62,7 @@ public abstract class AbstracForm {
     public void Init() {
         new Thread(() -> {
             try {
-                Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+                Effects.centerFrame(vista, desktop.getDpnlPrincipal());
                 desktop.getDpnlPrincipal().add(vista);
                 vista.setSelected(true);
                 vista.show();
@@ -67,9 +75,8 @@ public abstract class AbstracForm {
         listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
 
         cargarComboCarreras();
-        cargarCmbNombreNota(carrerasTradicionales);
+//        cargarCmbNombreNota(carrerasTradicionales);
         InitEventos();
-        COMPLETED = true;
     }
 
     private void InitEventos() {
@@ -95,6 +102,8 @@ public abstract class AbstracForm {
         });
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
+
+        vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTiposNotas(e));
     }
 
     //METODOS DE APOYO
@@ -179,4 +188,25 @@ public abstract class AbstracForm {
     }
 
     protected abstract void btnGuardar(ActionEvent e);
+
+    private void cargarTiposNotas(ActionEvent e) {
+        String busqueda = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+
+        PeriodoLectivoMD periodo = listaPeriodos
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equals(busqueda))
+                .findAny()
+                .get()
+                .getValue();
+
+        String modalidad = periodo.getCarrera().getModalidad();
+
+        if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
+            cargarCmbNombreNota(carrerasTradicionales);
+        } else {
+            cargarCmbNombreNota(carrerasDuales);
+        }
+
+    }
 }

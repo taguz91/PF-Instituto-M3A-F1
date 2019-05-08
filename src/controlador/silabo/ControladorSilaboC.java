@@ -6,6 +6,8 @@
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
+import static controlador.silabo.ControladorSilaboCRUD.x;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -14,6 +16,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -61,6 +68,21 @@ import vista.silabos.frmGestionSilabo.CheckListItem;
 import vista.silabos.frmGestionSilabo.CheckListRenderer;
 import vista.silabos.frmReferencias;
 import vista.silabos.frmSilabos;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import java.util.HashMap;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+
 
 /**
  *
@@ -147,7 +169,7 @@ public class ControladorSilaboC {
             periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
             //configuracion.getCmbPeriodo().removeAllItems();
             configuracion.getCmbAsignatura().removeAllItems();
-            System.out.println("-----------------" + periodosCarrera.get(0).getNombre_PerLectivo());
+            System.out.println("-------------------" + periodosCarrera.get(0).getNombre_PerLectivo());
             cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId_PerioLectivo());
             //cargarComboPeriodos(carreraSeleccionada.get().getId());
 
@@ -162,15 +184,14 @@ public class ControladorSilaboC {
             if (configuracion.getCmbPeriodo().getItemCount() > 0) {
 
                 System.out.println("-----------------------------entro");
-                for (SilaboMD s: silabosAnteriores){
-                    System.out.println(materiaSeleccionada.get().getId()+" - "+s.getIdMateria()+" - "+s.getIdPeriodoLectivo().getNombre_PerLectivo()+" - "+configuracion.getCmbPeriodo().getSelectedItem().toString());
+                for (SilaboMD s : silabosAnteriores) {
+                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre_PerLectivo() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
                 }
                 Optional<SilaboMD> silaboSeleccionado = silabosAnteriores.stream().
-                        filter(s -> s.getIdMateria().getId()==(materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                         findFirst();
                 silaboAnterior = silaboSeleccionado.get();
             }
-            
 
             silaboNuevo = new SilaboBD(conexion, materiaSeleccionada.get(), periodosCarrera.stream().findFirst().get());
 
@@ -258,7 +279,8 @@ public class ControladorSilaboC {
         });
 
         if (configuracion.getCmbAsignatura().getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Ya ha ingresado todos los silabos correspondientes para esta carrera en el período en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No tiene silabos pendientes para esta carrera dentro del periodo en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
+            
             configuracion.getBtnSiguiente().setEnabled(false);
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
@@ -274,6 +296,13 @@ public class ControladorSilaboC {
         silabosAnteriores.forEach((prd) -> {
             configuracion.getCmbPeriodo().addItem(prd.getIdPeriodoLectivo().getNombre_PerLectivo());
         });
+        
+        if (silabosAnteriores.size()>0){
+            configuracion.getSpnUnidades().setEnabled(false);
+        }else{
+            configuracion.getSpnUnidades().setEnabled(true);
+        }
+        
 
     }
 
@@ -327,9 +356,6 @@ public class ControladorSilaboC {
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             cargarReferencias(referenciasSilabo);
-            
-           
-            mostrarUnidad();
 
         }
 
@@ -345,8 +371,8 @@ public class ControladorSilaboC {
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
-        
-         gestion.getCmbUnidad().setSelectedIndex(0);
+
+        gestion.getCmbUnidad().setSelectedIndex(0);
 
         gestion.getCmbUnidad().addActionListener(new ActionListener() {
             @Override
@@ -1008,8 +1034,101 @@ public class ControladorSilaboC {
             }
 
         });
+        
+//        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
+//            @Override
+//            public void keyReleased(KeyEvent ke) {
+//            
+//                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+//                    buscarEstrategias(seleccionarUnidad());
+//                }
+//                
+//            }
+//            
+//        });
 
+        
+        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         cargarEstrategias(unidadesSilabo.get(0));
+        gestion.getCmbUnidad().setSelectedIndex(0);
+    }
+    private boolean accion = true;
+    private boolean accion2 = true;
+    private void ejecutar( ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+                gestion.getBtnGuardar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+
+                if (silaboNuevo.getIdSilabo() == null) {
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+                } else {
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+
+                
+                
+                accion = true;
+                
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                principal.getLblEstado().setText("");
+
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                
+                gestion.getBtnGuardar().setEnabled(true);
+
+            }).start();
+        }
+
+    }
+    
+    private void ejecutar2( ActionEvent e) {
+        if (accion) {
+            new Thread(() -> {
+                accion2 = false;
+                bibliografia.getBtnFinalizar().setEnabled(false);
+
+                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                if (silaboNuevo.getIdSilabo() == null) {
+                    guardarSilabo();
+                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+                } else {
+                    silaboNuevo.eliminar();
+                    guardarSilabo();
+                }
+
+                
+                
+                accion = true;
+                
+                
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                principal.getLblEstado().setText("");
+                bibliografia.getBtnFinalizar().setEnabled(true);
+                configuracion.dispose();
+                gestion.dispose();
+                bibliografia.dispose();
+
+                principal.getMnCtSilabos().doClick();
+
+            }).start();
+        }
+
     }
 
     public void citarReferencias(SilaboBD silabo, frmReferencias bibliografia) {
@@ -1074,20 +1193,8 @@ public class ControladorSilaboC {
 
         });
 
-        bibliografia.getBtnFinalizar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                guardarSilabo();
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-                configuracion.dispose();
-                gestion.dispose();
-                bibliografia.dispose();
-
-                principal.getMnCtSilabos().doClick();
-            }
-
-        });
+       bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
+        
 
         bibliografia.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
@@ -1171,7 +1278,10 @@ public class ControladorSilaboC {
 
         gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
         gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
-
+        
+        
+        
+        
         EstrategiasAprendizajeBD.consultar(conexion).forEach((emd) -> {
             modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
         });
@@ -1190,6 +1300,35 @@ public class ControladorSilaboC {
             }
         }
     }
+    
+//    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
+//
+//        DefaultListModel modeloEstrategias = new DefaultListModel();
+//
+//        gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
+//        gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
+//        
+//        
+//        
+//        
+//        EstrategiasAprendizajeBD.consultar2(conexion, gestion.getTxtBuscarEstrategia().getText()).forEach((emd) -> {
+//            modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
+//        });
+//
+//        for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
+//            CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
+//
+//            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+//
+//                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
+//                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
+//
+//                    item.setSelected(true);
+//
+//                }
+//            }
+//        }
+//    }
 
     public void agregarUnidad() {
 
@@ -1214,13 +1353,13 @@ public class ControladorSilaboC {
         evaluacionesSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
         for (EstrategiasUnidadMD emd : estrategiasSilabo) {
-            if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()) {
+            if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 
         for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
-            if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()) {
+            if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
@@ -1324,7 +1463,7 @@ public class ControladorSilaboC {
 
         total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
-        return (total + valor) <= 60;
+        return (total + valor) <= 60.0;
 
     }
 
@@ -1497,7 +1636,10 @@ public class ControladorSilaboC {
         }
 
         referenciasSilabo.forEach((rsm) -> {
-            b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
+                b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
+            }
+
         });
 
         modeloBase = new DefaultListModel<>();
@@ -1512,6 +1654,9 @@ public class ControladorSilaboC {
 
     public void agregarBibliografiaNoBase() {
 
+        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
+        
+        
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
@@ -1607,7 +1752,7 @@ public class ControladorSilaboC {
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
-        ReferenciasBD r2 = new ReferenciasBD(conexion);;
+        ReferenciasBD r2 = new ReferenciasBD(conexion);
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
@@ -1618,11 +1763,31 @@ public class ControladorSilaboC {
 
         silaboNuevo.insertar();
         insertarUnidades();
-
         insertarReferencias();
+        // exportarPDF();
 
     }
+//    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
+//        String sql = "UPDATE \"Silabo\"VALUES (?)";
+//        //Creamos una cadena para después prepararla
+//        PreparedStatement stmt = conexion.prepareStatement(sql);
+//        File archivo = new File("../PF-Instituto-M3A-F1/"+silabo.getIdMateria().getNombre()+".pdf");
+//        //ruta puede ser: "c://archivo"
+//        FileInputStream fis = new FileInputStream(archivo);
+//        //Lo convertimos en un Stream
+//        stmt.setBinaryStream(1, fis, (int) archivo.length());
+//        //Asignamos el Stream al Statement
+//        stmt.execute();
 
+//    File file = new File("myimage.gif");
+//FileInputStream fis = new FileInputStream(file);
+//PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
+//ps.setString(1, file.getName());
+//ps.setBinaryStream(2, fis, (int)file.length());
+//ps.executeUpdate();
+//ps.close();
+//fis.close();
+//    }
     public boolean validarCampos() {
 
         boolean control = true;
@@ -1700,4 +1865,7 @@ public class ControladorSilaboC {
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
     }
+    
+    
+
 }

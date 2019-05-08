@@ -121,7 +121,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
             hs = horaFin.split(":");
             horaT = Integer.parseInt(hs[0]);
             minutoT = Integer.parseInt(hs[1]);
-            System.out.println(horaC + " " + horaT + " " + minutoC + " " + minutoT);
+            //System.out.println(horaC + " " + horaT + " " + minutoC + " " + minutoT);
             if (horaC > 22 || horaC < 7 || horaT > 22 || horaC < 7 || minutoC != 0 || minutoT != 0) {
                 guardar = false;
                 jd.getLblError().setText("<html>Esta fuera de rango recuerde el formato: <br>08:00 - 20:00</html>");
@@ -135,7 +135,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                 }
             }
 
-            if ((horaT - horaC) > 1) {
+            if ((horaT - horaC) > 1 && editar) {
                 jd.getLblError().setText("<html>Debe ingresar solamente una hora: <br>08:00 - 09:00</html>");
                 guardar = false;
             }
@@ -163,22 +163,31 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
         }
 
         if (guardar) {
+            String nsql = "";
 //            System.out.println(dia);
 //            System.out.println(horaIni);
 //            System.out.println(horaFin);
-            inicio = LocalTime.of(horaC, minutoC);
-            fin = LocalTime.of(horaT, minutoT);
-            bd.setCurso(curso);
-            bd.setDia(dia);
-            bd.setHoraIni(inicio);
-            bd.setHoraFin(fin);
+            for (int i = horaC; i < horaT; i++) {
+                inicio = LocalTime.of(i, minutoC);
+                fin = LocalTime.of((i + 1), minutoT);
+                bd.setCurso(curso);
+                bd.setDia(dia);
+                bd.setHoraIni(inicio);
+                bd.setHoraFin(fin);
+                nsql += bd.obtenerInsert() + "\n";
+            }
+
+            System.out.println("-----------------");
+            System.out.println(nsql);
+            System.out.println("-----------------");
+            
             if (editar) {
                 bd.editar(idSesion);
                 idSesion = 0;
                 editar = false;
                 jd.getBtnCancelar().setVisible(false);
             } else {
-                bd.ingresar();
+                bd.ingresarHorarios(nsql);
             }
 
             //Actualizamos el horario 
@@ -211,10 +220,10 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
 
     private void cargarDatos() {
         //Titulo de la ventana 
-        jd.setTitle("Horario - " + curso.getId_materia().getNombre() + " - " + curso.getCurso_nombre());
-        jd.getLblPrd().setText(curso.getId_prd_lectivo().getNombre_PerLectivo());
-        jd.getLblMateria().setText(curso.getId_materia().getNombre());
-        switch (curso.getCurso_nombre().charAt(0)) {
+        jd.setTitle("Horario - " + curso.getMateria().getNombre() + " - " + curso.getNombre());
+        jd.getLblPrd().setText(curso.getPeriodo().getNombre_PerLectivo());
+        jd.getLblMateria().setText(curso.getMateria().getNombre());
+        switch (curso.getNombre().charAt(0)) {
             case 'M':
                 jornada = "MATUTINA";
                 break;
@@ -229,9 +238,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                 break;
         }
         jd.getLblJornada().setText(jornada);
-        jd.getLblDocente().setText(curso.getId_docente().getNombreCorto());
-        jd.getLblCurso().setText(curso.getCurso_nombre());
-        jd.getLblCapacidad().setText(curso.getCurso_capacidad() + "");
+        jd.getLblDocente().setText(curso.getDocente().getNombreCorto());
+        jd.getLblCurso().setText(curso.getNombre());
+        jd.getLblCapacidad().setText(curso.getCapacidad() + "");
     }
 
     private void clickTbl() {
@@ -261,8 +270,9 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                             jd.getBtnCancelar().setVisible(true);
                             break;
                         case 1:
-                            idSesion = 0;
+                            idSesion = sesion.getId();
                             bd.eliminar(idSesion);
+                            pnl.getTblHorario().setValueAt(null, posFil, posColum);
                             ctrHClase.actualizar(sesion.getDia());
                             break;
                         default:

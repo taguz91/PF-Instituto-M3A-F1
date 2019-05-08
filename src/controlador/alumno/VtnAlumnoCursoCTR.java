@@ -1,10 +1,11 @@
 package controlador.alumno;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
@@ -14,11 +15,15 @@ import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.estilo.TblEstilo;
+import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.VtnAlumnoCurso;
 import vista.principal.VtnPrincipal;
 
@@ -35,9 +40,9 @@ public class VtnAlumnoCursoCTR {
     private final VtnPrincipalCTR ctrPrin;
     private final RolMD permisos;
     //Posicion de los filtros seleccinados;
-    private int posPrd, posCur;
+    private int posPrd, posCur, posCiclo;
 
-    //Tabla  
+    //Tabla
     private DefaultTableModel mdTbl;
     //Datos
     private ArrayList<AlumnoCursoMD> almns;
@@ -45,9 +50,12 @@ public class VtnAlumnoCursoCTR {
     //Cargamos los periodos
     private final PeriodoLectivoBD prd;
     private ArrayList<PeriodoLectivoMD> periodos;
-    //Para cargar los cursos  
+    //Para cargar los cursos
     private final CursoBD cur;
     private ArrayList<String> cursos;
+    //Ciclos de una carrera 
+    private ArrayList<Integer> ciclos;
+    private final MateriaBD mat;
 
     /**
      * En el constructor se inician todas las dependencias de base de datos.
@@ -66,14 +74,10 @@ public class VtnAlumnoCursoCTR {
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
 
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos por curso");
-        ctrPrin.setIconJIFrame(vtnAlmnCurso);
-
         this.alc = new AlumnoCursoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         this.cur = new CursoBD(conecta);
+        this.mat = new MateriaBD(conecta);
 
         vtnPrin.getDpnlPrincipal().add(vtnAlmnCurso);
         vtnAlmnCurso.show();
@@ -88,16 +92,16 @@ public class VtnAlumnoCursoCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnAlmnCurso.getTblAlumnoCurso());
         vtnAlmnCurso.getTblAlumnoCurso().setModel(mdTbl);
-        //Llenamos la tabla 
+        //Llenamos la tabla
         cargarAlumnosCurso();
-        //Cargando los datos para combos 
+        //Cargando los datos para combos
         cargarCmbPrds();
-        //Buscador 
+        //Buscador
         vtnAlmnCurso.getTxtbuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmnCurso.getTxtbuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarAlumnosCurso();
@@ -110,14 +114,15 @@ public class VtnAlumnoCursoCTR {
                 vtnAlmnCurso.getBtnbuscar()));
         //Acciones de los botones
         vtnAlmnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
-        //Acciones en los combos  
+        //Acciones en los combos
         vtnAlmnCurso.getCmbPrdLectivos().addActionListener(e -> clickCmbPrd());
         vtnAlmnCurso.getCmbCursos().addActionListener(e -> clickCmbCurso());
-        //Le damos la accion al boton  
+        vtnAlmnCurso.getCmbCiclo().addActionListener(e -> clickCmbCiclo());
+        //Le damos la accion al boton
         vtnAlmnCurso.getBtnMaterias().addActionListener(e -> materiasCurso());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos por curso");
+        //llamar al reporte
+        vtnAlmnCurso.getBtnRepAlum().addActionListener(e -> validaComboReporte());
+        vtnAlmnCurso.getBtnListaCiclo().addActionListener(e -> validaComboReporteCiclo());
     }
 
     /**
@@ -162,6 +167,14 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    private void cargarTblPorCiclo() {
+        if (posCiclo > 0) {
+            almns = alc.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
+                    periodos.get(posPrd - 1).getId_PerioLectivo());
+            llenatTbl(almns);
+        }
+    }
+
     /**
      * Cargamos la informacion por curso y periodo lectivo
      */
@@ -185,7 +198,7 @@ public class VtnAlumnoCursoCTR {
                 Object[] valores = {a.getAlumno().getIdentificacion(),
                     a.getAlumno().getPrimerNombre()
                     + " " + a.getAlumno().getPrimerApellido(),
-                    a.getCurso().getCurso_nombre()};
+                    a.getCurso().getNombre()};
                 mdTbl.addRow(valores);
             });
             vtnAlmnCurso.getLblResultados().setText(almns.size() + " Resultados obtenidos.");
@@ -206,8 +219,25 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    private void cargarCmbCiclo() {
+        ciclos = mat.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+        if (ciclos != null) {
+            vtnAlmnCurso.getCmbCiclo().removeAllItems();
+            vtnAlmnCurso.getCmbCiclo().addItem("Todos");
+            ciclos.forEach((c) -> {
+                vtnAlmnCurso.getCmbCiclo().addItem(c + "");
+            });
+        }
+    }
+
+    private void clickCmbCiclo() {
+        posCiclo = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();
+        cargarTblPorCiclo();
+    }
+
     private void clickCmbPrd() {
         posPrd = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
+        cargarCmbCiclo();
         cargarCursoPorPrd();
         cargarTblPorPrd();
     }
@@ -221,7 +251,7 @@ public class VtnAlumnoCursoCTR {
         if (posPrd > 0) {
             cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
             vtnAlmnCurso.getCmbCursos().removeAllItems();
-            if (!cursos.isEmpty()) {
+            if (cursos != null) {
                 vtnAlmnCurso.getCmbCursos().addItem("Todos");
                 cursos.forEach(c -> {
                     vtnAlmnCurso.getCmbCursos().addItem(c);
@@ -242,6 +272,53 @@ public class VtnAlumnoCursoCTR {
         }
     }
 
+    public void reporteAlumno() {
+        JasperReport jr;
+        String path = "/vista/reportes/repAlumTodoCurso.jasper";
+        try {
+            Map parametro = new HashMap();
+            parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
+            parametro.put("curso", vtnAlmnCurso.getCmbCursos().getSelectedItem());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+   
+    public void validaComboReporte() {
+        int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
+        int pos2 = vtnAlmnCurso.getCmbCursos().getSelectedIndex();
+        if (pos1 <= 0 || pos2 <= 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un periodo y curso");
+        } else {
+            reporteAlumno();
+        }
+    }
+public void reporte() {
+        JasperReport jr;
+        String path = "/vista/reportes/repListaAlumCiclo.jasper";
+        try {
+            Map parametro = new HashMap();
+            parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
+            parametro.put("ciclo",vtnAlmnCurso.getCmbCiclo().getSelectedIndex());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+public void validaComboReporteCiclo() {
+        int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
+        int pos2 = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();
+        if (pos1 <= 0 || pos2 <= 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un periodo y un ciclo");
+        } else {
+            reporte();
+        }
+    }
     private void InitPermisos() {
 
         for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {

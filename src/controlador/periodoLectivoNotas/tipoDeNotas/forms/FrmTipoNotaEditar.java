@@ -5,7 +5,6 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import org.springframework.util.StringUtils;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
 
@@ -25,9 +24,13 @@ public class FrmTipoNotaEditar extends AbstracForm {
     public void InitEditar() {
 
         Init();
+
         PK = modelo.getIdTipoNota();
-        vista.setTitle(StringUtils.capitalize("editar tipo de nota"));
+
+        vista.setTitle("Editar Tipo De Nota");
+
         setObjInForm();
+
         activarFormulario(true);
     }
 
@@ -48,7 +51,6 @@ public class FrmTipoNotaEditar extends AbstracForm {
             if (setObj().editar(PK)) {
                 String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
                 JOptionPane.showMessageDialog(vista, MENSAJE);
-                Middlewares.setTextInLabelWithColor(vtnPadre.getVista().getLblEstado(), MENSAJE, 2, Middlewares.SUCCESS_COLOR);
                 vtnPadre.cargarTabla();
                 vista.dispose();
             } else {

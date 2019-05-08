@@ -27,12 +27,6 @@ public class dbCarreras extends CarreraMD {
     public dbCarreras() {
     }
 
-    public dbCarreras(int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        super(id, codigo, nombre, fechaInicio, fechaFin, modalidad, coordinador);
-    }
-
-    
-
     public List<CarreraMD> buscarCarreras(int aguja) {
 
         try {

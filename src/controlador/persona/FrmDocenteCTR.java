@@ -11,7 +11,6 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -31,11 +30,8 @@ import modelo.persona.PersonaMD;
 import modelo.validaciones.TxtVCedula;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 
@@ -192,7 +188,7 @@ public class FrmDocenteCTR {
         frmDocente.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-             //   buscarCedula(frmDocente.getTxtIdentificacion().getText());
+                //   buscarCedula(frmDocente.getTxtIdentificacion().getText());
             }
 
         });
@@ -494,8 +490,8 @@ public class FrmDocenteCTR {
     }
 
     public void editar(DocenteMD doc) {
-        
-       // frmDocente.getCmbTipoIdentificacion().setEnabled(false);
+
+        // frmDocente.getCmbTipoIdentificacion().setEnabled(false);
         editar = true;
         idDocente = doc.getIdDocente();
         frmDocente.getLblDatosPersona().setText("[ " + doc.getCodigo() + " ] " + doc.getNombreCompleto());
@@ -581,29 +577,27 @@ public class FrmDocenteCTR {
         frmDocente.getJdcFechaInicioContratacion().setDate(fechaHoy);
 
     }
-    
-     public void llamaReporteDocente() {
+
+    public void llamaReporteDocente() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentes.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
-            parametro.put("cedulaverificacion",frmDocente.getTxtIdentificacion().getText());
-            System.out.println( "parametro del reporte"+parametro);
+            parametro.put("cedulaverificacion", frmDocente.getTxtIdentificacion().getText());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Docente");
-            
+            conecta.mostrarReporte(jr, parametro, "Reporte de Docente");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Reporte de Docente");
 
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public void botonreporteDocente(){
-     int s = JOptionPane.showOptionDialog(vtnPrin,
+
+    public void botonreporteDocente() {
+        int s = JOptionPane.showOptionDialog(vtnPrin,
                 "Registro de persona \n"
                 + "¿Dessea Imprimir el Registro realizado ?", "REPORTE DOCENTES",
                 JOptionPane.YES_NO_CANCEL_OPTION,
@@ -612,13 +606,13 @@ public class FrmDocenteCTR {
                 new Object[]{"SI", "NO"}, "NO");
         switch (s) {
             case 0:
-               llamaReporteDocente();
+                llamaReporteDocente();
                 break;
             case 1:
-                
+
                 break;
             default:
                 break;
+        }
     }
-     }
 }

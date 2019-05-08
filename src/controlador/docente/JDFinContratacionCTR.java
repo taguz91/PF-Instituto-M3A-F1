@@ -13,17 +13,21 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.curso.CursoMD;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import vista.docente.JDFinContratacion;
 import vista.principal.VtnPrincipal;
 
@@ -34,12 +38,12 @@ import vista.principal.VtnPrincipal;
 public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     private PeriodoLectivoBD periodoBD;
-    private DocenteBD dc;
+    private final DocenteBD dc;
     private DocenteMD docenteMD;
-    private String cedula;
+    private final String cedula;
     private final JDFinContratacion frmFinContrato;
     private static LocalDate fechaInicio;
-    private DefaultTableModel mdTbl;
+    //private DefaultTableModel mdTbl;
     private boolean guardar = false;
 
     public JDFinContratacionCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
@@ -57,7 +61,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
         docenteMD = dc.buscarDocente(cedula);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
-
+        frmFinContrato.getbtninforme_fin_docente().addActionListener(e -> botoninformeDocente());
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -97,10 +101,10 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
                     if (frmFinContrato.getLbl_ErrPeriodos() != null) {
                         frmFinContrato.getLbl_ErrPeriodos().setVisible(true);
                         DefaultTableModel modelo_Tabla;
-                            modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
-                            for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
-                                modelo_Tabla.removeRow(i);
-                            }
+                        modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
+                        for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
+                            modelo_Tabla.removeRow(i);
+                        }
                     }
                 }
             }
@@ -134,8 +138,8 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);
-            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getId_materia().getNombre(), i, 0);
-            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getCurso_nombre(), i, 1);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
         }
     }
 
@@ -290,6 +294,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
             habilitarGuardar();
+
         }
 
     }
@@ -311,6 +316,50 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     public LocalDate convertirDate(Date fecha) {
         return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    //llamada al informe de fin de contratacion
+    public void llamainformeDocente() {
+        JasperReport jr;
+        String path = "/vista/reportes/INFORME_DOCENTE_RETIRADO.jasper";
+        //int posfila = vtnDocente.getTblDocente().getSelectedRow();
+
+        try {
+            Map parametro = new HashMap();
+            parametro.put("iddocente", docenteMD.getIdDocente());
+
+            parametro.put("periodolectivo", frmFinContrato.getJcbPeriodos());
+            parametro.put("periodolectivo", frmFinContrato.getCbx_Periodos().getSelectedItem().toString());
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            conecta.mostrarReporte(jr, parametro, "Informe de Retiro");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Informe de Retiro");
+
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+
+    public void botoninformeDocente() {
+        int s = JOptionPane.showOptionDialog(vtnPrin,
+                "Registro de persona \n"
+                + "¿Dessea Imprimir el Registro realizado ?", "Informe de Retiro",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"SI", "NO"}, "NO");
+        switch (s) {
+            case 0:
+                llamainformeDocente();
+                break;
+            case 1:
+
+                break;
+            default:
+                break;
+        }
     }
 
 }

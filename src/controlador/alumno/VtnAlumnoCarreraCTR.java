@@ -59,11 +59,6 @@ public class VtnAlumnoCarreraCTR {
         this.carr = new CarreraBD(conecta);
         this.permisos = permisos;
         this.ctrPrin = ctrPrin;
-
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos por carrera");
-        ctrPrin.setIconJIFrame(vtnAlmCar);
         vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
         vtnAlmCar.show();
     }
@@ -78,21 +73,21 @@ public class VtnAlumnoCarreraCTR {
         String[] titulo = {"Carrera", "Alumno", "Cédula", "Fecha inscripción"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        //Le damos unos toques a la tabla  
+        //Le damos unos toques a la tabla
         TblEstilo.formatoTbl(vtnAlmCar.getTblAlmnCarrera());
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 0, 70);
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 2, 120);
         vtnAlmCar.getTblAlmnCarrera().setModel(mdTbl);
         //Llenamos la tabla
         cargarAlmnsCarrera();
-        //acciones 
+        //acciones
         vtnAlmCar.getCmbCarrera().addActionListener(e -> clickCmbCarreras());
-        //Buscador 
+        //Buscador
         vtnAlmCar.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmCar.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarAlmnsCarrera();
@@ -105,9 +100,6 @@ public class VtnAlumnoCarreraCTR {
         //Validacion buscar
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
         //ctrPrin.carga.detener();
     }
 

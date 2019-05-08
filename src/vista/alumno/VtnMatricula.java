@@ -28,8 +28,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return btnEditar;
     }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
+    public JButton getBtnAnular() {
+        return btnAnular;
     }
 
     public JButton getBtnImprimirFicha() {
@@ -60,6 +60,10 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return lblNumResultados;
     }
 
+    public JButton getBtnHistoria() {
+        return btnHistoria;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,7 +79,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnIngresar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
         cbxEliminados = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         cmbPeriodos = new javax.swing.JComboBox<>();
@@ -84,6 +88,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         tblMatricula = new javax.swing.JTable();
         btnImprimirFicha = new javax.swing.JButton();
         lblNumResultados = new javax.swing.JLabel();
+        btnHistoria = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -101,7 +106,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
         btnEditar.setText("Editar");
 
-        btnEliminar.setText("Eliminar");
+        btnAnular.setText("Anular");
 
         cbxEliminados.setText("Ver eliminados");
         cbxEliminados.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -116,25 +121,26 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbxEliminados))
+                        .addComponent(cmbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(btnEliminar)
+                        .addComponent(txtBuscar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxEliminados)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAnular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIngresar)))
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -146,7 +152,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnIngresar)
                             .addComponent(btnEditar)
-                            .addComponent(btnEliminar))
+                            .addComponent(btnAnular))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBuscar)
@@ -180,6 +186,13 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
         lblNumResultados.setText("jLabel3");
 
+        btnHistoria.setText("Historial Matrícula");
+        btnHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -187,10 +200,12 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNumResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnImprimirFicha)))
                 .addContainerGap())
         );
@@ -201,7 +216,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimirFicha)
-                    .addComponent(lblNumResultados))
+                    .addComponent(lblNumResultados)
+                    .addComponent(btnHistoria))
                 .addGap(5, 5, 5))
         );
 
@@ -223,11 +239,16 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHistoriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnHistoria;
     private javax.swing.JButton btnImprimirFicha;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JCheckBox cbxEliminados;

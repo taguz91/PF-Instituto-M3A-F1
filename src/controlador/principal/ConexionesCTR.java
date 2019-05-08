@@ -11,7 +11,7 @@ public class ConexionesCTR extends Thread {
 
     private final Connection ct;
     private int segundos;
-    private String msg; 
+    private String msg;
 
     public ConexionesCTR(Connection ct) {
         this.ct = ct;
@@ -21,41 +21,54 @@ public class ConexionesCTR extends Thread {
     public void run() {
         try {
             System.out.println("Se inicia el hilo para comprobar, la conexion.");
-            
-            while (segundos < 200) {
+
+            while (segundos < 130) {
                 dormir(1000);
                 //System.out.println("Sigue contando: "+segundos);
-                segundos++; 
+                segundos++;
             }
-            System.out.println("Se cerrara la conexion. Se receteo por ultima: \n"+msg);
+            System.out.println("------------------------------");
+            System.out.println("Se cerrara la conexion. Se receteo por ultima: \n" + msg);
             ct.close();
+            System.out.println("------------------------------");
         } catch (SQLException ex) {
-            System.out.println("No se pudo cerrar la conexion."+ex.getMessage());
+            System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+            System.out.println("No se pudo cerrar la conexion." + ex.getMessage());
         }
     }
 
     public void iniciar(String mensaje) {
-        System.out.println("Iniciamos conexion desde: "+mensaje);
+        System.out.println("#############################################");
+        System.out.println("Iniciamos conexion desde: " + mensaje);
+        System.out.println("#############################################");
         if (ct != null) {
             System.out.println("Si tenemos conexion.");
         }
-        segundos = 0; 
+        segundos = 0;
         this.start();
     }
 
     public void recetear(String mensaje) {
         this.msg = mensaje;
-        System.out.println("Se receteara. Segundos: "+segundos);
+        //System.out.println("Se receteara. Segundos: "+segundos);
         segundos = 0;
-        System.out.println("Se receteeo. Segundos: "+segundos);
+        //System.out.println("Se receteeo. Segundos: "+segundos);
     }
-    
-    public void dormir(int seg){
+
+    public void dormir(int seg) {
         try {
             sleep(seg);
         } catch (InterruptedException ex) {
-            System.out.println("El hilo no se pudo dormir. "+ex.getMessage());
+            System.out.println("El hilo no se pudo dormir. " + ex.getMessage());
         }
+    }
+    
+    public void agregarSegundos(int seg){
+        this.segundos = seg;
+    }
+
+    public void matarHilo() {
+        segundos = 2000;
     }
 
 }

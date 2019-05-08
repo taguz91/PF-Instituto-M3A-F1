@@ -1,7 +1,6 @@
 package controlador.curso;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -24,11 +23,8 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.curso.FrmCurso;
 import vista.curso.VtnCurso;
 import vista.principal.VtnPrincipal;
@@ -46,7 +42,6 @@ public class VtnCursoCTR {
     private final RolMD permisos;
 
     private final CursoBD curso;
-    private CursoMD cursoEdit;
     private ArrayList<CursoMD> cursos;
     //modelo de la tabla 
     private DefaultTableModel mdTbl;
@@ -65,9 +60,6 @@ public class VtnCursoCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.permisos = permisos;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Cursos");
         this.prd = new PeriodoLectivoBD(conecta);
         ctrPrin.setIconJIFrame(vtnCurso);
         vtnPrin.getDpnlPrincipal().add(vtnCurso);
@@ -108,9 +100,6 @@ public class VtnCursoCTR {
         //Validacion del buscador 
         vtnCurso.getBtnBuscar().addKeyListener(new TxtVBuscador(vtnCurso.getTxtBuscar(),
                 vtnCurso.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Cursos");
         vtnCurso.getTblCurso().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -133,14 +122,6 @@ public class VtnCursoCTR {
                 } else if (b.length() == 0) {
                     cargarCursos();
                 }
-
-//                if (Validar.esLetras(b)) {
-//                    if (b.length() > 2) {
-//                        buscar(b);
-//                    } else if (b.length() == 0) {
-//                        cargarCursos();
-//                    }
-//                }
             }
         });
     }
@@ -150,26 +131,46 @@ public class VtnCursoCTR {
      * Abrimos el formulario para ingresar un curso
      */
     public void abrirFrmCurso() {
-        ctrPrin.abrirFrmCurso();
-        vtnCurso.dispose();
-        ctrPrin.cerradoJIF();
+        FrmCurso frmCurso = new FrmCurso();
+        ctrPrin.eventoInternal(frmCurso);
+        FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin, this);
+        ctrFrmCurso.iniciar();
+        vtnCurso.setVisible(false);
     }
 
     /**
      * Al seleccionar un curso se puede editar.
      */
     private void editarCurso() {
-        int fila = vtnCurso.getTblCurso().getSelectedRow();
-        if (fila >= 0) {
+        posFila = vtnCurso.getTblCurso().getSelectedRow();
+        if (posFila >= 0) {
             FrmCurso frmCurso = new FrmCurso();
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, ctrPrin, this);
             ctrFrmCurso.iniciar();
-            cursoEdit = curso.buscarCurso(
-                    Integer.parseInt(vtnCurso.getTblCurso().getValueAt(fila, 0).toString()));
-            ctrFrmCurso.editar(cursoEdit);
-            vtnCurso.dispose();
-            ctrPrin.cerradoJIF();
+            ctrPrin.eventoInternal(frmCurso);
+            ctrFrmCurso.editar(cursos.get(posFila));
+            vtnCurso.setVisible(false);
         }
+    }
+
+    /**
+     * Actualizamos la ventana luego de hacer una accion, eliminar editar etc.
+     */
+    public void actualizarVtn() {
+        int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
+        int posCur = vtnCurso.getCmbCurso().getSelectedIndex();
+        if (vtnCurso.getTxtBuscar().getText().length() > 0) {
+            buscar(vtnCurso.getTxtBuscar().getText().trim());
+        } else {
+            if (posPrd > 0 && posCur > 0) {
+                cargarCursosPorNombre();
+            } else if (posPrd > 0) {
+                cargarCursosPorPeriodo();
+            }else{
+                cargarCursos();
+            }
+        }
+        vtnCurso.setVisible(true);
     }
 
     /**
@@ -238,14 +239,14 @@ public class VtnCursoCTR {
         if (cursos != null) {
             cursos.forEach((c) -> {
                 Object valores[] = {
-                    c.getId_curso(),
-                    c.getId_prd_lectivo().getNombre_PerLectivo(),
-                    c.getId_materia().getNombre(),
-                    c.getId_docente().getPrimerNombre() + " "
-                    + c.getId_docente().getPrimerApellido(),
-                    c.getCurso_ciclo(),
-                    c.getCurso_nombre(),
-                    c.getCurso_capacidad()
+                    c.getId(),
+                    c.getPeriodo().getNombre_PerLectivo(),
+                    c.getMateria().getNombre(),
+                    c.getDocente().getPrimerNombre() + " "
+                    + c.getDocente().getPrimerApellido(),
+                    c.getCiclo(),
+                    c.getNombre(),
+                    c.getCapacidad()
                 };
                 mdTbl.addRow(valores);
             });
@@ -274,14 +275,15 @@ public class VtnCursoCTR {
         try {
             posFila = vtnCurso.getTblCurso().getSelectedRow();
             Map parametro = new HashMap();
-            parametro.put("curso", cursos.get(posFila).getId_curso());
+            parametro.put("curso", cursos.get(posFila).getId());
             // parametro.put("jornada", jornada.get(posFila).getNombre());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Lista de estudiantes");
+            conecta.mostrarReporte(jr, parametro, "Lista de estudiantes");
+//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
+//            JasperViewer view = new JasperViewer(print, false);
+//            view.setVisible(true);
+//            view.setTitle("Lista de estudiantes");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
@@ -304,16 +306,16 @@ public class VtnCursoCTR {
 
         if (posCur >= 0) {
             String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
-            int num = curso.numAlumnos(cursos.get(posCur).getId_curso());
+            int num = curso.numAlumnos(cursos.get(posCur).getId());
             int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro quiere "
                     + vtnCurso.getBtnEliminar().getText().toLowerCase() + " el curso " + nom + "\n"
                     + "Se " + vtnCurso.getBtnEliminar().getText().toLowerCase()
                     + "an todos los alumnos de este curso: " + num);
             if (r == JOptionPane.YES_OPTION) {
                 if (vtnCurso.getCbxEliminados().isSelected()) {
-                    curso.activarCurso(cursos.get(posCur).getId_curso());
+                    curso.activarCurso(cursos.get(posCur).getId());
                 } else {
-                    curso.eliminarCurso(cursos.get(posCur).getId_curso());
+                    curso.eliminarCurso(cursos.get(posCur).getId());
                 }
                 verCursosEliminados();
             }

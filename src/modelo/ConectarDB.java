@@ -1,6 +1,7 @@
 package modelo;
 
 import controlador.principal.ConexionesCTR;
+import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -10,11 +11,13 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.propiedades.Propiedades;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -31,8 +34,17 @@ public class ConectarDB {
     private ConexionesCTR ctrCt;
     //"Transaccion de tipo read commited
     //Se ven solo las modificaciones ya guardadas hechas por otras transacciones
+    //Para cambiar el estado de un mause cuando se hace una consulta.
+    private VtnPrincipal vtnPrin;
+    //Nombre de la tabla solo para testear 
+    private String tabla;
 
-    //BD En cloud
+    /**
+     * Base de datos de prueba
+     *
+     * @param user
+     * @param pass
+     */
     public ConectarDB(String user, String pass) {
         try {
             //Cargamos el driver
@@ -41,17 +53,18 @@ public class ConectarDB {
             url = "jdbc:postgresql://35.193.226.187:5432/BDcierre";
             this.user = user;
             this.pass = pass;
+            this.vtnPrin = null;
 
             //ct = DriverManager.getConnection(url, user, pass);
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Constructor conectarBD");
-            //ResourceManager.setConecct(ct);
+            ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
+            ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
-            System.out.println("No se puede conectar.");
+            System.out.println("No se puede conectar." + ex.getMessage());
         }
     }
 
@@ -62,12 +75,15 @@ public class ConectarDB {
             //Nos conectamos
             this.user = user;
             this.pass = pass;
-            conecta();
+            this.vtnPrin = null;
+            this.url = generarURL();
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Contructor ConectarBD");
-            //ct = ResourceManager.getConnection();
+            ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
             //ct = DriverManager.getConnection(url, user, pass);
+
+            ResourceManager.setConecct(ct);
+
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
@@ -89,32 +105,24 @@ public class ConectarDB {
             return ps;
         } catch (SQLException e) {
             System.out.println("No se pudo preparar el statement. " + e.getMessage());
+            ctrCt.matarHilo();
             return null;
         } finally {
-            
             ctrCt.recetear("Terminando de preparar un statamente.");
-//            try {
-//                ct.close();
-//                System.out.println("Cerramos conexion: Luego de hacer hacer un prepared statement");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion");
-//            }
         }
     }
 
     public SQLException nosql(String noSql) {
         try {
-            //Variable para las transacciones
-            //ct = ResourceManager.getConnection();
+            cursorCarga();
             if (ct.isClosed()) {
                 ct = DriverManager.getConnection(url, user, pass);
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("nosql Clase: ConectarBD");
             }
-
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
-            st.execute(noSql);
+            st.executeUpdate(noSql);
             System.out.println("---------NSQL-----------");
             System.out.println("Afecto a: " + st.getUpdateCount());
             System.out.println();
@@ -128,17 +136,14 @@ public class ConectarDB {
             return null;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la accion " + e.getMessage());
+            ctrCt.matarHilo();
             return e;
         } finally {
             try {
-                //Cerramos la consulta
+                cursorNormal();
+                //Cerramos el statement
                 st.close();
                 ctrCt.recetear("Terminando de ejecutar una transaccion.");
-//                //Si todo salio bienn retornamos nulo
-//                ct.close();
-//                if (ct.isClosed()) {
-//                    System.out.println("CERRAMOS CONEXION: Despues de realizar una transaccion.");
-//                }
             } catch (SQLException ex) {
                 System.out.println("NO SE CERRARON LAS CONEXIONES");
             }
@@ -147,6 +152,7 @@ public class ConectarDB {
 
     public ResultSet sql(String sql) {
         try {
+            cursorCarga();
             //Iniciamos la variable para las transacciones
             //ct = ResourceManager.getConnection();
             if (ct.isClosed()) {
@@ -160,49 +166,52 @@ public class ConectarDB {
             rs = st.executeQuery(sql);
             metaData = rs.getMetaData();
             System.out.println("--------SQL----------");
-            //System.out.println(ct.getSchema());
-            System.out.println("Tabla en la que se consulta: "+metaData.getTableName(1));
+            System.out.println(ct.getSchema());
+            System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
             System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
             System.out.println();
             System.out.println("------------------");
+            tabla = metaData.getTableName(1);
             return rs;
         } catch (SQLException e) {
             System.out.println("No pudimos realizar la consulta. " + e.getMessage());
+            ctrCt.matarHilo();
             return null;
         } finally {
-            ctrCt.recetear("Terminando de realizar una consulta.");
-//            try {
-//                ct.close();
-//                System.out.println("CERRAMOS CONEXION: Despues de hacer una consulta");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion.");
-//            }
+            ctrCt.recetear("Terminando de realizar una consulta en: " + tabla);
+            cursorNormal();
         }
     }
 
-    public Connection getConecction() {
+    public Connection getConecction(String mensaje) {
         try {
+            System.out.println("~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$~");
+            System.out.println("OBTENEMOS CONEXION " + mensaje);
             if (ct.isClosed()) {
                 System.out.println("La conexion fue cerrada no podemos retornarla. Debemos abrir una nueva");
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
+                ctrCt.agregarSegundos(60);
                 ct = DriverManager.getConnection(url, user, pass);
+                return ct;
             } else {
                 System.out.println("Esta abierta la conexion.");
+                ctrCt.recetear("Se recetea al devolver la conexion.");
+                ctrCt.agregarSegundos(60);
+                return ct;
             }
-        } catch (SQLException ex) {
-            System.out.println("No pudimos comprobar el estado de la conexion."+ex.getMessage());
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
+            ctrCt.matarHilo();
+            return null;
         }
-        return ct;
-    }
 
-    private void conecta() {
-        this.url = ResourceManager.generarURL();
     }
 
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         try {
+            cursorCarga();
             if (ct.isClosed()) {
                 ct = DriverManager.getConnection(url, user, pass);
                 ctrCt = new ConexionesCTR(ct);
@@ -214,16 +223,46 @@ public class ConectarDB {
             view.setTitle(titulo);
         } catch (SQLException ex) {
             System.out.println("No se puede imprimir el reporte. " + ex.getMessage());
+            ctrCt.matarHilo();
+            //mostrarReporte(jr, parametro, titulo); 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
         } finally {
             ctrCt.recetear("Terminando de imprimir un reporte.");
-//            try {
-//                ct.close();
-//                System.out.println("CERRAMOS CONEXION: Despues de imprimir un reporte.");
-//            } catch (SQLException ex) {
-//                System.out.println("No se pudo cerrar la conexion. Al imprimir un reporte.");
-//            }
+            cursorNormal();
         }
+    }
+    
+    public void cerrarConexion(){
+        try {
+            if (!ct.isClosed()) {
+                ct.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Un error ocurrimio mientras se cerraba conexion. "+e.getMessage());
+        }
+    }
+
+    private String generarURL() {
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
+    }
+
+    private void cursorCarga() {
+        if (vtnPrin != null) {
+            vtnPrin.setCursor(new Cursor(3));
+        }
+    }
+
+    private void cursorNormal() {
+        if (vtnPrin != null) {
+            vtnPrin.setCursor(new Cursor(0));
+        }
+    }
+
+    public void setVtnPrin(VtnPrincipal vtnPrin) {
+        this.vtnPrin = vtnPrin;
     }
 }

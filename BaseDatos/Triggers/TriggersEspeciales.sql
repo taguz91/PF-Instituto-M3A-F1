@@ -20,7 +20,7 @@ EXECUTE PROCEDURE actualiza_nom_prd();
 --Para borrar los triggers si es necesario
 --DROP TRIGGER inicia_ingreso_notas ON public."Cursos";
 --DROP FUNCTION iniciar_ingreso_notas;
-
+/*
 CREATE OR REPLACE FUNCTION iniciar_ingreso_notas()
 RETURNS TRIGGER AS $iniciar_ingreso_notas$
 BEGIN
@@ -34,7 +34,7 @@ CREATE TRIGGER inicia_ingreso_notas
 AFTER INSERT
 ON public."Cursos" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_ingreso_notas();
-
+*/
 --Trigger para cuando se ingresa un alumno en un curso
 CREATE OR REPLACE FUNCTION actualiza_malla_matricula()
 RETURNS TRIGGER AS $actualiza_malla_matricula$
@@ -68,6 +68,7 @@ ON public."AlumnoCurso" FOR EACH ROW
 EXECUTE PROCEDURE actualiza_malla_matricula();
 
 --Al volver reactivar una persona se activa tambien en docente o alumno
+/*
 CREATE OR REPLACE FUNCTION persona_activada()
 RETURNS TRIGGER AS $persona_activada$
 BEGIN
@@ -96,7 +97,7 @@ $persona_activada$ LANGUAGE plpgsql;
 CREATE TRIGGER auditoria_persona_activa
 BEFORE UPDATE OF persona_activa
 ON public."Personas" FOR EACH ROW
-EXECUTE PROCEDURE persona_activada();
+EXECUTE PROCEDURE persona_activada();*/
 
 --Iniciar malla al inscribir un alumno en un curso
 
@@ -106,12 +107,109 @@ BEGIN
   INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
   SELECT new.id_almn_carrera, id_materia, materia_ciclo
   FROM public."Materias"
-  WHERE id_carrera = new.id_carrera;
+  WHERE id_carrera = new.id_carrera AND materia_activa = true;
   RETURN NEW;
 END;
 $iniciar_malla$ LANGUAGE plpgsql;
 
-CREATE TRIGGER inicia_malla_
+CREATE TRIGGER inicia_malla
 AFTER INSERT
 ON public."AlumnosCarrera" FOR EACH ROW
 EXECUTE PROCEDURE iniciar_malla();
+
+--Trigger al retirar a un alumno de una materia
+CREATE OR REPLACE FUNCTION retirar_almn_clase()
+RETURNS TRIGGER AS $retirar_almn_clase$
+BEGIN
+  UPDATE public."AlumnoCurso"
+    SET almn_curso_estado = 'RETIRADO', almn_curso_activo = false
+    WHERE id_almn_curso = new.id_almn_curso;
+
+  UPDATE public."MallaAlumno"
+  SET malla_almn_estado = 'A', malla_almn_num_matricula = malla_almn_num_matricula - 1
+  WHERE id_almn_carrera = (
+  	SELECT id_almn_carrera
+  	FROM public."AlumnosCarrera"
+  	WHERE id_alumno = (
+  		SELECT id_alumno
+  		FROM public."AlumnoCurso"
+  		WHERE id_almn_curso = new.id_almn_curso) AND
+  	id_carrera = (
+  		SELECT id_carrera
+  		FROM public."Materias"
+  		WHERE id_materia = (
+  			SELECT id_materia
+  			FROM public."Cursos"
+  			WHERE id_curso = (
+  				SELECT id_curso
+  				FROM public."AlumnoCurso"
+  				WHERE id_almn_curso = new.id_almn_curso
+  			)
+  		)
+  	)
+  ) AND id_materia = (
+  	SELECT id_materia
+  		FROM public."Cursos"
+  		WHERE id_curso = (
+  			SELECT id_curso
+  			FROM public."AlumnoCurso"
+  			WHERE id_almn_curso = new.id_almn_curso)
+  );
+
+  RETURN NEW;
+END;
+$retirar_almn_clase$ LANGUAGE plpgsql;
+
+CREATE TRIGGER retira_almn_clase
+AFTER INSERT
+ON public."AlumnoCursoRetirados" FOR EACH ROW
+EXECUTE PROCEDURE retirar_almn_clase();
+
+--Eliminar retiro alumno
+/*
+CREATE OR REPLACE FUNCTION retirar_almn_clase()
+RETURNS TRIGGER AS $retirar_almn_clase$
+BEGIN
+  UPDATE public."AlumnoCurso"
+    SET almn_curso_estado = 'RETIRADO'
+    WHERE id_almn_curso = new.id_almn_curso;
+
+  UPDATE public."MallaAlumno"
+  SET malla_almn_estado = 'A', malla_almn_num_matricula = malla_almn_num_matricula - 1
+  WHERE id_almn_carrera = (
+  	SELECT id_almn_carrera
+  	FROM public."AlumnosCarrera"
+  	WHERE id_alumno = (
+  		SELECT id_alumno
+  		FROM public."AlumnoCurso"
+  		WHERE id_almn_curso = new.id_almn_curso) AND
+  	id_carrera = (
+  		SELECT id_carrera
+  		FROM public."Materias"
+  		WHERE id_materia = (
+  			SELECT id_materia
+  			FROM public."Cursos"
+  			WHERE id_curso = (
+  				SELECT id_curso
+  				FROM public."AlumnoCurso"
+  				WHERE id_almn_curso = new.id_almn_curso
+  			)
+  		)
+  	)
+  ) AND id_materia = (
+  	SELECT id_materia
+  		FROM public."Cursos"
+  		WHERE id_curso = (
+  			SELECT id_curso
+  			FROM public."AlumnoCurso"
+  			WHERE id_almn_curso = new.id_almn_curso)
+  );
+
+  RETURN NEW;
+END;
+$retirar_almn_clase$ LANGUAGE plpgsql;
+
+CREATE TRIGGER retira_almn_clase
+AFTER UPDATE OF retiro_activo
+ON public."AlumnoCursoRetirados" FOR EACH ROW
+EXECUTE PROCEDURE retirar_almn_clase();*/

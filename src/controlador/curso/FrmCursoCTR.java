@@ -1,8 +1,9 @@
 package controlador.curso;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.util.ArrayList;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -24,10 +25,9 @@ import vista.principal.VtnPrincipal;
  */
 public class FrmCursoCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmCurso frmCurso;
+    private final VtnCursoCTR ctrCurso;
     private final CursoBD curso;
-    private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
     //Para saber si estamos editando  
     private boolean editando = false;
@@ -45,21 +45,35 @@ public class FrmCursoCTR {
     //Para cargar jornadas  
     private final JornadaBD jd;
     private ArrayList<JornadaMD> jornadas;
+    //Private void ciclos de una carrera
+    private ArrayList<Integer> ciclos;
 
     public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.frmCurso = frmCurso;
-        this.vtnPrin = vtnPrin;
-        this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Alumno por carrera");
-        ctrPrin.setIconJIFrame(frmCurso);
+
         this.curso = new CursoBD(conecta);
         this.docen = new DocenteBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         this.mt = new MateriaBD(conecta);
         this.jd = new JornadaBD(conecta);
+        this.ctrCurso = null;
+
+        vtnPrin.getDpnlPrincipal().add(frmCurso);
+        frmCurso.show();
+    }
+
+    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin,
+            VtnCursoCTR ctrCurso) {
+        this.frmCurso = frmCurso;
+        this.ctrPrin = ctrPrin;
+
+        this.curso = new CursoBD(conecta);
+        this.docen = new DocenteBD(conecta);
+        this.prd = new PeriodoLectivoBD(conecta);
+        this.mt = new MateriaBD(conecta);
+        this.jd = new JornadaBD(conecta);
+        this.ctrCurso = ctrCurso;
 
         vtnPrin.getDpnlPrincipal().add(frmCurso);
         frmCurso.show();
@@ -74,15 +88,22 @@ public class FrmCursoCTR {
         actualizarCmbDocentes();
         cargarCmbJornada();
 
-        frmCurso.getCbxPeriodoLectivo().addActionListener(e -> actualizarCmbMaterias());
+        frmCurso.getCbxPeriodoLectivo().addActionListener(e -> clickCmbPrd());
         frmCurso.getCbxCiclo().addActionListener(e -> actualizarCmbMaterias());
         frmCurso.getCbxMateria().addActionListener(e -> actualizarCmbDocentes());
         //Le damos accion a los botones  
         frmCurso.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCurso.getBtnGuardarContinuar().addActionListener(e -> guardarSeguirIngresando());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Alumno por carrera");
+
+        //Al cerrar la ventana se le dara una accion 
+        frmCurso.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                if (ctrCurso != null) {
+                    ctrCurso.actualizarVtn();
+                }
+            }
+        });
     }
 
     private void ocultarErrores() {
@@ -107,6 +128,11 @@ public class FrmCursoCTR {
         }
     }
 
+    private void clickCmbPrd() {
+        int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
+        llenarCmbCiclos(posPr);
+    }
+
     //Con este emtodo actualizamos los datos del combo materias  
     //De igual manera en los del combo docente  
     //Materia consultamos todas las materias de ese cilo 
@@ -115,11 +141,12 @@ public class FrmCursoCTR {
         frmCurso.getCbxMateria().setEnabled(true);
         int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
         int posCi = frmCurso.getCbxCiclo().getSelectedIndex();
-        if (posPr > 0 && posCi == 0) {
-            //Consultamos las materias para cargarlo co el combo materias
-            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
-            cargarCmbMaterias(materias);
-        } else if (posPr > 0 && posCi > 0) {
+//        if (posPr > 0 && posCi == 0) {
+//            //Consultamos las materias para cargarlo co el combo materias
+//            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
+//            cargarCmbMaterias(materias);
+//        } else 
+        if (posPr > 0 && posCi > 0) {
             int ciclo = Integer.parseInt(frmCurso.getCbxCiclo().getSelectedItem().toString());
 
             materias = mt.cargarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
@@ -129,6 +156,17 @@ public class FrmCursoCTR {
             frmCurso.getCbxMateria().setEnabled(false);
         }
 
+    }
+
+    private void llenarCmbCiclos(int posPrd) {
+        ciclos = mt.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+        frmCurso.getCbxCiclo().removeAllItems();
+        if (ciclos != null) {
+            frmCurso.getCbxCiclo().addItem("Seleccione");
+            ciclos.forEach(c -> {
+                frmCurso.getCbxCiclo().addItem(c + "");
+            });
+        }
     }
 
     private void actualizarCmbDocentes() {
@@ -179,8 +217,9 @@ public class FrmCursoCTR {
         if (guardar()) {
             actualizarCmbMaterias();
             actualizarCmbDocentes();
+            frmCurso.getLblError().setVisible(false);
         } else {
-            System.out.println("Guardar y seguir");
+            System.out.println("No se pudo guardar, posiblmente ");
         }
     }
 
@@ -188,7 +227,9 @@ public class FrmCursoCTR {
         if (guardar()) {
             frmCurso.dispose();
             ctrPrin.cerradoJIF();
-            ctrPrin.abrirVtnCurso();
+            if (ctrCurso != null) {
+                ctrCurso.actualizarVtn();
+            }
         } else {
             System.out.println("No se pudo guardar.");
         }
@@ -235,18 +276,19 @@ public class FrmCursoCTR {
                     frmCurso.getLblError().setVisible(true);
                 } else {
                     frmCurso.getLblError().setVisible(false);
+
+                    existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
+                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId_PerioLectivo(),
+                            paralelo);
+                    if (existeCurso != null) {
+                        guardar = false;
+                        frmCurso.getLblError().setText("Este curso ya tiene guardado: " + materias.get(posMat - 1).getNombre() + ".");
+                        frmCurso.getLblError().setVisible(true);
+                    } else {
+                        frmCurso.getLblError().setVisible(false);
+                    }
                 }
 
-                existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
-                        jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId_PerioLectivo(),
-                        paralelo);
-                if (existeCurso != null) {
-                    guardar = false;
-                    frmCurso.getLblError().setText("Este curso ya tiene guardado: " + materias.get(posMat - 1).getNombre() + ".");
-                    frmCurso.getLblError().setVisible(true);
-                } else {
-                    frmCurso.getLblError().setVisible(false);
-                }
             }
         }
 
@@ -254,13 +296,13 @@ public class FrmCursoCTR {
 
             String nombre = jornadas.get(posJrd - 1).getNombre().charAt(0) + "" + ciclo + "" + paralelo;
 
-            curso.setCurso_capacidad(Integer.parseInt(capacidad));
-            curso.setCurso_ciclo(ciclo);
-            curso.setCurso_jornada(jornadas.get(posJrd - 1));
-            curso.setCurso_nombre(nombre);
-            curso.setId_docente(docentes.get(posDoc - 1));
-            curso.setId_materia(materias.get(posMat - 1));
-            curso.setId_prd_lectivo(periodos.get(posPrd - 1));
+            curso.setCapacidad(Integer.parseInt(capacidad));
+            curso.setCiclo(ciclo);
+            curso.setJornada(jornadas.get(posJrd - 1));
+            curso.setNombre(nombre);
+            curso.setDocente(docentes.get(posDoc - 1));
+            curso.setMateria(materias.get(posMat - 1));
+            curso.setPeriodo(periodos.get(posPrd - 1));
             curso.setParalelo(paralelo);
 
             if (!editando) {
@@ -280,17 +322,30 @@ public class FrmCursoCTR {
 
     public void editar(CursoMD c) {
         editando = true;
-        idCurso = c.getId_curso();
+        idCurso = c.getId();
+        int j = 0;
+        switch (c.getNombre().charAt(0)) {
+            case 'M':
+                j = 1;
+                break;
+            case 'V':
+                j = 2;
+                break;
+            case 'N':
+                j = 3;
+                break;
+        }
+        //Ocultamos el btn de guardar y continuar
+        frmCurso.getBtnGuardarContinuar().setVisible(false);
 
-        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getId_prd_lectivo().getNombre_PerLectivo());
-        frmCurso.getCbxJornada().setSelectedItem(c.getCurso_jornada().getNombre());
-        frmCurso.getCbxCiclo().setSelectedItem(c.getCurso_ciclo() + "");
-        frmCurso.getCbxParalelo().setSelectedItem(c.getParalelo());
-        frmCurso.getCbxMateria().setSelectedItem(c.getId_materia().getNombre());
-        frmCurso.getCbxDocente().setSelectedItem(c.getId_docente().getPrimerNombre() + " "
-                + c.getId_docente().getPrimerApellido());
-        frmCurso.getTxtCapacidad().setText(c.getCurso_capacidad() + "");
-
+        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getPeriodo().getNombre_PerLectivo());
+        frmCurso.getCbxJornada().setSelectedIndex(j);
+        frmCurso.getCbxCiclo().setSelectedItem(c.getCiclo() + "");
+        frmCurso.getCbxParalelo().setSelectedItem(c.getNombre().charAt(2) + "");
+        frmCurso.getCbxMateria().setSelectedItem(c.getMateria().getNombre());
+        frmCurso.getCbxDocente().setSelectedItem(c.getDocente().getPrimerNombre() + " "
+                + c.getDocente().getPrimerApellido());
+        frmCurso.getTxtCapacidad().setText(c.getCapacidad() + "");
     }
 
 }

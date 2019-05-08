@@ -1,6 +1,8 @@
 package controlador.login;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
+import controlador.notas.VtnNotasCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,13 +11,29 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import modelo.ConectarDB;
+import modelo.ResourceManager;
+import modelo.alumno.AlumnoCursoBD;
+import modelo.notas.NotasBD;
+import modelo.persona.AlumnoMD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -47,6 +65,7 @@ public class LoginCTR {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
         this.ista = icono.getImage();
         vista.setIconImage(ista);
+
     }
 
     //Inits
@@ -80,8 +99,6 @@ public class LoginCTR {
             }
         });
 
-        vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
@@ -98,13 +115,7 @@ public class LoginCTR {
         if (c.length() > 1 && c.length() <= 2) {
             if (c.equalsIgnoreCase("J.")) {
                 vista.getTxtUsername().setText("JOHNNY");
-                vista.getTxtPassword().setText("ROOT");
-            } else if (c.equalsIgnoreCase("R.")) {
-                vista.getTxtUsername().setText("ROOT");
-                vista.getTxtPassword().setText("RUTH");
-            } else if (c.equalsIgnoreCase("P.")) {
-                vista.getTxtUsername().setText("postgres");
-                vista.getTxtPassword().setText("Holapostgres");
+                //vista.getTxtPassword().
             }
         }
     }
@@ -115,17 +126,21 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
-
-                Middlewares.setLoadCursorInWindow(vista);
+                Effects.setLoadCursor(vista);
 
                 USERNAME = vista.getTxtUsername().getText();
                 PASSWORD = vista.getTxtPassword().getText();
 
+                ConectarDB conectar = new ConectarDB(USERNAME, PASSWORD, "Login");
+
                 Map<Object, Object> properties = new HashMap<>();
+
                 properties.put("username", USERNAME);
                 properties.put("password", PASSWORD);
 
                 Propiedades.generateUserProperties(properties);
+
+                ResourceManager.setConecct(conectar.getConecction("Al iniciar la aplicacion"));
 
                 modelo.setUsername(vista.getTxtUsername().getText());
                 modelo.setPassword(vista.getTxtPassword().getText());
@@ -134,89 +149,32 @@ public class LoginCTR {
                     List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
 
                     if (!Lista.isEmpty()) {
-
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
-
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conectar, icono, ista, false);
                         vtn.Init();
-
                     } else {
+
                         vista.getLblAvisos().setVisible(true);
                         vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                     }
-
+                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
                     vista.getLblAvisos().setVisible(true);
                     vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
 
             }).start();
         }
-
     }
 
-    private void LoginGenerico() {
-
-        JPasswordField pass = new JPasswordField();
-        int o = JOptionPane.showConfirmDialog(vista, pass, "Ingrese contraseña",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        pass.setFocusable(true);
-        pass.requestFocus();
-        pass.selectAll();
-
-        if (o == JOptionPane.OK_OPTION) {
-            String c = new String(pass.getPassword());
-            if (c.equals("soyyo")) {
-
-                USERNAME = "ROOT";
-                PASSWORD = "RUTH";
-
-                modelo.setUsername("ROOT");
-                modelo.setPassword("RUTH");
-
-                //ConectarDB conecta = new ConectarDB(PASSWORD, USERNAME);
-                ConectarDB conecta = new ConectarDB(USERNAME, PASSWORD);
-                System.out.println("Conexion " + conecta.getConecction());
-                try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
-
-                    if (!Lista.isEmpty()) {
-
-                        modelo.setPersona(Lista.get(0).getPersona());
-
-                        vista.dispose();
-
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conecta, icono, ista, true);
-                        vtn.Init();
-
-                    } else {
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                    }
-
-                } catch (NullPointerException e) {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                }
-                if (conecta.getConecction() != null) {
-                    vista.dispose();
-                } else {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("No se puede conectar.");
-                }
-
-            } else if (c.length() == 0) {
-                LoginGenerico();
-            } else {
-                JOptionPane.showMessageDialog(null, "Esponja entrar aqui es peligroso!!!", "Error",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-        }
-
-    }
-
+    /**
+     * Recibimos la contraseña para ingresar al sistema
+     *
+     * @param e
+     */
     //Procesadores de eventos
     private void btnIngresarActionPerformance(ActionEvent e) {
         Login();
@@ -228,10 +186,6 @@ public class LoginCTR {
             Login();
         }
 
-    }
-
-    private void btnIngSUActionPerformance(ActionEvent e) {
-        LoginGenerico();
     }
 
     /**
@@ -250,5 +204,7 @@ public class LoginCTR {
             }
         });
     }
+
+
 
 }

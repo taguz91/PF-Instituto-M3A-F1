@@ -1,12 +1,7 @@
 package controlador.notas.ux;
 
-import controlador.Libraries.Middlewares;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ComponentListener;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseListener;
-import java.beans.VetoableChangeListener;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -17,11 +12,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RowStyle extends DefaultTableCellRenderer {
 
     private int columna;
-    private int minValue;
 
-    public RowStyle(int columna, int minValue) {
+    public RowStyle(int columna) {
         this.columna = columna;
-        this.minValue = minValue;
     }
 
     @Override
@@ -31,13 +24,19 @@ public class RowStyle extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         try {
 
-            double valor = Double.valueOf(table.getValueAt(row, this.columna).toString());
+            String valor = table.getValueAt(row, this.columna).toString();
 
-            if (valor >= minValue) {
-                setForeground(Color.BLUE);
+            if (valor.equalsIgnoreCase("APROBADO")) {
+                setForeground(new Color(37, 107, 187));
+            } else if (valor.equalsIgnoreCase("REPROBADO")) {
+                setForeground(new Color(214, 48, 12));
             } else {
-                setForeground(Color.RED);
+                setForeground(new Color(0, 0, 0));
             }
+
+            table.setSelectionBackground(Color.lightGray);
+            //table.setSelectionForeground(Color.lightGray);
+
         } catch (NumberFormatException | NullPointerException e) {
 
         }

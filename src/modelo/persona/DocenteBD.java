@@ -241,15 +241,15 @@ public class DocenteBD extends DocenteMD {
                 + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
 
         ResultSet rs = conecta.sql(nsql);
-        List<CursoMD> lista = new ArrayList<CursoMD>();
+        List<CursoMD> lista = new ArrayList<>();
 
         try {
             while (rs.next()) {
                 CursoMD c = new CursoMD();
                 MateriaMD m = new MateriaMD();
                 m.setNombre(rs.getString("materia_nombre"));
-                c.setId_materia(m);
-                c.setCurso_nombre(rs.getString("curso_nombre"));
+                c.setMateria(m);
+                c.setNombre(rs.getString("curso_nombre"));
                 lista.add(c);
 
             }
@@ -273,7 +273,6 @@ public class DocenteBD extends DocenteMD {
                 + "	AND public.\"DocentesMateria\".id_docente = public.\"Docentes\".id_docente\n"
                 + "	AND public.\"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
                 + "	GROUP BY \"Docentes\".id_docente, \"Materias\".id_carrera ORDER BY id_docente;";
-        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -323,22 +322,27 @@ public class DocenteBD extends DocenteMD {
 
     public ArrayList<DocenteMD> cargarDocentesPorMateria(int idMateria) {
         ArrayList<DocenteMD> docentes = new ArrayList();
-        String sql = "SELECT public.\"Docentes\".id_docente, id_persona, docente_codigo, docente_otro_trabajo, \n"
-                + "docente_categoria, docente_fecha_contrato,\n"
-                + "docente_tipo_tiempo, docente_activo, docente_observacion,\n"
-                + "docente_capacitador , docente_titulo, docente_abreviatura\n"
-                + "FROM public.\"Docentes\",  public.\"DocentesMateria\"\n"
-                + "WHERE public.\"DocentesMateria\".id_materia = " + idMateria + " \n"
-                + "AND public.\"Docentes\".id_docente = public.\"DocentesMateria\".id_docente\n"
+        String sql = "SELECT d.id_docente, d.id_persona, \n"
+                + "docente_abreviatura, \n"
+                + "persona_primer_nombre, persona_primer_apellido \n"
+                + "FROM public.\"Docentes\" d,  public.\"DocentesMateria\" dm, "
+                + "public.\"Personas\"p \n"
+                + "WHERE dm.id_materia = " + idMateria + " \n"
+                + "AND d.id_docente = dm.id_docente \n"
+                + "AND p.id_persona = d.id_persona \n"
+                + "AND docente_activo = TRUE\n"
                 + "ORDER BY id_docente;";
-        System.out.println(sql);
+        //System.out.println(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                DocenteMD doc = obtenerDocente(rs);
-                if (doc != null) {
-                    docentes.add(doc);
-                }
+                DocenteMD doc = new DocenteMD();
+                doc.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                doc.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                doc.setIdDocente(rs.getInt("id_docente"));
+                doc.setIdPersona(rs.getInt("id_persona"));
+
+                docentes.add(doc);
             }
             rs.close();
             return docentes;
@@ -571,7 +575,6 @@ public class DocenteBD extends DocenteMD {
                 + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura\n"
                 + "FROM public.\"Docentes\" WHERE "
                 + " docente_activo=false and docente_codigo ='" + identificacion + "'";
-        //System.out.println(sql);
         return consultarPor(sql);
     }
 
@@ -709,51 +712,60 @@ public class DocenteBD extends DocenteMD {
 
     }
 
-    public static Map<String, DocenteMD> selectDocentes() {
+    public static HashMap<String, DocenteMD> selectAll(String username) {
+
         String SELECT = "SELECT\n"
+                + "\"public\".\"Personas\".id_persona,\n"
                 + "\"public\".\"Personas\".persona_identificacion,\n"
                 + "\"public\".\"Personas\".persona_primer_apellido,\n"
                 + "\"public\".\"Personas\".persona_segundo_apellido,\n"
                 + "\"public\".\"Personas\".persona_primer_nombre,\n"
                 + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"Personas\".id_persona,\n"
                 + "\"public\".\"Docentes\".id_docente,\n"
-                + "\"public\".\"Docentes\".docente_codigo\n"
+                + "\"public\".\"Docentes\".docente_codigo,\n"
+                + "\"public\".\"Docentes\".docente_activo,\n"
+                + "\"public\".\"Docentes\".docente_en_funcion\n"
                 + "FROM\n"
-                + "\"public\".\"Docentes\"\n"
-                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
-                + "WHERE \n"
-                + "docente_activo IS TRUE";
+                + "\"public\".\"Personas\"\n"
+                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"public\".\"Usuarios\".usu_username = '" + username + "'"
+                + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
 
-        Map<String, DocenteMD> lista = new HashMap<>();
-
+        HashMap<String, DocenteMD> lista = new HashMap<>();
+        
+        
+        
+        
         ResultSet rs = ResourceManager.Query(SELECT);
 
         try {
+
             while (rs.next()) {
 
                 DocenteMD docente = new DocenteMD();
+
                 docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdPersona(rs.getInt("id_persona"));
+                docente.setCodigo(rs.getString("docente_codigo"));
                 docente.setIdentificacion(rs.getString("persona_identificacion"));
                 docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
 
-                docente.setIdPersona(rs.getInt("id_persona"));
-
-                docente.setCodigo(rs.getString("docente_codigo"));
-
-                String key = docente.getIdentificacion() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre();
+                String key = docente.getIdentificacion() + " " + docente.getPrimerNombre() + " " + docente.getSegundoNombre() + " " + docente.getPrimerApellido() + " " + docente.getSegundoApellido();
 
                 lista.put(key, docente);
+
             }
             rs.close();
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return lista;
-    }
 
+    }
 }

@@ -175,7 +175,7 @@ public class FrmCurso extends javax.swing.JInternalFrame {
 
         lblCapacidad.setText("Capacidad:");
         jPanel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 90, -1));
-        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 30, -1));
+        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 30, -1));
 
         cbxJornada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "MATUTINO", "VESPERTINO", "NOCTURNO" }));
         jPanel1.add(cbxJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 370, -1));
@@ -204,7 +204,7 @@ public class FrmCurso extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Guardar y salir.");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
         pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -233,10 +233,10 @@ public class FrmCurso extends javax.swing.JInternalFrame {
 
         btnGuardarContinuar.setText("Guardar y continuar ingresando");
         btnGuardarContinuar.setToolTipText("Guardar y continuar ingresando en el mismo curso.");
-        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, -1));
+        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, -1, -1));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
-        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 390, 15));
+        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 180, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

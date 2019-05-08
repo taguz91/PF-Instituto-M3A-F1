@@ -19,3 +19,7 @@ ALTER TABLE public."DocentesMateria" ADD UNIQUE(id_docente, id_materia);
 ALTER TABLE public."Matricula" ADD UNIQUE(id_alumno, id_prd_lectivo);
 --No se puede duplicar un silabo de una materia y prd lectivo
 ALTER TABLE public."Sialbo" ADD UNIQUE(id_materia, id_prd_lectivo);
+--No se puede retirar a un alumno de una materia mas de una vez
+ALTER TABLE public."AlumnoCursoRetirados" ADD UNIQUE(id_almn_curso);
+--SOlo puede tener un tipo de nota en un periodo
+ALTER TABLE public."Notas" ADD UNIQUE(id_almn_curso, id_tipo_nota);

@@ -16,18 +16,9 @@ public class CarreraMD {
     private LocalDate fechaFin;
     private String modalidad;
     private DocenteMD coordinador;
+    private int numSemanas;
     
     public CarreraMD() {
-    }
-
-    public CarreraMD(int id, String codigo, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String modalidad, DocenteMD coordinador) {
-        this.id = id;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.modalidad = modalidad;
-        this.coordinador = coordinador;
     }
 
     public int getId() {
@@ -84,6 +75,14 @@ public class CarreraMD {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getNumSemanas() {
+        return numSemanas;
+    }
+
+    public void setNumSemanas(int numSemanas) {
+        this.numSemanas = numSemanas;
     }
 
     @Override

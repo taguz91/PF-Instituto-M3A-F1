@@ -1,8 +1,5 @@
 package modelo;
 
-import controlador.login.LoginCTR;
-import java.io.File;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -22,8 +19,8 @@ public class ResourceManager {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
     private static String JDBC_URL = "";
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+    public static String USERNAME = "";
+    public static String PASSWORD = "";
     private static Driver driver = null;
 
     private static Connection conn = null;
@@ -46,17 +43,16 @@ public class ResourceManager {
 
         }
 
-        if (conn != null) {
-            //cerrarSesion();
+        if (conn.isClosed()) {
 
-            //conn.close();
-            //resetConn();
-        }
+            System.out.println("CLOSE");
 
-        if (conn == null || conn.isClosed()) {
-            //cerrarSesion();
+            conn = null;
             resetConn();
-            System.out.println("Se inicio la conexion. En resource manager");
+        }
+        if (conn == null) {
+            System.out.println("null");
+            resetConn();
         }
 
         return conn;
@@ -69,7 +65,6 @@ public class ResourceManager {
 
             USERNAME = Propiedades.getUserProp("username");
             PASSWORD = Propiedades.getUserProp("password");
-
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         } catch (SQLException ex) {
             System.out.println("INTENTE NUEVAMENTE");
@@ -110,7 +105,6 @@ public class ResourceManager {
 
             stmt.execute(Statement);
 
-            conn.close();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -127,7 +121,6 @@ public class ResourceManager {
 
             rs = stmt.executeQuery(Query);
 
-            conn.close();
             return rs;
 
         } catch (SQLException | NullPointerException e) {
@@ -186,4 +179,17 @@ public class ResourceManager {
     public static void setConecct(Connection cn) {
         ResourceManager.conn = cn;
     }
+
+    public static void cerrarConexion() {
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null;
+            } catch (SQLException ex) {
+                Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }
+

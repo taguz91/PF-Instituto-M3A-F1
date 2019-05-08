@@ -55,7 +55,31 @@ public class EstrategiasAprendizajeBD extends EstrategiasAprendizajeMD {
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_estrategia, descripcion_estrategia\n"
-                    + "	FROM public.\"EstrategiasAprendizaje\" ORDER BY id_estrategia DESC");
+                    + "	FROM public.\"EstrategiasAprendizaje\" ORDER BY descripcion_estrategia");
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                EstrategiasAprendizajeMD tmp = new EstrategiasAprendizajeMD();
+                tmp.setIdEstrategia(rs.getInt(1));
+                tmp.setDescripcionEstrategia(rs.getString(2));
+                estrategias.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EstrategiasAprendizajeBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return estrategias;
+    }
+    
+    public static List<EstrategiasAprendizajeMD> consultar2(ConexionBD conexion, String clave) {
+
+        List<EstrategiasAprendizajeMD> estrategias = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_estrategia, descripcion_estrategia\n"
+                    + "	FROM public.\"EstrategiasAprendizaje\" WHERE descripcion_estrategia ILIKE '%" + clave + "%'"+"ORDER BY descripcion_estrategia");
 
             ResultSet rs = st.executeQuery();
 

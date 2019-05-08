@@ -88,12 +88,21 @@
                 <Property name="text" type="java.lang.String" value="Matricula"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnRetirados">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Delete_File_20px_1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Matriculas Anuladas"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtListaAlumnos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Lista Alumnos"/>
+                <Property name="text" type="java.lang.String" value="Lista alumnos"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
@@ -114,6 +123,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtRolesPeriodo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
               <Events>
@@ -295,6 +307,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>
@@ -369,33 +384,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Estilo"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnWindows">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" value="Windows"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnNimbus">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Nimbus"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnMetal">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Metal"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
@@ -452,7 +440,7 @@
               <Component id="dpnlPrincipal" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jPanel1" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
                   <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -642,6 +630,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnIngresarRol">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Permanent_Job_25px.png"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
@@ -694,13 +685,8 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblEstado" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="lblEstado" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Component id="btnEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -818,7 +804,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblIP" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="lblIP" min="-2" pref="180" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsola" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>

@@ -52,6 +52,7 @@ CREATE TABLE "Personas"(
   "persona_tipo_residencia" character varying(30),
   "persona_fecha_nacimiento" date,
   "persona_activa" BOOLEAN DEFAULT 'true',
+  "persona_categoria_migratoria" character varying(50),
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
 
@@ -121,6 +122,7 @@ CREATE TABLE "Carreras"(
   "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true',
+  "carrera_semanas" smallint DEFAULT 0,
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
@@ -154,6 +156,25 @@ CREATE TABLE "Lugares"(
   CONSTRAINT lugar_pk PRIMARY KEY ("id_lugar")
 ) WITH (OIDS = FALSE);
 
+--Profesiones
+CREATE TABLE "Profesiones"(
+  "id_titulo" serial NOT NULL,
+  "titulo_nombre" character varying(75) NOT NULL,
+  "titulo_abrev" character varying(20) NOT NULL,
+  "titulo_institucion" character varying(75),
+  "titulo_estado" boolean,
+  CONSTRAINT profesion_pk PRIMARY KEY ("id_titulo")
+) WITH (OIDS = FALSE);
+
+--PersonaProfesiones
+CREATE TABLE "PersonaProfesiones"(
+  "id_persona_profesion" serial NOT NULL,
+  "id_persona" integer NOT NULL,
+  "id_titulo" integer NOT NULL UNIQUE,
+  "id_persona_profesion_observacion" character varying(100),
+  CONSTRAINT persona_profesion_pk PRIMARY KEY ("id_persona_profesion")
+) WITH (OIDS = FALSE);
+
 --Cursos
 CREATE TABLE "Cursos"(
   "id_curso" serial NOT NULL,
@@ -175,17 +196,11 @@ CREATE TABLE "AlumnoCurso"(
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
   "almn_curso_fecha_registro" DATE default now();
-  "almn_curso_nt_1_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_interciclo" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_2_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_final" numeric(6, 2) DEFAULT '0' ,
-  "almn_curso_nt_examen_supletorio" numeric(6, 2) DEFAULT '0',
   "almn_curso_asistencia" character varying(30) DEFAULT 'Asiste',
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
   "almn_curso_num_faltas" integer DEFAULT '0',
 	"almn_curso_activo" boolean DEFAULT 'true',
-  "almn_curso_fecha_registro" DATE default now(), 
   CONSTRAINT alumno_curso_pk PRIMARY KEY ("id_almn_curso")
 ) WITH (OIDS = FALSE);
 
@@ -211,6 +226,7 @@ CREATE TABLE "EjesFormacion"(
 	"id_carrera" integer NOT NULL,
 	"eje_codigo" character varying(10) NOT NULL,
 	"eje_nombre" character varying(100) NOT NULL,
+	"eje_estado" BOOLEAN DEFAULT TRUE,
 	CONSTRAINT eje_formacion_pk PRIMARY KEY ("id_eje")
 ) WITH (OIDS = FALSE);
 
@@ -294,20 +310,17 @@ FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 --Para retirar un alumno
-CREATE TABLE "Retirados"(
+CREATE TABLE "AlumnoCursoRetirados"(
 	"id_retirado" serial NOT NULL,
-	"id_malla_alumno" integer NOT NULL,
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
 	"retiro_observacion" text,
+  "retiro_activo" boolean DEFAULT 'true',
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_.fk1"
-FOREIGN KEY ("id_malla_alumno") REFERENCES "MallaAlumno"("id_malla_alumno")
-ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "Retirados" ADD CONSTRAINT "retirado_fk2"
+ALTER TABLE "AlumnoCursoRetirados" ADD CONSTRAINT "retirado_fk1"
 FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -410,7 +423,8 @@ CREATE TABLE "HistorialUsuarios"(
 	"historial_tipo_accion" character varying(30) NOT NULL,
 	"historial_nombre_tabla" character varying(30) NOT NULL,
 	"historial_pk_tabla" integer NOT NULL,
-  "historial_observacion" character varying(200),
+  	"historial_observacion" character varying(200),
+  	"historial_ip" character varying (200) NOT NULL DEFAULT '000.00.000.000',
 	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user")
 ) WITH (OIDS = FALSE);
 
@@ -833,7 +847,13 @@ ALTER TABLE "Alumnos" ADD CONSTRAINT "alumnos_fk2"
 FOREIGN KEY ("id_sec_economico") REFERENCES "SectorEconomico"("id_sec_economico")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk1"
+FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk2"
+FOREIGN KEY ("id_titulo") REFERENCES "Profesiones"("id_titulo")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "Docentes" ADD CONSTRAINT "docentes_fk1"
 FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")

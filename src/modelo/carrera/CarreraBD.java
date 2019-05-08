@@ -27,10 +27,11 @@ public class CarreraBD extends CarreraMD {
     public void guardarCarrera() {
         String nsql = "INSERT INTO public.\"Carreras\"(\n"
                 + "	id_docente_coordinador, carrera_nombre, \n"
-                + "	carrera_codigo, carrera_fecha_inicio, carrera_modalidad)\n"
+                + "	carrera_codigo, carrera_fecha_inicio, carrera_modalidad, "
+                + "     carrera_semanas)\n"
                 + "	VALUES (" + getCoordinador().getIdDocente() + ", "
                 + " '" + getNombre() + "', '" + getCodigo() + "', '" + getFechaInicio() + "',"
-                + " '" + getModalidad() + "');";
+                + " '" + getModalidad() + "', " + getNumSemanas() + ");";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Guardamos correctamente \n" + getNombre());
         }
@@ -41,7 +42,7 @@ public class CarreraBD extends CarreraMD {
                 + "SET id_docente_coordinador=" + getCoordinador().getIdDocente() + ", "
                 + "carrera_nombre='" + getNombre() + "', \n"
                 + "carrera_codigo='" + getCodigo() + "', carrera_fecha_inicio='" + getFechaInicio() + "', \n"
-                + "carrera_modalidad='" + getModalidad() + "'\n"
+                + "carrera_modalidad='" + getModalidad() + "', carrera_semanas = " + getNumSemanas() + "\n"
                 + "WHERE id_carrera=" + idCarrera + ";";
 
         if (conecta.nosql(nsql) == null) {
@@ -102,6 +103,43 @@ public class CarreraBD extends CarreraMD {
     }
 
     /**
+     * Buscamos la carrera por id
+     *
+     * @param idCarrera
+     * @return
+     */
+    public CarreraMD buscarPorId(int idCarrera) {
+        CarreraMD carrera = null;
+        String sql = "SELECT id_carrera, carrera_nombre,"
+                + " carrera_codigo, carrera_fecha_inicio,"
+                + " carrera_modalidad \n"
+                + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
+
+        ResultSet rs = conecta.sql(sql);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    carrera = new CarreraMD();
+                    carrera.setId(rs.getInt("id_carrera"));
+                    carrera.setNombre(rs.getString("carrera_nombre"));
+                    carrera.setCodigo(rs.getString("carrera_codigo"));
+                    carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
+                    carrera.setModalidad(rs.getString("carrera_modalidad"));
+                }
+                return carrera;
+            } else {
+                System.out.println("No se pudo consultar una carreras");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo consultar carreras");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Consultamos todas la carreras activas.
      *
      * @return
@@ -109,7 +147,7 @@ public class CarreraBD extends CarreraMD {
     public ArrayList<CarreraMD> cargarCarreras() {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
-                + "carrera_modalidad, (\n"
+                + "carrera_modalidad, carrera_semanas, (\n"
                 + "	SELECT persona_primer_nombre || '%' || \n"
                 + "	persona_segundo_nombre || '%' ||\n"
                 + "	persona_primer_apellido || '%' ||\n"
@@ -133,7 +171,7 @@ public class CarreraBD extends CarreraMD {
     public ArrayList<CarreraMD> buscarCarrera(String aguja) {
         String sql = "SELECT id_carrera, id_docente_coordinador, carrera_nombre,\n"
                 + "carrera_codigo, carrera_fecha_inicio,\n"
-                + "carrera_modalidad, (\n"
+                + "carrera_modalidad, carrera_semanas, (\n"
                 + "	SELECT persona_primer_nombre || '%' || \n"
                 + "	persona_segundo_nombre || '%' ||\n"
                 + "	persona_primer_apellido || '%' ||\n"
@@ -167,7 +205,7 @@ public class CarreraBD extends CarreraMD {
 
                     carrera.setId(rs.getInt("id_carrera"));
                     DocenteMD docen = new DocenteMD();
-                    String nombreC = rs.getString(7);
+                    String nombreC = rs.getString(8);
                     if (nombreC != null) {
                         String nombres[] = nombreC.split("%");
                         docen.setPrimerNombre(nombres[0]);
@@ -182,6 +220,7 @@ public class CarreraBD extends CarreraMD {
                     carrera.setCodigo(rs.getString("carrera_codigo"));
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
+                    carrera.setNumSemanas(rs.getInt("carrera_semanas"));
 
                     carreras.add(carrera);
                 }

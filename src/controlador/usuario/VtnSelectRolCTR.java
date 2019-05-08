@@ -99,6 +99,7 @@ public class VtnSelectRolCTR {
         if (conexion.nosql(nsql) == null) {
             System.out.println("Salimos del sistema como: " + usuario.getUsername());
         }
+        conexion.cerrarConexion();
     }
 
     //Inits
@@ -158,59 +159,10 @@ public class VtnSelectRolCTR {
     private void ingresar() {
 
         setObjFromCombo();
-
+        
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
         vtn.iniciar();
-        logConexion();
         vista.dispose();
-    }
-
-    //Procesadores de Eventos
-    private void logConexion() {
-        //generarArchivo();
-    }
-
-    private void generarArchivo() {
-        LocalDateTime fecha = LocalDateTime.now();
-        new Thread(() -> {
-            FileWriter fichero = null;
-            PrintWriter pw = null;
-            try {
-                fichero = new FileWriter(Middlewares.getProjectPath() + "log.txt");
-                pw = new PrintWriter(fichero);
-
-                for (;;) {
-                    try {
-
-                        Thread.sleep(30);
-                        pw.println(" [" + fecha.now() + "]");
-                        pw.println("Cerrado? R: " + ResourceManager.getConnection().isClosed());
-                        pw.println("Cerrado? C: " + conexion.getConecction().isClosed());
-
-                        System.out.println("Conectado R: " + ResourceManager.getConnection().isClosed());
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(VtnSelectRolCTR.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VtnSelectRolCTR.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                try {
-                    // Nuevamente aprovechamos el finally para 
-                    // asegurarnos que se cierra el fichero.
-                    if (null != fichero) {
-                        fichero.close();
-                    }
-                } catch (IOException e2) {
-                    e2.printStackTrace();
-                }
-            }
-        }).start();
-
     }
 
 }
