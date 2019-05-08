@@ -254,9 +254,7 @@ public class VtnNotasCTR {
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
     private int getIdDocente() {
-        return listaDocentes
-                .entrySet()
-                .stream()
+        return listaDocentes.entrySet().stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocente().getSelectedItem().toString())))
                 .map(c -> c.getValue().getIdDocente())
                 .findAny()
@@ -292,7 +290,6 @@ public class VtnNotasCTR {
     private int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-
             return listaPeriodos
                     .stream()
                     .filter(item -> item.getNombre_PerLectivo().equals(periodo))
@@ -385,13 +382,6 @@ public class VtnNotasCTR {
         } else {
             JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
         }
-    }
-
-    private void editarEstado(int fila, int columna, TableModel tabla) {
-        String estado = tabla.getValueAt(fila, columna).toString();
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        alumno.setEstado(estado);
-        alumno.editar();
     }
 
     // </editor-fold>  
@@ -826,7 +816,6 @@ public class VtnNotasCTR {
                 case 15:
                     editarAsistencia(fila, columna, tablaNotasDuales, 12, agregarFilasDuales());
                     break;
-
                 default:
                     break;
             }
