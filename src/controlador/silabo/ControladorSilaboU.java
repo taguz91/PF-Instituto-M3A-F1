@@ -771,32 +771,7 @@ public class ControladorSilaboU {
 
         });
 
-        gestion.getBtnSiguiente().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                 gestion.getBtnGuardar().doClick();
-                
-                if (validarCampos()) {
-
-                    if (!retroceso) {
-                        gestion.setVisible(false);
-                        citarReferencias(silabo, bibliografia);
-                        retroceso = true;
-                    } else {
-                        gestion.setVisible(false);
-                        bibliografia.setVisible(true);
-
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No ha completado correctamente los campos necesarios", "Aviso", JOptionPane.ERROR_MESSAGE);
-
-                }
-
-            }
-
-        });
+        
 
         gestion.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
@@ -821,6 +796,8 @@ public class ControladorSilaboU {
 //            
 //        });
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
+
+        gestion.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
 
         mostrarUnidad();
     }
@@ -855,6 +832,7 @@ public class ControladorSilaboU {
 //    }
     private boolean accion = true;
     private boolean accion2 = true;
+    private boolean accion3 = true;
 
     private void ejecutar(ActionEvent e) {
         if (accion) {
@@ -862,11 +840,11 @@ public class ControladorSilaboU {
                 accion = false;
                 gestion.getBtnGuardar().setEnabled(false);
 
-                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
                 new SilaboBD(conexion).eliminar(silabo);
 
                 guardarSilabo();
-
+                silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
                 accion = true;
 
                 try {
@@ -876,7 +854,7 @@ public class ControladorSilaboU {
                 }
 
                 gestion.getBtnGuardar().setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
                 principal.getLblEstado().setText("");
 
             }).start();
@@ -885,7 +863,7 @@ public class ControladorSilaboU {
     }
 
     private void ejecutar2(ActionEvent e) {
-        if (accion) {
+        if (accion2) {
             new Thread(() -> {
                 accion2 = false;
                 bibliografia.getBtnFinalizar().setEnabled(false);
@@ -895,8 +873,9 @@ public class ControladorSilaboU {
                 new SilaboBD(conexion).eliminar(silabo);
 
                 guardarSilabo();
+                silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-
+                accion2 = true;
                 principal.getLblEstado().setText("");
                 bibliografia.getBtnFinalizar().setEnabled(true);
                 gestion.dispose();
@@ -905,7 +884,59 @@ public class ControladorSilaboU {
             }).start();
         }
 
-        mostrarUnidad();
+    }
+
+    private void ejecutar3(ActionEvent e, SilaboMD silabo) {
+
+        if (accion3) {
+            new Thread(() -> {
+                accion = false;
+                if (validarCampos()) {
+
+                    gestion.getBtnGuardar().setEnabled(false);
+
+                    principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    new SilaboBD(conexion).eliminar(silabo);
+
+                    guardarSilabo();
+                    silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+
+                    accion = true;
+
+
+                    principal.getLblEstado().setText("");
+
+                    JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
+
+                    gestion.getBtnGuardar().setEnabled(true);
+
+                    if (!retroceso) {
+                        gestion.setVisible(false);
+                        citarReferencias(silabo, bibliografia);
+                        retroceso = true;
+                    } else {
+                        gestion.setVisible(false);
+                        bibliografia.setVisible(true);
+
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No ha completado correctamente los campos necesarios", "Aviso", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+                accion3 = true;
+
+            }).start();
+        }
+
     }
 
     public void citarReferencias(SilaboMD silabo, frmReferencias bibliografia) {
@@ -923,7 +954,11 @@ public class ControladorSilaboU {
             @Override
             public void keyReleased(KeyEvent ke) {
 
-                cargarBiblioteca();
+                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+                    cargarBiblioteca();
+                }
+                
+                
 
             }
 
@@ -969,21 +1004,7 @@ public class ControladorSilaboU {
 
         });
 
-        bibliografia.getBtnFinalizar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                new SilaboBD(conexion).eliminar(silabo);
-                guardarSilabo();
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-
-                gestion.dispose();
-                bibliografia.dispose();
-                principal.getMnCtSilabos().doClick();
-
-            }
-
-        });
+       
 
         bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
 
@@ -1598,7 +1619,6 @@ public class ControladorSilaboU {
             }
 
             if (unidadesSilabo.get(i).getFechaInicioUnidad() == null) {
-
                 control = false;
             }
 

@@ -141,7 +141,7 @@ public class ControladorCRUDPlanClase {
 
             for (PlandeClasesMD plc : lista_plan_clases) {
                 modelotabla.addRow(new Object[]{
-                    plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_plan_clases(), plc.getId_unidad().getIdUnidad()
+                    plc.getId_plan_clases(), plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_unidad().getIdUnidad()
                 });
             }
 
@@ -191,16 +191,16 @@ public class ControladorCRUDPlanClase {
     private PlandeClasesMD plan_clas_selecc() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
         Optional<PlandeClasesMD> plan_clase_selec = lista_plan_clases.stream().
-                filter(pl -> pl.getId_plan_clases() == Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
+                filter(pl -> pl.getId_plan_clases() == Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 0).toString())).findFirst();
 
         return plan_clase_selec.get();
     }
 
     private CursoMD curso_selecc() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 1).toString());
+        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString());
         System.out.println(lista_curso.get(0).getNombre() + "---------------------------ooooooooooooooooooooooooo");
-        Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString())).findFirst();
+        Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
         System.out.println(curso_selecccionado.get().getNombre() + "----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
         return curso_selecccionado.get();
     }
@@ -279,7 +279,7 @@ public class ControladorCRUDPlanClase {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
 
         silabosDocente = cargar_silabo();
-        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 1).toString())).
+        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString())).
                 findFirst();
         return silaboSeleccionado.get();
     }
