@@ -289,7 +289,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
             }
         });
 
-        btnFinalizar.setText("Guardar");
+        btnFinalizar.setText("Finalizar");
 
         btnAtras.setText("Atrás");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
