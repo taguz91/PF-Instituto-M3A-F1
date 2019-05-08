@@ -114,7 +114,7 @@ public class MateriaBD extends MateriaMD {
 
     public CarreraMD filtrarIdCarrera(String nombre, int id) {
         String sql = "SELECT id_carrera, carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre
-                + "' or id_carrera = " + id + " AND carrera_activa = true;";
+                + "' or id_carrera = " + id + " AND carrera_activo = true;";
         CarreraMD carrera = new CarreraMD();
         ResultSet rs = conecta.sql(sql);
         try {
@@ -151,7 +151,7 @@ public class MateriaBD extends MateriaMD {
     }
 
     public MateriaMD capturarIDMaterias(String nombre, int carrera) {
-        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '" + nombre + "' AND carrera_id = " + carrera + " AND materia_activa = true;";
+        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '" + nombre + "' AND id_carrera = " + carrera + " AND materia_activa = true;";
         MateriaMD m = new MateriaMD();
         ResultSet rs = conecta.sql(sql);
         try {
