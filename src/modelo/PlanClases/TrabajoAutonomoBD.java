@@ -59,6 +59,20 @@ public class TrabajoAutonomoBD extends TrabajoAutonomoMD{
         }
         return true;
     }
+    public boolean ActulizarTrabajoAutonomo1(TrabajoAutonomoMD ta){
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public.\"TrabajoAutonomo\"\n" +
+"	SET  autonomo_plan=?\n" +
+"	WHERE id_plan_clases=?");
+            st.setString(1, ta.getAutonomo_plan_descripcion());
+            st.setInt(2, ta.getId_plan_clases().getId_plan_clases());
+            st.executeUpdate();
+            System.out.println(st);
+        } catch (SQLException ex) {
+            Logger.getLogger(TrabajoAutonomoBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
     
     public static List<TrabajoAutonomoMD> consultarTrabajoAutonomo(ConexionBD conexion, int id_plan_clase){
         List<TrabajoAutonomoMD> lista_tra_aut=new ArrayList<>();

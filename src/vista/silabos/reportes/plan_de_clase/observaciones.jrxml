@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ff756fa-6869-45b1-b237-2a7ae9835a26">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_plan_clase" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select observaciones from "PlandeClases" where id_plan_clases=$P!{id_plan_clase}]]>
+	</queryString>
+	<field name="observaciones" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="29" uuid="4ef0b93c-452d-4a36-9b5b-1a059366929b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="46">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="46" uuid="4a19dbfe-31c3-4360-9fb3-1a52bde931ec"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="1">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="d8162e81-779d-42bf-bd85-934c3de9b60a"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

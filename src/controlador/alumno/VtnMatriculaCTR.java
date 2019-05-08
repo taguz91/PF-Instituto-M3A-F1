@@ -61,6 +61,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         iniciarAcciones();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
+        vtnMatri.getBtnHistoria().addActionListener(e->llamaReporteMatriculaPeriodo());
     }
 
     /**
@@ -200,6 +201,18 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             System.out.println("El usuari que matriculo a este estudiante es: " + ctrPrin.getUsuario().getUsername());
             System.out.println(parametro);
             conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+     private void llamaReporteMatriculaPeriodo() {
+         int posCombo=vtnMatri.getCmbPeriodos().getSelectedIndex();
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculadosPeriodo.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("periodo", periodos.get(posCombo - 1).getId_PerioLectivo());
+            System.out.println(parametro);
+            conecta.mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

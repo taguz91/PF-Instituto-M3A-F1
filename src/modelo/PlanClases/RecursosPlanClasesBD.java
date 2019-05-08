@@ -42,13 +42,29 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         }
         return  true;
     }
+    public boolean ActualizarRecursosPlanClases(RecursosPlanClasesMD rP){
+        
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public.\"RecursosPlanClases\"\n" +
+"	  set id_recurso =? \n" +
+"	WHERE id_plan_clases=? and id_recurso=?");
+            st.setInt(1, rP.getId_recursos().getId_recurso());
+            st.setInt(2, rP.getId_plan_clases().getId_plan_clases());
+            st.setInt(3, rP.getId_recursos().getId_recurso());
+            st.executeUpdate();
+            System.out.println(st);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  true;
+    }
     
-       public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion,String nombre_recurso){
+       public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion){
         List<RecursosPlanClasesMD> recursos=new ArrayList<>();
         
          try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" where nombre_recursos ILIKE '%" +nombre_recurso + "%' order by nombre_recursos ");
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_recurso,nombre_recursos,tipo_recurso from \"Recursos\" order by nombre_recursos ");
 
             ResultSet rs = st.executeQuery();
 

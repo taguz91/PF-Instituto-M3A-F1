@@ -82,7 +82,7 @@ public class FrmDocenteMateriaCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = frmDM.getTxtBuscar().getText().trim();
-                if (a.length() > 2) {
+                if (e.getKeyCode() ==  10) {
                     buscarDocente(a);
                 }
             }
@@ -179,8 +179,8 @@ public class FrmDocenteMateriaCTR {
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-            materias = mat.cargarMateriaPorCarrera(idCar);
-            llenarCmbMaterias(materias);
+//            materias = mat.cargarMateriaPorCarrera(idCar);
+//            llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
         } else {

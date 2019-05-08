@@ -26,7 +26,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="807" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -38,7 +38,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="Cmb_Carreras" min="-2" pref="500" max="-2" attributes="0"/>
                                   <Component id="txtBuscarPLC" min="-2" pref="500" max="-2" attributes="0"/>
                               </Group>
@@ -49,9 +49,13 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnEliminarPLC" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="CmbJornadas" alignment="0" pref="168" max="32767" attributes="0"/>
-                              <Component id="Cmb_periodos" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="CmbJornadas" alignment="0" pref="168" max="32767" attributes="0"/>
+                                  <Component id="Cmb_periodos" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnImplimirPlan" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -92,7 +96,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="216" max="-2" attributes="0"/>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnImplimirPlan" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -191,6 +197,11 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Periodo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnImplimirPlan">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir "/>
       </Properties>
     </Component>
   </SubComponents>

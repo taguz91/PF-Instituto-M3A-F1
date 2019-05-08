@@ -231,6 +231,7 @@ public class ControladorCRUD {
         return silaboSeleccionado.get();
     }
 
+    
     public void opcionesImpresion(boolean estado) {
 
         crud.getLblSeleccionDocumento().setVisible(estado);
@@ -249,7 +250,7 @@ public class ControladorCRUD {
                 JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No puede eliminarsilabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No puede eliminar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
                
         }
 

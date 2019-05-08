@@ -25,8 +25,12 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
+import modelo.carrera.CarreraBD;
+import modelo.carrera.CarreraMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
+import modelo.materia.MateriaBD;
+import modelo.materia.MateriaMD;
 import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -93,6 +97,13 @@ public class FrmAlumnoCursoCTR {
     private final MatriculaBD matri;
     //Numero de materia matricula:
     private int numMateria = 0;
+    //Para buscar materias si una materia es nucleo estructurante
+    private final MateriaBD mat;
+    private ArrayList<MateriaMD> materias;
+    private Boolean perdioNE;
+    //Para guardar la carrera en la que se esta trabajando 
+    private CarreraMD carrera;
+    private CarreraBD car;
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -111,6 +122,8 @@ public class FrmAlumnoCursoCTR {
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.matri = new MatriculaBD(conecta);
+        this.mat = new MateriaBD(conecta);
+        this.car = new CarreraBD(conecta);
         //Inicializamos todas la clases que usaremos
         this.almnCurso = new AlumnoCursoBD(conecta);
         this.almCar = new AlumnoCarreraBD(conecta);
@@ -396,10 +409,23 @@ public class FrmAlumnoCursoCTR {
                     matri.numMaticulados(periodos.get(posPrd - 1).getId_PerioLectivo()) + "");
             frmAlmCurso.getLblNumMatriculasClases().setText(
                     matri.numMaticuladosClases(periodos.get(posPrd - 1).getId_PerioLectivo()) + "");
+            //Cargamos informacion de la carrera que usaremos.
+            carrera = car.buscarPorId(periodos.get(posPrd - 1).getCarrera().getId());
+            mostrarInfoCarrera(carrera);
             limpiarFrm();
-
         } else {
             buscadoresEstado(false);
+        }
+    }
+
+    /**
+     * Mostramos la informacion de la carrera en la que se realiza la matricula.
+     */
+    private void mostrarInfoCarrera(CarreraMD carrera) {
+        if (carrera != null) {
+            frmAlmCurso.setTitle("Matricula | " + carrera.getNombre() + " - " + carrera.getModalidad());
+        } else {
+            frmAlmCurso.setTitle("Matricula ");
         }
     }
 
@@ -438,7 +464,7 @@ public class FrmAlumnoCursoCTR {
             mdMatSelec.setRowCount(0);
             cursosSelec = new ArrayList();
             horarioAlmn = new ArrayList<>();
-            
+
             frmAlmCurso.getBtnPendientes().setEnabled(true);
             frmAlmCurso.getBtnMtCursadas().setEnabled(true);
             //Buscamos los cursos en los que se matriculo. 
@@ -495,15 +521,17 @@ public class FrmAlumnoCursoCTR {
      * @param posPrd Int: Poscion en el array del periodo seleccionado.
      */
     private void clasificarMateriasAlmn(int posPrd) {
+        //Para comprobar si perdio nucleo estruncturante
+        perdioNE = false;
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
         //Cargamos el horario del alumno  
-        if (cursosMatriculado != null) {
-            cursosMatriculado.forEach(ac -> {
-                horario = sesion.cargarHorarioCurso(ac.getCurso());
-                llenarHorarioAlmn(horario);
-            });
-        }
+//        if (cursosMatriculado != null) {
+//            cursosMatriculado.forEach(ac -> {
+//                horario = sesion.cargarHorarioCurso(ac.getCurso());
+//                llenarHorarioAlmn(horario);
+//            });
+//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
@@ -532,7 +560,10 @@ public class FrmAlumnoCursoCTR {
         //Buscamos las pendientes 
         mallaPendientes = filtrarMalla(mallaCompleta, "P");
 
-        //Si no perdio ninguna se le suba al ciclo en que se perdio uno
+        //Cargamos las materias de esta carrera 
+        materias = mat.cargarMateriaPorCarreraFrm(carrera.getId());
+
+        //Si no perdio ninguna se le suba al ciclo en que perdio uno
         if (cicloCursado == cicloReprobado) {
             cicloReprobado++;
         }
@@ -541,6 +572,14 @@ public class FrmAlumnoCursoCTR {
             frmAlmCurso.getBtnReprobadas().setVisible(true);
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
             mallaPerdidas.forEach(m -> {
+                if (carrera.getModalidad().equals("DUAL")) {
+                    System.out.println("Estamos en una carrera dual. " + m.getMateria().getNombre());
+                    boolean p = perdioNucleoEstruncturante(m.getMateria().getId());
+                    if (!perdioNE) {
+                        perdioNE = p;
+                    }
+                }
+
                 if (m.getMallaCiclo() < cicloReprobado) {
                     cicloReprobado = m.getMallaCiclo();
                 }
@@ -569,6 +608,13 @@ public class FrmAlumnoCursoCTR {
             });
         } else {
             frmAlmCurso.getBtnPendientes().setVisible(false);
+        }
+
+        //Hacemos que seleccione unicamente donde perdio la dual
+        if (perdioNE) {
+            System.out.println("Ciclo en el que curso antes: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
+            cicloCursado -= 1;
+            System.out.println("Ciclo en el que curso: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
         }
 
         cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
@@ -688,17 +734,35 @@ public class FrmAlumnoCursoCTR {
                     }
                 }
             }
-            //Eliminamos las materias que ya curso 
-            for (int i = 0; i < mallaCursadas.size(); i++) {
-                for (int j = 0; j < cursos.size(); j++) {
-                    //Si es la misma materia la eliminamos de cursos
-                    if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()) {
-                        //System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
-                        cursos.remove(j);
-                        break;
+
+            //Si no perdio el nucleo estructurante se eliminan las que ya curso
+            if (!perdioNE) {
+                //Eliminamos las materias que ya curso 
+                for (int i = 0; i < mallaCursadas.size(); i++) {
+                    for (int j = 0; j < cursos.size(); j++) {
+                        //Si es la misma materia la eliminamos de cursos
+                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()) {
+                            //System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
+                            cursos.remove(j);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                //Eliminamos las materias que ya curso  de nucleo estructurante
+                for (int i = 0; i < mallaCursadas.size(); i++) {
+                    for (int j = 0; j < cursos.size(); j++) {
+                        //Si es la misma materia la eliminamos de cursos
+                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId() 
+                                && !perdioNucleoEstruncturante(mallaCursadas.get(i).getMateria().getId())) {
+                            System.out.println("Ya curso y no es nucleo: " + cursos.get(j).getMateria().getNombre());
+                            cursos.remove(j);
+                            break;
+                        }
                     }
                 }
             }
+
             //Comprabamos que el curso en el que se quiere no estan vacios 
             if (!cursos.isEmpty()) {
                 //Revisamos el ciclo que es 
@@ -709,6 +773,27 @@ public class FrmAlumnoCursoCTR {
                 }
             }
         }
+    }
+
+    /**
+     * Comprobamos si perdio una materia de nucleo estructurante
+     *
+     * @param idMateria
+     * @return
+     */
+    private boolean perdioNucleoEstruncturante(int idMateria) {
+        boolean perdio = false;
+        if (materias != null) {
+            for (int i = 0; i < materias.size(); i++) {
+                //&& materias.get(i).isMateriaNucleo()
+                if (materias.get(i).getId() == idMateria && materias.get(i).isMateriaNucleo()) {
+                    System.out.println("Encontramos un nucleo Estructurante ");
+                    perdio = true;
+                    break;
+                }
+            }
+        }
+        return perdio;
     }
 
     /**
@@ -833,6 +918,8 @@ public class FrmAlumnoCursoCTR {
     public void llenarTblMateriasPendientes(ArrayList<CursoMD> cursos) {
         //Antes validamos que esos cursos ya no esten el materia seleccionados 
         //Si cursos no esta vacio llenamos la tabla
+        //Pasamos el nuevo cursos depurado al array 
+        cursosPen = cursos;
         mdMatPen.setRowCount(0);
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
