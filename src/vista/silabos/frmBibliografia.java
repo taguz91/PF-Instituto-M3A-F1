@@ -174,6 +174,10 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         lbCodigoLibro = new javax.swing.JLabel();
         txtCodigoLibro = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
         lbTituloVentanaCBApa.setText("Campos Bibliograficos de APA");
 
         lbAutor.setText("Autor");
@@ -261,7 +265,7 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(lbTituloVentanaCBApa)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
