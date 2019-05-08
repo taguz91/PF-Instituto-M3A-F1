@@ -59,12 +59,14 @@ public final class UsuarioBD extends UsuarioMD {
                 + "    \"Personas\".persona_primer_apellido,\n"
                 + "    \"Personas\".persona_segundo_apellido,\n"
                 + "    \"Personas\".persona_primer_nombre,\n"
-                + "    \"Personas\".persona_segundo_nombre,\n"
-                + "    \"Personas\".persona_foto\n"
+                + "    \"Personas\".persona_segundo_nombre\n"
                 + "   FROM (\"Usuarios\"\n"
                 + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
+                + "\"public\".\"Usuarios\".usu_estado IS TRUE \n"
+                + "ORDER BY usu_username";
+
+        System.out.println(SELECT);
 
         return selectSimple(SELECT);
 

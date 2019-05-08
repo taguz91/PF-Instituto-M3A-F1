@@ -286,7 +286,7 @@ public class Controlador_plan_clases {
     }
     
       private void agregarEstrategiasMetologicas(){
-          lista_estrategias_metodologicas=new ArrayList<>();
+        lista_estrategias_metodologicas=new ArrayList<>();
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();        
