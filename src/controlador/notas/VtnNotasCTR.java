@@ -320,6 +320,15 @@ public class VtnNotasCTR {
         return vista.getTblNotasDuales().getSelectedColumn();
     }
 
+    private int getHoras() {
+        return listaMaterias
+                .stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
+                .map(c -> c.getHorasPresenciales())
+                .findFirst()
+                .orElse(1);
+    }
+
     private void activarForm(boolean estado) {
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
@@ -336,6 +345,53 @@ public class VtnNotasCTR {
         vista.getCmbCiclo().setEnabled(estado);
         vista.getCmbAsignatura().setEnabled(estado);
         vista.getTblNotas().setEnabled(estado);
+    }
+
+    private void editarFaltas(int fila, int columna, DefaultTableModel tabla, int colEstado, int conPorcentaje, int colAsistencia) {
+
+        String faltasText = tabla.getValueAt(fila, columna).toString();
+        if (Validaciones.isInt(faltasText)) {
+            int faltas = new Integer(faltasText);
+
+            int horas = getHoras();
+
+            int porcentaje = 0;
+
+            if (horas <= 0) {
+                horas = 1;
+            }
+
+            porcentaje = (faltas * horas) / 100;
+
+            tabla.setValueAt(porcentaje, fila, conPorcentaje);
+
+            String estado = tabla.getValueAt(fila, colEstado).toString();
+            String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
+
+            if (!estado.equalsIgnoreCase("RETIRADO") && asistencia.equalsIgnoreCase("RETIRADO")) {
+                if (porcentaje >= 25) {
+                    vista.getTblNotas().setValueAt("REPROBADO", fila, colEstado);
+                } else {
+                    vista.getTblNotas().setValueAt("APROBADO", fila, colEstado);
+                }
+            }
+
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+            tabla.setValueAt(faltas, fila, columna);
+
+            alumno.setEstado(estado);
+            alumno.setNumFalta(faltas);
+            alumno.editar();
+        } else {
+            JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
+        }
+    }
+
+    private void editarEstado(int fila, int columna, TableModel tabla) {
+        String estado = tabla.getValueAt(fila, columna).toString();
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+        alumno.setEstado(estado);
+        alumno.editar();
     }
 
     // </editor-fold>  
@@ -786,13 +842,7 @@ public class VtnNotasCTR {
                     break;
 
                 case 13://FALTAS
-                    String faltas = tablaNotasDuales.getValueAt(getSelectedRowDuales(), getSelectedColumDuales()).toString();
-                    if (Validaciones.isInt(faltas)) {
-                        int faltasTabla = Integer.valueOf(faltas);
-                        editarFaltas(fila, columna, faltasTabla, tablaNotasDuales);
-                    } else {
-                        JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO ENTERO");
-                    }
+                    editarFaltas(fila, columna, tablaNotasDuales, 12, 14, 15);
                     break;
 
                 case 15:
@@ -836,9 +886,7 @@ public class VtnNotasCTR {
             } else {
                 sumarColumnas(tablaNotasDuales, fila, 8, 9, 11, "INT");
             }
-
             editarDuales(fila, columna, tipoNota);
-
         } else {
             mensajeDeError();
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
@@ -861,14 +909,6 @@ public class VtnNotasCTR {
 
         alumno.setNotaFinal(Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 11).toString()));
         alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
-        alumno.editar();
-
-    }
-
-    private void editarFaltas(int fila, int columna, int faltas, TableModel tabla) {
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        tabla.setValueAt(faltas, fila, columna);
-        alumno.setNumFalta(faltas);
         alumno.editar();
 
     }
@@ -902,13 +942,6 @@ public class VtnNotasCTR {
 
             return null;
         };
-    }
-
-    private void editarEstado(int fila, int columna, TableModel tabla) {
-        String estado = tabla.getValueAt(fila, columna).toString();
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        alumno.setEstado(estado);
-        alumno.editar();
     }
 
     // </editor-fold>  
