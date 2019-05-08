@@ -27,9 +27,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="265" splitType="Stretch">
+		<band height="320" splitType="Stretch">
 			<textField>
-				<reportElement x="117" y="47" width="95" height="217" uuid="4b68deb8-b5d5-4229-8a35-424ff322687f"/>
+				<reportElement x="117" y="47" width="95" height="272" uuid="4b68deb8-b5d5-4229-8a35-424ff322687f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -144,7 +144,7 @@ APRENDIZAJE]]></text>
 EVALUACIÓN]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="47" width="117" height="217" uuid="45b29e86-2dee-4ef3-90a1-62361539252e"/>
+				<reportElement x="0" y="47" width="117" height="272" uuid="45b29e86-2dee-4ef3-90a1-62361539252e"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -158,7 +158,7 @@ EVALUACIÓN]]></text>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="440" y="47" width="107" height="218" uuid="b6749025-397a-4ff3-86f2-bfb134aae654"/>
+				<reportElement x="447" y="46" width="107" height="273" uuid="b6749025-397a-4ff3-86f2-bfb134aae654"/>
 				<subreportParameter name="id_unidad">
 					<subreportParameterExpression><![CDATA[$F{id_unidad}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -166,25 +166,25 @@ EVALUACIÓN]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "instrumentos.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="212" y="264" width="343" height="1" uuid="0dd06be8-af2c-4574-bbe2-b84866651c73"/>
+				<reportElement x="212" y="319" width="343" height="1" uuid="0dd06be8-af2c-4574-bbe2-b84866651c73"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="337" y="48" width="1" height="216" uuid="02b8033d-ca99-4fae-b8ec-962374620e7b"/>
+				<reportElement x="337" y="48" width="1" height="271" uuid="02b8033d-ca99-4fae-b8ec-962374620e7b"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="436" y="48" width="1" height="216" uuid="b308d469-9073-4749-bf95-1a0a42377a2f"/>
+				<reportElement x="436" y="48" width="1" height="271" uuid="b308d469-9073-4749-bf95-1a0a42377a2f"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="554" y="47" width="1" height="218" uuid="4b68b7ee-8a46-409f-9420-d70ad2eccec2"/>
+				<reportElement x="554" y="47" width="1" height="273" uuid="4b68b7ee-8a46-409f-9420-d70ad2eccec2"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
@@ -198,7 +198,7 @@ EVALUACIÓN]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "recursos_tecnicos.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="338" y="149" width="98" height="115" uuid="cbf0143b-9f4c-48fd-81b2-5b8c56c0c063"/>
+				<reportElement x="338" y="149" width="98" height="170" uuid="cbf0143b-9f4c-48fd-81b2-5b8c56c0c063"/>
 				<subreportParameter name="id_plan_clase">
 					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -206,7 +206,7 @@ EVALUACIÓN]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "recursos_materiales.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="214" y="47" width="123" height="64" uuid="2bc28033-5229-4afd-baa4-28b14dbc9e78"/>
+				<reportElement x="214" y="47" width="123" height="87" uuid="2bc28033-5229-4afd-baa4-28b14dbc9e78"/>
 				<subreportParameter name="id_plan_clase">
 					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -214,7 +214,7 @@ EVALUACIÓN]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias de anticipacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="214" y="111" width="123" height="73" uuid="130a35ad-46b8-4359-861f-75c106b4f53f"/>
+				<reportElement x="215" y="134" width="123" height="86" uuid="130a35ad-46b8-4359-861f-75c106b4f53f"/>
 				<subreportParameter name="id_plan_clase">
 					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -222,7 +222,7 @@ EVALUACIÓN]]></text>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias de construccion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="213" y="184" width="124" height="80" uuid="2e34f9f6-9f98-4a49-b8ed-cd442e4721d0"/>
+				<reportElement x="213" y="220" width="124" height="99" uuid="2e34f9f6-9f98-4a49-b8ed-cd442e4721d0"/>
 				<subreportParameter name="id_plan_clase">
 					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
 				</subreportParameter>

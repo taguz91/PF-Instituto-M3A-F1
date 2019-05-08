@@ -862,6 +862,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
     public JLabel getLblGuardarEstrategia() {
         return lblGuardarEstrategia;
+        
     }
 
     public void setLblGuardarEstrategia(JLabel lblGuardarEstrategia) {
