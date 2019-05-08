@@ -239,7 +239,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnFinalizar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="text" type="java.lang.String" value="Finalizar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnAtras">

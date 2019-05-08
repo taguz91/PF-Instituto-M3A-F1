@@ -443,6 +443,7 @@ public class ControladorEditarPlanClases {
         modelo_anticipacion.removeAllElements();
         for (int i = 0; i < array_Anticipacion.size(); i++) {
             modelo_anticipacion.addElement(array_Anticipacion.get(i));
+            System.out.println(array_Anticipacion+"-----------------------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<array_recargado_ANTICIPACION");
         }
     }
     
