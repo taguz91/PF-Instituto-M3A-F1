@@ -882,16 +882,10 @@ public class VtnNotasCTR {
             row.add(15, obj.getAsistencia());
 
             tablaNotasDuales.addRow(row);
-            prueba().apply(agregarFilasDuales());
 
             return null;
 
         };
-    }
-
-    Function<Function<AlumnoCursoBD,Void>, Void> prueba() {
-        
-        return null;
     }
 
     // </editor-fold>  
