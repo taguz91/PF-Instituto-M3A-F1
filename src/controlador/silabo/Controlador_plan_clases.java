@@ -15,6 +15,7 @@ import java.util.Optional;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasBD;
 import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
@@ -254,6 +255,7 @@ public class Controlador_plan_clases {
         new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
         insertarRecursosPlanClases();
         insertarTrabajoAutonomo();
+        insertarEstrategiasMetodologicas();
         return true;
     }
     private void insertarRecursosPlanClases(){
@@ -300,10 +302,7 @@ public class Controlador_plan_clases {
                         JOptionPane.showMessageDialog(null, "Esta estrategia ya esta añadida");
                         for (int j = 0; j < array_Anticipacion.size(); j++) {
                             modelo_anticipacion.addElement(array_Anticipacion.get(j));
-                            Object o=modelo_anticipacion.getElementAt(j);
-                            System.out.println(o+"object---------------------------------------------------------------------->>");
-                            System.out.println(array_Anticipacion.get(j)+"ARRRRRAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-                            
+                             
                         }
                          fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
                     } else {
@@ -431,7 +430,13 @@ public class Controlador_plan_clases {
             return true;
     }
     }
- 
+      
+    private void insertarEstrategiasMetodologicas(){
+        for(EstrategiasMetodologicasMD est : lista_estrategias_metodologicas){
+            EstrategiasMetodologicasBD embd=new EstrategiasMetodologicasBD(conexion);
+            embd.insertarEstrategiasMetodologicas(est);
+        }
+    }
 }
 
 

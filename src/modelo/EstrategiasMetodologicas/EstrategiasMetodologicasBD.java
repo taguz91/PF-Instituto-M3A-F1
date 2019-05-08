@@ -24,7 +24,7 @@ public class EstrategiasMetodologicasBD extends EstrategiasMetodologicasMD {
         super(id_plan_clases, id_estrategias_unidad);
         this.conexion = conexion;
     }
-    public boolean  insertarEstrategiasMetodologicas(EstrategiasMetodologicasMD em,EstrategiasUnidadMD eu){
+    public boolean  insertarEstrategiasMetodologicas(EstrategiasMetodologicasMD em){
         
          try {
              PreparedStatement st =conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasMetodologias\"(\n" +
@@ -32,7 +32,7 @@ public class EstrategiasMetodologicasBD extends EstrategiasMetodologicasMD {
                      "	VALUES ( ?, (SELECT MAX(id_plan_clases) from \"PlandeClases\"), ?)");
              
              st.setString(1, em.getTipo_estrategias_metodologicas());
-             st.setInt(2, eu.getIdEstrategiaUnidad());
+             st.setInt(2, em.getId_estrategias_unidad().getIdEstrategiaUnidad());
          } catch (SQLException ex) {
              Logger.getLogger(EstrategiasMetodologicasBD.class.getName()).log(Level.SEVERE, null, ex);
          }
