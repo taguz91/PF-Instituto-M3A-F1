@@ -70,6 +70,7 @@ public class VtnMateriaCTR {
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
+        InitPermisosDocente();
 
     }
 
@@ -161,6 +162,12 @@ public class VtnMateriaCTR {
             cargarTblMaterias();
         }
 
+    }
+
+    private void InitPermisosDocente() {
+        if (permisos.getNombre().equalsIgnoreCase("Docente")) {
+            vtnMateria.getBtnEliminarMateria().setEnabled(false);
+        }
     }
 
     public void cargarCmbCarreras() {

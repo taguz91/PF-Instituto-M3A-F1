@@ -33,6 +33,8 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.referencias.ReferenciasCRUDCTR;
+import controlador.referencias.ReferenciasCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
@@ -108,6 +110,8 @@ import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
+import vista.silabos.frmBibliografia;
+import vista.silabos.frmCRUDBibliografia;
 
 /**
  *
@@ -262,6 +266,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnBiblioteca().addActionListener(e->abrirVentanaBiblioteca());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -359,8 +364,20 @@ public class VtnPrincipalCTR {
             ctrVtnAlumno.iniciar();
         } else {
             errorNumVentanas();
+            
         }
 
+    }
+    public void abrirVentanaBiblioteca(){
+        frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia ();
+        eventoInternal(frmCRUDBibliografiaV);
+        if (numVtns < 5) {
+           ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR (conecta,this,vtnPrin,frmCRUDBibliografiaV);
+            ReferenciasCRUDCTRV.iniciarControlador();
+            
+        } else {
+            errorNumVentanas();
+        }
     }
 
     public void abrirVtnCarrera() {

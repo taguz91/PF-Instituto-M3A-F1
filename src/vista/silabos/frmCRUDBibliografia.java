@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vista.silabos;
 
 import javax.swing.JButton;
@@ -11,15 +7,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Daniel
- */
+
 public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmCRUDBibliografia
-     */
+   
     public frmCRUDBibliografia() {
         initComponents();
     }
@@ -127,12 +118,13 @@ public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(lbBuscarCB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(28, 28, 28)
                         .addComponent(txtBuscarCB, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(40, 40, 40)
                         .addComponent(btnNuevoCB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditarCB)
@@ -143,7 +135,7 @@ public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbBuscarCB)
                     .addComponent(txtBuscarCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -151,8 +143,8 @@ public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
                     .addComponent(btnEditarCB)
                     .addComponent(btnNuevoCB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -160,12 +152,12 @@ public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditarCB;
-    private javax.swing.JButton btnEliminarCB;
-    private javax.swing.JButton btnNuevoCB;
+    public javax.swing.JButton btnEditarCB;
+    public javax.swing.JButton btnEliminarCB;
+    public javax.swing.JButton btnNuevoCB;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbBuscarCB;
-    private javax.swing.JTable tblTablaCB;
-    private javax.swing.JTextField txtBuscarCB;
+    public javax.swing.JLabel lbBuscarCB;
+    public javax.swing.JTable tblTablaCB;
+    public javax.swing.JTextField txtBuscarCB;
     // End of variables declaration//GEN-END:variables
 }
