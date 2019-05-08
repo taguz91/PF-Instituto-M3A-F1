@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 import modelo.ResourceManager;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -77,5 +78,13 @@ public final class Middlewares {
 
     public static double conversor(String texto) {
         return Math.round(Double.valueOf(texto) * 10) / 10d;
+    }
+
+    public static String capitalize(String texto) {
+        if (texto.length() > 1) {
+            return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+        } else {
+            return texto.toUpperCase();
+        }
     }
 }

@@ -358,7 +358,7 @@ public class VtnNotasCTR {
                 horas = 1;
             }
 
-            porcentaje = (faltas * horas) / 100;
+            porcentaje = (faltas * 100) / horas;
 
             tabla.setValueAt(porcentaje, fila, conPorcentaje);
 
@@ -381,6 +381,40 @@ public class VtnNotasCTR {
             alumno.editar();
         } else {
             JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
+        }
+    }
+
+    private void editarAsistencia(int fila, int columna, DefaultTableModel tabla, int colRespuesta, Function<AlumnoCursoBD, Void> funcion) {
+        String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+
+        List<String> palabrasValidas = new ArrayList();
+        if (asistencia.isEmpty()) {
+            asistencia = "";
+        }
+        palabrasValidas.add("RETIRADO");
+        palabrasValidas.add("ASISTE");
+        palabrasValidas.add("DESERTOR");
+        palabrasValidas.add("NO ASISTE");
+        String estado = tabla.getValueAt(fila, colRespuesta).toString();
+
+        if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+            if (asistencia.contains("retirado")) {
+                estado = "RETIRADO";
+                tabla.setValueAt(estado, fila, colRespuesta);
+            } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
+                estado = "REPROBADO";
+                tabla.setValueAt(estado, fila, colRespuesta);
+            }
+            asistencia = Middlewares.capitalize(asistencia);
+            tabla.setValueAt(asistencia, fila, columna);
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+            alumno.setEstado(estado);
+            alumno.setAsistencia(asistencia);
+            alumno.editar();
+        } else {
+
+            refreshTabla(funcion, tabla);
+
         }
     }
 
@@ -435,7 +469,7 @@ public class VtnNotasCTR {
                     editarFaltas(fila, colum, tablaNotasTrad, 13, 15, 16);
                     break;
                 case 16:
-                    editarAsistencia(fila, colum, tablaNotasTrad, 12, agregarFilasTradicionales());
+                    editarAsistencia(fila, colum, tablaNotasTrad, 13, agregarFilasTradicionales());
                     break;
                 default:
                     break;
@@ -523,27 +557,6 @@ public class VtnNotasCTR {
         }
         tablaNotasTrad.setValueAt(Math.round(notaFinal), fila, 12);
 
-    }
-
-    private Consumer<MateriaMD> setPorcentaje(int faltas) {
-        return obj -> {
-
-            int horasMateria = obj.getHorasPresenciales();
-            int porcentaje = 1;
-            if (horasMateria != 0) {
-                porcentaje = (faltas * obj.getHorasPresenciales()) / 100;
-            }
-            vista.getTblNotas().setValueAt(porcentaje, getSelectedRowTrad(), 15);
-            String estado = vista.getTblNotas().getValueAt(getSelectedRowTrad(), 13).toString();
-            String asistencia = vista.getTblNotas().getValueAt(getSelectedRowTrad(), 16).toString();
-            if (!estado.equalsIgnoreCase("RETIRADO") && asistencia.equalsIgnoreCase("RETIRADO")) {
-                if (porcentaje >= 25) {
-                    vista.getTblNotas().setValueAt("REPROBADO", getSelectedRowTrad(), 13);
-                } else {
-                    vista.getTblNotas().setValueAt("APROBADO", getSelectedRowTrad(), 13);
-                }
-            }
-        };
     }
 
     private void editarTrad() {
@@ -841,39 +854,6 @@ public class VtnNotasCTR {
         alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
         alumno.editar();
 
-    }
-
-    private void editarAsistencia(int fila, int columna, DefaultTableModel tabla, int colRespuesta, Function<AlumnoCursoBD, Void> funcion) {
-        String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
-
-        List<String> palabrasValidas = new ArrayList();
-        if (asistencia.isEmpty()) {
-            asistencia = "";
-        }
-        palabrasValidas.add("RETIRADO");
-        palabrasValidas.add("ASISTE");
-        palabrasValidas.add("DESERTOR");
-        palabrasValidas.add("NO ASISTE");
-        String estado = tabla.getValueAt(fila, colRespuesta).toString();
-
-        if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
-            if (asistencia.contains("retirado")) {
-                tabla.setValueAt("RETIRADO", fila, colRespuesta);
-                estado = "RETIRADO";
-            } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
-                tabla.setValueAt("REPROBADO", fila, colRespuesta);
-                estado = "REPROBADO";
-            }
-
-            AlumnoCursoBD alumno = listaNotas.get(fila);
-            alumno.setEstado(estado);
-            alumno.setAsistencia(asistencia.toUpperCase());
-            alumno.editar();
-        } else {
-
-            refreshTabla(funcion, tabla);
-
-        }
     }
 
     private Function<AlumnoCursoBD, Void> agregarFilasDuales() {
