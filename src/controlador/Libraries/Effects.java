@@ -35,15 +35,16 @@ public class Effects {
     }
 
     public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
-
-        try {
-            centerFrame(component, desktop);
-            desktop.add(component);
-            component.setSelected(true);
-            component.setVisible(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new Thread(() -> {
+            try {
+                centerFrame(component, desktop);
+                desktop.add(component);
+                component.setSelected(true);
+                component.setVisible(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
 
     }
 

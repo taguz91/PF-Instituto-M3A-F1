@@ -225,7 +225,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SEGUNDA_PARTE_DATOS_UNIDAD.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="49"/>
+		<band height="36"/>
 		<band height="116">
 			<staticText>
 				<reportElement x="180" y="15" width="48" height="15" uuid="50eb41f7-67bb-4a7c-854c-b55cf50ac267"/>
