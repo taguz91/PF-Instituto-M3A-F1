@@ -83,6 +83,7 @@ public class FrmMateriasCTR {
                     for (int i = 0; i < ejes.size(); i++) {
                         frmMaterias.getCbEjeFormacion().addItem(ejes.get(i).getNombre());
                     }
+                     habilitarGuardar();
                 }
 
                 int pos = frmMaterias.getCbCarrera().getSelectedIndex();
@@ -98,7 +99,7 @@ public class FrmMateriasCTR {
                         frmMaterias.getLblErrorCarrera().setVisible(true);
                     }
                 }
-                habilitarGuardar();
+               
             }
         });
 
@@ -528,8 +529,8 @@ public class FrmMateriasCTR {
             materia.setMateriaNucleo(materiaNucleo);
 
             if (editar) {
-                System.out.println("materia" + materia.getNombre());
-                if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia).getId())) {
+//                System.out.println("ID " + materia.getCarrera().getId());
+                if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia, materia.getCarrera().getId()).getId())) {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
                     frmMaterias.dispose();
                 } else {
