@@ -289,12 +289,12 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Indicador" type="java.lang.Object"/>
-                            <Column editable="true" title="Instrumento" type="java.lang.Object"/>
-                            <Column editable="true" title="Valoraci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Id" type="java.lang.Object"/>
+                            <Column editable="false" title="Indicador" type="java.lang.Object"/>
+                            <Column editable="false" title="Instrumento" type="java.lang.Object"/>
+                            <Column editable="false" title="Valoraci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Id" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -494,12 +494,12 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Indicador" type="java.lang.Object"/>
-                            <Column editable="true" title="Instrumento" type="java.lang.Object"/>
-                            <Column editable="true" title="Valoraci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Id" type="java.lang.Object"/>
+                            <Column editable="false" title="Indicador" type="java.lang.Object"/>
+                            <Column editable="false" title="Instrumento" type="java.lang.Object"/>
+                            <Column editable="false" title="Valoraci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Id" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -700,12 +700,12 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Indicador" type="java.lang.Object"/>
-                            <Column editable="true" title="Instrumento" type="java.lang.Object"/>
-                            <Column editable="true" title="Valoraci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Id" type="java.lang.Object"/>
+                            <Column editable="false" title="Indicador" type="java.lang.Object"/>
+                            <Column editable="false" title="Instrumento" type="java.lang.Object"/>
+                            <Column editable="false" title="Valoraci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Id" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -905,12 +905,12 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Indicador" type="java.lang.Object"/>
-                            <Column editable="true" title="Instrumento" type="java.lang.Object"/>
-                            <Column editable="true" title="Valoraci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
-                            <Column editable="true" title="Id" type="java.lang.Object"/>
+                            <Column editable="false" title="Indicador" type="java.lang.Object"/>
+                            <Column editable="false" title="Instrumento" type="java.lang.Object"/>
+                            <Column editable="false" title="Valoraci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Env&#xed;o" type="java.lang.Object"/>
+                            <Column editable="false" title="Fecha  Presentaci&#xf3;n" type="java.lang.Object"/>
+                            <Column editable="false" title="Id" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -1154,7 +1154,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="460" y="120" width="370" height="220"/>
+              <AbsoluteConstraints x="460" y="180" width="370" height="160"/>
             </Constraint>
           </Constraints>
 
@@ -1184,7 +1184,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="460" y="100" width="-1" height="-1"/>
+              <AbsoluteConstraints x="460" y="160" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1238,7 +1238,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="720" y="100" width="-1" height="-1"/>
+              <AbsoluteConstraints x="710" y="160" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1246,6 +1246,9 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNuevaEstrategiaActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="860" y="150" width="430" height="-1"/>
@@ -1259,6 +1262,23 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="1050" y="570" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtBuscarEstrategia">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="460" y="120" width="370" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblBuscarEstrategia">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Buscar Estrategia:"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="460" y="100" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

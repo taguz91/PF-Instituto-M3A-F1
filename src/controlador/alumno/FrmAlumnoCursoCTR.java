@@ -526,12 +526,12 @@ public class FrmAlumnoCursoCTR {
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
         //Cargamos el horario del alumno  
-        if (cursosMatriculado != null) {
-            cursosMatriculado.forEach(ac -> {
-                horario = sesion.cargarHorarioCurso(ac.getCurso());
-                llenarHorarioAlmn(horario);
-            });
-        }
+//        if (cursosMatriculado != null) {
+//            cursosMatriculado.forEach(ac -> {
+//                horario = sesion.cargarHorarioCurso(ac.getCurso());
+//                llenarHorarioAlmn(horario);
+//            });
+//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
@@ -743,6 +743,19 @@ public class FrmAlumnoCursoCTR {
                         //Si es la misma materia la eliminamos de cursos
                         if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()) {
                             //System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
+                            cursos.remove(j);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                //Eliminamos las materias que ya curso  de nucleo estructurante
+                for (int i = 0; i < mallaCursadas.size(); i++) {
+                    for (int j = 0; j < cursos.size(); j++) {
+                        //Si es la misma materia la eliminamos de cursos
+                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId() 
+                                && !perdioNucleoEstruncturante(mallaCursadas.get(i).getMateria().getId())) {
+                            System.out.println("Ya curso y no es nucleo: " + cursos.get(j).getMateria().getNombre());
                             cursos.remove(j);
                             break;
                         }
