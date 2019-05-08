@@ -36,6 +36,15 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         this.btnEditarPLC = btnEditarPLC;
     }
 
+    public JButton getBtnImplimirPlan() {
+        return btnImplimirPlan;
+    }
+
+    public void setBtnImplimirPlan(JButton btnImplimirPlan) {
+        this.btnImplimirPlan = btnImplimirPlan;
+    }
+    
+
     public JButton getBtnEliminarPLC() {
         return btnEliminarPLC;
     }
@@ -126,6 +135,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         tlbTablaPLC = new javax.swing.JTable();
         Cmb_periodos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        btnImplimirPlan = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -171,13 +181,15 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Periodo:");
 
+        btnImplimirPlan.setText("Imprimir ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -188,7 +200,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Cmb_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtBuscarPLC, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(38, 38, 38)
@@ -197,9 +209,12 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                                 .addComponent(btnEditarPLC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminarPLC))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(CmbJornadas, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE)
-                                .addComponent(Cmb_periodos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(CmbJornadas, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE)
+                                    .addComponent(Cmb_periodos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnImplimirPlan)))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -228,7 +243,9 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnImplimirPlan)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -280,6 +297,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> Cmb_periodos;
     private javax.swing.JButton btnEditarPLC;
     private javax.swing.JButton btnEliminarPLC;
+    private javax.swing.JButton btnImplimirPlan;
     private javax.swing.JButton btnNuevoPLC;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

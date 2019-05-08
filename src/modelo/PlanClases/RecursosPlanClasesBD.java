@@ -42,6 +42,22 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
         }
         return  true;
     }
+    public boolean ActualizarRecursosPlanClases(RecursosPlanClasesMD rP){
+        
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public.\"RecursosPlanClases\"\n" +
+"	  set id_recurso =? \n" +
+"	WHERE id_plan_clases=? and id_recurso=?");
+            st.setInt(1, rP.getId_recursos().getId_recurso());
+            st.setInt(2, rP.getId_plan_clases().getId_plan_clases());
+            st.setInt(3, rP.getId_recursos().getId_recurso());
+            st.executeUpdate();
+            System.out.println(st);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecursosPlanClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  true;
+    }
     
        public  static List<RecursosPlanClasesMD>  consultarRecursos(ConexionBD conexion){
         List<RecursosPlanClasesMD> recursos=new ArrayList<>();
