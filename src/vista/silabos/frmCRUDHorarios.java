@@ -40,6 +40,11 @@ public class frmCRUDHorarios extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnBuscarCH.setText("Nuevo");
+        btnBuscarCH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCHActionPerformed(evt);
+            }
+        });
 
         btnNuevoCH.setText("Editar");
 
@@ -111,6 +116,10 @@ public class frmCRUDHorarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarCHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarCHActionPerformed
 
     /**
      * @param args the command line arguments

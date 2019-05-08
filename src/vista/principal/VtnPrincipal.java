@@ -47,6 +47,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return btnConsultarSilabo;
     }
 
+    public JMenuItem getMnBiblioteca() {
+        return MnBiblioteca;
+    }
+
     public JButton getBtnIngresarSilabo() {
         return btnIngresarSilabo;
     }
@@ -358,6 +362,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btngEstilo = new javax.swing.ButtonGroup();
+        jMenuItem1 = new javax.swing.JMenuItem();
         pnlMenu = new javax.swing.JPanel();
         btnDocente = new javax.swing.JButton();
         btnAlumno = new javax.swing.JButton();
@@ -409,6 +414,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtActivarNotas = new javax.swing.JMenuItem();
+        MnBiblioteca = new javax.swing.JMenuItem();
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
@@ -435,6 +441,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnRbtnWindows = new javax.swing.JRadioButtonMenuItem();
         mnRbtnNimbus = new javax.swing.JRadioButtonMenuItem();
         mnRbtnMetal = new javax.swing.JRadioButtonMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -790,6 +798,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnTipoNotas.add(mnNotas);
 
+        MnBiblioteca.setText("Biblioteca");
+        MnBiblioteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnBibliotecaActionPerformed(evt);
+            }
+        });
+        mnTipoNotas.add(MnBiblioteca);
+
         mnCtAccesos.setText("Accesos");
         mnTipoNotas.add(mnCtAccesos);
 
@@ -940,7 +956,12 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnCtActivarNotasActionPerformed
 
+    private void MnBibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBibliotecaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MnBibliotecaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MnBiblioteca;
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarRol;
@@ -962,6 +983,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnSecretaria;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
