@@ -56,11 +56,30 @@ public class FrmMateriasCTR {
     private final CarreraBD carBD = null;
     private final EjeFormacionBD ejeBD = null;
 
-    public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    //Para actualizar la tabla  
+    private final VtnMateriaCTR ctrVtnMat;
+
+    public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta,
+            VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmMaterias = frmMaterias;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
+        this.ctrVtnMat = null;
+        this.materiaBD = new MateriaBD(conecta);
+        vtnPrin.getDpnlPrincipal().add(frmMaterias);
+        frmMaterias.show();
+        //this.carBD = new CarreraBD(conecta); 
+        //this.ejeBD = new EjeFormacionBD(conecta);
+    }
+
+    public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta,
+            VtnPrincipalCTR ctrPrin, VtnMateriaCTR ctrVtnMat) {
+        this.vtnPrin = vtnPrin;
+        this.frmMaterias = frmMaterias;
+        this.conecta = conecta;
+        this.ctrPrin = ctrPrin;
+        this.ctrVtnMat = ctrVtnMat;
         this.materiaBD = new MateriaBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmMaterias);
         frmMaterias.show();
@@ -83,7 +102,7 @@ public class FrmMateriasCTR {
                     for (int i = 0; i < ejes.size(); i++) {
                         frmMaterias.getCbEjeFormacion().addItem(ejes.get(i).getNombre());
                     }
-                     habilitarGuardar();
+                    habilitarGuardar();
                 }
 
                 int pos = frmMaterias.getCbCarrera().getSelectedIndex();
@@ -99,7 +118,7 @@ public class FrmMateriasCTR {
                         frmMaterias.getLblErrorCarrera().setVisible(true);
                     }
                 }
-               
+
             }
         });
 
@@ -375,13 +394,13 @@ public class FrmMateriasCTR {
                     && frmMaterias.getLblErrorTipoAcreditacion().isVisible() == false && frmMaterias.getLblErrorMateriaCiclo().isVisible() == false
                     && frmMaterias.getLblErrorCreditos().isVisible() == false && frmMaterias.getLblErrorCampoFormacion().isVisible() == false
                     && frmMaterias.getLblErrorOrganizacionCurricular().isVisible() == false) {
-                        frmMaterias.getBtnGuardar().setEnabled(true);
-                        guardar = true;
-                
-            } else{
+                frmMaterias.getBtnGuardar().setEnabled(true);
+                guardar = true;
+
+            } else {
                 frmMaterias.getBtnGuardar().setEnabled(false);
             }
-        } else{
+        } else {
             frmMaterias.getBtnGuardar().setEnabled(false);
         }
 
@@ -532,6 +551,7 @@ public class FrmMateriasCTR {
 //                System.out.println("ID " + materia.getCarrera().getId());
                 if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia, materia.getCarrera().getId()).getId())) {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
+                    actualizarVtnMaterias();
                     frmMaterias.dispose();
                 } else {
                     JOptionPane.showMessageDialog(vtnPrin, "Los no se pudieron Editar Correctamente");
@@ -543,6 +563,7 @@ public class FrmMateriasCTR {
             } else {
                 if (materia.insertarMateria()) {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Guardados Correctamente");
+                    actualizarVtnMaterias();
                     frmMaterias.dispose();
                 } else {
                     JOptionPane.showMessageDialog(vtnPrin, "Los datos no se pudieron Guardar Correctamente");
@@ -823,6 +844,12 @@ public class FrmMateriasCTR {
         frmMaterias.getCbx_CamFormacion().setSelectedItem(matEditar.getMateriacampoformacion());
 
         iniciarValidaciones();
+    }
+    
+    private void actualizarVtnMaterias(){
+        if (ctrVtnMat != null) {
+            ctrVtnMat.actualizarVtn();
+        }
     }
 
 }

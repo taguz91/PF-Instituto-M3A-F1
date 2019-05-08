@@ -88,6 +88,8 @@ public class frmCRUDBibliografia extends javax.swing.JInternalFrame {
         btnEditarCB = new javax.swing.JButton();
         btnNuevoCB = new javax.swing.JButton();
 
+        setClosable(true);
+
         tblTablaCB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

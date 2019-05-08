@@ -210,6 +210,7 @@ public class SilaboBD extends SilaboMD {
             st.setInt(1, s.getIdSilabo());
 
             st.executeUpdate();
+            
             System.out.println(st);
             st.close();
         } catch (SQLException ex) {
