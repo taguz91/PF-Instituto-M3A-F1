@@ -1123,6 +1123,7 @@ public class ControladorSilaboU {
         for (EvaluacionSilaboMD esd : evaluacionesSilabo) {
             if (esd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 esd.getIdUnidad().setNumeroUnidad(esd.getIdUnidad().getNumeroUnidad() - 1);
+
             }
         }
 
@@ -1166,7 +1167,7 @@ public class ControladorSilaboU {
 
         total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
-        return (total + valor) <= 60;
+        return (total + valor) <= 60.0;
 
     }
 

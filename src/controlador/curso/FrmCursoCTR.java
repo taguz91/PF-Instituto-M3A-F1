@@ -1,7 +1,6 @@
 package controlador.curso;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -46,6 +45,8 @@ public class FrmCursoCTR {
     //Para cargar jornadas  
     private final JornadaBD jd;
     private ArrayList<JornadaMD> jornadas;
+    //Private void ciclos de una carrera
+    private ArrayList<Integer> ciclos;
 
     public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.frmCurso = frmCurso;
@@ -87,7 +88,7 @@ public class FrmCursoCTR {
         actualizarCmbDocentes();
         cargarCmbJornada();
 
-        frmCurso.getCbxPeriodoLectivo().addActionListener(e -> actualizarCmbMaterias());
+        frmCurso.getCbxPeriodoLectivo().addActionListener(e -> clickCmbPrd());
         frmCurso.getCbxCiclo().addActionListener(e -> actualizarCmbMaterias());
         frmCurso.getCbxMateria().addActionListener(e -> actualizarCmbDocentes());
         //Le damos accion a los botones  
@@ -127,6 +128,11 @@ public class FrmCursoCTR {
         }
     }
 
+    private void clickCmbPrd() {
+        int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
+        llenarCmbCiclos(posPr);
+    }
+
     //Con este emtodo actualizamos los datos del combo materias  
     //De igual manera en los del combo docente  
     //Materia consultamos todas las materias de ese cilo 
@@ -135,11 +141,12 @@ public class FrmCursoCTR {
         frmCurso.getCbxMateria().setEnabled(true);
         int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
         int posCi = frmCurso.getCbxCiclo().getSelectedIndex();
-        if (posPr > 0 && posCi == 0) {
-            //Consultamos las materias para cargarlo co el combo materias
-            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
-            cargarCmbMaterias(materias);
-        } else if (posPr > 0 && posCi > 0) {
+//        if (posPr > 0 && posCi == 0) {
+//            //Consultamos las materias para cargarlo co el combo materias
+//            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
+//            cargarCmbMaterias(materias);
+//        } else 
+        if (posPr > 0 && posCi > 0) {
             int ciclo = Integer.parseInt(frmCurso.getCbxCiclo().getSelectedItem().toString());
 
             materias = mt.cargarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
@@ -149,6 +156,17 @@ public class FrmCursoCTR {
             frmCurso.getCbxMateria().setEnabled(false);
         }
 
+    }
+
+    private void llenarCmbCiclos(int posPrd) {
+        ciclos = mt.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+        frmCurso.getCbxCiclo().removeAllItems();
+        if (ciclos != null) {
+            frmCurso.getCbxCiclo().addItem("Seleccione");
+            ciclos.forEach(c -> {
+                frmCurso.getCbxCiclo().addItem(c + "");
+            });
+        }
     }
 
     private void actualizarCmbDocentes() {

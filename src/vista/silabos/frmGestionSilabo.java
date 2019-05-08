@@ -1052,7 +1052,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAsistidaDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAsistidaDocente.setViewportView(tblAsistidaDocente);
         if (tblAsistidaDocente.getColumnModel().getColumnCount() > 0) {
@@ -1122,7 +1130,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAprendizajeColaborativo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAprendizajeColaborativo.setViewportView(tblAprendizajeColaborativo);
         if (tblAprendizajeColaborativo.getColumnModel().getColumnCount() > 0) {
@@ -1193,7 +1209,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblPractica.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrPractica.setViewportView(tblPractica);
         if (tblPractica.getColumnModel().getColumnCount() > 0) {
@@ -1263,7 +1287,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAutonoma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAutonoma.setViewportView(tblAutonoma);
         if (tblAutonoma.getColumnModel().getColumnCount() > 0) {
