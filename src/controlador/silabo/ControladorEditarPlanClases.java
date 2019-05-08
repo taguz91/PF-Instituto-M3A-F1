@@ -2,15 +2,24 @@
 package controlador.silabo;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasBD;
 import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
+import modelo.PlanClases.RecursosBD;
+import modelo.PlanClases.RecursosMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
 import modelo.PlanClases.TrabajoAutonomoBD;
@@ -26,6 +35,7 @@ import modelo.silabo.CursosBDS;
 import modelo.silabo.SilaboMD;
 import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
+import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmPlanClase.CheckListItem;
 import vista.silabos.frmPlanClase.CheckListRenderer;
@@ -35,6 +45,7 @@ import vista.silabos.frmPlanClase;
 
 
 public class ControladorEditarPlanClases {
+    private final UsuarioBD usuario;
     private frmPlanClase fPlanClase;
     private PlandeClasesMD planClaseMD;
     private VtnPrincipal principal;
@@ -42,20 +53,30 @@ public class ControladorEditarPlanClases {
     private CursoMD curso;
     private SilaboMD silabo;
     private UnidadSilaboMD unidadsilabo;
+    private PlandeClasesMD plan_claseMD;
+    private TrabajoAutonomoMD trabajo_autonoMD;
     private List<CursoMDS> lista_curso;
     private List<PlandeClasesMD> lista_plan;
     private List<TrabajoAutonomoMD> lista_tra_aut;
     private List<RecursosPlanClasesMD> lista_recursoMD;
+     private List<RecursosPlanClasesMD> lista_recursoMD1;
     private List<RecursosPlanClasesMD> lista_recursoBD;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
     private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
     private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas;
+    private List<EvaluacionSilaboMD> lista_evualacion_unidad;
     private DefaultListModel modelo;
     
-    
+     ArrayList array_Anticipacion=new ArrayList();
+    ArrayList array_Construccion=new ArrayList();
+    ArrayList array_Consolidacion=new ArrayList();
+    DefaultListModel modelo_anticipacion;
+    DefaultListModel modelo_Construccion;
+    DefaultListModel modelo_Consolidacion;
 
-    public ControladorEditarPlanClases(PlandeClasesMD planClaseMD, VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+    public ControladorEditarPlanClases(UsuarioBD usuario,PlandeClasesMD planClaseMD, VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+         this.usuario = usuario;
         this.planClaseMD = planClaseMD;
         this.principal = principal;
         this.conexion = conexion;
@@ -75,8 +96,56 @@ public class ControladorEditarPlanClases {
         
         fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
             fPlanClase.dispose();
+            ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
+            cP.iniciaControlador();
         });
-        
+        fPlanClase.getBtnAgregarPC().addActionListener(ba->{
+            agregarEstrategiasMetologicas();
+        });
+        fPlanClase.getBtnQuitarPC().addActionListener(qp->{
+            eliminarEstrategiasMto();
+        });
+          fPlanClase.getJlisRecursos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event ){
+                lista_recursoMD1=new ArrayList();
+                int index=fPlanClase.getJlisRecursos().locationToIndex(event.getPoint());
+                CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(index);
+                        item.setSelected(!item.isSelected());
+                        fPlanClase.getJlisRecursos().repaint(fPlanClase.getJlisRecursos().getCellBounds(index, index));
+                        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
+                    
+                    
+                 
+                   for (int i = 0; i < fPlanClase.getJlisRecursos().getModel().getSize(); i++) {
+                    CheckListItem item2=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(i);
+                    if(item2.isSelected()){
+                        String recurso= fPlanClase.getJlisRecursos().getModel().getElementAt(i).toString();
+                        Optional<RecursosMD> recursoSeleccionado=RecursosBD.consultarRecursos(conexion).stream().
+                                filter(r -> r.getNombre_recursos().equals(recurso)).findFirst();
+                        
+                        lista_recursoMD1.add(new RecursosPlanClasesMD(planClaseMD,recursoSeleccionado.get()));
+                       
+                        System.out.println(recursoSeleccionado.get().getNombre_recursos()+"-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                    }
+                }
+         
+                        
+            }
+         });
+ fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                  if(actualizarPlanClase()==true){
+                      fPlanClase.dispose();
+                      JOptionPane.showMessageDialog(fPlanClase, "Se actualizó correctamente!");
+                       ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
+                       cP.iniciaControlador();
+                  }
+
+            }
+            
+    });        
         iniciaPlanClase(planClaseMD, curso, silabo, unidadsilabo);
     }
     
@@ -104,6 +173,8 @@ public class ControladorEditarPlanClases {
         cargarCampoAutonomo(lista_tra_aut);
         
        lista_recursoBD=RecursosPlanClasesBD.consultarRecursosPlanClase(conexion, planclase.getId_plan_clases());
+       
+        lista_recursoMD1=lista_recursoBD;
         
        lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
        CargarRecursos(lista_recursoMD);
@@ -222,4 +293,172 @@ public class ControladorEditarPlanClases {
                  fPlanClase.getListConstruccionPC().setModel(modelo_Construcciom);
                  fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
      }
+     
+     public boolean actualizarPlanClase(){
+        new PlandeClasesBD(conexion).eliminarPlanClase(planClaseMD);
+        
+        plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
+        plan_claseMD.getId_curso().setId(curso.getId());
+        plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
+        plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
+        new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
+        actualizarAutonomo();
+        actualizarRecusosPlanClases();
+        return true;
+     }
+     private void actualizarAutonomo(){
+           lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
+        for (EvaluacionSilaboMD evaluacionSilaboMD : lista_evualacion_unidad) {
+            trabajo_autonoMD=new TrabajoAutonomoMD();
+            trabajo_autonoMD.getId_evaluacion().setIdEvaluacion(evaluacionSilaboMD.getIdEvaluacion());
+            trabajo_autonoMD.setAutonomo_plan_descripcion(fPlanClase.getTxrTrabajoAutonomo().getText());
+            
+            new TrabajoAutonomoBD(conexion).insertarTrabajoAutonomo1(trabajo_autonoMD);
+        }
+     }
+     
+     private void actualizarRecusosPlanClases(){
+          for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
+           RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
+            rcp.insertarRecursosPlanClases(recursoPlam);
+        }
+     }
+     
+      public EstrategiasUnidadMD estrategiaSeleccionado(){
+        String item=fPlanClase.getCmbxEstrategiasPC().getSelectedItem().toString();
+        Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
+                filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(item)).findFirst();
+        System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"EstrategiaSeleccionada-------------------------------------------");
+        return estrate_selecc.get();
+    }
+      private void agregarEstrategiasMetologicas(){
+        modelo_anticipacion= new DefaultListModel();
+        modelo_Construccion = new DefaultListModel();
+        modelo_Consolidacion = new DefaultListModel();        
+        if (fPlanClase.getjScrollPane10().isShowing()) {
+            
+            for (int i = 0; i < lista_estrategiasSilabo.size(); i++) {
+                if(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia().equals(estrategiaSeleccionado().getIdEstrategia().getDescripcionEstrategia())){
+                    if (array_Anticipacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia()) ||
+                            array_Construccion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())||
+                            array_Consolidacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())) {
+                        JOptionPane.showMessageDialog(null, "Esta estrategia ya esta añadida");
+                        for (int j = 0; j < array_Anticipacion.size(); j++) {
+                            modelo_anticipacion.addElement(array_Anticipacion.get(j));
+                        }
+                         fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    } else {
+                        array_Anticipacion.add(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia());
+                        for (int j = 0; j < array_Anticipacion.size(); j++) {
+                            modelo_anticipacion.addElement(array_Anticipacion.get(j));
+                        }
+                         fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    }
+                }
+            }
+        } else if(fPlanClase.getjScrollPane11().isShowing()){
+            for (int i = 0; i < lista_estrategiasSilabo.size(); i++) {
+                if(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia().equals(estrategiaSeleccionado().getIdEstrategia().getDescripcionEstrategia())){
+                    if (array_Anticipacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia()) ||
+                            array_Construccion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())||
+                            array_Consolidacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())) {
+                        JOptionPane.showMessageDialog(null, "Esta estrategia ya esta añadida");
+                        for (int j = 0; j < array_Construccion.size(); j++) {
+                            modelo_Construccion.addElement(array_Construccion.get(j));
+                        }
+                         fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                    } else {
+                        array_Construccion.add(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia());
+                        for (int j = 0; j < array_Construccion.size(); j++) {
+                            modelo_Construccion.addElement(array_Construccion.get(j));
+                        }
+                         fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                    }
+                }
+            }
+            fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+        }else if(fPlanClase.getjScrollPane9().isShowing()){
+            for (int i = 0; i < lista_estrategiasSilabo.size(); i++) {
+                if(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia().equals(estrategiaSeleccionado().getIdEstrategia().getDescripcionEstrategia())){
+                    if (array_Anticipacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia()) ||
+                            array_Construccion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())||
+                            array_Consolidacion.contains(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia())) {
+                        JOptionPane.showMessageDialog(null, "Esta estrategia ya esta añadida");
+                        for (int j = 0; j < array_Consolidacion.size(); j++) {
+                            modelo_Consolidacion.addElement(array_Consolidacion.get(j));
+                        }
+                         fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                    } else {
+                        array_Consolidacion.add(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia());
+                        for (int j = 0; j < array_Consolidacion.size(); j++) {
+                            modelo_Consolidacion.addElement(array_Consolidacion.get(j));
+                        }
+                         fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                    }
+                }
+            }
+        }        
+    }
+      private void eliminarEstrategiasMto(){
+         try {
+            String indice;
+            System.out.println(array_Anticipacion);
+            System.out.println(array_Construccion);
+            System.out.println(array_Consolidacion);
+            if (fPlanClase.getjScrollPane10().isShowing()) {
+                 if (fPlanClase.getListAnticipacionPC().getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    indice=fPlanClase.getListAnticipacionPC().getSelectedValue();
+                    modelo_anticipacion.removeElement(indice);
+                    array_Anticipacion.remove(indice);
+                    fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    recargarElemwentos();
+                }
+            }else if (fPlanClase.getjScrollPane11().isShowing()){
+                if (fPlanClase.getListConstruccionPC().getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    indice=fPlanClase.getListConstruccionPC().getSelectedValue();
+                    modelo_Construccion.removeElement(indice);
+                    array_Construccion.remove(indice);
+                    fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                    recargarElemwentos2();
+                }
+            }else if (fPlanClase.getjScrollPane9().isShowing()){
+                if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    indice=fPlanClase.getListConsolidacionPC().getSelectedValue();
+                    modelo_Consolidacion.removeElement(indice);
+                    array_Consolidacion.remove(indice);
+                    fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                    recargarElemwentos3();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(fPlanClase,"No se puede realizar esta acción!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    public void recargarElemwentos(){
+        modelo_anticipacion.removeAllElements();
+        for (int i = 0; i < array_Anticipacion.size(); i++) {
+            modelo_anticipacion.addElement(array_Anticipacion.get(i));
+        }
+    }
+    
+    public void recargarElemwentos2(){
+        modelo_Construccion.removeAllElements();
+        for (int i = 0; i < array_Construccion.size(); i++) {
+            modelo_Construccion.addElement(array_Construccion.get(i));
+        }
+    }
+    public void recargarElemwentos3(){
+        modelo_Consolidacion.removeAllElements();
+        for (int i = 0; i < array_Consolidacion.size(); i++) {
+            modelo_Consolidacion.addElement(array_Consolidacion.get(i));
+        }
+    }
+     
 }

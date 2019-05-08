@@ -99,8 +99,9 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases.getBtnEditarPLC().addActionListener((ActionEvent ae) -> {
             int row=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
             if(row!=-1){
-                ControladorEditarPlanClases ce=new ControladorEditarPlanClases(plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
+                ControladorEditarPlanClases ce=new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                 ce.iniciaControlador();
+                fCrud_plan_Clases.dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
@@ -180,9 +181,9 @@ public class ControladorCRUDPlanClase {
    private CursoMD curso_selecc(){
        int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
        lista_curso=CursosBDS.Consultarcursos(conexion,  usuario.getPersona().getIdPersona(), getid_periodo(),fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,1).toString());
-       System.out.println(lista_curso.get(0).getNombre()+"---------------------------ooooooooooooooooooooooooo");
+//       System.out.println(lista_curso.get(0).getNombre()+"---------------------------ooooooooooooooooooooooooo");
        Optional<CursoMD> curso_selecccionado=lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,2).toString())).findFirst();
-       System.out.println(curso_selecccionado.get().getNombre()+"----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
+//       System.out.println(curso_selecccionado.get().getNombre()+"----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
        return curso_selecccionado.get();
    }
    private void eliminarPlanClase(){
@@ -214,7 +215,7 @@ public class ControladorCRUDPlanClase {
          String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
-         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
+//         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
     }
