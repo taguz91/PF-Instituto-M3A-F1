@@ -432,26 +432,7 @@ public class VtnNotasCTR {
                     break;
 
                 case 14:
-                    String materia = vista.getCmbAsignatura().getSelectedItem().toString();
-                    String value = tablaNotasTrad.getValueAt(getSelectedRowTrad(), 14).toString();
-
-                    if (value.isEmpty()) {
-                        value = "0";
-                    }
-
-                    if (Validaciones.isInt(value)) {
-                        int faltas = (int) Middlewares.conversor(value);
-                        listaMaterias
-                                .stream()
-                                .filter(item -> item.getNombre().equals(materia))
-                                .collect(Collectors.toList())
-                                .forEach(setPorcentaje(faltas));
-                        editarTrad();
-                    } else {
-                        JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMEROS ENTEROS!!");
-                    }
-
-                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
+                    editarFaltas(fila, colum, tablaNotasTrad, 13, 15, 16);
                     break;
                 case 16:
                     editarAsistencia(fila, colum, tablaNotasTrad, 12, agregarFilasTradicionales());
@@ -810,7 +791,7 @@ public class VtnNotasCTR {
                     break;
 
                 case 13://FALTAS
-                    editarFaltas(fila, columna, tablaNotasDuales, 12, 14, 15);
+                    editarFaltas(fila, columna, tablaNotasDuales, 11, 14, 15);
                     break;
 
                 case 15:
@@ -858,14 +839,6 @@ public class VtnNotasCTR {
 
         alumno.setNotaFinal(Middlewares.conversor(tablaNotasDuales.getValueAt(fila, 11).toString()));
         alumno.setEstado(tablaNotasDuales.getValueAt(fila, 12).toString());
-        alumno.editar();
-
-    }
-
-    private void editarFaltas(int fila, int columna, int faltas, TableModel tabla) {
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        tabla.setValueAt(faltas, fila, columna);
-        alumno.setNumFalta(faltas);
         alumno.editar();
 
     }
