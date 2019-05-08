@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
@@ -881,9 +882,16 @@ public class VtnNotasCTR {
             row.add(15, obj.getAsistencia());
 
             tablaNotasDuales.addRow(row);
+            prueba().apply(agregarFilasDuales());
 
             return null;
+
         };
+    }
+
+    Function<Function<AlumnoCursoBD,Void>, Void> prueba() {
+        
+        return null;
     }
 
     // </editor-fold>  
