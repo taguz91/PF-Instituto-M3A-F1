@@ -107,23 +107,19 @@ public class ControladorCRUDPlanClase {
             }
         });
         fCrud_plan_Clases.getBtnEditarPLC().addActionListener((ActionEvent ae) -> {
-<<<<<<< HEAD
             int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
             if (row != -1) {
-                ControladorEditarPlanClases ce = new ControladorEditarPlanClases(plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
+                
+                ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                 ce.iniciaControlador();
             } else {
-=======
-            int row=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-            if(row!=-1){
-                ControladorEditarPlanClases ce=new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
-                ce.iniciaControlador();
-                fCrud_plan_Clases.dispose();
-            }else{
->>>>>>> 60c64c89a77ae161d4a1f1a00003d94c697f9a1d
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
+        
+    
+        
+            
         CARGAR_COMBO_CARRERAS();
         CARGAR_JORNADAS();
         cargarPlanesDeClaseProfesor();
@@ -181,7 +177,6 @@ public class ControladorCRUDPlanClase {
         }
         fCrud_plan_Clases.getCmb_Carreras().setSelectedIndex(0);
     }
-<<<<<<< HEAD
 
     private void CARGAR_JORNADAS() {
         fCrud_plan_Clases.getCmbJornadas().removeAllItems();
@@ -209,36 +204,11 @@ public class ControladorCRUDPlanClase {
         return curso_selecccionado.get();
     }
 
-    private void eliminarPlanClase() {
-        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este plan de clase?", "Eliminar", JOptionPane.YES_NO_OPTION);
-=======
    
-   private void CARGAR_JORNADAS(){
-       fCrud_plan_Clases.getCmbJornadas().removeAllItems();
-       lista_jornadas=JornadasDB.consultarJornadas(conexion);
-       lista_jornadas.forEach((lj)-> { 
-           fCrud_plan_Clases.getCmbJornadas().addItem(lj.getNombre());
-       });
-       
-   }
-   private PlandeClasesMD plan_clas_selecc(){
-       int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-       Optional<PlandeClasesMD> plan_clase_selec=lista_plan_clases.stream().
-               filter(pl -> pl.getId_plan_clases()==Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
-       
-       return plan_clase_selec.get();
-   }
-   private CursoMD curso_selecc(){
-       int seleccion=fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-       lista_curso=CursosBDS.Consultarcursos(conexion,  usuario.getPersona().getIdPersona(), getid_periodo(),fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,1).toString());
-//       System.out.println(lista_curso.get(0).getNombre()+"---------------------------ooooooooooooooooooooooooo");
-       Optional<CursoMD> curso_selecccionado=lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion,2).toString())).findFirst();
-//       System.out.println(curso_selecccionado.get().getNombre()+"----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
-       return curso_selecccionado.get();
-   }
+   
+   
    private void eliminarPlanClase(){
        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este plan de clase?", "Eliminar", JOptionPane.YES_NO_OPTION);
->>>>>>> 60c64c89a77ae161d4a1f1a00003d94c697f9a1d
         if (reply == JOptionPane.YES_OPTION) {
             new PlandeClasesBD(conexion).eliminarPlanClase(plan_clas_selecc());
             JOptionPane.showMessageDialog(null, "Plan de clase eliminado correctamente");
@@ -290,9 +260,7 @@ public class ControladorCRUDPlanClase {
                 .forEach(obj -> {
                     id_periodo_lectivo = obj.getId_PerioLectivo();
                 });
-<<<<<<< HEAD
-        return id_periodo_lectivo;
-=======
+
      return id_periodo_lectivo;
   }
    
@@ -303,17 +271,8 @@ public class ControladorCRUDPlanClase {
 //         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
->>>>>>> 60c64c89a77ae161d4a1f1a00003d94c697f9a1d
     }
 
-    public List<SilaboMD> cargar_silabo() {
-        String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
-        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(conexion, parametros);
-
-        System.out.println(silabosdocente.get(0).getIdSilabo() + " CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
-        return silabosdocente;
-
-    }
 
     private SilaboMD silabo_seleccionado() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
