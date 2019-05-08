@@ -280,8 +280,11 @@ public class ControladorSilaboC {
         if (configuracion.getCmbAsignatura().getItemCount() == 0) {
             JOptionPane.showMessageDialog(null, "No tiene silabos pendientes para esta carrera dentro del periodo en curso ", "Aviso", JOptionPane.WARNING_MESSAGE);
 
+            configuracion.getCmbPeriodo().setEnabled(false);
+            configuracion.getCmbAsignatura().setEnabled(false);
             configuracion.getBtnSiguiente().setEnabled(false);
             configuracion.getSpnUnidades().setEnabled(false);
+            
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
         }
@@ -298,8 +301,10 @@ public class ControladorSilaboC {
         });
 
         if (silabosAnteriores.size() > 0) {
+            
             configuracion.getSpnUnidades().setEnabled(false);
         } else {
+            configuracion.getCmbPeriodo().setEnabled(false);
             configuracion.getSpnUnidades().setEnabled(true);
         }
 
