@@ -301,6 +301,7 @@ public class ControladorCRUDPlanClase {
                 principal.setEnabled(false);
 
                 frmCargando1 frmCargando1 = new frmCargando1();
+               
 
                 frmCargando1.setVisible(true);
 
@@ -309,11 +310,11 @@ public class ControladorCRUDPlanClase {
                 accion = true;
 
                 principal.setEnabled(true);
+                
 
                 frmCargando1.dispose();
 
-                fCrud_plan_Clases.dispose();
-
+            
                
             }).start();
 
