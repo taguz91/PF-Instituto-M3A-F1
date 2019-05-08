@@ -296,6 +296,13 @@ public class ControladorSilaboC {
         silabosAnteriores.forEach((prd) -> {
             configuracion.getCmbPeriodo().addItem(prd.getIdPeriodoLectivo().getNombre_PerLectivo());
         });
+        
+        if (silabosAnteriores.size()>0){
+            configuracion.getSpnUnidades().setEnabled(false);
+        }else{
+            configuracion.getSpnUnidades().setEnabled(true);
+        }
+        
 
     }
 
