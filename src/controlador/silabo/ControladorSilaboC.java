@@ -1032,7 +1032,10 @@ public class ControladorSilaboC {
             @Override
             public void keyReleased(KeyEvent ke) {
             
-                buscarEstrategias(seleccionarUnidad());
+                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+                    buscarEstrategias(seleccionarUnidad());
+                }
+                
             }
             
         });

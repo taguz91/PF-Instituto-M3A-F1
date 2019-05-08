@@ -811,7 +811,10 @@ public class ControladorSilaboU {
             @Override
             public void keyReleased(KeyEvent ke) {
             
-                buscarEstrategias(seleccionarUnidad());
+                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+                    buscarEstrategias(seleccionarUnidad());
+                }
+                
             }
             
         });
@@ -1112,14 +1115,14 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
         for (EstrategiasUnidadMD emd : estrategiasSilabo) {
-            if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()) {
+            if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 
-        for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
-            if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()) {
-                emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
+        for (EvaluacionSilaboMD esd : evaluacionesSilabo) {
+            if (esd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
+                esd.getIdUnidad().setNumeroUnidad(esd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 

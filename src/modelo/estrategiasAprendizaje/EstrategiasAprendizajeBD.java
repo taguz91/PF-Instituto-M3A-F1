@@ -55,7 +55,7 @@ public class EstrategiasAprendizajeBD extends EstrategiasAprendizajeMD {
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_estrategia, descripcion_estrategia\n"
-                    + "	FROM public.\"EstrategiasAprendizaje\" ORDER BY id_estrategia DESC");
+                    + "	FROM public.\"EstrategiasAprendizaje\" ORDER BY descripcion_estrategia");
 
             ResultSet rs = st.executeQuery();
 
@@ -79,7 +79,7 @@ public class EstrategiasAprendizajeBD extends EstrategiasAprendizajeMD {
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_estrategia, descripcion_estrategia\n"
-                    + "	FROM public.\"EstrategiasAprendizaje\" WHERE descripcion_estrategia ILIKE '%" + clave + "%'"+"ORDER BY id_estrategia DESC");
+                    + "	FROM public.\"EstrategiasAprendizaje\" WHERE descripcion_estrategia ILIKE '%" + clave + "%'"+"ORDER BY descripcion_estrategia");
 
             ResultSet rs = st.executeQuery();
 
