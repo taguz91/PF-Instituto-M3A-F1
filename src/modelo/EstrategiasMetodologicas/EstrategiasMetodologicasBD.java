@@ -33,6 +33,8 @@ public class EstrategiasMetodologicasBD extends EstrategiasMetodologicasMD {
              
              st.setString(1, em.getTipo_estrategias_metodologicas());
              st.setInt(2, em.getId_estrategias_unidad().getIdEstrategiaUnidad());
+             st.executeUpdate();
+             System.out.println(st);
          } catch (SQLException ex) {
              Logger.getLogger(EstrategiasMetodologicasBD.class.getName()).log(Level.SEVERE, null, ex);
          }

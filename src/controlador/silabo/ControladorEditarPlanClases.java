@@ -156,9 +156,7 @@ public class ControladorEditarPlanClases {
          lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         CargarEstrategiasUnidad(lista_estrategiasSilabo);
         
-        for(EstrategiasUnidadMD est:lista_estrategiasSilabo){
-            System.out.println(est.getIdEstrategiaUnidad()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<---------------------------");
-        }
+        
         
         lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
