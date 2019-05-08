@@ -96,8 +96,8 @@ public class ControladorSilaboU {
 
     private static Integer idEvaluacionSig = 0;
     private Integer idEvaluacion;
-    
-    private boolean retroceso=false;
+
+    private boolean retroceso = false;
 
     public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal, ConexionBD conexion) {
         this.silabo = silabo;
@@ -215,7 +215,7 @@ public class ControladorSilaboU {
             @Override
             public void mouseClicked(MouseEvent me) {
 
-               boolean existe = false;
+                boolean existe = false;
 
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
 
@@ -275,11 +275,9 @@ public class ControladorSilaboU {
                                 filter(e -> e.getDescripcionEstrategia().equals(estrategia)).
                                 findFirst();
 
-                        
-                        
                         estrategiasSilabo.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
-                        
-                        System.out.println(estrategiasSilabo.size()+"------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>><< TAMAÑO DEL ARRAY LIST");
+
+                        System.out.println(estrategiasSilabo.size() + "------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>><< TAMAÑO DEL ARRAY LIST");
 
                         System.out.println(estrategiaSeleccionada.get().getDescripcionEstrategia() + " - " + unidadSeleccionada.getNumeroUnidad());
 
@@ -302,7 +300,7 @@ public class ControladorSilaboU {
                         unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio.minus(1,ChronoUnit.DAYS))) {
+                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio.minus(1, ChronoUnit.DAYS))) {
                             unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                             actualizarUnidad(unidadSeleccionada);
                         } else {
@@ -329,7 +327,7 @@ public class ControladorSilaboU {
                         unidadSeleccionada.setFechaFinUnidad(fechaFin);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1,ChronoUnit.DAYS))) {
+                        if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1, ChronoUnit.DAYS))) {
 
                             unidadSeleccionada.setFechaFinUnidad(fechaFin);
                             actualizarUnidad(unidadSeleccionada);
@@ -777,6 +775,8 @@ public class ControladorSilaboU {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
+                 gestion.getBtnGuardar().doClick();
+                
                 if (validarCampos()) {
 
                     if (!retroceso) {
@@ -808,7 +808,7 @@ public class ControladorSilaboU {
             }
 
         });
-        
+
 //        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
 //            @Override
 //            public void keyReleased(KeyEvent ke) {
@@ -820,12 +820,11 @@ public class ControladorSilaboU {
 //            }
 //            
 //        });
-        
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
 
         mostrarUnidad();
     }
-    
+
 //    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
 //
 //        DefaultListModel modeloEstrategias = new DefaultListModel();
@@ -854,7 +853,6 @@ public class ControladorSilaboU {
 //            }
 //        }
 //    }
-
     private boolean accion = true;
     private boolean accion2 = true;
 
@@ -869,7 +867,6 @@ public class ControladorSilaboU {
 
                 guardarSilabo();
 
-               
                 accion = true;
 
                 try {
@@ -877,7 +874,7 @@ public class ControladorSilaboU {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 gestion.getBtnGuardar().setEnabled(true);
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
                 principal.getLblEstado().setText("");
@@ -907,7 +904,6 @@ public class ControladorSilaboU {
                 principal.getMnCtSilabos().doClick();
             }).start();
         }
-
 
         mostrarUnidad();
     }
@@ -980,7 +976,7 @@ public class ControladorSilaboU {
                 new SilaboBD(conexion).eliminar(silabo);
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-               
+
                 gestion.dispose();
                 bibliografia.dispose();
                 principal.getMnCtSilabos().doClick();
@@ -989,9 +985,8 @@ public class ControladorSilaboU {
 
         });
 
-        
         bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
-        
+
         bibliografia.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -1419,9 +1414,8 @@ public class ControladorSilaboU {
 
     public void agregarBibliografiaNoBase() {
 
-        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
-        
-        
+        referenciasSilabo.removeIf(r -> r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
+
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
@@ -1551,8 +1545,7 @@ public class ControladorSilaboU {
     public void insertarReferencias() {
 
         agregarBibliografiaNoBase();
-        
-        
+
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
             rbd.insertar(referenciasSilabo.get(i));
@@ -1578,12 +1571,13 @@ public class ControladorSilaboU {
         insertarReferencias();
 
     }
-    
+
     public boolean validarCampos() {
 
         boolean control = true;
 
         int contador = 0;
+        double aprovechamiento = 0.0;
 
         for (int i = 0; i < unidadesSilabo.size(); i++) {
 
@@ -1604,6 +1598,7 @@ public class ControladorSilaboU {
             }
 
             if (unidadesSilabo.get(i).getFechaInicioUnidad() == null) {
+
                 control = false;
             }
 
@@ -1612,24 +1607,26 @@ public class ControladorSilaboU {
             }
 
             for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                
-                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad().equals(unidadesSilabo.get(i).getIdUnidad())) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getNumeroUnidad() == (unidadesSilabo.get(i).getNumeroUnidad())) {
                     contador++;
-                  
-                    
                 }
+
             }
-            
-         
+
+            for (int k = 0; k < evaluacionesSilabo.size(); k++) {
+                aprovechamiento = aprovechamiento + evaluacionesSilabo.get(k).getValoracion();
+            }
 
             if (contador == 0) {
                 control = false;
             }
 
+            if (aprovechamiento < 60.0) {
+                control = false;
+            }
+
         }
-        
-        
-        
+
         return control;
 
     }
