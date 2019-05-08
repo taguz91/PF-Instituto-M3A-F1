@@ -398,9 +398,12 @@ public class VtnNotasCTR {
     // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES">    
     private void carlcularNotasTradicionales(TableModel datos) {
 
+        int fila = getSelectedRowTrad();
+        int colum = getSelectedColumTrad();
+
         try {
             String nombreNota = "";
-            switch (getSelectedColumTrad()) {
+            switch (colum) {
                 case 6:
                     nombreNota = "APORTE 1";
 
@@ -461,28 +464,7 @@ public class VtnNotasCTR {
                     refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
                     break;
                 case 16:
-                    String asistencia = vista.getTblNotas().getValueAt(getSelectedRowTrad(), 16).toString().toLowerCase();
-
-                    List<String> palabrasValidas = new ArrayList();
-                    if (asistencia.isEmpty()) {
-                        asistencia = "";
-                    }
-                    palabrasValidas.add("RETIRADO");
-                    palabrasValidas.add("ASISTE");
-                    palabrasValidas.add("DESERTOR");
-                    palabrasValidas.add("NO ASISTE");
-
-                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
-                        if (asistencia.contains("retirado")) {
-                            vista.getTblNotas().setValueAt("RETIRADO", getSelectedRowTrad(), 13);
-                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
-                            vista.getTblNotas().setValueAt("REPROBADO", getSelectedRowTrad(), 13);
-                        }
-                        sumarColumnasTrad();
-                        editarTrad();
-                    }
-                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
-
+                    editarAsistencia(fila, colum, tablaNotasTrad, 12, agregarFilasTradicionales());
                     break;
                 default:
                     break;
@@ -837,35 +819,12 @@ public class VtnNotasCTR {
 
                     break;
 
-                case 12:
-                    editarEstado(fila, columna, tablaNotasDuales);
-                    break;
-
                 case 13://FALTAS
                     editarFaltas(fila, columna, tablaNotasDuales, 12, 14, 15);
                     break;
 
                 case 15:
-                    String asistencia = tablaNotasDuales.getValueAt(fila, columna).toString().toLowerCase();
-
-                    List<String> palabrasValidas = new ArrayList();
-                    if (asistencia.isEmpty()) {
-                        asistencia = "";
-                    }
-                    palabrasValidas.add("RETIRADO");
-                    palabrasValidas.add("ASISTE");
-                    palabrasValidas.add("DESERTOR");
-                    palabrasValidas.add("NO ASISTE");
-
-                    if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
-                        if (asistencia.contains("retirado")) {
-                            tablaNotasDuales.setValueAt("RETIRADO", fila, 13);
-                        } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
-                            tablaNotasDuales.setValueAt("REPROBADO", fila, 13);
-                        }
-                    }
-                    refreshTabla(agregarFilasTradicionales(), tablaNotasTrad);
-
+                    editarAsistencia(fila, columna, tablaNotasDuales, 12, agregarFilasDuales());
                     break;
 
                 default:
@@ -887,6 +846,7 @@ public class VtnNotasCTR {
                 sumarColumnas(tablaNotasDuales, fila, 8, 9, 11, "INT");
             }
             editarDuales(fila, columna, tipoNota);
+            refreshTabla(agregarFilasDuales(), tablaNotasDuales);
         } else {
             mensajeDeError();
             refreshTabla(agregarFilasDuales(), tablaNotasDuales);
@@ -913,6 +873,47 @@ public class VtnNotasCTR {
 
     }
 
+    private void editarFaltas(int fila, int columna, int faltas, TableModel tabla) {
+        AlumnoCursoBD alumno = listaNotas.get(fila);
+        tabla.setValueAt(faltas, fila, columna);
+        alumno.setNumFalta(faltas);
+        alumno.editar();
+
+    }
+
+    private void editarAsistencia(int fila, int columna, DefaultTableModel tabla, int colRespuesta, Function<AlumnoCursoBD, Void> funcion) {
+        String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+
+        List<String> palabrasValidas = new ArrayList();
+        if (asistencia.isEmpty()) {
+            asistencia = "";
+        }
+        palabrasValidas.add("RETIRADO");
+        palabrasValidas.add("ASISTE");
+        palabrasValidas.add("DESERTOR");
+        palabrasValidas.add("NO ASISTE");
+        String estado = tabla.getValueAt(fila, colRespuesta).toString();
+
+        if (Validaciones.validarPalabras(palabrasValidas, asistencia)) {
+            if (asistencia.contains("retirado")) {
+                tabla.setValueAt("RETIRADO", fila, colRespuesta);
+                estado = "RETIRADO";
+            } else if (asistencia.contains("desertor") || asistencia.contains("no asiste")) {
+                tabla.setValueAt("REPROBADO", fila, colRespuesta);
+                estado = "REPROBADO";
+            }
+
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+            alumno.setEstado(estado);
+            alumno.setAsistencia(asistencia.toUpperCase());
+            alumno.editar();
+        } else {
+
+            refreshTabla(funcion, tabla);
+
+        }
+    }
+
     private Function<AlumnoCursoBD, Void> agregarFilasDuales() {
         return obj -> {
             Vector<Object> row = new Vector<>();
@@ -929,9 +930,8 @@ public class VtnNotasCTR {
             row.add(8, obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor());
             row.add(9, obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor());
             row.add(10, obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor());
-            row.add(11, obj.getNotaFinal());
 
-            System.out.println(obj.getNotas().stream().filter(buscar("NOTA FINAL CICLO")).findAny().get().getNotaValor());
+            row.add(11, obj.getNotaFinal());
 
             row.add(12, obj.getEstado());
             row.add(13, obj.getNumFalta());
