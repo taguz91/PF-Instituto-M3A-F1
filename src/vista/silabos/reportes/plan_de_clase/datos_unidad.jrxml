@@ -5,15 +5,15 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_unidad" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select numero_unidad,titulo_unidad,concat(fecha_inicio_unidad,' al ',fecha_fin_unidad),
-horas_docencia_unidad + horas_practica_unidad 
+		<![CDATA[select numero_unidad,titulo_unidad,concat(fecha_inicio_unidad,' al ',fecha_fin_unidad),concat(
+horas_docencia_unidad + horas_practica_unidad,' horas') 
 as duracion 
 from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 	</queryString>
 	<field name="numero_unidad" class="java.lang.Integer"/>
 	<field name="titulo_unidad" class="java.lang.String"/>
 	<field name="concat" class="java.lang.String"/>
-	<field name="duracion" class="java.lang.Integer"/>
+	<field name="duracion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

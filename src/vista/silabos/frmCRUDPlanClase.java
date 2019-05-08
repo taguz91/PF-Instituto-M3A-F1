@@ -158,7 +158,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Docente", "Materia", "Curso", "Plan de Clase N°", "Unidad"
+                "PlanCod", "Docente", "Materia", "Curso", "Unidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
