@@ -528,7 +528,7 @@ public class FrmMateriasCTR {
 
             if (editar) {
                 System.out.println("materia" + materia.getNombre());
-                if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia).getId())) {
+                if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia, materia.getCarrera().getId()).getId())) {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
                     frmMaterias.dispose();
                 } else {
@@ -631,11 +631,11 @@ public class FrmMateriasCTR {
 
         };
         
-        frmMaterias.getTxt_CodMateria().addFocusListener(new FocusAdapter() {
-            public void focusLost(FocusEvent e) {
-                buscarMateria();
-            }
-        });
+//        frmMaterias.getTxt_CodMateria().addFocusListener(new FocusAdapter() {
+//            public void focusLost(FocusEvent e) {
+//                buscarMateria();
+//            }
+//        });
 
 //        frmMaterias.getCbCarrera().addActionListener(new CmbValidar(
 ////                frmMaterias.getCbCarrera(), frmMaterias.getLblErrorCarrera()));
