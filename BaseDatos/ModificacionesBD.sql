@@ -385,5 +385,8 @@ ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
 
 
 --UPDATES 24/Abril/2019
-ALTER TABLE "public"."Carreras" 
+ALTER TABLE "public"."Carreras"
   ADD COLUMN "carrera_emanas" smallint DEFAULT 0;
+
+--Para que salga la hora
+ALTER TABLE public."AlumnoCurso" ALTER COLUMN "almn_curso_fecha_registro" TYPE TIMESTAMP;
