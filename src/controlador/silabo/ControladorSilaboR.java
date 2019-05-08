@@ -62,33 +62,9 @@ public class ControladorSilaboR {
 
     public void iniciarControlador() {
         
+     
+
         
-        
-        System.out.println("894814841817414");
-        System.out.println("894814841817414");
-        System.out.println("894814841817414");
-
-        crud.getBtnGenerar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                if (crud.getChbSilabo().isSelected()) {
-                    imprimirSilabo();
-
-                } else if (crud.getChbProgramaAnalitico().isSelected()) {
-                    imprimirProgramaAnalitico();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar el documento antes de imprimir");
-                }
-
-                crud.dispose();
-
-                principal.getBtnConsultarSilabo().doClick();
-
-            }
-
-        });
  
         
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
