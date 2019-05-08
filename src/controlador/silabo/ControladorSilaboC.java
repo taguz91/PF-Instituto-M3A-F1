@@ -284,9 +284,11 @@ public class ControladorSilaboC {
             configuracion.getCmbAsignatura().setEnabled(false);
             configuracion.getBtnSiguiente().setEnabled(false);
             configuracion.getSpnUnidades().setEnabled(false);
-            
+
         } else {
             configuracion.getBtnSiguiente().setEnabled(true);
+            configuracion.getCmbPeriodo().setEnabled(true);
+            configuracion.getCmbAsignatura().setEnabled(true);
         }
 
     }
@@ -301,7 +303,7 @@ public class ControladorSilaboC {
         });
 
         if (silabosAnteriores.size() > 0) {
-            
+
             configuracion.getSpnUnidades().setEnabled(false);
         } else {
             configuracion.getCmbPeriodo().setEnabled(false);
@@ -1008,7 +1010,7 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 gestion.getBtnGuardar().doClick();
-                
+
                 if (validarCampos()) {
 
                     if (!retroceso) {
@@ -1098,34 +1100,40 @@ public class ControladorSilaboC {
     private void ejecutar2(ActionEvent e) {
         if (accion) {
             new Thread(() -> {
-                accion2 = false;
-                bibliografia.getBtnFinalizar().setEnabled(false);
 
-                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
-                if (silaboNuevo.getIdSilabo() == null) {
-                    guardarSilabo();
-                    silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
-                } else {
-                    silaboNuevo.eliminar();
-                    guardarSilabo();
+                if (validarReferenciaBase()) {
+                    accion2 = false;
+                    bibliografia.getBtnFinalizar().setEnabled(false);
+
+                    principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                    if (silaboNuevo.getIdSilabo() == null) {
+                        guardarSilabo();
+                        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+                    } else {
+                        silaboNuevo.eliminar();
+                        guardarSilabo();
+                    }
+
+                    accion = true;
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                    principal.getLblEstado().setText("");
+                    bibliografia.getBtnFinalizar().setEnabled(true);
+                    configuracion.dispose();
+                    gestion.dispose();
+                    bibliografia.dispose();
+
+                    principal.getMnCtSilabos().doClick();
+                }else{
+                    JOptionPane.showMessageDialog(null, "El silabo debe contar con al menos una referencia base", "Aviso", JOptionPane.WARNING_MESSAGE);
+
                 }
-
-                accion = true;
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
-                principal.getLblEstado().setText("");
-                bibliografia.getBtnFinalizar().setEnabled(true);
-                configuracion.dispose();
-                gestion.dispose();
-                bibliografia.dispose();
-
-                principal.getMnCtSilabos().doClick();
 
             }).start();
         }
@@ -1818,7 +1826,7 @@ public class ControladorSilaboC {
             }
 
             for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                if (estrategiasSilabo.get(j).getIdUnidad().getNumeroUnidad()==(unidadesSilabo.get(i).getNumeroUnidad())) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getNumeroUnidad() == (unidadesSilabo.get(i).getNumeroUnidad())) {
                     contador++;
                 }
 
@@ -1903,6 +1911,20 @@ public class ControladorSilaboC {
 
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
+    }
+
+    public boolean validarReferenciaBase() {
+        boolean control = false;
+
+        for (int k = 0; k < referenciasSilabo.size(); k++) {
+            if (referenciasSilabo.get(k).getIdReferencia().getTipoReferencia().equals("Base")) {
+
+                control = true;
+
+            }
+        }
+
+        return control;
     }
 
 }
