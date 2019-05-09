@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -27,8 +28,8 @@ public class VtnNotas extends JInternalFrame {
         tblDual.setRowHeight(20);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
-        
-        
+        ((DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(0);
+
     }
 
     public JButton getBtnImprimir() {
@@ -192,11 +193,6 @@ public class VtnNotas extends JInternalFrame {
             tblTrad.getColumnModel().getColumn(0).setMinWidth(40);
             tblTrad.getColumnModel().getColumn(0).setPreferredWidth(40);
             tblTrad.getColumnModel().getColumn(0).setMaxWidth(40);
-            tblTrad.getColumnModel().getColumn(1).setMinWidth(80);
-            tblTrad.getColumnModel().getColumn(2).setMinWidth(100);
-            tblTrad.getColumnModel().getColumn(3).setMinWidth(100);
-            tblTrad.getColumnModel().getColumn(4).setMinWidth(100);
-            tblTrad.getColumnModel().getColumn(5).setMinWidth(100);
             tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
             tblTrad.getColumnModel().getColumn(6).setMaxWidth(55);
             tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
@@ -244,15 +240,6 @@ public class VtnNotas extends JInternalFrame {
             tblDual.getColumnModel().getColumn(0).setMinWidth(50);
             tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblDual.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblDual.getColumnModel().getColumn(1).setMinWidth(100);
-            tblDual.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tblDual.getColumnModel().getColumn(1).setMaxWidth(100);
-            tblDual.getColumnModel().getColumn(2).setMinWidth(100);
-            tblDual.getColumnModel().getColumn(2).setPreferredWidth(100);
-            tblDual.getColumnModel().getColumn(2).setMaxWidth(100);
-            tblDual.getColumnModel().getColumn(3).setMinWidth(100);
-            tblDual.getColumnModel().getColumn(3).setPreferredWidth(100);
-            tblDual.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         tabPane.addTab("Carreras Duales", jScrollPane1);

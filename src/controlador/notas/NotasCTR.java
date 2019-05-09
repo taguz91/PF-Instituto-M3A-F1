@@ -6,15 +6,22 @@
 package controlador.notas;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
+import controlador.Libraries.cellEditor.ComboBoxCellEditor;
+import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import java.util.Vector;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
@@ -25,6 +32,7 @@ import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.notas.NotasBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
@@ -58,8 +66,8 @@ public class NotasCTR {
     private DefaultTableModel tablaNotasDuales;
 
     //JTables
-    private JTable jTablaTrad;
-    private JTable jTablaDual;
+    private JTable jTblTrad;
+    private JTable jTblDual;
 
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
@@ -76,8 +84,8 @@ public class NotasCTR {
         tablaNotasTrad = (DefaultTableModel) vista.getTblTrad().getModel();
         tablaNotasDuales = (DefaultTableModel) vista.getTblDual().getModel();
 
-        jTablaTrad = vista.getTblTrad();
-        jTablaDual = vista.getTblDual();
+        jTblTrad = vista.getTblTrad();
+        jTblDual = vista.getTblDual();
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
             listaDocentes = DocenteBD.selectAll(usuario.getUsername());
@@ -119,7 +127,7 @@ public class NotasCTR {
                 if (e.getKeyCode() == 10) {
                     String texto = vista.getTxtBuscar().getText();
                     if (texto.length() >= 10) {
-                        //buscarDocente();
+                        buscarDocente();
                     }
                 }
             }
@@ -136,13 +144,11 @@ public class NotasCTR {
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
 
                     active = true;
-
-                    //carlcularNotasTradicionales(tablaNotasTrad);
+                    carlcularNotasTradicionales(jTblTrad);
                     active = false;
                 }
 
             }
-
         });
 
         tablaNotasDuales.addTableModelListener(new TableModelListener() {
@@ -162,7 +168,29 @@ public class NotasCTR {
     }
 
     private void InitTablas() {
-        vista.getTblTrad().getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+
+        //TABLA TRADICIONALES
+        jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
+
+        List<String> items = new ArrayList<>();
+        items.add("Asiste");
+        items.add("No asiste");
+        items.add("Retirado");
+        items.add("Desertor");
+        jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
+
+        //TABLA DUALES
+        jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+        jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+        jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+        jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(true));
+        jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
 
     }
 
@@ -327,6 +355,10 @@ public class NotasCTR {
                 .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
     }
 
+    private Predicate<NotasBD> buscar(String busqueda) {
+        return item -> item.getTipoDeNota().getNombre().equals(busqueda);
+    }
+
     private void activarForm(boolean estado) {
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
@@ -343,6 +375,13 @@ public class NotasCTR {
         vista.getCmbCiclo().setEnabled(estado);
         vista.getCmbAsignatura().setEnabled(estado);
         vista.getTblTrad().setEnabled(estado);
+    }
+
+    private int calcularPorcentaje(int faltas, int horas) {
+        if (horas == 0) {
+            horas = 1;
+        }
+        return (faltas * 100) / horas;
     }
 
     private void editarFaltas(int fila, JTable tabla) {
@@ -390,7 +429,7 @@ public class NotasCTR {
         }
     }
 
-    private void cargarTabla(DefaultTableModel tabla) {
+    private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
         new Thread(() -> {
 
             cargarTabla = false;
@@ -402,10 +441,7 @@ public class NotasCTR {
             listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
 
             listaNotas.stream().forEach(obj -> {
-                tabla.addRow(new Object[]{
-                    tabla.getDataVector().size() + 1,
-                    obj.getAlumno().getPrimerApellido()
-                });
+                funcionCarga.apply(obj, tabla);
             });
             cargarTabla = true;
 
@@ -414,21 +450,51 @@ public class NotasCTR {
 
     // </editor-fold> 
     // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES"> 
-    private Function<AlumnoCursoBD, Void> agregarFilasTrad() {
-        return obj -> {
-            tablaNotasTrad.getDataVector().stream()
-                    .filter(item ->item.equals(item));
-            
-            
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+        return (obj, tabla) -> {
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(),
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(),
+                obj.getAlumno().getSegundoNombre(),
+                obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()),
+                obj.getEstado(),
+                obj.getNumFalta(),
+                calcularPorcentaje(obj.getNumFalta(), getHoras()),
+                obj.getAsistencia()
+            });
             return null;
         };
+    }
+
+    private void carlcularNotasTradicionales(JTable tabla) {
+        int fila = tabla.getSelectedRow();
+        int columna = tabla.getSelectedColumn();
+
+        switch (fila) {
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
     }
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            cargarTabla(tablaNotasTrad);
+            cargarTabla(tablaNotasTrad, agregarFilasTrad());
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }

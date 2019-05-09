@@ -35,9 +35,12 @@ public class RowStyle extends DefaultTableCellRenderer {
                 setForeground(new Color(0, 0, 0));
             }
             setHorizontalAlignment(CENTER);
-            setFont(new Font("Arial", Font.PLAIN, 12));
+            setFont(new Font("Arial", Font.PLAIN, 11));
             table.setSelectionBackground(Color.lightGray);
             //table.setSelectionForeground(Color.lightGray);
+
+            setHorizontalAlignment(0);
+            
         } catch (NumberFormatException | NullPointerException e) {
 
         }
