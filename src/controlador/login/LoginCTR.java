@@ -1,8 +1,6 @@
 package controlador.login;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Middlewares;
-import controlador.notas.VtnNotasCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
@@ -11,29 +9,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
-import modelo.alumno.AlumnoCursoBD;
-import modelo.notas.NotasBD;
-import modelo.persona.AlumnoMD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -70,6 +51,9 @@ public class LoginCTR {
 
     //Inits
     public void Init() {
+
+        System.out.println("--------->" + Thread.activeCount());
+
         btnHover();
         //Ocultamos el boton que ya no se usa
         //vista.getBtnIngSU().setEnabled(false);
@@ -204,7 +188,5 @@ public class LoginCTR {
             }
         });
     }
-
-
 
 }

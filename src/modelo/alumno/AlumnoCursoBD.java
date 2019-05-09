@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ResourceManager;
@@ -485,7 +486,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         return lista;
 
     }
-
     public boolean editar() {
         String UPDATE = "UPDATE \"AlumnoCurso\" \n"
                 + "SET \n"

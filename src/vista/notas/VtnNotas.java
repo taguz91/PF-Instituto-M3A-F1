@@ -220,7 +220,7 @@ public class VtnNotas extends JInternalFrame {
 
             },
             new String [] {
-                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
+                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "Aporte 1", "Aporte 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
