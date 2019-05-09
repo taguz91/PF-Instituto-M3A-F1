@@ -270,7 +270,6 @@ public class NotasCTR {
     }
 
     private void refreshTabla(Function<AlumnoCursoBD, Void> funcion, DefaultTableModel tabla) {
-        System.out.println("REFRESH");
         activarForm(false);
         tabla.setRowCount(0);
         listaNotas.stream().forEach(obj -> {
@@ -417,7 +416,10 @@ public class NotasCTR {
     // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES"> 
     private Function<AlumnoCursoBD, Void> agregarFilasTrad() {
         return obj -> {
-
+            tablaNotasTrad.getDataVector().stream()
+                    .filter(item ->item.equals(item));
+            
+            
             return null;
         };
     }

@@ -23,10 +23,12 @@ public class VtnNotas extends JInternalFrame {
     }
 
     private void InitDiseño() {
-        tblTrad.setRowHeight(15);
-        tblDual.setRowHeight(15);
+        tblTrad.setRowHeight(20);
+        tblDual.setRowHeight(20);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
+        
+        
     }
 
     public JButton getBtnImprimir() {
@@ -174,16 +176,9 @@ public class VtnNotas extends JInternalFrame {
                 "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, true, true, false, true, true, true, false, false, true, false, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -194,10 +189,14 @@ public class VtnNotas extends JInternalFrame {
         tblTrad.getTableHeader().setReorderingAllowed(false);
         tabDuales.setViewportView(tblTrad);
         if (tblTrad.getColumnModel().getColumnCount() > 0) {
-            tblTrad.getColumnModel().getColumn(0).setMinWidth(50);
-            tblTrad.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblTrad.getColumnModel().getColumn(1).setMinWidth(90);
-            tblTrad.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblTrad.getColumnModel().getColumn(0).setMinWidth(40);
+            tblTrad.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblTrad.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblTrad.getColumnModel().getColumn(1).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(2).setMinWidth(100);
+            tblTrad.getColumnModel().getColumn(3).setMinWidth(100);
+            tblTrad.getColumnModel().getColumn(4).setMinWidth(100);
+            tblTrad.getColumnModel().getColumn(5).setMinWidth(100);
             tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
             tblTrad.getColumnModel().getColumn(6).setMaxWidth(55);
             tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
@@ -242,8 +241,18 @@ public class VtnNotas extends JInternalFrame {
         });
         jScrollPane1.setViewportView(tblDual);
         if (tblDual.getColumnModel().getColumnCount() > 0) {
-            tblDual.getColumnModel().getColumn(0).setResizable(false);
+            tblDual.getColumnModel().getColumn(0).setMinWidth(50);
             tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblDual.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblDual.getColumnModel().getColumn(1).setMinWidth(100);
+            tblDual.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblDual.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(2).setMinWidth(100);
+            tblDual.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblDual.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(3).setMinWidth(100);
+            tblDual.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblDual.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         tabPane.addTab("Carreras Duales", jScrollPane1);
