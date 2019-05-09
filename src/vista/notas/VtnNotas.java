@@ -1,5 +1,6 @@
 package vista.notas;
 
+import controlador.notas.ux.RowStyle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -18,8 +19,16 @@ public class VtnNotas extends JInternalFrame {
     public VtnNotas() {
 
         initComponents();
-
+        InitDiseño();
     }
+
+    private void InitDiseño() {
+        tblTrad.setRowHeight(15);
+        tblDual.setRowHeight(15);
+        tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
+        tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
+    }
+
     public JButton getBtnImprimir() {
         return btnImprimir;
     }
@@ -60,8 +69,8 @@ public class VtnNotas extends JInternalFrame {
         return lblEstado;
     }
 
-    public JTable getTblNotas() {
-        return tblNotas;
+    public JTable getTblTrad() {
+        return tblTrad;
     }
 
     public JScrollPane getjScrollPane2() {
@@ -84,8 +93,8 @@ public class VtnNotas extends JInternalFrame {
         return tabPane;
     }
 
-    public JTable getTblNotasDuales() {
-        return tblNotasDuales;
+    public JTable getTblDual() {
+        return tblDual;
     }
 
     @SuppressWarnings("unchecked")
@@ -112,9 +121,9 @@ public class VtnNotas extends JInternalFrame {
         lblHoras = new javax.swing.JLabel();
         tabPane = new javax.swing.JTabbedPane();
         tabDuales = new javax.swing.JScrollPane();
-        tblNotas = new javax.swing.JTable();
+        tblTrad = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblNotasDuales = new javax.swing.JTable();
+        tblDual = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -157,7 +166,7 @@ public class VtnNotas extends JInternalFrame {
 
         tabPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        tblNotas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTrad.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -180,42 +189,42 @@ public class VtnNotas extends JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblNotas.setSelectionBackground(new java.awt.Color(102, 102, 102));
-        tblNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblNotas.getTableHeader().setReorderingAllowed(false);
-        tabDuales.setViewportView(tblNotas);
-        if (tblNotas.getColumnModel().getColumnCount() > 0) {
-            tblNotas.getColumnModel().getColumn(0).setMinWidth(50);
-            tblNotas.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblNotas.getColumnModel().getColumn(1).setMinWidth(90);
-            tblNotas.getColumnModel().getColumn(1).setMaxWidth(90);
-            tblNotas.getColumnModel().getColumn(6).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(6).setMaxWidth(55);
-            tblNotas.getColumnModel().getColumn(7).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(7).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(9).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(9).setMaxWidth(55);
-            tblNotas.getColumnModel().getColumn(10).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(10).setMaxWidth(70);
-            tblNotas.getColumnModel().getColumn(11).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(11).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(12).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
-            tblNotas.getColumnModel().getColumn(13).setMinWidth(85);
-            tblNotas.getColumnModel().getColumn(13).setMaxWidth(85);
-            tblNotas.getColumnModel().getColumn(14).setMinWidth(50);
-            tblNotas.getColumnModel().getColumn(14).setMaxWidth(50);
-            tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
-            tblNotas.getColumnModel().getColumn(15).setMaxWidth(60);
-            tblNotas.getColumnModel().getColumn(16).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(16).setMaxWidth(70);
+        tblTrad.setSelectionBackground(new java.awt.Color(102, 102, 102));
+        tblTrad.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblTrad.getTableHeader().setReorderingAllowed(false);
+        tabDuales.setViewportView(tblTrad);
+        if (tblTrad.getColumnModel().getColumnCount() > 0) {
+            tblTrad.getColumnModel().getColumn(0).setMinWidth(50);
+            tblTrad.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblTrad.getColumnModel().getColumn(1).setMinWidth(90);
+            tblTrad.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
+            tblTrad.getColumnModel().getColumn(6).setMaxWidth(55);
+            tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(7).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(8).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(8).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(9).setMinWidth(55);
+            tblTrad.getColumnModel().getColumn(9).setMaxWidth(55);
+            tblTrad.getColumnModel().getColumn(10).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(10).setMaxWidth(70);
+            tblTrad.getColumnModel().getColumn(11).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(11).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(12).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(12).setMaxWidth(70);
+            tblTrad.getColumnModel().getColumn(13).setMinWidth(85);
+            tblTrad.getColumnModel().getColumn(13).setMaxWidth(85);
+            tblTrad.getColumnModel().getColumn(14).setMinWidth(50);
+            tblTrad.getColumnModel().getColumn(14).setMaxWidth(50);
+            tblTrad.getColumnModel().getColumn(15).setMinWidth(60);
+            tblTrad.getColumnModel().getColumn(15).setMaxWidth(60);
+            tblTrad.getColumnModel().getColumn(16).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(16).setMaxWidth(70);
         }
 
         tabPane.addTab("Carrera Tradicional", tabDuales);
 
-        tblNotasDuales.setModel(new javax.swing.table.DefaultTableModel(
+        tblDual.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -231,10 +240,10 @@ public class VtnNotas extends JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblNotasDuales);
-        if (tblNotasDuales.getColumnModel().getColumnCount() > 0) {
-            tblNotasDuales.getColumnModel().getColumn(0).setResizable(false);
-            tblNotasDuales.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jScrollPane1.setViewportView(tblDual);
+        if (tblDual.getColumnModel().getColumnCount() > 0) {
+            tblDual.getColumnModel().getColumn(0).setResizable(false);
+            tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
         tabPane.addTab("Carreras Duales", jScrollPane1);
@@ -363,8 +372,8 @@ public class VtnNotas extends JInternalFrame {
     private javax.swing.JLabel lbl_periodolectivo;
     private javax.swing.JScrollPane tabDuales;
     private javax.swing.JTabbedPane tabPane;
-    private javax.swing.JTable tblNotas;
-    private javax.swing.JTable tblNotasDuales;
+    private javax.swing.JTable tblDual;
+    private javax.swing.JTable tblTrad;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 

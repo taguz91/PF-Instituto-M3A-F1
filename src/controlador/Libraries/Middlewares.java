@@ -4,7 +4,7 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import javax.swing.JTable;
 import modelo.ResourceManager;
 import net.sf.jasperreports.engine.JRException;
@@ -89,11 +89,8 @@ public final class Middlewares {
         }
     }
 
-    public static Function<JTable, Integer> getIndexOfColTbl(String name) {
-        return obj -> {
-            return obj.getColumn(name).getModelIndex();
-        };
-
-    }
+    public static BiFunction<JTable, String, Integer> getNombre = (tabla, nombre) -> {
+        return tabla.getColumnModel().getColumnIndex(nombre);
+    };
 
 }

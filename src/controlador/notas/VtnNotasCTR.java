@@ -77,8 +77,8 @@ public class VtnNotasCTR {
     // <editor-fold defaultstate="collapsed" desc="INITS">    
     public void Init() {
 
-        tablaNotasTrad = (DefaultTableModel) vista.getTblNotas().getModel();
-        tablaNotasDuales = (DefaultTableModel) vista.getTblNotasDuales().getModel();
+        tablaNotasTrad = (DefaultTableModel) vista.getTblTrad().getModel();
+        tablaNotasDuales = (DefaultTableModel) vista.getTblDual().getModel();
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
             listaDocentes = DocenteBD.selectAll(usuario.getUsername());
         } else {
@@ -165,7 +165,7 @@ public class VtnNotasCTR {
     }
 
     private void InitTablas() {
-        vista.getTblNotas().getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        vista.getTblTrad().getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         
     }
 
@@ -306,19 +306,19 @@ public class VtnNotasCTR {
     }
 
     private int getSelectedRowTrad() {
-        return vista.getTblNotas().getSelectedRow();
+        return vista.getTblTrad().getSelectedRow();
     }
 
     private int getSelectedColumTrad() {
-        return vista.getTblNotas().getSelectedColumn();
+        return vista.getTblTrad().getSelectedColumn();
     }
 
     private int getSelectedRowDuales() {
-        return vista.getTblNotasDuales().getSelectedRow();
+        return vista.getTblDual().getSelectedRow();
     }
 
     private int getSelectedColumDuales() {
-        return vista.getTblNotasDuales().getSelectedColumn();
+        return vista.getTblDual().getSelectedColumn();
     }
 
     private int getHoras() {
@@ -345,7 +345,7 @@ public class VtnNotasCTR {
         vista.getCmbPeriodoLectivo().setEnabled(estado);
         vista.getCmbCiclo().setEnabled(estado);
         vista.getCmbAsignatura().setEnabled(estado);
-        vista.getTblNotas().setEnabled(estado);
+        vista.getTblTrad().setEnabled(estado);
     }
 
     private void editarFaltas(int fila, int columna, DefaultTableModel tabla, int colEstado, int conPorcentaje, int colAsistencia) {
@@ -363,9 +363,9 @@ public class VtnNotasCTR {
 
             if (!estado.equalsIgnoreCase("RETIRADO") || !asistencia.equalsIgnoreCase("RETIRADO")) {
                 if (porcentaje >= 25) {
-                    vista.getTblNotas().setValueAt("REPROBADO", fila, colEstado);
+                    vista.getTblTrad().setValueAt("REPROBADO", fila, colEstado);
                 } else {
-                    vista.getTblNotas().setValueAt("APROBADO", fila, colEstado);
+                    vista.getTblTrad().setValueAt("APROBADO", fila, colEstado);
                 }
             }
 
@@ -584,16 +584,16 @@ public class VtnNotasCTR {
 
     private void editarTrad() {
 
-        vista.getTblNotas().setEnabled(false);
+        vista.getTblTrad().setEnabled(false);
         int fila = getSelectedRowTrad();
 
         AlumnoCursoBD alumno = listaNotas.get(fila);
 
         alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
 
-        String asistencia = vista.getTblNotas().getValueAt(fila, 16).toString().toLowerCase();
+        String asistencia = vista.getTblTrad().getValueAt(fila, 16).toString().toLowerCase();
 
-        String estado = vista.getTblNotas().getValueAt(fila, 13).toString();
+        String estado = vista.getTblTrad().getValueAt(fila, 13).toString();
 
         if (asistencia.contains("desertor")) {
             alumno.setAsistencia("Desertor");
@@ -639,10 +639,10 @@ public class VtnNotasCTR {
                 .collect(Collectors.toList())
                 .forEach(editarNota(fila, 11, tablaNotasTrad));
 
-        alumno.setNotaFinal(Middlewares.conversor(vista.getTblNotas().getValueAt(fila, 12).toString()));
+        alumno.setNotaFinal(Middlewares.conversor(vista.getTblTrad().getValueAt(fila, 12).toString()));
 
         alumno.editar();
-        vista.getTblNotas().setEnabled(true);
+        vista.getTblTrad().setEnabled(true);
 
     }
 
@@ -674,7 +674,7 @@ public class VtnNotasCTR {
 
             cargarTabla = false;
             tabla.setRowCount(0);
-            vista.getTblNotas().setEnabled(false);
+            vista.getTblTrad().setEnabled(false);
             Effects.setLoadCursor(vista);
 
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
@@ -697,7 +697,7 @@ public class VtnNotasCTR {
             Effects.setDefaultCursor(vista);
 
             cargarTabla = true;
-            vista.getTblNotas().setEnabled(true);
+            vista.getTblTrad().setEnabled(true);
             validarCombos();
         }).start();
 
@@ -906,10 +906,10 @@ public class VtnNotasCTR {
             if (modalidad.equalsIgnoreCase("TRADICIONAL")) {
                 System.out.println("TRADICIONAL");
                 vista.getTabPane().setSelectedIndex(0);
-                cargarTabla(agregarFilasTradicionales(), tablaNotasTrad, vista.getTblNotas(), 13);
+                cargarTabla(agregarFilasTradicionales(), tablaNotasTrad, vista.getTblTrad(), 13);
             } else if (modalidad.equalsIgnoreCase("DUAL") || modalidad.equalsIgnoreCase("DUAL FOCALIZADA")) {
                 vista.getTabPane().setSelectedIndex(1);
-                cargarTabla(agregarFilasDuales(), tablaNotasDuales, vista.getTblNotasDuales(), 12);
+                cargarTabla(agregarFilasDuales(), tablaNotasDuales, vista.getTblDual(), 12);
             }
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
