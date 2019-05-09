@@ -1,7 +1,10 @@
 package controlador.estilo;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,6 +24,12 @@ public class AnimacionCarga extends Thread {
     private int pos = 0;
     private boolean cargando = true, bloqueo = false;
     private InetAddress ina;
+    //El sockect que escuchara todo  
+    private Socket sc;
+    private ServerSocket ssc;
+    private DataInputStream mensaje;
+    private String me;
+
     //Todos los inconos que usaremos 
     ImageIcon estados[] = {
         new ImageIcon(getClass().getResource("/vista/img/animacion/LogoPosFinal.png")),
@@ -36,10 +45,11 @@ public class AnimacionCarga extends Thread {
 
     @Override
     public void run() {
+        iniciarSocketEscucha();
         System.out.println("Animacion en funcionamiento 1111111111");
         try {
             ina = InetAddress.getByName(Propiedades.getPropertie("ip"));
-            System.out.println("EL IP ES: "+Propiedades.getPropertie("ip"));
+            System.out.println("EL IP ES: " + Propiedades.getPropertie("ip"));
         } catch (UnknownHostException e) {
             ina = null;
             System.out.println("No se puede hacer ping a esta direccion." + e.getMessage());
@@ -54,7 +64,7 @@ public class AnimacionCarga extends Thread {
             if (pos > estados.length - 1) {
                 pos = 1;
             }
-           
+
 //            if (ina != null) {
 //                try {
 //                    if (ina.isReachable(2000)) {
@@ -79,11 +89,36 @@ public class AnimacionCarga extends Thread {
 //                    System.out.println("No se puede ver si puede ser accedida.");
 //                }
 //            }
+            //Aqui estara el sockect escuchando siempre 
+            escucharSocket();
         }
 
         //Le regresmos al icono original
         //Cuando se detiene la animacion
         //lbl.setIcon(estados[0]);
+    }
+
+    private void escucharSocket() {
+        if (ssc != null) {
+            try {
+                sc = ssc.accept();
+                mensaje = new DataInputStream(sc.getInputStream());
+                me = mensaje.readUTF();
+                JOptionPane.showMessageDialog(vtnPrin, me);
+                sc.close();
+            } catch (IOException e) {
+                System.out.println("El socket se murio escuchando pray for it. " + e.getMessage());
+            }
+        }
+    }
+
+    private void iniciarSocketEscucha() {
+        try {
+            System.out.println("Se inicia el sockect para escuchar mensajes.");
+            ssc = new ServerSocket(6000);
+        } catch (IOException ex) {
+            System.out.println("No se puedo iniciar el sokect de escucha. " + ex.getMessage());
+        }
     }
 
     public void iniciar() {

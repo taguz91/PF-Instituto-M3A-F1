@@ -42,7 +42,6 @@ public class VtnSelectRolCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
-    private final boolean pruebas;
 
     /**
      *
@@ -52,17 +51,15 @@ public class VtnSelectRolCTR {
      * @param conexion
      * @param icono
      * @param ista
-     * @param pruebas Para saber si entramos unicamente a probar el sistema
      */
     public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario,
-            ConectarDB conexion, ImageIcon icono, Image ista, boolean pruebas) {
+            ConectarDB conexion, ImageIcon icono, Image ista) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
         this.conexion = conexion;
         this.icono = icono;
         this.ista = ista;
-        this.pruebas = pruebas;
         vista.setIconImage(ista);
 
         registroIngreso(vista);
@@ -160,7 +157,7 @@ public class VtnSelectRolCTR {
 
         setObjFromCombo();
         
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this, pruebas);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
         vtn.iniciar();
         vista.dispose();
     }

@@ -152,7 +152,7 @@ public class LoginCTR {
                         modelo.setPersona(Lista.get(0).getPersona());
 
                         vista.dispose();
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conectar, icono, ista, false);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conectar, icono, ista);
                         vtn.Init();
                     } else {
 
@@ -204,7 +204,5 @@ public class LoginCTR {
             }
         });
     }
-
-
 
 }

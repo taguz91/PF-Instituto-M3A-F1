@@ -34,7 +34,6 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
-import controlador.referencias.ReferenciasCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
@@ -67,7 +66,6 @@ import modelo.ConexionBD;
 import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.IngresoNotasBD;
@@ -110,7 +108,6 @@ import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
-import vista.silabos.frmBibliografia;
 import vista.silabos.frmCRUDBibliografia;
 
 /**
@@ -141,9 +138,6 @@ public class VtnPrincipalCTR {
             ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
             ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
-
-    private final boolean pruebas;
-
     private final String[][] ACCESOS = {
         {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
         {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
@@ -168,18 +162,16 @@ public class VtnPrincipalCTR {
      * @param icono ImagenIcon: Icono del sistema.
      * @param ista Imagen: Imagen del icono del sistema.
      * @param ctrSelecRol
-     * @param pruebas Para saber si estamos en pruebas
      */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista,
-            VtnSelectRolCTR ctrSelecRol, boolean pruebas) {
+            VtnSelectRolCTR ctrSelecRol) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
         this.ctrSelecRol = ctrSelecRol;
         this.vtnBienvenida = new VtnBienvenida();
-        this.pruebas = pruebas;
         this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
@@ -266,7 +258,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
-        vtnPrin.getMnBiblioteca().addActionListener(e->abrirVentanaBiblioteca());
+        vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -364,17 +356,18 @@ public class VtnPrincipalCTR {
             ctrVtnAlumno.iniciar();
         } else {
             errorNumVentanas();
-            
+
         }
 
     }
-    public void abrirVentanaBiblioteca(){
-        frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia ();
+
+    public void abrirVentanaBiblioteca() {
+        frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
         eventoInternal(frmCRUDBibliografiaV);
         if (numVtns < 5) {
-           ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR (conecta,this,vtnPrin,frmCRUDBibliografiaV);
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conecta, this, vtnPrin, frmCRUDBibliografiaV);
             ReferenciasCRUDCTRV.iniciarControlador();
-            
+
         } else {
             errorNumVentanas();
         }
@@ -1017,9 +1010,9 @@ public class VtnPrincipalCTR {
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("estaesunacontra")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
-                ctr.iniciar();
+            if (c.equals("e")) {
+                    JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
+                    ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
                         JOptionPane.WARNING_MESSAGE);
@@ -1126,7 +1119,6 @@ public class VtnPrincipalCTR {
     }
 
     private void InitPermisosTesterYDocente() {
-        System.out.println("Estamos en modo pruebas = " + pruebas);
 
         if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
             if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
