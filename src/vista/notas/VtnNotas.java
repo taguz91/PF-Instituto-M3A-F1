@@ -2,6 +2,7 @@ package vista.notas;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -10,18 +11,15 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Alejandro
+ * @author MrRainx
  */
-public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
+public class VtnNotas extends JInternalFrame {
 
-
-
-    public VtnNotasAlumnoCurso() {
+    public VtnNotas() {
 
         initComponents();
 
     }
-
     public JButton getBtnImprimir() {
         return btnImprimir;
     }
@@ -62,26 +60,13 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         return lblEstado;
     }
 
-    public void setLblEstado(JLabel lblEstado) {
-        this.lblEstado = lblEstado;
-    }
-
     public JTable getTblNotas() {
         return tblNotas;
-    }
-
-    public void setTblNotas(JTable tblNotas) {
-        this.tblNotas = tblNotas;
     }
 
     public JScrollPane getjScrollPane2() {
         return tabDuales;
     }
-
-    public boolean[] canEdit = new boolean[]{
-        false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
-    };
-
 
     public JLabel getLblResultados() {
         return lblResultados;

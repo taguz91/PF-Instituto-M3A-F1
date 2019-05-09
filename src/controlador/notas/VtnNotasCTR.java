@@ -3,6 +3,7 @@ package controlador.notas;
 import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
+import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.notas.ux.RowStyle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -38,7 +39,7 @@ import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.notas.VtnNotasAlumnoCurso;
+import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -48,7 +49,7 @@ import vista.principal.VtnPrincipal;
 public class VtnNotasCTR {
 
     private final VtnPrincipal desktop;
-    private final VtnNotasAlumnoCurso vista;
+    private final VtnNotas vista;
     private final UsuarioBD usuario;
     private final RolBD rolSeleccionado;
 
@@ -66,7 +67,7 @@ public class VtnNotasCTR {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public VtnNotasCTR(VtnPrincipal desktop, VtnNotasAlumnoCurso vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
@@ -75,8 +76,6 @@ public class VtnNotasCTR {
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
     public void Init() {
-
-        vista.canEdit[1] = true;
 
         tablaNotasTrad = (DefaultTableModel) vista.getTblNotas().getModel();
         tablaNotasDuales = (DefaultTableModel) vista.getTblNotasDuales().getModel();
@@ -95,7 +94,7 @@ public class VtnNotasCTR {
         cargarComboCiclo();
         cargarComboMaterias();
         InitEventos();
-
+        InitTablas();
         activarForm(true);
 
     }
@@ -163,6 +162,11 @@ public class VtnNotasCTR {
 
             }
         });
+    }
+
+    private void InitTablas() {
+        vista.getTblNotas().getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        
     }
 
     // </editor-fold>  

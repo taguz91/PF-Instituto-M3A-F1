@@ -21,6 +21,7 @@ import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
+import controlador.notas.NotasCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasCTR;
 import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
@@ -65,7 +66,6 @@ import modelo.ConexionBD;
 import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.alumno.AlumnoCursoBD;
 import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.IngresoNotasBD;
@@ -88,7 +88,7 @@ import vista.docente.VtnDocenteMateria;
 import vista.docente.VtnRolesPeriodos;
 import vista.materia.VtnMateria;
 import vista.notas.VtnActivarNotas;
-import vista.notas.VtnNotasAlumnoCurso;
+import vista.notas.VtnNotas;
 import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.persona.FrmAlumno;
@@ -652,7 +652,7 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
-        VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
+        VtnNotas vtn = new VtnNotas();
         eventoInternal(vtn);
         if (numVtns < 5) {
             VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn, usuario, rolSeleccionado);
@@ -979,9 +979,11 @@ public class VtnPrincipalCTR {
 
     private void btnPrdIngrNotas(ActionEvent e) {
 
-        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-
-        vtn.Init();
+//        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
+//
+//        vtn.Init();
+        NotasCTR notas = new NotasCTR(vtnPrin, new VtnNotas(), usuario, rolSeleccionado);
+        notas.Init();
 
     }
 
