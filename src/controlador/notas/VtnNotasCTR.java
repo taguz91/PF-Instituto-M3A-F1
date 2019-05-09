@@ -570,11 +570,11 @@ public class VtnNotasCTR {
 
     }
 
-    private void validarExamenFinal(double notaFinal, DefaultTableModel tabla, int fila, int colEstado) {
-
+    private void validarExamenFinal(double notaFinal, DefaultTableModel tabla) {
+        
         TipoDeNotaMD rango = getRango("NOTA FINAL");
         if (notaFinal < rango.getValorMinimo()) {
-            tabla.setValueAt("REPROBADO", fila, colEstado);
+            //tabla.setValueAt("REPROBADO", fila, colEstado);
         }
     }
 
