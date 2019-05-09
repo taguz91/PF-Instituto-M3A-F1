@@ -839,7 +839,7 @@ public class ControladorSilaboU {
             new Thread(() -> {
                 accion = false;
                 gestion.getBtnGuardar().setEnabled(false);
-
+                gestion.getBtnSiguiente().setEnabled(false);
                 principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
                 new SilaboBD(conexion).eliminar(silabo);
 
@@ -854,6 +854,7 @@ public class ControladorSilaboU {
                 }
 
                 gestion.getBtnGuardar().setEnabled(true);
+                gestion.getBtnSiguiente().setEnabled(true);
                 JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
                 principal.getLblEstado().setText("");
 
@@ -894,7 +895,7 @@ public class ControladorSilaboU {
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
-
+                    gestion.getBtnSiguiente().setEnabled(false);
                     principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
 
                     try {
@@ -916,7 +917,7 @@ public class ControladorSilaboU {
                     JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
 
                     gestion.getBtnGuardar().setEnabled(true);
-
+                    gestion.getBtnSiguiente().setEnabled(true);
                     if (!retroceso) {
                         gestion.setVisible(false);
                         citarReferencias(silabo, bibliografia);
