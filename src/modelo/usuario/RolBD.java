@@ -21,12 +21,10 @@ public class RolBD extends RolMD {
 
     private static ConnDBPool pool;
     private static Connection conn;
-    private static PreparedStatement stmt;
     private static ResultSet rs;
 
     static {
         pool = new ConnDBPool();
-        conn = pool.getConnection();
     }
 
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
@@ -46,7 +44,11 @@ public class RolBD extends RolMD {
         parametros.put(1, getNombre());
         parametros.put(2, getObservaciones());
 
-        return pool.ejecutar(INSERT, pool.getConnection(), parametros) == null;
+        conn = pool.getConnection();
+
+        System.out.println(INSERT);
+
+        return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
     public static List<RolMD> selectAll() {
