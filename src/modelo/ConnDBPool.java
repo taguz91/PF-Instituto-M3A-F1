@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -17,21 +19,23 @@ import modelo.propiedades.Propiedades;
  */
 public class ConnDBPool {
 
-    private static final HikariConfig config;
-    private static final HikariDataSource ds;
+    private static HikariConfig config;
+    private static HikariDataSource ds;
 
     private PreparedStatement stmt;
     private ResultSet rs;
 
-    static {
+    public ConnDBPool() {
+    }
 
+    public ConnDBPool(String username, String password) {
         config = new HikariConfig();
         config.setJdbcUrl(generarURL());
 
-        String username = Propiedades.getUserProp("username");
+        //String username = Propiedades.getUserProp("username");
         config.setUsername(username);
 
-        String password = Propiedades.getUserProp("password");
+        //String password = Propiedades.getUserProp("password");
         config.setPassword(password);
 
         config.setMaximumPoolSize(3);
@@ -39,9 +43,6 @@ public class ConnDBPool {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         ds = new HikariDataSource(config);
-    }
-
-    public ConnDBPool() {
     }
 
     public Connection getConnection() {
@@ -157,6 +158,20 @@ public class ConnDBPool {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    public static void cerrarSesion() {
+
+        try {
+            ds.getConnection().close();
+            config.getScheduledExecutor().shutdown();
+//            config.getDataSource().getConnection().close();
+            ds = null;
+            config = null;
+            System.gc();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
