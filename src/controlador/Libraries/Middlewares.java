@@ -78,6 +78,9 @@ public final class Middlewares {
     }
 
     public static double conversor(String texto) {
+        if (texto.isEmpty()) {
+            texto = "99999";
+        }
         return Math.round(Double.valueOf(texto) * 10) / 10d;
     }
 

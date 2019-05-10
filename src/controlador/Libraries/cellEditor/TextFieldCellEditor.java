@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.EventObject;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -37,6 +39,17 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
             }
 
         });
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    stopCellEditing();
+                }
+            }
+
+        });
+
     }
 
     // Start editing

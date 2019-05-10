@@ -412,6 +412,11 @@ public class NotasCTR {
         int colAsistencia = getIndex.apply(tabla, "Asistencia");
 
         String faltasText = tabla.getValueAt(fila, colFaltas).toString();
+
+        if (faltasText.isEmpty()) {
+            faltasText = "2.2";
+        }
+
         if (Validaciones.isInt(faltasText)) {
             int faltas = new Integer(faltasText);
             int oldFaltas = listaNotas.get(fila).getNumFalta();
