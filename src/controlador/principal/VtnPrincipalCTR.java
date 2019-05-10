@@ -99,7 +99,6 @@ import vista.persona.VtnDocente;
 import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
-import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
@@ -129,7 +128,6 @@ public class VtnPrincipalCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
-    private final VtnBienvenida vtnBienvenida;
     //Para hacer los accesos
     private List<AccesosMD> accesos;
     //Constantes de accesos, para las ventanas y menus
@@ -171,7 +169,6 @@ public class VtnPrincipalCTR {
         this.usuario = usuario;
         this.conecta = conecta;
         this.ctrSelecRol = ctrSelecRol;
-        this.vtnBienvenida = new VtnBienvenida();
         this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
@@ -198,22 +195,10 @@ public class VtnPrincipalCTR {
     public void iniciar() {
         //Le pasamos dependencias a conectar
         conecta.setVtnPrin(vtnPrin);
-        //Agregamos el panel de bienvenida  
-        vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
-        //Se le pasa el nombre de usuario que inicio sesio  
-//        vtnBienvenida.getLblUser().setText(usuario.getUsername());
-//        vtnBienvenida.show();
-//        //Lo ponemos en pantalla completa
-//        try {
-//            vtnBienvenida.setMaximum(true);
-//        } catch (PropertyVetoException e) {
-//            System.out.println("No se maximiso");
-//        }
         //Iniciamos los shortcuts 
-
         iniciarAtajosTeclado();
-        agregarEstilos();
 
+        agregarEstilos();
         //Acciones de las ventanas de consulta
         //Para el estilo 
         //Para abrir las ventanas consulta
@@ -458,9 +443,12 @@ public class VtnPrincipalCTR {
 
     public void abrirVtnMallaAlumnos() {
         VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno();
+        eventoInternal(vtnMallaAlm);
+        if (numVtns < 5) {
+            VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
+            ctrMalla.iniciar();
+        }
 
-        VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
-        ctrMalla.iniciar();
     }
 
     public void abrirVtnDocenteMateria() {
@@ -703,11 +691,7 @@ public class VtnPrincipalCTR {
                     break;
                 }
             }
-            //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
-            //Ocultamos el borde de internal de bienvenida
-//            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
-//            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());

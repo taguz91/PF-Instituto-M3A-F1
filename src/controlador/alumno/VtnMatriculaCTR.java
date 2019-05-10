@@ -61,7 +61,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         iniciarAcciones();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
-        vtnMatri.getBtnHistoria().addActionListener(e -> llamaReporteMatriculaPeriodo());
     }
 
     /**
@@ -107,15 +106,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         }
     }
 
-    private void clickImprimirReporte() {
-        posFila = vtnMatri.getTblMatricula().getSelectedRow();
-        if (posFila >= 0) {
-            llamaReporteMatricula();
-        } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una persona antes.");
-        }
-    }
-
     private void iniciarBuscador() {
         vtnMatri.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -139,7 +129,8 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
 
     private void iniciarAcciones() {
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
-        vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirReporte());
+        vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirFicha());
+        vtnMatri.getBtnHistoria().addActionListener(e -> llamaReporteMatriculaPeriodo());
         vtnMatri.getBtnIngresar().addActionListener(e -> abrirFrm());
         vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
         vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
@@ -191,6 +182,30 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         ctrPrin.abrirFrmMatricula();
     }
 
+    private void clickImprimirFicha() {
+        posFila = vtnMatri.getTblMatricula().getSelectedRow();
+        if (posFila > 0) {
+            int s = JOptionPane.showOptionDialog(vtnMatri,
+                    "Reporte de matricula\n"
+                    + "¿Elegir el tipo de reporte?", "Ficha matricula",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Con Foto", "Sin Foto",
+                        "Cancelar"}, "Con Foto");
+            switch (s) {
+                case 0:
+                    llamaReporteMatricula();
+                    break;
+                case 1:
+                    llamaReporteMatriculaSinFoto();
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una persona antes.");
+        }
+    }
+
     private void llamaReporteMatricula() {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
@@ -198,9 +213,20 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
-            System.out.println("El usuari que matriculo a este estudiante es: " + ctrPrin.getUsuario().getUsername());
-            System.out.println(parametro);
             conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
+    }
+
+    private void llamaReporteMatriculaSinFoto() {
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculaSinFoto.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
+            parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
+            parametro.put("usuario", ctrPrin.getUsuario().getUsername());
+            conecta.mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -220,7 +246,6 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un periodo lectivo, del combo.");
         }
-
     }
 
 }

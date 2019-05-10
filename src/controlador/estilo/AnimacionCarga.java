@@ -44,7 +44,7 @@ public class AnimacionCarga extends Thread {
 
     @Override
     public void run() {
-        iniciarSocketEscucha();
+        //iniciarSocketEscucha();
         while (cargando) {
             //System.out.println("Animacion en funcionamiento " + cuenta);
             lbl.setIcon(estados[pos]);
@@ -76,7 +76,6 @@ public class AnimacionCarga extends Thread {
 
     private void iniciarSocketEscucha() {
         try {
-            System.out.println("Se inicia el sockect para escuchar mensajes.");
             ssc = new ServerSocket(6000);
         } catch (IOException ex) {
             System.out.println("No se puedo iniciar el sokect de escucha. " + ex.getMessage());

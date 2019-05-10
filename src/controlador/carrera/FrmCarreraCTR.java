@@ -219,7 +219,7 @@ public class FrmCarreraCTR {
         frmCarrera.getTxtNombre().setText("");
         frmCarrera.getTxtCodigo().setText("");
         frmCarrera.getJdFechaInicio().setCalendar(null);
-        frmCarrera.getCmbModalidad().setSelectedItem("Seleccioné");
+        frmCarrera.getCmbModalidad().setSelectedItem("Seleccione");
         frmCarrera.getTxtBuscar().setText("");
         mdTbl.setRowCount(0);
 
@@ -227,7 +227,7 @@ public class FrmCarreraCTR {
 
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
-        frmCarrera.getCmbModalidad().addItem("Seleccioné");
+        frmCarrera.getCmbModalidad().addItem("Seleccione");
         for (String m : MODALIDADES) {
             frmCarrera.getCmbModalidad().addItem(m);
         }

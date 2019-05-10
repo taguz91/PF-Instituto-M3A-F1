@@ -331,14 +331,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtListaAlumnos;
     }
 
-    public JButton getBtnSecretaria() {
-        return btnSecretaria;
-    }
-
-    public void setBtnSecretaria(JButton btnSecretaria) {
-        this.btnSecretaria = btnSecretaria;
-    }
-
     public JMenuItem getMnCtAlmnRetirados() {
         return mnCtAlmnRetirados;
     }
@@ -374,7 +366,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarSilabo = new javax.swing.JButton();
         btnConsultarSilabo = new javax.swing.JButton();
         btnIngresarRol = new javax.swing.JButton();
-        btnSecretaria = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnEstado = new javax.swing.JLabel();
@@ -501,9 +492,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
-        btnSecretaria.setText("Se");
-        btnSecretaria.setToolTipText("Secretaria, acceso para retirar a estudiantes");
-
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -535,9 +523,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngresarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSecretaria, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,8 +541,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                     .addComponent(btnDocenteMateria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSecretaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(2, 2, 2))
         );
 
@@ -965,7 +950,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnMatricula;
     private javax.swing.JButton btnPersona;
     private javax.swing.JButton btnPrdLectivo;
-    private javax.swing.JButton btnSecretaria;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
     private javax.swing.JMenuItem jMenuItem1;
