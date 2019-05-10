@@ -11,7 +11,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct k.id_docente,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' '
+		<![CDATA[select distinct k.id_docente,concat(k.docente_abreviatura,' ',p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' '
 									,p.persona_segundo_nombre) as nombre_docente,
 concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) as curso from  "Cursos" c join "Jornadas" 
 a on c.id_jornada=a.id_jornada join "Docentes" k on k.id_docente=c.id_docente

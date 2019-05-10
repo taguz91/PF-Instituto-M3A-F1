@@ -107,6 +107,7 @@ public class VtnTipoNotasCTR {
                 || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
                 || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
+                || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
                 )
                 .collect(Collectors.toList());
 

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ca20592-755c-4f93-9ad6-db236b9afe9d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="865"/>
+	<property name="ireport.y" value="896"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/formato2/"]]></defaultValueExpression>
@@ -21,12 +21,12 @@ end as ciclo
 ,c.id_carrera,m.materia_codigo, m.materia_nombre,m.materia_descripcion,
 m.materia_objetivo,m.materia_objetivo_especifico,m.materia_organizacion_curricular,
 m.materia_campo_formacion,m.materia_horas_docencia,m.materia_horas_practicas,
-m.materia_horas_auto_estudio,m.materia_horas_docencia/18 as horas_sem_docen,
-m.materia_horas_practicas/18  as horas_sem_prac, current_date,
-m.materia_horas_auto_estudio/18 as horas_sem_auto ,m.materia_total_horas, c.carrera_nombre,
-c.carrera_modalidad,m.materia_horas_practicas/18+m.materia_horas_docencia/18+m.materia_horas_auto_estudio/18 
-as horas_semanales from "Materias" m,"Carreras" c where 
-m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
+m.materia_horas_auto_estudio,round(cast(cast(m.materia_horas_docencia as float)/cast(c.carrera_semanas as float) as numeric),1) as horas_sem_docen,
+round (cast(CAST(m.materia_horas_practicas AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)as numeric),1)  as horas_sem_prac, current_date,
+round(cast(CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) as numeric),1) as horas_sem_auto  ,m.materia_horas_docencia+m.materia_horas_practicas + m.materia_horas_auto_estudio as materia_total_horas, c.carrera_nombre,
+c.carrera_modalidad,round(cast(CAST(m.materia_horas_practicas AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)+CAST(m.materia_horas_docencia AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)+ CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) 
+as numeric),1)as horas_semanales from "Materias" m,"Carreras" c where 
+m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 	</queryString>
 	<field name="ciclo" class="java.lang.String"/>
 	<field name="id_carrera" class="java.lang.Integer"/>
@@ -47,7 +47,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 	<field name="materia_total_horas" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="carrera_modalidad" class="java.lang.String"/>
-	<field name="horas_semanales" class="java.lang.Integer"/>
+	<field name="horas_semanales" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,7 +98,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CODIGO:]]></text>
+				<text><![CDATA[CODIGO: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="21" y="29" width="173" height="20" forecolor="#006699" uuid="699136e9-6ed0-466e-b43b-89621c0ee22d"/>
@@ -219,7 +219,7 @@ m.id_carrera=c.id_carrera and  id_materia=$P!{parameter1}]]>
 				<text><![CDATA[ Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="460" y="35" width="85" height="20" uuid="d8a78be0-6d13-4f2c-8f65-8e4d7fccee16"/>
+				<reportElement x="457" y="35" width="88" height="20" uuid="d8a78be0-6d13-4f2c-8f65-8e4d7fccee16"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

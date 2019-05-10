@@ -29,7 +29,7 @@ public class VtnRolPeriodosCTR {
     private final VtnRolesPeriodos vtnRolPe;
     private final ConectarDB conecta;
     private final VtnPrincipalCTR ctrPrin;
-    private final RolPeriodoBD rolDoc;
+    private final RolPeriodoBD rolPer;
     private DefaultTableModel mdTbl;
 // para combo de periodo
     private ArrayList<PeriodoLectivoMD> periodos;
@@ -42,7 +42,7 @@ public class VtnRolPeriodosCTR {
         this.vtnRolPe = vtnRolPe;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        this.rolDoc = new RolPeriodoBD(conecta);
+        this.rolPer = new RolPeriodoBD(conecta);
         this.prd = new PeriodoLectivoBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnRolPe);
         vtnRolPe.show();
@@ -62,7 +62,7 @@ public class VtnRolPeriodosCTR {
 
         vtnRolPe.getBtnIngresar().addActionListener(e -> abrirFRM());
         vtnRolPe.getBtnEditar().addActionListener(e -> abrirFrmEditar());
-        vtnRolPe.getBtnEliminar().addActionListener(e->eliminarRolPeriodo());
+        vtnRolPe.getBtnEliminar().addActionListener(e -> eliminarRolPeriodo());
         llenarTabla();
     }
 
@@ -87,13 +87,14 @@ public class VtnRolPeriodosCTR {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para editar");
         }
     }
-    public void eliminarRolPeriodo(){
-        posFila= vtnRolPe.getTblAlumno().getSelectedRow();
-        if(posFila>=0){
-            rolDoc.eliminarRolPeriodo(roles.get(posFila).getId_rol());
+
+    public void eliminarRolPeriodo() {
+        posFila = vtnRolPe.getTblAlumno().getSelectedRow();
+        if (posFila >= 0) {
+            rolPer.eliminarRolPeriodo(roles.get(posFila).getId_rol());
             JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
             llenarTabla();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar");
         }
     }
@@ -104,7 +105,7 @@ public class VtnRolPeriodosCTR {
             mdTbl.removeRow(i);
         }
 
-        roles = rolDoc.llenarTabla();
+        roles = rolPer.llenarTabla();
         int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < roles.size(); i++) {
             mdTbl.addRow(new Object[columnas]);

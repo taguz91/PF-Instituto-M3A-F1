@@ -289,12 +289,17 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGap(5, 5, 5))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(105, 105, 105))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(105, 105, 105))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Número de matriculas:");
+        jLabel7.setToolTipText("");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 20));
-        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 40, 20));
+
+        lblNumMatriculas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNumMatriculas.setToolTipText("");
+        lblNumMatriculas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel4.add(lblNumMatriculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 30, 20));
 
         jLabel5.setText("Ver marterias:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
@@ -306,18 +311,22 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel4.add(btnPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 100, -1));
 
         btnReprobadas.setText("Reprobadas");
-        jPanel4.add(btnReprobadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 100, -1));
+        jPanel4.add(btnReprobadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 100, -1));
 
         btnAnuladas.setText("Anuladas");
-        jPanel4.add(btnAnuladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 100, -1));
+        jPanel4.add(btnAnuladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 100, -1));
 
-        jLabel8.setText("Matriculas en el curso:");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 170, -1));
+        jLabel8.setText("Numero de matriculas: ");
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 170, -1));
         jPanel4.add(lblNumMatriculasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 150, 20));
 
         jLabel9.setText("Número de matriculas en clases:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, 20));
-        jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 40, 20));
+
+        lblNumMatriculasClases.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNumMatriculasClases.setToolTipText("");
+        lblNumMatriculasClases.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 30, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

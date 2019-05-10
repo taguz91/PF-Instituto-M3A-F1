@@ -11,7 +11,6 @@ import java.beans.PropertyVetoException;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -38,26 +37,17 @@ public class Effects {
     }
 
     public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    centerFrame(component, desktop);
-                    desktop.add(component);
-                    component.setSelected(true);
-                    component.setVisible(true);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                eliminarThread(this);
+        new Thread(() -> {
+            try {
+                centerFrame(component, desktop);
+                desktop.add(component);
+                component.setSelected(true);
+                component.setVisible(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }).start();
 
-            @Override
-            protected void finalize() throws Throwable {
-                System.out.println("HILO ELIMINADO");
-            }
-        };
-        thread.start();
     }
 
     public static synchronized void eliminarThread(Thread thread) {
@@ -99,6 +89,7 @@ public class Effects {
         view.setCursor(DEFAULT_CURSOR);
     }
 
+
     public static void pressEnter(JTextComponent component, Function<Void, Void> funcion) {
         component.addKeyListener(new KeyAdapter() {
             @Override
@@ -126,5 +117,6 @@ public class Effects {
             }
         });
     }
+
 
 }

@@ -236,7 +236,6 @@
     <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCarrera">
@@ -319,7 +318,7 @@
                     <Column editable="true" title="Ex. Recuperacion" type="java.lang.Object"/>
                     <Column editable="false" title="Not. Final" type="java.lang.Object"/>
                     <Column editable="false" title="Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="Faltas" type="java.lang.Object"/>
+                    <Column editable="true" title="Faltas" type="java.lang.Integer"/>
                     <Column editable="false" title="% Faltas" type="java.lang.Object"/>
                     <Column editable="true" title="Asistencia" type="java.lang.Object"/>
                   </Table>
@@ -456,7 +455,7 @@
                     <Column editable="true" title="Ex. final" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. Recuperacion" type="java.lang.Object"/>
                     <Column editable="true" title="Nota Final" type="java.lang.Object"/>
-                    <Column editable="false" title="Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="Estado" type="java.lang.Object"/>
                     <Column editable="true" title="Faltas" type="java.lang.Object"/>
                     <Column editable="true" title="% Faltas" type="java.lang.Object"/>
                     <Column editable="true" title="Asistencia" type="java.lang.Object"/>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="54e16a25-ace7-4f14-8941-621546442cce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_unidad" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select numero_unidad,titulo_unidad,concat(fecha_inicio_unidad,' al ',fecha_fin_unidad),concat(
+horas_docencia_unidad + horas_practica_unidad,' horas') 
+as duracion 
+from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
+	</queryString>
+	<field name="numero_unidad" class="java.lang.Integer"/>
+	<field name="titulo_unidad" class="java.lang.String"/>
+	<field name="concat" class="java.lang.String"/>
+	<field name="duracion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="74" splitType="Stretch">
+			<textField>
+				<reportElement x="273" y="20" width="282" height="34" uuid="ccafc0c8-58f9-47e1-a8c4-b58afb948a0b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="273" y="0" width="65" height="20" uuid="016d6a62-a087-41c1-9fd3-3532322cae53"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="54" width="55" height="20" uuid="76c4a878-679b-4f16-8b79-c7d5a0a3810b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Duración: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="328" y="54" width="71" height="20" uuid="ab474886-9962-4a0a-8661-58d28d678a29"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{duracion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="338" y="0" width="217" height="20" uuid="88d110bd-7550-4bf5-a04f-aa52acf38ca8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="54" width="44" height="20" uuid="c4e59e83-ddf0-49e4-92ab-7d3deef0d4c1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="44" y="54" width="229" height="20" uuid="03512147-43e1-4449-99d3-24b8688c36b1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{concat}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -306,6 +307,21 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
+    
+        public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCicloTbl(int ciclo, int idPrd) {
+        String sql = "SELECT DISTINCT c.curso_nombre,  \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
+                + "persona_segundo_apellido, persona_identificacion\n"
+                + "FROM public.\"AlumnoCurso\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
+                + "public.\"Cursos\" c\n"
+                + "WHERE a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "c.curso_ciclo = " + ciclo + " AND\n"
+                + "c.id_prd_lectivo = " + idPrd + "  AND\n"
+                + "ac.id_curso = c.id_curso "
+                + "ORDER BY persona_primer_apellido;";
+        return consultarAlmnCursosParaTblSimple(sql);
+    }
 
     public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorPrdTbl(int idPrd) {
         String sql = "SELECT DISTINCT c.curso_nombre,  \n"
@@ -446,35 +462,37 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
         List<AlumnoCursoBD> lista = new ArrayList();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
         try {
 
-            while (rs.next()) {
-                AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
+            PreparedStatement stmt = ResourceManager.getConnection().prepareStatement(SELECT);
 
-                alumnoCurso.setId(rs.getInt("id_almn_curso"));
-                alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
-                alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
-                alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-                alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
-                AlumnoMD alumno = new AlumnoMD();
-                alumno.setId_Alumno(rs.getInt("id_alumno"));
-                alumno.setIdentificacion(rs.getString("persona_identificacion"));
-                alumno.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    alumnoCurso.setId(rs.getInt("id_almn_curso"));
+                    alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
+                    alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
+                    alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+                    alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
 
-                alumnoCurso.setAlumno(alumno);
+                    AlumnoMD alumno = new AlumnoMD();
+                    alumno.setId_Alumno(rs.getInt("id_alumno"));
+                    alumno.setIdentificacion(rs.getString("persona_identificacion"));
+                    alumno.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
 
-                List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
+                    alumnoCurso.setAlumno(alumno);
 
-                alumnoCurso.setNotas(notas);
+                    List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
 
-                lista.add(alumnoCurso);
+                    alumnoCurso.setNotas(notas);
+
+                    lista.add(alumnoCurso);
+                }
             }
-            rs.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -493,7 +511,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "WHERE \n"
                 + "id_almn_curso = " + getId() + ";";
 
-        //System.out.println(UPDATE);
+        System.out.println(UPDATE);
         return ResourceManager.Statement(UPDATE) == null;
 
     }

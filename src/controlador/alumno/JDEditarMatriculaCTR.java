@@ -1,6 +1,6 @@
 package controlador.alumno;
 
-import controlador.estilo.TblRenderMateriasMatricula;
+import controlador.estilo.TblRenderMatricula;
 import controlador.principal.DependenciasVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
@@ -243,8 +243,8 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
         TblEstilo.columnaMedida(jd.getTblClasesNuevas(), 1, 50);
         TblEstilo.columnaMedida(jd.getTblClasesNuevas(), 2, 50);
 
-        jd.getTblClasesNuevas().getColumnModel().getColumn(1).setCellRenderer(new TblRenderMateriasMatricula(1));
-        jd.getTblClasesNuevas().getColumnModel().getColumn(2).setCellRenderer(new TblRenderMateriasMatricula(2));
+        jd.getTblClasesNuevas().getColumnModel().getColumn(1).setCellRenderer(new TblRenderMatricula(1));
+        jd.getTblClasesNuevas().getColumnModel().getColumn(2).setCellRenderer(new TblRenderMatricula(2));
     }
 
     private void inicarInformacion() {

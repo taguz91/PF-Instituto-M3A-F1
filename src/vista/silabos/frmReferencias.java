@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import vista.silabos.MyCellRenderer.WordWrapCellRenderer;
 
-
 /**
  *
  * @author Andres Ullauri
@@ -31,20 +30,16 @@ public class frmReferencias extends javax.swing.JInternalFrame {
      */
     public frmReferencias() {
         initComponents();
-        
-        MyCellRenderer cellRenderer = new MyCellRenderer(300);
-         lstBibliografiaBase.setCellRenderer(cellRenderer);
-        
-         tblBiblioteca.getColumnModel().getColumn(1).setCellRenderer(new WordWrapCellRenderer());
-         
-         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
-         
-    }
 
-   
-    
-    
+        MyCellRenderer cellRenderer = new MyCellRenderer(300);
+        lstBibliografiaBase.setCellRenderer(cellRenderer);
+
+        tblBiblioteca.getColumnModel().getColumn(1).setCellRenderer(new WordWrapCellRenderer());
+
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
+
+    }
 
     public JButton getBtnAtras() {
         return btnAtras;
@@ -69,8 +64,6 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     public void setBtnFinalizar(JButton btnFinalizar) {
         this.btnFinalizar = btnFinalizar;
     }
-
-    
 
     public JLabel getLblBibliografiaBase() {
         return lblBibliografiaBase;
@@ -111,8 +104,6 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     public void setLblLinkografia(JLabel lblLinkografia) {
         this.lblLinkografia = lblLinkografia;
     }
-
-    
 
     public JList<String> getLstBibliografiaBase() {
         return lstBibliografiaBase;
@@ -201,14 +192,6 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     public void setBtnQuitarBibliografiaBase(JButton btnQuitarBibliografiaBase) {
         this.btnQuitarBibliografiaBase = btnQuitarBibliografiaBase;
     }
-
-    
-
-    
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -306,7 +289,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
             }
         });
 
-        btnFinalizar.setText("Guardar");
+        btnFinalizar.setText("Finalizar");
 
         btnAtras.setText("Atrás");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -464,42 +447,43 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txrLinkografia;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
-    
+
 }
 
 class MyCellRenderer extends DefaultListCellRenderer {
-   public static final String HTML_1 = "<html><body style='width: ";
-   public static final String HTML_2 = "px'>";
-   public static final String HTML_3 = "</html>";
-   private int width;
 
-   public MyCellRenderer(int width) {
-      this.width = width;
-   }
+    public static final String HTML_1 = "<html><body style='width: ";
+    public static final String HTML_2 = "px'>";
+    public static final String HTML_3 = "</html>";
+    private int width;
 
-   
-   @Override
-   public Component getListCellRendererComponent(JList list, Object value,
-         int index, boolean isSelected, boolean cellHasFocus) {
-      String text = HTML_1 + String.valueOf(width) + HTML_2 + value.toString()
-            + HTML_3;
-      return super.getListCellRendererComponent(list, text, index, isSelected,
-            cellHasFocus);
-   }
-
-   static class WordWrapCellRenderer extends JTextArea implements TableCellRenderer {
-    WordWrapCellRenderer() {
-        setLineWrap(true);
-        setWrapStyleWord(true);
+    public MyCellRenderer(int width) {
+        this.width = width;
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        setText(value.toString());
-        setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
-        if (table.getRowHeight(row) != getPreferredSize().height) {
-            table.setRowHeight(row, getPreferredSize().height);
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
+        String text = HTML_1 + String.valueOf(width) + HTML_2 + value.toString()
+                + HTML_3;
+        return super.getListCellRendererComponent(list, text, index, isSelected,
+                cellHasFocus);
+    }
+
+    static class WordWrapCellRenderer extends JTextArea implements TableCellRenderer {
+
+        WordWrapCellRenderer() {
+            setLineWrap(true);
+            setWrapStyleWord(true);
         }
-        return this;
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value.toString());
+            setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
+            if (table.getRowHeight(row) != getPreferredSize().height) {
+                table.setRowHeight(row, getPreferredSize().height);
+            }
+            return this;
+        }
     }
-}
 }

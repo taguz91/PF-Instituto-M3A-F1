@@ -50,7 +50,6 @@ public abstract class AbstracForm {
         "NOTA FINAL"
     };
 
-    protected boolean COMPLETED = false;
 
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
@@ -78,7 +77,6 @@ public abstract class AbstracForm {
         cargarComboCarreras();
 //        cargarCmbNombreNota(carrerasTradicionales);
         InitEventos();
-        COMPLETED = true;
     }
 
     private void InitEventos() {

@@ -35,6 +35,7 @@ public class LoginCTR {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
         this.ista = icono.getImage();
         vista.setIconImage(ista);
+
     }
 
     //Inits

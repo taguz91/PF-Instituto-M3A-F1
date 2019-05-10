@@ -72,7 +72,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
                     + "AND m.materia_nombre ILIKE '%" + clave[1] + "%'\n"
-                    + "AND p.id_persona=? AND s.estado_silabo<>-1");
+                    + "AND p.id_persona=?");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[2]));
@@ -103,7 +103,7 @@ public class SilaboBD extends SilaboMD {
         return silabos;
     }
 
-    /*public void eliminar() {
+    public void eliminar() {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
@@ -117,7 +117,8 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }*/
+    }
+    
     public void actualizar() {
 
         try {
@@ -209,6 +210,7 @@ public class SilaboBD extends SilaboMD {
             st.setInt(1, s.getIdSilabo());
 
             st.executeUpdate();
+            
             System.out.println(st);
             st.close();
         } catch (SQLException ex) {
@@ -391,5 +393,27 @@ public class SilaboBD extends SilaboMD {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return silabos;
+    }
+    
+    
+    public static SilaboMD consultarUltimo(ConexionBD conexion,int id){
+        SilaboMD silabo = null;
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia=?");
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                silabo = new SilaboMD();
+
+                silabo.setIdSilabo(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return silabo;
     }
 }

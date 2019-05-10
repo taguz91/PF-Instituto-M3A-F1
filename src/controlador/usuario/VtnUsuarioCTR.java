@@ -51,15 +51,14 @@ public class VtnUsuarioCTR {
     }
 
     //Inits
-    public void Init() {
+    public synchronized void Init() {
         //Inicializamos la tabla
-        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
+        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
         //Inicializamos las listas con las consultas
         listaUsuarios = UsuarioBD.selectAll();
         cargarTabla(listaUsuarios);
-
-        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
         //InitPermisos();
         InitEventos();
 
@@ -125,9 +124,7 @@ public class VtnUsuarioCTR {
 
                 Effects.setLoadCursor(vista);
 
-                lista.stream()
-                        .sorted((item1, item2) -> item1.getUsername().compareTo(item2.getUsername()))
-                        .forEach(VtnUsuarioCTR::agregarFila);
+                lista.stream().forEach(VtnUsuarioCTR::agregarFila);
 
                 vista.getLblResultados().setText(lista.size() + " Registros");
 

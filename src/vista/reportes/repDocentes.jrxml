@@ -88,6 +88,10 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente_fecha_fin}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="420" y="10" width="116" height="170"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+			</image>
 			<staticText>
 				<reportElement x="10" y="152" width="71" height="20"/>
 				<textElement verticalAlignment="Middle">
