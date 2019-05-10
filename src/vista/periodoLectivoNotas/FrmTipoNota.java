@@ -8,14 +8,11 @@ package vista.periodoLectivoNotas;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
-/**
- *
- * @author USUARIO
- */
-public class FrmTipoNota extends javax.swing.JInternalFrame {
-
+public class  FrmTipoNota extends JInternalFrame{
     public FrmTipoNota() {
         initComponents();
 
@@ -23,9 +20,27 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
     }
 
+  
+
+ 
+    public JTable getTblTipoNota() {
+        return tblTipoNota;
+    }
+
+    public void setTblTipoNota(JTable tblTipoNota) {
+        this.tblTipoNota = tblTipoNota;
+    }
+    
+
     public JButton getBtnCancelar() {
         return btnCancelar;
     }
+
+    public JLabel getLblNombreCarrera() {
+        return lblNombreCarrera;
+    }
+    
+    
 
     public void setBtnCancelar(JButton btnCancelar) {
         this.btnCancelar = btnCancelar;
@@ -39,14 +54,6 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         this.btnGuardar = btnGuardar;
     }
 
-    public JComboBox<String> getCmbTipoDeNota() {
-        return cmbTipoDeNota;
-    }
-
-    public void setCmbTipoDeNota(JComboBox<String> cmbTipoDeNota) {
-        this.cmbTipoDeNota = cmbTipoDeNota;
-    }
-
     public JComboBox<String> getCmbPeriodoLectivo() {
         return cmdPeriodoLectivo;
     }
@@ -55,52 +62,32 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         this.cmdPeriodoLectivo = cmdPeriodoLectivo;
     }
 
-    public JTextField getTxtNotaMax() {
-        return txtNotaMax;
-    }
-
-    public void setTxtNotaMax(JTextField txtNotaMax) {
-        this.txtNotaMax = txtNotaMax;
-    }
-
-    public JTextField getTxtNotaMin() {
-        return txtNotaMin;
-    }
-
-    public void setTxtNotaMin(JTextField txtNotaMin) {
-        this.txtNotaMin = txtNotaMin;
-    }
+   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblNombre = new javax.swing.JLabel();
-        lblNotaMax = new javax.swing.JLabel();
-        txtNotaMax = new javax.swing.JTextField();
-        lblNotaMin = new javax.swing.JLabel();
-        txtNotaMin = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         lblCarrera = new javax.swing.JLabel();
         cmdPeriodoLectivo = new javax.swing.JComboBox<>();
-        cmbTipoDeNota = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTipoNota = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        lblNombreCarrera = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setClosable(true);
         setIconifiable(true);
-        setMinimumSize(new java.awt.Dimension(550, 228));
-        setPreferredSize(new java.awt.Dimension(550, 228));
-
-        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNombre.setText("Nombre:");
-
-        lblNotaMax.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNotaMax.setText("Nota máxima:");
-
-        lblNotaMin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNotaMin.setText("Nota mínima:");
+        setMinimumSize(new java.awt.Dimension(778, 330));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(778, 330));
+        setRequestFocusEnabled(false);
 
         btnCancelar.setText("Cancelar");
 
@@ -109,37 +96,51 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
         lblCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCarrera.setText("Periodo Lectivo:");
 
+        tblTipoNota.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Minimo", "Maximo"
+            }
+        ));
+        jScrollPane1.setViewportView(tblTipoNota);
+        if (tblTipoNota.getColumnModel().getColumnCount() > 0) {
+            tblTipoNota.getColumnModel().getColumn(1).setMinWidth(60);
+            tblTipoNota.getColumnModel().getColumn(1).setMaxWidth(60);
+            tblTipoNota.getColumnModel().getColumn(2).setMinWidth(60);
+            tblTipoNota.getColumnModel().getColumn(2).setMaxWidth(60);
+        }
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Carrera:");
+
+        lblNombreCarrera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addComponent(jSeparator2)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdPeriodoLectivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 381, Short.MAX_VALUE)
-                        .addComponent(btnGuardar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTipoDeNota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdPeriodoLectivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
+            .addComponent(jSeparator3)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,23 +151,19 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmdPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbTipoDeNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(lblNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNotaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNotaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardar))
+                .addContainerGap())
         );
 
         pack();
@@ -176,15 +173,16 @@ public class FrmTipoNota extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cmbTipoDeNota;
     private javax.swing.JComboBox<String> cmdPeriodoLectivo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblCarrera;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNotaMax;
-    private javax.swing.JLabel lblNotaMin;
-    private javax.swing.JTextField txtNotaMax;
-    private javax.swing.JTextField txtNotaMin;
+    private javax.swing.JLabel lblNombreCarrera;
+    private javax.swing.JTable tblTipoNota;
     // End of variables declaration//GEN-END:variables
 }

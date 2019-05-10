@@ -646,7 +646,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 carrera.setModalidad(rs.getString("carrera_modalidad"));
                 periodo.setCarrera(carrera);
 
-                String key = rs.getString("prd_lectivo_nombre") + " " + rs.getString("carrera_nombre");
+                String key = rs.getString("prd_lectivo_nombre");
 
                 map.put(key, periodo);
             }

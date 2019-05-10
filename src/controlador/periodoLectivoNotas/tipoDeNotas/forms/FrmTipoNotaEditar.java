@@ -31,32 +31,17 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         setObjInForm();
 
-        activarFormulario(true);
+
     }
 
     private void setObjInForm() {
 
         String key = modelo.getPeriodoLectivo().getNombre_PerLectivo() + " " + modelo.getPeriodoLectivo().getCarrera().getNombre();
-
-        vista.getCmbPeriodoLectivo().setSelectedItem(key);
-        vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
-        vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
-        vista.getCmbTipoDeNota().setSelectedItem(modelo.getNombre());
     }
 
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        if (validarFormulario()) {
-            if (setObj().editar(PK)) {
-                String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
-                JOptionPane.showMessageDialog(vista, MENSAJE);
-                vtnPadre.cargarTabla();
-                vista.dispose();
-            } else {
-                JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
-            }
-        }
     }
 
 }

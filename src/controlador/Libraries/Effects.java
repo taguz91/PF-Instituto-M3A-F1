@@ -3,12 +3,8 @@ package controlador.Libraries;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -16,7 +12,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -37,7 +32,7 @@ public class Effects {
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
     }
 
-    public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
+    public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
         new Thread(() -> {
             try {
                 centerFrame(component, desktop);
@@ -47,6 +42,8 @@ public class Effects {
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            System.out.println("--------------->" + Thread.activeCount());
         }).start();
 
     }

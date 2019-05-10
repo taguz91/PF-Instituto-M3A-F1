@@ -1,24 +1,41 @@
 package vista.notas;
 
+import controlador.notas.ux.RowStyle;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author Alejandro
+ * @author MrRainx
  */
-public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
+public class VtnNotas extends JInternalFrame {
 
-
-
-    public VtnNotasAlumnoCurso() {
+    public VtnNotas() {
 
         initComponents();
+        InitDiseño();
+    }
+
+    public void InitDiseño() {
+        tblTrad.setRowHeight(25);
+        tblDual.setRowHeight(25);
+        tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
+        tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
+
+        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
+        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
+
+        DefaultTableCellRenderer headerDual = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
+        headerDual.setHorizontalAlignment(SwingConstants.CENTER);
 
     }
 
@@ -62,26 +79,13 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         return lblEstado;
     }
 
-    public void setLblEstado(JLabel lblEstado) {
-        this.lblEstado = lblEstado;
-    }
-
-    public JTable getTblNotas() {
-        return tblNotas;
-    }
-
-    public void setTblNotas(JTable tblNotas) {
-        this.tblNotas = tblNotas;
+    public JTable getTblTrad() {
+        return tblTrad;
     }
 
     public JScrollPane getjScrollPane2() {
         return tabDuales;
     }
-
-    public boolean[] canEdit = new boolean[]{
-        false, false, false, false, true, true, true, true, true, true, true, true, true, true, true
-    };
-
 
     public JLabel getLblResultados() {
         return lblResultados;
@@ -99,8 +103,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         return tabPane;
     }
 
-    public JTable getTblNotasDuales() {
-        return tblNotasDuales;
+    public JTable getTblDual() {
+        return tblDual;
     }
 
     @SuppressWarnings("unchecked")
@@ -127,16 +131,17 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
         lblHoras = new javax.swing.JLabel();
         tabPane = new javax.swing.JTabbedPane();
         tabDuales = new javax.swing.JScrollPane();
-        tblNotas = new javax.swing.JTable();
+        tblTrad = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblNotasDuales = new javax.swing.JTable();
+        tblDual = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Notas");
-        setMaximumSize(new java.awt.Dimension(1243, 500));
-        setMinimumSize(new java.awt.Dimension(1243, 500));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1060, 550));
 
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
@@ -172,7 +177,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
 
         tabPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        tblNotas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTrad.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -180,76 +185,70 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                 "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, true, true, false, true, true, true, false, false, true, false, true
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblNotas.setSelectionBackground(new java.awt.Color(102, 102, 102));
-        tblNotas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblNotas.getTableHeader().setReorderingAllowed(false);
-        tabDuales.setViewportView(tblNotas);
-        if (tblNotas.getColumnModel().getColumnCount() > 0) {
-            tblNotas.getColumnModel().getColumn(0).setMinWidth(50);
-            tblNotas.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblNotas.getColumnModel().getColumn(1).setMinWidth(90);
-            tblNotas.getColumnModel().getColumn(1).setMaxWidth(90);
-            tblNotas.getColumnModel().getColumn(6).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(6).setMaxWidth(55);
-            tblNotas.getColumnModel().getColumn(7).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(7).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(8).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(9).setMinWidth(55);
-            tblNotas.getColumnModel().getColumn(9).setMaxWidth(55);
-            tblNotas.getColumnModel().getColumn(10).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(10).setMaxWidth(70);
-            tblNotas.getColumnModel().getColumn(11).setMinWidth(80);
-            tblNotas.getColumnModel().getColumn(11).setMaxWidth(80);
-            tblNotas.getColumnModel().getColumn(12).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(12).setMaxWidth(70);
-            tblNotas.getColumnModel().getColumn(13).setMinWidth(85);
-            tblNotas.getColumnModel().getColumn(13).setMaxWidth(85);
-            tblNotas.getColumnModel().getColumn(14).setMinWidth(50);
-            tblNotas.getColumnModel().getColumn(14).setMaxWidth(50);
-            tblNotas.getColumnModel().getColumn(15).setMinWidth(60);
-            tblNotas.getColumnModel().getColumn(15).setMaxWidth(60);
-            tblNotas.getColumnModel().getColumn(16).setMinWidth(70);
-            tblNotas.getColumnModel().getColumn(16).setMaxWidth(70);
+        tblTrad.setSelectionBackground(new java.awt.Color(102, 102, 102));
+        tblTrad.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblTrad.getTableHeader().setReorderingAllowed(false);
+        tabDuales.setViewportView(tblTrad);
+        if (tblTrad.getColumnModel().getColumnCount() > 0) {
+            tblTrad.getColumnModel().getColumn(0).setMinWidth(40);
+            tblTrad.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblTrad.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
+            tblTrad.getColumnModel().getColumn(6).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(7).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(8).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(8).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(9).setMinWidth(55);
+            tblTrad.getColumnModel().getColumn(9).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(10).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(10).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(11).setMinWidth(80);
+            tblTrad.getColumnModel().getColumn(11).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(12).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(12).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(13).setMinWidth(85);
+            tblTrad.getColumnModel().getColumn(13).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(14).setMinWidth(50);
+            tblTrad.getColumnModel().getColumn(14).setMaxWidth(50);
+            tblTrad.getColumnModel().getColumn(15).setMinWidth(60);
+            tblTrad.getColumnModel().getColumn(15).setMaxWidth(60);
+            tblTrad.getColumnModel().getColumn(16).setMinWidth(70);
+            tblTrad.getColumnModel().getColumn(16).setMaxWidth(70);
         }
 
         tabPane.addTab("Carrera Tradicional", tabDuales);
 
-        tblNotasDuales.setModel(new javax.swing.table.DefaultTableModel(
+        tblDual.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "G. Aula 1", "G. Aula 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
+                "No.", "Identificacion", "P. Apellido", "S. Apellido", "P. Nombre", "S. Nombre", "Aporte 1", "Aporte 2", "Total G. Aula", "Ex. final", "Ex. Recuperacion", "Nota Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, true, true, true, true, true, true, true
+                false, false, false, false, false, false, true, true, false, true, true, true, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblNotasDuales);
-        if (tblNotasDuales.getColumnModel().getColumnCount() > 0) {
-            tblNotasDuales.getColumnModel().getColumn(0).setResizable(false);
-            tblNotasDuales.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblDual.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblDual);
+        if (tblDual.getColumnModel().getColumnCount() > 0) {
+            tblDual.getColumnModel().getColumn(0).setMinWidth(50);
+            tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblDual.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         tabPane.addTab("Carreras Duales", jScrollPane1);
@@ -304,7 +303,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(64, 64, 64)
                                         .addComponent(btnBuscar)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -346,7 +345,7 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
                             .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,8 +377,8 @@ public class VtnNotasAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbl_periodolectivo;
     private javax.swing.JScrollPane tabDuales;
     private javax.swing.JTabbedPane tabPane;
-    private javax.swing.JTable tblNotas;
-    private javax.swing.JTable tblNotasDuales;
+    private javax.swing.JTable tblDual;
+    private javax.swing.JTable tblTrad;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 

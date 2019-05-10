@@ -76,19 +76,31 @@ public class ResourceManager {
         try {
             //System.out.println(Statement);
 
-            conn = getConnection();
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        conn = getConnection();
 
-            stmt = conn.createStatement();
+                        stmt = conn.createStatement();
 
-            stmt.execute(Statement);
+                        stmt.execute(Statement);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            };
+            thread.start();
+
             return null;
 
-        } catch (SQLException | NullPointerException e) {
+        } catch (NullPointerException e) {
             if (e instanceof NullPointerException) {
                 driver = null;
             } else {
                 System.out.println(e.getMessage());
-                return (SQLException) e;
+                return new SQLException();
             }
 
         }
@@ -192,4 +204,3 @@ public class ResourceManager {
     }
 
 }
-
