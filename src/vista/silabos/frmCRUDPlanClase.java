@@ -170,8 +170,18 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
             }
         });
         tlbTablaPLC.getTableHeader().setResizingAllowed(false);
-        tlbTablaPLC.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tlbTablaPLC);
+        if (tlbTablaPLC.getColumnModel().getColumnCount() > 0) {
+            tlbTablaPLC.getColumnModel().getColumn(0).setMinWidth(0);
+            tlbTablaPLC.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tlbTablaPLC.getColumnModel().getColumn(0).setMaxWidth(0);
+            tlbTablaPLC.getColumnModel().getColumn(1).setPreferredWidth(270);
+            tlbTablaPLC.getColumnModel().getColumn(1).setMaxWidth(270);
+            tlbTablaPLC.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tlbTablaPLC.getColumnModel().getColumn(3).setMaxWidth(80);
+            tlbTablaPLC.getColumnModel().getColumn(4).setPreferredWidth(60);
+            tlbTablaPLC.getColumnModel().getColumn(4).setMaxWidth(60);
+        }
 
         Cmb_periodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
