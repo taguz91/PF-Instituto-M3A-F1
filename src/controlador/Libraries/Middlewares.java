@@ -1,11 +1,11 @@
 package controlador.Libraries;
 
 import java.io.File;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
-import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import modelo.ResourceManager;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -54,10 +54,15 @@ public final class Middlewares {
      * @param tituloVentana Titulo de la ventana del ReporViewer
      * @param parametros
      */
-    public static void generarReporte(String path, String tituloVentana, Map parametros) {
-        try {
+    static JasperReport prueba;
 
-            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
+    public static void generarReporte(URL path, String tituloVentana, Map parametros) {
+        try {
+//            (JasperReport) JRLoader.loadObject();
+
+            JasperReport jasper = (JasperReport) JRLoader.loadObject(path);
+
+            System.out.println("PATH ---------->" + path);
 
             JasperPrint print = JasperFillManager.fillReport(jasper, parametros, ResourceManager.getConnection());
 
@@ -68,6 +73,10 @@ public final class Middlewares {
             view.setVisible(true);
 
         } catch (JRException | SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "PATH\n" + path);
+            JOptionPane.showMessageDialog(null, "PATH PROYECTO" + getProjectPath());
             System.out.println(ex.getMessage());
         }
     }
