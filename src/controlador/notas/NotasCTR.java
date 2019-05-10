@@ -687,14 +687,9 @@ public class NotasCTR {
     // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            //InitTablas();
             jTblTrad.clearSelection();
             jTblTrad.removeAll();
-            //jTblTrad.removeEditor();
-            //jTblTrad.repaint();
-            //vista.InitDiseño();
             tablaNotasTrad.setRowCount(0);
-            InitTablas();
             cargarTabla(tablaNotasTrad, agregarFilasTrad());
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");

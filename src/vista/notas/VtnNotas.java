@@ -26,8 +26,8 @@ public class VtnNotas extends JInternalFrame {
     }
 
     public void InitDiseño() {
-        tblTrad.setRowHeight(20);
-        tblDual.setRowHeight(20);
+        tblTrad.setRowHeight(30);
+        tblDual.setRowHeight(30);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
 
