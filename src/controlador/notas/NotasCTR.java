@@ -424,11 +424,8 @@ public class NotasCTR {
                 int oldFaltas = listaNotas.get(fila).getNumFalta();
                 if (faltas != oldFaltas) {
                     if (faltas <= getHoras()) {
-
                         int horas = getHoras();
-
                         int porcentaje = 0;
-
                         if (horas <= 0) {
                             horas = 1;
                         }
@@ -551,9 +548,7 @@ public class NotasCTR {
                 guardarTRAD(fila, valueText, tipoNota);
                 break;
             case 14:
-
                 editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad(), sumarTrad);
-
                 break;
             case 16:
                 String asistencia = tabla.getValueAt(fila, columna).toString();
