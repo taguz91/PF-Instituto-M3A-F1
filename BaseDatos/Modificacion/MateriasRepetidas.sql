@@ -26,3 +26,18 @@ WHERE id_materia = 357;
 
 DELETE FROM public."Materias"
 WHERE id_materia =
+
+
+--
+UPDATE public."Materias"
+	SET
+	materia_descripcion='La asignatura de MAQUINAS HERRAMIENTAS, nos posibilitará desarrollar las siguientes habilidades y destrezas en los estudiantes:
+Leer y medir con instrumentos de medición.
+Conocer las calidades superficiales y tolerancias.
+Identificar los procesos constructivos en el torno, la fresadora, en el taladro y la rectificadora.',
+materia_objetivo_especifico='1.- Intrepreta planos de elementos mecanicos para su construccion
+2.- Identifica y conoce el funcionamiento del entorno y la fresadora
+3.- Construye elementos mecanicos maquinas herramientas.
+4.- Realiza controles de calidad en elementos mecanicos construidos
+5.- Elabora fases de trabajo y operacion de maquinas herramientas'
+WHERE id_materia= 318;
