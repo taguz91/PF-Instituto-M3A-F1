@@ -16,17 +16,12 @@ import modelo.persona.PersonaMD;
  */
 public final class UsuarioBD extends UsuarioMD {
 
-    private static ConnDBPool pool = null;
-    private static Connection conn = null;
-    private static ResultSet rs = null;
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
 
     static {
-        try {
-            pool = new ConnDBPool();
-            conn = pool.getConnection();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        pool = new ConnDBPool();
     }
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -59,7 +54,7 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
-
+        conn = pool.getConnection();
         return pool.ejecutar(INSERT, conn, parametros) == null;
 
     }
@@ -90,7 +85,7 @@ public final class UsuarioBD extends UsuarioMD {
     private static List<UsuarioMD> selectSimple(String QUERY, Map<Integer, Object> parametros) {
         List<UsuarioMD> lista = new ArrayList<>();
         try {
-
+            conn = pool.getConnection();
             rs = pool.ejecutarQuery(QUERY, conn, parametros);
 
             while (rs.next()) {
@@ -142,7 +137,7 @@ public final class UsuarioBD extends UsuarioMD {
 
             parametros.put(1, getUsername());
             parametros.put(2, getPassword());
-
+            conn = pool.getConnection();
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
 
             while (rs.next()) {
@@ -207,7 +202,7 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
         parametros.put(4, Pk);
-
+        conn = pool.getConnection();
         return pool.ejecutar(UPDATE, conn, parametros) == null;
 
     }
@@ -233,7 +228,7 @@ public final class UsuarioBD extends UsuarioMD {
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, estado);
         parametros.put(2, Pk);
-
+        conn = pool.getConnection();
         return pool.ejecutar(DELETE, conn, parametros) == null;
     }
 

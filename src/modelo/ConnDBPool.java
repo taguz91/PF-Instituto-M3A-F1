@@ -44,20 +44,12 @@ public class ConnDBPool {
     public ConnDBPool() {
     }
 
-    public ConnDBPool(int maxConnections) {
-        config.setMaximumPoolSize(maxConnections);
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("----------------->" + config.getMaximumPoolSize());
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-
-    }
-
-    public Connection getConnection() throws SQLException {
-        return ds.getConnection();
+    public Connection getConnection() {
+        try {
+            return ds.getConnection();
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     /*
@@ -74,7 +66,6 @@ public class ConnDBPool {
 
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         try {
-
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);
             } else {
@@ -155,7 +146,14 @@ public class ConnDBPool {
     public void close(Connection conn) {
         try {
             if (conn != null) {
+//                System.out.println("*******************************");
+//                System.out.println("*EJECUTANDO CIERRE DE CONEXION*");
+//                System.out.println("*******************************");
                 conn.close();
+//                System.out.println("*******************************");
+//                System.out.println("*Conexio cerrada? " + conn.isClosed() + "*");
+//                System.out.println("*******************************");
+
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

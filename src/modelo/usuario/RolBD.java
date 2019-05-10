@@ -25,12 +25,8 @@ public class RolBD extends RolMD {
     private static ResultSet rs;
 
     static {
-        try {
-            pool = new ConnDBPool();
-            conn = pool.getConnection();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        pool = new ConnDBPool();
+        conn = pool.getConnection();
     }
 
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
@@ -50,7 +46,7 @@ public class RolBD extends RolMD {
         parametros.put(1, getNombre());
         parametros.put(2, getObservaciones());
 
-        return pool.ejecutar(INSERT, conn, parametros) == null;
+        return pool.ejecutar(INSERT, pool.getConnection(), parametros) == null;
     }
 
     public static List<RolMD> selectAll() {
@@ -75,7 +71,7 @@ public class RolBD extends RolMD {
 
         try {
 
-            rs = pool.ejecutarQuery(Query, pool.getConnection(), null);
+            rs = pool.ejecutarQuery(Query, conn, null);
             while (rs.next()) {
                 RolMD rol = new RolMD();
 

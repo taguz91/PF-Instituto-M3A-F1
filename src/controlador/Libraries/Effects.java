@@ -48,7 +48,7 @@ public class Effects {
                 Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            System.out.println("--------------->" + Thread.activeCount());
+            //System.out.println("--------------->" + Thread.activeCount());
         }).start();
 
     }
