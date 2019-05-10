@@ -123,6 +123,7 @@ public class ConectarDB {
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.executeUpdate(noSql);
+            System.out.println("Tiempo de ejecucion "+st.getQueryTimeout());
             System.out.println("---------NSQL-----------");
             System.out.println("Afecto a: " + st.getUpdateCount());
             System.out.println();
@@ -130,7 +131,6 @@ public class ConectarDB {
             while (rs.next()) {
                 System.out.println("ID generado: " + rs.getInt(1));
             }
-            System.out.println("No hay id");
             System.out.println("--------------------");
             //idGenerado = st.getGeneratedKeys().getInt(0);
             return null;
@@ -145,7 +145,7 @@ public class ConectarDB {
                 st.close();
                 ctrCt.recetear("Terminando de ejecutar una transaccion.");
             } catch (SQLException ex) {
-                System.out.println("NO SE CERRARON LAS CONEXIONES");
+                System.out.println("NO SE CERRARON LAS CONEXIONES "+ex.getMessage());
             }
         }
     }
@@ -170,7 +170,7 @@ public class ConectarDB {
             System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
             System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
-            System.out.println();
+            System.out.println("Concourrencia: "+rs.getConcurrency());
             System.out.println("------------------");
             tabla = metaData.getTableName(1);
             return rs;
@@ -210,36 +210,36 @@ public class ConectarDB {
     }
 
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
-        try {
-            cursorCarga();
-            if (ct.isClosed()) {
-                ct = DriverManager.getConnection(url, user, pass);
-                ctrCt = new ConexionesCTR(ct);
-                ctrCt.iniciar("Mostrar reporte desde ConectarBD");
+        new Thread(() -> {
+            try {
+                vtnPrin.getLblEstado().setText("Ejecutando reporte: " + titulo);
+                if (ct.isClosed()) {
+                    ct = DriverManager.getConnection(url, user, pass);
+                    ctrCt = new ConexionesCTR(ct);
+                    ctrCt.iniciar("Mostrar reporte desde ConectarBD");
+                }
+                JasperPrint print = JasperFillManager.fillReport(jr, parametro, ct);
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle(titulo);
+            } catch (SQLException ex) {
+                ctrCt.matarHilo();
+                JOptionPane.showMessageDialog(null, "Error en consulta: " + ex.getMessage());
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error en reporte: " + ex);
+            } finally {
+                ctrCt.recetear("Terminando de imprimir un reporte.");
             }
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, ct);
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle(titulo);
-        } catch (SQLException ex) {
-            System.out.println("No se puede imprimir el reporte. " + ex.getMessage());
-            ctrCt.matarHilo();
-            //mostrarReporte(jr, parametro, titulo); 
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
-        } finally {
-            ctrCt.recetear("Terminando de imprimir un reporte.");
-            cursorNormal();
-        }
+        }).start();
     }
-    
-    public void cerrarConexion(){
+
+    public void cerrarConexion() {
         try {
             if (!ct.isClosed()) {
                 ct.close();
             }
         } catch (SQLException e) {
-            System.out.println("Un error ocurrimio mientras se cerraba conexion. "+e.getMessage());
+            System.out.println("Un error ocurrimio mientras se cerraba conexion. " + e.getMessage());
         }
     }
 

@@ -293,6 +293,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Número de matriculas:");
+        jLabel7.setToolTipText("");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 20));
 
         lblNumMatriculas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

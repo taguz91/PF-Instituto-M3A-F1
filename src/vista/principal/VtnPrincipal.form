@@ -94,7 +94,6 @@
                   <Image iconType="3" name="/vista/img/icons8_Delete_File_20px_1.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Matriculas Anuladas"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtListaAlumnos">
@@ -486,9 +485,7 @@
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnIngresarRol" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnSecretaria" min="-2" pref="46" max="-2" attributes="0"/>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -509,7 +506,6 @@
                       <Component id="btnIngresarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnIngresarRol" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnSecretaria" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               </Group>
@@ -635,12 +631,6 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnSecretaria">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Se"/>
-            <Property name="toolTipText" type="java.lang.String" value="Secretaria, acceso para retirar a estudiantes"/>
           </Properties>
         </Component>
       </SubComponents>
