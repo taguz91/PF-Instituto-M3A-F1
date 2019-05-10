@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.persona.PersonaMD;
 
@@ -27,7 +25,7 @@ public final class UsuarioBD extends UsuarioMD {
             pool = new ConnDBPool();
             conn = pool.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 

@@ -29,7 +29,7 @@ public class RolBD extends RolMD {
             pool = new ConnDBPool();
             conn = pool.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
