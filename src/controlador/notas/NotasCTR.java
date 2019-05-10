@@ -418,39 +418,46 @@ public class NotasCTR {
         }
 
         if (Validaciones.isInt(faltasText)) {
-            int faltas = new Integer(faltasText);
-            int oldFaltas = listaNotas.get(fila).getNumFalta();
-            if (faltas != oldFaltas) {
-                if (faltas <= getHoras()) {
+            int faltas;
+            try {
+                faltas = new Integer(faltasText);
+                int oldFaltas = listaNotas.get(fila).getNumFalta();
+                if (faltas != oldFaltas) {
+                    if (faltas <= getHoras()) {
 
-                    int horas = getHoras();
+                        int horas = getHoras();
 
-                    int porcentaje = 0;
+                        int porcentaje = 0;
 
-                    if (horas <= 0) {
-                        horas = 1;
-                    }
-
-                    porcentaje = (faltas * 100) / horas;
-
-                    tabla.setValueAt(porcentaje, fila, conPorcentaje);
-
-                    String estado = tabla.getValueAt(fila, colEstado).toString();
-                    String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
-
-                    if (!estado.equalsIgnoreCase("RETIRADO") && !asistencia.equalsIgnoreCase("RETIRADO")) {
-                        if (porcentaje >= 25) {
-                            tabla.setValueAt("REPROBADO", fila, colEstado);
-                        } else {
-                            sumar.apply(null);
+                        if (horas <= 0) {
+                            horas = 1;
                         }
-                    }
 
-                    tabla.setValueAt(faltas, fila, colFaltas);
-                    editar.apply("");
-                } else {
-                    JOptionPane.showMessageDialog(vista, "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS");
+                        porcentaje = (faltas * 100) / horas;
+
+                        tabla.setValueAt(porcentaje, fila, conPorcentaje);
+
+                        String estado = tabla.getValueAt(fila, colEstado).toString();
+                        String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
+
+                        if (!estado.equalsIgnoreCase("RETIRADO") && !asistencia.equalsIgnoreCase("RETIRADO")) {
+                            if (porcentaje >= 25) {
+                                tabla.setValueAt("REPROBADO", fila, colEstado);
+                            } else {
+                                sumar.apply(null);
+                            }
+                        }
+
+                        tabla.setValueAt(faltas, fila, colFaltas);
+                        editar.apply("");
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS");
+                        refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
+                    }
                 }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO VALIDO!!");
+                refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
             }
         } else {
             JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
