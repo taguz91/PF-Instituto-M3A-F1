@@ -70,7 +70,7 @@ public class RolBD extends RolMD {
         List<RolMD> Lista = new ArrayList<>();
 
         try {
-
+            conn = pool.getConnection();
             rs = pool.ejecutarQuery(Query, conn, null);
             while (rs.next()) {
                 RolMD rol = new RolMD();
