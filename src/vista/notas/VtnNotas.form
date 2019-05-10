@@ -5,12 +5,13 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
+    <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Notas"/>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1243, 500]"/>
+      <Dimension value="[1280, 720]"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1243, 500]"/>
+      <Dimension value="[1060, 550]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -92,7 +93,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -151,7 +152,7 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="tabPane" pref="365" max="32767" attributes="0"/>
+              <Component id="tabPane" pref="393" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblResultados" min="-2" pref="23" max="-2" attributes="0"/>
@@ -355,42 +356,42 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="55" minWidth="55" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="55" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="80" minWidth="80" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="80" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="80" minWidth="80" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="80" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="55" minWidth="55" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="55" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="70" minWidth="70" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="80" minWidth="80" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="80" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="70" minWidth="70" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="85" minWidth="85" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="85" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -546,7 +547,7 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
             </Component>

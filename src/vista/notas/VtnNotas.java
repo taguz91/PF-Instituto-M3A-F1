@@ -131,9 +131,10 @@ public class VtnNotas extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Notas");
-        setMaximumSize(new java.awt.Dimension(1243, 500));
-        setMinimumSize(new java.awt.Dimension(1243, 500));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1060, 550));
 
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
@@ -194,21 +195,21 @@ public class VtnNotas extends JInternalFrame {
             tblTrad.getColumnModel().getColumn(0).setPreferredWidth(40);
             tblTrad.getColumnModel().getColumn(0).setMaxWidth(40);
             tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
-            tblTrad.getColumnModel().getColumn(6).setMaxWidth(55);
+            tblTrad.getColumnModel().getColumn(6).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
-            tblTrad.getColumnModel().getColumn(7).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(7).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(8).setMinWidth(80);
-            tblTrad.getColumnModel().getColumn(8).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(8).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(9).setMinWidth(55);
-            tblTrad.getColumnModel().getColumn(9).setMaxWidth(55);
+            tblTrad.getColumnModel().getColumn(9).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(10).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(10).setMaxWidth(70);
+            tblTrad.getColumnModel().getColumn(10).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(11).setMinWidth(80);
-            tblTrad.getColumnModel().getColumn(11).setMaxWidth(80);
+            tblTrad.getColumnModel().getColumn(11).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(12).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(12).setMaxWidth(70);
+            tblTrad.getColumnModel().getColumn(12).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(13).setMinWidth(85);
-            tblTrad.getColumnModel().getColumn(13).setMaxWidth(85);
+            tblTrad.getColumnModel().getColumn(13).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(14).setMinWidth(50);
             tblTrad.getColumnModel().getColumn(14).setMaxWidth(50);
             tblTrad.getColumnModel().getColumn(15).setMinWidth(60);
@@ -235,6 +236,7 @@ public class VtnNotas extends JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblDual.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblDual);
         if (tblDual.getColumnModel().getColumnCount() > 0) {
             tblDual.getColumnModel().getColumn(0).setMinWidth(50);
@@ -294,7 +296,7 @@ public class VtnNotas extends JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(64, 64, 64)
                                         .addComponent(btnBuscar)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -336,7 +338,7 @@ public class VtnNotas extends JInternalFrame {
                             .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
