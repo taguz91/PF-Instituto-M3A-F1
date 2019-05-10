@@ -1,10 +1,8 @@
 package controlador.materia;
 
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +70,7 @@ public class VtnMateriaCTR {
         this.carrerBD = new CarreraBD(conecta);
         vtnPrin.getDpnlPrincipal().add(vtnMateria);
         vtnMateria.show();
+        InitPermisosDocente();
 
     }
 
@@ -163,6 +162,12 @@ public class VtnMateriaCTR {
             cargarTblMaterias();
         }
 
+    }
+
+    private void InitPermisosDocente() {
+        if (permisos.getNombre().equalsIgnoreCase("Docente")) {
+            vtnMateria.getBtnEliminarMateria().setEnabled(false);
+        }
     }
 
     public void cargarCmbCarreras() {
@@ -284,7 +289,7 @@ public class VtnMateriaCTR {
         if (posFila >= 0) {
             vtnMateria.getLblError().setVisible(false);
             FrmMaterias frmMateria = new FrmMaterias();
-            FrmMateriasCTR ctrFrm = new FrmMateriasCTR(vtnPrin, frmMateria, conecta, ctrPrin);
+            FrmMateriasCTR ctrFrm = new FrmMateriasCTR(vtnPrin, frmMateria, conecta, ctrPrin, this);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             MateriaMD matEditar = materia.buscarMateria(Integer.parseInt(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
@@ -329,6 +334,14 @@ public class VtnMateriaCTR {
             }
         }
         return cod;
+    }
+    
+    public void actualizarVtn(){
+        if (vtnMateria.getTxtBuscar().getText().length() > 0) {
+            buscar();
+        }else{
+            filtrarPorCarreraPorCiclo();
+        }
     }
 
 }

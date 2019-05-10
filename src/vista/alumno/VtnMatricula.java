@@ -40,10 +40,6 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return btnIngresar;
     }
 
-    public JCheckBox getCbxEliminados() {
-        return cbxEliminados;
-    }
-
     public JTextField getTxtBuscar() {
         return txtBuscar;
     }
@@ -58,6 +54,10 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
     public JLabel getLblNumResultados() {
         return lblNumResultados;
+    }
+
+    public JButton getBtnHistoria() {
+        return btnHistoria;
     }
 
     /**
@@ -76,7 +76,6 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         btnIngresar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnAnular = new javax.swing.JButton();
-        cbxEliminados = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         cmbPeriodos = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
@@ -84,6 +83,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         tblMatricula = new javax.swing.JTable();
         btnImprimirFicha = new javax.swing.JButton();
         lblNumResultados = new javax.swing.JLabel();
+        btnHistoria = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -102,9 +102,6 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         btnEditar.setText("Editar");
 
         btnAnular.setText("Anular");
-
-        cbxEliminados.setText("Ver eliminados");
-        cbxEliminados.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jLabel2.setText("Periodo:");
 
@@ -128,14 +125,11 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxEliminados)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAnular)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(btnAnular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -159,8 +153,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(cmbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxEliminados))
+                            .addComponent(cmbPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -181,6 +174,13 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
 
         lblNumResultados.setText("jLabel3");
 
+        btnHistoria.setText("Historial Matrícula");
+        btnHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -192,6 +192,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNumResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnImprimirFicha)))
                 .addContainerGap())
         );
@@ -202,7 +204,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimirFicha)
-                    .addComponent(lblNumResultados))
+                    .addComponent(lblNumResultados)
+                    .addComponent(btnHistoria))
                 .addGap(5, 5, 5))
         );
 
@@ -224,14 +227,18 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHistoriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnHistoria;
     private javax.swing.JButton btnImprimirFicha;
     private javax.swing.JButton btnIngresar;
-    private javax.swing.JCheckBox cbxEliminados;
     private javax.swing.JComboBox<String> cmbPeriodos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

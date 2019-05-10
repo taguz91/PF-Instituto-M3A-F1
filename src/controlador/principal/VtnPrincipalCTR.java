@@ -34,6 +34,7 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
@@ -99,7 +100,6 @@ import vista.persona.VtnDocente;
 import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
-import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.usuario.VtnRol;
@@ -108,6 +108,7 @@ import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
+import vista.silabos.frmCRUDBibliografia;
 
 /**
  *
@@ -128,7 +129,6 @@ public class VtnPrincipalCTR {
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
-    private final VtnBienvenida vtnBienvenida;
     //Para hacer los accesos
     private List<AccesosMD> accesos;
     //Constantes de accesos, para las ventanas y menus
@@ -137,9 +137,6 @@ public class VtnPrincipalCTR {
             ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
             ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
-
-    private final boolean pruebas;
-
     private final String[][] ACCESOS = {
         {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
         {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
@@ -164,18 +161,15 @@ public class VtnPrincipalCTR {
      * @param icono ImagenIcon: Icono del sistema.
      * @param ista Imagen: Imagen del icono del sistema.
      * @param ctrSelecRol
-     * @param pruebas Para saber si estamos en pruebas
      */
     public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
             UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista,
-            VtnSelectRolCTR ctrSelecRol, boolean pruebas) {
+            VtnSelectRolCTR ctrSelecRol) {
         this.vtnPrin = vtnPrin;
         this.rolSeleccionado = rolSeleccionado;
         this.usuario = usuario;
         this.conecta = conecta;
         this.ctrSelecRol = ctrSelecRol;
-        this.vtnBienvenida = new VtnBienvenida();
-        this.pruebas = pruebas;
         this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
@@ -202,22 +196,10 @@ public class VtnPrincipalCTR {
     public void iniciar() {
         //Le pasamos dependencias a conectar
         conecta.setVtnPrin(vtnPrin);
-        //Agregamos el panel de bienvenida  
-        vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
-        //Se le pasa el nombre de usuario que inicio sesio  
-//        vtnBienvenida.getLblUser().setText(usuario.getUsername());
-//        vtnBienvenida.show();
-//        //Lo ponemos en pantalla completa
-//        try {
-//            vtnBienvenida.setMaximum(true);
-//        } catch (PropertyVetoException e) {
-//            System.out.println("No se maximiso");
-//        }
         //Iniciamos los shortcuts 
-
         iniciarAtajosTeclado();
-        agregarEstilos();
 
+        agregarEstilos();
         //Acciones de las ventanas de consulta
         //Para el estilo 
         //Para abrir las ventanas consulta
@@ -262,6 +244,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -359,8 +342,21 @@ public class VtnPrincipalCTR {
             ctrVtnAlumno.iniciar();
         } else {
             errorNumVentanas();
+
         }
 
+    }
+
+    public void abrirVentanaBiblioteca() {
+        frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
+        eventoInternal(frmCRUDBibliografiaV);
+        if (numVtns < 5) {
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conecta, this, vtnPrin, frmCRUDBibliografiaV);
+            ReferenciasCRUDCTRV.iniciarControlador();
+
+        } else {
+            errorNumVentanas();
+        }
     }
 
     public void abrirVtnCarrera() {
@@ -448,9 +444,12 @@ public class VtnPrincipalCTR {
 
     public void abrirVtnMallaAlumnos() {
         VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno();
+        eventoInternal(vtnMallaAlm);
+        if (numVtns < 5) {
+            VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
+            ctrMalla.iniciar();
+        }
 
-        VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
-        ctrMalla.iniciar();
     }
 
     public void abrirVtnDocenteMateria() {
@@ -693,11 +692,7 @@ public class VtnPrincipalCTR {
                     break;
                 }
             }
-            //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
-            //Ocultamos el borde de internal de bienvenida
-//            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
-//            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
@@ -831,7 +826,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -889,7 +884,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.ALT_MASK));
+                KeyEvent.VK_R, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
@@ -1002,7 +997,7 @@ public class VtnPrincipalCTR {
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("estaesunacontra")) {
+            if (c.equals("e")) {
                 JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
                 ctr.iniciar();
             } else if (c.length() == 0) {
@@ -1111,7 +1106,6 @@ public class VtnPrincipalCTR {
     }
 
     private void InitPermisosTesterYDocente() {
-        System.out.println("Estamos en modo pruebas = " + pruebas);
 
         if (rolSeleccionado.getNombre().equalsIgnoreCase("TESTER") || rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {
             if (rolSeleccionado.getNombre().equalsIgnoreCase("DOCENTE")) {

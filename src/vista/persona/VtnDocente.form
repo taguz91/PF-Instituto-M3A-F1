@@ -52,10 +52,12 @@
                       <Component id="cbxDocentesEliminados" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblResultados" pref="185" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="372" max="-2" attributes="0"/>
+                      <Component id="lblResultados" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="274" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                      <Component id="btnhorasAsignadas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnReporteDocente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnReporteDocenteMateria" min="-2" max="-2" attributes="0"/>
@@ -94,6 +96,7 @@
                       <Component id="btnReporteDocenteMateria" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnReporteDocente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnhorasAsignadas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -217,6 +220,11 @@
     <Component class="javax.swing.JButton" name="btnAsignarRol">
       <Properties>
         <Property name="text" type="java.lang.String" value="Asignar rol"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnhorasAsignadas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="horas asignacion "/>
       </Properties>
     </Component>
   </SubComponents>

@@ -60,6 +60,10 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         return lblResultados;
     }
 
+    public JButton getBtnhorasAsignadas() {
+        return btnhorasAsignadas;
+    }
+
     public JButton getBtnFinContratacion() {
         return btnFinContratacion;
     }
@@ -112,7 +116,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         cbxDocentesEliminados = new javax.swing.JCheckBox();
         btnFinContratacion = new javax.swing.JButton();
         btnAsignarRol = new javax.swing.JButton();
-
+        btnhorasAsignadas = new javax.swing.JButton();
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -168,7 +172,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnFinContratacion.setText("Fin de Contratación");
 
         btnAsignarRol.setText("Asignar rol");
-
+        btnhorasAsignadas.setText("horas asignacion ");
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,10 +201,12 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cbxDocentesEliminados))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                        .addGap(372, 372, 372)
+                        .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(274, 274, 274)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnhorasAsignadas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnReporteDocente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReporteDocenteMateria)))
@@ -231,7 +237,8 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnReporteDocenteMateria)
                         .addComponent(btnReporteDocente)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6)
+                        .addComponent(btnhorasAsignadas)))
                 .addContainerGap())
         );
 
@@ -252,6 +259,7 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteDocente;
     private javax.swing.JButton btnReporteDocenteMateria;
+    private javax.swing.JButton btnhorasAsignadas;
     private javax.swing.JCheckBox cbxDocentesEliminados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;

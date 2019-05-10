@@ -31,4 +31,13 @@ ALTER TABLE "DetalleDuales" ADD CONSTRAINT "NotasDuales__AlumnoCurso__fk"
 
 0703630715=CARRANZA OCHOA ROBERTO  NATANIEL\t0995710017\trncarranza76@gmail.com\tTIEMPO COMPLETO
 
-iptraf <--
+
+--Count tipo de nota por periodo
+SELECT
+"PeriodoLectivo".prd_lectivo_nombre,
+COUNT ("TipoDeNota".id_tipo_nota) AS "TIPO DE NOTA"
+FROM
+"public"."TipoDeNota"
+INNER JOIN "public"."PeriodoLectivo" ON "public"."TipoDeNota".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+GROUP BY "PeriodoLectivo".prd_lectivo_nombre
+HAVING "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019';

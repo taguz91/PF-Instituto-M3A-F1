@@ -4,6 +4,7 @@ import controlador.curso.PnlHorarioCursoCTR;
 import controlador.estilo.CambioPnlCTR;
 import controlador.estilo.TblRenderNumMatricula;
 import controlador.principal.VtnPrincipalCTR;
+import controlador.ventanas.VtnLblToolTip;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -154,6 +155,8 @@ public class FrmAlumnoCursoCTR {
         //Ocultamos el boton 
         frmAlmCurso.getBtnAnuladas().setVisible(false);
         inicarValidaciones();
+        //Vemos los componentes 
+        VtnLblToolTip.agregarTooltipsLblJI(frmAlmCurso);
     }
 
     /**
@@ -526,12 +529,12 @@ public class FrmAlumnoCursoCTR {
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
         //Cargamos el horario del alumno  
-        if (cursosMatriculado != null) {
-            cursosMatriculado.forEach(ac -> {
-                horario = sesion.cargarHorarioCurso(ac.getCurso());
-                llenarHorarioAlmn(horario);
-            });
-        }
+//        if (cursosMatriculado != null) {
+//            cursosMatriculado.forEach(ac -> {
+//                horario = sesion.cargarHorarioCurso(ac.getCurso());
+//                llenarHorarioAlmn(horario);
+//            });
+//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 

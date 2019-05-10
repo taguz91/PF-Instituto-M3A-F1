@@ -7,6 +7,7 @@ package vista.silabos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,8 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-
-
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -36,11 +36,30 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
      */
     public frmGestionSilabo() {
         initComponents();
-        
+
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
         this.setFrameIcon(icon);
     }
 
+//    public JLabel getLblBuscarEstrategia() {
+//        return lblBuscarEstrategia;
+//    }
+//
+//    public void setLblBuscarEstrategia(JLabel lblBuscarEstrategia) {
+//        this.lblBuscarEstrategia = lblBuscarEstrategia;
+//    }
+//
+//    public JTextField getTxtBuscarEstrategia() {
+//        return txtBuscarEstrategia;
+//    }
+//
+//    public void setTxtBuscarEstrategia(JTextField txtBuscarEstrategia) {
+//        this.txtBuscarEstrategia = txtBuscarEstrategia;
+//    }
+
+    
+    
+    
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
@@ -48,7 +67,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     public void setBtnGuardar(JButton btnGuardar) {
         this.btnGuardar = btnGuardar;
     }
-   
 
     public JLabel getLblEliminarUnidad() {
         return lblEliminarUnidad;
@@ -114,8 +132,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         this.scrEstrategiasPredeterminadas = scrEstrategiasPredeterminadas;
     }
 
-    
-
     public JSpinner getSpnHorasAutonomas() {
         return spnHorasAutonomas;
     }
@@ -147,8 +163,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     public void setTxtNuevaEstrategia(JTextField txtNuevaEstrategia) {
         this.txtNuevaEstrategia = txtNuevaEstrategia;
     }
-
-    
 
     public JLabel getLblAgregarEstrategia() {
         return lblAgregarEstrategia;
@@ -197,8 +211,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     public void setBtnAgregarP(JButton btnAgregarP) {
         this.btnAgregarP = btnAgregarP;
     }
-
-    
 
     public JButton getBtnCancelar() {
         return btnCancelar;
@@ -850,6 +862,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
     public JLabel getLblGuardarEstrategia() {
         return lblGuardarEstrategia;
+        
     }
 
     public void setLblGuardarEstrategia(JLabel lblGuardarEstrategia) {
@@ -1038,7 +1051,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAsistidaDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAsistidaDocente.setViewportView(tblAsistidaDocente);
         if (tblAsistidaDocente.getColumnModel().getColumnCount() > 0) {
@@ -1108,7 +1129,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAprendizajeColaborativo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAprendizajeColaborativo.setViewportView(tblAprendizajeColaborativo);
         if (tblAprendizajeColaborativo.getColumnModel().getColumnCount() > 0) {
@@ -1179,7 +1208,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblPractica.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrPractica.setViewportView(tblPractica);
         if (tblPractica.getColumnModel().getColumnCount() > 0) {
@@ -1249,7 +1286,15 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             new String [] {
                 "Indicador", "Instrumento", "Valoración", "Fecha  Envío", "Fecha  Presentación", "Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblAutonoma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrAutonoma.setViewportView(tblAutonoma);
         if (tblAutonoma.getColumnModel().getColumnCount() > 0) {
@@ -1369,9 +1414,14 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
-        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
+        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, -1, -1));
 
         txtNuevaEstrategia.setEnabled(false);
+        txtNuevaEstrategia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNuevaEstrategiaActionPerformed(evt);
+            }
+        });
         pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 430, -1));
 
         btnGuardar.setText("Guardar");
@@ -1403,6 +1453,10 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void txtNuevaEstrategiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaEstrategiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNuevaEstrategiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1604,5 +1658,5 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         }
     }
 
+    
 }
-

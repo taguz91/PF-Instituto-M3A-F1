@@ -31,7 +31,7 @@ public class Effects {
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
     }
 
-    public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
+    public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
         new Thread(() -> {
             try {
                 centerFrame(component, desktop);
@@ -41,8 +41,6 @@ public class Effects {
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            System.out.println("--------------->" + Thread.activeCount());
         }).start();
 
     }

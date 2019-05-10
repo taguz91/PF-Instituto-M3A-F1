@@ -20,6 +20,23 @@ public class EstrategiasMetodologicasMD {
         this.id_plan_clases = id_plan_clases;
         this.id_estrategias_unidad = id_estrategias_unidad;
     }
+    public EstrategiasMetodologicasMD( EstrategiasUnidadMD id_estrategias_unidad,String tipo_estrategias_metodologicas) {
+        this.id_estrategias_unidad = id_estrategias_unidad;
+        this.tipo_estrategias_metodologicas = tipo_estrategias_metodologicas;
+    }
+
+    public EstrategiasMetodologicasMD(String tipo_estrategias_metodologicas, EstrategiasUnidadMD id_estrategias_unidad) {
+        this.tipo_estrategias_metodologicas = tipo_estrategias_metodologicas;
+        this.id_estrategias_unidad = id_estrategias_unidad;
+    }
+
+    public EstrategiasMetodologicasMD(String tipo_estrategias_metodologicas, PlandeClasesMD id_plan_clases, EstrategiasUnidadMD id_estrategias_unidad) {
+        this.tipo_estrategias_metodologicas = tipo_estrategias_metodologicas;
+        this.id_plan_clases = id_plan_clases;
+        this.id_estrategias_unidad = id_estrategias_unidad;
+    }
+    
+    
 
     public EstrategiasMetodologicasMD(Integer id_estrategias_metodologicas, String tipo_estrategias_metodologicas, PlandeClasesMD id_plan_clases, EstrategiasUnidadMD id_estrategias_unidad) {
         this.id_estrategias_metodologicas = id_estrategias_metodologicas;

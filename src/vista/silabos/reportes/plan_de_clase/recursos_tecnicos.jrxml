@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0a9a368f-efb5-4701-832c-a3683d2c6b56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_plan_clase" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select nombre_recursos from "Recursos" r join "RecursosPlanClases" rp on r.id_recurso=rp.id_recurso where rp.id_plan_clases=$P!{id_plan_clase} and r.tipo_recurso='T']]>
+	</queryString>
+	<field name="nombre_recursos" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="101" height="20" uuid="1716be10-8a6c-4dce-b86b-9993739dacbb"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TÉCNICOS:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="101" height="20" uuid="9e68035b-b4f0-48f9-b226-ad3f3063ecf5"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_recursos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

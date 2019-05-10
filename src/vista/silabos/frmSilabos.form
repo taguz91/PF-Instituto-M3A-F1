@@ -43,7 +43,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Component id="srcSilabos" min="-2" pref="666" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
@@ -52,7 +53,6 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="srcSilabos" min="-2" pref="666" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -83,6 +83,13 @@
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="chbSilabo" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -93,22 +100,15 @@
                       <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnGenerar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="242" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Component id="srcSilabos" min="-2" pref="240" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
@@ -159,10 +159,14 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="showHorizontalLines" type="boolean" value="false"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="frmSilabos_tblSilabos"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
