@@ -922,7 +922,7 @@ public class VtnNotasCTR {
                     .findAny()
                     .orElse("CARRERA SIN MODALIDAD");
 
-            if (modalidad.equalsIgnoreCase("TRADICIONAL")) {
+            if (modalidad.equalsIgnoreCase("TRADICIONAL") || modalidad.equalsIgnoreCase("PRESENCIAL")) {
                 System.out.println("TRADICIONAL");
                 vista.getTabPane().setSelectedIndex(0);
                 cargarTabla(agregarFilasTradicionales(), tablaNotasTrad, vista.getTblNotas(), 13);

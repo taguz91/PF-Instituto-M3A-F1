@@ -14,7 +14,7 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="140" height="20" uuid="c52baa7f-6e0b-434f-8e74-2ce7f57bb7c0"/>
+				<reportElement x="0" y="0" width="216" height="20" uuid="c52baa7f-6e0b-434f-8e74-2ce7f57bb7c0"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

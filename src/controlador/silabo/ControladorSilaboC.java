@@ -1125,7 +1125,7 @@ public class ControladorSilaboC {
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
-
+                    gestion.getBtnSiguiente().setEnabled(false);
                     principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
 
                     try {
@@ -1150,6 +1150,7 @@ public class ControladorSilaboC {
                     JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
 
                     gestion.getBtnGuardar().setEnabled(true);
+                    gestion.getBtnSiguiente().setEnabled(true);
 
                     if (!retroceso) {
                         gestion.setVisible(false);
@@ -1878,6 +1879,13 @@ public class ControladorSilaboC {
             if (aprovechamiento < 60.0) {
                 control = false;
             }
+            
+            
+            if (!validarHoras()){
+                
+                control=false;
+                
+            }
 
         }
 
@@ -1913,6 +1921,30 @@ public class ControladorSilaboC {
 
         bibliografia.getLstBibliografiaBase().setModel(modeloBase);
 
+    }
+    
+    public boolean validarHoras(){
+        
+        int totalDocencia=0;
+        int totalPractica=0;
+        int totalAutonomo=0;
+        boolean control=false;
+        
+        for (UnidadSilaboMD umd : unidadesSilabo){
+            totalDocencia=totalDocencia+umd.getHorasDocenciaUnidad();
+            totalPractica=totalPractica+umd.getHorasPracticaUnidad();
+            totalAutonomo=totalAutonomo+umd.getHorasAutonomoUnidad();
+        }
+        
+        if (totalDocencia==silaboNuevo.getIdMateria().getHorasDocencia()&& 
+            totalPractica==silaboNuevo.getIdMateria().getHorasPracticas() && 
+            totalAutonomo==silaboNuevo.getIdMateria().getHorasAutoEstudio()){
+            
+            control=true;
+            
+        }
+        
+        return control;
     }
 
 }
