@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.persona.PersonaMD;
 
@@ -17,14 +19,16 @@ import modelo.persona.PersonaMD;
 public final class UsuarioBD extends UsuarioMD {
 
     private static ConnDBPool pool = null;
-
     private static Connection conn = null;
-
     private static ResultSet rs = null;
 
     static {
-        pool = new ConnDBPool();
-        conn = pool.getConnection();
+        try {
+            pool = new ConnDBPool();
+            conn = pool.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -42,9 +46,6 @@ public final class UsuarioBD extends UsuarioMD {
         setPersona(obj.getPersona());
     }
 
-    private static final String TABLA = " \"Usuarios\" ";
-    private static final String PRIMARY_KEY = " usu_username ";
-
     public boolean insertar() {
 
         String INSERT = ""
@@ -61,7 +62,7 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
 
-        return pool.ejecutar(INSERT, conn, parametros);
+        return pool.ejecutar(INSERT, conn, parametros) == null;
 
     }
 
@@ -116,7 +117,7 @@ public final class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close();
+            pool.close(conn);
         }
         return lista;
     }
@@ -165,7 +166,7 @@ public final class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close();
+            pool.close(conn);
         }
 
         return usuario;
@@ -209,7 +210,7 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(3, getPersona().getIdPersona());
         parametros.put(4, Pk);
 
-        return pool.ejecutar(UPDATE, pool.getConnection(), parametros);
+        return pool.ejecutar(UPDATE, conn, parametros) == null;
 
     }
 
@@ -235,7 +236,7 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(1, estado);
         parametros.put(2, Pk);
 
-        return pool.ejecutar(DELETE, pool.getConnection(), parametros);
+        return pool.ejecutar(DELETE, conn, parametros) == null;
     }
 
 }

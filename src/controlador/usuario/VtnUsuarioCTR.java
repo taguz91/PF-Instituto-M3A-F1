@@ -23,21 +23,18 @@ import vista.usuario.VtnUsuario;
 
 /**
  *
- * @author USUARIO
+ * @author MrRainx
  */
 public class VtnUsuarioCTR {
 
-    private final VtnPrincipal desktop; // DONDE VOY A VISUALIZAR
-    private final VtnUsuario vista; // QUE VOY A VISUALIZAR
-    private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
-    //Modelos para trabajar
+    private final VtnPrincipal desktop;
+    private final VtnUsuario vista;
+    private UsuarioBD modelo;
     private final RolMD permisos;
 
-    //Listas Para rellenar la tabla
+    //Listas
     private static List<UsuarioMD> listaUsuarios;
-    //Modelo de la tabla
     private static DefaultTableModel tablaUsuarios;
-
     private boolean cargar = true;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos) {
@@ -52,11 +49,9 @@ public class VtnUsuarioCTR {
 
     //Inits
     public synchronized void Init() {
-        //Inicializamos la tabla
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
-        //Inicializamos las listas con las consultas
         listaUsuarios = UsuarioBD.selectAll();
         cargarTabla(listaUsuarios);
         //InitPermisos();
@@ -249,7 +244,6 @@ public class VtnUsuarioCTR {
         if (fila == -1) {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         } else {
-
             if (modelo.getUsername().equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE EDITAR LOS PERMISOS DEL USUARIO ROOT!");
             } else {

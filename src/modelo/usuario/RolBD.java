@@ -1,5 +1,6 @@
 package modelo.usuario;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,11 +20,17 @@ import modelo.ResourceManager;
 public class RolBD extends RolMD {
 
     private static ConnDBPool pool;
+    private static Connection conn;
     private static PreparedStatement stmt;
     private static ResultSet rs;
 
     static {
-        pool = new ConnDBPool();
+        try {
+            pool = new ConnDBPool();
+            conn = pool.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
@@ -43,7 +50,7 @@ public class RolBD extends RolMD {
         parametros.put(1, getNombre());
         parametros.put(2, getObservaciones());
 
-        return pool.ejecutar(INSERT, pool.getConnection(), parametros);
+        return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
     public static List<RolMD> selectAll() {
@@ -67,7 +74,7 @@ public class RolBD extends RolMD {
         List<RolMD> Lista = new ArrayList<>();
 
         try {
-            
+
             rs = pool.ejecutarQuery(Query, pool.getConnection(), null);
             while (rs.next()) {
                 RolMD rol = new RolMD();
@@ -83,7 +90,7 @@ public class RolBD extends RolMD {
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            pool.close();
+            pool.close(conn);
         }
 
         return Lista;

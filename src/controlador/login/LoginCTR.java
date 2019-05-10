@@ -69,7 +69,6 @@ public class LoginCTR {
             new Thread(() -> {
 
                 Effects.setLoadCursor(vista);
-                modelo = new UsuarioBD();
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
 
@@ -77,6 +76,8 @@ public class LoginCTR {
                 properties.put("username", USERNAME);
                 properties.put("password", PASSWORD);
                 Propiedades.generateUserProperties(properties);
+                
+                modelo = new UsuarioBD();
 
                 modelo.setUsername(USERNAME);
                 modelo.setPassword(PASSWORD);
@@ -87,8 +88,13 @@ public class LoginCTR {
                     if (modelo != null) {
 
                         vista.dispose();
+                        
+                        
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("JOHNNY", "DEV", "Login"), icono, ista, false);
                         vtn.Init();
+                        
+                        
+                        
                     } else {
 
                         vista.getLblAvisos().setVisible(true);

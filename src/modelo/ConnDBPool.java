@@ -20,7 +20,6 @@ public class ConnDBPool {
     private static final HikariConfig config;
     private static final HikariDataSource ds;
 
-    private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rs;
 
@@ -29,11 +28,11 @@ public class ConnDBPool {
         config = new HikariConfig();
         config.setJdbcUrl(generarURL());
 
-        //String username = Propiedades.getUserProp("username");
-        config.setUsername("ROOT");
+        String username = Propiedades.getUserProp("username");
+        config.setUsername(username);
 
-        //String password = Propiedades.getUserProp("password");
-        config.setPassword("DEVROOT");
+        String password = Propiedades.getUserProp("password");
+        config.setPassword(password);
 
         config.setMaximumPoolSize(3);
         config.addDataSourceProperty("cachePrepStmts", "true");
@@ -45,12 +44,20 @@ public class ConnDBPool {
     public ConnDBPool() {
     }
 
-    public Connection getConnection() {
-        try {
-            return ds.getConnection();
-        } catch (SQLException e) {
-            return null;
-        }
+    public ConnDBPool(int maxConnections) {
+        config.setMaximumPoolSize(maxConnections);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("----------------->" + config.getMaximumPoolSize());
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+
+    }
+
+    public Connection getConnection() throws SQLException {
+        return ds.getConnection();
     }
 
     /*
@@ -65,8 +72,7 @@ public class ConnDBPool {
         return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
-    public boolean ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
-        conn = getConnection();
+    public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         try {
 
             if (parametros == null) {
@@ -81,13 +87,13 @@ public class ConnDBPool {
             System.out.println("*******************************************");
             System.out.println("*PreparedStatement ejecutado correctamente*");
             System.out.println("*******************************************");
-            return true;
+            return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            close();
-            return false;
+            close(conn);
+            return e;
         } finally {
-            close();
+            close(conn);
         }
     }
 
@@ -146,7 +152,7 @@ public class ConnDBPool {
         return rs;
     }
 
-    public void close() {
+    public void close(Connection conn) {
         try {
             if (conn != null) {
                 conn.close();
