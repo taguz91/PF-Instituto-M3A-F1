@@ -70,7 +70,7 @@ public class ComboBoxCellEditor extends JComboBox implements TableCellEditor {
     public boolean stopCellEditing() {
         try {
             cellEditorListener.editingStopped(new ChangeEvent(this));
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
         }
         return true;
     }
@@ -88,7 +88,7 @@ public class ComboBoxCellEditor extends JComboBox implements TableCellEditor {
     @Override
     public void removeCellEditorListener(CellEditorListener celleditorlistener) {
         if (cellEditorListener == cellEditorListener) {
-            cellEditorListener = null;
+            //cellEditorListener = null;
         }
     }
 }

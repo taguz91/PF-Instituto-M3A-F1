@@ -91,11 +91,6 @@ public class ResourceManager {
                 }
 
             };
-            try {
-                thread.join();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
             thread.start();
 
             return null;

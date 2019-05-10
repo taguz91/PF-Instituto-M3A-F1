@@ -1,12 +1,9 @@
 package controlador.Libraries.cellEditor;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -74,7 +71,10 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
 
     @Override
     public boolean stopCellEditing() {
-        cellEditorListener.editingStopped(new ChangeEvent(this));
+        try {
+            cellEditorListener.editingStopped(new ChangeEvent(this));
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
         return true;
     }
 
@@ -91,7 +91,7 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
     @Override
     public void removeCellEditorListener(CellEditorListener celleditorlistener) {
         if (cellEditorListener == cellEditorListener) {
-            cellEditorListener = null;
+            //cellEditorListener = null;
         }
     }
 }
