@@ -60,7 +60,7 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="almn_curso_fecha_registro" class="java.sql.Date"/>
+	<field name="almn_curso_fecha_registro" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -156,8 +156,8 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="91" y="11" width="318" height="20"/>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss ">
+				<reportElement x="91" y="11" width="306" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{almn_curso_fecha_registro}]]></textFieldExpression>
 			</textField>
