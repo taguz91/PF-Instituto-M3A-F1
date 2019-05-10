@@ -841,7 +841,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -899,7 +899,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.ALT_MASK));
+                KeyEvent.VK_R, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
@@ -1011,8 +1011,8 @@ public class VtnPrincipalCTR {
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
             if (c.equals("e")) {
-                    JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
-                    ctr.iniciar();
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
+                ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
                         JOptionPane.WARNING_MESSAGE);

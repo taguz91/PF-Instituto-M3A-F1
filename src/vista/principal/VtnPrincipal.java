@@ -730,7 +730,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtAlmnRetirados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Delete_File_20px_1.png"))); // NOI18N
         mnCtAlmnRetirados.setText("Matriculas Anuladas");
-        mnCtAlmnRetirados.setEnabled(false);
         mnTipoNotas.add(mnCtAlmnRetirados);
 
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N

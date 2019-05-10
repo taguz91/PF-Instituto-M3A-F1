@@ -210,36 +210,41 @@ public class ConectarDB {
     }
 
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
-        try {
-            cursorCarga();
-            if (ct.isClosed()) {
-                ct = DriverManager.getConnection(url, user, pass);
-                ctrCt = new ConexionesCTR(ct);
-                ctrCt.iniciar("Mostrar reporte desde ConectarBD");
+        new Thread(() -> {
+            System.out.println("Se ejecuta el hilo de reportes.");
+            try {
+                vtnPrin.getLblEstado().setText("Ejecutando reporte: "+titulo);
+                if (ct.isClosed()) {
+                    ct = DriverManager.getConnection(url, user, pass);
+                    ctrCt = new ConexionesCTR(ct);
+                    ctrCt.iniciar("Mostrar reporte desde ConectarBD");
+                }
+                JasperPrint print = JasperFillManager.fillReport(jr, parametro, ct);
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle(titulo);
+
+            } catch (SQLException ex) {
+                System.out.println("No se puede imprimir el reporte. " + ex.getMessage());
+                ctrCt.matarHilo();
+                //mostrarReporte(jr, parametro, titulo); 
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
+            } finally {
+                ctrCt.recetear("Terminando de imprimir un reporte.");
+                
             }
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, ct);
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle(titulo);
-        } catch (SQLException ex) {
-            System.out.println("No se puede imprimir el reporte. " + ex.getMessage());
-            ctrCt.matarHilo();
-            //mostrarReporte(jr, parametro, titulo); 
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Error en reporte" + ex);
-        } finally {
-            ctrCt.recetear("Terminando de imprimir un reporte.");
-            cursorNormal();
-        }
+            System.out.println("Se termina el hilo de reportes.");
+        }).start();
     }
-    
-    public void cerrarConexion(){
+
+    public void cerrarConexion() {
         try {
             if (!ct.isClosed()) {
                 ct.close();
             }
         } catch (SQLException e) {
-            System.out.println("Un error ocurrimio mientras se cerraba conexion. "+e.getMessage());
+            System.out.println("Un error ocurrimio mientras se cerraba conexion. " + e.getMessage());
         }
     }
 

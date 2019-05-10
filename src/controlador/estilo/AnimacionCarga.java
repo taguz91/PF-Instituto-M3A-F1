@@ -1,11 +1,11 @@
 package controlador.estilo;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,7 +23,6 @@ public class AnimacionCarga extends Thread {
     private final VtnPrincipal vtnPrin;
     private int pos = 0;
     private boolean cargando = true, bloqueo = false;
-    private InetAddress ina;
     //El sockect que escuchara todo  
     private Socket sc;
     private ServerSocket ssc;
@@ -46,15 +45,6 @@ public class AnimacionCarga extends Thread {
     @Override
     public void run() {
         iniciarSocketEscucha();
-        System.out.println("Animacion en funcionamiento 1111111111");
-        try {
-            ina = InetAddress.getByName(Propiedades.getPropertie("ip"));
-            System.out.println("EL IP ES: " + Propiedades.getPropertie("ip"));
-        } catch (UnknownHostException e) {
-            ina = null;
-            System.out.println("No se puede hacer ping a esta direccion." + e.getMessage());
-        }
-
         while (cargando) {
             //System.out.println("Animacion en funcionamiento " + cuenta);
             lbl.setIcon(estados[pos]);
@@ -64,38 +54,10 @@ public class AnimacionCarga extends Thread {
             if (pos > estados.length - 1) {
                 pos = 1;
             }
-
-//            if (ina != null) {
-//                try {
-//                    if (ina.isReachable(2000)) {
-//                        System.out.println("Se puede acceder sin problema.");
-//                        System.out.println("Esta hosteado en: "+ina.getHostName());
-//                        System.out.println(""+ina.getCanonicalHostName());
-//                        if (bloqueo) {
-//                            JOptionPane.showMessageDialog(null, "Se reestablecio la conexion a la red. "
-//                                    + "\nPuede volver a usar la aplicacion...");
-//                            vtnPrin.setEnabled(true);
-//                            bloqueo = false;
-//                        }
-//                    } else {
-//                        if (!bloqueo) {
-//                            JOptionPane.showMessageDialog(null, "Se perdio la conexion a la red, \npor favor espere. "
-//                                    + "\nSe bloqueara la aplicacion hasta que vuelva a tener conexion.");
-//                            vtnPrin.setEnabled(false);
-//                            bloqueo = true;
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    System.out.println("No se puede ver si puede ser accedida.");
-//                }
-//            }
+            //comprobarConexion();
             //Aqui estara el sockect escuchando siempre 
-            escucharSocket();
+            //escucharSocket();
         }
-
-        //Le regresmos al icono original
-        //Cuando se detiene la animacion
-        //lbl.setIcon(estados[0]);
     }
 
     private void escucharSocket() {
@@ -137,6 +99,25 @@ public class AnimacionCarga extends Thread {
             Thread.sleep(seg);
         } catch (InterruptedException e) {
             System.out.println("No se realizo la animacion " + e.getMessage());
+        }
+    }
+
+    private void comprobarConexion() {
+        String ip = Propiedades.getPropertie("ip");
+        String ping = "ping " + ip;
+
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process pc = rt.exec(ping);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(pc.getInputStream()));
+            String linea = br.readLine();
+            while (linea != null) {
+                System.out.println(linea + "\n");
+                linea = br.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println("No se pudo hacer ping " + e.getMessage());
         }
     }
 
