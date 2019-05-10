@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class RowStyle extends DefaultTableCellRenderer {
 
-    private int columna;
+    private final int columna;
 
     public RowStyle(int columna) {
         this.columna = columna;
@@ -37,14 +37,13 @@ public class RowStyle extends DefaultTableCellRenderer {
             setHorizontalAlignment(CENTER);
             setFont(new Font("Arial", Font.PLAIN, 11));
             table.setSelectionBackground(Color.lightGray);
-            //table.setSelectionForeground(Color.lightGray);
 
             setHorizontalAlignment(0);
             
         } catch (NumberFormatException | NullPointerException e) {
 
         }
-
+        
         return this;
     }
 

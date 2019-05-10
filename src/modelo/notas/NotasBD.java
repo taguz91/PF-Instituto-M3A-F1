@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.ResourceManager;
 import modelo.alumno.AlumnoCursoMD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 
 /**
@@ -28,9 +27,7 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"Notas\".id_nota,\n"
                 + "\"public\".\"Notas\".nota_valor,\n"
                 + "\"public\".\"Notas\".id_tipo_nota,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_minimo,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo\n"
+                + "\"public\".\"TipoDeNota\".tipo_nota_nombre\n"
                 + "FROM\n"
                 + "\"public\".\"Notas\"\n"
                 + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
@@ -52,8 +49,6 @@ public class NotasBD extends NotasMD {
                     nota.setNotaValor(rs.getDouble("nota_valor"));
                     TipoDeNotaMD tipoDeNota = new TipoDeNotaMD();
                     tipoDeNota.setNombre(rs.getString("tipo_nota_nombre"));
-                    tipoDeNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
-                    tipoDeNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
                     nota.setTipoDeNota(tipoDeNota);
                     lista.add(nota);
                 }

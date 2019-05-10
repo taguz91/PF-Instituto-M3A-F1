@@ -3,6 +3,10 @@ package controlador.Libraries.cellEditor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,9 +30,16 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
         this.editar = editar;
         setOpaque(true);
         setBorder(null);
-        setBackground(new Color(48, 156, 189));
-        setForeground(Color.white);
+//        setBackground(new Color(48, 156, 189));
+//        setForeground(Color.white);
         setHorizontalAlignment(CENTER);
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                selectAll();
+            }
+
+        });
     }
 
     // Start editing

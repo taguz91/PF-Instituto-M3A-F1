@@ -1,6 +1,7 @@
 package vista.notas;
 
 import controlador.notas.ux.RowStyle;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -9,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -28,7 +30,12 @@ public class VtnNotas extends JInternalFrame {
         tblDual.setRowHeight(20);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
-        ((DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(0);
+
+        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
+        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
+
+        DefaultTableCellRenderer headerDual = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
+        headerDual.setHorizontalAlignment(SwingConstants.CENTER);
 
     }
 

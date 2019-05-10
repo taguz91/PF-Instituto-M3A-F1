@@ -388,7 +388,8 @@ public class NotasCTR {
         return (faltas * 100) / horas;
     }
 
-    private void editarFaltas(int fila, JTable tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcion) {
+    private void editarFaltas(int fila, JTable tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilas,
+            Function<String, Void> editar) {
 
         int colFaltas = getIndex.apply(tabla, "Faltas");
         int colEstado = getIndex.apply(tabla, "Estado");
@@ -398,39 +399,37 @@ public class NotasCTR {
         String faltasText = tabla.getValueAt(fila, colFaltas).toString();
         if (Validaciones.isInt(faltasText)) {
             int faltas = new Integer(faltasText);
+            int oldFaltas = listaNotas.get(fila).getNumFalta();
+            if (faltas != oldFaltas) {
+                int horas = getHoras();
 
-            int horas = getHoras();
+                int porcentaje = 0;
 
-            int porcentaje = 0;
-
-            if (horas <= 0) {
-                horas = 1;
-            }
-
-            porcentaje = (faltas * 100) / horas;
-
-            tabla.setValueAt(porcentaje, fila, conPorcentaje);
-
-            String estado = tabla.getValueAt(fila, colEstado).toString();
-            String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
-
-            if (!estado.equalsIgnoreCase("RETIRADO") && !asistencia.equalsIgnoreCase("RETIRADO")) {
-                if (porcentaje >= 25) {
-                    tabla.setValueAt("REPROBADO", fila, colEstado);
-                } else {
-                    tabla.setValueAt("APROBADO", fila, colEstado);
+                if (horas <= 0) {
+                    horas = 1;
                 }
+
+                porcentaje = (faltas * 100) / horas;
+
+                tabla.setValueAt(porcentaje, fila, conPorcentaje);
+
+                String estado = tabla.getValueAt(fila, colEstado).toString();
+                String asistencia = tabla.getValueAt(fila, colAsistencia).toString();
+
+                if (!estado.equalsIgnoreCase("RETIRADO") && !asistencia.equalsIgnoreCase("RETIRADO")) {
+                    if (porcentaje >= 25) {
+                        tabla.setValueAt("REPROBADO", fila, colEstado);
+                    } else {
+                        tabla.setValueAt("APROBADO", fila, colEstado);
+                    }
+                }
+
+                tabla.setValueAt(faltas, fila, colFaltas);
+                editar.apply("");
             }
-
-            AlumnoCursoBD alumno = listaNotas.get(fila);
-            tabla.setValueAt(faltas, fila, colFaltas);
-
-            alumno.setEstado(estado);
-            alumno.setNumFalta(faltas);
-            alumno.editar();
         } else {
             JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
-            refreshTabla(funcion, (DefaultTableModel) tabla.getModel());
+            refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
         }
     }
 
@@ -522,8 +521,9 @@ public class NotasCTR {
                     guardarTRAD(fila, valueText, tipoNota);
                     break;
                 case 14:
-                    editarFaltas(fila, tabla, agregarFilasTrad());
-                    editarTrad(null);
+
+                    editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad());
+
                     break;
                 case 16:
                     String asistencia = tabla.getValueAt(fila, columna).toString();
@@ -531,20 +531,12 @@ public class NotasCTR {
                     switch (asistencia.toLowerCase()) {
                         case "retirado":
                             tabla.setValueAt("RETIRADO", fila, colEstado);
-                            editarTrad(null);
+                            editarTrad().apply(null);
                             break;
-                        case "no asiste":
-                            tabla.setValueAt("REPROBADO", fila, colEstado);
-                            editarTrad(null);
-                            break;
-                        case "desertor":
-                            tabla.setValueAt("REPROBADO", fila, colEstado);
-                            editarTrad(null);
-                            break;
-                        case "asiste":
+                        default:
                             tabla.setValueAt("REPROBADO", fila, colEstado);
                             sumarTrad();
-                            editarTrad("");
+                            editarTrad().apply("");
                             break;
                     }
                     break;
@@ -564,7 +556,7 @@ public class NotasCTR {
                     refreshTabla(agregarFilasTrad(), tablaNotasTrad);
                 } else {
                     sumarTrad();
-                    editarTrad(tipoNota);
+                    editarTrad().apply(tipoNota);
                     refreshTabla(agregarFilasTrad(), tablaNotasTrad);
                 }
             }
@@ -641,36 +633,40 @@ public class NotasCTR {
         }
     }
 
-    private void editarTrad(String tipoNota) {
-        jTblTrad.setEnabled(false);
-        int fila = getSelectedRowTrad();
+    private Function<String, Void> editarTrad() {
 
-        int columa = getSelectedColumTrad();
-        String estado = vista.getTblTrad().getValueAt(fila, 13).toString();
-        String asistencia = Middlewares.capitalize(vista.getTblTrad().getValueAt(fila, 16).toString());
+        return tipoNota -> {
+            jTblTrad.setEnabled(false);
+            int fila = getSelectedRowTrad();
 
-        AlumnoCursoBD alumno = listaNotas.get(fila);
-        if (tipoNota != null) {
-            List<NotasBD> notas = alumno.getNotas();
+            int columa = getSelectedColumTrad();
+            String estado = vista.getTblTrad().getValueAt(fila, 13).toString();
+            String asistencia = Middlewares.capitalize(vista.getTblTrad().getValueAt(fila, 16).toString());
 
-            notas.stream().filter(buscar(tipoNota)).collect(Collectors.toList())
-                    .forEach(editarNota(fila, columa, tablaNotasTrad));
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+            if (tipoNota != null) {
+                List<NotasBD> notas = alumno.getNotas();
 
-            notas.stream().filter(buscar("NOTA INTERCICLO")).collect(Collectors.toList())
-                    .forEach(editarNota(fila, 8, tablaNotasTrad));
+                notas.stream().filter(buscar(tipoNota)).collect(Collectors.toList())
+                        .forEach(editarNota(fila, columa, tablaNotasTrad));
 
-            if (asistencia.equalsIgnoreCase("retirado")) {
-                estado = "RETIRADO";
+                notas.stream().filter(buscar("NOTA INTERCICLO")).collect(Collectors.toList())
+                        .forEach(editarNota(fila, 8, tablaNotasTrad));
+
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    estado = "RETIRADO";
+                }
+
+                alumno.setNotaFinal(Middlewares.conversor(vista.getTblTrad().getValueAt(fila, 12).toString()));
             }
+            alumno.setAsistencia(asistencia);
+            alumno.setEstado(estado);
+            alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
+            alumno.editar();
+            jTblTrad.setEnabled(true);
+            return null;
+        };
 
-            alumno.setNotaFinal(Middlewares.conversor(vista.getTblTrad().getValueAt(fila, 12).toString()));
-        }
-        alumno.setAsistencia(asistencia);
-        alumno.setEstado(estado);
-        alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
-
-        alumno.editar();
-        jTblTrad.setEnabled(true);
     }
 
     // </editor-fold>  
