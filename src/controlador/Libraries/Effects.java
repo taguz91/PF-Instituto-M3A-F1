@@ -3,8 +3,12 @@ package controlador.Libraries;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.EventQueue;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -12,6 +16,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 /**
  *

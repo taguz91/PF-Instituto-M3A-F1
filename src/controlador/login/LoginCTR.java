@@ -76,7 +76,7 @@ public class LoginCTR {
                 properties.put("username", USERNAME);
                 properties.put("password", PASSWORD);
                 Propiedades.generateUserProperties(properties);
-                
+
                 modelo = new UsuarioBD();
 
                 modelo.setUsername(USERNAME);
@@ -88,13 +88,10 @@ public class LoginCTR {
                     if (modelo != null) {
 
                         vista.dispose();
-                        
-                        
+
                         VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("JOHNNY", "DEV", "Login"), icono, ista, false);
                         vtn.Init();
-                        
-                        
-                        
+
                     } else {
 
                         vista.getLblAvisos().setVisible(true);
