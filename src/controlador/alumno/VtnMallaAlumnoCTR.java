@@ -106,8 +106,6 @@ public class VtnMallaAlumnoCTR {
         //Inciiamos los combos en falso
         vtnMallaAlm.getCmbAlumnos().setEnabled(false);
         vtnMallaAlm.getCmbEstado().setEnabled(false);
-        //Ocultamos el boton de ingresar nota porque ya no se usa  
-        vtnMallaAlm.getBtnIngNota().setVisible(false);
 
         vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCombo());
         vtnMallaAlm.getCmbAlumnos().addActionListener(e -> clickCombo());
@@ -144,18 +142,7 @@ public class VtnMallaAlumnoCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                int l = 5;
                 String a = vtnMallaAlm.getCmbAlumnos().getEditor().getItem().toString().trim();
-                if (Validar.esNumeros(a)) {
-                    l = 10;
-                }
-//                if (e.getKeyCode() != 38 && e.getKeyCode() != 40
-//                        && e.getKeyCode() != 37 && e.getKeyCode() != 39
-//                        && a.length() >= l && e.getKeyCode() != 13
-//                        && e.getKeyCode() != 10) {
-//                    buscarAlumno(a);
-//                }
-
                 if (e.getKeyCode() != 38 && e.getKeyCode() != 40
                         && e.getKeyCode() != 37 && e.getKeyCode() != 39
                         && e.getKeyCode() != 13

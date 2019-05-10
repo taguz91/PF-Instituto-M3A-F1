@@ -24,7 +24,7 @@ public class CarreraBD extends CarreraMD {
         this.doc = new DocenteBD(conecta);
     }
 
-    public void guardarCarrera() {
+    public boolean guardarCarrera() {
         String nsql = "INSERT INTO public.\"Carreras\"(\n"
                 + "	id_docente_coordinador, carrera_nombre, \n"
                 + "	carrera_codigo, carrera_fecha_inicio, carrera_modalidad, "
@@ -34,10 +34,15 @@ public class CarreraBD extends CarreraMD {
                 + " '" + getModalidad() + "', " + getNumSemanas() + ");";
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Guardamos correctamente \n" + getNombre());
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar \n" + getNombre() + "\n"
+                    + "Revise su conexion a internet.");
+            return false;
         }
     }
 
-    public void editarCarrera(int idCarrera) {
+    public boolean editarCarrera(int idCarrera) {
         String nsql = "UPDATE public.\"Carreras\"\n"
                 + "SET id_docente_coordinador=" + getCoordinador().getIdDocente() + ", "
                 + "carrera_nombre='" + getNombre() + "', \n"
@@ -47,6 +52,11 @@ public class CarreraBD extends CarreraMD {
 
         if (conecta.nosql(nsql) == null) {
             JOptionPane.showMessageDialog(null, "Editamos correctamente \n" + getNombre());
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo editar \n" + getNombre() + "\n"
+                    + "Revise su conexion a internet.");
+            return false;
         }
     }
 

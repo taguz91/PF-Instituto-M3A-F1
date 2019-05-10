@@ -51,10 +51,6 @@ public class FrmCarreraCTR {
         this.frmCarrera = frmCarrera;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Carrera");
-        ctrPrin.setIconJIFrame(frmCarrera);
         this.docen = new DocenteBD(conecta);
         vtnPrin.getDpnlPrincipal().add(frmCarrera);
         frmCarrera.show();
@@ -75,7 +71,7 @@ public class FrmCarreraCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = frmCarrera.getTxtBuscar().getText().trim();
-                if (a.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscarDocentes(a);
                 }
             }
@@ -86,9 +82,6 @@ public class FrmCarreraCTR {
 
         frmCarrera.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCarrera.getBtnGuardarContinuar().addActionListener(e -> guardarYContinuar());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Carrera");
     }
 
     private void validaciones() {
@@ -107,18 +100,21 @@ public class FrmCarreraCTR {
     }
 
     private void guardarYSalir() {
-        guardar();
-        frmCarrera.dispose();
-        ctrPrin.cerradoJIF();
-        ctrPrin.abrirVtnCarrera();
+        if (guardar()) {
+            frmCarrera.dispose();
+            ctrPrin.cerradoJIF();
+            ctrPrin.abrirVtnCarrera();
+        }
+
     }
 
     private void guardarYContinuar() {
-        guardar();
-        borrarCampos();
+        if (guardar()) {
+            borrarCampos();
+        }
     }
 
-    private void guardar() {
+    private boolean guardar() {
         boolean guardar = true;
         SimpleDateFormat formFecha = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = frmCarrera.getJdFechaInicio().getDate();
@@ -139,7 +135,7 @@ public class FrmCarreraCTR {
                 fechaInicio = LocalDate.of(Integer.parseInt(anio), Integer.parseInt(mes),
                         Integer.parseInt(dia));
             } catch (NumberFormatException e) {
-                System.out.println("No es fecha.");
+                System.out.println("No es fecha. " + e.getMessage());
                 guardar = false;
             }
         } else {
@@ -163,12 +159,16 @@ public class FrmCarreraCTR {
             car.setCoordinador(docentes.get(posCoord));
             car.setNumSemanas(Integer.parseInt(semanas));
             if (editar) {
-                car.editarCarrera(idCarrera);
-                editar = false;
+                guardar = car.editarCarrera(idCarrera);
+                if (guardar) {
+                    editar = false;
+                    return true;
+                }
             } else {
-                car.guardarCarrera();
+                guardar = car.guardarCarrera();
             }
         }
+        return guardar;
     }
 
     private void buscarDocentes(String aguja) {
