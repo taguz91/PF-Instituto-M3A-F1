@@ -242,12 +242,24 @@ public class VtnNotas extends JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblDual.setColumnSelectionAllowed(true);
         tblDual.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblDual);
+        tblDual.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblDual.getColumnModel().getColumnCount() > 0) {
             tblDual.getColumnModel().getColumn(0).setMinWidth(50);
             tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblDual.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblDual.getColumnModel().getColumn(6).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(7).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(8).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(9).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(10).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(11).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(12).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(13).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(14).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(15).setMaxWidth(100);
         }
 
         tabPane.addTab("Carreras Duales", jScrollPane1);
