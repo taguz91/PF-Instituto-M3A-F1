@@ -349,7 +349,7 @@ public class ControladorSilaboC {
             }
         } else {
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboAnterior.getIdSilabo());
+            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboAnterior.getIdSilabo(),0);
 
             estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboAnterior.getIdSilabo());
 
@@ -1125,7 +1125,7 @@ public class ControladorSilaboC {
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
-
+                    gestion.getBtnSiguiente().setEnabled(false);
                     principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
 
                     try {
@@ -1150,6 +1150,7 @@ public class ControladorSilaboC {
                     JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
 
                     gestion.getBtnGuardar().setEnabled(true);
+                    gestion.getBtnSiguiente().setEnabled(true);
 
                     if (!retroceso) {
                         gestion.setVisible(false);

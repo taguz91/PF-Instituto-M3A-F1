@@ -52,10 +52,6 @@ public class FrmDocenteMateriaCTR {
         this.frmDM = frmDM;
         this.conecta = conecta;
         this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Docente materia");
-        ctrPrin.setIconJIFrame(frmDM);
         //Mostramos el formulario
         vtnPrin.getDpnlPrincipal().add(frmDM);
         frmDM.show();
@@ -74,6 +70,8 @@ public class FrmDocenteMateriaCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         frmDM.getTblDocentes().setModel(mdTbl);
         TblEstilo.formatoTbl(frmDM.getTblDocentes());
+        //Le damos formato a la tabla  
+        TblEstilo.columnaMedida(frmDM.getTblDocentes(), 0, 100);
         //Desabilitamos el combo de materia y ciclo, se activaran al escoger una carrera
         estadoCmbCicloYMateria(false);
         llenarCmbCarrera();
@@ -82,7 +80,7 @@ public class FrmDocenteMateriaCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = frmDM.getTxtBuscar().getText().trim();
-                if (e.getKeyCode() ==  10) {
+                if (e.getKeyCode() == 10) {
                     buscarDocente(a);
                 }
             }
@@ -93,9 +91,6 @@ public class FrmDocenteMateriaCTR {
         //Acciones de los botones
         frmDM.getBtnBuscar().addActionListener(e -> buscarDocente(frmDM.getTxtBuscar().getText().trim()));
         frmDM.getBtnGuardar().addActionListener(e -> guardarYSalir());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Docente materia");
         iniciarValidaciones();
     }
 
@@ -110,7 +105,6 @@ public class FrmDocenteMateriaCTR {
         if (guardar()) {
             frmDM.dispose();
             ctrPrin.cerradoJIF();
-            ctrPrin.abrirVtnDocenteMateria();
         }
 
     }
@@ -129,7 +123,6 @@ public class FrmDocenteMateriaCTR {
         if (guardar) {
             docenMat = dm.existeDocenteMateria(docentes.get(posDoc).getIdDocente(),
                     materias.get(posMat - 1).getId());
-            System.out.println("Entramos a comprobar");
             if (docenMat != null) {
                 frmDM.getLblError().setText("Ya se asigno esta materia al docente.");
                 guardar = false;
@@ -151,7 +144,7 @@ public class FrmDocenteMateriaCTR {
             dm.setDocente(docentes.get(posDoc));
             dm.setMateria(materias.get(posMat - 1));
 
-            dm.guardar();
+            guardar = dm.guardar();
 
         }
         return guardar;
@@ -238,7 +231,7 @@ public class FrmDocenteMateriaCTR {
         if (docentes != null) {
             docentes.forEach(d -> {
                 Object[] valores = {d.getIdentificacion(),
-                    d.getPrimerNombre() + " " + d.getPrimerApellido()};
+                    d.getNombreCompleto()};
                 mdTbl.addRow(valores);
             });
         }

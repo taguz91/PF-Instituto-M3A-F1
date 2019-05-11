@@ -76,7 +76,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
     }
 
-    public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave) {
+    public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave, int tipo) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
         
@@ -92,18 +92,21 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-
+                
+                
                 UnidadSilaboMD tmp = new UnidadSilaboMD();
                 tmp.setIdUnidad(rs.getInt(1));
                 tmp.setNumeroUnidad(rs.getInt(2));
                 tmp.setObjetivoEspecificoUnidad(rs.getString(3));
                 tmp.setResultadosAprendizajeUnidad(rs.getString(4));
                 tmp.setContenidosUnidad(rs.getString(5));
-                if (rs.getDate(6)!=null){
+                if (rs.getDate(6)!=null && tipo==1){
                      tmp.setFechaInicioUnidad(rs.getDate(6).toLocalDate());
                 }
-               
-                if (rs.getDate(7)!=null){
+                
+                
+                
+                if (rs.getDate(7)!=null && tipo==1){
                     tmp.setFechaFinUnidad(rs.getDate(7).toLocalDate()); 
                 }
                

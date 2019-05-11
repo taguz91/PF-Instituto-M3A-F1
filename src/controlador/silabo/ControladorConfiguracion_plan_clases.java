@@ -5,10 +5,13 @@ import java.util.Optional;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
+import modelo.PlanClases.PlandeClasesBD;
+import modelo.PlanClases.PlandeClasesMD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
@@ -36,6 +39,7 @@ public class ControladorConfiguracion_plan_clases {
     private List<MateriaMD> materias_Silabos;
     private List<CarreraMD>  silabos_docente;
     private List<UnidadSilaboMD> unidadesSilabo;
+    private List<PlandeClasesMD> lista_plan_clases;
     private List<CursoMD> cursosSilabo;
     private List<PeriodoLectivoMD> periodosCarrera;
     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
@@ -61,10 +65,14 @@ public class ControladorConfiguracion_plan_clases {
              cP.iniciaControlador();
         });
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
+            if (validarPlanClaseExistente()==true) {
             frm_cong_PlanClase.dispose();
             Controlador_plan_clases cpc=new 
         Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
+            } else {
+                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
         });
           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
            frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
@@ -186,7 +194,7 @@ private void clickCmbCarreras(){
        if(posS>0){
            estadoCmb_cursoUnidDES(true);
            String materia_silabo=materias_Silabos.get(posS -1).getNombre();
-           unidadesSilabo=UnidadSilaboBD.consultar(conexion,getIdSilabo() );
+           unidadesSilabo=UnidadSilaboBD.consultar(conexion,getIdSilabo(),1 );
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
            cursosSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
            LLENAR_COMBO_CURSOS(cursosSilabo);
@@ -264,6 +272,24 @@ private void clickCmbCarreras(){
                 });
      return id_periodo_lectivo;
   }
-
+   
+  private boolean validarPlanClaseExistente(){
+      boolean valid=true;
+      String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),String.valueOf(usuario.getPersona().getIdPersona()),  String.valueOf(getid_periodo())};
+      lista_plan_clases=PlandeClasesBD.consultarPlanClaseExistente(conexion, parametros);
+      System.out.println(lista_plan_clases.get(0).getId_unidad().getIdUnidad()+"      ----------------<<<<<< de la base id unidad");
+     System.out.println("------------------->>>id del combo"+unidad_seleccionada().getIdUnidad());
+  
+      for(PlandeClasesMD plmd:lista_plan_clases){
+          
+      if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
+              || Objects.equals(plmd.getId_curso(), cursos_seleccionado().getId()) ) {
+          valid=false;
+      }
+      }
+      
+  
+  return valid;
+  }
   
 }
