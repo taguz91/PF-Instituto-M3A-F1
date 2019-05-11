@@ -112,7 +112,7 @@ public class FrmPersonaCTR {
         //Desactivamos el campo de identificacion porque debe ingresar primero el tipo de identificacion
         frmPersona.getTxtIdentificacion().setEnabled(false);
         //Ocultamos todos los erores del formulario 
-        ocultarErrores();
+        iniciarComponentes();
         cargarIdiomas();
         desactivarDiscapacidad(false);
         desactivarCategoriaMigratoria(false);
@@ -246,14 +246,14 @@ public class FrmPersonaCTR {
                 } else {
                     numAccion = 0;
                     borrarCampos();
-                    ocultarErrores();
+                    iniciarComponentes();
                     editar = false;
                     iniciarValidaciones();
                 }
             }
         } else {
             borrarCampos();
-            ocultarErrores();
+            iniciarComponentes();
         }
     }
 
@@ -928,7 +928,7 @@ public class FrmPersonaCTR {
                             JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
-                            ocultarErrores();
+                            iniciarComponentes();
                         } else {
                             JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
                                     + "Revise su conexion a internet. ");
@@ -939,7 +939,7 @@ public class FrmPersonaCTR {
                             JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
-                            ocultarErrores();
+                            iniciarComponentes();
                         } else {
                             JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
                                     + "Revise su conexion a internet. ");
@@ -954,14 +954,14 @@ public class FrmPersonaCTR {
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
-                    ocultarErrores();
+                    iniciarComponentes();
 
                 } else {
                     per.insertarPersona();
                     JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
-                    ocultarErrores();
+                    iniciarComponentes();
 
                 }
             }
@@ -1187,7 +1187,10 @@ public class FrmPersonaCTR {
     }
 
     //Metodo para ocultar errores
-    public void ocultarErrores() {
+    public void iniciarComponentes() {
+//        frmPersona.getCmbTipoId().setToolTipText("Seleccione un Tipo de Identificación");
+//        frmPersona.getTxtIdentificacion().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
+//        
         frmPersona.getLblErrorCategoriaMigratoria().setVisible(false);
         frmPersona.getLblErrorCallePrin().setVisible(false);
         frmPersona.getLblErrorCalleSec().setVisible(false);
