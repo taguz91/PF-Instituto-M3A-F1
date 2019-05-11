@@ -165,6 +165,22 @@ AFTER INSERT
 ON public."AlumnoCursoRetirados" FOR EACH ROW
 EXECUTE PROCEDURE retirar_almn_clase();
 
+--Actualizar malla al actualizar materia
+CREATE OR REPLACE FUNCTION actualiza_ciclo_materia()
+RETURNS TRIGGER AS $actualiza_ciclo_materia$
+BEGIN
+  UPDATE public."MallaAlumno"
+  SET malla_almn_ciclo = new.materia_ciclo
+  WHERE id_materia = new.id_materia;
+  RETURN NEW;
+END;
+$actualiza_ciclo_materia$ LANGUAGE plpgsql;
+
+CREATE TRIGGER actualizar_ciclo
+AFTER UPDATE OF materia_ciclo
+ON public."Materias" FOR EACH ROW
+EXECUTE PROCEDURE actualiza_ciclo_materia();
+
 --Eliminar retiro alumno
 /*
 CREATE OR REPLACE FUNCTION retirar_almn_clase()

@@ -15,7 +15,7 @@ import modelo.persona.AlumnoMD;
 public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private final ConectarDB conecta;
-    private String sql;
+    private String sql = "";
 
     public MallaAlumnoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -79,7 +79,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "a.id_alumno = ac.id_alumno AND \n"
                 + "c.id_carrera = ac.id_carrera AND \n"
                 + "p.id_persona = a.id_persona AND\n"
-                + "m.id_materia = ma.id_materia AND carrera_activo = true;";
+                + "m.id_materia = ma.id_materia AND carrera_activo = true \n"
+                + "ORDER BY persona_primer_apellido, persona_segundo_apellido, malla_almn_ciclo;";
         return consultaMallasTbl(sql);
     }
 
@@ -176,7 +177,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "p.id_persona = a.id_persona AND\n"
                 + "m.id_materia = ma.id_materia AND\n"
                 + "ac.id_carrera = " + idCarrera + " \n"
-                + "ORDER BY malla_almn_ciclo;";
+                + "ORDER BY persona_primer_apellido, persona_segundo_apellido, malla_almn_ciclo;";
         return consultaMallasTbl(sql);
     }
 
@@ -201,7 +202,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "m.id_materia = ma.id_materia AND\n"
                 + "ac.id_carrera = " + idCarrera + " AND\n"
                 + "malla_almn_ciclo = " + ciclo + " \n"
-                + "ORDER BY malla_almn_ciclo;";
+                + "ORDER BY persona_primer_apellido, persona_segundo_apellido;";
         return consultaMallasTbl(sql);
     }
 
@@ -226,7 +227,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "m.id_materia = ma.id_materia AND\n"
                 + "ac.id_carrera = " + idCarrera + " AND\n"
                 + "malla_almn_estado = '" + estado.charAt(0) + "'" + " \n"
-                + "ORDER BY malla_almn_ciclo;";
+                + "ORDER BY persona_primer_apellido, persona_segundo_apellido, malla_almn_ciclo;";
         return consultaMallasTbl(sql);
     }
 
@@ -245,7 +246,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "ac.id_carrera = " + idCarrera + " AND\n"
                 + "malla_almn_ciclo = " + ciclo + " AND\n"
                 + "malla_almn_estado = '" + estado.charAt(0) + "'" + " \n"
-                + "ORDER BY malla_almn_ciclo;";
+                + "ORDER BY persona_primer_apellido, persona_segundo_apellido;";
         return consultaMallasTbl(sql);
     }
 
