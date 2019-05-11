@@ -349,7 +349,7 @@ public class ControladorSilaboC {
             }
         } else {
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboAnterior.getIdSilabo());
+            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboAnterior.getIdSilabo(),0);
 
             estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboAnterior.getIdSilabo());
 
