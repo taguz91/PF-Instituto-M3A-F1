@@ -9,7 +9,6 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -17,8 +16,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
-import java.util.Vector;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -65,8 +62,8 @@ public class NotasCTR {
     private List<TipoDeNotaMD> listaValidaciones;
 
     //TABLA
-    private DefaultTableModel tablaNotasTrad;
-    private DefaultTableModel tablaNotasDuales;
+    private DefaultTableModel tablaTrad;
+    private DefaultTableModel tablaDuales;
 
     //JTables
     private JTable jTblTrad;
@@ -84,8 +81,8 @@ public class NotasCTR {
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
     public void Init() {
-        tablaNotasTrad = (DefaultTableModel) vista.getTblTrad().getModel();
-        tablaNotasDuales = (DefaultTableModel) vista.getTblDual().getModel();
+        tablaTrad = (DefaultTableModel) vista.getTblTrad().getModel();
+        tablaDuales = (DefaultTableModel) vista.getTblDual().getModel();
 
         jTblTrad = vista.getTblTrad();
         jTblDual = vista.getTblDual();
@@ -142,7 +139,7 @@ public class NotasCTR {
 
     private void InitTablas() {
 
-        tablaNotasTrad.addTableModelListener(new TableModelListener() {
+        tablaTrad.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
 
@@ -158,7 +155,7 @@ public class NotasCTR {
             }
         });
 
-        tablaNotasDuales.addTableModelListener(new TableModelListener() {
+        tablaDuales.addTableModelListener(new TableModelListener() {
             boolean active = false;
 
             @Override
@@ -166,7 +163,7 @@ public class NotasCTR {
 
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
                     active = true;
-                    //cacularNotasDuales(tablaNotasDuales);
+                    cacularNotasDuales(jTblDual);
                     active = false;
                 }
 
@@ -206,8 +203,8 @@ public class NotasCTR {
             vista.getCmbDocente().addItem(key);
 
         });
-        tablaNotasTrad.setRowCount(0);
-        tablaNotasDuales.setRowCount(0);
+        tablaTrad.setRowCount(0);
+        tablaDuales.setRowCount(0);
     }
 
     private void cargarComboPeriodos() {
@@ -220,8 +217,8 @@ public class NotasCTR {
                 .forEach(obj -> {
                     vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
                 });
-        tablaNotasTrad.setRowCount(0);
-        tablaNotasDuales.setRowCount(0);
+        tablaTrad.setRowCount(0);
+        tablaDuales.setRowCount(0);
     }
 
     private void setLblCarrera() {
@@ -247,8 +244,8 @@ public class NotasCTR {
                     });
         } catch (NullPointerException e) {
         }
-        tablaNotasTrad.setRowCount(0);
-        tablaNotasDuales.setRowCount(0);
+        tablaTrad.setRowCount(0);
+        tablaDuales.setRowCount(0);
     }
 
     private void cargarComboMaterias() {
@@ -278,8 +275,8 @@ public class NotasCTR {
         } catch (NullPointerException e) {
             vista.getCmbAsignatura().removeAllItems();
         }
-        tablaNotasTrad.setRowCount(0);
-        tablaNotasDuales.setRowCount(0);
+        tablaTrad.setRowCount(0);
+        tablaDuales.setRowCount(0);
     }
 
     // </editor-fold>  
@@ -476,6 +473,8 @@ public class NotasCTR {
             });
             cargarTabla = true;
 
+            vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+
         }).start();
     }
 
@@ -490,31 +489,6 @@ public class NotasCTR {
 
     // </editor-fold> 
     // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES"> 
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
-            tabla.addRow(new Object[]{
-                tabla.getDataVector().size() + 1,
-                obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(),
-                obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(),
-                obj.getAlumno().getSegundoNombre(),
-                obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
-                (int) Middlewares.conversor("" + obj.getNotaFinal()),
-                obj.getEstado(),
-                obj.getNumFalta(),
-                calcularPorcentaje(obj.getNumFalta(), getHoras()),
-                obj.getAsistencia()
-            });
-            return null;
-        };
-    }
-
     private void carlcularNotasTradicionales(JTable tabla) {
 
         int fila = tabla.getSelectedRow();
@@ -548,28 +522,82 @@ public class NotasCTR {
                 guardarTRAD(fila, valueText, tipoNota);
                 break;
             case 14:
-                editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad(), sumarTrad);
+                editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad(), sumarTrad());
                 break;
             case 16:
-                String asistencia = tabla.getValueAt(fila, columna).toString();
+                String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
                 int colEstado = getIndex.apply(tabla, "Estado");
-                switch (asistencia.toLowerCase()) {
-                    case "retirado":
-                        tabla.setValueAt("RETIRADO", fila, colEstado);
-                        editarTrad().apply(null);
-                        break;
-                    default:
-                        tabla.setValueAt("REPROBADO", fila, colEstado);
-                        sumarTrad.apply(null);
-                        editarTrad().apply("");
-                        break;
+
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    tabla.setValueAt("RETIRADO", fila, colEstado);
+                    editarTrad().apply(null);
+                } else if (asistencia.equalsIgnoreCase("asiste")) {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    sumarTrad().apply(null);
+                    editarTrad().apply("");
+                } else {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    editarTrad().apply("");
                 }
                 break;
         }
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="SUMA DE COLUMNAS"> 
+    // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+        return (obj, tabla) -> {
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(),
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(),
+                obj.getAlumno().getSegundoNombre(),
+                obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()),
+                obj.getEstado(),
+                obj.getNumFalta(),
+                calcularPorcentaje(obj.getNumFalta(), getHoras()),
+                obj.getAsistencia()
+            });
+            return null;
+        };
+    }
+
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasDuales() {
+        return (obj, tabla) -> {
+
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(),
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(),
+                obj.getAlumno().getSegundoNombre(),
+                obj.getNotas().stream().filter(buscar("G. DE AULA 1")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("G. DE AULA 2")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()),
+                obj.getEstado(),
+                obj.getNumFalta(),
+                carcularPorcentaje(obj.getNumFalta(), getHoras()),
+                obj.getAsistencia()
+            });
+            return null;
+        };
+    }
+
+    // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="SUMA DE COLUMNAS TRADICIONALES"> 
     private void guardarTRAD(int fila, String valueText, String tipoNota) {
         if (Validaciones.isDecimal(valueText)) {
             double value = Middlewares.conversor(valueText);
@@ -577,49 +605,51 @@ public class NotasCTR {
                 TipoDeNotaMD rango = getRango(tipoNota);
                 if (value > rango.getValorMaximo()) {
                     errorDeNota(rango);
-                    refreshTabla(agregarFilasTrad(), tablaNotasTrad);
+                    refreshTabla(agregarFilasTrad(), tablaTrad);
                 } else {
-                    sumarTrad.apply(null);
+                    sumarTrad().apply(null);
                     editarTrad().apply(tipoNota);
-                    refreshTabla(agregarFilasTrad(), tablaNotasTrad);
+                    refreshTabla(agregarFilasTrad(), tablaTrad);
                 }
             }
 
         } else {
             mensajeDeError();
-            refreshTabla(agregarFilasTrad(), tablaNotasTrad);
+            refreshTabla(agregarFilasTrad(), tablaTrad);
         }
     }
 
-    private Function<Void, Void> sumarTrad = t -> {
-        int fila = getSelectedRowTrad();
+    private Function<Void, Void> sumarTrad() {
+        return t -> {
+            int fila = getSelectedRowTrad();
 
-        double aporte1;
-        double examenInterCiclo;
-        double totalInterciclo;
+            double aporte1;
+            double examenInterCiclo;
+            double totalInterciclo;
 
-        double aporte2;
-        double examenFinal;
-        double examenRecuperacion;
-        double notaFinal;
+            double aporte2;
+            double examenFinal;
+            double examenRecuperacion;
+            double notaFinal;
 
-        aporte1 = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 6).toString());
-        examenInterCiclo = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 7).toString());
-        totalInterciclo = aporte1 + examenInterCiclo;
-        tablaNotasTrad.setValueAt(totalInterciclo, fila, 8);
-        aporte2 = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 9).toString());
-        examenFinal = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 10).toString());
-        examenRecuperacion = Middlewares.conversor(tablaNotasTrad.getValueAt(fila, 11).toString());
+            aporte1 = Middlewares.conversor(tablaTrad.getValueAt(fila, 6).toString());
+            examenInterCiclo = Middlewares.conversor(tablaTrad.getValueAt(fila, 7).toString());
+            totalInterciclo = aporte1 + examenInterCiclo;
+            tablaTrad.setValueAt(totalInterciclo, fila, 8);
+            aporte2 = Middlewares.conversor(tablaTrad.getValueAt(fila, 9).toString());
+            examenFinal = Middlewares.conversor(tablaTrad.getValueAt(fila, 10).toString());
+            examenRecuperacion = Middlewares.conversor(tablaTrad.getValueAt(fila, 11).toString());
 
-        if (examenRecuperacion != 0) {
-            notaFinal = totalInterciclo + aporte2 + examenRecuperacion;
-        } else {
-            notaFinal = totalInterciclo + aporte2 + examenFinal;
-        }
-        validarAprobado(examenFinal, examenRecuperacion, Math.round(notaFinal), jTblTrad);
-        tablaNotasTrad.setValueAt(Math.round(notaFinal), fila, 12);
-        return null;
-    };
+            if (examenRecuperacion != 0) {
+                notaFinal = totalInterciclo + aporte2 + examenRecuperacion;
+            } else {
+                notaFinal = totalInterciclo + aporte2 + examenFinal;
+            }
+            validarAprobado(examenFinal, examenRecuperacion, Math.round(notaFinal), jTblTrad);
+            tablaTrad.setValueAt(Math.round(notaFinal), fila, 12);
+            return null;
+        };
+    }
 
     private void validarAprobado(double examenFinal, double examenRecuperacion, double notaFinal, JTable tabla) {
         int fila = tabla.getSelectedRow();
@@ -673,20 +703,20 @@ public class NotasCTR {
                 List<NotasBD> notas = alumno.getNotas();
 
                 notas.stream().filter(buscar(tipoNota)).collect(Collectors.toList())
-                        .forEach(editarNota(fila, columa, tablaNotasTrad));
+                        .forEach(editarNota(fila, columa, tablaTrad));
 
                 notas.stream().filter(buscar("NOTA INTERCICLO")).collect(Collectors.toList())
-                        .forEach(editarNota(fila, 8, tablaNotasTrad));
+                        .forEach(editarNota(fila, 8, tablaTrad));
 
                 if (asistencia.equalsIgnoreCase("retirado")) {
                     estado = "RETIRADO";
                 }
 
-                alumno.setNotaFinal(Middlewares.conversor(vista.getTblTrad().getValueAt(fila, 12).toString()));
+                alumno.setNotaFinal(Middlewares.conversor(tablaTrad.getValueAt(fila, 12).toString()));
             }
             alumno.setAsistencia(asistencia);
             alumno.setEstado(estado);
-            alumno.setNumFalta(Integer.valueOf(tablaNotasTrad.getValueAt(fila, 14).toString()));
+            alumno.setNumFalta(Integer.valueOf(tablaTrad.getValueAt(fila, 14).toString()));
             alumno.editar();
             jTblTrad.setEnabled(true);
             return null;
@@ -695,14 +725,186 @@ public class NotasCTR {
     }
 
     // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="SUMA DE COLUMNAS DUALES">   
+    private void guardarDUAL(int fila, String valueText, String tipoNota) {
+        if (Validaciones.isDecimal(valueText)) {
+            double value = Middlewares.conversor(valueText);
+            if (value != getValorNota(fila, tipoNota)) {
+                TipoDeNotaMD rango = getRango(tipoNota);
+                if (value > rango.getValorMaximo()) {
+                    errorDeNota(rango);
+                    refreshTabla(agregarFilasDuales(), tablaDuales);
+                } else {
+                    sumarDual().apply(null);
+                    editarDuales().apply(tipoNota);
+                    refreshTabla(agregarFilasDuales(), tablaDuales);
+                }
+            }
+
+        } else {
+            mensajeDeError();
+            refreshTabla(agregarFilasDuales(), tablaDuales);
+        }
+    }
+
+    private Function<Void, Void> sumarDual() {
+        return t -> {
+            int fila = getSelectedRowDuales();
+
+            double gestion1;
+            double gestion2;
+            double totalGestion;
+
+            double examenFinal;
+            double examenRecuperacion;
+            double notaFinal;
+
+            gestion1 = Middlewares.conversor(jTblDual.getValueAt(fila, 6).toString());
+            gestion2 = Middlewares.conversor(jTblDual.getValueAt(fila, 7).toString());
+
+            totalGestion = gestion1 + gestion2;
+            jTblDual.setValueAt(totalGestion, fila, 8);
+            examenFinal = Middlewares.conversor(jTblDual.getValueAt(fila, 9).toString());
+            examenRecuperacion = Middlewares.conversor(jTblDual.getValueAt(fila, 10).toString());
+
+            if (examenRecuperacion != 0) {
+                notaFinal = totalGestion + examenRecuperacion;
+            } else {
+                notaFinal = totalGestion + examenFinal;
+            }
+
+            validarAprobado(examenFinal, examenRecuperacion, Math.round(notaFinal), jTblDual);
+            jTblDual.setValueAt(Math.round(notaFinal), fila, 11);
+            return null;
+        };
+    }
+
+    // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
+    private void cacularNotasDuales(JTable tabla) {
+
+        int fila = tabla.getSelectedRow();
+        int columna = tabla.getSelectedColumn();
+        String valueText;
+        String tipoNota;
+
+        switch (columna) {
+            case 6:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "G. DE AULA 1";
+                guardarDUAL(fila, valueText, tipoNota);
+                break;
+            case 7:
+                tipoNota = "G. DE AULA 2";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
+
+                break;
+            case 9:
+                tipoNota = "EXAMEN FINAL";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
+
+                break;
+            case 10:
+                tipoNota = "EXAMEN DE RECUPERACION";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
+
+                break;
+
+            case 13://FALTAS
+                editarFaltas(fila, tabla, agregarFilasDuales(), editarDuales(), sumarDual());
+                break;
+
+            case 15:
+                String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+                int colEstado = getIndex.apply(tabla, "Estado");
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    tabla.setValueAt("RETIRADO", fila, colEstado);
+                    editarDuales().apply(null);
+                } else if (asistencia.equalsIgnoreCase("asiste")) {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    sumarDual().apply(null);
+                    editarDuales().apply("");
+                } else {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    editarDuales().apply("");
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private Function<String, Void> editarDuales() {
+
+        return tipoNota -> {
+            jTblDual.setEnabled(false);
+            int fila = getSelectedRowDuales();
+            int columna = getSelectedColumDuales();
+
+            String estado = jTblDual.getValueAt(fila, 12).toString();
+            String asistencia = jTblDual.getValueAt(fila, 15).toString();
+
+            AlumnoCursoBD alumno = listaNotas.get(fila);
+
+            if (tipoNota != null) {
+
+                List<NotasBD> notas = alumno.getNotas();
+
+                notas.stream().filter(buscar(tipoNota)).collect(Collectors.toList())
+                        .forEach(editarNota(fila, columna, tablaDuales));
+
+                notas.stream().filter(buscar("TOTAL GESTION")).collect(Collectors.toList())
+                        .forEach(editarNota(fila, 8, tablaDuales));
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    estado = "RETIRADO";
+                }
+                alumno.setNotaFinal(Middlewares.conversor(jTblDual.getValueAt(fila, 11).toString()));
+            }
+
+            alumno.setEstado(estado);
+            alumno.setAsistencia(asistencia);
+            alumno.setNumFalta(Integer.valueOf(tablaDuales.getValueAt(fila, 13).toString()));
+            alumno.editar();
+            jTblDual.setEnabled(true);
+            return null;
+        };
+
+    }
+
+    private int carcularPorcentaje(int faltas, int horas) {
+        if (horas == 0) {
+            horas = 1;
+        }
+        return (faltas * 100) / horas;
+    }
+
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            jTblTrad.clearSelection();
-            jTblTrad.removeAll();
-            tablaNotasTrad.setRowCount(0);
-            cargarTabla(tablaNotasTrad, agregarFilasTrad());
+            String modalidad = listaPeriodos.stream()
+                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                    .map(c -> c.getCarrera().getModalidad())
+                    .findFirst()
+                    .orElse("");
+            if (modalidad.equalsIgnoreCase("TRADICIONAL") || modalidad.equalsIgnoreCase("PRESENCIAL")) {
+                vista.getTabPane().setSelectedIndex(0);
+                jTblTrad.clearSelection();
+                jTblTrad.removeAll();
+                tablaTrad.setRowCount(0);
+                cargarTabla(tablaTrad, agregarFilasTrad());
+
+            } else {
+                vista.getTabPane().setSelectedIndex(1);
+                jTblDual.clearSelection();
+                jTblDual.removeAll();
+                tablaDuales.setRowCount(0);
+                cargarTabla(tablaDuales, agregarFilasDuales());
+            }
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }

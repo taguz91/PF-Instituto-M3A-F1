@@ -1,7 +1,6 @@
 package vista.notas;
 
 import controlador.notas.ux.RowStyle;
-import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -34,7 +33,7 @@ public class VtnNotas extends JInternalFrame {
         DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
         headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
 
-        DefaultTableCellRenderer headerDual = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
+        DefaultTableCellRenderer headerDual = (DefaultTableCellRenderer) tblDual.getTableHeader().getDefaultRenderer();
         headerDual.setHorizontalAlignment(SwingConstants.CENTER);
 
     }
