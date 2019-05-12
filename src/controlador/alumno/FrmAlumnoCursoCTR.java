@@ -1047,10 +1047,6 @@ public class FrmAlumnoCursoCTR {
      * Se regresan todas las materias, a la tabla de materias pendientes.
      */
     private void regresarTodasMaterias() {
-//        cursosSelec.forEach(c -> {
-//            //c.setNombre(c.getNombre().replace("C-", ""));
-//            cursosPen.add(c);
-//        });
         //Reiniciamos el array para borrar todos los datos
         cursosSelec = new ArrayList();
         horarioAlmn = new ArrayList<>();
@@ -1136,13 +1132,6 @@ public class FrmAlumnoCursoCTR {
      * Imprimimos el horario de del alumno
      */
     public void horarioAlmn() {
-        System.out.println("||||||||||||||||||||||||||||||||||||");
-        System.out.println("Horario del alumno: ");
-        horarioAlmn.forEach(h -> {
-            System.out.println(h.getDia() + " -> " + h.getHoraIni() + " -- " + h.getHoraFin());
-        });
-        System.out.println("||||||||||||||||||||||||||||||||||||");
-
         PnlHorarioClase pnl = new PnlHorarioClase();
         JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
         CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
