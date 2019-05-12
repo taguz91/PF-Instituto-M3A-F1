@@ -350,7 +350,7 @@ public class VtnPrincipalCTR {
         frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
         eventoInternal(frmCRUDBibliografiaV);
         if (numVtns < 5) {
-            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conecta, this, vtnPrin, frmCRUDBibliografiaV);
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conexion,conecta, this, vtnPrin, frmCRUDBibliografiaV);
             ReferenciasCRUDCTRV.iniciarControlador();
 
         } else {
