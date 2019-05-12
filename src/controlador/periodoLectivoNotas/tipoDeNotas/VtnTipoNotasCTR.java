@@ -138,17 +138,13 @@ public class VtnTipoNotasCTR {
     };
 
     private void setModel(int fila) {
-
         int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 1);
-
-        listaTiposNotas
+        modelo = new TipoDeNotaBD(listaTiposNotas
                 .stream()
                 .filter(item -> item.getIdTipoNota() == idTipoNota)
-                .collect(Collectors.toList())
-                .forEach(obj -> {
-                    modelo = new TipoDeNotaBD(obj);
-                });
-
+                .findFirst()
+                .get()
+        );
     }
 
     //PROCESADORES DE EVENTOS
