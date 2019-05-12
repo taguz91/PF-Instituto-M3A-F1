@@ -29,9 +29,6 @@ public class Effects {
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
 
         SUCCESS_COLOR = new Color(10, 186, 52);
-
-        System.out.println("--------->");
-
         ERROR_COLOR = new Color(159, 53, 39);
     }
 

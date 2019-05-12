@@ -3,9 +3,11 @@ package controlador.Libraries;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.ResourceManager;
@@ -106,5 +108,15 @@ public final class Middlewares {
     public static BiFunction<JTable, String, Integer> getNombre = (tabla, nombre) -> {
         return tabla.getColumnModel().getColumnIndex(nombre);
     };
+
+    public static void destruirVariables(Object... variables) {
+        Arrays.asList(variables).forEach(obj -> {
+            obj = null;
+        });
+        System.gc();
+        System.out.println("======================");
+        System.out.println("*VARAIBLES DESTRUIDAS*");
+        System.out.println("======================");
+    }
 
 }
