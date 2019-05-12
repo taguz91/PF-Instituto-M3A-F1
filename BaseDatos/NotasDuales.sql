@@ -41,3 +41,6 @@ FROM
 INNER JOIN "public"."PeriodoLectivo" ON "public"."TipoDeNota".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
 GROUP BY "PeriodoLectivo".prd_lectivo_nombre
 HAVING "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019';
+
+iptraf <--
+

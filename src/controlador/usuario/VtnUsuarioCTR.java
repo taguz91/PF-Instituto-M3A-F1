@@ -32,11 +32,10 @@ public class VtnUsuarioCTR {
     private UsuarioBD modelo;
     private final RolMD permisos;
 
-    //Listas Para rellenar la tabla
+    //Listas
     private static List<UsuarioMD> listaUsuarios;
     private static DefaultTableModel tablaUsuarios;
-
-    private boolean cargaTabla = true;
+    private boolean cargar = true;
 
     public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos) {
         this.desktop = desktop;
@@ -50,12 +49,10 @@ public class VtnUsuarioCTR {
 
     //Inits
     public synchronized void Init() {
-        //Inicializamos la tabla
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
-        //Inicializamos las listas con las consultas
-        listaUsuarios = UsuarioBD.SelectAll();
+        listaUsuarios = UsuarioBD.selectAll();
         cargarTabla(listaUsuarios);
         //InitPermisos();
         InitEventos();
@@ -68,7 +65,7 @@ public class VtnUsuarioCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmUsuarioAdd(desktop, this).Init());
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.SelectAll()));
+        vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.selectAll()));
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
         vista.getBtnVerRoles().addActionListener(e -> btnVerRoles(e));
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -111,14 +108,14 @@ public class VtnUsuarioCTR {
      */
     public void cargarTabla(List<UsuarioMD> lista) {
 
-        if (cargaTabla) {
+        if (cargar) {
             new Thread(() -> {
 
                 tablaUsuarios.setRowCount(0);
 
                 vista.getTxtBuscar().setEnabled(false);
 
-                cargaTabla = false;
+                cargar = false;
 
                 Effects.setLoadCursor(vista);
 
@@ -130,7 +127,7 @@ public class VtnUsuarioCTR {
 
                 vista.getTxtBuscar().setEnabled(true);
 
-                cargaTabla = true;
+                cargar = true;
             }).start();
 
         } else {
@@ -203,10 +200,12 @@ public class VtnUsuarioCTR {
                 int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR AL USUARIO\n" + Username);
 
                 if (opcion == 0) {
+                    if (modelo == null) {
+                        modelo = new UsuarioBD();
+                    }
+                    modelo.cambiarEstado(Username, false);
 
-                    modelo.eliminar(Username);
-
-                    cargarTabla(UsuarioBD.SelectAll());
+                    cargarTabla(UsuarioBD.selectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");

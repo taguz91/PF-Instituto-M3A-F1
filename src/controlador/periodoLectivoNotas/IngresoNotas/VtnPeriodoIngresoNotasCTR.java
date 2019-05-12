@@ -1,5 +1,6 @@
 package controlador.periodoLectivoNotas.IngresoNotas;
 
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.IngresoNotas.forms.FrmIngresoNotasAgregar;
 import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;

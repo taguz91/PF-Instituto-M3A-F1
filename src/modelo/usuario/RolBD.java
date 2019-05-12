@@ -1,11 +1,16 @@
 package modelo.usuario;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.ConnDBPool;
 import modelo.ResourceManager;
 
 /**
@@ -14,6 +19,14 @@ import modelo.ResourceManager;
  */
 public class RolBD extends RolMD {
 
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
+
+    static {
+        pool = new ConnDBPool();
+    }
+
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
         super(id, nombre, observaciones, estado);
     }
@@ -21,40 +34,46 @@ public class RolBD extends RolMD {
     public RolBD() {
     }
 
-    private static String TABLA = " \"Roles\" ";
     private static String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
-    private static String PRIMARY_KEY = " id_rol ";
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA + "(rol_nombre,rol_observaciones) VALUES('" + getNombre() + "', '" + getObservaciones() + "')";
+        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES(?, ?)";
 
-        return ResourceManager.Statement(INSERT) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getNombre());
+        parametros.put(2, getObservaciones());
+
+        conn = pool.getConnection();
+
+        System.out.println(INSERT);
+
+        return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public static List<RolMD> SelectAll() {
+    public static List<RolMD> selectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre != 'ROOT'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
         return SelectSimple(SELECT);
     }
 
     public static List<RolMD> SelectWhereNombreLike(String Aguja) {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre LIKE '%" + Aguja + "%'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
     public static List<RolMD> SelectWhereUSUARIOusername(String username) {
-        String SELECT = "SELECT  " + ATRIBUTOS + " FROM " + TABLA + " JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
+        String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 
     private static List<RolMD> SelectSimple(String Query) {
         List<RolMD> Lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(Query);
-
         try {
+            conn = pool.getConnection();
+            rs = pool.ejecutarQuery(Query, conn, null);
             while (rs.next()) {
                 RolMD rol = new RolMD();
 
@@ -66,9 +85,10 @@ public class RolBD extends RolMD {
                 Lista.add(rol);
 
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.close(conn);
         }
 
         return Lista;
@@ -76,12 +96,12 @@ public class RolBD extends RolMD {
 
     public boolean editar(int Pk) {
 
-        String UPDATE = "UPDATE " + TABLA
+        String UPDATE = "UPDATE \"Roles\" "
                 + " SET "
                 + " id_rol = " + getId()
                 + ",rol_nombre = '" + getNombre() + "'"
                 + " WHERE"
-                + "	" + PRIMARY_KEY + " = '" + Pk + "'";
+                + " id_rol = '" + Pk + "'";
 
         return ResourceManager.Statement(UPDATE) == null;
 
@@ -89,11 +109,11 @@ public class RolBD extends RolMD {
 
     public boolean eliminar(int Pk) {
 
-        String DELETE = "UPDATE " + TABLA
+        String DELETE = "UPDATE \"Roles\" "
                 + " SET "
                 + " rol_estado = " + false
                 + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
+                + " id_rol = " + Pk
                 + "";
 
         return ResourceManager.Statement(DELETE) == null;
@@ -102,11 +122,11 @@ public class RolBD extends RolMD {
 
     public boolean reactivar(int Pk) {
 
-        String REACTIVAR = "UPDATE " + TABLA
+        String REACTIVAR = "UPDATE \"Roles\" "
                 + " SET "
                 + " rol_estado = " + false
                 + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
+                + " id_rol = " + Pk
                 + "";
 
         return ResourceManager.Statement(REACTIVAR) == null;

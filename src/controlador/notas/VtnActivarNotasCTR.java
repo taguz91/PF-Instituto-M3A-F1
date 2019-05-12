@@ -109,7 +109,6 @@ public class VtnActivarNotasCTR {
             public void keyReleased(KeyEvent e) {
                 if (modelo.editar(modelo.getIdIngresoNotas())) {
                     refreshTabla();
-
                 }
 
                 System.out.println(modelo);
@@ -231,7 +230,7 @@ public class VtnActivarNotasCTR {
                     valor = vista.getTblCursoTipoNotas().getValueAt(getSelectedRow(), 7).toString();
 
                     IngresoNotasBD notaModificar = listaNotasActivadas.get(getSelectedRow());
-                    
+
                     break;
                 case 8:
 

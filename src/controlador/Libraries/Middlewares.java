@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.ResourceManager;

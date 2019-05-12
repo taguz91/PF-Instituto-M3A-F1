@@ -62,6 +62,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
@@ -922,8 +923,9 @@ public class VtnPrincipalCTR {
     private void btnCerrarSesion(ActionEvent e) {
         ctrSelecRol.cierreSesion();
         ResourceManager.cerrarSesion();
+        ConnDBPool.cerrarSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+        LoginCTR login = new LoginCTR(new Login());
         login.Init();
     }
 
