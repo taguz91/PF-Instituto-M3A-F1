@@ -439,7 +439,7 @@ public class VtnNotasCTR {
                         tabla.setValueAt(faltas, fila, colFaltas);
                         editar.apply("");
                     } else {
-                        JOptionPane.showMessageDialog(vista, "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS");
+                        Effects.setTextInLabel(vista.getLblEstado(), "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
                         refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
                     }
                 }
