@@ -53,11 +53,12 @@ public class ConnDBPool {
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="METODOS DE MANEJO DE DATOS"> 
     /*
         Este metodo lee el archivo "configuracion.properties" de la raiz del proyecto
         y genera una URL con los valores que toma del archivo
      */
-    public static String generarURL() {
+    public String generarURL() {
 
         String ip = Propiedades.getPropertie("ip");
         String port = Propiedades.getPropertie("port");
@@ -174,4 +175,5 @@ public class ConnDBPool {
             Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    // </editor-fold>  
 }

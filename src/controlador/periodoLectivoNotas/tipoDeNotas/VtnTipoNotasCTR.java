@@ -52,33 +52,29 @@ public class VtnTipoNotasCTR {
 
     //Inits
     public void Init() {
-        vista.setVisible(true);
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         Effects.centerFrame(vista, desktop.getDpnlPrincipal());
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
         cargarTabla();
-        desktop.getDpnlPrincipal().add(vista);
-        try {
-            vista.setSelected(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(VtnTipoNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void InitEventos() {
 
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
+
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
-        vista.getBtnIngresar().addActionListener(e -> btnIngresar(e));
+
+        vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).InitAgregar());
+
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                txtBuscarOnKeyReleased(e);
+                cargarTablaFilter(vista.getTxtBuscar().getText().toUpperCase());
             }
         });
 
@@ -114,11 +110,12 @@ public class VtnTipoNotasCTR {
     private void cargarTablaFilter(String Aguja) {
         tablaTiposNotas.setRowCount(0);
         listaTiposNotas.stream()
-                .filter(item -> item.getNombre().toUpperCase().contains(Aguja)
-                || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
-                || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
-                || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
-                || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
+                .filter(
+                        item -> item.getNombre().toUpperCase().contains(Aguja)
+                        || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
+                        || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
+                        || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
+                        || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
                 )
                 .collect(Collectors.toList()).forEach(agregarFilas);
     }
@@ -197,17 +194,6 @@ public class VtnTipoNotasCTR {
 
         }
 
-    }
-
-    private void btnIngresar(ActionEvent e) {
-
-        FrmTipoNotaAgregar form = new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this);
-        form.InitAgregar();
-
-    }
-
-    private void txtBuscarOnKeyReleased(KeyEvent e) {
-        cargarTablaFilter(vista.getTxtBuscar().getText().toUpperCase());
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {

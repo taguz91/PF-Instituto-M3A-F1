@@ -6,12 +6,9 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
@@ -41,25 +38,17 @@ public class LoginCTR {
 
     //Inits
     public void Init() {
-
-        vista.getLblAvisos().setText("");
-
         InitEventos();
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
-        //ocusltamos el error
-        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
         vista.getBtnIngresar().addActionListener(e -> login());
-
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
         vista.getTxtPassword().addKeyListener(eventoText());
-
         vista.getTxtUsername().addKeyListener(eventoText());
         vista.getBtnIngresar().addActionListener(e -> login());
-
     }
 
     //METODOS DE APOYO
@@ -95,15 +84,11 @@ public class LoginCTR {
                         vtn.Init();
 
                     } else {
-
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                     }
-                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
-                    Effects.setDefaultCursor(vista);
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                    Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                } finally {
                     Effects.setDefaultCursor(vista);
                 }
 
