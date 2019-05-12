@@ -21,7 +21,6 @@ import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
@@ -81,7 +80,6 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<CursoMD> cursosSelec = new ArrayList();
     //Guardaremos la malla que tiene pasada un alumno  
     private final MallaAlumnoBD mallaAlm;
-    private ArrayList<AlumnoCursoMD> cursosMatriculado;
     //Para eliminar las materias en las que ya estoy matriculado  
     private ArrayList<MallaAlumnoMD> mallaCompleta;
     private ArrayList<MallaAlumnoMD> mallaPerdidas;
@@ -470,10 +468,6 @@ public class FrmAlumnoCursoCTR {
 
             frmAlmCurso.getBtnPendientes().setEnabled(true);
             frmAlmCurso.getBtnMtCursadas().setEnabled(true);
-            //Buscamos los cursos en los que se matriculo. 
-            cursosMatriculado = almnCurso.buscarCursosAlmPeriodo(
-                    alumnosCarrera.get(posAl).getAlumno().getId_Alumno(),
-                    periodos.get(posPrd - 1).getId_PerioLectivo());
             //Buscamos la malla completa
             mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAl).getId());
             //Vemos si el alumno esta matriculado en una materia
@@ -528,13 +522,6 @@ public class FrmAlumnoCursoCTR {
         perdioNE = false;
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
-        //Cargamos el horario del alumno  
-//        if (cursosMatriculado != null) {
-//            cursosMatriculado.forEach(ac -> {
-//                horario = sesion.cargarHorarioCurso(ac.getCurso());
-//                llenarHorarioAlmn(horario);
-//            });
-//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
@@ -619,8 +606,37 @@ public class FrmAlumnoCursoCTR {
             cicloCursado -= 1;
             System.out.println("Ciclo en el que curso: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
         }
+        //Buscamos las terceras matriculas 
+        ArrayList<MallaAlumnoMD> tm = filtrarTercerasMatriculas(mallaPerdidas);
+        if (tm.size() > 0) {
+            int s = JOptionPane.showOptionDialog(vtnPrin,
+                    "El alumno tiene terceras matriculas \n"
+                    + "¿Ver materias en las que debe realizar tercera matricula?", "Alumno con tercera matricula",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Permitir matricula",
+                        "Ver materias", "Cancelar"}, "Ver materias");
+            switch (s) {
+                case 0:
+                    tm.forEach(m -> {
+                        if (m.getMallaCiclo() < cicloCursado) {
+                            cicloCursado = m.getMallaCiclo();
+                        }
+                    });
+                    //Le restamos un curso ya que al consultar le sumamos uno porque debe ser
+                    //el siguiente que ya curso
+                    cicloCursado -= 1;
+                    cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
+                    break;
+                case 1:
+                    mostrarTercerasMatriculas();
+                    break;
+            }
+        } else {
+            cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
+        }
 
-        cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
     /**
@@ -637,6 +653,20 @@ public class FrmAlumnoCursoCTR {
             JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
                     mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
+            jdCtr.cargarMateriasEstado();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
+        }
+    }
+
+    private void mostrarTercerasMatriculas() {
+        int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
+        if (posAlm >= 0) {
+            //Mostramos las materias que curso
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
+                    mallaAlm, "R", ctrPrin);
+            jdCtr.iniciar();
+            jdCtr.cargarTercerasMatriculas();
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
         }
@@ -1165,6 +1195,22 @@ public class FrmAlumnoCursoCTR {
         ArrayList<MallaAlumnoMD> mf = new ArrayList<>();
         mallaCompleta.forEach(m -> {
             if (m.getEstado().equals(estado)) {
+                mf.add(m);
+            }
+        });
+        return mf;
+    }
+
+    /**
+     * Buscamos las materias en las que el alumno tendra tercera matricula.
+     *
+     * @param mallaPerdidas
+     * @return
+     */
+    private ArrayList<MallaAlumnoMD> filtrarTercerasMatriculas(ArrayList<MallaAlumnoMD> mallaPerdidas) {
+        ArrayList<MallaAlumnoMD> mf = new ArrayList<>();
+        mallaPerdidas.forEach(m -> {
+            if (m.getMallaNumMatricula() == 2) {
                 mf.add(m);
             }
         });
