@@ -28,7 +28,6 @@ public class FrmAlumnoCarreraCTR {
 
     private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCarrera frmAlmCarrera;
-    private final ConectarDB conecta;
     private final AlumnoCarreraBD almnCarrera;
     private final VtnPrincipalCTR ctrPrin;
     private boolean matriculado = false;
@@ -57,7 +56,6 @@ public class FrmAlumnoCarreraCTR {
     public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
         this.vtnPrin = vtnPrin;
         this.frmAlmCarrera = frmAlmCarrera;
-        this.conecta = conecta;
         this.ctrPrin = ctrPrin;
 
         this.almnCarrera = new AlumnoCarreraBD(conecta);

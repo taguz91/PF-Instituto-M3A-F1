@@ -21,7 +21,6 @@ import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
@@ -81,7 +80,6 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<CursoMD> cursosSelec = new ArrayList();
     //Guardaremos la malla que tiene pasada un alumno  
     private final MallaAlumnoBD mallaAlm;
-    private ArrayList<AlumnoCursoMD> cursosMatriculado;
     //Para eliminar las materias en las que ya estoy matriculado  
     private ArrayList<MallaAlumnoMD> mallaCompleta;
     private ArrayList<MallaAlumnoMD> mallaPerdidas;
@@ -90,7 +88,7 @@ public class FrmAlumnoCursoCTR {
     private ArrayList<MallaAlumnoMD> mallaAnuladas;
     private ArrayList<MallaAlumnoMD> mallaPendientes;
     private ArrayList<MateriaRequisitoMD> requisitos;
-    private ArrayList<SesionClaseMD> horarioAlmn, horario;
+    private ArrayList<SesionClaseMD> horarioAlmn, horario, hcurso;
     private final SesionClaseBD sesion;
     //Para revisar de que materias son requisitos y si no paso eliminarla 
     private final MateriaRequisitoBD matReq;
@@ -104,7 +102,7 @@ public class FrmAlumnoCursoCTR {
     private Boolean perdioNE;
     //Para guardar la carrera en la que se esta trabajando 
     private CarreraMD carrera;
-    private CarreraBD car;
+    private final CarreraBD car;
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -470,10 +468,6 @@ public class FrmAlumnoCursoCTR {
 
             frmAlmCurso.getBtnPendientes().setEnabled(true);
             frmAlmCurso.getBtnMtCursadas().setEnabled(true);
-            //Buscamos los cursos en los que se matriculo. 
-            cursosMatriculado = almnCurso.buscarCursosAlmPeriodo(
-                    alumnosCarrera.get(posAl).getAlumno().getId_Alumno(),
-                    periodos.get(posPrd - 1).getId_PerioLectivo());
             //Buscamos la malla completa
             mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAl).getId());
             //Vemos si el alumno esta matriculado en una materia
@@ -528,13 +522,6 @@ public class FrmAlumnoCursoCTR {
         perdioNE = false;
         //Mensajes de estado 
         vtnPrin.getLblEstado().setText("Clasificando cursos... ");
-        //Cargamos el horario del alumno  
-//        if (cursosMatriculado != null) {
-//            cursosMatriculado.forEach(ac -> {
-//                horario = sesion.cargarHorarioCurso(ac.getCurso());
-//                llenarHorarioAlmn(horario);
-//            });
-//        }
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
@@ -619,8 +606,37 @@ public class FrmAlumnoCursoCTR {
             cicloCursado -= 1;
             System.out.println("Ciclo en el que curso: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
         }
+        //Buscamos las terceras matriculas 
+        ArrayList<MallaAlumnoMD> tm = filtrarTercerasMatriculas(mallaPerdidas);
+        if (tm.size() > 0) {
+            int s = JOptionPane.showOptionDialog(vtnPrin,
+                    "El alumno tiene terceras matriculas \n"
+                    + "¿Ver materias en las que debe realizar tercera matricula?", "Alumno con tercera matricula",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Permitir matricula",
+                        "Ver materias", "Cancelar"}, "Ver materias");
+            switch (s) {
+                case 0:
+                    tm.forEach(m -> {
+                        if (m.getMallaCiclo() < cicloCursado) {
+                            cicloCursado = m.getMallaCiclo();
+                        }
+                    });
+                    //Le restamos un curso ya que al consultar le sumamos uno porque debe ser
+                    //el siguiente que ya curso
+                    cicloCursado -= 1;
+                    cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
+                    break;
+                case 1:
+                    mostrarTercerasMatriculas();
+                    break;
+            }
+        } else {
+            cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
+        }
 
-        cargarCmbCursos(posPrd, cicloCursado, cicloReprobado);
     }
 
     /**
@@ -637,6 +653,20 @@ public class FrmAlumnoCursoCTR {
             JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
                     mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
+            jdCtr.cargarMateriasEstado();
+        } else {
+            JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
+        }
+    }
+
+    private void mostrarTercerasMatriculas() {
+        int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
+        if (posAlm >= 0) {
+            //Mostramos las materias que curso
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
+                    mallaAlm, "R", ctrPrin);
+            jdCtr.iniciar();
+            jdCtr.cargarTercerasMatriculas();
         } else {
             JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
         }
@@ -700,6 +730,9 @@ public class FrmAlumnoCursoCTR {
                     periodos.get(posPrd - 1).getId_PerioLectivo());
             //Cargamos todos los requisitos de este ciclo en esta carrera
             requisitos = matReq.buscarRequisitosPorCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+            //Cargamos el horario de este curso 
+            hcurso = sesion.cargarHorarioCurso(frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
+                    periodos.get(posPrd - 1).getId_PerioLectivo());
             clasificarMateriasPendientes(cursosPen);
         } else {
             mdMatPen.setRowCount(0);
@@ -756,7 +789,7 @@ public class FrmAlumnoCursoCTR {
                 for (int i = 0; i < mallaCursadas.size(); i++) {
                     for (int j = 0; j < cursos.size(); j++) {
                         //Si es la misma materia la eliminamos de cursos
-                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId() 
+                        if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()
                                 && !perdioNucleoEstruncturante(mallaCursadas.get(i).getMateria().getId())) {
                             System.out.println("Ya curso y no es nucleo: " + cursos.get(j).getMateria().getNombre());
                             cursos.remove(j);
@@ -959,7 +992,8 @@ public class FrmAlumnoCursoCTR {
         if (posMat >= 0) {
             if (cursosPen.get(posMat).getCapaciadActual() > 0) {
                 //Buscamos el horario de este curso 
-                horario = sesion.cargarHorarioCurso(cursosPen.get(posMat));
+                //horario = sesion.cargarHorarioCurso(cursosPen.get(posMat));
+                horario = buscarHorarioCurso(cursosPen.get(posMat));
                 if (cursosPen.get(posMat).getNombre().charAt(0) != 'C') {
                     if (chocanHoras(horario)) {
                         cursosPen.get(posMat).setNombre("C-" + cursosPen.get(posMat).getNombre());
@@ -994,7 +1028,8 @@ public class FrmAlumnoCursoCTR {
         //La rrellenamos en cursos seleccionados
         cursosPen.forEach(c -> {
             if (c.getCapaciadActual() > 0) {
-                horario = sesion.cargarHorarioCurso(c);
+                //horario = sesion.cargarHorarioCurso(c);
+                horario = buscarHorarioCurso(c);
                 if (c.getNombre().charAt(0) != 'C') {
                     if (chocanHoras(horario)) {
                         c.setNombre("C-" + c.getNombre());
@@ -1023,9 +1058,11 @@ public class FrmAlumnoCursoCTR {
             cursosPen.add(cursosSelec.get(posMat));
             //Eliminamos el horario de esta materia 
             if (cursosSelec.get(posMat).getNombre().charAt(0) != 'C') {
-                horario = sesion.cargarHorarioCurso(cursosSelec.get(posMat));
+                //horario = sesion.cargarHorarioCurso(cursosSelec.get(posMat));
+                horario = buscarHorarioCurso(cursosSelec.get(posMat));
                 quitarHorarioAlmn(horario);
             }
+            //cursosSelec.get(posMat).setNombre(cursosSelec.get(posMat).getNombre().replace("C-", ""));
             //Eliminamos la materia que fue pasada 
             cursosSelec.remove(posMat);
             //Volvemos a llenar las tablas
@@ -1040,12 +1077,12 @@ public class FrmAlumnoCursoCTR {
      * Se regresan todas las materias, a la tabla de materias pendientes.
      */
     private void regresarTodasMaterias() {
-        cursosSelec.forEach(c -> cursosPen.add(c));
         //Reiniciamos el array para borrar todos los datos
         cursosSelec = new ArrayList();
         horarioAlmn = new ArrayList<>();
-        llenarTblMateriasPendientes(cursosPen);
+        //llenarTblMateriasPendientes(cursosPen);
         llenarTblMatSelec(cursosSelec);
+        cargarMaterias();
     }
 
     /**
@@ -1125,13 +1162,6 @@ public class FrmAlumnoCursoCTR {
      * Imprimimos el horario de del alumno
      */
     public void horarioAlmn() {
-        System.out.println("||||||||||||||||||||||||||||||||||||");
-        System.out.println("Horario del alumno: ");
-        horarioAlmn.forEach(h -> {
-            System.out.println(h.getDia() + " -> " + h.getHoraIni() + " -- " + h.getHoraFin());
-        });
-        System.out.println("||||||||||||||||||||||||||||||||||||");
-
         PnlHorarioClase pnl = new PnlHorarioClase();
         JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
         CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
@@ -1165,6 +1195,22 @@ public class FrmAlumnoCursoCTR {
         ArrayList<MallaAlumnoMD> mf = new ArrayList<>();
         mallaCompleta.forEach(m -> {
             if (m.getEstado().equals(estado)) {
+                mf.add(m);
+            }
+        });
+        return mf;
+    }
+
+    /**
+     * Buscamos las materias en las que el alumno tendra tercera matricula.
+     *
+     * @param mallaPerdidas
+     * @return
+     */
+    private ArrayList<MallaAlumnoMD> filtrarTercerasMatriculas(ArrayList<MallaAlumnoMD> mallaPerdidas) {
+        ArrayList<MallaAlumnoMD> mf = new ArrayList<>();
+        mallaPerdidas.forEach(m -> {
+            if (m.getMallaNumMatricula() == 2) {
                 mf.add(m);
             }
         });
@@ -1216,6 +1262,25 @@ public class FrmAlumnoCursoCTR {
         }
         num++;
         return num;
+    }
+
+    /**
+     * Buscamos el horario del curso en el horario general.
+     *
+     * @param idCurso
+     * @return
+     */
+    private ArrayList<SesionClaseMD> buscarHorarioCurso(CursoMD curso) {
+        ArrayList<SesionClaseMD> hc = new ArrayList<>();
+        if (hcurso != null) {
+            hcurso.forEach(h -> {
+                if (h.getCurso().getId() == curso.getId()) {
+                    h.setCurso(curso);
+                    hc.add(h);
+                }
+            });
+        }
+        return hc;
     }
 
 }
