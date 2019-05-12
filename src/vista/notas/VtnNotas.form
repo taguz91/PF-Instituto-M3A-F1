@@ -50,8 +50,8 @@
                                   <Component id="lbl_carrera" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="cmbPeriodoLectivo" min="-2" pref="300" max="-2" attributes="0"/>
                                           <Component id="lblCarrera" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
@@ -62,9 +62,9 @@
                                           <Component id="lbl_docente" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Component id="cmbCiclo" min="-2" pref="80" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -83,9 +83,11 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtBuscar" min="-2" pref="172" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Component id="txtBuscar" min="-2" pref="172" max="-2" attributes="0"/>
+                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                                       <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
@@ -109,45 +111,45 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lbl_periodolectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="cmbPeriodoLectivo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="lbl_periodolectivo" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="cmbPeriodoLectivo" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lbl_carrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="lblCarrera" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="lbl_carrera" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="lblCarrera" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="lbl_docente" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="lbl_docente" min="-2" pref="26" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbl_asignatura" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="lbl_asignatura" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl_ciclo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="cmbCiclo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="lbl_ciclo" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="cmbCiclo" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbDocente" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="txtBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="cmbDocente" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="txtBuscar" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbAsignatura" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="btnVerNotas" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="btnBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="cmbAsignatura" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="btnVerNotas" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="btnBuscar" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblHoras" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="btnImprimir" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="lblHoras" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="btnImprimir" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -168,36 +170,54 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_carrera">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Carrera:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_ciclo">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Ciclo:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_docente">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Docente:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_asignatura">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Asignatura:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbPeriodoLectivo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -209,6 +229,9 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -218,6 +241,9 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -229,6 +255,9 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -237,21 +266,40 @@
     <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCarrera">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnVerNotas">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Notas"/>
         <Property name="enabled" type="boolean" value="false"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscar">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblResultados">
@@ -273,11 +321,17 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Horas Presenciales:"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblHoras">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="tabPane">
@@ -331,27 +385,27 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -396,17 +450,17 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="50" minWidth="50" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="50" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="60" minWidth="60" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="60" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="70" minWidth="70" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -469,27 +523,27 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

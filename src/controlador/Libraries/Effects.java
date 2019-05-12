@@ -3,7 +3,6 @@ package controlador.Libraries;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +20,19 @@ public class Effects {
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
 
-    public static Color SUCCESS_COLOR = new Color(10, 186, 52);
+    public static Color SUCCESS_COLOR;
 
-    public static Color ERROR_COLOR = new Color(37, 107, 187);
+    public static Color ERROR_COLOR;
 
     static {
         LOAD_CURSOR = new Cursor(Cursor.WAIT_CURSOR);
-
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
+
+        SUCCESS_COLOR = new Color(10, 186, 52);
+
+        System.out.println("--------->");
+
+        ERROR_COLOR = new Color(159, 53, 39);
     }
 
     public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {

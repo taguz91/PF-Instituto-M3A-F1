@@ -57,7 +57,7 @@ public class NotasBD extends NotasMD {
             System.out.println(e.getMessage());
         }
 
-//        System.out.println(lista.size() + "<--------------");
+        System.out.println(lista.size() + "<--------------");
 //
 //        if (lista.isEmpty()) {
 //            String SELECT_COMPROBACION = "SELECT\n"

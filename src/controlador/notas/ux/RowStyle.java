@@ -39,11 +39,11 @@ public class RowStyle extends DefaultTableCellRenderer {
             table.setSelectionBackground(Color.lightGray);
 
             setHorizontalAlignment(0);
-            
+
         } catch (NumberFormatException | NullPointerException e) {
 
         }
-        
+
         return this;
     }
 

@@ -21,10 +21,8 @@ import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
-import controlador.notas.NotasCTR;
 import controlador.notas.VtnActivarNotasCTR;
 import controlador.notas.VtnNotasCTR;
-import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -67,7 +65,6 @@ import modelo.ConexionBD;
 import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -90,7 +87,6 @@ import vista.docente.VtnRolesPeriodos;
 import vista.materia.VtnMateria;
 import vista.notas.VtnActivarNotas;
 import vista.notas.VtnNotas;
-import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -977,9 +973,6 @@ public class VtnPrincipalCTR {
 //        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
 //
 //        vtn.Init();
-        NotasCTR notas = new NotasCTR(vtnPrin, new VtnNotas(), usuario, rolSeleccionado);
-        notas.Init();
-
     }
 
     /**

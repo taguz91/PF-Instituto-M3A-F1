@@ -25,8 +25,8 @@ public class VtnNotas extends JInternalFrame {
     }
 
     public void InitDiseño() {
-        tblTrad.setRowHeight(25);
-        tblDual.setRowHeight(25);
+        tblTrad.setRowHeight(23);
+        tblDual.setRowHeight(23);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
 
@@ -144,25 +144,45 @@ public class VtnNotas extends JInternalFrame {
 
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
+        lbl_periodolectivo.setMinimumSize(null);
 
         lbl_carrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_carrera.setText("Carrera:");
+        lbl_carrera.setMinimumSize(null);
 
         lbl_ciclo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_ciclo.setText("Ciclo:");
+        lbl_ciclo.setMinimumSize(null);
 
         lbl_docente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_docente.setText("Docente:");
+        lbl_docente.setMinimumSize(null);
 
         lbl_asignatura.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_asignatura.setText("Asignatura:");
+        lbl_asignatura.setMinimumSize(null);
+
+        cmbPeriodoLectivo.setMinimumSize(null);
+
+        cmbCiclo.setMinimumSize(null);
+
+        cmbAsignatura.setMinimumSize(null);
+
+        cmbDocente.setMinimumSize(null);
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setMinimumSize(null);
+
+        lblCarrera.setMinimumSize(null);
 
         btnVerNotas.setText("Ver Notas");
         btnVerNotas.setEnabled(false);
+        btnVerNotas.setMinimumSize(null);
+
+        txtBuscar.setMinimumSize(null);
 
         btnBuscar.setText("Buscar");
+        btnBuscar.setMinimumSize(null);
 
         lblResultados.setText("0 Resultados");
 
@@ -171,8 +191,10 @@ public class VtnNotas extends JInternalFrame {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Horas Presenciales:");
+        jLabel1.setMinimumSize(null);
 
         lblHoras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHoras.setMinimumSize(null);
 
         tabPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -200,6 +222,11 @@ public class VtnNotas extends JInternalFrame {
             tblTrad.getColumnModel().getColumn(0).setMinWidth(40);
             tblTrad.getColumnModel().getColumn(0).setPreferredWidth(40);
             tblTrad.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblTrad.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(3).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(4).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(5).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
             tblTrad.getColumnModel().getColumn(6).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
@@ -217,11 +244,11 @@ public class VtnNotas extends JInternalFrame {
             tblTrad.getColumnModel().getColumn(13).setMinWidth(85);
             tblTrad.getColumnModel().getColumn(13).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(14).setMinWidth(50);
-            tblTrad.getColumnModel().getColumn(14).setMaxWidth(50);
+            tblTrad.getColumnModel().getColumn(14).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(15).setMinWidth(60);
-            tblTrad.getColumnModel().getColumn(15).setMaxWidth(60);
+            tblTrad.getColumnModel().getColumn(15).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(16).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(16).setMaxWidth(70);
+            tblTrad.getColumnModel().getColumn(16).setMaxWidth(100);
         }
 
         tabPane.addTab("Carrera Tradicional", tabDuales);
@@ -250,6 +277,11 @@ public class VtnNotas extends JInternalFrame {
             tblDual.getColumnModel().getColumn(0).setMinWidth(50);
             tblDual.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblDual.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblDual.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(3).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(4).setMaxWidth(100);
+            tblDual.getColumnModel().getColumn(5).setMaxWidth(100);
             tblDual.getColumnModel().getColumn(6).setMaxWidth(100);
             tblDual.getColumnModel().getColumn(7).setMaxWidth(100);
             tblDual.getColumnModel().getColumn(8).setMaxWidth(100);
@@ -284,7 +316,7 @@ public class VtnNotas extends JInternalFrame {
                                     .addComponent(lbl_ciclo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lbl_carrera, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,8 +327,8 @@ public class VtnNotas extends JInternalFrame {
                                             .addComponent(lbl_docente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(170, 170, 170)
-                                        .addComponent(jLabel1)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -308,12 +340,13 @@ public class VtnNotas extends JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(64, 64, 64)
-                                        .addComponent(btnBuscar)))))
+                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -326,35 +359,35 @@ public class VtnNotas extends JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbl_periodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbl_periodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbl_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lbl_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_docente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_docente, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lbl_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbl_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lbl_ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addGap(12, 12, 12)

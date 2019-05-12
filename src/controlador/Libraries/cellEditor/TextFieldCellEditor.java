@@ -29,15 +29,12 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
         this.editar = editar;
         setOpaque(true);
         setBorder(null);
-//        setBackground(new Color(48, 156, 189));
-//        setForeground(Color.white);
         setHorizontalAlignment(CENTER);
         this.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 selectAll();
             }
-
         });
 
         this.addKeyListener(new KeyAdapter() {
@@ -55,14 +52,13 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
     // Start editing
     @Override
     public Component getTableCellEditorComponent(JTable table, Object obj, boolean isSelected, int row, int column) {
-
         super.setText(obj.toString());
 
         if (isSelected) {
             this.selectAll();
         }
 
-        setFont(new Font("Arial", Font.PLAIN, 10));
+        setFont(new Font("Arial", Font.PLAIN, 12));
         return this;
     }
 
