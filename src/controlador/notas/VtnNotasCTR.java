@@ -444,11 +444,11 @@ public class VtnNotasCTR {
                     }
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(vista, "INGRESE UN NUMERO VALIDO!!");
+                Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", Effects.ERROR_COLOR, 2);
                 refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
             }
         } else {
-            JOptionPane.showMessageDialog(vista, "INGRESE SOLO NUMERO ENTEROS!!!");
+            Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", Effects.ERROR_COLOR, 2);
             refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
         }
     }
