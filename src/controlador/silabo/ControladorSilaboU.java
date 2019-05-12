@@ -124,7 +124,7 @@ public class ControladorSilaboU {
 
     public void iniciarSilabo(SilaboMD silabo) {
 
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(),1);
 
         estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
 
