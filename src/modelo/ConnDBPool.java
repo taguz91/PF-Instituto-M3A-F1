@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -32,7 +30,7 @@ public class ConnDBPool {
     public ConnDBPool(String username, String password) {
         config = new HikariConfig();
         config.setJdbcUrl(generarURL());
-        
+
         config.setUsername(username);
 
         config.setPassword(password);
@@ -41,6 +39,12 @@ public class ConnDBPool {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        /*
+            CONFIG A PROBAR
+         */
+        config.addDataSourceProperty("allowMultiQueries", "true");
+        config.addDataSourceProperty("useServerPrepStmts", "true");
         ds = new HikariDataSource(config);
     }
 
@@ -160,19 +164,11 @@ public class ConnDBPool {
             System.out.println(ex.getMessage());
         }
     }
+    // </editor-fold>  
 
-    public static void cerrarSesion() {
-
-        try {
-            ds.getConnection().close();
-            config.getScheduledExecutor().shutdown();
-//            config.getDataSource().getConnection().close();
-            ds = null;
-            config = null;
-            System.gc();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+    public void closePool() {
+        if (ConnDBPool.ds != null && !ConnDBPool.ds.isClosed()) {
+            ConnDBPool.ds.close();
         }
     }
-    // </editor-fold>  
 }
