@@ -31,23 +31,10 @@ public class TrabajoAutonomoBD extends TrabajoAutonomoMD{
         super(id_evaluacion, id_plan_clases);
         this.conexion = conexion;
     }
-    public boolean insertarTrabajoAutonomo(EvaluacionSilaboMD es,TrabajoAutonomoMD ta){
-        try {
-            PreparedStatement st=conexion.getCon().prepareStatement("INSERT INTO public.\"TrabajoAutonomo\"(\n" +
-                    "	id_evaluacion, id_plan_clases, autonomo_plan)\n" +
-                    "	VALUES (?, SELECT MAX(id_plan_clases) from public.\"PlandeClases\", ?)");
-            st.setInt(1, es.getIdEvaluacion());
-            st.setString(2, ta.getAutonomo_plan_descripcion());
-            st.executeUpdate();
-            System.out.println(st);
-        } catch (SQLException ex) {
-            Logger.getLogger(TrabajoAutonomoBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
-    }
+   
     public boolean insertarTrabajoAutonomo1(TrabajoAutonomoMD ta){
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("INSERT INTO public.\"TrabajoAutonomo\"(\n" +
+            PreparedStatement st=conexion.getCon().prepareStatement("INSERT INTO public.\"TrabajoAutonomoPlanClase\"(\n" +
                     "	id_evaluacion, id_plan_clases, autonomo_plan)\n" +
                     "	VALUES (?, (SELECT MAX(id_plan_clases) from public.\"PlandeClases\"), ?)");
             st.setInt(1, ta.getId_evaluacion().getIdEvaluacion());
@@ -59,25 +46,12 @@ public class TrabajoAutonomoBD extends TrabajoAutonomoMD{
         }
         return true;
     }
-    public boolean ActulizarTrabajoAutonomo1(TrabajoAutonomoMD ta){
-        try {
-            PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public.\"TrabajoAutonomo\"\n" +
-"	SET  autonomo_plan=?\n" +
-"	WHERE id_plan_clases=?");
-            st.setString(1, ta.getAutonomo_plan_descripcion());
-            st.setInt(2, ta.getId_plan_clases().getId_plan_clases());
-            st.executeUpdate();
-            System.out.println(st);
-        } catch (SQLException ex) {
-            Logger.getLogger(TrabajoAutonomoBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
-    }
+    
     
     public static List<TrabajoAutonomoMD> consultarTrabajoAutonomo(ConexionBD conexion, int id_plan_clase){
         List<TrabajoAutonomoMD> lista_tra_aut=new ArrayList<>();
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("select autonomo_plan from \"TrabajoAutonomo\" where id_plan_clases=?");
+            PreparedStatement st=conexion.getCon().prepareStatement("select autonomo_plan from \"TrabajoAutonomoPlanClase\" where id_plan_clases=?");
             st.setInt(1, id_plan_clase);
             ResultSet rs=st.executeQuery();
             while (rs.next()) {
