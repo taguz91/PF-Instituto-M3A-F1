@@ -1,6 +1,8 @@
 package controlador.materia;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,32 +22,26 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class JDMateriaInfoCTR {
+public class JDMateriaInfoCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final JDMateriaInfo vtnInfo;
-    private final ConectarDB conecta;
     private final MateriaRequisitoBD matRe;
     private final MateriaMD m;
-    private final VtnPrincipalCTR ctrPrin;
     private ArrayList<MateriaRequisitoMD> preRequisitos, coRequisitos;
     private int posFila;
     private String tipo, materia;
-    private MateriaBD materiabd;
+    private final MateriaBD materiabd;
 
     //Para las tablas 
     private DefaultTableModel mdTblPre, mdTblCo;
 
-    public JDMateriaInfoCTR(VtnPrincipal vtnPrin, ConectarDB conecta, MateriaMD m,
-            VtnPrincipalCTR ctrPrin, MateriaBD materiabd) {
-        this.vtnPrin = vtnPrin;
-        this.conecta = conecta;
+    public JDMateriaInfoCTR(MateriaMD m, VtnPrincipalCTR ctrPrin, MateriaBD materiabd) {
+        super(ctrPrin);
         this.materiabd = materiabd;
         this.m = m;
-        this.ctrPrin = ctrPrin;
-        this.vtnInfo = new JDMateriaInfo(vtnPrin, false);
-        this.matRe = new MateriaRequisitoBD(conecta);
-        vtnInfo.setLocationRelativeTo(vtnPrin);
+        this.vtnInfo = new JDMateriaInfo(ctrPrin.getVtnPrin(), false);
+        this.matRe = new MateriaRequisitoBD(ctrPrin.getConecta());
+        vtnInfo.setLocationRelativeTo(ctrPrin.getVtnPrin());
     }
 
     public void iniciar() {
@@ -91,57 +87,56 @@ public class JDMateriaInfoCTR {
     }
 
     private void editar() {
-        
-        try{
-             if (posFila >= 0) {
-            FrmRequisitos frmreq = new FrmRequisitos();
-            VtnRequisitosCTR req = new VtnRequisitosCTR(conecta, ctrPrin, vtnPrin, frmreq, materiabd, m);
-            req.iniciar();
-            switch (tipo) {
-                case "co-requisito":
-                    req.editar(coRequisitos.get(posFila));
-                    break;
-                case "pre-requisito":
-                    req.editar(preRequisitos.get(posFila));
-                    break;
-               
+
+        try {
+            if (posFila >= 0) {
+                FrmRequisitos frmreq = new FrmRequisitos();
+                VtnRequisitosCTR req = new VtnRequisitosCTR(ctrPrin, frmreq, materiabd, m);
+                req.iniciar();
+                switch (tipo) {
+                    case "co-requisito":
+                        req.editar(coRequisitos.get(posFila));
+                        break;
+                    case "pre-requisito":
+                        req.editar(preRequisitos.get(posFila));
+                        break;
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
-        }
-        }catch(Exception e){
+        } catch (HeadlessException e) {
             System.out.println(e);
-            
-        
+
         }
-       
+
     }
 
     private void eliminar() {
         try {
-            
-        if (posFila >= 0) {
 
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Esta seguro que desea eliminar " + materia + "\n"
-                    + "como " + tipo);
-            if (r == JOptionPane.YES_OPTION) {
-                switch (tipo) {
-                    case "co-requisito":
-                        matRe.eliminar(coRequisitos.get(posFila).getId());
-                        mdTblCo.removeRow(posFila);
-                        break;
-                    case "pre-requisito":
-                        matRe.eliminar(preRequisitos.get(posFila).getId());
-                        mdTblPre.removeRow(posFila);
-                        break;
-                 
+            if (posFila >= 0) {
+
+                int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Esta seguro que desea eliminar " + materia + "\n"
+                        + "como " + tipo);
+                if (r == JOptionPane.YES_OPTION) {
+                    switch (tipo) {
+                        case "co-requisito":
+                            matRe.eliminar(coRequisitos.get(posFila).getId());
+                            mdTblCo.removeRow(posFila);
+                            break;
+                        case "pre-requisito":
+                            matRe.eliminar(preRequisitos.get(posFila).getId());
+                            mdTblPre.removeRow(posFila);
+                            break;
+
+                    }
+
                 }
-
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor seleccione una materia para continuar");
-        }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             System.out.println(e);
         }
     }

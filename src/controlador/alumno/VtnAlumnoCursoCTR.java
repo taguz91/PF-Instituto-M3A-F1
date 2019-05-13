@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
@@ -18,32 +17,24 @@ import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.VtnAlumnoCurso;
-import vista.principal.VtnPrincipal;
 
 /**
  * Aqui se visualiza el listado de alumnos por curso.
  *
  * @author Johnny
  */
-public class VtnAlumnoCursoCTR {
+public class VtnAlumnoCursoCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnAlumnoCurso vtnAlmnCurso;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
     //Posicion de los filtros seleccinados;
     private int posPrd, posCur, posCiclo;
 
-    //Tabla
-    private DefaultTableModel mdTbl;
     //Datos
     private ArrayList<AlumnoCursoMD> almns;
     private final AlumnoCursoBD alc;
@@ -60,27 +51,17 @@ public class VtnAlumnoCursoCTR {
     /**
      * En el constructor se inician todas las dependencias de base de datos.
      *
-     * @param vtnPrin
      * @param vtnAlmnCurso
-     * @param conecta
      * @param ctrPrin
-     * @param permisos
      */
-    public VtnAlumnoCursoCTR(VtnPrincipal vtnPrin, VtnAlumnoCurso vtnAlmnCurso,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnAlumnoCursoCTR(VtnAlumnoCurso vtnAlmnCurso, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnAlmnCurso = vtnAlmnCurso;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
 
-        this.alc = new AlumnoCursoBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        this.cur = new CursoBD(conecta);
-        this.mat = new MateriaBD(conecta);
-
-        vtnPrin.getDpnlPrincipal().add(vtnAlmnCurso);
-        vtnAlmnCurso.show();
+        this.alc = new AlumnoCursoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
+        this.cur = new CursoBD(ctrPrin.getConecta());
+        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     /**
@@ -123,6 +104,8 @@ public class VtnAlumnoCursoCTR {
         //llamar al reporte
         vtnAlmnCurso.getBtnRepAlum().addActionListener(e -> validaComboReporte());
         vtnAlmnCurso.getBtnListaCiclo().addActionListener(e -> validaComboReporteCiclo());
+
+        ctrPrin.agregarVtn(vtnAlmnCurso);
     }
 
     /**
@@ -263,12 +246,12 @@ public class VtnAlumnoCursoCTR {
     }
 
     private void materiasCurso() {
-        int posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
+        posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
         if (posFila >= 0) {
-            JDMateriasCursoCTR ctrM = new JDMateriasCursoCTR(almns.get(posFila), vtnPrin, ctrPrin, conecta);
+            JDMateriasCursoCTR ctrM = new JDMateriasCursoCTR(almns.get(posFila), ctrPrin);
             ctrM.iniciar();
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un alumno primero.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un alumno primero.");
         }
     }
 
@@ -281,12 +264,12 @@ public class VtnAlumnoCursoCTR {
             parametro.put("curso", vtnAlmnCurso.getCmbCursos().getSelectedItem());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-   
+
     public void validaComboReporte() {
         int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
         int pos2 = vtnAlmnCurso.getCmbCursos().getSelectedIndex();
@@ -296,21 +279,23 @@ public class VtnAlumnoCursoCTR {
             reporteAlumno();
         }
     }
-public void reporte() {
+
+    public void reporte() {
         JasperReport jr;
         String path = "/vista/reportes/repListaAlumCiclo.jasper";
         try {
             Map parametro = new HashMap();
             parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
-            parametro.put("ciclo",vtnAlmnCurso.getCmbCiclo().getSelectedIndex());
+            parametro.put("ciclo", vtnAlmnCurso.getCmbCiclo().getSelectedIndex());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-public void validaComboReporteCiclo() {
+
+    public void validaComboReporteCiclo() {
         int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
         int pos2 = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();
         if (pos1 <= 0 || pos2 <= 0) {
@@ -319,9 +304,10 @@ public void validaComboReporteCiclo() {
             reporte();
         }
     }
+
     private void InitPermisos() {
 
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);

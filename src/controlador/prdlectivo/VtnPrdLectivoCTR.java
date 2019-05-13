@@ -1,57 +1,44 @@
 package controlador.prdlectivo;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnPrdLectivoCTR {
+public class VtnPrdLectivoCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnPrdLectivo vtnPrdLectivo;
     private final PeriodoLectivoBD bdPerLectivo;
     private FrmPrdLectivo frmPerLectivo;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
     private List<PeriodoLectivoMD> periodos;
     private List<CarreraMD> carreras;
 
-    public VtnPrdLectivoCTR(VtnPrincipal vtnPrin, VtnPrdLectivo vtnPrdLectivo,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnPrdLectivoCTR(VtnPrdLectivo vtnPrdLectivo, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnPrdLectivo = vtnPrdLectivo;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-
-        bdPerLectivo = new PeriodoLectivoBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnPrdLectivo);
-        vtnPrdLectivo.show();
+        bdPerLectivo = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     //Inicia la funcionalidad de la Ventana de visualización de los Períodos Lectivos
     public void iniciar() {
-
+        ctrPrin.agregarVtn(vtnPrdLectivo);
         //Validacion del txt buscar
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar()));
         ocultarAtributo();
@@ -170,7 +157,7 @@ public class VtnPrdLectivoCTR {
         CarreraMD carrera = new CarreraMD();
         if (periodo != null) {
             frmPerLectivo = new FrmPrdLectivo();
-            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(vtnPrin, frmPerLectivo, conecta, ctrPrin);
+            FrmPrdLectivoCTR ctrFrm = new FrmPrdLectivoCTR(frmPerLectivo, ctrPrin);
             ctrFrm.iniciar();
             carrera.setNombre(periodo.getCarrera().getNombre());
             ctrFrm.editar(periodo, carrera);
@@ -246,7 +233,7 @@ public class VtnPrdLectivoCTR {
 
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);

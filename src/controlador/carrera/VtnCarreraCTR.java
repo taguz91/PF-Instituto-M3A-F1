@@ -1,7 +1,7 @@
 package controlador.carrera;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
@@ -20,7 +18,6 @@ import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
@@ -28,42 +25,25 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnCarreraCTR {
+public class VtnCarreraCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnCarrera vtnCarrera;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
     private final PeriodoLectivoBD prd;
 
     private final CarreraBD car;
-    ArrayList<CarreraMD> carreras;
+    private ArrayList<CarreraMD> carreras;
     private ArrayList<PeriodoLectivoMD> periodos;
 
-    DefaultTableModel mdTbl;
-
-    public VtnCarreraCTR(VtnPrincipal vtnPrin, VtnCarrera vtnCarrera,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnCarreraCTR(VtnCarrera vtnCarrera, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnCarrera = vtnCarrera;
-        this.conecta = conecta;
-        this.car = new CarreraBD(conecta);
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        this.prd = new PeriodoLectivoBD(conecta);
-        //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Carreras");
-        ctrPrin.setIconJIFrame(vtnCarrera);
-        vtnPrin.getDpnlPrincipal().add(vtnCarrera);
-        vtnCarrera.show();
+        this.car = new CarreraBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -106,9 +86,8 @@ public class VtnCarreraCTR {
         vtnCarrera.getBtnBuscar().addActionListener(e -> buscar(vtnCarrera.getTxtBuscar().getText().trim()));
         vtnCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnCarrera.getTxtBuscar(),
                 vtnCarrera.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Carreras");
+
+        ctrPrin.agregarVtn(vtnCarrera);
     }
 
     private void buscar(String b) {
@@ -116,7 +95,7 @@ public class VtnCarreraCTR {
             carreras = car.buscarCarrera(b);
             llenarTbl(carreras);
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "No debe ingresar caracteres especiales.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No debe ingresar caracteres especiales.");
         }
     }
 
@@ -125,20 +104,20 @@ public class VtnCarreraCTR {
         if (fila >= 0) {
             FrmCarrera frmCarrera = new FrmCarrera();
             ctrPrin.eventoInternal(frmCarrera);
-            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, ctrPrin);
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(frmCarrera, ctrPrin);
             ctrFrmCarrera.iniciar();
             ctrFrmCarrera.editar(carreras.get(fila));
             ctrPrin.cerradoJIF();
             vtnCarrera.dispose();
-        }else{
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una carrera primero.");
+        } else {
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una carrera primero.");
         }
     }
 
     private void eliminarCarrera() {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Seguro que quiere eliminar \n"
+            int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Seguro que quiere eliminar \n"
                     + vtnCarrera.getTblMaterias().getValueAt(fila, 2).toString() + "\n"
                     + "No se podran recuperar los datos despues.");
             if (r == JOptionPane.OK_OPTION) {
@@ -185,21 +164,22 @@ public class VtnCarreraCTR {
     }
 
     public void llamaReporteAlumnoCarrera() {
-
+        posFila = vtnCarrera.getTblMaterias().getSelectedRow();
         JasperReport jr;
         String path = "/vista/reportes/repAlumnosCarrera.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
-        try {
-            int posFila = vtnCarrera.getTblMaterias().getSelectedRow();
-            Map parametro = new HashMap();
-            parametro.put("alumnoCarrera", carreras.get(posFila).getId());
-            System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de alumnos por Carrera");
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+        if (posFila >= 0) {
+            try {
+                Map parametro = new HashMap();
+                parametro.put("alumnoCarrera", carreras.get(posFila).getId());
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de alumnos por Carrera");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtnCarrera, "Seleccione una carrera.");
         }
+
     }
 
     public void botonDocentes() {
@@ -227,7 +207,7 @@ public class VtnCarreraCTR {
             ///546645645645465456
             nmPrd.add(p.getNombre_PerLectivo());
         });
-        Object np = JOptionPane.showInputDialog(vtnPrin,
+        Object np = JOptionPane.showInputDialog(ctrPrin.getVtnPrin(),
                 "Lista de periodos lectivos", "Periodos lectivos",
                 JOptionPane.QUESTION_MESSAGE, null,
                 nmPrd.toArray(), "Seleccione");
@@ -236,13 +216,9 @@ public class VtnCarreraCTR {
         if (np == null) {
             botonDocentes();
         } else if (np.equals("Seleccione")) {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un periodo lectivo.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un periodo lectivo.");
             seleccionarPeriodo();
         } else {
-            int posPrd = nmPrd.indexOf(np);
-            //Se le resta 1 porque al inicio se agrega uno mas
-            //posPrd = posPrd - 1;
-
             JasperReport jr;
             String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
             try {
@@ -252,7 +228,7 @@ public class VtnCarreraCTR {
                 parametro.put("idPeriodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
 //                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
 //                JasperViewer view = new JasperViewer(print, false);
 //                view.setVisible(true);
@@ -265,7 +241,7 @@ public class VtnCarreraCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);

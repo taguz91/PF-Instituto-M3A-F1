@@ -3,6 +3,7 @@ package controlador.alumno;
 import controlador.curso.PnlHorarioCursoCTR;
 import controlador.estilo.CambioPnlCTR;
 import controlador.estilo.TblRenderNumMatricula;
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import controlador.ventanas.VtnLblToolTip;
 import java.awt.event.KeyAdapter;
@@ -14,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.curso.CursoBD;
@@ -44,19 +44,15 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.FrmAlumnoCurso;
 import vista.curso.JDInfoHorario;
 import vista.curso.PnlHorarioClase;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmAlumnoCursoCTR {
+public class FrmAlumnoCursoCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCurso frmAlmCurso;
     private final AlumnoCursoBD almnCurso;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     //Esta variable la usaremos para saber cual es el ultimo ciclo que paso 
     //o cual es el ultimo ciclo en el que reprobo una materi para cargar los cursos
     private int cicloCursado = 0;
@@ -108,32 +104,24 @@ public class FrmAlumnoCursoCTR {
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
      * una carrera.
      *
-     * @param vtnPrin VtnPrincipal: Vista principal del sistema.
      * @param frmAlmCurso FrmAlumnoCurso:
-     * @param conecta ConectarBD: Nos ayuda a realizar consultas en la base de
-     * datos.
      * @param ctrPrin VtnPrincipalCTR: Controlador de ventana principal.
      */
-    public FrmAlumnoCursoCTR(VtnPrincipal vtnPrin, FrmAlumnoCurso frmAlmCurso, ConectarDB conecta,
+    public FrmAlumnoCursoCTR(FrmAlumnoCurso frmAlmCurso,
             VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+        super(ctrPrin);
         this.frmAlmCurso = frmAlmCurso;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.matri = new MatriculaBD(conecta);
-        this.mat = new MateriaBD(conecta);
-        this.car = new CarreraBD(conecta);
+        this.matri = new MatriculaBD(ctrPrin.getConecta());
+        this.mat = new MateriaBD(ctrPrin.getConecta());
+        this.car = new CarreraBD(ctrPrin.getConecta());
         //Inicializamos todas la clases que usaremos
-        this.almnCurso = new AlumnoCursoBD(conecta);
-        this.almCar = new AlumnoCarreraBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        this.cur = new CursoBD(conecta);
-        this.mallaAlm = new MallaAlumnoBD(conecta);
-        this.matReq = new MateriaRequisitoBD(conecta);
-        this.sesion = new SesionClaseBD(conecta);
-
-        vtnPrin.getDpnlPrincipal().add(frmAlmCurso);
-        frmAlmCurso.show();
+        this.almnCurso = new AlumnoCursoBD(ctrPrin.getConecta());
+        this.almCar = new AlumnoCarreraBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
+        this.cur = new CursoBD(ctrPrin.getConecta());
+        this.mallaAlm = new MallaAlumnoBD(ctrPrin.getConecta());
+        this.matReq = new MateriaRequisitoBD(ctrPrin.getConecta());
+        this.sesion = new SesionClaseBD(ctrPrin.getConecta());
     }
 
     /**
@@ -155,6 +143,8 @@ public class FrmAlumnoCursoCTR {
         inicarValidaciones();
         //Vemos los componentes 
         VtnLblToolTip.agregarTooltipsLblJI(frmAlmCurso);
+
+        ctrPrin.agregarVtn(frmAlmCurso);
     }
 
     /**
@@ -262,7 +252,7 @@ public class FrmAlumnoCursoCTR {
         boolean guardar = true;
         if (cursosSelec.isEmpty()) {
             guardar = false;
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar materias.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar materias.");
         }
 
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
@@ -292,7 +282,7 @@ public class FrmAlumnoCursoCTR {
                 numMateria++;
             });
 
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Se matricula a: \n"
+            int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Se matricula a: \n"
                     + alumnosCarrera.get(posAlm).getAlumno().getNombreCorto() + "\n"
                     + "Periodo: \n" + periodos.get(posPrd - 1).getNombre_PerLectivo() + "\n"
                     + "En las siguientes materias: \n" + materiasMatricula);
@@ -311,7 +301,7 @@ public class FrmAlumnoCursoCTR {
                         matri.setPeriodo(periodos.get(posPrd - 1));
                         matri.ingresar();
                     }
-                    int c = JOptionPane.showConfirmDialog(vtnPrin, "Desea imprimir la matricula.");
+                    int c = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Desea imprimir la matricula.");
                     if (c == JOptionPane.YES_OPTION) {
                         //Imprimimos el reporte de matricula
                         llamaReporteMatricula(alumnosCarrera.get(posAlm).getAlumno().getIdentificacion(),
@@ -320,7 +310,7 @@ public class FrmAlumnoCursoCTR {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "El formulario contiene errores.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "El formulario contiene errores.");
         }
     }
 
@@ -476,7 +466,7 @@ public class FrmAlumnoCursoCTR {
             if (!mallaMatriculadas.isEmpty()) {
                 //Borramos los cursos que posiblemente carguemos antes
                 frmAlmCurso.getCmbCurso().removeAllItems();
-                int s = JOptionPane.showOptionDialog(vtnPrin,
+                int s = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(),
                         "Alumno matriculado en " + mallaMatriculadas.get(0).getMallaCiclo() + " ciclo. \n"
                         + "¿Ver materias en las que se encuentra matriculado?", "Alumno matriculado",
                         JOptionPane.YES_NO_CANCEL_OPTION,
@@ -521,7 +511,7 @@ public class FrmAlumnoCursoCTR {
         //Para comprobar si perdio nucleo estruncturante
         perdioNE = false;
         //Mensajes de estado 
-        vtnPrin.getLblEstado().setText("Clasificando cursos... ");
+        ctrPrin.getVtnPrin().getLblEstado().setText("Clasificando cursos... ");
         //Se reinciia el ciclo en el que esta matriculado
         cicloCursado = 0;
 
@@ -609,7 +599,7 @@ public class FrmAlumnoCursoCTR {
         //Buscamos las terceras matriculas 
         ArrayList<MallaAlumnoMD> tm = filtrarTercerasMatriculas(mallaPerdidas);
         if (tm.size() > 0) {
-            int s = JOptionPane.showOptionDialog(vtnPrin,
+            int s = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(),
                     "El alumno tiene terceras matriculas \n"
                     + "¿Ver materias en las que debe realizar tercera matricula?", "Alumno con tercera matricula",
                     JOptionPane.YES_NO_CANCEL_OPTION,
@@ -650,12 +640,12 @@ public class FrmAlumnoCursoCTR {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
             //Mostramos las materias que curso
-            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(alumnosCarrera.get(posAlm),
                     mallaAlm, estado, ctrPrin);
             jdCtr.iniciar();
             jdCtr.cargarMateriasEstado();
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Primero debe seleccionar un alumno.");
         }
     }
 
@@ -663,12 +653,12 @@ public class FrmAlumnoCursoCTR {
         int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         if (posAlm >= 0) {
             //Mostramos las materias que curso
-            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(vtnPrin, alumnosCarrera.get(posAlm),
+            JDMateriasInformacionCTR jdCtr = new JDMateriasInformacionCTR(alumnosCarrera.get(posAlm),
                     mallaAlm, "R", ctrPrin);
             jdCtr.iniciar();
             jdCtr.cargarTercerasMatriculas();
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Primero debe seleccionar un alumno.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Primero debe seleccionar un alumno.");
         }
     }
 
@@ -708,9 +698,9 @@ public class FrmAlumnoCursoCTR {
             nombreCursos.forEach(c -> {
                 frmAlmCurso.getCmbCurso().addItem(c);
             });
-            vtnPrin.getLblEstado().setText("Cursos clasificados correctamente.");
+            ctrPrin.getVtnPrin().getLblEstado().setText("Cursos clasificados correctamente.");
         } else {
-            vtnPrin.getLblEstado().setText("No se pudieron clasificar los cursos, por favor vuelva a seleccionar un alumno.");
+            ctrPrin.getVtnPrin().getLblEstado().setText("No se pudieron clasificar los cursos, por favor vuelva a seleccionar un alumno.");
         }
     }
 
@@ -1009,12 +999,12 @@ public class FrmAlumnoCursoCTR {
                 llenarTblMateriasPendientes(cursosPen);
                 llenarTblMatSelec(cursosSelec);
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "No puede matricular en este curso, debido \n"
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No puede matricular en este curso, debido \n"
                         + "a que no se disponen de mas cupos.");
             }
 
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Seleecione una materia.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Seleecione una materia.");
         }
     }
 
@@ -1069,7 +1059,7 @@ public class FrmAlumnoCursoCTR {
             llenarTblMateriasPendientes(cursosPen);
             llenarTblMatSelec(cursosSelec);
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Seleecione una materia.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Seleecione una materia.");
         }
     }
 
@@ -1092,19 +1082,19 @@ public class FrmAlumnoCursoCTR {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
         if (posPrd > 0 && posCurso > 0) {
-            JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
+            JDInfoHorario jd = new JDInfoHorario(ctrPrin.getVtnPrin(), false);
             PnlHorarioClase pnl = new PnlHorarioClase();
             CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
             PnlHorarioCursoCTR ctr = new PnlHorarioCursoCTR(pnl,
                     frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId_PerioLectivo(), conecta);
+                    periodos.get(posPrd - 1).getId_PerioLectivo(), ctrPrin.getConecta());
             ctr.iniciar();
-            jd.setLocationRelativeTo(vtnPrin);
+            jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
             jd.setVisible(true);
             jd.setTitle("Horario de " + frmAlmCurso.getCmbCurso().getSelectedItem().toString());
             ctrPrin.eventoJDCerrar(jd);
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Seleccione un curso primero.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Seleccione un curso primero.");
         }
     }
 
@@ -1163,7 +1153,7 @@ public class FrmAlumnoCursoCTR {
      */
     public void horarioAlmn() {
         PnlHorarioClase pnl = new PnlHorarioClase();
-        JDInfoHorario jd = new JDInfoHorario(vtnPrin, false);
+        JDInfoHorario jd = new JDInfoHorario(ctrPrin.getVtnPrin(), false);
         CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
         PnlHorarioAlmnCTR ctr = new PnlHorarioAlmnCTR(horarioAlmn, pnl);
         jd.setTitle("Horario Alumno ");
@@ -1181,7 +1171,7 @@ public class FrmAlumnoCursoCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", cedula);
             parametro.put("idPeriodo", idPrd);
-            conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

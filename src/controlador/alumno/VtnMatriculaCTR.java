@@ -1,6 +1,6 @@
 package controlador.alumno;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
 import modelo.estilo.TblEstilo;
@@ -20,13 +19,12 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.VtnMatricula;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnMatriculaCTR extends DependenciasVtnCTR {
+public class VtnMatriculaCTR extends DVtnCTR {
 
     private final VtnMatricula vtnMatri;
     private final MatriculaBD matr;
@@ -37,14 +35,11 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
     private final PeriodoLectivoBD prd;
     private int posPrd;
 
-    public VtnMatriculaCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin, VtnMatricula vtnMatri) {
-        super(conecta, vtnPrin, ctrPrin);
-        this.matr = new MatriculaBD(conecta);
+    public VtnMatriculaCTR(VtnPrincipalCTR ctrPrin, VtnMatricula vtnMatri) {
+        super(ctrPrin);
+        this.matr = new MatriculaBD(ctrPrin.getConecta());
         this.vtnMatri = vtnMatri;
-        this.prd = new PeriodoLectivoBD(conecta);
-        //Mostramos en la ventana
-        vtnPrin.getDpnlPrincipal().add(vtnMatri);
-        vtnMatri.show();
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -61,6 +56,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         iniciarAcciones();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
+        ctrPrin.agregarVtn(vtnMatri);
     }
 
     /**
@@ -82,13 +78,13 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
             if (validarFecha()) {
-                JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(conecta, vtnPrin, ctrPrin, matriculas.get(posFila));
+                JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(ctrPrin, matriculas.get(posFila));
                 ctr.iniciar();
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "Ya pasaron mas de 30 dias ya no se puede anular la matricula.");
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ya pasaron mas de 30 dias ya no se puede anular la matricula.");
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila primero.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
 
@@ -96,13 +92,13 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
             if (validarFecha()) {
-                JDEditarMatriculaCTR ctr = new JDEditarMatriculaCTR(conecta, vtnPrin, ctrPrin, matriculas.get(posFila));
+                JDEditarMatriculaCTR ctr = new JDEditarMatriculaCTR(ctrPrin, matriculas.get(posFila));
                 ctr.iniciar();
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "Ya pasaron mas de 30 dias ya no se puede editar la matricula.");
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ya pasaron mas de 30 dias ya no se puede editar la matricula.");
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila primero.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
 
@@ -202,7 +198,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
                     break;
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una persona antes.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una persona antes.");
         }
     }
 
@@ -213,7 +209,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
-            conecta.mostrarReporte(jr, parametro, "Reporte de Matricula");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -226,7 +222,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
-            conecta.mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -239,7 +235,7 @@ public class VtnMatriculaCTR extends DependenciasVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculadosPeriodo.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("periodo", periodos.get(posCombo - 1).getId_PerioLectivo());
-                conecta.mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
             }

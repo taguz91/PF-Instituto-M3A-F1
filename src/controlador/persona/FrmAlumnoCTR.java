@@ -1,9 +1,8 @@
 package controlador.persona;
 
 import controlador.carrera.VtnCarreraCTR;
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,17 +20,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
-import modelo.ConectarDB;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaMD;
 import modelo.persona.ProfesionMD;
 import modelo.persona.SectorEconomicoBD;
 import modelo.persona.SectorEconomicoMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.CmbValidar;
-import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
@@ -41,20 +35,15 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmAlumnoCTR {
+public class FrmAlumnoCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmAlumno frmAlumno;
     private AlumnoBD bdAlumno;
-    private final VtnPrincipalCTR ctrPrin;
-    private final ConectarDB conecta;
-    private final RolMD permisos;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false; //Variable de permiso para editar mediante el filtro de datos del evento de teclado
     private boolean editar_2 = false; //Variable de permiso de edicion cuando se filtran los datos de la Ventana de Alumno
@@ -69,29 +58,18 @@ public class FrmAlumnoCTR {
     /**
      * Este es el Constructor del Formulario Alumno
      *
-     * @param vtnPrin. Se debe insertar la Ventana Principal para su uso
      * @param frmAlumno. Se debe insertar el Formulario del Alumno para su uso
-     * @param conecta. Se debe insertar un objeto de la Clase Conecta
      * @param ctrPrin
-     * @param permisos
      */
-    public FrmAlumnoCTR(VtnPrincipal vtnPrin, FrmAlumno frmAlumno, ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public FrmAlumnoCTR(FrmAlumno frmAlumno, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmAlumno = frmAlumno;
-        this.conecta = conecta;
-        this.sectorE = new SectorEconomicoBD(conecta);
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Alumno");
-        ctrPrin.setIconJIFrame(frmAlumno);
-        vtnPrin.getDpnlPrincipal().add(frmAlumno);
-        frmAlumno.show();
-        bdAlumno = new AlumnoBD(conecta);
+        this.sectorE = new SectorEconomicoBD(ctrPrin.getConecta());
+        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
+        ctrPrin.agregarVtn(frmAlumno);
         //Validaciones de los Combo Box
         CmbValidar combo_TipoColegio = new CmbValidar(frmAlumno.getCmBx_TipoColegio(), frmAlumno.getLbl_ErrTipColegio());
         CmbValidar combo_TipoBachi = new CmbValidar(frmAlumno.getCmBx_TipoBachillerato(), frmAlumno.getLbl_ErrTipBachillerato());
@@ -373,15 +351,12 @@ public class FrmAlumnoCTR {
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Alumno");
     }
 
     //Muestra la ventana para visualizar los Alumnos registrado
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
-        VtnAlumnoCTR c = new VtnAlumnoCTR(vtnPrin, alumno, conecta, ctrPrin, permisos);
+        VtnAlumnoCTR c = new VtnAlumnoCTR(alumno, ctrPrin);
         c.iniciar();
     }
 
@@ -498,7 +473,7 @@ public class FrmAlumnoCTR {
                         if (result == 0) {
                             //ConectarDB conectar = new ConectarDB("ROOT", "password", "Persona");
                             FrmPersona frmPersona = new FrmPersona();
-                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                            FrmPersonaCTR ctrPers = new FrmPersonaCTR(frmPersona, ctrPrin);
                             ctrPers.iniciar();
                             frmPersona.getTxtIdentificacion().setText(cedula);
                             if (modelo.validaciones.Validar.esNumeros(cedula) == true) {
@@ -782,7 +757,7 @@ public class FrmAlumnoCTR {
     public void guardarAlumno() {
 
         if (editar == false && editar_2 == false) {
-            AlumnoBD persona = new AlumnoBD(conecta);
+            AlumnoBD persona = new AlumnoBD(ctrPrin.getConecta());
             ProfesionMD profesion = new ProfesionMD();
             this.bdAlumno = pasarDatos(persona);
             profesion.setTitulo_nombre(bdAlumno.getProfesion().getTitulo_nombre());
@@ -816,7 +791,7 @@ public class FrmAlumnoCTR {
                 JOptionPane.showMessageDialog(null, "Error en grabar los datos");
             }
         } else if (editar == true) {
-            AlumnoBD persona = new AlumnoBD(conecta);
+            AlumnoBD persona;
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
@@ -830,7 +805,7 @@ public class FrmAlumnoCTR {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
             }
         } else if (editar_2 == true) {
-            AlumnoBD persona = new AlumnoBD(conecta);
+            AlumnoBD persona;
             persona = pasarDatos(bdAlumno);
             if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
@@ -872,9 +847,9 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Ocupacion().setText(persona.getOcupacion());
         frmAlumno.getTxt_Anios().setText(persona.getAnio_graduacion());
         frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
-        if(persona.isTrabaja() == true){
+        if (persona.isTrabaja() == true) {
             frmAlumno.getCmBx_SecEconomico().setEnabled(true);
-        } else{
+        } else {
             frmAlumno.getCmBx_SecEconomico().setEnabled(false);
         }
         frmAlumno.getChkBx_Trabaja().setSelected(persona.isTrabaja());
@@ -970,25 +945,18 @@ public class FrmAlumnoCTR {
     public void llamaReporteAlumno() {
         JasperReport jr;
         String path = "/vista/reportes/repAlumno.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("cedula_alumno", frmAlumno.getTxt_Cedula().getText());
-            System.out.println("parametro del reporte" + parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Alumno");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Alumno");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Alumno");
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void botonreporteAlumno() {
-        int s = JOptionPane.showOptionDialog(vtnPrin,
+        int s = JOptionPane.showOptionDialog(null,
                 "Registro de persona \n"
                 + "¿Dessea Imprimir el Registro realizado ?", "REPORTE ALUMNO",
                 JOptionPane.YES_NO_CANCEL_OPTION,

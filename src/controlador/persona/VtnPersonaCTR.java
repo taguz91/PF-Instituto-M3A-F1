@@ -1,5 +1,6 @@
 package controlador.persona;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -32,37 +33,25 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class VtnPersonaCTR {
+public class VtnPersonaCTR extends DVtnCTR {
 
     private final PersonaBD dbp;
-    private final VtnPrincipal vtnPrin;
     private final VtnPersona vtnPersona;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
     //Para trabajar en los datos de la tabla
-    private DefaultTableModel mdTbl;
     private ArrayList<PersonaMD> personas;
     private final String tipoPersonas[] = {"Docente", "Alumno"};
     //Para permisos
     String[] accesos = {"Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"};
 
-    public VtnPersonaCTR(VtnPrincipal vtnPrin, VtnPersona vtnPersona,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnPersonaCTR(VtnPersona vtnPersona, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnPersona = vtnPersona;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        ctrPrin.estadoCargaVtn("Personas");
-        ctrPrin.setIconJIFrame(vtnPersona);
-        vtnPrin.getDpnlPrincipal().add(vtnPersona);
-        vtnPersona.show();
         //Iniciamos la clase persona
-        dbp = new PersonaBD(conecta);
+        dbp = new PersonaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
+        ctrPrin.agregarVtn(vtnPersona);
 
         vtnPersona.getChBx_PerEliminada().addActionListener(e -> {
             if (vtnPersona.getChBx_PerEliminada().isSelected()) {
@@ -158,19 +147,19 @@ public class VtnPersonaCTR {
     }
 
     public void filtrarEliminados() {
-        List<PersonaMD> personas;
-        personas = dbp.filtrarEliminados();
+        List<PersonaMD> peliminados;
+        peliminados = dbp.filtrarEliminados();
         mdTbl.setRowCount(0);
-        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(3));
-        if (personas != null) {
-            personas.forEach((p) -> {
+        ctrPrin.getVtnPrin().getDpnlPrincipal().setCursor(new Cursor(3));
+        if (peliminados != null) {
+            peliminados.forEach((p) -> {
                 Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
                     p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                     + p.getPrimerApellido() + " " + p.getSegundoApellido(),
                     p.getFechaNacimiento()};
                 mdTbl.addRow(valores);
             });
-            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+            vtnPersona.getLblResultados().setText(peliminados.size() + " resultados obtenidos.");
         } else {
             vtnPersona.getLblResultados().setText("0 resultados obtenidos.");
         }
@@ -182,7 +171,7 @@ public class VtnPersonaCTR {
     //obtenemos el modelo de la tabla de la vista y la pones en el modelo por defaulta con un castingt
     public void cargarLista() {
         mdTbl.setRowCount(0);
-        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(3));
+        ctrPrin.getVtnPrin().getDpnlPrincipal().setCursor(new Cursor(3));
         if (personas != null) {
             personas.forEach((p) -> {
                 Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
@@ -193,7 +182,7 @@ public class VtnPersonaCTR {
             });
             vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
         }
-        vtnPrin.getDpnlPrincipal().setCursor(new Cursor(0));
+        ctrPrin.getVtnPrin().getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
     //Buscamos persona
@@ -220,11 +209,11 @@ public class VtnPersonaCTR {
 
     //Para ejecutar el metodo editar del frm
     public void editar() {
-        int posFila = vtnPersona.getTblPersona().getSelectedRow();
+        posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
             vtnPersona.getLblError().setVisible(false);
             FrmPersona frmPersona = new FrmPersona();
-            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+            FrmPersonaCTR ctrFrm = new FrmPersonaCTR(frmPersona, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
             PersonaMD perEditar = dbp.buscarPersona(
@@ -237,7 +226,7 @@ public class VtnPersonaCTR {
     }
 
     private void eliminar() {
-        int posFila = vtnPersona.getTblPersona().getSelectedRow();
+        posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
             PersonaMD persona;
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
@@ -261,20 +250,24 @@ public class VtnPersonaCTR {
     }
 
     public void llamaReportePersona() {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
-            Map parametro = new HashMap();
-            parametro.put("cedula", String.valueOf(mdTbl.getValueAt(vtnPersona.getTblPersona().getSelectedRow(), 1)));
-
-            conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
-
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+        posFila = vtnPersona.getTblPersona().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("cedula", String.valueOf(mdTbl.getValueAt(posFila, 1)));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Persona");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione una fila para ver el reporte.");
         }
+
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);

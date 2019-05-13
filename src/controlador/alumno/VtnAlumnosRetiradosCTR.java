@@ -1,12 +1,11 @@
 package controlador.alumno;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoRetiradoBD;
 import modelo.alumno.AlumnoCursoRetiradoMD;
 import modelo.estilo.TblEstilo;
@@ -14,13 +13,12 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnosRetirados;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnAlumnosRetiradosCTR extends DependenciasVtnCTR {
+public class VtnAlumnosRetiradosCTR extends DVtnCTR {
 
     private final VtnAlumnosRetirados vtnAR;
 
@@ -31,24 +29,22 @@ public class VtnAlumnosRetiradosCTR extends DependenciasVtnCTR {
     private int posPrd;
     private DefaultTableModel mdTblACR;
 
-    public VtnAlumnosRetiradosCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public VtnAlumnosRetiradosCTR(VtnPrincipalCTR ctrPrin,
             VtnAlumnosRetirados vtnAR) {
-        super(conecta, vtnPrin, ctrPrin);
+        super(ctrPrin);
         this.vtnAR = vtnAR;
-        this.acrb = new AlumnoCursoRetiradoBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
+        this.acrb = new AlumnoCursoRetiradoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
-        vtnPrin.getDpnlPrincipal().add(vtnAR);
-        vtnAR.show();
-
         iniciarDependencias();
         iniciarTblACR();
         iniciarBuscador();
         iniciarAcciones();
         formatoTbl();
         cargarAnulados();
+        ctrPrin.agregarVtn(vtnAR);
     }
 
     /**
