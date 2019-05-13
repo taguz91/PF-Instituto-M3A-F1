@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.materia.EjeFormacionMD;
@@ -600,6 +601,26 @@ public class FrmMateriasCTR {
                 habilitarGuardar();
             }
         };
+        
+        FocusListener horas = new FocusAdapter(){
+            public void focusLost(FocusEvent e) {
+                String docencia = frmMaterias.getTxtHorasDocencia().getText();
+                String auto = frmMaterias.getTxtHorasAutoEstudio().getText();
+                String practicas = frmMaterias.getTxtHorasPracticas().getText();
+                if(docencia.equals("") == false && practicas.equals("") == false){
+                    int horas_Docencia = Integer.valueOf(frmMaterias.getTxtHorasDocencia().getText());
+                    int horas_Practicas = Integer.valueOf(frmMaterias.getTxtHorasPracticas().getText());
+                    int horasPresenciales = horas_Docencia + horas_Practicas;
+                    frmMaterias.getTxtHorasPresenciales().setText(String.valueOf(horasPresenciales));
+                } else if(docencia.equals("") == false && practicas.equals("") == false && auto.equals("") == false){
+                    int horas_Docencia = Integer.valueOf(frmMaterias.getTxtHorasDocencia().getText());
+                    int horas_Auto = Integer.valueOf(frmMaterias.getTxtHorasAutoEstudio().getText());
+                    int horas_Practicas = Integer.valueOf(frmMaterias.getTxtHorasPracticas().getText());
+                    int horasTotales = horas_Docencia + horas_Practicas + horas_Auto;
+                    frmMaterias.getTxtTotalHoras().setText(String.valueOf(horasTotales));
+                } 
+            }
+        };
 
         KeyListener validarNombre = new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -702,6 +723,9 @@ public class FrmMateriasCTR {
                 .addKeyListener(new TxtVNumeros_2(frmMaterias.getTxtTotalHoras()));
         frmMaterias.getTxtTotalHoras()
                 .addPropertyChangeListener(habilitar);
+        frmMaterias.getTxtHorasDocencia().addFocusListener(horas);
+        frmMaterias.getTxtHorasAutoEstudio().addFocusListener(horas);
+        frmMaterias.getTxtHorasPracticas().addFocusListener(horas);
         //Permitir insertar comas y puntos
 
         KeyListener validar = new KeyAdapter() {

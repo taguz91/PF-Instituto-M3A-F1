@@ -537,14 +537,29 @@ public class FrmAlumnoCTR {
                             frmAlumno.getTxt_Anios().setText(alumno.getAnio_graduacion());
                             frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
                             frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
-                            SectorEconomicoMD sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico());
-                            if (sector.getDescrip_SecEconomico().equals("Ninguno")) {
+                            String sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico();
+//                            if (sector.getDescrip_SecEconomico().equals("Ninguno")) {
+//                                frmAlumno.getCmBx_SecEconomico().setSelectedIndex(0);
+//                                frmAlumno.getLbl_ErrSecEconomico().setVisible(false);
+//                            } else {
+//                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
+//                                frmAlumno.getChkBx_Trabaja().setSelected(true);
+//                            }
+                            
+                            if(alumno.isTrabaja() == true){
+                                frmAlumno.getCmBx_SecEconomico().setEnabled(true);
+                            } else{
+                                frmAlumno.getCmBx_SecEconomico().setEnabled(false);
+                            }
+                            frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
+                            if (sector.equals("NINGUNO")) {
                                 frmAlumno.getCmBx_SecEconomico().setSelectedIndex(0);
                                 frmAlumno.getLbl_ErrSecEconomico().setVisible(false);
+                                frmAlumno.getChkBx_Trabaja().setSelected(false);
                             } else {
-                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
-                                frmAlumno.getChkBx_Trabaja().setSelected(true);
+                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector);
                             }
+
                             frmAlumno.getCmBx_ForPadre().setSelectedItem(alumno.getFormacion_Padre());
                             frmAlumno.getCmBx_ForMadre().setSelectedItem(alumno.getFormacion_Madre());
                             frmAlumno.getTxt_NomContacto().setText(alumno.getNom_Contacto());
@@ -873,7 +888,6 @@ public class FrmAlumnoCTR {
         frmAlumno.getTxt_Anios().setText(persona.getAnio_graduacion());
         frmAlumno.getChkBx_Pension().setSelected(persona.isPension());
         if(persona.isTrabaja() == true){
-            frmAlumno.getCmBx_SecEconomico().setEnabled(true);
             frmAlumno.getCmBx_SecEconomico().setEnabled(true);
         } else{
             frmAlumno.getCmBx_SecEconomico().setEnabled(false);
