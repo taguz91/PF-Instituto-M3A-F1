@@ -6,11 +6,15 @@
 package modelo.propiedades;
 
 import controlador.Libraries.Middlewares;
+import controlador.run;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -23,9 +27,9 @@ import java.util.stream.Collectors;
  */
 public class Propiedades {
 
-    private static final Properties config;
+    private static Properties config;
     private static String PATH = "configuracion.properties";
-    private static final File archivo;
+    private static File archivo;
 
     static {
         config = new Properties();
@@ -47,67 +51,52 @@ public class Propiedades {
     }
 
     public static Map<Object, Object> loadProperties() {
-        if (archivo.exists()) {
-            try {
-                config.load(new FileReader(archivo));
-                if (config.size() != 3) {
-                    setDefault();
-                    config.load(new FileReader(archivo));
-                }
-            } catch (FileNotFoundException ex) {
-                setDefault();
-                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                setDefault();
-                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
+        try {
+
+            return Files.lines(Paths.get("configuracion.properties"))
+                    .filter(item -> item.contains("="))
+                    .map(c -> c.split("="))
+                    .collect(Collectors.toMap(s -> s[0], s -> s[1]));
+        } catch (NoSuchFileException ex) {
             setDefault();
-            Map<Object, Object> properties = loadProperties();
-            return properties;
+            return loadProperties();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
 
-        return config;
+        return null;
     }
 
     public static String getPropertie(String propertie) {
-        String value = "";
-
-        Map<Object, Object> map = loadProperties().entrySet()
+        return loadProperties().entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().equals(propertie.toLowerCase()))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-
-        for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            value = (String) entry.getValue();
-        }
-
-        return value;
+                .collect(Collectors.toMap(c -> c.getKey().toString(), c -> c.getValue().toString()))
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equalsIgnoreCase(propertie))
+                .map(c -> c.getValue())
+                .findFirst()
+                .orElse("");
     }
 
     public static String getUserProp(String propertie) {
-        String value = "";
-
-        Properties properties = new Properties();
-
         try {
-            properties.load(new FileReader("user.properties"));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
+            return Files.lines(Paths.get("user.properties"))
+                    .filter(item -> item.contains("="))
+                    .map(c -> c.split("="))
+                    .collect(Collectors.toMap(s -> s[0], s -> s[1]))
+                    .entrySet()
+                    .stream()
+                    .filter(item -> item.getKey().equalsIgnoreCase(propertie))
+                    .map(c -> c.getValue())
+                    .findFirst()
+                    .orElse("");
+        } catch (NoSuchFileException ex) {
+            generateUserProperties(null);
         } catch (IOException ex) {
             Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        Map<Object, Object> map = properties.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(propertie.toLowerCase()))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-
-        for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            value = (String) entry.getValue();
-        }
-
-        return value;
+        return "";
     }
 
     public static void generateUserProperties(Map<Object, Object> properties) {

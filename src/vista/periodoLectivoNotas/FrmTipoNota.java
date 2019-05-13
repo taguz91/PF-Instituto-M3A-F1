@@ -101,7 +101,7 @@ public class  FrmTipoNota extends JInternalFrame{
 
             },
             new String [] {
-                "Nombre", "Minimo", "Maximo"
+                "Nombre", "Minimo", "Maximo", "ID"
             }
         ));
         jScrollPane1.setViewportView(tblTipoNota);
@@ -110,6 +110,9 @@ public class  FrmTipoNota extends JInternalFrame{
             tblTipoNota.getColumnModel().getColumn(1).setMaxWidth(60);
             tblTipoNota.getColumnModel().getColumn(2).setMinWidth(60);
             tblTipoNota.getColumnModel().getColumn(2).setMaxWidth(60);
+            tblTipoNota.getColumnModel().getColumn(3).setMinWidth(0);
+            tblTipoNota.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblTipoNota.getColumnModel().getColumn(3).setMaxWidth(0);
         }
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

@@ -88,12 +88,12 @@ public class Effects {
 
     public static void setLoadCursor(Container view) {
         view.setCursor(LOAD_CURSOR);
+        
     }
 
     public static void setDefaultCursor(Container view) {
         view.setCursor(DEFAULT_CURSOR);
     }
-
 
     public static void pressEnter(JTextComponent component, Function<Void, Void> funcion) {
         component.addKeyListener(new KeyAdapter() {
@@ -122,6 +122,5 @@ public class Effects {
             }
         });
     }
-
 
 }

@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -38,21 +36,27 @@ public abstract class AbstracForm {
     //Combo
     protected String[] carrerasTradicionales = {
         "APORTE 1",
-        "NOTA INTERCICLO",
         "EXAMEN INTERCICLO",
+        "NOTA INTERCICLO",
         "APORTE 2",
         "EXAMEN FINAL",
         "EXAMEN SUPLETORIO",
         "NOTA FINAL"
     };
 
+    /*
+        '*' <-- no agregar a la tabla notas
+     */
     protected String[] carrerasDuales = {
         "G. DE AULA 1",
         "G. DE AULA 2",
         "TOTAL GESTION",
         "EXAMEN FINAL",
         "EXAMEN DE RECUPERACION",
-        "NOTA FINAL"
+        "NOTA FINAL",//*
+        "PTI",//*
+        "FASE PRACTICA",//*
+        "NOTA FINAL TOTAL"//*
     };
 
     protected List<String> tiposNota;

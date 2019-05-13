@@ -1,17 +1,13 @@
 package controlador.periodoLectivoNotas.tipoDeNotas;
 
-import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaAgregar;
 import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.forms.FrmTipoNotaEditar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
@@ -103,7 +99,7 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas.setRowCount(0);
         listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
-        listaTiposNotas.forEach(agregarFilas);
+        listaTiposNotas.forEach(agregarFilas());
 
     }
 
@@ -117,31 +113,32 @@ public class VtnTipoNotasCTR {
                         || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
                         || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
                 )
-                .collect(Collectors.toList()).forEach(agregarFilas);
+                .collect(Collectors.toList()).forEach(agregarFilas());
     }
 
-    private final Consumer<TipoDeNotaMD> agregarFilas = obj -> {
-        tablaTiposNotas.addRow(new Object[]{
-            tablaTiposNotas.getDataVector().size() + 1,
-            obj.getIdTipoNota(),
-            obj.getNombre(),
-            obj.getPeriodoLectivo().getNombre_PerLectivo(),
-            obj.getPeriodoLectivo().getCarrera().getNombre(),
-            obj.getPeriodoLectivo().getCarrera().getModalidad(),
-            obj.getValorMinimo(),
-            obj.getValorMaximo(),
-            obj.getFechaCreacion()
-        });
-        vista.getLblResultados().setText(tablaTiposNotas.getDataVector().size() + " Resultados Obtenidos");
-    };
+    private Consumer<TipoDeNotaMD> agregarFilas() {
+        return obj -> {
+            tablaTiposNotas.addRow(new Object[]{
+                tablaTiposNotas.getDataVector().size() + 1,
+                obj.getIdTipoNota(),
+                obj.getNombre(),
+                obj.getPeriodoLectivo().getNombre_PerLectivo(),
+                obj.getPeriodoLectivo().getCarrera().getNombre(),
+                obj.getPeriodoLectivo().getCarrera().getModalidad(),
+                obj.getValorMinimo(),
+                obj.getValorMaximo(),
+                obj.getFechaCreacion()
+            });
+            vista.getLblResultados().setText(tablaTiposNotas.getDataVector().size() + " Resultados Obtenidos");
+        };
+    }
 
     private void setModel(int fila) {
         int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 1);
         modelo = new TipoDeNotaBD(listaTiposNotas
                 .stream()
                 .filter(item -> item.getIdTipoNota() == idTipoNota)
-                .findFirst()
-                .get()
+                .findFirst().get()
         );
     }
 

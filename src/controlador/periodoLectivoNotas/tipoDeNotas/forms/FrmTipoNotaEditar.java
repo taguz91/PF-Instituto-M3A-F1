@@ -32,13 +32,6 @@ public class FrmTipoNotaEditar extends AbstracForm {
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        new Thread(() -> {
-            listaTipos.stream()
-                    .forEach(obj -> {
-                        obj.insertar();
-                    });
-        }).start();
-
     }
 
 }

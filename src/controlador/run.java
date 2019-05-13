@@ -3,7 +3,6 @@ package controlador;
 import controlador.login.LoginCTR;
 import java.awt.EventQueue;
 import javax.swing.UIManager;
-import modelo.usuario.UsuarioBD;
 import vista.Login;
 
 /**
@@ -11,11 +10,10 @@ import vista.Login;
  * @author Johnny
  */
 public class run {
-    
+
     public static void main(String[] args) {
         try {
-            
-            
+
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             System.out.println(ex.getMessage());
@@ -27,12 +25,13 @@ public class run {
 
             LoginCTR login = new LoginCTR(new Login());
             login.Init();
-            
+
         });
+
     }
-    
+
     public static boolean iniciaEstilo(String estilo) {
-        boolean encontrado = false;        
+        boolean encontrado = false;
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if (estilo.equals(info.getName())) {
@@ -46,5 +45,5 @@ public class run {
         }
         return encontrado;
     }
-    
+
 }
