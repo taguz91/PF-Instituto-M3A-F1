@@ -188,20 +188,20 @@ AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "fotoPersona.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement x="0" y="31" width="53" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Tipo:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="53" y="31" width="344" height="20"/>
+				<reportElement x="91" y="31" width="306" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula_tipo}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="31" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Matrícula:  ]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
