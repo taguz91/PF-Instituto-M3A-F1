@@ -49,7 +49,7 @@ private String autor,autorCorporativo,titulo,año,ciudad,editor;
         año=frmBibliografia.getTxtAnio().getText();
         ciudad=frmBibliografia.getTxtCiudad().getText();
         editor=frmBibliografia.getTxtEditor().getText();
-        contenedor=autor+titulo+año+ciudad+editor;
+        contenedor=autor+','+titulo+','+año+','+ciudad+','+editor;
         BDbibliografia.setCodigo_referencia(frmBibliografia.getTxtCodigoLibro().getText());
         BDbibliografia.setDescripcion_referencia(contenedor);
          BDbibliografia.setTipo_referencia(tipoD);

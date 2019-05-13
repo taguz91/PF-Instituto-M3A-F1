@@ -1,7 +1,7 @@
 package controlador.persona;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,14 +9,12 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -25,36 +23,21 @@ import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
 import vista.persona.VtnMatRetiradas;
-import vista.principal.VtnPrincipal;
 
-public class VtnAlumnoCTR {
+public class VtnAlumnoCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
-    private final ConectarDB conecta; //Conexión con la Base de Datos
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos; //Rol que tiene el Usuario
 
-    private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
     public static AlumnoMD mdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnAlumnoCTR(VtnAlumno vtnAlumno, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnAlumno = vtnAlumno;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
         //Cambiamos el estado del cursos
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos");
-        ctrPrin.setIconJIFrame(vtnAlumno);
-        vtnPrin.getDpnlPrincipal().add(vtnAlumno);
-        vtnAlumno.show();
         //Inicializamos la clase de alumno
-        bdAlumno = new AlumnoBD(conecta);
+        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -139,9 +122,6 @@ public class VtnAlumnoCTR {
 //            }
 //        });
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos");
     }
 
     //Muestra el Formulario de Registro de Alumno
@@ -158,8 +138,8 @@ public class VtnAlumnoCTR {
         if (mdAlumno == null) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
         } else {
-            VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
-            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno, conecta);
+            VtnMatRetiradas m = new VtnMatRetiradas(ctrPrin.getVtnPrin(), false);
+            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(this, vtnAlumno, ctrPrin);
             materias.iniciarVentana();
         }
     }
@@ -332,18 +312,18 @@ public class VtnAlumnoCTR {
                     new Object[]{"Editar Datos Personales", "Editar Datos de Alumno"}, "Editar Datos de Alumno");
             if (seleccion == 1) {
                 frmAlumno = new FrmAlumno();
-                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin, permisos);
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(frmAlumno, ctrPrin);
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
                 ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
-                PersonaBD extraer = new PersonaBD(conecta);
+                PersonaBD extraer = new PersonaBD(ctrPrin.getConecta());
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());
-                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(frmPersona, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
@@ -392,19 +372,15 @@ public class VtnAlumnoCTR {
         String path = "/vista/reportes/repAlumnos.jasper";
         try {
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, null, "Reporte de Alumnos");
-//            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Reporte de Alumnos");
+            ctrPrin.getConecta().mostrarReporte(jr, null, "Reporte de Alumnos");
 
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
         }
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);

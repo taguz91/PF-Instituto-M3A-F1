@@ -31,7 +31,7 @@ public class ReferenciasBD extends ReferenciasMD {
         this.conexion = conexion;
     }
 
-    public static List<ReferenciasMD> consultarBiblioteca(ConexionBD conexion, String clave) {
+    public  static List<ReferenciasMD> consultarBiblioteca(ConexionBD conexion, String clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
         try {
@@ -61,6 +61,7 @@ public class ReferenciasBD extends ReferenciasMD {
         return referencias;
 
     }
+    
 
     public void insertar(ReferenciasMD r) {
 
