@@ -107,8 +107,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         return lblNumMatriculasClases;
     }
 
-    public JLabel getLblNumMatriculasCurso() {
-        return lblNumMatriculasCurso;
+    public JComboBox<String> getCmbTipoMatricula() {
+        return cmbTipoMatricula;
     }
     
     /**
@@ -156,14 +156,16 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnPendientes = new javax.swing.JButton();
         btnReprobadas = new javax.swing.JButton();
         btnAnuladas = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        lblNumMatriculasCurso = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         lblNumMatriculasClases = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        cmbTipoMatricula = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Matrícula en un periodo");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -201,6 +203,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
         jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 260, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 486, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -265,6 +269,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnHorarioAlmn.setText("Alumno");
         jPanel2.add(btnHorarioAlmn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 239, 730, 234));
+
         btnGuardar.setText("Guardar");
 
         btnError.setForeground(new java.awt.Color(153, 0, 0));
@@ -275,7 +281,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(btnError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnError, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap())
@@ -289,7 +295,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGap(5, 5, 5))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(105, 105, 105))); // NOI18N
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 479, 736, -1));
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(105, 105, 105))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Número de matriculas:");
@@ -316,10 +324,6 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnAnuladas.setText("Anuladas");
         jPanel4.add(btnAnuladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 100, -1));
 
-        jLabel8.setText("Numero de matriculas: ");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 170, -1));
-        jPanel4.add(lblNumMatriculasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 150, 20));
-
         jLabel9.setText("Número de matriculas en clases:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, 20));
 
@@ -328,35 +332,35 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         lblNumMatriculasClases.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jPanel4.add(lblNumMatriculasClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 30, 20));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 0, 241, 160));
+
+        jLabel10.setText("Tipo matricula:");
+
+        cmbTipoMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ORDINARIA", "EXTRAORDINARIA", "ESPECIAL" }));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(cmbTipoMatricula, 0, 229, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addComponent(cmbTipoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 166, 241, 61));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -378,19 +382,21 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnReprobadas;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbPrdLectivo;
+    private javax.swing.JComboBox<String> cmbTipoMatricula;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -398,7 +404,6 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblErrorPrdLectivo;
     private javax.swing.JLabel lblNumMatriculas;
     private javax.swing.JLabel lblNumMatriculasClases;
-    private javax.swing.JLabel lblNumMatriculasCurso;
     private javax.swing.JTable tblAlumnos;
     private javax.swing.JTable tblMateriasPen;
     private javax.swing.JTable tblMateriasSelec;

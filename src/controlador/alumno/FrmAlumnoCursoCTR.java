@@ -266,6 +266,11 @@ public class FrmAlumnoCursoCTR extends DCTR {
             guardar = false;
         }
 
+        int posTipo = frmAlmCurso.getCmbTipoMatricula().getSelectedIndex();
+        if (posTipo < 1) {
+            guardar = false;
+        }
+
         //Se borra todas las materias que tienen un choque de horas
         borrarChoques(cursosSelec);
 
@@ -299,6 +304,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     } else {
                         matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
                         matri.setPeriodo(periodos.get(posPrd - 1));
+                        matri.setTipo(frmAlmCurso.getCmbTipoMatricula().getSelectedItem().toString());
                         matri.ingresar();
                     }
                     int c = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Desea imprimir la matricula.");
