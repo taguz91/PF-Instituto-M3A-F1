@@ -277,9 +277,6 @@ private void clickCmbCarreras(){
       boolean valid=true;
       String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),String.valueOf(usuario.getPersona().getIdPersona()),  String.valueOf(getid_periodo())};
       lista_plan_clases=PlandeClasesBD.consultarPlanClaseExistente(conexion, parametros);
-      System.out.println(lista_plan_clases.get(0).getId_unidad().getIdUnidad()+"      ----------------<<<<<< de la base id unidad");
-     System.out.println("------------------->>>id del combo"+unidad_seleccionada().getIdUnidad());
-  
       for(PlandeClasesMD plmd:lista_plan_clases){
           
       if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
