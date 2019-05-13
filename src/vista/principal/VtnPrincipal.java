@@ -27,6 +27,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtPlandeClase;
     }
 
+    public JMenuItem getMnCtRendimientoAcademico() {
+        return mnCtRendimientoAcademico;
+    }
+
+    public void setMnCtRendimientoAcademico(JMenuItem mnCtRendimientoAcademico) {
+        this.mnCtRendimientoAcademico = mnCtRendimientoAcademico;
+    }
+
     public void setMnCtPlandeClase(JMenuItem mnCtPlandeClase) {
         this.mnCtPlandeClase = mnCtPlandeClase;
     }
@@ -403,6 +411,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtActivarNotas = new javax.swing.JMenuItem();
+        mnCtRendimientoAcademico = new javax.swing.JMenuItem();
         MnBiblioteca = new javax.swing.JMenuItem();
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
@@ -779,6 +788,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         });
         mnNotas.add(mnCtActivarNotas);
 
+        mnCtRendimientoAcademico.setText("Rendimiento Académico");
+        mnNotas.add(mnCtRendimientoAcademico);
+
         mnTipoNotas.add(mnNotas);
 
         MnBiblioteca.setText("Biblioteca");
@@ -979,6 +991,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtPlandeClase;
     private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
+    private javax.swing.JMenuItem mnCtRendimientoAcademico;
     private javax.swing.JMenuItem mnCtRoles;
     private javax.swing.JMenuItem mnCtRolesPeriodo;
     private javax.swing.JMenuItem mnCtSilabos;

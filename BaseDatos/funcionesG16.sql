@@ -229,3 +229,75 @@ BEGIN
 	RETURN NEW;
 END;
 $actualiza_tipodenota$ LANGUAGE plpgsql;
+
+
+
+
+AQUI TIO DIEGO JAJAJAJA :v
+------------------------------------------------------------------------
+
+CREATE TRIGGER ActualizaEstado
+AFTER UPDATE OF almn_curso_estado
+ON public."AlumnoCurso" FOR EACH ROW
+EXECUTE PROCEDURE Actualiza_estado_alumno();
+
+CREATE OR REPLACE FUNCTION Actualiza_estado_alumno()
+RETURN TRIGGER AS $Actualiza_estado_alumno$
+
+DECLARE 
+modalidad VARCHAR := '';
+nombre_curso VARCHAR := '';
+
+reg RECORD;
+
+
+
+SELECT
+	"public"."Carreras".carrera_modalidad,
+	"public"."Cursos".curso_nombre
+	 INTO modalidad, nombre_curso 
+FROM
+	"public"."Cursos"
+	INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera 
+WHERE
+	"public"."Cursos".id_curso = NEW.id_curso;
+	
+
+	
+
+BEGIN
+	IF
+		modalidad = 'DUAL' THEN
+		IF
+			NEW.almn_curso_estado = 'RETIRADO' 
+			OR NEW.almn_curso_estado = 'REPROBADO' THEN
+
+				registros_almn_materias_nucleo CURSOR FOR SELECT
+				"public"."Materias".materia_nucleo,
+				"public"."AlumnoCurso".id_almn_curso,
+				"public"."Cursos".id_curso 
+			FROM
+				"public"."AlumnoCurso"
+				INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+				INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia 
+			WHERE
+				"public"."AlumnoCurso".id_alumno = NEW.id_alumno 
+				AND "public"."Cursos".curso_nombre = nombre_curso 
+				AND "Materias".materia_nucleo IS TRUE;
+
+			OPEN registros_almn_materias_nucleo;
+
+			FETCH registros_almn_materias_nucleo INTO reg;
+
+			WHILE (FOUND) LOOP
+				UPDATE public."AlumnoCurso"
+					
+				SET;
+			END LOOP;
+
+
+		END IF;
+		
+	END IF;
+END;

@@ -49,7 +49,7 @@ public class Propiedades {
 
     public static Map<Object, Object> loadProperties() {
         try {
-
+            
             return Files.lines(Paths.get("configuracion.properties"))
                     .filter(item -> item.contains("="))
                     .map(c -> c.split("="))

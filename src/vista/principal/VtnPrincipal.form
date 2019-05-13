@@ -205,6 +205,11 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtActivarNotasActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtRendimientoAcademico">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Rendimiento Acad&#xe9;mico"/>
+                  </Properties>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">

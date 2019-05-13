@@ -82,7 +82,7 @@ public class VtnTipoNotasCTR {
                 modelo = null;
                 tablaTiposNotas = null;
                 System.gc();
-                System.out.println(".internalFrameClosed()");
+                System.out.println(".VTN Tipos de notas closed!");
             }
         });
 

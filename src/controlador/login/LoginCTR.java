@@ -62,10 +62,6 @@ public class LoginCTR {
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
 
-//                Map<Object, Object> properties = new HashMap<>();
-//                properties.put("username", USERNAME);
-//                properties.put("password", PASSWORD);
-//                Propiedades.generateUserProperties(properties);
                 ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
 
                 modelo = new UsuarioBD();
