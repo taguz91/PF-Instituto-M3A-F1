@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,20 +11,17 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.estilo.TblEstilo;
 import vista.alumno.JDMateriasInformacion;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDMateriasInformacionCTR {
+public class JDMateriasInformacionCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final AlumnoCarreraMD alumno;
     private final MallaAlumnoBD mallaAlm;
     private final JDMateriasInformacion jd;
     private final String estado;
-    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<MallaAlumnoMD> materiasAlmn;
     private DefaultTableModel mdTbl;
@@ -32,21 +30,19 @@ public class JDMateriasInformacionCTR {
      * Dialogo en la que nos muestra informacion de las materias de un
      * estudiante.
      *
-     * @param vtnPrin
      * @param alumno
      * @param mallaAlm
      * @param estado Estado por el cual cargaran las materias.
      * @param ctrPrin
      */
-    public JDMateriasInformacionCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno,
+    public JDMateriasInformacionCTR(AlumnoCarreraMD alumno,
             MallaAlumnoBD mallaAlm, String estado, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+        super(ctrPrin);
         this.alumno = alumno;
         this.mallaAlm = mallaAlm;
         this.estado = estado;
-        this.ctrPrin = ctrPrin;
-        this.jd = new JDMateriasInformacion(vtnPrin, false);
-        jd.setLocationRelativeTo(vtnPrin);
+        this.jd = new JDMateriasInformacion(ctrPrin.getVtnPrin(), false);
+        jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
 
         jd.setVisible(true);
     }

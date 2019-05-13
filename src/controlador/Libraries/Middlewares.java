@@ -105,6 +105,9 @@ public final class Middlewares {
         if (texto.isEmpty()) {
             texto = "99999";
         }
+        if (texto.equalsIgnoreCase(".") || texto.equalsIgnoreCase(",")) {
+            texto = "0";
+        }
         return Math.round(Double.valueOf(texto) * 10) / 10d;
     }
 

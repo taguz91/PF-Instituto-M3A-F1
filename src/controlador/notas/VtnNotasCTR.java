@@ -135,7 +135,9 @@ public class VtnNotasCTR {
     }
 
     private void InitTablas() {
-
+        String funcion = "";
+        
+        
         tablaTrad.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -173,6 +175,17 @@ public class VtnNotasCTR {
         jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
+        
+        
+            /*jTblTrad.getColumnModel().getColumn(6).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(7).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(8).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(9).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(10).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(11).setWidth(0);
+            jTblTrad.getColumnModel().getColumn(12).setWidth(0);  */
+      
+        
 
         List<String> items = new ArrayList<>();
         items.add("Asiste");
