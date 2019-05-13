@@ -447,6 +447,8 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnMallaAlm, this);
             ctrMalla.iniciar();
+        } else {
+            errorNumVentanas();
         }
 
     }
