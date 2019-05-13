@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.materia;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -17,22 +12,18 @@ import modelo.carrera.CarreraMD;
 import modelo.materia.EjeFormacionMD;
 import modelo.materia.MateriaBD;
 import modelo.validaciones.CmbValidar;
-import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.Validar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.carrera.CarreraBD;
-import modelo.lugar.LugarMD;
 import modelo.materia.EjeFormacionBD;
 import modelo.materia.MateriaMD;
-import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.TxtVNumeros_2;
 import vista.materia.FrmMaterias;
 import vista.principal.VtnPrincipal;
@@ -41,13 +32,10 @@ import vista.principal.VtnPrincipal;
  *
  * @author Lina
  */
-public class FrmMateriasCTR {
+public class FrmMateriasCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmMaterias frmMaterias;
     private final MateriaBD materiaBD;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private boolean guardar = false, siguiente = false, anterior = false;
     private int acceso = 0;
     private boolean editar = false;
@@ -57,19 +45,30 @@ public class FrmMateriasCTR {
     private final CarreraBD carBD = null;
     private final EjeFormacionBD ejeBD = null;
 
-    public FrmMateriasCTR(VtnPrincipal vtnPrin, FrmMaterias frmMaterias, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    //Para actualizar la tabla  
+    private final VtnMateriaCTR ctrVtnMat;
+
+    public FrmMateriasCTR(FrmMaterias frmMaterias, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmMaterias = frmMaterias;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.materiaBD = new MateriaBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(frmMaterias);
-        frmMaterias.show();
+        this.ctrVtnMat = null;
+        this.materiaBD = new MateriaBD(ctrPrin.getConecta());
+        //this.carBD = new CarreraBD(conecta); 
+        //this.ejeBD = new EjeFormacionBD(conecta);
+    }
+
+    public FrmMateriasCTR(FrmMaterias frmMaterias, VtnPrincipalCTR ctrPrin, VtnMateriaCTR ctrVtnMat) {
+        super(ctrPrin);
+        this.frmMaterias = frmMaterias;
+        this.ctrVtnMat = ctrVtnMat;
+        this.materiaBD = new MateriaBD(ctrPrin.getConecta());
         //this.carBD = new CarreraBD(conecta); 
         //this.ejeBD = new EjeFormacionBD(conecta);
     }
 
     public void iniciar() {
+
+        ctrPrin.agregarVtn(frmMaterias);
 
         frmMaterias.getCbCarrera().addActionListener(new ActionListener() {
             @Override
@@ -84,7 +83,7 @@ public class FrmMateriasCTR {
                     for (int i = 0; i < ejes.size(); i++) {
                         frmMaterias.getCbEjeFormacion().addItem(ejes.get(i).getNombre());
                     }
-                     habilitarGuardar();
+                    habilitarGuardar();
                 }
 
                 int pos = frmMaterias.getCbCarrera().getSelectedIndex();
@@ -100,7 +99,7 @@ public class FrmMateriasCTR {
                         frmMaterias.getLblErrorCarrera().setVisible(true);
                     }
                 }
-               
+
             }
         });
 
@@ -376,13 +375,13 @@ public class FrmMateriasCTR {
                     && frmMaterias.getLblErrorTipoAcreditacion().isVisible() == false && frmMaterias.getLblErrorMateriaCiclo().isVisible() == false
                     && frmMaterias.getLblErrorCreditos().isVisible() == false && frmMaterias.getLblErrorCampoFormacion().isVisible() == false
                     && frmMaterias.getLblErrorOrganizacionCurricular().isVisible() == false) {
-                        frmMaterias.getBtnGuardar().setEnabled(true);
-                        guardar = true;
-                
-            } else{
+                frmMaterias.getBtnGuardar().setEnabled(true);
+                guardar = true;
+
+            } else {
                 frmMaterias.getBtnGuardar().setEnabled(false);
             }
-        } else{
+        } else {
             frmMaterias.getBtnGuardar().setEnabled(false);
         }
 
@@ -500,7 +499,7 @@ public class FrmMateriasCTR {
 
         if (guardar) {
 
-            MateriaBD materia = new MateriaBD(conecta);
+            MateriaBD materia = new MateriaBD(ctrPrin.getConecta());
             carreraMD.setId(materiaBD.filtrarIdCarrera(carrera, 0).getId());
             ejeMD.setId(materiaBD.filtrarIdEje(eje, 0).getId());
             materia.setCarrera(carreraMD);
@@ -532,10 +531,11 @@ public class FrmMateriasCTR {
             if (editar) {
 //                System.out.println("ID " + materia.getCarrera().getId());
                 if (materia.editarMateria(materiaBD.capturarIDMaterias(nombre_Materia, materia.getCarrera().getId()).getId())) {
-                    JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente");
+                    JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Datos Editados Correctamente");
+                    actualizarVtnMaterias();
                     frmMaterias.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(vtnPrin, "Los no se pudieron Editar Correctamente");
+                    JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Los no se pudieron Editar Correctamente");
                 }
                 //Boton de reportes
                 //borrarCampos();
@@ -543,10 +543,11 @@ public class FrmMateriasCTR {
 
             } else {
                 if (materia.insertarMateria()) {
-                    JOptionPane.showMessageDialog(vtnPrin, "Datos Guardados Correctamente");
+                    JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Datos Guardados Correctamente");
+                    actualizarVtnMaterias();
                     frmMaterias.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(vtnPrin, "Los datos no se pudieron Guardar Correctamente");
+                    JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Los datos no se pudieron Guardar Correctamente");
                 }
 
                 //Boton de reportes
@@ -847,6 +848,12 @@ public class FrmMateriasCTR {
         frmMaterias.getCbx_CamFormacion().setSelectedItem(matEditar.getMateriacampoformacion());
 
         iniciarValidaciones();
+    }
+
+    private void actualizarVtnMaterias() {
+        if (ctrVtnMat != null) {
+            ctrVtnMat.actualizarVtn();
+        }
     }
 
 }

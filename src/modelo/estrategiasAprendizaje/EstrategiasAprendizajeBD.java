@@ -54,7 +54,7 @@ public class EstrategiasAprendizajeBD extends EstrategiasAprendizajeMD {
         List<EstrategiasAprendizajeMD> estrategias = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_estrategia, descripcion_estrategia\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_estrategia, descripcion_estrategia\n"
                     + "	FROM public.\"EstrategiasAprendizaje\" ORDER BY descripcion_estrategia");
 
             ResultSet rs = st.executeQuery();

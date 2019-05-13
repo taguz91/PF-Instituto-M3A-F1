@@ -1,5 +1,6 @@
 package controlador.materia;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -15,12 +16,8 @@ import vista.principal.VtnPrincipal;
  *
  * @author Dannes
  */
-public class VtnRequisitosCTR {
+public class VtnRequisitosCTR extends DVtnCTR {
 
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-
-    private final VtnPrincipal vtnPrin;
     private final FrmRequisitos frmreq;
     private final MateriaBD materiabd;
 
@@ -36,34 +33,29 @@ public class VtnRequisitosCTR {
 
     /*
     *Constructor de la clase
-    */
-    public VtnRequisitosCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, FrmRequisitos frmreq,
-            MateriaBD materiabd, MateriaMD materia) {
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.vtnPrin = vtnPrin;
+     */
+    public VtnRequisitosCTR(VtnPrincipalCTR ctrPrin, FrmRequisitos frmreq, MateriaBD materiabd, MateriaMD materia) {
+        super(ctrPrin);
         this.frmreq = frmreq;
         this.materiabd = materiabd;
-        this.materiarequisito = new MateriaRequisitoBD(conecta);
-
+        this.materiarequisito = new MateriaRequisitoBD(ctrPrin.getConecta());
         this.materia = materia;
-        //agregar la ventana
-        vtnPrin.getDpnlPrincipal().add(frmreq);
-        frmreq.show();
-        frmreq.setLocation(650, 250);
-        
     }
 
-     /**Inicia la accion del boton,asi como asigna valores a los componentes de la vista*/
+    /**
+     * Inicia la accion del boton,asi como asigna valores a los componentes de
+     * la vista
+     */
     public void iniciar() {
-        
         frmreq.getLblNombreMateria().setText(materia.getNombre());
         cargarComboMaterias();
         frmreq.getBtnGuardar().addActionListener(e -> guardarMateriaRequisito());
-
+        ctrPrin.agregarVtn(frmreq);
     }
 
-    /**Se encargar de enlistar en un combobox las materias*/
+    /**
+     * Se encargar de enlistar en un combobox las materias
+     */
     private void cargarComboMaterias() {
         materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
         frmreq.getCmbrequisitos().removeAllItems();
@@ -75,23 +67,22 @@ public class VtnRequisitosCTR {
         });
 
     }
-    
+
     /*
     *Guardar toda la informacion del formulario Requisitos
     *En la tabla Materia_Requisitos
-    */
-
+     */
     public void guardarMateriaRequisito() {
-     
+
         boolean guardar = true;
-        String tipo="";
+        String tipo;
         int posicion;
         //Guarda en a varibale posicion el indice de la materia seleccionada
         posicion = frmreq.getCmbrequisitos().getSelectedIndex();
 
         //Guarda la materia requisito en su objeto
         materiarequisito.setMateria(materia);
-        
+
         if (posicion > 0) {
             materia = materias.get(posicion - 1);
             materiarequisito.setMateriaRequisito(materia);
@@ -99,20 +90,16 @@ public class VtnRequisitosCTR {
             guardar = false;
             JOptionPane.showMessageDialog(null, "Seleccione los datos");
         }
-        
+
         //Verifica que opcion de los radio buton han sido seleccionados para guardarlo en la variable
         if (frmreq.getJrbCoRequisito().isSelected()) {
             tipo = "C";
             materiarequisito.setTipo(tipo);
-     
+
         } else if (frmreq.getJrbPrerequisito().isSelected()) {
             tipo = "P";
-           materiarequisito.setTipo(tipo);
-           
-           
-         
-          
-           
+            materiarequisito.setTipo(tipo);
+
         } else {
             guardar = false;
         }
@@ -130,13 +117,14 @@ public class VtnRequisitosCTR {
             }
 
         }
-        
-        
+
     }
-   
+
     /**
-     *Permite cargar los datos seleccionados en la tabla en el formulario
+     * Permite cargar los datos seleccionados en la tabla en el formulario
      * materia paa su porterior edicion
+     *
+     * @param mr
      */
     public void editar(MateriaRequisitoMD mr) {
         editar = true;

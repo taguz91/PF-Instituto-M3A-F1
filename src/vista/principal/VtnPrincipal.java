@@ -47,6 +47,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return btnConsultarSilabo;
     }
 
+    public JMenuItem getMnBiblioteca() {
+        return MnBiblioteca;
+    }
+
     public JButton getBtnIngresarSilabo() {
         return btnIngresarSilabo;
     }
@@ -327,14 +331,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtListaAlumnos;
     }
 
-    public JButton getBtnSecretaria() {
-        return btnSecretaria;
-    }
-
-    public void setBtnSecretaria(JButton btnSecretaria) {
-        this.btnSecretaria = btnSecretaria;
-    }
-
     public JMenuItem getMnCtAlmnRetirados() {
         return mnCtAlmnRetirados;
     }
@@ -355,6 +351,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btngEstilo = new javax.swing.ButtonGroup();
+        jMenuItem1 = new javax.swing.JMenuItem();
         pnlMenu = new javax.swing.JPanel();
         btnDocente = new javax.swing.JButton();
         btnAlumno = new javax.swing.JButton();
@@ -369,7 +366,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarSilabo = new javax.swing.JButton();
         btnConsultarSilabo = new javax.swing.JButton();
         btnIngresarRol = new javax.swing.JButton();
-        btnSecretaria = new javax.swing.JButton();
         dpnlPrincipal = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnEstado = new javax.swing.JLabel();
@@ -407,6 +403,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtActivarNotas = new javax.swing.JMenuItem();
+        MnBiblioteca = new javax.swing.JMenuItem();
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
@@ -430,6 +427,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgActivarNotas1 = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -493,9 +492,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
-        btnSecretaria.setText("Se");
-        btnSecretaria.setToolTipText("Secretaria, acceso para retirar a estudiantes");
-
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -527,9 +523,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngresarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSecretaria, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,8 +541,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                     .addComponent(btnDocenteMateria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnIngresarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarSilabo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSecretaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnIngresarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(2, 2, 2))
         );
 
@@ -722,7 +715,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtAlmnRetirados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Delete_File_20px_1.png"))); // NOI18N
         mnCtAlmnRetirados.setText("Matriculas Anuladas");
-        mnCtAlmnRetirados.setEnabled(false);
         mnTipoNotas.add(mnCtAlmnRetirados);
 
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
@@ -788,6 +780,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.add(mnCtActivarNotas);
 
         mnTipoNotas.add(mnNotas);
+
+        MnBiblioteca.setText("Biblioteca");
+        MnBiblioteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnBibliotecaActionPerformed(evt);
+            }
+        });
+        mnTipoNotas.add(MnBiblioteca);
 
         mnCtAccesos.setText("Accesos");
         mnTipoNotas.add(mnCtAccesos);
@@ -926,7 +926,12 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnCtActivarNotasActionPerformed
 
+    private void MnBibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBibliotecaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MnBibliotecaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MnBiblioteca;
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarRol;
@@ -945,9 +950,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnMatricula;
     private javax.swing.JButton btnPersona;
     private javax.swing.JButton btnPrdLectivo;
-    private javax.swing.JButton btnSecretaria;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

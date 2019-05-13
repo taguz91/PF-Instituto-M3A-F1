@@ -48,8 +48,19 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             st.setString(2, u.getObjetivoEspecificoUnidad());
             st.setString(3, u.getResultadosAprendizajeUnidad());
             st.setString(4, u.getContenidosUnidad());
-            st.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));
-            st.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
+            if (u.getFechaInicioUnidad()==null){
+                st.setDate(5, null);
+                
+            }else{
+                st.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));  
+            }
+           if (u.getFechaFinUnidad()==null){
+               st.setDate(6, null); 
+              
+           }else{
+               st.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad())); 
+           }
+            
             st.setInt(7, u.getHorasDocenciaUnidad());
             st.setInt(8, u.getHorasPracticaUnidad());
             st.setInt(9, u.getHorasAutonomoUnidad());
@@ -65,7 +76,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
     }
 
-    public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave) {
+    public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave, int tipo) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
         
@@ -81,15 +92,24 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-
+                
+                
                 UnidadSilaboMD tmp = new UnidadSilaboMD();
                 tmp.setIdUnidad(rs.getInt(1));
                 tmp.setNumeroUnidad(rs.getInt(2));
                 tmp.setObjetivoEspecificoUnidad(rs.getString(3));
                 tmp.setResultadosAprendizajeUnidad(rs.getString(4));
                 tmp.setContenidosUnidad(rs.getString(5));
-                tmp.setFechaInicioUnidad(rs.getDate(6).toLocalDate());
-                tmp.setFechaFinUnidad(rs.getDate(7).toLocalDate());
+                if (rs.getDate(6)!=null && tipo==1){
+                     tmp.setFechaInicioUnidad(rs.getDate(6).toLocalDate());
+                }
+                
+                
+                
+                if (rs.getDate(7)!=null && tipo==1){
+                    tmp.setFechaFinUnidad(rs.getDate(7).toLocalDate()); 
+                }
+               
                 tmp.setHorasDocenciaUnidad(rs.getInt(8));
                 System.out.println(tmp.getHorasDocenciaUnidad());
                 tmp.setHorasPracticaUnidad(rs.getInt(9));

@@ -229,4 +229,40 @@ public class SesionClaseBD extends SesionClaseMD {
         }
     }
 
+    public ArrayList<SesionClaseMD> cargarHorarioCurso(String nombreCurso, int idPrdLectivo) {
+        sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion,"
+                + " id_curso \n"
+                + "	FROM public.\"SesionClase\" \n"
+                + "	WHERE id_curso IN (\n"
+                + "	SELECT id_curso\n"
+                + "	FROM public.\"Cursos\"\n"
+                + "	WHERE id_prd_lectivo = " + idPrdLectivo + "  AND \n"
+                + "	curso_nombre = '" + nombreCurso + "');";
+
+        ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
+        ResultSet rs = conecta.sql(sql);
+        System.out.println(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    SesionClaseMD s = new SesionClaseMD();
+                    CursoMD c = new CursoMD();
+                    c.setId(rs.getInt("id_curso"));
+                    s.setCurso(c);
+                    s.setDia(rs.getInt("dia_sesion"));
+                    s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
+                    s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
+                    s.setId(rs.getInt("id_sesion"));
+
+                    sesiones.add(s);
+                }
+                return sesiones;
+            } catch (SQLException e) {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -1,12 +1,11 @@
 package controlador.alumno;
 
 import controlador.estilo.TblRenderMatricula;
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.MatriculaMD;
@@ -14,13 +13,12 @@ import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import vista.alumno.JDEditarMatricula;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
+public class JDEditarMatriculaCTR extends DVtnCTR {
 
     private final JDEditarMatricula jd;
     private final MatriculaMD matricula;
@@ -33,14 +31,14 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
     private DefaultTableModel mdTblA, mdTblN;
     private String nombreCursosN = "";
 
-    public JDEditarMatriculaCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public JDEditarMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
-        super(conecta, vtnPrin, ctrPrin);
-        this.cur = new CursoBD(conecta);
-        this.almCur = new AlumnoCursoBD(conecta);
+        super(ctrPrin);
+        this.cur = new CursoBD(ctrPrin.getConecta());
+        this.almCur = new AlumnoCursoBD(ctrPrin.getConecta());
         this.cursosNuevos = new ArrayList<>();
         this.matricula = matricula;
-        this.jd = new JDEditarMatricula(vtnPrin, false);
+        this.jd = new JDEditarMatricula(ctrPrin.getVtnPrin(), false);
     }
 
     public void iniciar() {
@@ -71,7 +69,7 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
             cursosNuevos = acx;
             llenarTblMN(cursosNuevos);
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila o mas filas.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila o mas filas.");
         }
     }
 
@@ -87,12 +85,12 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
                 }
             });
 
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Se editara la matricula de: "
+            int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Se editara la matricula de: "
                     + matricula.getAlumno().getNombreCompleto() + "   \n" + ""
                     + "Estos son sus nuevos cursos: \n" + nombreCursosN);
             if (r == JOptionPane.YES_OPTION) {
                 if (almCur.actualizarMatricula()) {
-                    vtnPrin.setEnabled(true);
+                    ctrPrin.getVtnPrin().setEnabled(true);
                     jd.dispose();
                     almCur.borrarActualizarMatricula();
                 }
@@ -153,13 +151,13 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
         });
         nomCursos = nomAux;
 
-        Object np = JOptionPane.showInputDialog(vtnPrin,
+        Object np = JOptionPane.showInputDialog(ctrPrin.getVtnPrin(),
                 "Lista de cursos disponibles", "Cursos",
                 JOptionPane.QUESTION_MESSAGE, null,
                 nomCursos.toArray(), "Seleccione");
         if (np != null) {
             if (np.toString().equals("Seleccione")) {
-                JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un curso.");
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un curso.");
                 llenarCursosDisponibles(ciclo);
             } else {
                 cambiarACurso(np.toString());
@@ -186,10 +184,10 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
             if (mismoCiclo) {
                 llenarCursosDisponibles(ciclo);
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar clases del mismo ciclo o la misma jornada.");
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar clases del mismo ciclo o la misma jornada.");
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una o mas filas.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una o mas filas.");
         }
 
     }
@@ -258,7 +256,7 @@ public class JDEditarMatriculaCTR extends DependenciasVtnCTR {
 
     private void iniciarJD() {
         jd.setVisible(true);
-        jd.setLocationRelativeTo(vtnPrin);
+        jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
         jd.setTitle("Editar matricula");
         ctrPrin.eventoJDCerrar(jd);
     }

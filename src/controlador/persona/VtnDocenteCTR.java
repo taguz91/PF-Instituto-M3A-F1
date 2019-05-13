@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import controlador.docente.JDFinContratacionCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,18 +11,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.docente.RolDocenteBD;
+import modelo.docente.RolPeriodoBD;
+import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
@@ -30,48 +31,41 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
 import vista.persona.VtnDocente;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnDocenteCTR {
+public class VtnDocenteCTR extends DVtnCTR {
 
     //array de docente modelo
     //vector de titulos de la tabla en el iniciar
     // vtnMateriaCTR basarme en ese---->para el crud
-    private final VtnPrincipal vtnPrin;
     private final VtnDocente vtnDocente;
     private final DocenteBD docente;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
+    private final RolPeriodoBD rolPer;
+    private final RolDocenteBD rolDoc;
     private final PeriodoLectivoBD prd;
     private DocenteMD d;
     //Lista de todos los periodos lectivos
     private ArrayList<PeriodoLectivoMD> periodos;
-
+    private ArrayList<RolPeriodoMD> roles;
     private ArrayList<DocenteMD> docentesMD;
     private FrmDocente frmDocente;
 
-    private DefaultTableModel mdTbl;
     private PersonaMD perEditar;
     private final PersonaBD per;
 
-    public VtnDocenteCTR(VtnPrincipal vtnPrin, VtnDocente vtnDocente,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnDocenteCTR(VtnDocente vtnDocente,
+            VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnDocente = vtnDocente;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        this.prd = new PeriodoLectivoBD(conecta);
+        this.rolPer = new RolPeriodoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
+        this.rolDoc = new RolDocenteBD(ctrPrin.getConecta());
         //Cambiamos el estado del cursos
-        docente = new DocenteBD(conecta);
-        per = new PersonaBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnDocente);
-        vtnDocente.show();
+        docente = new DocenteBD(ctrPrin.getConecta());
+        per = new PersonaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -107,8 +101,9 @@ public class VtnDocenteCTR {
         });
         vtnDocente.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnDocente.getTxtBuscar(),
                 vtnDocente.getBtnBuscar()));
-        // vtnDocente.getTblDocente().addActionListener(e -> validarBotonesReportes());
+        vtnDocente.getBtnhorasAsignadas().addActionListener(e -> botonReporteHorasAsignadas());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnAsignarRol().addActionListener(e -> asignarRolDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
             @Override
@@ -116,6 +111,8 @@ public class VtnDocenteCTR {
                 validarBotonesReportes();
             }
         });
+
+        ctrPrin.agregarVtn(vtnDocente);
     }
 
     private void cargarDocentes() {
@@ -135,11 +132,11 @@ public class VtnDocenteCTR {
     public void llenarTabla(ArrayList<DocenteMD> docentesM) {
         mdTbl.setRowCount(0);
         if (docentesM != null) {
-            docentesM.forEach(d -> {
-                Object[] valores = {d.getCodigo(), d.getPrimerApellido() + " "
-                    + d.getSegundoApellido() + " " + d.getPrimerNombre()
-                    + " " + d.getSegundoNombre(),
-                    d.getCelular(), d.getCorreo(), d.getDocenteTipoTiempo()};
+            docentesM.forEach(dc -> {
+                Object[] valores = {dc.getCodigo(), dc.getPrimerApellido() + " "
+                    + dc.getSegundoApellido() + " " + dc.getPrimerNombre()
+                    + " " + dc.getSegundoNombre(),
+                    dc.getCelular(), dc.getCorreo(), dc.getDocenteTipoTiempo()};
                 mdTbl.addRow(valores);
             });
             vtnDocente.getLblResultados().setText(String.valueOf(docentesM.size()) + " Resultados obtenidos.");
@@ -151,7 +148,7 @@ public class VtnDocenteCTR {
 
     public void abrirFrmDocente() {
         frmDocente = new FrmDocente();
-        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, conecta, ctrPrin);
+        FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(frmDocente, ctrPrin);
         ctrFrmDocente.iniciar();
         vtnDocente.dispose();
         ctrPrin.cerradoJIF();
@@ -171,7 +168,7 @@ public class VtnDocenteCTR {
     }
 
     public void editar() {
-        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (!vtnDocente.getCbxDocentesEliminados().isSelected()) {
             if (posFila >= 0) {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
@@ -180,7 +177,7 @@ public class VtnDocenteCTR {
                         new Object[]{"Editar Datos Personales", "Editar Datos de Docente"}, "Editar Datos de Docente");
                 if (seleccion == 0) {
                     FrmPersona frmPersona = new FrmPersona();
-                    FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                    FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(frmPersona, ctrPrin);
                     ctrFrmPersona.iniciar();
                     perEditar = per.buscarPersona(docentesMD.get(posFila).getIdPersona());
                     ctrFrmPersona.editar(perEditar);
@@ -189,7 +186,7 @@ public class VtnDocenteCTR {
                 } else {
                     if (seleccion == 1) {
                         FrmDocente frmDoc = new FrmDocente();
-                        FrmDocenteCTR ctrFrm = new FrmDocenteCTR(vtnPrin, frmDoc, conecta, ctrPrin);
+                        FrmDocenteCTR ctrFrm = new FrmDocenteCTR(frmDoc, ctrPrin);
                         ctrFrm.iniciar();
                         frmDoc.getBtnRegistrarPersona().setVisible(false);
                         //Le pasamos la persona de nuestro lista justo la persona seleccionada
@@ -242,7 +239,7 @@ public class VtnDocenteCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);
@@ -264,7 +261,7 @@ public class VtnDocenteCTR {
 
     public void eliminarDocente() {
         DocenteMD docentemd = new DocenteMD();
-        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar un Docente? ", " Eliminar Docente ", dialog);
@@ -290,33 +287,42 @@ public class VtnDocenteCTR {
     public void llamaReporteDocente() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentes.jasper";
-        try {
-            int posFila = vtnDocente.getTblDocente().getSelectedRow();
-            Map parametro = new HashMap();
-            parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
-            System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Docente");
-
-        } catch (JRException ex) {
-             JOptionPane.showMessageDialog(null, "error" + ex);
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+                Map parametro = new HashMap();
+                parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Docente");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(frmDocente, "Seleecione una fila primero.");
         }
+
     }
 
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentesCarrera.jasper";
-        try {
-            int posFila = vtnDocente.getTblDocente().getSelectedRow();
-            Map parametro = new HashMap();
-            parametro.put("id", docentesMD.get(posFila).getIdDocente());
-            System.out.println(parametro);
-            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
+        if (posFila >= 0) {
+            try {
 
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+                Map parametro = new HashMap();
+                parametro.put("id", docentesMD.get(posFila).getIdDocente());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(frmDocente, "Seleecione una fila primero.");
         }
+
     }
 
     public void botonReporteMateria() {
@@ -347,7 +353,7 @@ public class VtnDocenteCTR {
         periodos.forEach(p -> {
             nmPrd.add(p.getNombre_PerLectivo());
         });
-        Object np = JOptionPane.showInputDialog(vtnPrin,
+        Object np = JOptionPane.showInputDialog(null,
                 "Lista de periodos lectivos", "Periodos lectivos",
                 JOptionPane.QUESTION_MESSAGE, null,
                 nmPrd.toArray(), "Seleccione");
@@ -355,29 +361,23 @@ public class VtnDocenteCTR {
         if (np == null) {
             botonReporteMateria();
         } else if (np.equals("Seleccione")) {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar un periodo lectivo.");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
             seleccionarPeriodo();
         } else {
             int posPrd = nmPrd.indexOf(np);
 
             JasperReport jr;
             String path = "/vista/reportes/repDocenteCarreraPeriodo.jasper";
-
+            posFila = vtnDocente.getTblDocente().getSelectedRow();
             try {
-                int posFila = vtnDocente.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
                 parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
                 parametro.put("periodo", np);
-                System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                conecta.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
-//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//                JasperViewer view = new JasperViewer(print, false);
-//                view.setVisible(true);
-//                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "error" + ex);
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
         }
     }
@@ -395,14 +395,11 @@ public class VtnDocenteCTR {
 
     private void finContratacion() {
 
-        int posFila = vtnDocente.getTblDocente().getSelectedRow();
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-//            VtnFinContratacionCTR vtn_fin_contratacion = new VtnFinContratacionCTR(conecta, vtnPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
-//            vtn_fin_contratacion.iniciar();
-            JDFinContratacionCTR ctr = new JDFinContratacionCTR(conecta, vtnPrin, ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+            JDFinContratacionCTR ctr = new JDFinContratacionCTR(ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
             ctr.iniciar();
-   
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }
@@ -421,5 +418,171 @@ public class VtnDocenteCTR {
         vtnDocente.getBtnIngresar().setEnabled(false);
         vtnDocente.getBtnFinContratacion().setEnabled(false);
     }
-   
+//se selecciona el periodo y dependiendo que boton escoja muestra diferentes reportes
+
+    public void botonReporteHorasAsignadas() {
+        int s = JOptionPane.showOptionDialog(vtnDocente,
+                "Reporte de Materias del Docente\n"
+                + "¿desea obtener reporte de horas semanales?", "REPORTE hORAS DOCENCIA SEMANAL",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Horas por Docente", "Horas por periodo",
+                    "Cancelar"}, "Historial de Materias");
+        switch (s) {
+            case 0:
+                seleccionarPeriodohoras();
+                break;
+            case 1:
+                seleccionarPeriodohorasCARRERA();
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public void asignarRolDocente() {
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
+        if (posFila >= 0) {
+            periodos = prd.cargarPeriodos();
+            ArrayList<String> nmPrd = new ArrayList();
+            nmPrd.add("Seleccione");
+            periodos.forEach(p -> {
+                nmPrd.add(p.getNombre_PerLectivo());
+            });
+            Object np = JOptionPane.showInputDialog(null,
+                    "Lista de periodos lectivos", "Periodos lectivos",
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    nmPrd.toArray(), 0);
+
+            System.out.println("Posicion: ");
+            if (np == null) {
+                JOptionPane.showMessageDialog(null, "Seleccione un periodo");
+            } else {
+
+                System.out.println("Este es el periodo: " + np.toString());
+                int posPrd = nmPrd.indexOf(np);
+                System.out.println("La posicion es: " + posPrd + " El nombre es: " + periodos.get(posPrd - 1).getNombre_PerLectivo());
+
+                selecionarRol(periodos.get(posPrd - 1).getId_PerioLectivo());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
+        }
+    }
+
+    private void selecionarRol(int idPrd) {
+        ArrayList<String> nmRol = new ArrayList();
+        roles = rolPer.cargarRolesPorPeriodo(idPrd);
+        nmRol.add("Seleccione");
+        roles.forEach(r -> {
+            nmRol.add(r.getNombre_rol());
+        });
+        Object nr = JOptionPane.showInputDialog(null,
+                "Lista de roles por periodos", "Roles de Docente",
+                JOptionPane.QUESTION_MESSAGE, null, nmRol.toArray(), 0);
+        if (nr != null) {
+            if (!nr.equals("Seleccione")) {
+                int posRol = nmRol.indexOf(nr);
+                insertarRolDocente(roles.get(posRol - 1));
+            } else {
+                JOptionPane.showMessageDialog(null, "Selleccione un rol");
+                selecionarRol(idPrd);
+            }
+        }
+
+    }
+
+    public void insertarRolDocente(RolPeriodoMD rol) {
+        System.out.println("Ya podemos ingresar el rol: " + rol);
+        posFila = vtnDocente.getTblDocente().getSelectedRow();
+        rolDoc.setIdDocente(docentesMD.get(posFila));
+        rolDoc.setIdRolPeriodo(rol);
+        if (rolDoc.InsertarRol() == true) {
+            JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+        }
+    }
+
+    //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
+    public void seleccionarPeriodohoras() {
+        periodos = prd.cargarPeriodos();
+        ArrayList<String> nmPrd = new ArrayList();
+        nmPrd.add("Seleccione");
+        periodos.forEach(p -> {
+            nmPrd.add(p.getNombre_PerLectivo());
+        });
+        Object np = JOptionPane.showInputDialog(null,
+                "Lista de periodos lectivos", "Periodos lectivos",
+                JOptionPane.QUESTION_MESSAGE, null,
+                nmPrd.toArray(), "Seleccione");
+        //Se es null significa que no selecciono nada
+        if (np == null) {
+            botonReporteHorasAsignadas();
+        } else if (np.equals("Seleccione")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
+            seleccionarPeriodohoras();
+        } else {
+            int posPrd = nmPrd.indexOf(np);
+            //Se le resta 1 porque al inicio se agrega uno mas
+            JasperReport jr;
+            String path = "/vista/reportes/repSesionClase.jasper";
+
+            try {
+                posFila = vtnDocente.getTblDocente().getSelectedRow();
+                Map parametro = new HashMap();
+                parametro.put("iddocente", docentesMD.get(posFila).getIdDocente());
+                parametro.put("idperiodolectivo", np.toString());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
+            }
+        }
+    }
+
+    //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR CARRERA
+    public void seleccionarPeriodohorasCARRERA() {
+        periodos = prd.cargarPeriodos();
+        ArrayList<String> nmPrd = new ArrayList();
+        nmPrd.add("Seleccione");
+        periodos.forEach(p -> {
+            nmPrd.add(p.getNombre_PerLectivo());
+        });
+        Object np = JOptionPane.showInputDialog(null,
+                "Lista de periodos lectivos", "Periodos lectivos",
+                JOptionPane.QUESTION_MESSAGE, null,
+                nmPrd.toArray(), "Seleccione");
+        if (np == null) {
+            botonReporteHorasAsignadas();
+        } else if (np.equals("Seleccione")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
+
+            seleccionarPeriodohorasCARRERA();
+
+        } else {
+            int posPrd = nmPrd.indexOf(np);
+            //Se le resta 1 porque al inicio se agrega uno mas
+
+            JasperReport jr;
+            String path = "/vista/reportes/repHorasClaseCarrera.jasper";
+            try {
+                posFila = vtnDocente.getTblDocente().getSelectedRow();
+                Map parametro = new HashMap();
+                //parametro.put("iddocente", docentesMD.get(posFila).getIdDocente());
+                parametro.put("periodo_nombre", np.toString());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
+            }
+        }
+    }
+
 }

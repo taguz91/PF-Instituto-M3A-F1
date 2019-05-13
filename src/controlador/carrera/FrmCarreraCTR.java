@@ -1,7 +1,7 @@
 package controlador.carrera;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -22,18 +21,14 @@ import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.Validar;
 import vista.carrera.FrmCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmCarreraCTR {
+public class FrmCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmCarrera frmCarrera;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private boolean editar = false;
     private int idCarrera = 0;
     //Para cargar el combo de coordinador  
@@ -44,20 +39,12 @@ public class FrmCarreraCTR {
     private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
 
     //Modelo de la tabla 
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
 
-    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmCarreraCTR(FrmCarrera frmCarrera, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmCarrera = frmCarrera;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Carrera");
-        ctrPrin.setIconJIFrame(frmCarrera);
-        this.docen = new DocenteBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(frmCarrera);
-        frmCarrera.show();
+        this.docen = new DocenteBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -75,7 +62,7 @@ public class FrmCarreraCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = frmCarrera.getTxtBuscar().getText().trim();
-                if (a.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscarDocentes(a);
                 }
             }
@@ -86,9 +73,8 @@ public class FrmCarreraCTR {
 
         frmCarrera.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCarrera.getBtnGuardarContinuar().addActionListener(e -> guardarYContinuar());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Carrera");
+
+        ctrPrin.agregarVtn(frmCarrera);
     }
 
     private void validaciones() {
@@ -107,18 +93,21 @@ public class FrmCarreraCTR {
     }
 
     private void guardarYSalir() {
-        guardar();
-        frmCarrera.dispose();
-        ctrPrin.cerradoJIF();
-        ctrPrin.abrirVtnCarrera();
+        if (guardar()) {
+            frmCarrera.dispose();
+            ctrPrin.cerradoJIF();
+            ctrPrin.abrirVtnCarrera();
+        }
+
     }
 
     private void guardarYContinuar() {
-        guardar();
-        borrarCampos();
+        if (guardar()) {
+            borrarCampos();
+        }
     }
 
-    private void guardar() {
+    private boolean guardar() {
         boolean guardar = true;
         SimpleDateFormat formFecha = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = frmCarrera.getJdFechaInicio().getDate();
@@ -139,7 +128,7 @@ public class FrmCarreraCTR {
                 fechaInicio = LocalDate.of(Integer.parseInt(anio), Integer.parseInt(mes),
                         Integer.parseInt(dia));
             } catch (NumberFormatException e) {
-                System.out.println("No es fecha.");
+                System.out.println("No es fecha. " + e.getMessage());
                 guardar = false;
             }
         } else {
@@ -155,7 +144,7 @@ public class FrmCarreraCTR {
         }
 
         if (guardar) {
-            CarreraBD car = new CarreraBD(conecta);
+            CarreraBD car = new CarreraBD(ctrPrin.getConecta());
             car.setCodigo(codigo);
             car.setFechaInicio(fechaInicio);
             car.setModalidad(modalidad);
@@ -163,12 +152,16 @@ public class FrmCarreraCTR {
             car.setCoordinador(docentes.get(posCoord));
             car.setNumSemanas(Integer.parseInt(semanas));
             if (editar) {
-                car.editarCarrera(idCarrera);
-                editar = false;
+                guardar = car.editarCarrera(idCarrera);
+                if (guardar) {
+                    editar = false;
+                    return true;
+                }
             } else {
-                car.guardarCarrera();
+                guardar = car.guardarCarrera();
             }
         }
+        return guardar;
     }
 
     private void buscarDocentes(String aguja) {
@@ -219,7 +212,7 @@ public class FrmCarreraCTR {
         frmCarrera.getTxtNombre().setText("");
         frmCarrera.getTxtCodigo().setText("");
         frmCarrera.getJdFechaInicio().setCalendar(null);
-        frmCarrera.getCmbModalidad().setSelectedItem("Seleccioné");
+        frmCarrera.getCmbModalidad().setSelectedItem("Seleccione");
         frmCarrera.getTxtBuscar().setText("");
         mdTbl.setRowCount(0);
 
@@ -227,7 +220,7 @@ public class FrmCarreraCTR {
 
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
-        frmCarrera.getCmbModalidad().addItem("Seleccioné");
+        frmCarrera.getCmbModalidad().addItem("Seleccione");
         for (String m : MODALIDADES) {
             frmCarrera.getCmbModalidad().addItem(m);
         }

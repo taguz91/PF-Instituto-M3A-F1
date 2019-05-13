@@ -1,7 +1,7 @@
 package controlador.alumno;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
@@ -22,29 +21,23 @@ import modelo.estilo.TblEstilo;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaBD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.alumno.VtnMallaAlumno;
-import vista.principal.VtnPrincipal;
 
 /**
  * Informacion de toda la malla de una alumno
  *
  * @author Johnny
  */
-public class VtnMallaAlumnoCTR {
+public class VtnMallaAlumnoCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnMallaAlumno vtnMallaAlm;
-    private final ConectarDB conecta;
     private final MallaAlumnoBD mallaAlm;
-    private final VtnPrincipalCTR ctrPrin;
     private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado", "Anulado/Retirado"};
-    private final RolMD permisos;
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos
@@ -59,24 +52,17 @@ public class VtnMallaAlumnoCTR {
     private ArrayList<Integer> ciclos;
     private final MateriaBD mat;
 
-    //Para saber el alumno seleccionado
-    private int posFila = -1;
-    private int idAlmnSeleccionado = 0;
+    //Para comprobar que los datos ya fueron cargados 
+    private boolean cargados = false;
 
-    public VtnMallaAlumnoCTR(VtnPrincipal vtn, VtnMallaAlumno vtnMallaAlm,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtn;
+    public VtnMallaAlumnoCTR(VtnMallaAlumno vtnMallaAlm, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnMallaAlm = vtnMallaAlm;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
         //Cambiamos el estado del cursos
-        this.mat = new MateriaBD(conecta);
-        this.almCar = new AlumnoCarreraBD(conecta);
-        this.mallaAlm = new MallaAlumnoBD(conecta);
-        this.car = new CarreraBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnMallaAlm);
-        vtnMallaAlm.show();
+        this.mat = new MateriaBD(ctrPrin.getConecta());
+        this.almCar = new AlumnoCarreraBD(ctrPrin.getConecta());
+        this.mallaAlm = new MallaAlumnoBD(ctrPrin.getConecta());
+        this.car = new CarreraBD(ctrPrin.getConecta());
     }
 
     /**
@@ -105,12 +91,7 @@ public class VtnMallaAlumnoCTR {
         //Inciiamos los combos en falso
         vtnMallaAlm.getCmbAlumnos().setEnabled(false);
         vtnMallaAlm.getCmbEstado().setEnabled(false);
-        //Ocultamos el boton de ingresar nota porque ya no se usa  
-        vtnMallaAlm.getBtnIngNota().setVisible(false);
 
-//        vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCmbCarrera());
-//        vtnMallaAlm.getCmbAlumnos().addActionListener(e -> cargarPorAlumno());
-//        vtnMallaAlm.getCmbEstado().addActionListener(e -> cargarPorEstado());
         vtnMallaAlm.getCmbCarreras().addActionListener(e -> clickCombo());
         vtnMallaAlm.getCmbAlumnos().addActionListener(e -> clickCombo());
         vtnMallaAlm.getCmbEstado().addActionListener(e -> clickCombo());
@@ -146,15 +127,11 @@ public class VtnMallaAlumnoCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                int l = 5;
                 String a = vtnMallaAlm.getCmbAlumnos().getEditor().getItem().toString().trim();
-                if (Validar.esNumeros(a)) {
-                    l = 10;
-                }
                 if (e.getKeyCode() != 38 && e.getKeyCode() != 40
                         && e.getKeyCode() != 37 && e.getKeyCode() != 39
-                        && a.length() >= l && e.getKeyCode() != 13
-                        && e.getKeyCode() != 10) {
+                        && e.getKeyCode() != 13
+                        && e.getKeyCode() == 10) {
                     buscarAlumno(a);
                 }
             }
@@ -167,19 +144,13 @@ public class VtnMallaAlumnoCTR {
                 //clickTbl();
             }
         });
-        //Prueba cargando todos los datos
-        //Funciona de la patada
-//        Instant iniBusqueda = Instant.now();
-//        cargarMallas();
-//        Instant terBusqueda = Instant.now();
-//        System.out.println("El tiempo que tardó en buscar malla alumnos es: "
-//                + Duration.between(iniBusqueda, terBusqueda).toMillis() + " milisegundos");
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
         InitPermisosTester();
+
+        ctrPrin.agregarVtn(vtnMallaAlm);
     }
 
     private void InitPermisosTester() {
-        if (permisos.getNombre().equalsIgnoreCase("TESTER")) {
+        if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
             vtnMallaAlm.getBtnIngNota().setEnabled(false);
             vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
             vtnMallaAlm.getTxtBuscar().setEnabled(false);
@@ -198,21 +169,13 @@ public class VtnMallaAlumnoCTR {
     private void actualizarNotas() {
         posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
         if (posFila >= 0) {
-            FrmMallaActualizarCTR ctrFrm = new FrmMallaActualizarCTR(conecta, vtnPrin, ctrPrin, mallas.get(posFila), mallaAlm, this);
+            FrmMallaActualizarCTR ctrFrm = new FrmMallaActualizarCTR(ctrPrin, mallas.get(posFila), mallaAlm, this);
             ctrFrm.iniciar();
             //Ocusltamos esta ventana
             vtnMallaAlm.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleecionar una fila antes.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleecionar una fila antes.");
         }
-    }
-
-    /**
-     * Cargamos todas las mallas de un alumno
-     */
-    private void cargarMallas() {
-        mallas = mallaAlm.cargarMallasTbl();
-        llenarTbl(mallas);
     }
 
     /**
@@ -228,7 +191,7 @@ public class VtnMallaAlumnoCTR {
                     aguja);
             llenarCmbAlumno(alumnos);
             vtnMallaAlm.getCmbAlumnos().showPopup();
-            vtnMallaAlm.getCmbAlumnos().getEditor().setItem(aguja);
+            //vtnMallaAlm.getCmbAlumnos().getEditor().setItem(aguja);
         }
     }
 
@@ -257,13 +220,10 @@ public class VtnMallaAlumnoCTR {
             //Guardamos la posicion del alumno seleccionado
             posFila = vtnMallaAlm.getCmbAlumnos().getSelectedIndex() - 1;
             if (posFila >= 0) {
-                idAlmnSeleccionado = alumnos.get(posFila).getId();
-                //Se activa el boton de reporte tambien
                 vtnMallaAlm.getBtnReporteMallaAlumno().setEnabled(true);
             }
 
             llenarTbl(mallas);
-            cargarCmbEstado();
         } else {
             //Borramos todos los datos de la tabla si no se selecciona ninguno
             mdlTbl.setRowCount(0);
@@ -280,7 +240,7 @@ public class VtnMallaAlumnoCTR {
             MallaAlumnoMD malla = mallas.get(pos);
             if (malla.getMallaNumMatricula() > 0) {
                 if (malla.getEstado().equals("C")) {
-                    JOptionPane.showMessageDialog(vtnPrin, "Ya cursó ésta materia, no se puede ingresar  una nota.");
+                    JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ya cursó ésta materia, no se puede ingresar  una nota.");
                 } else {
                     String nota = JOptionPane.showInputDialog(
                             "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
@@ -288,34 +248,16 @@ public class VtnMallaAlumnoCTR {
                     if (Validar.esNota(nota)) {
                         mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
                     } else {
-                        JOptionPane.showMessageDialog(vtnPrin, "Ingrese una nota válida.");
+                        JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ingrese una nota válida.");
                         ingresarNota();
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "No se encuentra matrícula en esta \n"
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No se encuentra matrícula en esta \n"
                         + "materia, no puede ingresar su nota.");
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Debe seleccionar una fila para poder ingresar una nota.");
-        }
-    }
-
-    /**
-     * Cargamos la malla de un alumno por estado
-     */
-    private void cargarPorEstado() {
-        int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
-        int posEst = vtnMallaAlm.getCmbEstado().getSelectedIndex();
-        if (posAlm > 0 && posEst > 0) {
-            mallas = mallaAlm.cargarMallaAlumnoPorEstado(
-                    alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
-            llenarTbl(mallas);
-            //Cuando termina de cargar todo se le vuelve a su estado normal.
-            vtnPrin.setCursor(new Cursor(0));
-            ctrPrin.estadoCargaVtnFin("Malla alumnos");
-        } else if (posAlm > 0) {
-            cargarPorAlumno();
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila para poder ingresar una nota.");
         }
     }
 
@@ -348,15 +290,22 @@ public class VtnMallaAlumnoCTR {
                 mallas = mallaAlm.cargarMallaPorCarreraEstado(carreras.get(posCar - 1).getId(), cmbEstado[posEst]);
                 llenarTbl(mallas);
             } else if (posCar > 0) {
+
                 //Cargamos la malla por carrera
                 //mallas = mallaAlm.cargarMallaPorCarrera(carreras.get(posCar - 1).getId());
                 vtnMallaAlm.getCmbAlumnos().setEnabled(true);
                 vtnMallaAlm.getCmbEstado().setEnabled(true);
-                cargarCmbEstado();
-                ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
-                cargarCmbCiclos(ciclos);
+                if (!cargados) {
+                    cargados = true;
+                    System.out.println("Se cargan los ciclos");
+                    cargarCmbEstado();
+                    ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
+                    cargarCmbCiclos(ciclos);
+                }
                 //llenarTbl(mallas);
+
             } else {
+                cargados = false;
                 vtnMallaAlm.getCmbAlumnos().removeAllItems();
                 vtnMallaAlm.getCmbAlumnos().setEnabled(false);
                 vtnMallaAlm.getCmbEstado().setEnabled(false);
@@ -417,7 +366,7 @@ public class VtnMallaAlumnoCTR {
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
             vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
-            if (!permisos.getNombre().equalsIgnoreCase("TESTER")) {
+            if (!ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
                 carreras.forEach(c -> {
                     vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
                 });
@@ -439,6 +388,7 @@ public class VtnMallaAlumnoCTR {
         ciclos.forEach((c) -> {
             vtnMallaAlm.getCmbCiclo().addItem(c + "");
         });
+        vtnMallaAlm.getCmbCiclo().setSelectedIndex(0);
     }
 
     /**
@@ -471,7 +421,7 @@ public class VtnMallaAlumnoCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);
@@ -495,24 +445,33 @@ public class VtnMallaAlumnoCTR {
      * Llamamos al reporte de la malla alumno
      */
     public void llamaReporteMallaALumno() {
-        JasperReport jr;
-        String path = "/vista/reportes/repMalaAlumno.jasper";
-        try {
-            Map parametro = new HashMap();
-            parametro.put("consulta", mallaAlm.getSql());
-            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+        if (mallaAlm.getSql().length() > 0) {
+            if (vtnMallaAlm.getCmbAlumnos().getSelectedIndex() > 0 || mallas.size() < 45) {
+                JasperReport jr;
+                String path = "/vista/reportes/repMalaAlumno.jasper";
+                try {
+                    Map parametro = new HashMap();
+                    parametro.put("consulta", mallaAlm.getSql());
+                    jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                    ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+                } catch (JRException ex) {
+                    JOptionPane.showMessageDialog(null, "error" + ex);
+                }
+            } else {
+                JasperReport jr;
+                String path = "/vista/reportes/repMallas.jasper";
+                try {
+                    Map parametro = new HashMap();
+                    parametro.put("consulta", mallaAlm.getSql());
+                    jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                    ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+                } catch (JRException ex) {
+                    JOptionPane.showMessageDialog(null, "error" + ex);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No tenemos datos para mostrar el reporte.");
         }
     }
 
-    /* private void clickTbl() {
-        posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
-        idAlmnSeleccionado = mallas.get(posFila).getAlumnoCarrera().getId();
-        System.out.println("Este es el id que sale "+idAlmnSeleccionado);
-        //Activamos el boton
-        vtnMallaAlm.getBtnReporteMallaAlumno().setEnabled(true);
-    }
-     */
 }

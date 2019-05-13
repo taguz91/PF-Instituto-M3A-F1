@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,49 +11,45 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.estilo.TblEstilo;
 import vista.alumno.JDMateriasInformacion;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDMateriasInformacionCTR {
+public class JDMateriasInformacionCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final AlumnoCarreraMD alumno;
     private final MallaAlumnoBD mallaAlm;
     private final JDMateriasInformacion jd;
     private final String estado;
-    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<MallaAlumnoMD> materiasAlmn;
     private DefaultTableModel mdTbl;
-    
+
     /**
-     * Dialogo en la que nos muestra informacion de las materias de un estudiante.     
-     * @param vtnPrin 
+     * Dialogo en la que nos muestra informacion de las materias de un
+     * estudiante.
+     *
      * @param alumno
      * @param mallaAlm
      * @param estado Estado por el cual cargaran las materias.
-     * @param ctrPrin 
+     * @param ctrPrin
      */
-    public JDMateriasInformacionCTR(VtnPrincipal vtnPrin, AlumnoCarreraMD alumno, 
+    public JDMateriasInformacionCTR(AlumnoCarreraMD alumno,
             MallaAlumnoBD mallaAlm, String estado, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+        super(ctrPrin);
         this.alumno = alumno;
         this.mallaAlm = mallaAlm;
         this.estado = estado;
-        this.ctrPrin = ctrPrin;
-        this.jd = new JDMateriasInformacion(vtnPrin, false);
-        jd.setLocationRelativeTo(vtnPrin);
-        
+        this.jd = new JDMateriasInformacion(ctrPrin.getVtnPrin(), false);
+        jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
+
         jd.setVisible(true);
     }
-    
+
     /**
-     * Iniciamos todas las dependencias de la ventana.
-     * Eventos.
-     * Formato de la tabla.
+     * Iniciamos todas las dependencias de la ventana. Eventos. Formato de la
+     * tabla.
      */
     public void iniciar() {
         String[] titulo = {"Materia"};
@@ -63,31 +60,45 @@ public class JDMateriasInformacionCTR {
 
         jd.getLblAlumno().setText(alumno.getAlumno().getPrimerNombre() + " "
                 + alumno.getAlumno().getPrimerApellido());
-        
-        cargarMateriasEstado();
 
         jd.getTblMaterias().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 clickTbl();
             }
         });
-        
+
         ctrPrin.eventoJDCerrar(jd);
     }
-    
+
     /**
-     * Consulta en la base de datos, en la tabla de malla. Las
-     * materias con el estado pasado por filtro.
+     * Mostramos terceras matriculas
      */
-    private void cargarMateriasEstado() {
+    public void cargarTercerasMatriculas() {
+        materiasAlmn = mallaAlm.cargarMallaAlumnoPorEstado(alumno.getId(), "R");
+        ArrayList<MallaAlumnoMD> terceras = new ArrayList<>();
+        materiasAlmn.forEach(m -> {
+            if (m.getMallaNumMatricula() == 2) {
+                terceras.add(m);
+            }
+        });
+        materiasAlmn = terceras;
+        llenarTbl(materiasAlmn);
+    }
+
+    /**
+     * Consulta en la base de datos, en la tabla de malla. Las materias con el
+     * estado pasado por filtro.
+     */
+    public void cargarMateriasEstado() {
         materiasAlmn = mallaAlm.cargarMallaAlumnoPorEstado(alumno.getId(), estado);
         llenarTbl(materiasAlmn);
     }
-    
+
     /**
      * Lenamos la tabla con la informacion obtenida.
-     * @param materiasAlmn 
+     *
+     * @param materiasAlmn
      */
     private void llenarTbl(ArrayList<MallaAlumnoMD> materiasAlmn) {
         mdTbl.setRowCount(0);
@@ -98,10 +109,10 @@ public class JDMateriasInformacionCTR {
             });
         }
     }
-    
+
     /**
-     * Al hacer click en una de las materias se carga toda la informacion referente
-     * a la misma.
+     * Al hacer click en una de las materias se carga toda la informacion
+     * referente a la misma.
      */
     private void clickTbl() {
         int pos = jd.getTblMaterias().getSelectedRow();

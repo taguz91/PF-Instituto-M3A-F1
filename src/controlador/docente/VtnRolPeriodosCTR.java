@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.docente;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.estilo.TblEstilo;
@@ -17,35 +12,25 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnRolesPeriodos;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author arman
  */
-public class VtnRolPeriodosCTR {
+public class VtnRolPeriodosCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnRolesPeriodos vtnRolPe;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolPeriodoBD rolDoc;
-    private DefaultTableModel mdTbl;
+    private final RolPeriodoBD rolPer;
 // para combo de periodo
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
     private ArrayList<RolPeriodoMD> roles;
-    private int posFila;
 
-    public VtnRolPeriodosCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolPe, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public VtnRolPeriodosCTR(VtnRolesPeriodos vtnRolPe, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnRolPe = vtnRolPe;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.rolDoc = new RolPeriodoBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnRolPe);
-        vtnRolPe.show();
+        this.rolPer = new RolPeriodoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -62,8 +47,10 @@ public class VtnRolPeriodosCTR {
 
         vtnRolPe.getBtnIngresar().addActionListener(e -> abrirFRM());
         vtnRolPe.getBtnEditar().addActionListener(e -> abrirFrmEditar());
-        vtnRolPe.getBtnEliminar().addActionListener(e->eliminarRolPeriodo());
+        vtnRolPe.getBtnEliminar().addActionListener(e -> eliminarRolPeriodo());
         llenarTabla();
+
+        ctrPrin.agregarVtn(vtnRolPe);
     }
 
     private void abrirFRM() {
@@ -78,7 +65,7 @@ public class VtnRolPeriodosCTR {
             //ctrPrin.abrirFrmRolesPeriodos();
             FrmRolesPeriodos frm = new FrmRolesPeriodos();
             ctrPrin.eventoInternal(frm);
-            FrmRolPeriodoCTR ctr = new FrmRolPeriodoCTR(vtnPrin, frm, conecta, ctrPrin);
+            FrmRolPeriodoCTR ctr = new FrmRolPeriodoCTR(frm, ctrPrin);
             ctr.iniciar();
             ctr.editarRolesPeriodos(roles.get(posFila));
             vtnRolPe.dispose();
@@ -87,13 +74,14 @@ public class VtnRolPeriodosCTR {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para editar");
         }
     }
-    public void eliminarRolPeriodo(){
-        posFila= vtnRolPe.getTblAlumno().getSelectedRow();
-        if(posFila>=0){
-            rolDoc.eliminarRolPeriodo(roles.get(posFila).getId_rol());
+
+    public void eliminarRolPeriodo() {
+        posFila = vtnRolPe.getTblAlumno().getSelectedRow();
+        if (posFila >= 0) {
+            rolPer.eliminarRolPeriodo(roles.get(posFila).getId_rol());
             JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
             llenarTabla();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar");
         }
     }
@@ -104,7 +92,7 @@ public class VtnRolPeriodosCTR {
             mdTbl.removeRow(i);
         }
 
-        roles = rolDoc.llenarTabla();
+        roles = rolPer.llenarTabla();
         int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < roles.size(); i++) {
             mdTbl.addRow(new Object[columnas]);

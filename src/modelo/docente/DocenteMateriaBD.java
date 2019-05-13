@@ -26,7 +26,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         this.mat = new MateriaBD(conecta);
     }
 
-    public void guardar() {
+    public boolean guardar() {
         String nsql = "INSERT INTO public.\"DocentesMateria\"(\n"
                 + "	id_docente, id_materia)\n"
                 + "	VALUES (" + getDocente().getIdDocente() + ", " + getMateria().getId() + ");";
@@ -35,6 +35,13 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
             JOptionPane.showMessageDialog(null, "Asignamos correctamente \n" + getMateria().getNombre()
                     + " A \n" + getDocente().getPrimerNombre() + " " + getDocente().getSegundoNombre()
                     + " " + getDocente().getPrimerApellido() + " " + getDocente().getSegundoApellido());
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo asignar  \n" + getMateria().getNombre()
+                    + " A \n" + getDocente().getPrimerNombre() + " " + getDocente().getSegundoNombre()
+                    + " " + getDocente().getPrimerApellido() + " " + getDocente().getSegundoApellido() + "\n"
+                    + "Por favor compruebe su conexion a internet y vuelva a intentarlo.");
+            return false;
         }
     }
 
@@ -48,7 +55,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar, compruebe su conexion.");
         }
     }
-    
+
     public void activar(int idDocenMat) {
         String nsql = "UPDATE public.\"DocentesMateria\""
                 + " SET docente_mat_activo = true\n"
@@ -64,7 +71,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         DocenteMateriaMD dm = null;
         String sql = "SELECT id_docente_mat, docente_mat_activo\n"
                 + "	FROM public.\"DocentesMateria\" \n"
-                + "	WHERE id_docente = "+idDocente+" AND id_materia = "+idMateria+";";
+                + "	WHERE id_docente = " + idDocente + " AND id_materia = " + idMateria + ";";
         ResultSet rs = conecta.sql(sql);
         System.out.println(sql);
         if (rs != null) {

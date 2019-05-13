@@ -862,6 +862,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
     public JLabel getLblGuardarEstrategia() {
         return lblGuardarEstrategia;
+        
     }
 
     public void setLblGuardarEstrategia(JLabel lblGuardarEstrategia) {
@@ -978,6 +979,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAgregarEstrategia = new javax.swing.JLabel();
         txtNuevaEstrategia = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1004,8 +1007,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblFechaInicio.setText("Fecha de Inicio de Unidad:");
         pnlUnidad.add(lblFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
-        pnlUnidad.add(dchFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, -1, -1));
-        pnlUnidad.add(dchFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
+        pnlUnidad.add(dchFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(938, 20, 130, -1));
+        pnlUnidad.add(dchFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(938, 60, 130, -1));
 
         lblFechaFin.setText("Fecha de Fin de Unidad:");
         pnlUnidad.add(lblFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 61, -1, -1));
@@ -1426,6 +1429,14 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         btnGuardar.setText("Guardar");
         pnlUnidad.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 570, -1, -1));
 
+        jLabel1.setText("Total de Gestion de  Aula:");
+        pnlUnidad.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 350, -1, 30));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("0/60");
+        pnlUnidad.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 350, 60, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1522,6 +1533,8 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAC;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAD;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionP;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
     private javax.swing.JLabel lblAprendizajeColaborativo;

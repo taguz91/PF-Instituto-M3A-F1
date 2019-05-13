@@ -23,19 +23,17 @@ import vista.usuario.VtnUsuario;
 
 /**
  *
- * @author USUARIO
+ * @author MrRainx
  */
 public class VtnUsuarioCTR {
 
-    private final VtnPrincipal desktop; // DONDE VOY A VISUALIZAR
-    private final VtnUsuario vista; // QUE VOY A VISUALIZAR
-    private UsuarioBD modelo; // CON LO QUE VOY A TRABAJAR
-    //Modelos para trabajar
+    private final VtnPrincipal desktop;
+    private final VtnUsuario vista;
+    private UsuarioBD modelo;
     private final RolMD permisos;
 
     //Listas Para rellenar la tabla
     private static List<UsuarioMD> listaUsuarios;
-    //Modelo de la tabla
     private static DefaultTableModel tablaUsuarios;
 
     private boolean cargaTabla = true;
@@ -51,15 +49,14 @@ public class VtnUsuarioCTR {
     }
 
     //Inits
-    public void Init() {
+    public synchronized void Init() {
         //Inicializamos la tabla
-        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
+        tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
         //Inicializamos las listas con las consultas
         listaUsuarios = UsuarioBD.SelectAll();
         cargarTabla(listaUsuarios);
-
-        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
         //InitPermisos();
         InitEventos();
 
@@ -125,9 +122,7 @@ public class VtnUsuarioCTR {
 
                 Effects.setLoadCursor(vista);
 
-                lista.stream()
-                        .sorted((item1, item2) -> item1.getUsername().compareTo(item2.getUsername()))
-                        .forEach(VtnUsuarioCTR::agregarFila);
+                lista.stream().forEach(VtnUsuarioCTR::agregarFila);
 
                 vista.getLblResultados().setText(lista.size() + " Registros");
 
@@ -179,17 +174,17 @@ public class VtnUsuarioCTR {
 
     }
 
-    private UsuarioBD setObjFromTable(int fila) {
+    public UsuarioBD getModelo() {
+        return modelo;
+    }
 
-        String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
+    public void setModelo(int fila) {
         modelo = null;
+        String username = (String) vista.getTblUsuario().getValueAt(fila, 1);
         modelo = new UsuarioBD(listaUsuarios.stream()
                 .filter(item -> item.getUsername().equals(username))
                 .findAny()
                 .get());
-
-        return modelo;
-
     }
 
     //EVENTOS 
@@ -231,11 +226,11 @@ public class VtnUsuarioCTR {
 
         if (fila != -1) {
 
-            setObjFromTable(fila);
+            setModelo(fila);
 
             FrmUsuarioUpdt form = new FrmUsuarioUpdt(desktop, this);
             form.Init();
-            form.setModelo(setObjFromTable(fila));
+            form.setModelo(getModelo());
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
@@ -250,11 +245,11 @@ public class VtnUsuarioCTR {
         if (fila == -1) {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         } else {
-
-            if (modelo.getUsername().equals("ROOT")) {
+            setModelo(fila);
+            if (getModelo().getUsername().equals("ROOT")) {
                 JOptionPane.showMessageDialog(vista, "NO SE PUEDE EDITAR LOS PERMISOS DEL USUARIO ROOT!");
             } else {
-                FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), setObjFromTable(fila), "Asignar");
+                FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), modelo, "Asignar");
                 form.Init();
             }
 
@@ -269,8 +264,8 @@ public class VtnUsuarioCTR {
         if (fila == -1) {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
         } else {
-
-            FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), setObjFromTable(fila), "Consultar");
+            setModelo(fila);
+            FrmAsignarRolCTR form = new FrmAsignarRolCTR(desktop, new FrmAsignarRoles(), new RolesDelUsuarioBD(), getModelo(), "Consultar");
             form.Init();
 
         }

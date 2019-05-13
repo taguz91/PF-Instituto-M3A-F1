@@ -1,6 +1,6 @@
 package controlador.alumno;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
+public class JDAnularMatriculaCTR extends DVtnCTR {
 
     private final JDAnularMatricula jd;
     private final MatriculaMD matricula;
@@ -31,14 +31,14 @@ public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
     private final MateriaRequisitoBD mtr;
     private String materiaAnular = "";
 
-    public JDAnularMatriculaCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public JDAnularMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
-        super(conecta, vtnPrin, ctrPrin);
-        this.almCur = new AlumnoCursoBD(conecta);
-        this.acrb = new AlumnoCursoRetiradoBD(conecta);
-        this.mtr = new MateriaRequisitoBD(conecta);
+        super(ctrPrin);
+        this.almCur = new AlumnoCursoBD(ctrPrin.getConecta());
+        this.acrb = new AlumnoCursoRetiradoBD(ctrPrin.getConecta());
+        this.mtr = new MateriaRequisitoBD(ctrPrin.getConecta());
         this.matricula = matricula;
-        this.jd = new JDAnularMatricula(vtnPrin, false);
+        this.jd = new JDAnularMatricula(ctrPrin.getVtnPrin(), false);
     }
 
     public void iniciar() {
@@ -70,7 +70,7 @@ public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
 
                 llenarTbl();
             } else {
-                JOptionPane.showMessageDialog(vtnPrin, "Unicamente puede ingresar letras.");
+                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Unicamente puede ingresar letras.");
                 anunarMatricula(almnsCursoAnular);
             }
         }
@@ -91,7 +91,7 @@ public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
                 materiaAnular = materiaAnular + c.getMateria().getNombre() + "\n";
             });
 
-            int r = JOptionPane.showConfirmDialog(vtnPrin, "Se anulara la matricula de: \n" + materiaAnular);
+            int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Se anulara la matricula de: \n" + materiaAnular);
             if (r == JOptionPane.YES_OPTION) {
                 almnsCurso.forEach(ac -> {
                     for (int i = 0; i < corequisitos.size(); i++) {
@@ -105,7 +105,7 @@ public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
                 anunarMatricula(almnsCursoAnular);
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Seleccione una fila primero.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Seleccione una fila primero.");
         }
     }
 
@@ -138,7 +138,7 @@ public class JDAnularMatriculaCTR extends DependenciasVtnCTR {
 
     private void iniciarJD() {
         jd.setVisible(true);
-        jd.setLocationRelativeTo(vtnPrin);
+        jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
         jd.setTitle("Anular matricula");
         ctrPrin.eventoJDCerrar(jd);
     }
