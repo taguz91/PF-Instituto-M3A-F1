@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.5644739300537839"/>
-	<property name="ireport.x" value="175"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="423"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./src/vista/notas/reportesPresencial/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./src/vista/notas/reportesUB/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -62,10 +62,10 @@ FROM
   INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
 	
 WHERE
-	"Cursos".id_docente = 49 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019' 
-	AND "Cursos".curso_nombre= 'M2A' 
-	AND "public"."Materias".materia_nombre = 'ALGEBRA Y TRIGONOMETRÍA'
+	"Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "Cursos".curso_nombre= $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	
 	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido  ||' ' ||
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre]]>
@@ -86,11 +86,11 @@ WHERE
 	<title>
 		<band height="203" splitType="Stretch">
 			<staticText>
-				<reportElement x="663" y="58" width="199" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement x="608" y="58" width="402" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
-				<text><![CDATA[REGISTRO DE ALUMNOS]]></text>
+				<text><![CDATA[REGISTRO DE N° DE ALUMNOS ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1034" y="81" width="88" height="20"/>
