@@ -149,11 +149,6 @@ public class FrmCursoCTR extends DCTR {
         frmCurso.getCbxMateria().setEnabled(true);
         int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
         int posCi = frmCurso.getCbxCiclo().getSelectedIndex();
-//        if (posPr > 0 && posCi == 0) {
-//            //Consultamos las materias para cargarlo co el combo materias
-//            materias = mt.cargarMateriaPorCarrera(periodos.get(posPr - 1).getCarrera().getId());
-//            cargarCmbMaterias(materias);
-//        } else 
         if (posPr > 0 && posCi > 0) {
             int ciclo = Integer.parseInt(frmCurso.getCbxCiclo().getSelectedItem().toString());
 
@@ -166,6 +161,11 @@ public class FrmCursoCTR extends DCTR {
 
     }
 
+    /**
+     * Llenamso el combo de con los ciclos de la carrera
+     *
+     * @param posPrd
+     */
     private void llenarCmbCiclos(int posPrd) {
         ciclos = mt.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
         frmCurso.getCbxCiclo().removeAllItems();
@@ -177,6 +177,10 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Actualizamos el combo de de docentes correspondiendo a la materia que
+     * Seleccionemos
+     */
     private void actualizarCmbDocentes() {
         int posMat = frmCurso.getCbxMateria().getSelectedIndex();
         frmCurso.getCbxDocente().setEnabled(true);
@@ -189,6 +193,11 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Cargamos el combo con las materias seleccionadas
+     *
+     * @param materias
+     */
     private void cargarCmbMaterias(ArrayList<MateriaMD> materias) {
         if (materias != null) {
             frmCurso.getCbxMateria().removeAllItems();
@@ -199,6 +208,12 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Cargamos el combo de docentes con los docentes que le pasemos por
+     * parametro
+     *
+     * @param docentes
+     */
     private void cargarCmbDocente(ArrayList<DocenteMD> docentes) {
         if (docentes != null) {
             frmCurso.getCbxDocente().removeAllItems();
@@ -210,6 +225,9 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Cargamos las jornadas
+     */
     private void cargarCmbJornada() {
         jornadas = jd.cargarJornadas();
         if (jornadas != null) {
@@ -221,16 +239,20 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Guardamos todo y actualizamos el combo de materias y docentes
+     */
     public void guardarSeguirIngresando() {
         if (guardar()) {
             actualizarCmbMaterias();
             actualizarCmbDocentes();
             frmCurso.getLblError().setVisible(false);
-        } else {
-            System.out.println("No se pudo guardar, posiblmente ");
         }
     }
 
+    /**
+     * Guardamos y cerramos todo
+     */
     public void guardarYSalir() {
         if (guardar()) {
             frmCurso.dispose();
@@ -238,11 +260,15 @@ public class FrmCursoCTR extends DCTR {
             if (ctrCurso != null) {
                 ctrCurso.actualizarVtn();
             }
-        } else {
-            System.out.println("No se pudo guardar.");
         }
     }
 
+    /**
+     * Al dar click en guardar validamos que todo el formulario este
+     * correctamente Tambien que no exista el curso Ni la materia en ese curso
+     *
+     * @return
+     */
     private boolean guardar() {
         //Para validar todo 
         boolean guardar = true;
@@ -327,7 +353,13 @@ public class FrmCursoCTR extends DCTR {
         }
         return guardar;
     }
-
+    
+    /**
+     * Editamos el curso 
+     * Cargamos todo el formulario con los datos que nos den de curso 
+     * desde la tabla 
+     * @param c 
+     */
     public void editar(CursoMD c) {
         editando = true;
         idCurso = c.getId();

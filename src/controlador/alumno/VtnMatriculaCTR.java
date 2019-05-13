@@ -224,7 +224,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      */
     private void clickImprimirFicha() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
-        if (posFila > 0) {
+        if (posFila >= 0) {
             int s = JOptionPane.showOptionDialog(vtnMatri,
                     "Reporte de matricula\n"
                     + "¿Elegir el tipo de reporte?", "Ficha matricula",
