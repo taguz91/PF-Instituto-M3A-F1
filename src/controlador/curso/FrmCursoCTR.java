@@ -71,6 +71,9 @@ public class FrmCursoCTR extends DCTR {
         this.ctrCurso = ctrCurso;
     }
 
+    /**
+     * Iniciamos todas las dependencias de esta ventana
+     */
     public void iniciar() {
         //Ocusltamos los errores 
         ocultarErrores();
@@ -100,6 +103,9 @@ public class FrmCursoCTR extends DCTR {
         ctrPrin.agregarVtn(frmCurso);
     }
 
+    /**
+     * Ocultamos todos los errores que existen en este formulario
+     */
     private void ocultarErrores() {
         frmCurso.getLblError().setVisible(false);
         frmCurso.getLblErrorCapacidad().setVisible(false);
@@ -111,6 +117,9 @@ public class FrmCursoCTR extends DCTR {
         frmCurso.getLblErrorPrdLectivo().setVisible(false);
     }
 
+    /**
+     * Cargamos el combo de periodos lectivos
+     */
     private void cargarCmbPrdLectivo() {
         periodos = prd.cargarPrdParaCmbFrm();
         if (periodos != null) {
@@ -122,14 +131,19 @@ public class FrmCursoCTR extends DCTR {
         }
     }
 
+    /**
+     * Al seleccionar un periodo se cargan todos los ciclos.
+     */
     private void clickCmbPrd() {
         int posPr = frmCurso.getCbxPeriodoLectivo().getSelectedIndex();
         llenarCmbCiclos(posPr);
     }
 
-    //Con este emtodo actualizamos los datos del combo materias  
-    //De igual manera en los del combo docente  
-    //Materia consultamos todas las materias de ese cilo 
+    /**
+     * Con este emtodo actualizamos los datos del combo materias De igual manera
+     * en los del combo docente Materia consultamos todas las materias de ese
+     * cilo
+     */
     private void actualizarCmbMaterias() {
         //Activamos el combo de materias
         frmCurso.getCbxMateria().setEnabled(true);
