@@ -49,11 +49,11 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla. historial_ip)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso,inet_client_addr());
-  ELSE
-    INSERT INTO public."HistorialUsuarios"(
-    usu_username, historial_fecha, historial_tipo_accion,
-    historial_nombre_tabla, historial_pk_tabla, historial_ip)
-    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
+	 ELSE
+	    INSERT INTO public."HistorialUsuarios"(
+	    usu_username, historial_fecha, historial_tipo_accion,
+	    historial_nombre_tabla, historial_pk_tabla, historial_ip)
+	    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
 	END IF;
 	UPDATE public."AlumnoCurso" 
 	SET almn_curso_activo = new.curso_activo
