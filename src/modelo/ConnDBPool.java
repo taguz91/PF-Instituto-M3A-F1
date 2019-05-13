@@ -22,6 +22,7 @@ public class ConnDBPool {
     private static HikariConfig config;
     private static HikariDataSource ds;
 
+    private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rs;
 
@@ -67,6 +68,7 @@ public class ConnDBPool {
     }
 
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
+        //this.conn = conn;
         try {
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);
@@ -125,7 +127,6 @@ public class ConnDBPool {
     }
 
     public ResultSet ejecutarQuery(String sql, Connection conn, Map<Integer, Object> parametros) {
-
         try {
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);

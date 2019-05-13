@@ -107,9 +107,9 @@ public class VtnActivarNotasCTR {
         vista.getTblCursoTipoNotas().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (modelo.editar(modelo.getIdIngresoNotas())) {
-                    refreshTabla();
-                }
+//                if (modelo.editar(modelo.getIdIngresoNotas())) {
+//                    refreshTabla();
+//                }
 
                 System.out.println(modelo);
             }
@@ -276,7 +276,7 @@ public class VtnActivarNotasCTR {
 
             System.gc();
             setSelectedItemInCombo();
-            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
+//            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
 
             cargarTabla(listaNotasActivadas);
         } else {
@@ -288,7 +288,7 @@ public class VtnActivarNotasCTR {
     private void cmbPeriodos(ActionEvent e) {
         new Thread(() -> {
             setSelectedItemInCombo();
-            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
+//            listaNotasActivadas = IngresoNotasBD.selectAll(itemCombo);
             cargarTabla(listaNotasActivadas);
         }).start();
 

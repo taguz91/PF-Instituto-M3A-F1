@@ -6,7 +6,6 @@
 package modelo.tipoDeNota;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -17,7 +16,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
-import modelo.ResourceManager;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 
@@ -27,12 +25,11 @@ import modelo.periodolectivo.PeriodoLectivoMD;
  */
 public class TipoDeNotaBD extends TipoDeNotaMD {
 
-    private final ConnDBPool pool;
+    private static ConnDBPool pool;
     private static Connection conn;
     private static ResultSet rs;
-    private static PreparedStatement stmt;
 
-    {
+    static {
         pool = new ConnDBPool();
     }
 
@@ -63,7 +60,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     public boolean insertar() {
         String INSERT = "INSERT INTO  \"TipoDeNota\"  \n"
                 + "( tipo_nota_nombre, tipo_nota_valor_minimo, tipo_nota_valor_maximo, id_prd_lectivo )\n"
-                + "VALUES ('?',?,?,?);";
+                + "VALUES (?,?,?,?)";
         conn = pool.getConnection();
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, getNombre());
@@ -103,7 +100,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
         TipoDeNotaMD tipoNota = new TipoDeNotaMD();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
 
@@ -115,10 +114,10 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
             }
 
-            rs.close();
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
 
         return tipoNota;
@@ -127,7 +126,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     private static List<TipoDeNotaMD> SelectSimple(String QUERY) {
         List<TipoDeNotaMD> Lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(QUERY);
+        conn = pool.getConnection();
+
+        rs = pool.ejecutarQuery(QUERY, conn, null);
 
         try {
             while (rs.next()) {
@@ -154,9 +155,10 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
                 Lista.add(tipoNota);
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(TipoDeNotaBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.close(conn);
         }
 
         return Lista;
@@ -176,8 +178,8 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
         List<TipoDeNotaMD> lista = new ArrayList<>();
 
-        System.out.println(SELECT);
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
@@ -189,9 +191,10 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
                 lista.add(tipo);
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
 
         return lista;
@@ -207,28 +210,10 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "WHERE\n"
                 + "	id_tipo_nota = " + Pk;
 
-        return ResourceManager.Statement(UPDATE) == null;
+        conn = pool.getConnection();
 
-    }
+        return pool.ejecutar(UPDATE, conn, null) == null;
 
-    public boolean eliminar(int Pk) {
-        String DELETE = "UPDATE \"TipoDeNota\" \n"
-                + "SET \n"
-                + "     tipo_nota_estado = " + false + " \n"
-                + "WHERE\n"
-                + " \"TipoDeNota\".id_tipo_nota = " + Pk;
-
-        return ResourceManager.Statement(DELETE) == null;
-    }
-
-    public boolean reactivar(int Pk) {
-        String DELETE = "UPDATE \"TipoDeNota\" \n"
-                + "SET \n"
-                + "     tipo_nota_estado = " + true + "\n"
-                + "WHERE\n"
-                + " \"TipoDeNota\".id_tipo_nota = " + Pk;
-
-        return ResourceManager.Statement(DELETE) == null;
     }
 
 }

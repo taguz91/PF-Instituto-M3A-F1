@@ -56,7 +56,7 @@ public class VtnPeriodoIngresoNotasCTR {
 
         tablaPeriodoNotas = (DefaultTableModel) vista.getTblPeriodoIngresoNotas().getModel();
 
-        listaPeriodoNotas = PeriodoIngresoNotasBD.selectAll();
+        //listaPeriodoNotas = PeriodoIngresoNotasBD.selectAll();
         cargarTabla(listaPeriodoNotas);
 
         InitEventos();
@@ -183,8 +183,8 @@ public class VtnPeriodoIngresoNotasCTR {
             int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE BORRAR EL ELEMENTO SELECCIONADO");
 
             if (opcion == 0) {
-                modelo.eliminar(PK);
-                cargarTabla(PeriodoIngresoNotasBD.selectAll());
+//                modelo.eliminar(PK);
+//                cargarTabla(PeriodoIngresoNotasBD.selectAll());
             }
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
@@ -198,7 +198,7 @@ public class VtnPeriodoIngresoNotasCTR {
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {
-        cargarTabla(PeriodoIngresoNotasBD.selectAll());
+        //cargarTabla(PeriodoIngresoNotasBD.selectAll());
     }
 
     private void txtBuscarOnKeyReleased(KeyEvent e) {

@@ -25,16 +25,16 @@ public class FrmIngresoNotasAgregar extends AbstractForm {
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        if (validarFormulario()) {
-            if (setObj().insertar()) {
-
-                String MENSAJE = "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS";
-
-                JOptionPane.showMessageDialog(vista, MENSAJE);
-            } else {
-                JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
-            }
-        }
+//        if (validarFormulario()) {
+//            if (setObj().insertar()) {
+//
+//                String MENSAJE = "SE HA AGREGADO EL PERIODO DE INGRESO DE NOTAS";
+//
+//                JOptionPane.showMessageDialog(vista, MENSAJE);
+//            } else {
+//                JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
+//            }
+//        }
     }
 
 }

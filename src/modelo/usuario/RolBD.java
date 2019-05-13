@@ -1,7 +1,6 @@
 package modelo.usuario;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
-import modelo.ResourceManager;
 
 /**
  *
@@ -43,11 +41,7 @@ public class RolBD extends RolMD {
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, getNombre());
         parametros.put(2, getObservaciones());
-
         conn = pool.getConnection();
-
-        System.out.println(INSERT);
-
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
@@ -96,40 +90,36 @@ public class RolBD extends RolMD {
 
     public boolean editar(int Pk) {
 
-        String UPDATE = "UPDATE \"Roles\" "
-                + " SET "
-                + " id_rol = " + getId()
-                + ",rol_nombre = '" + getNombre() + "'"
-                + " WHERE"
-                + " id_rol = '" + Pk + "'";
+        String UPDATE = "UPDATE \"Roles\" \n"
+                + "SET \n"
+                + " id_rol = ?,\n"
+                + " rol_nombre = ?\n"
+                + " WHERE\n"
+                + " id_rol = ?";
 
-        return ResourceManager.Statement(UPDATE) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getId());
+        parametros.put(2, getNombre());
+        parametros.put(3, Pk);
+
+        return pool.ejecutar(UPDATE, conn, parametros) == null;
 
     }
 
     public boolean eliminar(int Pk) {
 
         String DELETE = "UPDATE \"Roles\" "
-                + " SET "
-                + " rol_estado = " + false
-                + " WHERE "
-                + " id_rol = " + Pk
-                + "";
+                + "SET "
+                + " rol_estado = ?\n"
+                + "WHERE "
+                + " id_rol = ?";
 
-        return ResourceManager.Statement(DELETE) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, false);
+        parametros.put(2, Pk);
 
-    }
-
-    public boolean reactivar(int Pk) {
-
-        String REACTIVAR = "UPDATE \"Roles\" "
-                + " SET "
-                + " rol_estado = " + false
-                + " WHERE "
-                + " id_rol = " + Pk
-                + "";
-
-        return ResourceManager.Statement(REACTIVAR) == null;
+        return pool.ejecutar(DELETE, conn, parametros) == null;
 
     }
+
 }

@@ -161,36 +161,6 @@ public class VtnTipoNotasCTR {
 
     private void btnEliminar(ActionEvent e) {
 
-        int fila = vista.getTblTipoNotas().getSelectedRow();
-        if (fila != -1) {
-
-            setModel(fila);
-
-            int opcion = JOptionPane.showConfirmDialog(vista, "ESTA SEGURO DE ELIMINAR LA NOTA: " + modelo.getNombre());
-
-            if (opcion == 0) {
-
-                if (modelo.eliminar(modelo.getIdTipoNota())) {
-
-                    JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO LA NOTA: " + modelo.getNombre());
-
-                    desktop.getLblEstado().setText("SE HA ELIMINADO LA NOTA: " + modelo.getNombre());
-
-                    cargarTabla();
-
-                } else {
-
-                    JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO ELIMINAR NADA");
-
-                }
-
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!!");
-
-        }
-
     }
 
     private void btnActualizarActionPerformance(ActionEvent e) {

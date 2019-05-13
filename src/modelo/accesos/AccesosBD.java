@@ -5,19 +5,32 @@
  */
 package modelo.accesos;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 
 /**
  *
  * @author MrRainx
  */
 public class AccesosBD extends AccesosMD {
+
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
+    private static PreparedStatement stmt;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public AccesosBD(int idAccesos, String nombre, String descripcion) {
         super(idAccesos, nombre, descripcion);
@@ -29,15 +42,14 @@ public class AccesosBD extends AccesosMD {
     public boolean insertar() {
 
         String INSERT = "INSERT INTO \"Accesos\" "
-                + " VALUES"
-                + "("
-                + "" + getIdAccesos() + ","
-                + "'" + getNombre() + "',"
-                + "'" + getDescripcion() + "'"
-                + ")"
-                + "";
+                + " VALUES(?,?,?)";
 
-        return ResourceManager.Statement(INSERT) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getIdAccesos());
+        parametros.put(2, getNombre());
+        parametros.put(3, getDescripcion());
+        conn = pool.getConnection();
+        return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
     public static List<AccesosMD> SelectAll() {
@@ -46,19 +58,6 @@ public class AccesosBD extends AccesosMD {
 
         return SelectSimple(SELECT);
 
-    }
-
-    public List<AccesosMD> SelectOneWhereNombreLike(String Aguja) {
-
-        String SELECT = "SELECT id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" WHERE acc_nombre LIKE '%" + Aguja + "%'";
-
-        return SelectSimple(SELECT);
-    }
-
-    public List<AccesosMD> SelectWhereIdAcceso(int idAcceso) {
-        String SELECT = "SELECT id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" WHERE id_acceso = " + idAcceso + "";
-
-        return SelectSimple(SELECT);
     }
 
     public static List<AccesosMD> SelectWhereACCESOROLidRol(int idRol) {
@@ -71,21 +70,21 @@ public class AccesosBD extends AccesosMD {
     private static List<AccesosMD> SelectSimple(String QUERY) {
         List<AccesosMD> Lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(QUERY);
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(QUERY, conn, null);
 
         try {
             while (rs.next()) {
                 AccesosMD acceso = new AccesosMD();
-                if (rs.wasNull()) {
-
-                }
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
                 Lista.add(acceso);
             }
-            rs.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.close(conn);
         }
 
         return Lista;
@@ -104,7 +103,8 @@ public class AccesosBD extends AccesosMD {
 
         List<AccesosMD> Lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
@@ -112,22 +112,29 @@ public class AccesosBD extends AccesosMD {
                 acceso.setNombre(rs.getString("acc_nombre"));
                 Lista.add(acceso);
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.close(conn);
         }
 
         return Lista;
     }
-    
-    public boolean editar(String pk){
-        String UPDATE = "UPDATE Accesos SET"
-                + "acc_nombre = "+getNombre()+""
-                + "acc_descripcion = "+getDescripcion()+""
-                + "WHERE"
-                + "id_acceso = "+pk+"";
+
+    public boolean editar(String pk) {
+        String UPDATE = "UPDATE Accesos SET\n"
+                + " acc_nombre = ?\n"
+                + " acc_descripcion = ?\n"
+                + "WHERE\n"
+                + " id_acceso = ?";
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getNombre());
+        parametros.put(2, getDescripcion());
+        parametros.put(2, pk);
         System.out.println(UPDATE);
-        return ResourceManager.Statement(UPDATE) == null;
+        conn = pool.getConnection();
+        return pool.ejecutar(UPDATE, conn, parametros) == null;
     }
 
 }

@@ -59,7 +59,6 @@ public class ConectarDB {
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
-            ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
@@ -82,7 +81,6 @@ public class ConectarDB {
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
             //ct = DriverManager.getConnection(url, user, pass);
 
-            ResourceManager.setConecct(ct);
 
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
