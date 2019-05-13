@@ -318,7 +318,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Numero de matriculas: ");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 170, -1));
-        jPanel4.add(lblNumMatriculasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 150, 20));
+        jPanel4.add(lblNumMatriculasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 150, 20));
 
         jLabel9.setText("Número de matriculas en clases:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, 20));

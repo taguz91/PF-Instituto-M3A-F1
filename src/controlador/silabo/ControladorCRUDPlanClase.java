@@ -286,7 +286,7 @@ public class ControladorCRUDPlanClase {
 
     private UnidadSilaboMD unidad_seleccionada() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo_seleccionado().getIdSilabo());
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo_seleccionado().getIdSilabo(),1);
         Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
                 filter(s -> s.getNumeroUnidad() == Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 4).toString())).
                 findFirst();

@@ -1,6 +1,6 @@
 package controlador.docente;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +15,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -29,13 +28,12 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.docente.JDFinContratacion;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Lina
  */
-public class JDFinContratacionCTR extends DependenciasVtnCTR {
+public class JDFinContratacionCTR extends DVtnCTR {
 
     private PeriodoLectivoBD periodoBD;
     private final DocenteBD dc;
@@ -46,13 +44,13 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
     //private DefaultTableModel mdTbl;
     private boolean guardar = false;
 
-    public JDFinContratacionCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public JDFinContratacionCTR(VtnPrincipalCTR ctrPrin,
             String cedula) {
-        super(conecta, vtnPrin, ctrPrin);
-        this.dc = new DocenteBD(conecta);
+        super(ctrPrin);
+        this.dc = new DocenteBD(ctrPrin.getConecta());
         this.cedula = cedula;
-        this.frmFinContrato = new JDFinContratacion(vtnPrin, false);
-        this.frmFinContrato.setLocationRelativeTo(vtnPrin);
+        this.frmFinContrato = new JDFinContratacion(ctrPrin.getVtnPrin(), false);
+        this.frmFinContrato.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.frmFinContrato.setVisible(true);
         this.frmFinContrato.setTitle("Fin de Contrato");
     }
@@ -115,7 +113,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
     }
 
     public void listaPeriodos() {
-        periodoBD = new PeriodoLectivoBD(conecta);
+        periodoBD = new PeriodoLectivoBD(ctrPrin.getConecta());
 
         List<PeriodoLectivoMD> listaPeriodos = periodoBD.periodoDocente(cedula);
         for (int i = 0; i < listaPeriodos.size(); i++) {
@@ -127,8 +125,8 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
 
     public void llenarTabla(String periodo) {
         System.out.println("Periodo " + periodo);
-        DocenteBD d = new DocenteBD(conecta);
-        PeriodoLectivoBD p = new PeriodoLectivoBD(conecta);
+        DocenteBD d = new DocenteBD(ctrPrin.getConecta());
+        PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) frmFinContrato.getTblMateriasCursos().getModel();
         for (int i = frmFinContrato.getTblMateriasCursos().getRowCount() - 1; i >= 0; i--) {
@@ -331,11 +329,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
             parametro.put("periodolectivo", frmFinContrato.getJcbPeriodos());
             parametro.put("periodolectivo", frmFinContrato.getCbx_Periodos().getSelectedItem().toString());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Informe de Retiro");
-//            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//            JasperViewer view = new JasperViewer(print, false);
-//            view.setVisible(true);
-//            view.setTitle("Informe de Retiro");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Informe de Retiro");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
@@ -343,7 +337,7 @@ public class JDFinContratacionCTR extends DependenciasVtnCTR {
     }
 
     public void botoninformeDocente() {
-        int s = JOptionPane.showOptionDialog(vtnPrin,
+        int s = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(),
                 "Registro de persona \n"
                 + "¿Dessea Imprimir el Registro realizado ?", "Informe de Retiro",
                 JOptionPane.YES_NO_CANCEL_OPTION,

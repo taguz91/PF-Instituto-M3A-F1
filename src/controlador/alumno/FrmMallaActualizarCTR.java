@@ -1,6 +1,6 @@
 package controlador.alumno;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -20,7 +20,7 @@ import vista.principal.VtnPrincipal;
  *
  * @author Johnny
  */
-public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
+public class FrmMallaActualizarCTR extends DVtnCTR {
 
     //Formulario 
     private final FrmMallaActualizar frmMalla;
@@ -35,14 +35,14 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
     private String notaAux;
     private final String[] estados = {"Matriculado", "Cursado", "Reprobado", "Pendiente", "Anulado"};
 
-    public FrmMallaActualizarCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public FrmMallaActualizarCTR(VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
-        super(conecta, vtnPrin, ctrPrin);
+        super(ctrPrin);
         this.malla = malla;
         this.ctrMalla = ctrMalla;
         this.bd = bd;
-        this.frmMalla = new FrmMallaActualizar(vtnPrin, false);
-        this.frmMalla.setLocationRelativeTo(vtnPrin);
+        this.frmMalla = new FrmMallaActualizar(ctrPrin.getVtnPrin(), false);
+        this.frmMalla.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.frmMalla.setVisible(true);
     }
 
@@ -76,7 +76,7 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
         } else {
             numMatricula = 0;
         }
-        
+
         boolean guardar = true;
 
         if (!Validar.esNota(nota1 + "") && !Validar.esNota(nota2 + "") && !Validar.esNota(nota3 + "")) {
@@ -84,7 +84,7 @@ public class FrmMallaActualizarCTR extends DependenciasVtnCTR {
         }
         if (guardar) {
             if (bd.actualizarNota(malla.getId(), nota1, nota2, nota3, numMatricula, frmMalla.getLblEstado().getText())) {
-                vtnPrin.setEnabled(true);
+                ctrPrin.getVtnPrin().setEnabled(true);
                 ctrMalla.actualizarVtn(malla);
                 frmMalla.dispose();
             }

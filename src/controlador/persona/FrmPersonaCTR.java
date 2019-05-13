@@ -1,6 +1,7 @@
 package controlador.persona;
 
 import com.toedter.calendar.JDateChooser;
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
@@ -25,13 +26,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import modelo.ConectarDB;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.validaciones.CmbValidar;
-import modelo.validaciones.TxtVCarnetConadis;
 import modelo.validaciones.TxtVCedula;
 import modelo.validaciones.TxtVCelular;
 import modelo.validaciones.TxtVCorreo;
@@ -45,19 +44,15 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import vista.persona.FrmPersona;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Lina
  */
-public class FrmPersonaCTR {
+public class FrmPersonaCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmPersona frmPersona;
     private final PersonaBD persona;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private TxtVCedula valCe;
     private int numAccion = 2;
 
@@ -92,23 +87,19 @@ public class FrmPersonaCTR {
 
     JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
 
-    public FrmPersonaCTR(VtnPrincipal vtnPrin, FrmPersona frmPersona, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmPersonaCTR(FrmPersona frmPersona, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmPersona = frmPersona;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
         //Inicializamos persona
-        this.persona = new PersonaBD(conecta);
-        this.lug = new LugarBD(conecta);
-
-        vtnPrin.getDpnlPrincipal().add(frmPersona);
-        frmPersona.show();
+        this.persona = new PersonaBD(ctrPrin.getConecta());
+        this.lug = new LugarBD(ctrPrin.getConecta());
         //Para iniciar los combos de paises 
         cargarPaises();
     }
 
     // Metodo iniciar donde se ejecuta todos las acciones d elos botones
     public void iniciar() {
+        ctrPrin.agregarVtn(frmPersona);
         //Desactivamos el campo de identificacion porque debe ingresar primero el tipo de identificacion
         frmPersona.getTxtIdentificacion().setEnabled(false);
         //Ocultamos todos los erores del formulario 
@@ -527,7 +518,7 @@ public class FrmPersonaCTR {
 
     //Metodo para capturar una foto desde WebCam
     private void capturarFotoWebCam() {
-        WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, vtnPrin);
+        WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, ctrPrin);
         ctrCam.iniciarCamara();
         habilitarBtnGuardar();
     }
@@ -578,7 +569,7 @@ public class FrmPersonaCTR {
                     && TipoSangre.equals("SELECCIONE") == false
                     && Etnia.equals("SELECCIONE") == false
                     //      && FechaNaci.equals("") == false
-                 //   && TipoResidencia.equals("SELECCIONE") == false
+                    //   && TipoResidencia.equals("SELECCIONE") == false
                     && CallePrin.equals("") == false) {
 //                if (Discapacidad == true && TipoDiscapacidad.equals("SELECCIONE") == false
 //                        && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
@@ -874,7 +865,7 @@ public class FrmPersonaCTR {
 
             // PersonaBD per = new PersonaBD();
             //Llenar directo por el constructor
-            PersonaBD per = new PersonaBD(conecta);
+            PersonaBD per = new PersonaBD(ctrPrin.getConecta());
 
             //Pasamos la informacion de la foto 
             per.setFile(fis);
@@ -925,23 +916,23 @@ public class FrmPersonaCTR {
                     System.out.println("idPersona" + idPersona);
                     if (fis != null) {
                         if (per.editarPersonaConFoto(idPersona)) {
-                            JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                            JOptionPane.showMessageDialog(null, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
                             ocultarErrores();
                         } else {
-                            JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
+                            JOptionPane.showMessageDialog(null, "No se pudo editar,\n"
                                     + "Revise su conexion a internet. ");
                         }
 
                     } else {
                         if (per.editarPersona(idPersona)) {
-                            JOptionPane.showMessageDialog(vtnPrin, "Datos Editados Correctamente.");
+                            JOptionPane.showMessageDialog(null, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
                             ocultarErrores();
                         } else {
-                            JOptionPane.showMessageDialog(vtnPrin, "No se pudo editar,\n"
+                            JOptionPane.showMessageDialog(null, "No se pudo editar,\n"
                                     + "Revise su conexion a internet. ");
                         }
 
@@ -951,14 +942,14 @@ public class FrmPersonaCTR {
             } else {
                 if (fis != null) {
                     per.insertarPersonaConFoto();
-                    JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
 
                 } else {
                     per.insertarPersona();
-                    JOptionPane.showMessageDialog(vtnPrin, "Datos guardados correctamente.");
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
                     ocultarErrores();
@@ -1419,21 +1410,18 @@ public class FrmPersonaCTR {
     public void llamaReportePersona() {
         JasperReport jr;
         String path = "/vista/reportes/repPersona.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
         try {
             Map parametro = new HashMap();
             parametro.put("cedula", frmPersona.getTxtIdentificacion().getText());
-            System.out.println("parametro del reporte" + parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            conecta.mostrarReporte(jr, parametro, "Reporte de Persona");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Persona");
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "error" + ex);
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
         }
     }
 
     public void botonreportepersona() {
-        int s = JOptionPane.showOptionDialog(vtnPrin,
+        int s = JOptionPane.showOptionDialog(null,
                 "Registro de persona \n"
                 + "¿Dessea Imprimir el Registro realizado ?", "REPORTE PERSONAS",
                 JOptionPane.YES_NO_CANCEL_OPTION,

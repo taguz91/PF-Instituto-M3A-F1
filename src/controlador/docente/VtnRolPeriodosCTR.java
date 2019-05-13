@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.docente;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.estilo.TblEstilo;
@@ -17,35 +12,25 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnRolesPeriodos;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author arman
  */
-public class VtnRolPeriodosCTR {
+public class VtnRolPeriodosCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnRolesPeriodos vtnRolPe;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private final RolPeriodoBD rolPer;
-    private DefaultTableModel mdTbl;
 // para combo de periodo
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
     private ArrayList<RolPeriodoMD> roles;
-    private int posFila;
 
-    public VtnRolPeriodosCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolPe, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public VtnRolPeriodosCTR(VtnRolesPeriodos vtnRolPe, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnRolPe = vtnRolPe;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.rolPer = new RolPeriodoBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(vtnRolPe);
-        vtnRolPe.show();
+        this.rolPer = new RolPeriodoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -64,6 +49,8 @@ public class VtnRolPeriodosCTR {
         vtnRolPe.getBtnEditar().addActionListener(e -> abrirFrmEditar());
         vtnRolPe.getBtnEliminar().addActionListener(e -> eliminarRolPeriodo());
         llenarTabla();
+
+        ctrPrin.agregarVtn(vtnRolPe);
     }
 
     private void abrirFRM() {
@@ -78,7 +65,7 @@ public class VtnRolPeriodosCTR {
             //ctrPrin.abrirFrmRolesPeriodos();
             FrmRolesPeriodos frm = new FrmRolesPeriodos();
             ctrPrin.eventoInternal(frm);
-            FrmRolPeriodoCTR ctr = new FrmRolPeriodoCTR(vtnPrin, frm, conecta, ctrPrin);
+            FrmRolPeriodoCTR ctr = new FrmRolPeriodoCTR(frm, ctrPrin);
             ctr.iniciar();
             ctr.editarRolesPeriodos(roles.get(posFila));
             vtnRolPe.dispose();

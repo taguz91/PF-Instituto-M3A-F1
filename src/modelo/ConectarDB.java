@@ -123,7 +123,7 @@ public class ConectarDB {
             st = ct.createStatement();
             //Ejecutamos la sentencia SQL
             st.executeUpdate(noSql);
-            System.out.println("Tiempo de ejecucion "+st.getQueryTimeout());
+            System.out.println("Tiempo de ejecucion " + st.getQueryTimeout());
             System.out.println("---------NSQL-----------");
             System.out.println("Afecto a: " + st.getUpdateCount());
             System.out.println();
@@ -145,7 +145,7 @@ public class ConectarDB {
                 st.close();
                 ctrCt.recetear("Terminando de ejecutar una transaccion.");
             } catch (SQLException ex) {
-                System.out.println("NO SE CERRARON LAS CONEXIONES "+ex.getMessage());
+                System.out.println("NO SE CERRARON LAS CONEXIONES " + ex.getMessage());
             }
         }
     }
@@ -170,7 +170,7 @@ public class ConectarDB {
             System.out.println("Tabla en la que se consulta: " + metaData.getTableName(1));
             System.out.println("Numero de columnas devueltas: " + metaData.getColumnCount());
             System.out.println("Nombre Base de datos: " + ct.getCatalog());
-            System.out.println("Concourrencia: "+rs.getConcurrency());
+            System.out.println("Concourrencia: " + rs.getConcurrency());
             System.out.println("------------------");
             tabla = metaData.getTableName(1);
             return rs;
@@ -264,5 +264,34 @@ public class ConectarDB {
 
     public void setVtnPrin(VtnPrincipal vtnPrin) {
         this.vtnPrin = vtnPrin;
+    }
+
+    public PreparedStatement getPS(String sql) {
+        try {
+            return ct.prepareStatement(sql);
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar el statement: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //Para migrar todo bien chidorin
+    public SQLException nsql(String sql) {
+        PreparedStatement ps = getPS(sql);
+        try {
+            int a = ps.executeUpdate();
+            System.out.println("Afecto a: " + a);
+            return null;
+        } catch (SQLException e) {
+            System.out.println("No se pudo ejecutar el nsql. " + e.getMessage());
+            return e;
+        } finally {
+            try {
+                ps.getConnection().close();
+                ps.close();
+            } catch (SQLException e) {
+                System.out.println("No se pudo cerrar el prepared statemente: " + e.getMessage());
+            }
+        }
     }
 }

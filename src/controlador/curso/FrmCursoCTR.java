@@ -1,10 +1,10 @@
 package controlador.curso;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import modelo.ConectarDB;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.jornada.JornadaBD;
@@ -17,18 +17,16 @@ import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.validaciones.Validar;
 import vista.curso.FrmCurso;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmCursoCTR {
+public class FrmCursoCTR extends DCTR {
 
     private final FrmCurso frmCurso;
     private final VtnCursoCTR ctrCurso;
     private final CursoBD curso;
-    private final VtnPrincipalCTR ctrPrin;
     //Para saber si estamos editando  
     private boolean editando = false;
     private int idCurso = 0;
@@ -48,35 +46,29 @@ public class FrmCursoCTR {
     //Private void ciclos de una carrera
     private ArrayList<Integer> ciclos;
 
-    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
+    public FrmCursoCTR(FrmCurso frmCurso, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmCurso = frmCurso;
-        this.ctrPrin = ctrPrin;
 
-        this.curso = new CursoBD(conecta);
-        this.docen = new DocenteBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        this.mt = new MateriaBD(conecta);
-        this.jd = new JornadaBD(conecta);
+        this.curso = new CursoBD(ctrPrin.getConecta());
+        this.docen = new DocenteBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
+        this.mt = new MateriaBD(ctrPrin.getConecta());
+        this.jd = new JornadaBD(ctrPrin.getConecta());
         this.ctrCurso = null;
-
-        vtnPrin.getDpnlPrincipal().add(frmCurso);
-        frmCurso.show();
     }
 
-    public FrmCursoCTR(VtnPrincipal vtnPrin, FrmCurso frmCurso, ConectarDB conecta, VtnPrincipalCTR ctrPrin,
+    public FrmCursoCTR(FrmCurso frmCurso, VtnPrincipalCTR ctrPrin,
             VtnCursoCTR ctrCurso) {
+        super(ctrPrin);
         this.frmCurso = frmCurso;
-        this.ctrPrin = ctrPrin;
 
-        this.curso = new CursoBD(conecta);
-        this.docen = new DocenteBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        this.mt = new MateriaBD(conecta);
-        this.jd = new JornadaBD(conecta);
+        this.curso = new CursoBD(ctrPrin.getConecta());
+        this.docen = new DocenteBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
+        this.mt = new MateriaBD(ctrPrin.getConecta());
+        this.jd = new JornadaBD(ctrPrin.getConecta());
         this.ctrCurso = ctrCurso;
-
-        vtnPrin.getDpnlPrincipal().add(frmCurso);
-        frmCurso.show();
     }
 
     public void iniciar() {
@@ -104,6 +96,8 @@ public class FrmCursoCTR {
                 }
             }
         });
+
+        ctrPrin.agregarVtn(frmCurso);
     }
 
     private void ocultarErrores() {

@@ -1,45 +1,39 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import vista.alumno.JDMateriasCurso;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDMateriasCursoCTR {
+public class JDMateriasCursoCTR extends DCTR {
 
     private final JDMateriasCurso jdMat;
-    private final ConectarDB conecta;
-    private final VtnPrincipal vtnPrin;
-    private final VtnPrincipalCTR ctrPrin;
     private final CursoBD cur;
     private final AlumnoCursoMD almCurso;
     //Guardaremos los cursos que consultamos
     private ArrayList<CursoMD> cursos;
     private DefaultTableModel mdTbl;
 
-    public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin, ConectarDB conecta) {
+    public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.almCurso = almCurso;
-        this.vtnPrin = vtnPrin;
-        this.ctrPrin = ctrPrin;
-        this.conecta = conecta;
-        this.cur = new CursoBD(conecta);
-        this.jdMat = new JDMateriasCurso(vtnPrin, false);
+        this.cur = new CursoBD(ctrPrin.getConecta());
+        this.jdMat = new JDMateriasCurso(ctrPrin.getVtnPrin(), false);
     }
 
     public void iniciar() {
-        jdMat.setLocationRelativeTo(vtnPrin);
+        jdMat.setLocationRelativeTo(ctrPrin.getVtnPrin());
         jdMat.setVisible(true);
-        
+
         String[] titulo = {"Materia", "Docente"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -53,7 +47,7 @@ public class JDMateriasCursoCTR {
     private void buscar() {
         cursos = cur.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
                 almCurso.getCurso().getNombre());
-        System.out.println("Numero de cursos devuletos "+cursos.size());
+        System.out.println("Numero de cursos devuletos " + cursos.size());
         llenarTbl(cursos);
     }
 

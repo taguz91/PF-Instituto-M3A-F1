@@ -1,13 +1,12 @@
 package controlador.docente;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.docente.DocenteMateriaBD;
@@ -21,18 +20,14 @@ import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.docente.FrmDocenteMateria;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmDocenteMateriaCTR {
+public class FrmDocenteMateriaCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmDocenteMateria frmDM;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
 
     private final DocenteMateriaBD dm;
     private DocenteMateriaMD docenMat;
@@ -47,19 +42,14 @@ public class FrmDocenteMateriaCTR {
 
     DefaultTableModel mdTbl;
 
-    public FrmDocenteMateriaCTR(VtnPrincipal vtnPrin, FrmDocenteMateria frmDM, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmDocenteMateriaCTR(FrmDocenteMateria frmDM, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmDM = frmDM;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        //Mostramos el formulario
-        vtnPrin.getDpnlPrincipal().add(frmDM);
-        frmDM.show();
         //Inciamos todos las clases para realizar las consultas
-        this.dm = new DocenteMateriaBD(conecta);
-        this.doc = new DocenteBD(conecta);
-        this.car = new CarreraBD(conecta);
-        this.mat = new MateriaBD(conecta);
+        this.dm = new DocenteMateriaBD(ctrPrin.getConecta());
+        this.doc = new DocenteBD(ctrPrin.getConecta());
+        this.car = new CarreraBD(ctrPrin.getConecta());
+        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -92,6 +82,8 @@ public class FrmDocenteMateriaCTR {
         frmDM.getBtnBuscar().addActionListener(e -> buscarDocente(frmDM.getTxtBuscar().getText().trim()));
         frmDM.getBtnGuardar().addActionListener(e -> guardarYSalir());
         iniciarValidaciones();
+
+        ctrPrin.agregarVtn(frmDM);
     }
 
     private void iniciarValidaciones() {
@@ -172,8 +164,6 @@ public class FrmDocenteMateriaCTR {
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-//            materias = mat.cargarMateriaPorCarrera(idCar);
-//            llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
         } else {
