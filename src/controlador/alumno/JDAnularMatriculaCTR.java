@@ -4,7 +4,6 @@ import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.AlumnoCursoRetiradoBD;
@@ -14,7 +13,6 @@ import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
 import modelo.validaciones.Validar;
 import vista.alumno.JDAnularMatricula;
-import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -31,6 +29,12 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
     private final MateriaRequisitoBD mtr;
     private String materiaAnular = "";
 
+    /**
+     * Este formulario nos ayuda a anular matriculas para ingresar 
+     * no debio pasar mas de 30 dias desde el inicio de periodo
+     * @param ctrPrin
+     * @param matricula
+     */
     public JDAnularMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
         super(ctrPrin);
@@ -40,7 +44,10 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
         this.matricula = matricula;
         this.jd = new JDAnularMatricula(ctrPrin.getVtnPrin(), false);
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias
+     */
     public void iniciar() {
         inicarInformacion();
         iniciarTbls();
@@ -48,11 +55,21 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
 
         iniciarJD();
     }
-
+    
+    /**
+     * Iniciamos todas las acciones que 
+     * existan en la ventana.
+     */
     private void inicarAcciones() {
         jd.getBtnAnular().addActionListener(e -> clickAnular());
     }
-
+    
+    /**
+     * Anulamos la matriculas, primero mostramos 
+     * las materias en las que anulara su matricula 
+     * y pedimos que ingrese la razon de su anulacion
+     * @param almnsCursoAnular 
+     */
     private void anunarMatricula(ArrayList<AlumnoCursoMD> almnsCursoAnular) {
         String observacion = JOptionPane.showInputDialog(
                 "Ingrese la razon de porque \n"
@@ -75,7 +92,14 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
             }
         }
     }
-
+    
+    /**
+     * Al hacer click en eliminar, se obtiene la materia 
+     * y se busca todos los co requisitos que tiene esta materia  
+     * para tambien anular su matricula.
+     * AL final se le pide confirmacion de si quiere anular 
+     * su matricula.
+     */
     private void clickAnular() {
         posFila = jd.getTblCursos().getSelectedRow();
         almnsCursoAnular = new ArrayList<>();
@@ -108,7 +132,10 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Seleccione una fila primero.");
         }
     }
-
+    
+    /**
+     * Iniciamos las tablas para que no puedan ser editables
+     */
     private void iniciarTbls() {
         String[] t = {"Materia", "Curso"};
         String[][] datos = {};
@@ -118,7 +145,10 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
         TblEstilo.columnaMedida(jd.getTblCursos(), 1, 50);
         llenarTbl();
     }
-
+    
+    /**
+     * Llenamos la tabla con todas las materias en las que se matricula este ciclo.
+     */
     private void llenarTbl() {
         mdTbl.setRowCount(0);
         almnsCurso = almCur.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
@@ -129,13 +159,19 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
             mdTbl.addRow(v);
         });
     }
-
+    
+    /**
+     * Cargamos toda la informacion referente a este estudiante.
+     */
     private void inicarInformacion() {
         jd.getLblAlumno().setText(matricula.getAlumno().getNombreCompleto());
         jd.getLblPeriodo().setText(matricula.getPeriodo().getNombre_PerLectivo());
         jd.getLblFecha().setText(matricula.getSoloFecha());
     }
-
+    
+    /**
+     * Iniciamos el para mostrarlo por ventana.
+     */
     private void iniciarJD() {
         jd.setVisible(true);
         jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
