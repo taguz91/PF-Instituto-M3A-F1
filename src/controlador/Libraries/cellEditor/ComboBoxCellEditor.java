@@ -35,7 +35,7 @@ public class ComboBoxCellEditor extends JComboBox implements TableCellEditor {
         items.forEach(obj -> {
             addItem(obj);
         });
-        this.addItemListener(e -> {
+        super.addItemListener(e -> {
             stopCellEditing();
         });
     }

@@ -27,24 +27,23 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
 
     public TextFieldCellEditor(boolean editar) {
         this.editar = editar;
-        setOpaque(true);
-        setBorder(null);
-        setHorizontalAlignment(CENTER);
-        this.addFocusListener(new FocusAdapter() {
+        super.setOpaque(true);
+        super.setBorder(null);
+        super.setHorizontalAlignment(CENTER);
+        super.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 selectAll();
             }
         });
 
-        this.addKeyListener(new KeyAdapter() {
+        super.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
                     stopCellEditing();
                 }
             }
-
         });
 
     }
@@ -100,7 +99,7 @@ public class TextFieldCellEditor extends JTextField implements TableCellEditor {
     @Override
     public void removeCellEditorListener(CellEditorListener celleditorlistener) {
         if (cellEditorListener == cellEditorListener) {
-            //cellEditorListener = null;
+            cellEditorListener = null;
         }
     }
 }
