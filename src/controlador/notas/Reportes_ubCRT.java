@@ -3,6 +3,7 @@ package controlador.notas;
 import controlador.Libraries.Middlewares;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import vista.notas.VtnControlUB;
 
 /**
@@ -26,7 +27,7 @@ public class Reportes_ubCRT {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/reportesUB/ReporteEstadoPresencial.jasper";
+        String path = "/vista/notas/reportesUB/ReporteEstadoPresencial.jasper";
 
         Map parametros = new HashMap();
 
@@ -34,7 +35,7 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-        System.out.println("PATH ---------->" + path);
+        JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
          System.out.println("-----------"+ parametros);
           
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Estado Estudiantil", parametros);
@@ -47,7 +48,7 @@ public class Reportes_ubCRT {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "./src/vista/notas/reportesUB/ReporteRendimientoIntercicloPresencial.jasper";
+        String path = "/vista/notas/reportesUB/ReporteRendimientoIntercicloPresencial.jasper";
 
         Map parametros = new HashMap();
 
@@ -55,8 +56,27 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-
+         JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Rendimiento Interciclo", parametros);
+
+    }
+      
+     public void generarReporteRendimientoCiclo() {
+
+        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+        String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+        String materia = vista.getCmbAsignatura().getSelectedItem().toString();
+
+        String path = "/vista/notas/reportesUB/ReporteRendimientoCiclo.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", idDocente);
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+         JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Rendimiento Ciclo", parametros);
 
     }
 }

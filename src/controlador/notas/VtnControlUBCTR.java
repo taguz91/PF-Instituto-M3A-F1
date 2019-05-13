@@ -272,7 +272,7 @@ public class VtnControlUBCTR {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     new Object[]{"Estado de Alumnos", "Rendimiento Interciclo",
-                        "Reporte Unidad Bienestar"}, "Cancelar");
+                        "Rendimiento Fin de Ciclo Menores a 70  "}, "Cancelar");
 
             Effects.setLoadCursor(vista);
 
@@ -296,9 +296,9 @@ public class VtnControlUBCTR {
 
                 case 2:
 
-//                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
-//                    reportes.generarReporteEntre80_90();
-//                    desktop.getLblEstado().setText("COMPLETADO");
+                   desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteRendimientoCiclo();
+                    desktop.getLblEstado().setText("COMPLETADO");
                     break;
 
                 default:
