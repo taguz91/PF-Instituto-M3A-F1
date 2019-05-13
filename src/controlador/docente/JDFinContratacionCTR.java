@@ -57,9 +57,11 @@ public class JDFinContratacionCTR extends DVtnCTR {
 
     public void iniciar() {
         docenteMD = dc.buscarDocente(cedula);
+        frmFinContrato.getBtnReasignarMateria().setEnabled(false);
         frmFinContrato.getBtnGuardar().setText("Siguiente");
         frmFinContrato.getBtnAnterior().setEnabled(false);
         frmFinContrato.getbtninforme_fin_docente().addActionListener(e -> botoninformeDocente());
+        frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
         frmFinContrato.getTpFrm().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -114,7 +116,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
 
     public void listaPeriodos() {
         periodoBD = new PeriodoLectivoBD(ctrPrin.getConecta());
-
         List<PeriodoLectivoMD> listaPeriodos = periodoBD.periodoDocente(cedula);
         for (int i = 0; i < listaPeriodos.size(); i++) {
             frmFinContrato.getJcbPeriodos().addItem(listaPeriodos.get(i).getNombre_PerLectivo());
@@ -138,6 +139,8 @@ public class JDFinContratacionCTR extends DVtnCTR {
             modelo_Tabla.addRow(new Object[columnas]);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
+            //System.out.println("materiassssss "+ lista.get(i).getMateria().getNombre() + lista.get(i).getNombre());
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 3);
         }
     }
 
@@ -270,24 +273,25 @@ public class JDFinContratacionCTR extends DVtnCTR {
             guardar = false;
         }
 
-//        if (docentesMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
-//                && docentesMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
-//            guardar = true;
-//            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(false);
-//        } else {
-//            guardar = false;
-//            vtnFinContratacion.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
-//            vtnFinContratacion.getLblErrorFechaFinContratacion().setVisible(true);
-//        }
+        if (docenteMD.getFechaInicioContratacion().isAfter(convertirDate(fecha)) == false
+                && docenteMD.getFechaInicioContratacion().isEqual(convertirDate(fecha)) == false) {
+            guardar = true;
+            frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
+        } else {
+            guardar = false;
+            frmFinContrato.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
+            frmFinContrato.getLblErrorFechaFinContratacion().setVisible(true);
+        }
+        
         if (guardar == true) {
 //            DocenteMD docente = new DocenteMD();
 //            docente.setObservacion(Observacion);
 //            docente.setFechaFinContratacion(convertirDate(fecha));
 
-//            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
-//            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-//            frmFinContrato.dispose();
-            System.out.println("Se guarda enn base de datos");
+            System.out.println("Se guarda en base de datos");
+            frmFinContrato.getBtnGuardar().setEnabled(false);
+            frmFinContrato.getBtnReasignarMateria().setEnabled(true);
+
         } else {
             frmFinContrato.getTpFrm().setSelectedIndex(1);
             frmFinContrato.getBtnAnterior().setEnabled(true);
@@ -354,6 +358,19 @@ public class JDFinContratacionCTR extends DVtnCTR {
             default:
                 break;
         }
+    }
+
+    private void reasignarMateria() {
+        posFila = frmFinContrato.getTblMateriasCursos().getSelectedRow();
+
+        if (posFila >= 0) {
+            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString());
+            ctr.iniciar();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+        }
+
     }
 
 }
