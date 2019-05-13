@@ -138,6 +138,8 @@ public class ControladorSilaboU {
 
         tiposActividad = TipoActividadBD.consultar(conexion);
 
+        mostrarTotalGestion();
+         
         cargarReferencias(referenciasSilabo);
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
@@ -1257,6 +1259,8 @@ public class ControladorSilaboU {
                 }
                 break;
         }
+        
+        mostrarTotalGestion();
     }
 
     public void cargarEvaluaciones(DefaultTableModel modeloTabla, int p) {
@@ -1469,6 +1473,7 @@ public class ControladorSilaboU {
 
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
@@ -1476,6 +1481,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
@@ -1483,6 +1489,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
@@ -1490,6 +1497,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void cargarReferencias(List<ReferenciaSilaboMD> referenciasSilabo) {
@@ -1650,6 +1658,16 @@ public class ControladorSilaboU {
 
         return control;
 
+    }
+    
+    public void mostrarTotalGestion(){
+        
+        double total = 0;
+
+        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+
+        gestion.getLblAcumuladoGestion().setText(total+"/100");
+        
     }
 
 }

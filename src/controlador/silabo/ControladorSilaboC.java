@@ -6,7 +6,6 @@
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
-import static controlador.silabo.ControladorSilaboCRUD.x;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -321,7 +320,9 @@ public class ControladorSilaboC {
         gestion = new frmGestionSilabo();
 
         bibliografia = new frmReferencias();
-
+        
+       
+        
         if (silaboAnterior == null) {
             carrerasDocente = new ArrayList<>();
 
@@ -355,7 +356,10 @@ public class ControladorSilaboC {
 
             estrategiasAprendizaje = new ArrayList<>();
 
-            evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboAnterior.getIdSilabo());
+            
+            evaluacionesSilabo = new ArrayList<>();
+            
+            //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboAnterior.getIdSilabo());
 
             biblioteca = new ArrayList<>();
 
@@ -366,6 +370,8 @@ public class ControladorSilaboC {
             cargarReferencias(referenciasSilabo);
 
         }
+        
+        mostrarTotalGestion();
 
         principal.getDpnlPrincipal().add(gestion);
 
@@ -1496,6 +1502,8 @@ public class ControladorSilaboC {
                 }
                 break;
         }
+        
+        mostrarTotalGestion();
     }
 
     public boolean validarLimiteEvaluaciones(double valor) {
@@ -1506,6 +1514,16 @@ public class ControladorSilaboC {
 
         return (total + valor) <= 60.0;
 
+    }
+    
+    public void mostrarTotalGestion(){
+        
+        double total = 0;
+
+        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+
+        gestion.getLblAcumuladoGestion().setText(total+"/100");
+        
     }
 
     public TipoActividadMD seleccionarTipoActividad(String[] infoE) {
@@ -1728,6 +1746,7 @@ public class ControladorSilaboC {
 
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
@@ -1735,6 +1754,7 @@ public class ControladorSilaboC {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
@@ -1742,6 +1762,7 @@ public class ControladorSilaboC {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+         mostrarTotalGestion();
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
@@ -1749,6 +1770,8 @@ public class ControladorSilaboC {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+        
+         mostrarTotalGestion();
     }
 
     public void insertarUnidades() {
