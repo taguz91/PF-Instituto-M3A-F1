@@ -266,6 +266,11 @@ public class FrmAlumnoCursoCTR extends DCTR {
             guardar = false;
         }
 
+        int posTipo = frmAlmCurso.getCmbTipoMatricula().getSelectedIndex();
+        if (posTipo < 1) {
+            guardar = false;
+        }
+
         //Se borra todas las materias que tienen un choque de horas
         borrarChoques(cursosSelec);
 
@@ -299,6 +304,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     } else {
                         matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
                         matri.setPeriodo(periodos.get(posPrd - 1));
+                        matri.setTipo(frmAlmCurso.getCmbTipoMatricula().getSelectedItem().toString());
                         matri.ingresar();
                     }
                     int c = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Desea imprimir la matricula.");
@@ -1230,17 +1236,16 @@ public class FrmAlumnoCursoCTR extends DCTR {
         requisitos.forEach(m -> {
             if (m.getMateria().getId() == idMateria && m.getTipo().equals(tipo)) {
                 filtrados.add(m);
-//                System.out.println(m.getMateria().getId() + "\n"
-//                        + m.getMateriaRequisito().getNombre());
             }
         });
         return filtrados;
     }
 
     /**
-     * Buscamos el numero de matricula de una materia Si es primera matricula
-     * nos devuelve 0 Si es segunda nos devolvera 1 Si es tercera nos devolvera
-     * 2
+     * Buscamos el numero de matricula de una materia 
+     * Si es primera nos devolvera 1 
+     * Si es segunda nos devolvera 2 
+     * Si es tercera nos devolvera 3
      */
     private int buscarNumeroMatricula(int idMateria) {
         int num = -1;

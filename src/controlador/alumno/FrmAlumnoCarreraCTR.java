@@ -140,7 +140,6 @@ public class FrmAlumnoCarreraCTR extends DCTR {
 
                         frmAlmCarrera.dispose();
                         ctrPrin.cerradoJIF();
-//                ctrPrin.abrirVtnAlumnoCarrera();
                     }
                 }
             }
