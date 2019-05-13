@@ -459,6 +459,8 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtn, this);
             ctrVtn.iniciar();
+        } else {
+            errorNumVentanas();
         }
     }
 
@@ -468,6 +470,8 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(this, vtn);
             ctr.iniciar();
+        } else {
+            errorNumVentanas();
         }
     }
 
