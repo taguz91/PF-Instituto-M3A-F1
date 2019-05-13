@@ -22,6 +22,7 @@ import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
+import controlador.notas.VtnControlUBCTR;
 import controlador.notas.VtnNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
@@ -103,6 +104,7 @@ import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
+import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
 
 /**
@@ -249,6 +251,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
+        vtnPrin.getMnCtRendimientoAcademico().addActionListener(e-> abrirVtnControlUB(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -397,6 +400,18 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso, conecta, this, rolSeleccionado);
             ctrVtnAlmnCurso.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+    
+    
+ private void abrirVtnControlUB(ActionEvent e) {
+        VtnControlUB vtn = new VtnControlUB();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnControlUBCTR vtnCtr = new VtnControlUBCTR(vtnPrin, vtn, usuario, rolSeleccionado);
+            vtnCtr.Init();
         } else {
             errorNumVentanas();
         }

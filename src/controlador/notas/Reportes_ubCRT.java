@@ -34,9 +34,9 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-
+        System.out.println("PATH ---------->" + path);
          System.out.println("-----------"+ parametros);
-       
+          
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Estado Estudiantil", parametros);
 
     }

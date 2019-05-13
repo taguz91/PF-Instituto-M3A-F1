@@ -27,6 +27,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtPlandeClase;
     }
 
+    public JMenuItem getMnCtRendimientoAcademico() {
+        return mnCtRendimientoAcademico;
+    }
+
+    public void setMnCtRendimientoAcademico(JMenuItem mnCtRendimientoAcademico) {
+        this.mnCtRendimientoAcademico = mnCtRendimientoAcademico;
+    }
+
     public void setMnCtPlandeClase(JMenuItem mnCtPlandeClase) {
         this.mnCtPlandeClase = mnCtPlandeClase;
     }
