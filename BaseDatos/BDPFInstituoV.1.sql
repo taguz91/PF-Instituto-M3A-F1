@@ -315,7 +315,7 @@ CREATE TABLE "AlumnoCursoRetirados"(
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
 	"retiro_observacion" text,
-  "retiro_activo" boolean DEFAULT 'true',
+  	"retiro_activo" boolean DEFAULT 'true',
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 

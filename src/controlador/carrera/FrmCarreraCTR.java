@@ -46,7 +46,10 @@ public class FrmCarreraCTR extends DCTR {
         this.frmCarrera = frmCarrera;
         this.docen = new DocenteBD(ctrPrin.getConecta());
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias de este formulario
+     */
     public void iniciar() {
         ocultarErrores();
         cargarCmbModalidades();
@@ -76,7 +79,10 @@ public class FrmCarreraCTR extends DCTR {
 
         ctrPrin.agregarVtn(frmCarrera);
     }
-
+    
+    /**
+     * Todas las validaciones del formulario
+     */
     private void validaciones() {
         frmCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(frmCarrera.getTxtBuscar()));
         frmCarrera.getCmbModalidad().addActionListener(new CmbValidar(frmCarrera.getCmbModalidad()));
@@ -86,27 +92,40 @@ public class FrmCarreraCTR extends DCTR {
                 frmCarrera.getLblErrorCodigo()));
         frmCarrera.getTxtSemanas().addKeyListener(new TxtVNumeros(frmCarrera.getTxtSemanas()));
     }
-
+    
+    /**
+     * Ocultamos todos los errores de este formulario
+     */
     private void ocultarErrores() {
         frmCarrera.getLblErrorCodigo().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
-
+    
+    /**
+     * Guardamos y salimos de este formulario
+     */
     private void guardarYSalir() {
         if (guardar()) {
             frmCarrera.dispose();
             ctrPrin.cerradoJIF();
-            ctrPrin.abrirVtnCarrera();
         }
 
     }
-
+    
+    /**
+     * Solo receteamos los campos 
+     */
     private void guardarYContinuar() {
         if (guardar()) {
             borrarCampos();
         }
     }
-
+    
+    /**
+     * AL darle a guardar, validamos todo el formulario si existen errores 
+     * no permitimos guardar
+     * @return 
+     */
     private boolean guardar() {
         boolean guardar = true;
         SimpleDateFormat formFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -163,14 +182,22 @@ public class FrmCarreraCTR extends DCTR {
         }
         return guardar;
     }
-
+    
+    /**
+     * Buscamos en docentes para poderlo asignar como coordinador
+     * @param aguja 
+     */
     private void buscarDocentes(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             docentes = docen.buscar(aguja);
             llenarTblDocentes(docentes);
         }
     }
-
+    
+    /**
+     * Llenamos la tabla de docentes para poderlos seleecionar
+     * @param docentes 
+     */
     private void llenarTblDocentes(ArrayList<DocenteMD> docentes) {
         mdTbl.setRowCount(0);
         if (docentes != null) {
@@ -186,7 +213,13 @@ public class FrmCarreraCTR extends DCTR {
 
     //Usada para el validar  
     private final Calendar fechaIni = Calendar.getInstance();
-
+    
+    /**
+     * Para editar la carrera, 
+     * Recibe una carrera desde la ventana  
+     * Cagramos todos los datos 
+     * @param carrera 
+     */
     public void editar(CarreraMD carrera) {
         frmCarrera.getTxtNombre().setText(carrera.getNombre());
         frmCarrera.getTxtCodigo().setText(carrera.getCodigo());
@@ -205,9 +238,11 @@ public class FrmCarreraCTR extends DCTR {
 
         editar = true;
         idCarrera = carrera.getId();
-        //frmCarrera.getCmbCoordinador().setSelectedItem(carrera.getCoordinador()); 
     }
-
+    
+    /**
+     * Borramos todos los campos de este formulario
+     */
     private void borrarCampos() {
         frmCarrera.getTxtNombre().setText("");
         frmCarrera.getTxtCodigo().setText("");
@@ -217,7 +252,10 @@ public class FrmCarreraCTR extends DCTR {
         mdTbl.setRowCount(0);
 
     }
-
+    
+    /**
+     * Cargamos el combo de modalidades, con todas las que tiene el instituto
+     */
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
         frmCarrera.getCmbModalidad().addItem("Seleccione");

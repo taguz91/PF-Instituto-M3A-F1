@@ -49,11 +49,11 @@ BEGIN
 		usu_username, historial_fecha, historial_tipo_accion,
 		historial_nombre_tabla, historial_pk_tabla. historial_ip)
 		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso,inet_client_addr());
-  ELSE
-    INSERT INTO public."HistorialUsuarios"(
-    usu_username, historial_fecha, historial_tipo_accion,
-    historial_nombre_tabla, historial_pk_tabla, historial_ip)
-    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
+	 ELSE
+	    INSERT INTO public."HistorialUsuarios"(
+	    usu_username, historial_fecha, historial_tipo_accion,
+	    historial_nombre_tabla, historial_pk_tabla, historial_ip)
+	    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
 	END IF;
 	UPDATE public."AlumnoCurso" 
 	SET almn_curso_activo = new.curso_activo
@@ -330,6 +330,26 @@ BEGIN
 		RETURN OLD;
 END;
 $malla_almn_elim$ LANGUAGE plpgsql;
+
+--Eliminamos anulacion de matricula
+CREATE OR REPLACE FUNCTION matricula_anulada_elim()
+RETURNS TRIGGER AS $matricula_anulada_elim$
+BEGIN
+	INSERT INTO public."HistorialUsuarios"(
+		usu_username, historial_fecha, historial_tipo_accion,
+		historial_nombre_tabla, historial_pk_tabla, historial_observacion,historial_ip)
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_malla_alumno,
+			old.id_materia || '%' || old.almn_carrera
+			|| '%' || old.malla_almn_ciclo || '%' ||
+			old.malla_almn_num_matricula || '%' ||
+			old.malla_almn_nota1 || '%' ||
+			old.malla_almn_nota2 || '%' ||
+			old.malla_almn_nota3 || '%' ||
+			old.malla_almn_estado || '%' ||
+			old.malla_almn_observacion,inet_client_addr());
+		RETURN OLD;
+END;
+$matricula_anulada_elim$ LANGUAGE plpgsql;
 
 --Materias
 CREATE TRIGGER auditoria_materia_elim

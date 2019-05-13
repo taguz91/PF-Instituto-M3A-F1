@@ -149,7 +149,11 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             llenatTbl(almns);
         }
     }
-
+    
+    /**
+     * Si seleecionamos un ciclo se carga los alumnos 
+     * por cada ciclo
+     */
     private void cargarTblPorCiclo() {
         if (posCiclo > 0) {
             almns = alc.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
@@ -201,7 +205,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             });
         }
     }
-
+    
+    /**
+     * LLenamos el combo de ciclos por carrera
+     */
     private void cargarCmbCiclo() {
         ciclos = mat.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
         if (ciclos != null) {
@@ -212,24 +219,39 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             });
         }
     }
-
+    
+    /**
+     * Al hacer click en un ciclo se cargan todos los alumnos por ciclo
+     */
     private void clickCmbCiclo() {
         posCiclo = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();
         cargarTblPorCiclo();
     }
-
+    
+    /**
+     * Al hacer click en un periodo se consultan todos sus ciclos 
+     * y todos los cursos que tiene este periodo
+     */
     private void clickCmbPrd() {
         posPrd = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
         cargarCmbCiclo();
         cargarCursoPorPrd();
         cargarTblPorPrd();
     }
-
+    
+    /**
+     * Accion al hacer click en el combo de curso  
+     * y llenamos la tabla por curso
+     */
     private void clickCmbCurso() {
         posCur = vtnAlmnCurso.getCmbCursos().getSelectedIndex();
         cargarTblPorCurso();
     }
-
+    
+    /**
+     * Llenamos el combo de cursos con todo los cursos 
+     * que se abran en este periodo
+     */
     private void cargarCursoPorPrd() {
         if (posPrd > 0) {
             cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
@@ -244,7 +266,11 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             vtnAlmnCurso.getCmbCursos().removeAllItems();
         }
     }
-
+    
+    /**
+     * Mostramos el JD con informacion de todas las materias 
+     * que tomo en este curso
+     */
     private void materiasCurso() {
         posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
         if (posFila >= 0) {
@@ -254,7 +280,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un alumno primero.");
         }
     }
-
+    
+    /**
+     * Llamamos el reporte de alumnos por curso 
+     */
     public void reporteAlumno() {
         JasperReport jr;
         String path = "/vista/reportes/repAlumTodoCurso.jasper";
@@ -269,7 +298,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+    
+    /**
+     * Validamos para poder abrir el reporte de lista de alumnos
+     */
     public void validaComboReporte() {
         int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
         int pos2 = vtnAlmnCurso.getCmbCursos().getSelectedIndex();
@@ -279,7 +311,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             reporteAlumno();
         }
     }
-
+    
+    /**
+     * Llamamos el reporte de lista de alumnos
+     */
     public void reporte() {
         JasperReport jr;
         String path = "/vista/reportes/repListaAlumCiclo.jasper";
@@ -294,7 +329,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+    
+    /**
+     * Validamos para que se pueda abrir el reporte por periodo y ciclo
+     */
     public void validaComboReporteCiclo() {
         int pos1 = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
         int pos2 = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();

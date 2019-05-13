@@ -280,6 +280,9 @@ public class ControladorEditarPlanClases {
          for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
              if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
                  modelo_Anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 
+                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
                  modelo_Construcciom.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){

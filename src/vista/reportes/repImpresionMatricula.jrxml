@@ -22,12 +22,14 @@ pd.persona_primer_apellido ||' '|| pd.persona_segundo_apellido
 ||' '|| pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
 materia_codigo, materia_nombre, p.persona_identificacion, c.carrera_nombre,
 mall.malla_almn_num_matricula, m.id_materia, g.curso_ciclo,
-g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre,acur.almn_curso_fecha_registro
+g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre,acur.almn_curso_fecha_registro, 
+mt.matricula_tipo
 FROM public."Alumnos" a, public."Personas" p,
 public."Materias" m, public."Carreras" c, public."Cursos" g,
 public."AlumnoCurso" acur, public."PeriodoLectivo" pl,
 public."Jornadas" j, public."Docentes" d, public."Personas" pd,
-public."MallaAlumno" mall, public."AlumnosCarrera" ac
+public."MallaAlumno" mall, public."AlumnosCarrera" ac,
+public."Matricula" mt
 WHERE  a.id_alumno = acur.id_alumno
 AND c.id_carrera =pl.id_carrera
 AND  p.id_persona = a.id_persona
@@ -46,7 +48,9 @@ AND g.id_prd_lectivo = $P{idPeriodo}
 AND ac.id_carrera = c.id_carrera
 AND ac.id_alumno = a.id_alumno
 AND mall.id_almn_carrera = ac.id_almn_carrera
-AND acur.almn_curso_estado <> 'RETIRADO';]]>
+AND acur.almn_curso_estado <> 'RETIRADO'
+AND mt.id_alumno = acur.id_alumno
+AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -60,6 +64,7 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="matricula_tipo" class="java.lang.String"/>
 	<field name="almn_curso_fecha_registro" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -106,7 +111,7 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="111" splitType="Stretch">
+		<band height="138" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="11" width="91" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -115,42 +120,42 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 				<text><![CDATA[Fecha Matrícula:  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="31" width="53" height="20"/>
+				<reportElement x="0" y="51" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Periodo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="51" width="53" height="20"/>
+				<reportElement x="0" y="71" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Alumno:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="71" width="53" height="20"/>
+				<reportElement x="0" y="91" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="31" width="344" height="20"/>
+				<reportElement x="53" y="51" width="344" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="71" width="344" height="20"/>
+				<reportElement x="53" y="91" width="344" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="51" width="344" height="20"/>
+				<reportElement x="53" y="71" width="344" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -162,14 +167,14 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{almn_curso_fecha_registro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="91" width="53" height="20"/>
+				<reportElement x="0" y="111" width="53" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cédula:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="91" width="291" height="20"/>
+				<reportElement x="53" y="111" width="291" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -183,6 +188,20 @@ AND acur.almn_curso_estado <> 'RETIRADO';]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "fotoPersona.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="91" y="31" width="306" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula_tipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="31" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Matrícula:  ]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

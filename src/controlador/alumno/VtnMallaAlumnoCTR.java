@@ -148,7 +148,10 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnMallaAlm);
     }
-
+    
+    /**
+     * Iniciamos los permisos si son tester 
+     */
     private void InitPermisosTester() {
         if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
             vtnMallaAlm.getBtnIngNota().setEnabled(false);
@@ -156,7 +159,11 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             vtnMallaAlm.getTxtBuscar().setEnabled(false);
         }
     }
-
+    
+    /**
+     * Actualizamos la ventana al ingresar en un JD para actualizar notas
+     * @param m 
+     */
     public void actualizarVtn(MallaAlumnoMD m) {
         mallas = mallaAlm.cargarMallasPorEstudiante(m.getAlumnoCarrera().getId());
         llenarTbl(mallas);
