@@ -30,7 +30,15 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
     private ArrayList<CursoMD> cursos;
     private DefaultTableModel mdTblA, mdTblN;
     private String nombreCursosN = "";
-
+    private int numMat;
+    
+    /**
+     * Iniciamos el editar matricula. 
+     * Se tiene acceso a este formulario unicamente 
+     * 30 dias despues de que inicia clases
+     * @param ctrPrin
+     * @param matricula 
+     */
     public JDEditarMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
         super(ctrPrin);
@@ -40,14 +48,21 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
         this.matricula = matricula;
         this.jd = new JDEditarMatricula(ctrPrin.getVtnPrin(), false);
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias de esta 
+     * ventana.
+     */
     public void iniciar() {
         iniciarTbls();
         inicarInformacion();
         inicarAcciones();
         iniciarJD();
     }
-
+    
+    /**
+     * Se pueden remover las materias en los cursos que tendra nuevamente.
+     */
     private void clickRemover() {
         int[] selecs = jd.getTblClasesNuevas().getSelectedRows();
         posFila = jd.getTblClasesNuevas().getSelectedRow();
@@ -72,15 +87,23 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila o mas filas.");
         }
     }
-
+    
+    /**
+     * Se guardan los nuevos cursos que tiene el alumno
+     * indicando el nombre del curso y la materia 
+     * Se pide la confirmacion antes de guardar los cambios.
+     */
     private void clickGuardar() {
         if (cursosNuevos != null) {
             almCur.borrarActualizarMatricula();
             nombreCursosN = "";
+            numMat = 0;
             cursosNuevos.forEach(ac -> {
                 if (ac.getCurso().getCapaciadActual() > 0) {
+                    //Agregamos el update en todo el sql
                     almCur.agregarUpdate(ac.getId(), ac.getCurso().getId());
-                    nombreCursosN = nombreCursosN + ac.getCurso().getMateria().getNombre() + "   Curso: "
+                    
+                    nombreCursosN = (numMat++)+": "+nombreCursosN + ac.getCurso().getMateria().getNombre() + "   Curso: "
                             + ac.getCurso().getNombre() + "   \n";
                 }
             });
@@ -97,7 +120,17 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
             }
         }
     }
-
+    
+    /**
+     * Cambiamos al nuevo curso.
+     * Buscamos en la base de datos todas las materias de este curso, 
+     * comparando si la materia seleccionada existe en el nuevo curso,
+     * si existe la agregamos al update.
+     * Si fue agregado posteriormente se elimna el curso, para ingresar el nuevo. 
+     * Y todos los nuevos cursos los agregamos a cursos nuevos, 
+     * para llenar la tabla de nuevos cursos.
+     * @param curso 
+     */
     private void cambiarACurso(String curso) {
         cursos = cur.buscarCursosPorNombreYPrdLectivo(curso,
                 matricula.getPeriodo().getId_PerioLectivo());
@@ -120,8 +153,8 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
     }
 
     /**
-     * Si el curso ya esta en nuestro array de nuevos cursos lo borramos
-     *
+     * Si el curso ya esta en nuestro array de nuevos cursos lo borramos, 
+     * para agregar el nuevo.
      * @param curso
      */
     private void borrarSiExisteCurso(CursoMD curso) {
@@ -134,8 +167,9 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
     }
 
     /**
-     * Para llenar el nombre de los cursos de un periodo y ciclo en especifico
-     *
+     * Para llenar el nombre de los cursos de un periodo y ciclo en especifico,
+     * unicamente llenamos los disponibles excluyendo el curso 
+     * seleccionado
      * @param ciclo
      */
     private void llenarCursosDisponibles(int ciclo) {
@@ -164,7 +198,13 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
             }
         }
     }
-
+    
+    /**
+     * Al dar click en cambiar curso  
+     * Seleccionamos el primer curso y obtenemos el ciclo  
+     * para poder validar que todos los seleccionados esten en el mismo curso, 
+     * si todos son del mismo ciclo mostramos el combo para que seleccione un curso.
+     */
     private void clickCambiar() {
         boolean mismoCiclo = true;
         posFila = jd.getTblClasesActuales().getSelectedRow();
@@ -191,7 +231,10 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
         }
 
     }
-
+    
+    /**
+     * Iniciamos las acciones de nuestro formulario
+     */
     private void inicarAcciones() {
         jd.getBtnCambiar().addActionListener(e -> clickCambiar());
         jd.getBtnGuardar().addActionListener(e -> clickGuardar());
@@ -225,7 +268,10 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
             });
         }
     }
-
+    
+    /**
+     * Iniciamos las tablas con los titulos que le corresponde
+     */
     private void iniciarTbls() {
         String[] t = {"Materia", "Curso"};
         String[] t2 = {"Materia", "M", "C"};
@@ -244,7 +290,10 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
         jd.getTblClasesNuevas().getColumnModel().getColumn(1).setCellRenderer(new TblRenderMatricula(1));
         jd.getTblClasesNuevas().getColumnModel().getColumn(2).setCellRenderer(new TblRenderMatricula(2));
     }
-
+    
+    /**
+     * Llenamos toda la informacion correspondiente a esta matricula.
+     */
     private void inicarInformacion() {
         jd.getLblAlumno().setText(matricula.getAlumno().getNombreCompleto());
         jd.getLblPeriodo().setText(matricula.getPeriodo().getNombre_PerLectivo());
@@ -253,7 +302,10 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
                 matricula.getPeriodo().getId_PerioLectivo());
         llenarTblMA(almnsCurso);
     }
-
+    
+    /**
+     * Iniciamos el JD para mostrarlo en la ventana
+     */
     private void iniciarJD() {
         jd.setVisible(true);
         jd.setLocationRelativeTo(ctrPrin.getVtnPrin());

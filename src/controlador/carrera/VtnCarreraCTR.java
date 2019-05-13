@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +45,9 @@ public class VtnCarreraCTR extends DVtnCTR {
         this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
+    /**
+     * Iniciamos todas las dependencias de este formulario
+     */
     public void iniciar() {
         vtnCarrera.getBtnReporteAlumnoCarrera().setEnabled(false);
         String titutlo[] = {"id", "Codigo", "Nombre", "Fecha Inicio", "Modalidad", "Semanas", "Coordinador"};
@@ -90,6 +92,11 @@ public class VtnCarreraCTR extends DVtnCTR {
         ctrPrin.agregarVtn(vtnCarrera);
     }
 
+    /**
+     * Buscador de esta ventana le asignamos todos sus metodos
+     *
+     * @param b
+     */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
             carreras = car.buscarCarrera(b);
@@ -99,6 +106,10 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
     }
 
+    /**
+     * Al dar click en editar se abre el formulario de carrera con todos los
+     * datos de esta carrera.
+     */
     private void editarCarrera() {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
@@ -114,6 +125,9 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
     }
 
+    /**
+     * Eliminamos esta carrera , siempre preguntando un mensaje de confirmacion
+     */
     private void eliminarCarrera() {
         int fila = vtnCarrera.getTblMaterias().getSelectedRow();
         if (fila >= 0) {
@@ -126,18 +140,29 @@ public class VtnCarreraCTR extends DVtnCTR {
             }
         }
     }
-
+    
+    /**
+     * Abrimos el formulario de la carrera 
+     */
     private void abrirFrmCarrera() {
         ctrPrin.abrirFrmCarrera();
         vtnCarrera.dispose();
         ctrPrin.cerradoJIF();
     }
-
+    
+    /**
+     * Consultamos todas las carreras, y las
+     * cargamos en la tabla 
+     */
     public void cargarCarreras() {
         carreras = car.cargarCarreras();
         llenarTbl(carreras);
     }
-
+    
+    /**
+     * LLenamos todos los datos de las carreras
+     * @param carreras 
+     */
     public void llenarTbl(ArrayList<CarreraMD> carreras) {
         mdTbl.setRowCount(0);
         if (carreras != null) {
@@ -162,7 +187,10 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
 
     }
-
+    
+    /**
+     * Llamamos al reporte de listado de alumnos por carrera
+     */
     public void llamaReporteAlumnoCarrera() {
         posFila = vtnCarrera.getTblMaterias().getSelectedRow();
         JasperReport jr;
@@ -181,7 +209,10 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
 
     }
-
+    
+    /**
+     * Docentes de esta carrera por periodo lectivo
+     */
     public void botonDocentes() {
         int s = JOptionPane.showOptionDialog(vtnCarrera,
                 "Reporte de Docentes por periodo LEctivo\n"
@@ -198,13 +229,15 @@ public class VtnCarreraCTR extends DVtnCTR {
                 break;
         }
     }
-
+    
+    /**
+     * Seleecionamos un periodo para poder llamar al reporte.
+     */
     public void seleccionarPeriodo() {
         periodos = prd.cargarPeriodos();
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
-            ///546645645645465456
             nmPrd.add(p.getNombre_PerLectivo());
         });
         Object np = JOptionPane.showInputDialog(ctrPrin.getVtnPrin(),
@@ -222,17 +255,12 @@ public class VtnCarreraCTR extends DVtnCTR {
             JasperReport jr;
             String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
             try {
-                // int posFila = vtn.getTblDocente().getSelectedRow();
                 Map parametro = new HashMap();
-                //  parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
+
                 parametro.put("idPeriodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
-//                JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-//                JasperViewer view = new JasperViewer(print, false);
-//                view.setVisible(true);
-//                view.setTitle("Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
