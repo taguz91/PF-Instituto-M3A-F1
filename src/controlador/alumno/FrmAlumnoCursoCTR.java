@@ -599,7 +599,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
         //Hacemos que seleccione unicamente donde perdio la dual
         if (perdioNE) {
             System.out.println("Ciclo en el que curso antes: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
-            cicloCursado -= 1;
+            //cicloCursado  1;
             System.out.println("Ciclo en el que curso: " + cicloCursado + " /// Reprobo: " + cicloReprobado);
         }
         //Buscamos las terceras matriculas 
