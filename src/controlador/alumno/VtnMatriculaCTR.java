@@ -35,6 +35,12 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private final PeriodoLectivoBD prd;
     private int posPrd;
 
+    /**
+     * Mostramos todas las matriculas realizadas
+     *
+     * @param ctrPrin
+     * @param vtnMatri
+     */
     public VtnMatriculaCTR(VtnPrincipalCTR ctrPrin, VtnMatricula vtnMatri) {
         super(ctrPrin);
         this.matr = new MatriculaBD(ctrPrin.getConecta());
@@ -42,6 +48,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
         this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
+    /**
+     * Iniciamos todas las dependencias
+     */
     public void iniciar() {
         //Iniciamos la tabla
         String[] t = {"Periodo", "Cedula", "Alumno", "Fecha",};
@@ -68,12 +77,12 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private boolean validarFecha() {
         LocalDate fi = prd.buscarFechaInicioPrd(matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
         LocalDate fa = LocalDate.now();
-        System.out.println("Fecha: " + fi);
-        System.out.println("Fecha mas 30: " + fi.plusMonths(1));
-        System.out.println("Esto es: " + fa.isBefore(fi.plusMonths(1)));
         return fa.isBefore(fi.plusMonths(1));
     }
-
+    
+    /**
+     * Click anular para mostrarnos el formulario de anulacion de matricula.
+     */
     private void clickAnular() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
@@ -87,21 +96,27 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
-
+    
+    /**
+     * Para mostrar el formulario de editar matricula, 
+     * aqui podemos cambiar de cursos  
+     * Paralelo 
+     * Ciclo
+     */
     private void clickEditar() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
-            if (validarFecha()) {
-                JDEditarMatriculaCTR ctr = new JDEditarMatriculaCTR(ctrPrin, matriculas.get(posFila));
-                ctr.iniciar();
-            } else {
-                JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ya pasaron mas de 30 dias ya no se puede editar la matricula.");
-            }
+            JDEditarMatriculaCTR ctr = new JDEditarMatriculaCTR(ctrPrin, matriculas.get(posFila));
+            ctr.iniciar();
+
         } else {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
-
+    
+    /**
+     * Iniciamos el buscador de la ventana 
+     */
     private void iniciarBuscador() {
         vtnMatri.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -115,7 +130,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             }
         });
     }
-
+    
+    /**
+     * Funcion usada para buscar
+     * @param aguja 
+     */
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             matriculas = matr.buscarMatriculas(aguja);
@@ -123,6 +142,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
         }
     }
 
+    /**
+     * Iniciamos todas las acciones de esta ventana 
+     */
     private void iniciarAcciones() {
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
         vtnMatri.getBtnImprimirFicha().addActionListener(e -> clickImprimirFicha());
@@ -131,12 +153,20 @@ public class VtnMatriculaCTR extends DVtnCTR {
         vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
         vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
     }
-
+    
+    /**
+     * Cargamos todas las matriculas que existan
+     */
     private void cargarMatriculas() {
         matriculas = matr.cargarMatriculas();
         llenarTbl(matriculas);
     }
-
+    
+    /**
+     * Al seleccionar un periodo se cargan las matriculas 
+     * por ese periodo  
+     * Si no seleeciona ningun periodo se cargan todas las matriculas
+     */
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
@@ -146,7 +176,10 @@ public class VtnMatriculaCTR extends DVtnCTR {
             cargarMatriculas();
         }
     }
-
+    
+    /**
+     * Llenamos el combo del periodo lectivo
+     */
     private void llenarCmbPrd() {
         periodos = prd.cargarPrdParaCmbVtn();
         vtnMatri.getCmbPeriodos().removeAllItems();
@@ -157,7 +190,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             });
         }
     }
-
+    
+    /**
+     * Llenamos la tabla de matriculas
+     * @param matriculas 
+     */
     private void llenarTbl(ArrayList<MatriculaMD> matriculas) {
         mdTbl.setRowCount(0);
         if (matriculas != null) {
@@ -173,11 +210,18 @@ public class VtnMatriculaCTR extends DVtnCTR {
             vtnMatri.getLblNumResultados().setText("0 Resultados obtenidos.");
         }
     }
-
+    
+    /**
+     * Abrimos e formulario de matricula
+     */
     private void abrirFrm() {
         ctrPrin.abrirFrmMatricula();
     }
-
+    
+    /**
+     * Para imprimir la ficha de matricula, preguntamos 
+     * Si quierela ficha con foto o sin foto 
+     */
     private void clickImprimirFicha() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila > 0) {
@@ -201,7 +245,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una persona antes.");
         }
     }
-
+    
+    /**
+     * Llamamos el reporte de la matricula, completo
+     * este nos imprime con foto
+     */
     private void llamaReporteMatricula() {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
@@ -214,7 +262,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+    
+    /**
+     * Llamamos el reporte de la matricula, 
+     * sin foto.
+     */
     private void llamaReporteMatriculaSinFoto() {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculaSinFoto.jasper"));
@@ -227,7 +279,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+    
+    /**
+     * Llamamos al reporte de matriculas por periodo, todo el historial 
+     * de las matriculas en este periodo separado por ciclo
+     */
     private void llamaReporteMatriculaPeriodo() {
         int posCombo = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posCombo > 0) {
