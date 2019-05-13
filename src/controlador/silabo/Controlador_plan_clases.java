@@ -447,13 +447,11 @@ public class Controlador_plan_clases {
             
             valid= false;
         }
-        if(lista_recursoMD1==null ){
+        if(lista_recursoMD1==null || lista_estrategias_metodologicas_antici==null){
             valid=false;
         }
         
-        if (lista_estrategias_metodologicas_antici==null) {
-            valid=false;
-        }
+
             
 
         return valid;
