@@ -6,10 +6,11 @@ CREATE TABLE "NotasDuales"(
     notas_t_empresarial NUMERIC (6,2),
     notas_t_academico NUMERIC (6,2),
     notas_total_practica NUMERIC (6,2),
-    notas_estado_practica NUMERIC (6,2),
+    notas_estado_practica VARCHAR(20) DEFAULT 'REPROBADO',
 
     id_prd_lectivo INTEGER
 );
+
 
 CREATE TABLE "DetalleDuales"(
     id_detale_duales serial NOT NULL PRIMARY KEY,
