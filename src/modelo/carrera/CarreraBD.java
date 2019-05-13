@@ -3,10 +3,8 @@ package modelo.carrera;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
@@ -280,61 +278,6 @@ public class CarreraBD extends CarreraMD {
             System.out.println(e.getMessage());
             return null;
         }
-    }
-
-    public static String selectCarreraWherePerdLectivo(String nombre) {
-
-        String SELECT = "SELECT\n"
-                + "\"Carreras\".carrera_nombre\n"
-                + "FROM\n"
-                + "\"PeriodoLectivo\"\n"
-                + "INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
-                + "WHERE\n"
-                + "\"PeriodoLectivo\".prd_lectivo_nombre = '" + nombre + "'\n"
-                + "AND\n"
-                + "\"PeriodoLectivo\".prd_lectivo_estado = TRUE";
-
-        String carrera = "";
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-            while (rs.next()) {
-
-                carrera = rs.getString("carrera_nombre");
-
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return carrera;
-    }
-
-    public static List<CarreraMD> selectIdNombreAll() {
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Carreras\".id_carrera,\n"
-                + "\"public\".\"Carreras\".carrera_nombre\n"
-                + "FROM\n"
-                + "\"public\".\"Carreras\"";
-
-        List<CarreraMD> lista = new ArrayList<>();
-        ResultSet rs = ResourceManager.Query(SELECT);
-        try {
-            while (rs.next()) {
-
-                CarreraMD carrera = new CarreraMD();
-
-                carrera.setId(rs.getInt("id_carrera"));
-                carrera.setNombre(rs.getString("carrera_nombre"));
-                lista.add(carrera);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return lista;
     }
 
 }

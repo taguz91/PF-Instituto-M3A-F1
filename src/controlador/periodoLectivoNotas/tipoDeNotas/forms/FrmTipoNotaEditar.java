@@ -1,9 +1,8 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -28,35 +27,11 @@ public class FrmTipoNotaEditar extends AbstracForm {
         PK = modelo.getIdTipoNota();
 
         vista.setTitle("Editar Tipo De Nota");
-
-        setObjInForm();
-
-        activarFormulario(true);
-    }
-
-    private void setObjInForm() {
-
-        String key = modelo.getPeriodoLectivo().getNombre_PerLectivo() + " " + modelo.getPeriodoLectivo().getCarrera().getNombre();
-
-        vista.getCmbPeriodoLectivo().setSelectedItem(key);
-        vista.getTxtNotaMax().setText(modelo.getValorMaximo() + "");
-        vista.getTxtNotaMin().setText(modelo.getValorMinimo() + "");
-        vista.getCmbTipoDeNota().setSelectedItem(modelo.getNombre());
     }
 
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        if (validarFormulario()) {
-            if (setObj().editar(PK)) {
-                String MENSAJE = "SE HA EDITADO ELTIPO DE NOTA";
-                JOptionPane.showMessageDialog(vista, MENSAJE);
-                vtnPadre.cargarTabla();
-                vista.dispose();
-            } else {
-                JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN PROBLEMA");
-            }
-        }
     }
 
 }

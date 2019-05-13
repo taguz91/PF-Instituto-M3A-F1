@@ -1,9 +1,8 @@
 package controlador;
 
-import controlador.estilo.SplashCTR;
 import controlador.login.LoginCTR;
+import java.awt.EventQueue;
 import javax.swing.UIManager;
-import modelo.usuario.UsuarioBD;
 import vista.Login;
 
 /**
@@ -11,31 +10,28 @@ import vista.Login;
  * @author Johnny
  */
 public class run {
-    
-    public static void main(String[] args) {
-        //No borrar !!!
-//        try {
-//            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(run.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
 
-        if (!iniciaEstilo("Windows")) {
-            iniciaEstilo("Nimbus"); 
+    public static void main(String[] args) {
+        try {
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            System.out.println(ex.getMessage());
         }
 
 //        SplashCTR ctrSplash = new SplashCTR();
 //        ctrSplash.iniciar();
-        java.awt.EventQueue.invokeLater(() -> {
-            
-            LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+        EventQueue.invokeLater(() -> {
+
+            LoginCTR login = new LoginCTR(new Login());
             login.Init();
-            
+
         });
+
     }
-    
+
     public static boolean iniciaEstilo(String estilo) {
-        boolean encontrado = false;        
+        boolean encontrado = false;
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if (estilo.equals(info.getName())) {
@@ -49,5 +45,5 @@ public class run {
         }
         return encontrado;
     }
-    
+
 }

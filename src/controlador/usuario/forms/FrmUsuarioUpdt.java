@@ -55,7 +55,7 @@ public class FrmUsuarioUpdt extends AbstracForm {
                 Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
                 vista.dispose();
                 destruirVariables();
-                vtnPadre.cargarTabla(UsuarioBD.SelectAll());
+                vtnPadre.cargarTabla(UsuarioBD.selectAll());
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
             }

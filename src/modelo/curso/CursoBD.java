@@ -1,12 +1,13 @@
 package modelo.curso;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
 import modelo.materia.MateriaBD;
@@ -27,6 +28,14 @@ public class CursoBD extends CursoMD {
     private final DocenteBD doc;
     private final JornadaBD jrd;
     private final ConectarDB conecta;
+
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public CursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -239,12 +248,13 @@ public class CursoBD extends CursoMD {
                 + "AND curso_activo = true;";
         return consultarCursos(sql);
     }
-    
+
     /**
      * Para consultar los cursos para un formulario
+     *
      * @param nombre
      * @param idPrdLectivo
-     * @return 
+     * @return
      */
     public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
         String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
@@ -357,29 +367,30 @@ public class CursoBD extends CursoMD {
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
-    
+
     /**
      * Cargamos los el nombre de los cursos por periodo
+     *
      * @param idPrdLectivo
      * @param ciclo
-     * @return 
+     * @return
      */
     public ArrayList<String> cargarNombreCursosPorPeriodoCiclo(int idPrdLectivo, int ciclo) {
         String sql = "SELECT DISTINCT curso_nombre\n"
                 + "FROM public.\"Cursos\" "
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
-                + "AND curso_ciclo = "+ciclo+ " AND curso_activo = true\n"
+                + "AND curso_ciclo = " + ciclo + " AND curso_activo = true\n"
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
     }
-    
+
     /**
-     * Cargamos el nombre de cursos por periodo, 
-     * restringiendo por ciclos.
+     * Cargamos el nombre de cursos por periodo, restringiendo por ciclos.
+     *
      * @param idPrdLectivo
      * @param cicloReprobado
      * @param cicloCursado
-     * @return 
+     * @return
      */
     public ArrayList<String> cargarNombreCursosPorPeriodo(int idPrdLectivo, int cicloReprobado, int cicloCursado) {
         String sql = "SELECT DISTINCT curso_nombre, curso_ciclo\n"
@@ -525,39 +536,6 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectParaleloWhere(CursoMD curso) {
-
-        String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"Cursos\".curso_nombre\n"
-                + "FROM\n"
-                + "\"public\".\"Cursos\"\n"
-                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + curso.getDocente() + " AND\n"
-                + "\"public\".\"Cursos\".curso_ciclo = " + curso.getCiclo() + " AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = " + curso.getPeriodo().getId_PerioLectivo() + "";
-
-        System.out.println(SELECT);
-
-        List<String> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-            while (rs.next()) {
-
-                String paralelo = rs.getString("curso_nombre");
-
-                lista.add(paralelo);
-
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return lista;
-    }
-
     public static List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
@@ -570,49 +548,19 @@ public class CursoBD extends CursoMD {
                 + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
 
         List<String> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
-
                 lista.add(rs.getString("curso_nombre"));
-
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
         return lista;
-    }
-
-    public static int selectIdCursoWhere(String paralelo, int ciclo, String nombreJornada, int idDocente, int idPeriodoLectivo) {
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Cursos\".id_curso\n"
-                + "FROM\n"
-                + "\"public\".\"Cursos\"\n"
-                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
-                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
-                + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = '" + idPeriodoLectivo + "' AND\n"
-                + "\"public\".\"Cursos\".curso_ciclo = " + ciclo + " AND\n"
-                + "\"public\".\"Cursos\".curso_paralelo = '" + paralelo + "' AND\n"
-                + "\"public\".\"Jornadas\".nombre_jornada = '" + nombreJornada + "'";
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        int idCurso = -1;
-
-        try {
-            while (rs.next()) {
-                idCurso = rs.getInt("id_curso");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return idCurso;
     }
 
 }
