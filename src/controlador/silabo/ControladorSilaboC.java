@@ -1522,7 +1522,7 @@ public class ControladorSilaboC {
 
         total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
-        gestion.getLblAcumuladoGestion().setText(total + "/100");
+        gestion.getLblAcumuladoGestion().setText(total + "/60");
 
     }
 
