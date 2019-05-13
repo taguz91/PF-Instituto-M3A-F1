@@ -1,5 +1,6 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -18,18 +18,15 @@ import modelo.persona.AlumnoMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.FrmAlumnoCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmAlumnoCarreraCTR {
+public class FrmAlumnoCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmAlumnoCarrera frmAlmCarrera;
     private final AlumnoCarreraBD almnCarrera;
-    private final VtnPrincipalCTR ctrPrin;
     private boolean matriculado = false;
     private String carrera;
 
@@ -46,24 +43,17 @@ public class FrmAlumnoCarreraCTR {
     /**
      * Iniciamos todos los modelos de base de datos.
      *
-     * @param vtnPrin VtnPrincipal: ventana del sistema. Necesaria para usar la
-     * barra de estado.
      * @param frmAlmCarrera FrmAlumnoCarrera: El formulario que se mostrara
-     * @param conecta ConectarBD: Conexion a la base de datos.
      * @param ctrPrin VtnPrincipalCTR: Controlador principal del sitema,
      * contiene metodos para todos.
      */
-    public FrmAlumnoCarreraCTR(VtnPrincipal vtnPrin, FrmAlumnoCarrera frmAlmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmAlumnoCarreraCTR(FrmAlumnoCarrera frmAlmCarrera, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmAlmCarrera = frmAlmCarrera;
-        this.ctrPrin = ctrPrin;
 
-        this.almnCarrera = new AlumnoCarreraBD(conecta);
-        this.almn = new AlumnoBD(conecta);
-        this.carr = new CarreraBD(conecta);
-
-        vtnPrin.getDpnlPrincipal().add(frmAlmCarrera);
-        frmAlmCarrera.show();
+        this.almnCarrera = new AlumnoCarreraBD(ctrPrin.getConecta());
+        this.almn = new AlumnoBD(ctrPrin.getConecta());
+        this.carr = new CarreraBD(ctrPrin.getConecta());
     }
 
     /**
@@ -108,6 +98,8 @@ public class FrmAlumnoCarreraCTR {
             }
 
         });
+        //Agregamos la ventana al dpn
+        ctrPrin.agregarVtn(frmAlmCarrera);
     }
 
     /**
@@ -138,7 +130,7 @@ public class FrmAlumnoCarreraCTR {
 
             if (guardar) {
 
-                int r = JOptionPane.showConfirmDialog(vtnPrin, "Se matricula a: \n"
+                int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Se matricula a: \n"
                         + alumnos.get(posAlm).getNombreCompleto() + "\n En: \n"
                         + carreras.get(posCar - 1).getNombre());
                 if (r == JOptionPane.YES_OPTION) {
@@ -153,7 +145,7 @@ public class FrmAlumnoCarreraCTR {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(vtnPrin, "Ya esta matriculado.\n " + carrera
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ya esta matriculado.\n " + carrera
                     + "No se puede inscribir en otra carrera.");
         }
     }
@@ -161,7 +153,7 @@ public class FrmAlumnoCarreraCTR {
     private boolean buscarSiEstaMatriculado(int posAlmn) {
         carrera = almnCarrera.estaMatriculadoEn(alumnos.get(posAlmn).getId_Alumno());
         if (carrera.length() > 1) {
-            JOptionPane.showMessageDialog(vtnPrin, alumnos.get(posAlmn).getNombreCompleto() + "\n"
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), alumnos.get(posAlmn).getNombreCompleto() + "\n"
                     + "Se encuentra matriculado en: \n" + carrera);
             return true;
         } else {

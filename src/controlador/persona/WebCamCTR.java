@@ -1,6 +1,7 @@
- package controlador.persona;
+package controlador.persona;
 
-import com.github.sarxos.webcam.WebcamShutdownHook;
+import controlador.principal.DCTR;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,13 +17,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import vista.persona.FrmPersona;
 import vista.persona.VtnWebCam;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class WebCamCTR {
+public class WebCamCTR extends DCTR {
 
     private final VtnWebCam vtnWebCam;
     private final FrmPersona frmPersona;
@@ -30,13 +30,14 @@ public class WebCamCTR {
     private InputStream is;
     private FileInputStream fis;
     private Image foto = null;
-    private boolean camaraActiva = false; 
+    private boolean camaraActiva = false;
 
-    public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipal vtnPrin) {
+    public WebCamCTR(FrmPersona frmPersona, FrmPersonaCTR ctrFrmPersona, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmPersona = frmPersona;
         this.ctrFrmPersona = ctrFrmPersona;
-        this.vtnWebCam = new VtnWebCam(vtnPrin, false);
-        vtnWebCam.setLocationRelativeTo(vtnPrin);
+        this.vtnWebCam = new VtnWebCam(ctrPrin.getVtnPrin(), false);
+        vtnWebCam.setLocationRelativeTo(ctrPrin.getVtnPrin());
         vtnWebCam.setVisible(true);
     }
 
@@ -44,32 +45,32 @@ public class WebCamCTR {
         //vtnWebCam.getBtnCapturarFoto().addActionListener(e -> capturarFoto());
         vtnWebCam.getBtnCapturarFoto().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 //Consulto los mouse listeners de el panel y le paso el evento
-                for(MouseListener ml: vtnWebCam.getPanelCam().getMouseListeners()){
+                for (MouseListener ml : vtnWebCam.getPanelCam().getMouseListeners()) {
                     ml.mouseClicked(e);
                 }
             }
         });
-        
+
         vtnWebCam.getBtnGuardarFoto().addActionListener(e -> guardarFoto());
         vtnWebCam.getBtnCancelar().addActionListener(e -> cancelarFoto());
-        
+
         //Evento de cama guardado  
-        vtnWebCam.getPanelCam().addMouseListener(new MouseAdapter(){
+        vtnWebCam.getPanelCam().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 if (!camaraActiva) {
                     camaraActiva = true;
-                }else{
-                    capturarFoto(); 
+                } else {
+                    capturarFoto();
                     camaraActiva = false;
                 }
             }
-        }); 
-        
+        });
+
     }
-    
+
     public void capturarFoto() {
         System.out.println("Se dio click en capturar foto");
         try {
@@ -115,10 +116,6 @@ public class WebCamCTR {
     private void cancelarFoto() {
         vtnWebCam.dispose();
         System.out.println("Se dio click en cancelar");
-    }
-    
-    private void clickCamara(){
-        
     }
 
 }

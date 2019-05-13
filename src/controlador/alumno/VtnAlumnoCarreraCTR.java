@@ -1,12 +1,11 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
@@ -18,20 +17,15 @@ import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnAlumnoCarreraCTR {
+public class VtnAlumnoCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnAlumnoCarrera vtnAlmCar;
     private final AlumnoCarreraBD almnCar;
-    private final ConectarDB conecta;
-    private final RolMD permisos;
-    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<AlumnoCarreraMD> almnsCarr;
 
@@ -44,23 +38,14 @@ public class VtnAlumnoCarreraCTR {
     /**
      * Se visualizan todos los alumnos por carrera respectivamente.
      *
-     * @param vtnPrin
      * @param vtnAlmCar
-     * @param conecta
-     * @param permisos
      * @param ctrPrin
      */
-    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar,
-            ConectarDB conecta, RolMD permisos, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public VtnAlumnoCarreraCTR(VtnAlumnoCarrera vtnAlmCar, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnAlmCar = vtnAlmCar;
-        this.almnCar = new AlumnoCarreraBD(conecta);
-        this.conecta = conecta;
-        this.carr = new CarreraBD(conecta);
-        this.permisos = permisos;
-        this.ctrPrin = ctrPrin;
-        vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
-        vtnAlmCar.show();
+        this.almnCar = new AlumnoCarreraBD(ctrPrin.getConecta());
+        this.carr = new CarreraBD(ctrPrin.getConecta());
     }
 
     /**
@@ -100,7 +85,7 @@ public class VtnAlumnoCarreraCTR {
         //Validacion buscar
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
-        //ctrPrin.carga.detener();
+        ctrPrin.agregarVtn(vtnAlmCar);
     }
 
     /**
@@ -202,7 +187,7 @@ public class VtnAlumnoCarreraCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
+        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 //            if (obj.getNombre().equals("USUARIOS-Agregar")) {
 //                vtnCarrera.getBtnIngresar().setEnabled(true);
 //            }

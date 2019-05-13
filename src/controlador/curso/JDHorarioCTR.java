@@ -1,12 +1,11 @@
 package controlador.curso;
 
-import controlador.principal.DependenciasVtnCTR;
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalTime;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
@@ -14,13 +13,12 @@ import modelo.validaciones.TxtVHora;
 import modelo.validaciones.Validar;
 import vista.curso.JDHorario;
 import vista.curso.PnlHorarioClase;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDHorarioCTR extends DependenciasVtnCTR {
+public class JDHorarioCTR extends DVtnCTR {
 
     private final JDHorario jd;
     private final CursoMD curso;
@@ -37,13 +35,13 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
     private LocalTime inicio, fin;
     private SesionClaseMD sesion;
 
-    public JDHorarioCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin,
+    public JDHorarioCTR(VtnPrincipalCTR ctrPrin,
             CursoMD curso) {
-        super(conecta, vtnPrin, ctrPrin);
+        super(ctrPrin);
         this.curso = curso;
-        this.bd = new SesionClaseBD(conecta);
-        this.jd = new JDHorario(vtnPrin, false);
-        jd.setLocationRelativeTo(vtnPrin);
+        this.bd = new SesionClaseBD(ctrPrin.getConecta());
+        this.jd = new JDHorario(ctrPrin.getVtnPrin(), false);
+        jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
 
     }
 
@@ -164,9 +162,6 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
 
         if (guardar) {
             String nsql = "";
-//            System.out.println(dia);
-//            System.out.println(horaIni);
-//            System.out.println(horaFin);
             for (int i = horaC; i < horaT; i++) {
                 inicio = LocalTime.of(i, minutoC);
                 fin = LocalTime.of((i + 1), minutoT);
@@ -177,10 +172,6 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                 nsql += bd.obtenerInsert() + "\n";
             }
 
-            System.out.println("-----------------");
-            System.out.println(nsql);
-            System.out.println("-----------------");
-            
             if (editar) {
                 bd.editar(idSesion);
                 idSesion = 0;
@@ -256,7 +247,7 @@ public class JDHorarioCTR extends DependenciasVtnCTR {
                     idSesion = Integer.parseInt(
                             pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
                     sesion = bd.buscarSesion(idSesion);
-                    int r = JOptionPane.showOptionDialog(vtnPrin, "Selecciono: " + idSesion + " "
+                    int r = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(), "Selecciono: " + idSesion + " "
                             + jd.getCmbDia().getItemAt(sesion.getDia()) + "\nHora inicio: " + sesion.getHoraIni() + "\n"
                             + "Hora fin: " + sesion.getHoraFin(), "Sesion Clase",
                             JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,

@@ -1,7 +1,7 @@
 package controlador.carrera;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -22,18 +21,14 @@ import modelo.validaciones.TxtVLetras;
 import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.Validar;
 import vista.carrera.FrmCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmCarreraCTR {
+public class FrmCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmCarrera frmCarrera;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private boolean editar = false;
     private int idCarrera = 0;
     //Para cargar el combo de coordinador  
@@ -44,16 +39,12 @@ public class FrmCarreraCTR {
     private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
 
     //Modelo de la tabla 
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
 
-    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmCarreraCTR(FrmCarrera frmCarrera, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmCarrera = frmCarrera;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.docen = new DocenteBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(frmCarrera);
-        frmCarrera.show();
+        this.docen = new DocenteBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -82,6 +73,8 @@ public class FrmCarreraCTR {
 
         frmCarrera.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCarrera.getBtnGuardarContinuar().addActionListener(e -> guardarYContinuar());
+
+        ctrPrin.agregarVtn(frmCarrera);
     }
 
     private void validaciones() {
@@ -151,7 +144,7 @@ public class FrmCarreraCTR {
         }
 
         if (guardar) {
-            CarreraBD car = new CarreraBD(conecta);
+            CarreraBD car = new CarreraBD(ctrPrin.getConecta());
             car.setCodigo(codigo);
             car.setFechaInicio(fechaInicio);
             car.setModalidad(modalidad);
