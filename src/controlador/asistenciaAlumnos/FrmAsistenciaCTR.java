@@ -2,9 +2,14 @@
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.cellEditor.ComboBoxCellEditor;
+import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
@@ -75,9 +80,33 @@ public class FrmAsistenciaCTR {
         setLblCarrera();
         cargarComboCiclo();
         cargarComboMaterias();
-        //InitEventos();
-        //InitTablas();
+        InitEventos();
+        InitTablas();
         activarForm(true);
+    }
+    
+    private void InitEventos(){
+        vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
+        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboPeriodos());
+        vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
+        vista.getCmbCicloAsis().addActionListener(e -> cargarComboCiclo());
+        
+    }
+    
+    private void InitTablas(){
+        jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
+        jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
+        
+        List<String> items = new ArrayList<>();
+        items.add("Asiste");
+        items.add("No asiste");
+        items.add("Retirado");
+        items.add("Desertor");
+        jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
     }
     
     //Metodos de apoyo
