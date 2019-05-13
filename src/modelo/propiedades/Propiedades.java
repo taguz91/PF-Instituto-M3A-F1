@@ -6,10 +6,7 @@
 package modelo.propiedades;
 
 import controlador.Libraries.Middlewares;
-import controlador.run;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -78,43 +75,4 @@ public class Propiedades {
                 .findFirst()
                 .orElse("");
     }
-
-    public static String getUserProp(String propertie) {
-        try {
-            return Files.lines(Paths.get("user.properties"))
-                    .filter(item -> item.contains("="))
-                    .map(c -> c.split("="))
-                    .collect(Collectors.toMap(s -> s[0], s -> s[1]))
-                    .entrySet()
-                    .stream()
-                    .filter(item -> item.getKey().equalsIgnoreCase(propertie))
-                    .map(c -> c.getValue())
-                    .findFirst()
-                    .orElse("");
-        } catch (NoSuchFileException ex) {
-            generateUserProperties(null);
-        } catch (IOException ex) {
-            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "";
-    }
-
-    public static void generateUserProperties(Map<Object, Object> properties) {
-        Properties file = new Properties();
-        if (properties != null) {
-            properties
-                    .entrySet()
-                    .stream()
-                    .forEach(entry -> {
-                        file.setProperty(entry.getKey().toString(), entry.getValue().toString());
-                    });
-        }
-
-        try {
-            file.store(new FileWriter("user.properties"), "PROPIEDADES DEL USUARIO");
-        } catch (IOException ex) {
-            Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

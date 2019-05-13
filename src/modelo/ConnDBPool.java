@@ -32,14 +32,12 @@ public class ConnDBPool {
     public ConnDBPool(String username, String password) {
         config = new HikariConfig();
         config.setJdbcUrl(generarURL());
-
-        //String username = Propiedades.getUserProp("username");
+        
         config.setUsername(username);
 
-        //String password = Propiedades.getUserProp("password");
         config.setPassword(password);
 
-        config.setMaximumPoolSize(3);
+        config.setMaximumPoolSize(2);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
