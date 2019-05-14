@@ -19,3 +19,15 @@ AND ac.id_almn_carrera = 211
 AND cr.id_carrera = ac.id_carrera 
 AND a.id_alumno = ac.id_alumno 
 AND p.id_persona = a.id_persona;
+
+
+SELECT persona_primer_nombre,
+persona_primer_apellido, 
+persona_identificacion,
+carrera_nombre 
+FROM public."AlumnosCarrera" ac, public."Carreras",
+public."Alumnos" a, public."Personas" p
+WHERE ac.id_almn_carrera = 211
+AND cr.id_carrera = ac.id_carrera 
+AND a.id_alumno = ac.id_alumno 
+AND p.id_persona = a.id_persona;
