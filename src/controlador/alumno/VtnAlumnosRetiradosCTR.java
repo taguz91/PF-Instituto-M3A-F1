@@ -5,7 +5,6 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import modelo.alumno.AlumnoCursoRetiradoBD;
 import modelo.alumno.AlumnoCursoRetiradoMD;
 import modelo.estilo.TblEstilo;
@@ -55,30 +54,14 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
     }
 
     /**
-     * Al hacer click en eliminar preguntamos si esta seguro de continuar e
-     * indicamos en que materia se eliminara su anulacion
-     */
-    private void clickEliminar() {
-        posFila = vtnAR.getTblAlumnosClase().getSelectedRow();
-        if (posFila >= 0) {
-            int r = JOptionPane.showConfirmDialog(vtnAR, "Se eliminara la anulacion de \n"
-                    + almsCursosRetirados.get(posFila).getAlumnoCurso().getCurso().getMateria().getNombre() + "\n"
-                    + "¿Seguro que quiere continuar?");
-            if (r == JOptionPane.YES_OPTION) {
-                if (acrb.eliminar(almsCursosRetirados.get(posFila).getId())) {
-                    cargarAnulados();
-                }
-            }
-        }
-    }
-
-    /**
      * Se incia filtros y estados de botones, y lbls
      */
     private void iniciarDependencias() {
         //Llenamos el combo 
         periodos = prd.cargarPrdParaCmbFrm();
         llenarCmbPrd(periodos);
+        vtnAR.getBtnEliminar().setEnabled(false);
+        vtnAR.getCbxEliminados().setVisible(false);
         vtnAR.getLblResultados().setText("0 Resultados obtenidos.");
     }
 
@@ -96,8 +79,6 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
     private void iniciarAcciones() {
         vtnAR.getCmbPrdLectivos().addActionListener(e -> clickPrd());
         vtnAR.getCbxEliminados().addActionListener(e -> clickCbxEliminados());
-        vtnAR.getBtnEliminar().addActionListener(e -> clickEliminar());
-        vtnAR.getBtnBuscar().addActionListener(e -> buscar());
     }
 
     /**
@@ -106,14 +87,8 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
      */
     private void clickCbxEliminados() {
         vtnAR.getTxtBuscar().setText("");
-        if (vtnAR.getCbxEliminados().isSelected()) {
-            vtnAR.getBtnEliminar().setEnabled(false);
-            cargarEliminados();
-        } else {
-            vtnAR.getBtnEliminar().setEnabled(true);
-            cargarAnulados();
-        }
-
+        vtnAR.getBtnEliminar().setEnabled(false);
+        cargarCmbACR();
     }
 
     /**
@@ -140,7 +115,11 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
-                    buscar();
+                    if (vtnAR.getCbxEliminados().isSelected()) {
+                        buscarACRE(vtnAR.getTxtBuscar().getText().trim());
+                    } else {
+                        buscarACR(vtnAR.getTxtBuscar().getText().trim());
+                    }
                 } else if (vtnAR.getTxtBuscar().getText().length() == 0) {
                     mdTbl.setRowCount(0);
                 }
@@ -148,21 +127,6 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
             }
 
         });
-    }
-
-    /**
-     * El buscador evaluamos si esta seleeciona el combo de eliminados o no para
-     * ejecutar diferentes buscadores
-     */
-    private void buscar() {
-        String b = vtnAR.getTxtBuscar().getText().trim();
-        if (Validar.esLetrasYNumeros(b)) {
-            if (vtnAR.getCbxEliminados().isSelected()) {
-                buscarACRE(b);
-            } else {
-                buscarACR(b);
-            }
-        }
     }
 
     /**

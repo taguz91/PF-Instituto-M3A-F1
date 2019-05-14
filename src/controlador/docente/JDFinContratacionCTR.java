@@ -316,6 +316,9 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este Docente");
             }
             
+//            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
+//            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
+//            frmFinContrato.dispose();
             System.out.println("Se guarda en base de datos");
             
         } else {
@@ -391,7 +394,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
 //            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString(),
 //            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), this.periodo, docenteMD.getIdDocente());
 //            ctr.iniciar();
-
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }

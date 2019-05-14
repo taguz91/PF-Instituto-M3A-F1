@@ -36,26 +36,18 @@ FROM
   INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
 INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota 	
 WHERE
-	"PeriodoLectivo".prd_lectivo_estado = true 
-	AND "Alumnos".id_alumno = $P{id_alumno}
+	"Alumnos".id_alumno = $P{id_alumno}
 	AND "Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre =$P{materia_nombre}
-	AND "TipoDeNota".tipo_nota_nombre = 'EXAMEN SUPLETORIO']]>
+	AND "TipoDeNota".tipo_nota_nombre = 'EXAMEN DE RECUPERACION']]>
 	</queryString>
 	<field name="Supletorio" class="java.math.BigDecimal"/>
 	<title>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="125" height="20" uuid="510052be-31c9-435f-b6b6-637ac1aa23d1"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="0" y="0" width="125" height="20" uuid="b7032deb-e48c-4d78-ab29-b0d7ddcd51bc"/>
 				<textFieldExpression><![CDATA[$F{Supletorio}]]></textFieldExpression>
 			</textField>
 		</band>

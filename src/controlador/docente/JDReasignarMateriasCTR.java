@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.validaciones.TxtVBuscador;
@@ -31,21 +30,16 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private PeriodoLectivoBD periodoBD;
     private final DocenteBD docenteBD;
     private DocenteMD docenteMD;
-    private final String nombre, curso;
+    private final String nombre;
     private final JDReasignarMaterias frmReasignarMateria;
     private ArrayList<DocenteMD> docentes;
-    private List<PeriodoLectivoMD> PeriodoLectivoMD;
     private DefaultTableModel mdTbl;
-    private final int periodo, idDocente;
     //int materia = frmFinContrato.getTblMateriasCursos();
-                                                                          ///////////////////////////////////////
-    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre, String curso, int periodo, int idDocente) {
+
+    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre) {
         super(ctrPrin);
         this.docenteBD = new DocenteBD(ctrPrin.getConecta());
         this.nombre = nombre;
-        this.curso = curso;
-        this.periodo = periodo;
-        this.idDocente = idDocente;
         this.frmReasignarMateria = new JDReasignarMaterias(ctrPrin.getVtnPrin(), false);
         this.frmReasignarMateria.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.frmReasignarMateria.setVisible(true);
@@ -53,9 +47,8 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     }
 
-
     public void iniciar() {
-        frmReasignarMateria.getLblMateria().setText(this.nombre + this.curso);
+        frmReasignarMateria.getLblMateria().setText(nombre);
         String[] titulo = {"Cedula", "Nombres Completos"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -88,9 +81,8 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private void reasignarMaterias() {
 
     }
-    
+
     private void cargarDocentes() {
-        //PeriodoLectivoMD = periodoBD.periodoDocente(periodo);
         docentes = docenteBD.cargarDocentesParaReasignarMaterias();
         llenarTblDocentes(docentes);
     }
