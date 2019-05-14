@@ -447,16 +447,21 @@ public class Controlador_plan_clases {
             
             valid= false;
         }
-        if(lista_recursoMD1==null || lista_estrategias_metodologicas_antici==null){
+        if(lista_recursoMD1==null){
             valid=false;
-        }
         
-
+        }
+        for (int i = 0; i < lista_estrategias_metodologicas_antici.size(); i++) {
+                if(lista_estrategias_metodologicas_antici.get(i).getId_estrategias_unidad().getIdEstrategiaUnidad()<1){
+            valid=false;
             
-
+        }
+        }
         return valid;
     
     }
+    
+    
       
     private void insertarEstrategiasMetodologicas(){
 
