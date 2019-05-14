@@ -218,13 +218,6 @@ public class ConectarDB {
         }
     }
 
-    private String generarURL() {
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
-    }
-
     private void cursorCarga() {
         if (vtnPrin != null) {
             vtnPrin.setCursor(new Cursor(3));
@@ -243,6 +236,11 @@ public class ConectarDB {
 
     public PreparedStatement getPS(String sql) {
         try {
+            if (ct.isClosed()) {
+                ct = DriverManager.getConnection(url, user, pass);
+                ctrCt = new ConexionesCTR(ct);
+                ctrCt.iniciar("Obtener un PS");
+            }
             return ct.prepareStatement(sql);
         } catch (SQLException e) {
             System.out.println("No pudimos preparar el statement: " + e.getMessage());
