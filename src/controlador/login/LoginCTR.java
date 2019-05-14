@@ -11,6 +11,7 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import org.postgresql.util.PSQLException;
 import vista.Login;
 import vista.usuario.VtnSelectRol;
 
@@ -49,43 +50,65 @@ public class LoginCTR {
         vista.getTxtPassword().addKeyListener(eventoText());
         vista.getTxtUsername().addKeyListener(eventoText());
         vista.getBtnIngresar().addActionListener(e -> login());
+        //Evento para ingresar rapido como JHONNY
+        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String txt = vista.getTxtUsername().getText().trim();
+                if (txt.length() <= 2) {
+                    ingresoVeloz(txt);
+                }
+            }
+        });
     }
 
     //METODOS DE APOYO
+    private void activarForm(boolean estado) {
+        vista.getTxtUsername().setEnabled(estado);
+        vista.getTxtPassword().setEnabled(estado);
+        vista.getBtnIngresar().setEnabled(estado);
+    }
+
     private void login() {
 
         if (carga) {
 
             new Thread(() -> {
-
-                Effects.setLoadCursor(vista);
-                String USERNAME = vista.getTxtUsername().getText();
-                String PASSWORD = vista.getTxtPassword().getText();
-
-                ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
-
-                modelo = new UsuarioBD();
-
-                modelo.setUsername(USERNAME);
-                modelo.setPassword(PASSWORD);
-
                 try {
+
+                    Effects.setLoadCursor(vista);
+                    String USERNAME = vista.getTxtUsername().getText();
+                    String PASSWORD = vista.getTxtPassword().getText();
+
+                    activarForm(false);
+                    ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
+
+                    modelo = new UsuarioBD();
+
+                    modelo.setUsername(USERNAME);
+                    modelo.setPassword(PASSWORD);
+
                     modelo = modelo.selectWhereUsernamePassword();
 
                     if (modelo != null) {
 
                         vista.dispose();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
-                        vtn.Init();
+                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista, false);
+                    vtn.Init();
 
                     } else {
                         Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                        Effects.setDefaultCursor(vista);
                     }
+
                 } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
                     Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                 } finally {
+
                     Effects.setDefaultCursor(vista);
+                    activarForm(true);
                 }
 
             }).start();
@@ -102,6 +125,14 @@ public class LoginCTR {
                 }
             }
         };
+    }
+
+    private void ingresoVeloz(String c) {
+        if (c.length() > 1 && c.length() <= 2) {
+            if (c.equalsIgnoreCase("J.")) {
+                vista.getTxtUsername().setText("JOHNNY");
+            }
+        }
     }
 
 }

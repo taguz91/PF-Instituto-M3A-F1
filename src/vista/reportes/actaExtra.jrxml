@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select persona_identificacion from public."Personas";]]>
+	</queryString>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="403" y="41" width="38" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cuenca,]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="441" y="41" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="18" y="0" width="219" height="61"/>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="233" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTA DE COMPROMISO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="29" width="519" height="204"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Yo, ………………………………………, con cédula de ciudadanía Nro. …………………………, estudiante del ………………………….nivel, de la carrera………………………………………., del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.
+                                    
+Reconozco que de acuerdo a lo establecido en el artículo 80, literal c), de la Ley Orgánica de Educación Superior y lo establecido en el Reglamento para garantizar la gratuidad de la Educación Superior; he perdido el derecho a la gratuidad de la matrícula correspondiente al primer período 2019; por tanto, me comprometo a cancelar el valor de matrícula (extraordinaria / especial).
+                                    
+El valor a pagar me será notificado por las autoridades del Instituto, de conformidad a los lineamientos establecidos por la Secretaría de Educación Superior, Ciencia, Tecnología e Innovación.
+                                     
+A efectos del presente procedimiento de matriculación, ACEPTO y RECONOZCO que mi matrícula será efectivizada una vez que se cumpla con el pago de los valores y condiciones descritas en el presente documento. 
+                                    
+Para constancia se suscribe este acuerdo en dos ejemplares.
+]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="221" splitType="Stretch">
+			<staticText>
+				<reportElement x="58" y="94" width="116" height="19"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[CC:.................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="113" width="116" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estudiante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="74" width="116" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[.................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="94" width="116" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA/O]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="113" width="202" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="74" width="116" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Dr. Mauricio Avilés]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

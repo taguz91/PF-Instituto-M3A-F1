@@ -194,7 +194,7 @@ public class SilaboBD extends SilaboMD {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 
@@ -410,7 +410,7 @@ public class SilaboBD extends SilaboMD {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 

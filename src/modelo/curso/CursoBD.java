@@ -1,6 +1,7 @@
 package modelo.curso;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class CursoBD extends CursoMD {
         this.jrd = new JornadaBD(conecta);
     }
 
-    public void iniciarIngresoNotas() {
+    private void iniciarIngresoNotas() {
         String nsql = "INSERT INTO public.\"IngresoNotas\"( id_curso)\n"
                 + "	VALUES ();";
         if (conecta.nosql(nsql) == null) {
@@ -64,7 +65,8 @@ public class CursoBD extends CursoMD {
                 + ", " + getDocente().getIdDocente() + ", " + getJornada().getId()
                 + ", '" + getNombre() + "', " + getCapacidad() + ", " + getCiclo()
                 + ", '" + getParalelo() + "');";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso " + getNombre());
         }
     }
@@ -79,7 +81,8 @@ public class CursoBD extends CursoMD {
                 + "curso_ciclo=" + getCiclo() + ", "
                 + "curso_paralelo= '" + getParalelo() + "'\n"
                 + "	WHERE id_curso = " + idCurso + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getNombre());
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + getNombre());
@@ -90,7 +93,8 @@ public class CursoBD extends CursoMD {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = false "
                 + "WHERE id_curso = " + idCurso + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
@@ -102,15 +106,16 @@ public class CursoBD extends CursoMD {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = true "
                 + "WHERE id_curso = " + idCurso + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se activo correctamente. ");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo activar,"
                     + "compruebe su conexion a internet.");
         }
     }
-    
-    public boolean nuevoCurso(CursoMD c){
+
+    public boolean nuevoCurso(CursoMD c) {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
@@ -119,7 +124,8 @@ public class CursoBD extends CursoMD {
                 + ", " + c.getDocente().getIdDocente() + ", " + c.getJornada().getId()
                 + ", '" + c.getNombre() + "', " + c.getCapacidad() + ", " + c.getCiclo()
                 + ", '" + c.getParalelo() + "');";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -218,12 +224,14 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT count(id_curso) "
                 + "FROM public.\"AlumnoCurso\" "
                 + "WHERE id_curso =" + idCurso + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
                     num = rs.getInt(1);
                 }
+                ps.getConnection().close();
                 return num;
             } else {
                 return 0;
@@ -556,7 +564,8 @@ public class CursoBD extends CursoMD {
 
     private ArrayList<CursoMD> consultarCursos(String sql) {
         ArrayList<CursoMD> cursos = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -565,6 +574,7 @@ public class CursoBD extends CursoMD {
                         cursos.add(c);
                     }
                 }
+                ps.getConnection().close();
                 return cursos;
             } else {
                 return null;
@@ -578,6 +588,7 @@ public class CursoBD extends CursoMD {
 
     private ArrayList<String> consultarNombreCursos(String sql) {
         ArrayList<String> nombres = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -585,6 +596,7 @@ public class CursoBD extends CursoMD {
                     String nombre = rs.getString("curso_nombre");
                     nombres.add(nombre);
                 }
+                ps.getConnection().close();
                 return nombres;
             } else {
                 return null;
@@ -598,6 +610,7 @@ public class CursoBD extends CursoMD {
 
     private CursoMD consultarCurso(String sql) {
         CursoMD c = null;
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -622,6 +635,7 @@ public class CursoBD extends CursoMD {
                     c.setCiclo(rs.getInt("curso_ciclo"));
                     c.setParalelo(rs.getString("curso_paralelo"));
                 }
+                ps.getConnection().close();
                 return c;
             } else {
                 return null;
