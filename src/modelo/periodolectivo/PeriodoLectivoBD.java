@@ -101,10 +101,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
-    public List<PeriodoLectivoMD> periodoDocente(String aguja) {
+    public List<PeriodoLectivoMD> periodoDocente(int aguja) {
+        System.out.println("docente " + aguja);
         String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
                 + "public.\"Docentes\" d USING(id_docente)\n"
-                + "WHERE d.docente_codigo LIKE '" + aguja + "';";
+                + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
         ResultSet rs = conecta.sql(sql);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {

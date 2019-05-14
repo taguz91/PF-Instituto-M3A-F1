@@ -110,7 +110,7 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases.getBtnEditarPLC().addActionListener((ActionEvent ae) -> {
             int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
             if (row != -1) {
-                
+                fCrud_plan_Clases.dispose();
                 ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                 ce.iniciaControlador();
             } else {

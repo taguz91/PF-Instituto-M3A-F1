@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -255,7 +256,7 @@ public class DocenteBD extends DocenteMD {
     }
 
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
-        String nsql = "SELECT m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
+        String nsql = "SELECT m.id_materia, c.id_curso, m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
                 + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
                 + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
 
@@ -266,8 +267,10 @@ public class DocenteBD extends DocenteMD {
             while (rs.next()) {
                 CursoMD c = new CursoMD();
                 MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
                 m.setNombre(rs.getString("materia_nombre"));
                 c.setMateria(m);
+                c.setId(rs.getInt("id_curso"));
                 c.setNombre(rs.getString("curso_nombre"));
                 lista.add(c);
 
@@ -511,9 +514,10 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-    public boolean deshabilitarCursos(int idPeriodo, int idDocente) {
+    public boolean deshabilitarCursos(CursoMD curso) {
         String sql = "UPDATE public.\"Cursos\" SET curso_activo = false "
-                + "WHERE id_docente = " + idDocente + " AND id_prd_lectivo = " + idPeriodo + ";";
+                + "WHERE id_docente = " + curso.getDocente().getIdDocente() + " AND id_prd_lectivo = " + curso.getPeriodo().getId_PerioLectivo()
+                + " AND id_materia = " + curso.getMateria().getId() + " AND curso_nombre = '" + curso.getNombre() + "';";
         System.out.println(sql);
         if (conecta.nosql(sql) == null) {
             return true;
@@ -619,10 +623,11 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-    public boolean terminarContrato(int aguja) {
+    public boolean terminarContrato(DocenteMD docente) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
-                + " docente_en_funcion = false\n"
-                + " WHERE id_docente = " + aguja + ";";
+                + " docente_fecha_fin = '" + docente.getFechaFinContratacion() + 
+                "', docente_observacion = '" + docente.getObservacion() + "', docente_en_funcion = false\n"
+                + " WHERE id_docente = " + docente.getIdDocente() + ";";
         if (conecta.nosql(nsql) == null) {
             return true;
         } else {

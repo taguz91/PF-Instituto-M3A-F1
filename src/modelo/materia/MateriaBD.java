@@ -188,6 +188,28 @@ public class MateriaBD extends MateriaMD {
         return consultarMateriasParaTabla(sql);
     }
 
+    public MateriaMD buscarMateria(String materia){
+        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '%" + materia + "%';";
+        ResultSet rs = conecta.sql(sql);
+        MateriaMD m = new MateriaMD();
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    m.setId(rs.getInt("id_materia"));
+                }
+                return m;
+            } else {
+                System.out.println("No se pudo consultar materias para tabla");
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar materias para tabla");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
     //Cargar datos de materia por carrera para comprobar si es nucleo o no 
     public ArrayList<MateriaMD> cargarMateriaPorCarreraFrm(int idcarrera) {
         sql = "SELECT id_materia, materia_codigo,"

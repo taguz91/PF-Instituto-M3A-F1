@@ -397,7 +397,9 @@ public class VtnDocenteCTR extends DVtnCTR {
 
         posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            JDFinContratacionCTR ctr = new JDFinContratacionCTR(ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString());
+            System.out.println("Este es el ID: " + docentesMD.get(posFila).getIdDocente());
+            JDFinContratacionCTR ctr = new JDFinContratacionCTR(ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(),
+                    docente.buscarDocente(vtnDocente.getTblDocente().getValueAt(posFila, 0).toString()).getIdDocente());
             ctr.iniciar();
 
         } else {
