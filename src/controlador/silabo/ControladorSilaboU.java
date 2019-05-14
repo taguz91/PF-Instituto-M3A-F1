@@ -124,7 +124,7 @@ public class ControladorSilaboU {
 
     public void iniciarSilabo(SilaboMD silabo) {
 
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(),1);
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(), 1);
 
         estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
 
@@ -137,6 +137,8 @@ public class ControladorSilaboU {
         referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
 
         tiposActividad = TipoActividadBD.consultar(conexion);
+
+        mostrarTotalGestion();
 
         cargarReferencias(referenciasSilabo);
         unidadesSilabo.forEach((umd) -> {
@@ -771,8 +773,6 @@ public class ControladorSilaboU {
 
         });
 
-        
-
         gestion.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -867,21 +867,30 @@ public class ControladorSilaboU {
         if (accion2) {
             new Thread(() -> {
                 accion2 = false;
-                bibliografia.getBtnFinalizar().setEnabled(false);
 
-                principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                if (validarBiblioBase()) {
+                    bibliografia.getBtnFinalizar().setEnabled(false);
 
-                new SilaboBD(conexion).eliminar(silabo);
+                    principal.getLblEstado().setText("Guardando silabo... Espere por favor");
 
-                guardarSilabo();
-                silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
-                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                    new SilaboBD(conexion).eliminar(silabo);
+
+                    guardarSilabo();
+                    silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+                    JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+
+                    principal.getLblEstado().setText("");
+                    bibliografia.getBtnFinalizar().setEnabled(true);
+                    gestion.dispose();
+                    bibliografia.dispose();
+                    principal.getMnCtSilabos().doClick();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe agregar al menos una referencia base ", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                }
+
                 accion2 = true;
-                principal.getLblEstado().setText("");
-                bibliografia.getBtnFinalizar().setEnabled(true);
-                gestion.dispose();
-                bibliografia.dispose();
-                principal.getMnCtSilabos().doClick();
+
             }).start();
         }
 
@@ -910,7 +919,6 @@ public class ControladorSilaboU {
                     silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
 
                     accion = true;
-
 
                     principal.getLblEstado().setText("");
 
@@ -955,11 +963,9 @@ public class ControladorSilaboU {
             @Override
             public void keyReleased(KeyEvent ke) {
 
-                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
                     cargarBiblioteca();
                 }
-                
-                
 
             }
 
@@ -1004,8 +1010,6 @@ public class ControladorSilaboU {
             }
 
         });
-
-       
 
         bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
 
@@ -1257,6 +1261,8 @@ public class ControladorSilaboU {
                 }
                 break;
         }
+
+        mostrarTotalGestion();
     }
 
     public void cargarEvaluaciones(DefaultTableModel modeloTabla, int p) {
@@ -1453,6 +1459,12 @@ public class ControladorSilaboU {
         referenciasSilabo.removeIf(p -> p.getIdReferencia().getDescripcionReferencia().equals(seleccion));
 
         modeloBase.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
+
+        if (bibliografia.getLstBibliografiaBase().getSelectedIndex() != -1) {
+            bibliografia.getBtnQuitarBibliografiaBase().setEnabled(true);
+        }else{
+            bibliografia.getBtnQuitarBibliografiaBase().setEnabled(false);
+        }
     }
 
     public ReferenciasMD seleccionarReferencia() {
@@ -1469,6 +1481,7 @@ public class ControladorSilaboU {
 
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
+        mostrarTotalGestion();
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
@@ -1476,6 +1489,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+        mostrarTotalGestion();
     }
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
@@ -1483,6 +1497,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+        mostrarTotalGestion();
     }
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
@@ -1490,6 +1505,7 @@ public class ControladorSilaboU {
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
+        mostrarTotalGestion();
     }
 
     public void cargarReferencias(List<ReferenciaSilaboMD> referenciasSilabo) {
@@ -1644,6 +1660,32 @@ public class ControladorSilaboU {
 
             if (aprovechamiento < 60.0) {
                 control = false;
+            }
+
+        }
+
+        return control;
+
+    }
+
+    public void mostrarTotalGestion() {
+
+        double total = 0;
+
+        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+
+        gestion.getLblAcumuladoGestion().setText(total + "/60");
+
+    }
+
+    public boolean validarBiblioBase() {
+
+        boolean control = false;
+
+        for (ReferenciaSilaboMD rsd : referenciasSilabo) {
+
+            if (rsd.getIdReferencia().getTipoReferencia().equals("Base")) {
+                control = true;
             }
 
         }

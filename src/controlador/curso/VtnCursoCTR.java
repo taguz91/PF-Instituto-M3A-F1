@@ -93,9 +93,11 @@ public class VtnCursoCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnCurso);
     }
-
+    
+    /**
+     * Iniciamos el buscador de esta ventana 
+     */
     private void iniciarBuscador() {
-        //Buscador 
         vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -180,13 +182,18 @@ public class VtnCursoCTR extends DVtnCTR {
         llenarTbl(cursos);
         System.out.println("Se cargaron cursos");
     }
-
+    
+    /**
+     * Cargamos los nombres de todos los cursos 
+     */
     public void cargarNombreCursos() {
-        //Cargamos el combo con los nombres de cursos 
         nombresC = curso.cargarNombreCursos();
         cargarCmbCursos(nombresC);
     }
-
+    
+    /**
+     * Cargamos todos los cursos por el periodo
+     */
     private void cargarCursosPorPeriodo() {
         vtnCurso.getTxtBuscar().setText("");
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
@@ -201,7 +208,10 @@ public class VtnCursoCTR extends DVtnCTR {
             cargarCursos();
         }
     }
-
+    
+    /**
+     * Cargamos los cursos por nombre 
+     */
     private void cargarCursosPorNombre() {
         vtnCurso.getTxtBuscar().setText("");
         int posNom = vtnCurso.getCmbCurso().getSelectedIndex();
@@ -217,7 +227,11 @@ public class VtnCursoCTR extends DVtnCTR {
             llenarTbl(cursos);
         }
     }
-
+    
+    /**
+     * Llenamos la tabla con los cursos 
+     * @param cursos 
+     */
     private void llenarTbl(ArrayList<CursoMD> cursos) {
         mdTbl.setRowCount(0);
         if (cursos != null) {
@@ -239,7 +253,10 @@ public class VtnCursoCTR extends DVtnCTR {
             vtnCurso.getLblResultados().setText("0 Resultados obtenidos.");
         }
     }
-
+    
+    /**
+     * Cargamos el combo de periodo lectivo 
+     */
     private void cargarCmbPrdLectio() {
         periodos = prd.cargarPrdParaCmbVtn();
         vtnCurso.getCmbPeriodoLectivo().removeAllItems();
@@ -250,7 +267,10 @@ public class VtnCursoCTR extends DVtnCTR {
             });
         }
     }
-
+    
+    /**
+     * Reporte de la lista de alumnos por curso
+     */
     public void reporteListaAlumnos() {
         JasperReport jr;
         String path = "/vista/reportes/repListaAlumno.jasper";
@@ -264,7 +284,11 @@ public class VtnCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+    
+    /**
+     * Cargamos los cursos 
+     * @param nombresC 
+     */
     private void cargarCmbCursos(ArrayList<String> nombresC) {
         vtnCurso.getCmbCurso().removeAllItems();
         if (nombresC != null) {

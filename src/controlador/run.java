@@ -2,7 +2,6 @@ package controlador;
 
 import controlador.login.LoginCTR;
 import java.awt.EventQueue;
-import javax.swing.UIManager;
 import vista.Login;
 
 /**
@@ -12,11 +11,8 @@ import vista.Login;
 public class run {
 
     public static void main(String[] args) {
-        try {
-
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            System.out.println(ex.getMessage());
+        if (!iniciaEstilo("Windows")) {
+            iniciaEstilo("Nimbus");
         }
 
 //        SplashCTR ctrSplash = new SplashCTR();

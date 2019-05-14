@@ -138,7 +138,7 @@ CREATE TABLE "Docentes"(
   "docente_fecha_fin" date,
   "docente_tipo_tiempo" character varying(20),
   "docente_activo" boolean NOT NULL DEFAULT 'true',
-  "docente_observacion" character varying(20),
+  "docente_observacion" character varying(200),
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
 	"docente_titulo" character varying(200),
 	"docente_abreviatura" character varying(20),
@@ -315,7 +315,7 @@ CREATE TABLE "AlumnoCursoRetirados"(
 	"id_almn_curso" integer NOT NULL,
 	"retiro_fecha" TIMESTAMP DEFAULT now(),
 	"retiro_observacion" text,
-  "retiro_activo" boolean DEFAULT 'true',
+  	"retiro_activo" boolean DEFAULT 'true',
 	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
 ) WITH (OIDS = FALSE);
 

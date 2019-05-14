@@ -44,7 +44,10 @@ public class JDHorarioCTR extends DVtnCTR {
         jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
 
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias  de esta ventana 
+     */
     public void iniciar() {
         cargarDatos();
         horarioClase();
@@ -68,19 +71,24 @@ public class JDHorarioCTR extends DVtnCTR {
      * Dar click al contenedor de panles de curso
      */
     private void clickTbp() {
-        System.out.println("Cambiamos de panle");
         if (jd.getTbpHorario().getSelectedIndex() == 1) {
             //Inciamos el horario del curso completo  
             ctrHCurso.iniciar();
         }
     }
-
+    
+    /**
+     * Si se da click a cancelar cuando se seleeciona un horario 
+     */
     private void clickCancelar() {
         editar = false;
         idSesion = 0;
         limpiarFrm();
     }
-
+    
+    /**
+     * Llenamos el combo con los dias 
+     */
     private void llenarCmbDias() {
         jd.getCmbDia().removeAllItems();
         jd.getCmbDia().addItem("Seleccione");
@@ -88,12 +96,18 @@ public class JDHorarioCTR extends DVtnCTR {
             jd.getCmbDia().addItem(ctrHClase.getjSelec()[i]);
         }
     }
-
+    
+    /**
+     * Iniciamos todas las validaciones de esta ventana 
+     */
     private void iniciarValidaciones() {
         jd.getTxtHoraInicio().addKeyListener(new TxtVHora(jd.getTxtHoraInicio()));
         jd.getTxtHoraFin().addKeyListener(new TxtVHora(jd.getTxtHoraFin()));
     }
-
+    
+    /**
+     * Guardamos el horario siempre validando de que todo este correcto.    
+     */
     private void guardar() {
         guardar = true;
         dia = jd.getCmbDia().getSelectedIndex();
@@ -106,7 +120,7 @@ public class JDHorarioCTR extends DVtnCTR {
         } else {
             jd.getLblError().setText("");
         }
-
+        //Validamos que todo sea hora
         if (!Validar.esHora(horaIni) || !Validar.esHora(horaFin)) {
             guardar = false;
             jd.getLblError().setText("<html>Debe ingresar horas validas <br>08:00 - 20:00</html>");
@@ -119,7 +133,7 @@ public class JDHorarioCTR extends DVtnCTR {
             hs = horaFin.split(":");
             horaT = Integer.parseInt(hs[0]);
             minutoT = Integer.parseInt(hs[1]);
-            //System.out.println(horaC + " " + horaT + " " + minutoC + " " + minutoT);
+            //Siempre validamos que sea antes de las 22 y superior a las 7 
             if (horaC > 22 || horaC < 7 || horaT > 22 || horaC < 7 || minutoC != 0 || minutoT != 0) {
                 guardar = false;
                 jd.getLblError().setText("<html>Esta fuera de rango recuerde el formato: <br>08:00 - 20:00</html>");
@@ -138,6 +152,7 @@ public class JDHorarioCTR extends DVtnCTR {
                 guardar = false;
             }
         }
+        //Si todo sigue correcto hasta ahora validamos que sean horas en la jornada especificada
         if (guardar) {
             guardar = false;
             for (String hSelec : ctrHClase.gethSelec()) {
@@ -186,7 +201,10 @@ public class JDHorarioCTR extends DVtnCTR {
             limpiarFrm();
         }
     }
-
+    
+    /**
+     * Comprobamos que todos los campos esten llenos 
+     */
     private void todosLosCamposLlenos() {
         if (horaIni.equals("") || horaFin.equals("") || dia == 0) {
             guardar = false;
@@ -195,20 +213,29 @@ public class JDHorarioCTR extends DVtnCTR {
             jd.getLblError().setText("");
         }
     }
-
+    
+    /**
+     * Iniciamos el horario de la clase el panel que nos muestra el horario
+     */
     private void horarioClase() {
         pnl = new PnlHorarioClase();
         ctrHClase = new PnlHorarioClaseCTR(pnl, curso, bd);
         ctrHClase.iniciar();
         jd.getTbpHorario().addTab("Horario Clase", pnl);
     }
-
+    
+    /**
+     * Iniciamos el panel del horario del curso 
+     */
     private void horarioCurso() {
         pnlCurso = new PnlHorarioClase();
         ctrHCurso = new PnlHorarioCursoCTR(pnlCurso, curso, bd);
         jd.getTbpHorario().addTab("Horario Curso", pnlCurso);
     }
-
+    
+    /**
+     * Cargamos informacion referente al curso que seleccionamos 
+     */
     private void cargarDatos() {
         //Titulo de la ventana 
         jd.setTitle("Horario - " + curso.getMateria().getNombre() + " - " + curso.getNombre());
@@ -233,17 +260,23 @@ public class JDHorarioCTR extends DVtnCTR {
         jd.getLblCurso().setText(curso.getNombre());
         jd.getLblCapacidad().setText(curso.getCapacidad() + "");
     }
-
+    
+    /**
+     * Evento al hacer click en la tabla  
+     * Obtenemos la fila, la columna 
+     * Luego obtenemos el valor de esa celda  
+     * Si no es nulo mostramos una JOptionPane que nos pregunta
+     * Si queremos editarlo o eliminarlo 
+     */
     private void clickTbl() {
         pnl.getTblHorario().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 posFil = pnl.getTblHorario().getSelectedRow();
                 posColum = pnl.getTblHorario().getSelectedColumn();
+                //Si tiene algun dato se busca la sesion y se pregunta si quiere 
+                //Eliminar o editar este horario
                 if (pnl.getTblHorario().getValueAt(posFil, posColum) != null) {
-                    System.out.println(pnl.getTblHorario().getValueAt(posFil, posColum));
-                    System.out.println(pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
-
                     idSesion = Integer.parseInt(
                             pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
                     sesion = bd.buscarSesion(idSesion);
@@ -274,7 +307,10 @@ public class JDHorarioCTR extends DVtnCTR {
             }
         });
     }
-
+    
+    /**
+     * Ponemos el formulario por defecto 
+     */
     private void limpiarFrm() {
         jd.getCmbDia().setSelectedIndex(0);
         jd.getTxtHoraFin().setText("");

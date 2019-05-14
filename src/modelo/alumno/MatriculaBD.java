@@ -24,8 +24,8 @@ public class MatriculaBD extends MatriculaMD {
 
     public void ingresar() {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
-                + "	id_alumno, id_prd_lectivo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ");";
+                + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '"+getTipo()+"');";
 
         System.out.println("SE matricula: ");
         System.out.println(nsql);

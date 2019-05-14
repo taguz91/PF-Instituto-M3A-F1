@@ -8,13 +8,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
-import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.validaciones.TxtVNota;
 import modelo.validaciones.Validar;
 import vista.alumno.FrmMallaActualizar;
-import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -34,7 +32,14 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
     private double nota1, nota2, nota3;
     private String notaAux;
     private final String[] estados = {"Matriculado", "Cursado", "Reprobado", "Pendiente", "Anulado"};
-
+    
+    /**
+     * Para poder actualizar la malla del alumno 
+     * @param ctrPrin
+     * @param malla
+     * @param bd
+     * @param ctrMalla 
+     */
     public FrmMallaActualizarCTR(VtnPrincipalCTR ctrPrin,
             MallaAlumnoMD malla, MallaAlumnoBD bd, VtnMallaAlumnoCTR ctrMalla) {
         super(ctrPrin);
@@ -45,7 +50,10 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
         this.frmMalla.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.frmMalla.setVisible(true);
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias de esta ventana
+     */
     public void iniciar() {
         frmMalla.getTxtNota().setEnabled(false);
         llenarComboNumMatriculas();
@@ -64,7 +72,12 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
         ctrPrin.eventoJDCerrar(frmMalla);
         mostrarVtnMalla(frmMalla);
     }
-
+    
+    /**
+     * Guardamos en la base de datos, 
+     * Se receteara el numero de matricula automaticamente evaluando
+     * hasta que nota tiene ingresado
+     */
     private void guardar() {
         //verificamos el numero de matricula que esta
         if (nota3 > 0) {
@@ -90,14 +103,20 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
             }
         }
     }
-
+    
+    /**
+     * Actualizamos el lbl de estaco obteniendo el estado ingresado
+     */
     private void clickEstados() {
         posEstado = frmMalla.getCmbEstado().getSelectedIndex();
         if (posEstado > 0) {
             frmMalla.getLblEstado().setText(frmMalla.getCmbEstado().getItemAt(posEstado).charAt(0) + "");
         }
     }
-
+    
+    /**
+     * Llenamos el combo con los estados, disponibles
+     */
     private void llenarCmb() {
         frmMalla.getCmbEstado().removeAllItems();
         frmMalla.getCmbEstado().addItem("Seleccione");
@@ -105,7 +124,11 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
             frmMalla.getCmbEstado().addItem(e);
         }
     }
-
+    
+    /**
+     * Al hacer click en un numero de nota se activa el campo,
+     * caso contrario se bloquea el campo.
+     */
     private void clickCmbNumMatricula() {
         posMatricula = frmMalla.getCmbNumMatricula().getSelectedIndex();
         if (posMatricula > 0) {
@@ -114,7 +137,12 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
             frmMalla.getTxtNota().setEnabled(false);
         }
     }
-
+    
+    /**
+     * Actualizamos los lbl con las notas, indicando que nota se 
+     * ingreso.
+     * @param txt 
+     */
     private void eventoActualizar(JTextField txt) {
         txt.addKeyListener(new KeyAdapter() {
             @Override
@@ -142,7 +170,14 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
             }
         });
     }
-
+    
+    /**
+     * Evaluamos el estado dependiendo de todas las notas 
+     * que ingresaron
+     * @param n1
+     * @param n2
+     * @param n3 
+     */
     private void estado(String n1, String n2, String n3) {
         if (Validar.esNota(n1) && Validar.esNota(n2) && Validar.esNota(n3)) {
             nota1 = Double.parseDouble(n1);
@@ -160,7 +195,11 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
 
         }
     }
-
+    
+    /**
+     * Cargamos todos los datos que tiene en la malla alumno, 
+     * obteniendo desde el malla alumno que se pasa
+     */
     private void cargarDatos() {
         nota1 = malla.getNota1();
         nota2 = malla.getNota2();
@@ -174,7 +213,11 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
         frmMalla.getLblNombre().setText(malla.getAlumnoCarrera().getAlumno().getNombreCompleto());
         frmMalla.getLblEstado().setText(malla.getEstado());
     }
-
+    
+    /**
+     * LLenamos el combo con el numero de 
+     * matriculas que se pueden hacer
+     */
     private void llenarComboNumMatriculas() {
         frmMalla.getCmbNumMatricula().removeAllItems();
         frmMalla.getCmbNumMatricula().addItem("--");
@@ -182,7 +225,11 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
             frmMalla.getCmbNumMatricula().addItem(n + "");
         }
     }
-
+    
+    /**
+     * Al cerrar la venta se vuelve a mostrar la ventana e malla
+     * @param vtn 
+     */
     private void mostrarVtnMalla(JDialog vtn) {
         vtn.addWindowListener(new WindowAdapter() {
             @Override
