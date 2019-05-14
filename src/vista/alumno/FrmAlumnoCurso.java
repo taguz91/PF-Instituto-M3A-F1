@@ -110,6 +110,18 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     public JComboBox<String> getCmbTipoMatricula() {
         return cmbTipoMatricula;
     }
+
+    public JButton getBtnSegunda() {
+        return btnSegunda;
+    }
+
+    public JButton getBtnTercera() {
+        return btnTercera;
+    }
+
+    public JButton getBtnCarta() {
+        return btnCarta;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,6 +160,9 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnError = new javax.swing.JLabel();
+        btnTercera = new javax.swing.JButton();
+        btnSegunda = new javax.swing.JButton();
+        btnCarta = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lblNumMatriculas = new javax.swing.JLabel();
@@ -275,14 +290,30 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnError.setForeground(new java.awt.Color(153, 0, 0));
 
+        btnTercera.setText("C-Tercera");
+
+        btnSegunda.setText("C-Segunda");
+
+        btnCarta.setText(" Carta");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnError, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnError, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+                        .addGap(105, 105, 105))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCarta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTercera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSegunda)
+                        .addGap(47, 47, 47)))
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -291,13 +322,19 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTercera)
+                            .addComponent(btnSegunda)
+                            .addComponent(btnCarta))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 479, 736, -1));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(105, 105, 105))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(105, 105, 105))); // NOI18N
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Número de matriculas:");
@@ -369,6 +406,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnuladas;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCarta;
     private javax.swing.JLabel btnError;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnHorarioAlmn;
@@ -380,6 +418,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnRegresarTodos;
     private javax.swing.JButton btnReprobadas;
+    private javax.swing.JButton btnSegunda;
+    private javax.swing.JButton btnTercera;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbPrdLectivo;
     private javax.swing.JComboBox<String> cmbTipoMatricula;

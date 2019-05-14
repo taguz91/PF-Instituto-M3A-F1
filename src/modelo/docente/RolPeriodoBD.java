@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.docente;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +29,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 + "id_prd_lectivo,rol_prd)\n"
                 + "Values (" + getPeriodo().getId_PerioLectivo() + ", "
                 + "UPPER('" + getNombre_rol() + "'));";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -46,7 +43,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 + "SET id_prd_lectivo=" + getPeriodo().getId_PerioLectivo() + ","
                 + " rol_prd='" + getNombre_rol() + "'\n"
                 + " WHERE id_rol_prd= " + aguja + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -58,7 +56,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
         String nsql = "UPDATE public.\"RolesPeriodo\"\n"
                 + "	SET rol_activo=false\n"
                 + "	WHERE id_rol_prd=" + aguja + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error de consulta");
@@ -68,12 +67,12 @@ public class RolPeriodoBD extends RolPeriodoMD {
 
     public ArrayList<RolPeriodoMD> llenarTabla() {
         ArrayList<RolPeriodoMD> lista = new ArrayList();
-
         String sql = "Select prd_lectivo_nombre, rol_prd, id_rol_prd, p.id_prd_lectivo  "
                 + "from \n"
                 + "public.\"PeriodoLectivo\" p join public.\"RolesPeriodo\"\n"
                 + "using (id_prd_lectivo) where rol_activo= true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 RolPeriodoMD m = new RolPeriodoMD();
@@ -86,7 +85,7 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 m.setNombre_rol(rs.getString("rol_prd"));
                 lista.add(m);
             }
-            rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -99,19 +98,20 @@ public class RolPeriodoBD extends RolPeriodoMD {
         ArrayList<RolPeriodoMD> rPrd = new ArrayList();
         String sql = "SELECT p.id_rol_prd, p.id_prd_lectivo, p.rol_prd, p.rol_activo\n"
                 + "	FROM public.\"RolesPeriodo\" p\n"
-                + "	where p.id_prd_lectivo="+idPrd+"\n"
+                + "	where p.id_prd_lectivo=" + idPrd + "\n"
                 + "	and p.rol_activo= true;";
-        ResultSet rs = conecta.sql(sql);
-        
-          try {
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+
+        try {
             while (rs.next()) {
-                 RolPeriodoMD rol= new RolPeriodoMD();
+                RolPeriodoMD rol = new RolPeriodoMD();
                 rol.setId_rol(rs.getInt("id_rol_prd"));
                 rol.setNombre_rol(rs.getString("rol_prd"));
-                System.out.println("Nombre " +rol.getNombre_rol());
+                System.out.println("Nombre " + rol.getNombre_rol());
                 rPrd.add(rol);
             }
-            rs.close();
+            ps.getConnection().close();
             return rPrd;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
