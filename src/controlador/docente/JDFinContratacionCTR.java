@@ -49,7 +49,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private int periodo;
     private final JDFinContratacion frmFinContrato;
     private static LocalDate fechaInicio;
-    //private DefaultTableModel mdTbl;
+    //private DefaultTableModel mdTbl;  
     private boolean guardar = false;
     private List<CursoMD> lista;
 

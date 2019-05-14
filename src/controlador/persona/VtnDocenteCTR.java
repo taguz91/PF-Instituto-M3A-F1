@@ -55,7 +55,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     private PersonaMD perEditar;
     private final PersonaBD per;
-    private final String tipoDocntes[] = {"Fin de Contrato"};
+    private final String tipoDocntes[] = {"Finalizado Contrato"};
 
     public VtnDocenteCTR(VtnDocente vtnDocente,
             VtnPrincipalCTR ctrPrin) {
@@ -116,6 +116,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         });
 
         ctrPrin.agregarVtn(vtnDocente);
+        vtnDocente.getCmbTipoDocente().addActionListener(e-> cargarTipoDocentes());
     }
 
     private void cargarCmbTipoDocentes() {
@@ -132,7 +133,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
         switch (tipo) {
 
-            case "Fin de Contrato":
+            case "Finalizado Contrato":
                 docentesMD = docente.cargarDocentesFinContrato();
                 llenarTabla(docentesMD);
                 break;
@@ -143,7 +144,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 break;
 
         }
-
+        System.out.println(" Tipo Docentes " + tipo);
     }
 
     private void cargarDocentes() {
