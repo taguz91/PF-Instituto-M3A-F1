@@ -34,6 +34,19 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
         }
     }
 
+    public boolean eliminar(int idRetirado) {
+        nsql = "UPDATE public.\"AlumnoCursoRetirados\" \n"
+                + "SET retiro_activo = false \n"
+                + "WHERE id_retirado = " + idRetirado + ";";
+        if (conecta.nosql(nsql) == null) {
+            JOptionPane.showMessageDialog(null, "Se elimino la anulacion. ");
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar, compruebe su conexion.");
+            return false;
+        }
+    }
+
     public ArrayList<AlumnoCursoRetiradoMD> cargarRetirados() {
         sql = "SELECT id_retirado, acr.id_almn_curso, retiro_fecha, \n"
                 + "retiro_observacion, ac.id_curso, materia_nombre, \n"
