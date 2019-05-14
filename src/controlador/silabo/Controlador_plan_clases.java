@@ -146,7 +146,7 @@ public class Controlador_plan_clases {
                         cP.iniciaControlador();
                   }
                 }else{
-                     JOptionPane.showMessageDialog(null, "Revise hay campos vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
+                     JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -443,11 +443,16 @@ public class Controlador_plan_clases {
     
     private boolean validarCampos(){
          boolean valid=true;
-        if(fPlanClase.getTxrTrabajoAutonomo().getText().equals("")){
+        if(fPlanClase.getTxrTrabajoAutonomo().getText().length()==0){
             
             valid= false;
         }
-        if(lista_recursoMD1==null || lista_estrategias_metodologicas_antici==null){
+        if(lista_recursoMD1==null ){
+            valid=false;
+        }
+        if(fPlanClase.getListAnticipacionPC().getModel().getSize()<=0 && fPlanClase.getListConstruccionPC().getModel().getSize()<=0 &&
+                fPlanClase.getListConsolidacionPC().getModel()
+                        .getSize()<=0){
             valid=false;
         }
         
@@ -457,6 +462,7 @@ public class Controlador_plan_clases {
         return valid;
     
     }
+    
       
     private void insertarEstrategiasMetodologicas(){
 

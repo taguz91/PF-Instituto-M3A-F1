@@ -1,5 +1,6 @@
 package modelo.curso;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion)\n"
                 + "	VALUES (" + getCurso().getId() + ", " + getDia() + ", "
                 + "'" + getHoraIni() + "', '" + getHoraFin() + "');";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar el horario correctamente.");
@@ -42,7 +44,8 @@ public class SesionClaseBD extends SesionClaseMD {
     }
 
     public void ingresarHorarios(String nsql) {
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar el horario correctamente.");
@@ -54,7 +57,8 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	SET  dia_sesion=" + getDia() + ", "
                 + " hora_inicio_sesion='" + getHoraIni() + "', hora_fin_sesion='" + getHoraFin() + "'\n"
                 + "	WHERE id_sesion=" + idSesion + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se edito correctamente el horario.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo editar correctamente el horario.");
@@ -64,7 +68,8 @@ public class SesionClaseBD extends SesionClaseMD {
     public void eliminar(int idSesion) {
         nsql = "DELETE FROM public.\"SesionClase\"\n"
                 + "	WHERE id_sesion= " + idSesion + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente el horario.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el horario.");
@@ -76,7 +81,8 @@ public class SesionClaseBD extends SesionClaseMD {
         sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
                 + "	WHERE id_sesion = " + idSesion + " ;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -88,6 +94,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
                     s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
                 }
+                ps.getConnection().close();
                 return s;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar sesion " + e.getMessage());
@@ -111,8 +118,8 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	WHERE id_curso = " + idCurso + " \n"
                 + "	AND dia_sesion = " + dia + " ;";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
-        //System.out.println(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -124,6 +131,7 @@ public class SesionClaseBD extends SesionClaseMD {
 
                     sesiones.add(s);
                 }
+                ps.getConnection().close();
                 return sesiones;
             } catch (SQLException e) {
                 return null;
@@ -144,7 +152,8 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	FROM public.\"SesionClase\" \n"
                 + "	WHERE id_curso = " + curso.getId() + ";";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         //System.out.println(sql);
         if (rs != null) {
             try {
@@ -158,6 +167,7 @@ public class SesionClaseBD extends SesionClaseMD {
 
                     sesiones.add(s);
                 }
+                ps.getConnection().close();
                 return sesiones;
             } catch (SQLException e) {
                 return null;
@@ -196,8 +206,8 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "m.id_materia = c.id_materia\n"
                 + "ORDER BY hora_inicio_sesion";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
-        //System.out.println(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -220,6 +230,7 @@ public class SesionClaseBD extends SesionClaseMD {
 
                     sesiones.add(s);
                 }
+                ps.getConnection().close();
                 return sesiones;
             } catch (SQLException e) {
                 return null;
@@ -238,10 +249,9 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	FROM public.\"Cursos\"\n"
                 + "	WHERE id_prd_lectivo = " + idPrdLectivo + "  AND \n"
                 + "	curso_nombre = '" + nombreCurso + "');";
-
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
-        System.out.println(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -256,6 +266,7 @@ public class SesionClaseBD extends SesionClaseMD {
 
                     sesiones.add(s);
                 }
+                ps.getConnection().close();
                 return sesiones;
             } catch (SQLException e) {
                 return null;

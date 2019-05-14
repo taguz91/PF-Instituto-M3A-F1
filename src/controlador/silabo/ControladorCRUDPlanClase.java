@@ -110,9 +110,9 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases.getBtnEditarPLC().addActionListener((ActionEvent ae) -> {
             int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
             if (row != -1) {
-                
                 ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                 ce.iniciaControlador();
+                fCrud_plan_Clases.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }

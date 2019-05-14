@@ -1,5 +1,6 @@
 package modelo.materia;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class EjeFormacionBD extends EjeFormacionMD {
         EjeFormacionMD eje = new EjeFormacionMD();
         String sql = "SELECT id_eje, id_carrera, eje_codigo, eje_nombre\n"
                 + "FROM public.\"EjesFormacion\" WHERE id_eje = '" + idEje + "';";
-        ResultSet rs = conecta.sql(sql);
-
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -35,6 +36,7 @@ public class EjeFormacionBD extends EjeFormacionMD {
                     eje.setId(rs.getInt("id_eje"));
                     eje.setNombre(rs.getString("eje_nombre"));
                 }
+                ps.getConnection().close();
                 return eje;
             } else {
                 System.out.println("No se consulto un eje de formacion");
@@ -50,8 +52,8 @@ public class EjeFormacionBD extends EjeFormacionMD {
         ArrayList<EjeFormacionMD> ejes = new ArrayList();
         String sql = "SELECT id_eje, id_carrera, eje_codigo, eje_nombre\n"
                 + "FROM public.\"EjesFormacion\";";
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
-
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -65,6 +67,7 @@ public class EjeFormacionBD extends EjeFormacionMD {
                     //Agregamos a nuestro array
                     ejes.add(eje);
                 }
+                ps.getConnection().close();
                 return ejes;
             } else {
                 System.out.println("No se consulto un eje de formacion");
@@ -80,8 +83,8 @@ public class EjeFormacionBD extends EjeFormacionMD {
         ArrayList<EjeFormacionMD> ejes = new ArrayList();
         String sql = "SELECT id_eje, id_carrera, eje_codigo, eje_nombre\n"
                 + "FROM public.\"EjesFormacion\" WHERE id_carrera = '" + idCarrera + "';";
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
-        //Ya que solo busca por una carrera la carrera solo se crea una vez
         CarreraMD carrera = new CarreraMD();
         carrera.setId(idCarrera);
         try {
@@ -96,6 +99,7 @@ public class EjeFormacionBD extends EjeFormacionMD {
                     //Agregamos a nuestro array
                     ejes.add(eje);
                 }
+                ps.getConnection().close();
                 return ejes;
             } else {
                 System.out.println("No se consulto un eje de formacion");
