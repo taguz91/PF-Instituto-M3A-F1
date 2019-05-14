@@ -52,6 +52,12 @@ public class LoginCTR {
     }
 
     //METODOS DE APOYO
+    private void activarForm(boolean estado) {
+        vista.getTxtUsername().setEnabled(estado);
+        vista.getTxtPassword().setEnabled(estado);
+        vista.getBtnIngresar().setEnabled(estado);
+    }
+
     private void login() {
 
         if (carga) {
@@ -62,31 +68,28 @@ public class LoginCTR {
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
 
+                activarForm(false);
                 ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
 
                 modelo = new UsuarioBD();
 
                 modelo.setUsername(USERNAME);
                 modelo.setPassword(PASSWORD);
+                
+                modelo = modelo.selectWhereUsernamePassword();
 
-                try {
-                    modelo = modelo.selectWhereUsernamePassword();
+                if (modelo != null) {
 
-                    if (modelo != null) {
+                    vista.dispose();
 
-                        vista.dispose();
+                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
+                    vtn.Init();
 
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
-                        vtn.Init();
-
-                    } else {
-                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
-                    }
-                } catch (NullPointerException e) {
+                } else {
                     Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
-                } finally {
                     Effects.setDefaultCursor(vista);
                 }
+                activarForm(true);
 
             }).start();
         }
