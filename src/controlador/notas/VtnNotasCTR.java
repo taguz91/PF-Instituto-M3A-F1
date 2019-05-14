@@ -593,7 +593,6 @@ public class VtnNotasCTR {
                 obj.getAsistencia()
             });
             return null;
-            
         };
     }
 
