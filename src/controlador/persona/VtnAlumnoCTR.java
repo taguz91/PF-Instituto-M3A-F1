@@ -41,7 +41,6 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     public void iniciar() {
-        ctrPrin.agregarVtn(vtnAlumno);
         KeyListener kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {

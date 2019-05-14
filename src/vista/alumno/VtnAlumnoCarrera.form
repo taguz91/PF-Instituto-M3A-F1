@@ -50,13 +50,9 @@
                           </Group>
                           <Component id="cmbCarrera" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="211" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnIngresar" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnIngresar" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxEliminados" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -71,12 +67,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel1" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="txtBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnIngresar" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -85,7 +78,7 @@
                   <Component id="cbxEliminados" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="307" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="303" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblResultados" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
@@ -169,11 +162,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver eliminados"/>
         <Property name="horizontalTextPosition" type="int" value="2"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Retirar"/>
       </Properties>
     </Component>
   </SubComponents>
