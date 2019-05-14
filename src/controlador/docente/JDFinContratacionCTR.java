@@ -160,8 +160,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
             modelo_Tabla.addRow(new Object[columnas]);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
-            //System.out.println("materiassssss "+ lista.get(i).getMateria().getNombre() + lista.get(i).getNombre());
-//            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 3);
         }
     }
 
@@ -318,9 +316,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este Docente");
             }
             
-//            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
-//            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-//            frmFinContrato.dispose();
             System.out.println("Se guarda en base de datos");
             
         } else {

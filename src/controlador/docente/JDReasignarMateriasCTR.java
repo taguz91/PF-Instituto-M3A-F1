@@ -7,13 +7,19 @@ package controlador.docente;
 
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 import modelo.curso.CursoMD;
+import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
+import modelo.validaciones.TxtVBuscador;
+import modelo.validaciones.Validar;
 import vista.docente.JDReasignarMaterias;
 
 /**
@@ -23,16 +29,23 @@ import vista.docente.JDReasignarMaterias;
 public class JDReasignarMateriasCTR extends DVtnCTR {
 
     private PeriodoLectivoBD periodoBD;
-    private final DocenteBD dc;
+    private final DocenteBD docenteBD;
     private DocenteMD docenteMD;
-    private final String nombre;
+    private final String nombre, curso;
     private final JDReasignarMaterias frmReasignarMateria;
+    private ArrayList<DocenteMD> docentes;
+    private List<PeriodoLectivoMD> PeriodoLectivoMD;
+    private DefaultTableModel mdTbl;
+    private final int periodo, idDocente;
     //int materia = frmFinContrato.getTblMateriasCursos();
-
-    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre) {
+                                                                          ///////////////////////////////////////
+    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre, String curso, int periodo, int idDocente) {
         super(ctrPrin);
-        this.dc = new DocenteBD(ctrPrin.getConecta());
+        this.docenteBD = new DocenteBD(ctrPrin.getConecta());
         this.nombre = nombre;
+        this.curso = curso;
+        this.periodo = periodo;
+        this.idDocente = idDocente;
         this.frmReasignarMateria = new JDReasignarMaterias(ctrPrin.getVtnPrin(), false);
         this.frmReasignarMateria.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.frmReasignarMateria.setVisible(true);
@@ -40,8 +53,30 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     }
 
+
     public void iniciar() {
-        frmReasignarMateria.getLblMateria().setText(nombre);
+        frmReasignarMateria.getLblMateria().setText(this.nombre + this.curso);
+        String[] titulo = {"Cedula", "Nombres Completos"};
+        String[][] datos = {};
+        mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
+        frmReasignarMateria.getTblDocentesDisponibles().setModel(mdTbl);
+        TblEstilo.formatoTbl(frmReasignarMateria.getTblDocentesDisponibles());
+        cargarDocentes();
+        //Buscador 
+        frmReasignarMateria.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String b = frmReasignarMateria.getTxtBuscar().getText().toUpperCase().trim();
+                if (e.getKeyCode() == 10) {
+                    buscaIncremental(b);
+                } else if (b.length() == 0) {
+                    cargarDocentes();
+                }
+            }
+        });
+        //Clcik buscar 
+        frmReasignarMateria.getTxtBuscar().addKeyListener(new TxtVBuscador(frmReasignarMateria.getTxtBuscar(),
+                frmReasignarMateria.getBtnBuscar()));
         frmReasignarMateria.getBtnCancelar().addActionListener(e -> salir());
         frmReasignarMateria.getBtnReasignarMateria().addActionListener(e -> reasignarMaterias());
     }
@@ -52,26 +87,34 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     private void reasignarMaterias() {
 
-        
     }
     
-    public void cargarTabla(String periodo){
-        
-        DocenteBD d = new DocenteBD(ctrPrin.getConecta());
-        PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
-        DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) frmReasignarMateria.getTblDocentesDisponibles().getModel();
-        for(int i = frmReasignarMateria.getTblDocentesDisponibles().getRowCount() - 1; i>=0; i-- ){
-            modelo_Tabla.removeRow(i);
-        }
-        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
-        int columnas = modelo_Tabla.getColumnCount();
-        for (int i = 0; i < lista.size(); i++) {
-            modelo_Tabla.addRow(new Object[columnas]);
-            frmReasignarMateria.getTblDocentesDisponibles().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 0);
-        }
-        
+    private void cargarDocentes() {
+        //PeriodoLectivoMD = periodoBD.periodoDocente(periodo);
+        docentes = docenteBD.cargarDocentesParaReasignarMaterias();
+        llenarTblDocentes(docentes);
     }
-    
+
+    private void buscaIncremental(String aguja) {
+        if (Validar.esLetrasYNumeros(aguja)) {
+            docentes = docenteBD.buscar(aguja);
+            llenarTblDocentes(docentes);
+        }
+    }
+
+    private void llenarTblDocentes(ArrayList<DocenteMD> docentes) {
+        mdTbl.setRowCount(0);
+        if (docentes != null) {
+            docentes.forEach(dc -> {
+                Object[] valores = {dc.getCodigo(), dc.getPrimerApellido() + " "
+                    + dc.getSegundoApellido() + " " + dc.getPrimerNombre()
+                    + " " + dc.getSegundoNombre()};
+                mdTbl.addRow(valores);
+            });
+            frmReasignarMateria.getLblResultados().setText(String.valueOf(docentes.size()) + " Resultados obtenidos.");
+        } else {
+            frmReasignarMateria.getLblResultados().setText("0 Resultados obtenidos.");
+        }
+    }
 
 }
