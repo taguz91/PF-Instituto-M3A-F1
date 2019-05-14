@@ -541,6 +541,21 @@ public class DocenteBD extends DocenteMD {
                 + ");";
         return consultarDocenteTbl(sql);
     }
+    
+    public ArrayList<DocenteMD> buscarReasignarMateria(String aguja) {
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = d.id_persona AND \n"
+                + "docente_activo = true AND docente_en_funcion = true(\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + ");";
+        return consultarDocenteTbl(sql);
+    }
 
     public ArrayList<DocenteMD> buscarEliminados(String aguja) {
         String sql = "SELECT docente_codigo,id_docente, d.id_persona, docente_tipo_tiempo, \n"
