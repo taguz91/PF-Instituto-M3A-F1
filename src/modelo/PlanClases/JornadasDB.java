@@ -32,13 +32,12 @@ public class JornadasDB extends JornadaMD {
         List<JornadaMD> lista_jornadas=new ArrayList<>();
         try {
             
-            PreparedStatement st=conexion.getCon().prepareStatement("select id_jornada,nombre_jornada from \"Jornadas\" ");
+            PreparedStatement st=conexion.getCon().prepareStatement("select nombre_jornada from \"Jornadas\" ");
             ResultSet rs=st.executeQuery();
             
             while(rs.next()){
                 JornadaMD j=new JornadaMD();
-                j.setId(rs.getInt(1));
-                j.setNombre(rs.getString(2));
+                j.setNombre(rs.getString(1));
                 lista_jornadas.add(j);
             }
         } catch (SQLException ex) {

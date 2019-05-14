@@ -155,7 +155,7 @@ public class Controlador_plan_clases {
         lista_estrategias_metodologicas_antici=new ArrayList<>();
 
         
-        
+//        CARGA_ID_EVALUACION();
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
@@ -281,11 +281,20 @@ public class Controlador_plan_clases {
         
     }
     
+    private void CARGA_ID_EVALUACION(){
+        
+        lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
+        if(lista_evualacion_unidad.isEmpty()){
+            fPlanClase.getTxrTrabajoAutonomo().setEnabled(false);
+            
+        }
+        for (EvaluacionSilaboMD evs:lista_evualacion_unidad)
+            System.out.println(evs.getIdEvaluacion()+"---------------------------------------------------->>>>>>>>>>>>ID EVALUACION DE ESTE SILABO");
+    }
     private void insertarTrabajoAutonomo(){
         lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
         
         for (EvaluacionSilaboMD evaluacionSilaboMD : lista_evualacion_unidad) {
-            System.out.println(evaluacionSilaboMD.getIdEvaluacion()+"lista_evaluciones--------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             trabajo_autonoMD=new TrabajoAutonomoMD();
             trabajo_autonoMD.getId_evaluacion().setIdEvaluacion(evaluacionSilaboMD.getIdEvaluacion());
             trabajo_autonoMD.setAutonomo_plan_descripcion(fPlanClase.getTxrTrabajoAutonomo().getText());

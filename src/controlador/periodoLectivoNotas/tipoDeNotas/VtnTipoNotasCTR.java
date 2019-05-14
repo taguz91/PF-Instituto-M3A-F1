@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
@@ -32,7 +34,7 @@ public class VtnTipoNotasCTR {
     private final RolBD permisos;
 
     private List<TipoDeNotaMD> listaTiposNotas;
-
+    private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
     public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
@@ -54,7 +56,9 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
-        cargarTabla();
+        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+        cargarTabla(listaTiposNotas);
+        cargarCmbPeriodos();
     }
 
     private void InitEventos() {
@@ -65,7 +69,7 @@ public class VtnTipoNotasCTR {
 
         vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).InitAgregar());
 
-        vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
+        vista.getBtnActualizar().addActionListener(e -> cargarTabla(TipoDeNotaBD.selectAllWhereEstadoIs(true)));
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -92,14 +96,36 @@ public class VtnTipoNotasCTR {
 //                oderBy(e);
 //            }
 //        });
+        vista.getCmbPeriodos().addItemListener(e -> {
+            if (vista.getCmbPeriodos().getSelectedIndex() != 0) {
+                cargarTabla(listaTiposNotas
+                        .stream()
+                        .filter(item -> item.getPeriodoLectivo().getNombre_PerLectivo().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
+                        .collect(Collectors.toList())
+                );
+            } else {
+                cargarTabla(listaTiposNotas);
+            }
+        });
     }
 
     //METODOS DE APOYO
-    public void cargarTabla() {
+    public void cargarTabla(List<TipoDeNotaMD> lista) {
         tablaTiposNotas.setRowCount(0);
-        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
-        listaTiposNotas.forEach(agregarFilas());
+        lista.forEach(agregarFilas());
+
+    }
+
+    private void cargarCmbPeriodos() {
+
+        listaPeriodos = PeriodoLectivoBD.SelectAll();
+
+        vista.getCmbPeriodos().addItem("----------------------------------------------");
+        listaPeriodos
+                .stream()
+                .map(c -> c.getNombre_PerLectivo())
+                .forEachOrdered(vista.getCmbPeriodos()::addItem);
 
     }
 
@@ -161,10 +187,6 @@ public class VtnTipoNotasCTR {
 
     private void btnEliminar(ActionEvent e) {
 
-    }
-
-    private void btnActualizarActionPerformance(ActionEvent e) {
-        cargarTabla();
     }
 
 //    private void oderBy(MouseEvent e) {

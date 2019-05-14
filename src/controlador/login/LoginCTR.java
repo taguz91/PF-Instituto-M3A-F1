@@ -11,7 +11,6 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import org.postgresql.util.PSQLException;
 import vista.Login;
 import vista.usuario.VtnSelectRol;
 
