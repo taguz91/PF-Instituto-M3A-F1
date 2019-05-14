@@ -38,36 +38,10 @@ public class ConectarDB {
     private VtnPrincipal vtnPrin;
     //Nombre de la tabla solo para testear 
     private String tabla;
+    //Pool 
+    private ConnDBPool pool;
 
-    /**
-     * Base de datos de prueba
-     *
-     * @param user
-     * @param pass
-     */
-    public ConectarDB(String user, String pass) {
-        try {
-            //Cargamos el driver
-            Class.forName("org.postgresql.Driver");
-            //Nos conectamos
-            url = generarURL();
-            this.user = user;
-            this.pass = pass;
-            this.vtnPrin = null;
-
-            //ct = DriverManager.getConnection(url, user, pass);
-            ct = DriverManager.getConnection(url, user, pass);
-            ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
-            System.out.println("Nos conectamos. Como invitados: " + user);
-        } catch (ClassNotFoundException e) {
-            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
-        } catch (SQLException ex) {
-            System.out.println("No se puede conectar." + ex.getMessage());
-        }
-    }
-
-    public ConectarDB(String user, String pass, String mensaje) {
+    public ConectarDB(String user, String pass, String mensaje, ConnDBPool pool) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
@@ -77,10 +51,12 @@ public class ConectarDB {
             this.vtnPrin = null;
             this.url = generarURL();
             ct = DriverManager.getConnection(url, user, pass);
+            this.pool = pool;
+
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
-            //ct = DriverManager.getConnection(url, user, pass);
 
+            //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
@@ -266,16 +242,14 @@ public class ConectarDB {
 
     public PreparedStatement getPS(String sql) {
         try {
-            return ct.prepareStatement(sql);
+            return pool.getConnection().prepareStatement(sql);
         } catch (SQLException e) {
             System.out.println("No pudimos preparar el statement: " + e.getMessage());
             return null;
         }
     }
 
-    //Para migrar todo bien chidorin
-    public SQLException nsql(String sql) {
-        PreparedStatement ps = getPS(sql);
+    public SQLException nosql(PreparedStatement ps) {
         try {
             int a = ps.executeUpdate();
             System.out.println("Afecto a: " + a);
@@ -292,4 +266,15 @@ public class ConectarDB {
             }
         }
     }
+
+    public ResultSet sql(PreparedStatement ps) {
+        try {
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println("No se pudo ejecutar el sql: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

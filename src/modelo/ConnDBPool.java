@@ -38,7 +38,7 @@ public class ConnDBPool {
 
             config.setPassword(password);
 
-            config.setMaximumPoolSize(3);
+            config.setMaximumPoolSize(2);
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -46,8 +46,8 @@ public class ConnDBPool {
             /*
                 CONFIG A PROBAR
              */
-            config.addDataSourceProperty("allowMultiQueries", "true");
-            config.addDataSourceProperty("useServerPrepStmts", "true");
+//            config.addDataSourceProperty("allowMultiQueries", "true");
+//            config.addDataSourceProperty("useServerPrepStmts", "true");
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }
@@ -123,6 +123,9 @@ public class ConnDBPool {
 
             if (entry.getValue() instanceof LocalDate) {
                 stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+            }
+            if (entry.getValue() instanceof Boolean) {
+                stmt.setBoolean(posicion, (boolean) entry.getValue());
             }
             if (entry.getValue() instanceof Boolean) {
                 stmt.setBoolean(posicion, (boolean) entry.getValue());

@@ -79,7 +79,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbEstrategiasUnidad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
             
         }
         
@@ -110,7 +110,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbEstrategiasUnidad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
             
         }
         
