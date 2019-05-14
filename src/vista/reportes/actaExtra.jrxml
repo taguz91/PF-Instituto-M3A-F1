@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[select persona_identificacion from public."Personas";]]>
+	<property name="ireport.y" value="48"/>
+	<parameter name="curso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idAlumCurso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT persona_primer_apellido, persona_segundo_apellido, 
+persona_primer_nombre, persona_segundo_nombre,
+persona_identificacion,
+carrera_nombre 
+FROM public."AlumnosCarrera" ac, public."Carreras" cr,
+public."Alumnos" a, public."Personas" p
+WHERE ac.id_almn_carrera = $P{idAlumCurso}
+AND cr.id_carrera = ac.id_carrera 
+AND a.id_alumno = ac.id_alumno 
+AND p.id_persona = a.id_persona;]]>
 	</queryString>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -29,7 +49,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="233" splitType="Stretch">
+		<band height="276" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -37,10 +57,10 @@
 				</textElement>
 				<text><![CDATA[ACTA DE COMPROMISO]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="18" y="29" width="519" height="204"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[Yo, ………………………………………, con cédula de ciudadanía Nro. …………………………, estudiante del ………………………….nivel, de la carrera………………………………………., del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.
+			<textField>
+				<reportElement x="18" y="32" width="519" height="244"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[Yo,+' '+$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}+ ' '+, con cédula de ciudadanía Nro.+' '+$F{persona_identificacion}+' '+, estudiante del +' '+$P{curso}+' '+, de la carrera +' '+$F{carrera_nombre}, del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.
                                     
 Reconozco que de acuerdo a lo establecido en el artículo 80, literal c), de la Ley Orgánica de Educación Superior y lo establecido en el Reglamento para garantizar la gratuidad de la Educación Superior; he perdido el derecho a la gratuidad de la matrícula correspondiente al primer período 2019; por tanto, me comprometo a cancelar el valor de matrícula (extraordinaria / especial).
                                     
@@ -48,9 +68,8 @@ El valor a pagar me será notificado por las autoridades del Instituto, de confo
                                      
 A efectos del presente procedimiento de matriculación, ACEPTO y RECONOZCO que mi matrícula será efectivizada una vez que se cumpla con el pago de los valores y condiciones descritas en el presente documento. 
                                     
-Para constancia se suscribe este acuerdo en dos ejemplares.
-]]></text>
-			</staticText>
+Para constancia se suscribe este acuerdo en dos ejemplares.]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<pageFooter>
@@ -63,23 +82,13 @@ Para constancia se suscribe este acuerdo en dos ejemplares.
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="221" splitType="Stretch">
+		<band height="138" splitType="Stretch">
 			<staticText>
-				<reportElement x="58" y="94" width="116" height="19"/>
-				<textElement verticalAlignment="Bottom"/>
-				<text><![CDATA[CC:.................................]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="58" y="113" width="116" height="20"/>
+				<reportElement x="96" y="114" width="116" height="20"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estudiante]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="58" y="74" width="116" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<text><![CDATA[.................................]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="94" width="116" height="19"/>
@@ -99,6 +108,21 @@ Para constancia se suscribe este acuerdo en dos ejemplares.
 				<reportElement x="325" y="74" width="116" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<text><![CDATA[Dr. Mauricio Avilés]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="58" y="74" width="226" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="94" width="128" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="86" y="94" width="23" height="20"/>
+				<textElement/>
+				<text><![CDATA[CC:]]></text>
 			</staticText>
 		</band>
 	</summary>
