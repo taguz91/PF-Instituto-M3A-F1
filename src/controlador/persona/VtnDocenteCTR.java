@@ -55,6 +55,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     private PersonaMD perEditar;
     private final PersonaBD per;
+    private final String tipoDocntes[] = {"Fin de Contrato"};
 
     public VtnDocenteCTR(VtnDocente vtnDocente,
             VtnPrincipalCTR ctrPrin) {
@@ -71,6 +72,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
+        cargarCmbTipoDocentes();
         String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
 
@@ -88,6 +90,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
         vtnDocente.getCbxDocentesEliminados().addActionListener(e -> cargarDocentes());
+        cargarTipoDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -113,6 +116,34 @@ public class VtnDocenteCTR extends DVtnCTR {
         });
 
         ctrPrin.agregarVtn(vtnDocente);
+    }
+
+    private void cargarCmbTipoDocentes() {
+
+        vtnDocente.getCmbTipoDocente().removeAllItems();
+        vtnDocente.getCmbTipoDocente().addItem("Todos");
+        for (String t : tipoDocntes) {
+            vtnDocente.getCmbTipoDocente().addItem(t);
+        }
+    }
+
+    public void cargarTipoDocentes() {
+        String tipo = vtnDocente.getCmbTipoDocente().getSelectedItem().toString();
+
+        switch (tipo) {
+
+            case "Fin de Contrato":
+                docentesMD = docente.cargarDocentesFinContrato();
+                llenarTabla(docentesMD);
+                break;
+
+            default:
+                docentesMD = docente.cargarDocentes();
+                llenarTabla(docentesMD);
+                break;
+
+        }
+
     }
 
     private void cargarDocentes() {
