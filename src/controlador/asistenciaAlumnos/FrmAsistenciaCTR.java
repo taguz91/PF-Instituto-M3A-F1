@@ -2,11 +2,15 @@
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -90,6 +94,7 @@ public class FrmAsistenciaCTR {
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboCiclo());
+        vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         
     }
     
@@ -217,6 +222,19 @@ public class FrmAsistenciaCTR {
         }
     }
     
+    private int getHoras() {
+        return listaMaterias.stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbAsignaturaAsis().getSelectedItem().toString()))
+                .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
+    }
+    
+    private int calcularPorcentaje(int faltas, int horas) {
+        if (horas == 0) {
+            horas = 1;
+        }
+        return (faltas * 100) / horas;
+    }
+    
     private int getSelectedRowTrad() {
         return vista.getTblAsistencia().getSelectedRow();
     }
@@ -243,10 +261,74 @@ public class FrmAsistenciaCTR {
         vista.getTblAsistencia().setEnabled(estado);
     }
     
+    
+    private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
+        new Thread(() -> {
+            cargarTabla = false;
+            String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
+            String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+            listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaNotas.stream().forEach(obj -> {
+                funcionCarga.apply(obj, tabla);
+            });
+            cargarTabla = true;
+            vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+        }).start();
+    }
+    
+    //Agregar Filas
+    
+        private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+        return (obj, tabla) -> {
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(),
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(),
+                obj.getAlumno().getSegundoNombre(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()),
+                obj.getEstado(),
+                obj.getNumFalta(),
+                calcularPorcentaje(obj.getNumFalta(), getHoras()),
+                obj.getAsistencia()
+            });
+            return null;
+        };
+    }
         
+    
     //Eventos
 
+    private void btnVerAsistencia(ActionEvent e) {
+        if (cargarTabla) {
+            String modalidad = listaPeriodos.stream()
+                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                    .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
+            
+            jTbl.removeAll();
+                tablaTrad.setRowCount(0);
+                cargarTabla(tablaTrad, agregarFilasTrad());
 
+//            if (modalidad.equalsIgnoreCase("TRADICIONAL") || modalidad.equalsIgnoreCase("PRESENCIAL")) {
+//                //vista.getTabPane().setSelectedIndex(0);
+//                jTbl.clearSelection();
+//                jTbl.removeAll();
+//                tablaTrad.setRowCount(0);
+//                cargarTabla(tablaTrad, agregarFilasTrad());
+//            } else {
+//                vista.getTabPane().setSelectedIndex(1);
+//                jTblDual.clearSelection();
+//                jTblDual.removeAll();
+//                tablaDuales.setRowCount(0);
+//                cargarTabla(tablaDuales, agregarFilasDuales());
+//            }
+        } else {
+            JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
+        }
+
+        vista.setTitle("NOTAS " + vista.getCmbCicloAsis().getSelectedItem().toString());
+    }
     
     
 }
