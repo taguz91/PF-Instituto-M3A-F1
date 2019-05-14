@@ -5,10 +5,6 @@
  */
 package modelo.notas.duales;
 
-import java.util.ArrayList;
-import java.util.List;
-import modelo.ResourceManager;
-
 /**
  *
  * @author MrRainx
@@ -22,18 +18,6 @@ public class PtiBD extends PtiMD {
     public PtiBD() {
     }
 
-    public boolean insertar() {
-        String INSERT = "";
 
-        return ResourceManager.Statement(INSERT) == null;
-    }
-
-    public static List<PtiMD> selectAll() {
-        String SELECT = "";
-
-        List<PtiMD> lista = new ArrayList<>();
-
-        return lista;
-    }
     
 }

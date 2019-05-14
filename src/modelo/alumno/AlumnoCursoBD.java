@@ -1,13 +1,13 @@
 package modelo.alumno;
 
-import java.sql.PreparedStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
@@ -26,6 +26,14 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     private AlumnoBD alm;
     private CursoBD cur;
     private String nsqlMatri = "", nsqlMatriUpdate = "";
+
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -307,8 +315,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY persona_primer_apellido;";
         return consultarAlmnCursosParaTblSimple(sql);
     }
-    
-        public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCicloTbl(int ciclo, int idPrd) {
+
+    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCicloTbl(int ciclo, int idPrd) {
         String sql = "SELECT DISTINCT c.curso_nombre,  \n"
                 + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_identificacion\n"
@@ -463,39 +471,39 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         List<AlumnoCursoBD> lista = new ArrayList();
 
         try {
+            conn = pool.getConnection();
+            rs = pool.ejecutarQuery(SELECT, conn, null);
+            while (rs.next()) {
+                AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
-            PreparedStatement stmt = ResourceManager.getConnection().prepareStatement(SELECT);
+                alumnoCurso.setId(rs.getInt("id_almn_curso"));
+                alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
+                alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
+                alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
+                alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
+                AlumnoMD alumno = new AlumnoMD();
+                alumno.setId_Alumno(rs.getInt("id_alumno"));
+                alumno.setIdentificacion(rs.getString("persona_identificacion"));
+                alumno.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
 
-                    alumnoCurso.setId(rs.getInt("id_almn_curso"));
-                    alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
-                    alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
-                    alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-                    alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
+                alumnoCurso.setAlumno(alumno);
 
-                    AlumnoMD alumno = new AlumnoMD();
-                    alumno.setId_Alumno(rs.getInt("id_alumno"));
-                    alumno.setIdentificacion(rs.getString("persona_identificacion"));
-                    alumno.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
 
-                    alumnoCurso.setAlumno(alumno);
+                alumnoCurso.setNotas(notas);
 
-                    List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
+                lista.add(alumnoCurso);
 
-                    alumnoCurso.setNotas(notas);
-
-                    lista.add(alumnoCurso);
-                }
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
         return lista;
 
@@ -512,7 +520,10 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "id_almn_curso = " + getId() + ";";
 
         System.out.println(UPDATE);
-        return ResourceManager.Statement(UPDATE) == null;
+
+        conn = pool.getConnection();
+
+        return pool.ejecutar(UPDATE, conn, null) == null;
 
     }
 

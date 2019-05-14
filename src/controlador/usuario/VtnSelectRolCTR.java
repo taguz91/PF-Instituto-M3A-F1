@@ -1,25 +1,16 @@
 package controlador.usuario;
 
-import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
@@ -52,8 +43,7 @@ public class VtnSelectRolCTR {
      * @param icono
      * @param ista
      */
-    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario,
-            ConectarDB conexion, ImageIcon icono, Image ista) {
+    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, ConectarDB conexion, ImageIcon icono, Image ista, boolean b) {
         this.vista = vista;
         this.modelo = modelo;
         this.usuario = usuario;
@@ -156,7 +146,7 @@ public class VtnSelectRolCTR {
     private void ingresar() {
 
         setObjFromCombo();
-        
+
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
         vtn.iniciar();
         vista.dispose();

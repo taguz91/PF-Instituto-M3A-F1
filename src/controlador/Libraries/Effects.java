@@ -5,10 +5,13 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -24,17 +27,19 @@ public class Effects {
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
 
-    public static Color SUCCESS_COLOR = new Color(10, 186, 52);
+    public static Color SUCCESS_COLOR;
 
-    public static Color ERROR_COLOR = new Color(37, 107, 187);
+    public static Color ERROR_COLOR;
 
     static {
         LOAD_CURSOR = new Cursor(Cursor.WAIT_CURSOR);
-
         DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
+
+        SUCCESS_COLOR = new Color(10, 186, 52);
+        ERROR_COLOR = new Color(159, 53, 39);
     }
 
-    public static synchronized void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
+    public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
         new Thread(() -> {
             try {
                 centerFrame(component, desktop);
@@ -44,6 +49,8 @@ public class Effects {
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            //System.out.println("--------------->" + Thread.activeCount());
         }).start();
 
     }
@@ -81,10 +88,39 @@ public class Effects {
 
     public static void setLoadCursor(Container view) {
         view.setCursor(LOAD_CURSOR);
+        
     }
 
     public static void setDefaultCursor(Container view) {
         view.setCursor(DEFAULT_CURSOR);
+    }
+
+    public static void pressEnter(JTextComponent component, Function<Void, Void> funcion) {
+        component.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    String texto = component.getText();
+                    if (texto.length() >= 10) {
+                        funcion.apply(null);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void btnHover(JButton btnIngresar, JLabel lblBtnHover, Color enterColor, Color exitColor) {
+        btnIngresar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblBtnHover.setBackground(enterColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblBtnHover.setBackground(exitColor);
+            }
+        });
     }
 
 }

@@ -84,20 +84,16 @@ public class pgConect {
             Logger.getLogger(pgConect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try {
-            //con = DriverManager.getConnection(cadConexion, pgUser, pgContra);
-            con = ResourceManager.getConnection();
-            System.out.println("Se Conecto DB.");
-        } catch (SQLException ex) {
-            Logger.getLogger(pgConect.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //con = DriverManager.getConnection(cadConexion, pgUser, pgContra);
+//            con = ResourceManager.getConnection();
+System.out.println("Se Conecto DB.");
 
     }
 
     public SQLException noQuery(String nSql) {
         System.out.println(nSql);
         try {
-            con = ResourceManager.getConnection();
+//            con = ResourceManager.getConnection();
             st = con.createStatement();
 
             st.execute(nSql);
@@ -116,7 +112,7 @@ public class pgConect {
 
         System.out.println(sql);
         try {
-            con = ResourceManager.getConnection();
+//            con = ResourceManager.getConnection();
             st = con.createStatement();
 
             rs = st.executeQuery(sql);
