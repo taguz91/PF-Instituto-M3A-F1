@@ -46,6 +46,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private DocenteMD docenteMD;
 //    private final String cedula;
     private final int ID;
+    private int periodo;
     private final JDFinContratacion frmFinContrato;
     private static LocalDate fechaInicio;
     //private DefaultTableModel mdTbl;
@@ -160,7 +161,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
             //System.out.println("materiassssss "+ lista.get(i).getMateria().getNombre() + lista.get(i).getNombre());
-            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 3);
+//            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 3);
         }
     }
 
@@ -182,6 +183,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
         frmFinContrato.getBtnGuardar().setEnabled(false);
         frmFinContrato.getBtnReasignarMateria().setEnabled(false);
         frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
+        frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
 
         frmFinContrato.getTxtObservacion().addKeyListener(new KeyAdapter() {
 
@@ -229,59 +231,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
         Date fecha = frmFinContrato.getJdcFinContratacion().getDate();
         int posPrd = frmFinContrato.getCbx_Periodos().getSelectedIndex();
         int pos = frmFinContrato.getTpFrm().getSelectedIndex();
-
-//        if (pos == 0) {
-//            if (observacion.equals("") == false && fecha != null) {
-//                if (frmFinContrato.getLblErrorFechaFinContratacion().isVisible() == true
-//                        || frmFinContrato.getLblErrorObservacion().isVisible() == true) {
-//                    frmFinContrato.getBtnGuardar().setEnabled(false);
-//                    guardar = false;
-//                } else {
-//                    frmFinContrato.getBtnGuardar().setEnabled(true);
-//                    frmFinContrato.getBtnGuardar().setText("Siguiente");
-//                    guardar = false;
-//                }
-//            } else {
-//                frmFinContrato.getBtnGuardar().setEnabled(true);
-//                frmFinContrato.getBtnGuardar().setText("Siguiente");
-//                guardar = false;
-//            }
-//        } else if (pos == 1) {
-//            if (observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
-//                frmFinContrato.getBtnGuardar().setText("Guardar");
-//                frmFinContrato.getBtnGuardar().setEnabled(false);
-//                guardar = false;
-//            } else if (observacion.equals("") == true && fecha == null && frmFinContrato.getLbl_ErrPeriodos().isVisible() == false) {
-//                frmFinContrato.getBtnGuardar().setText("Guardar");
-//                frmFinContrato.getBtnGuardar().setEnabled(false);
-//                guardar = false;
-//            }
-//
-//            if (observacion.equals("") == false && fecha != null && posPrd == 0) {
-//
-//                if (frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
-//                    frmFinContrato.getBtnGuardar().setText("Guardar");
-//                    frmFinContrato.getBtnGuardar().setEnabled(false);
-//                    guardar = false;
-//                } else {
-//                    frmFinContrato.getBtnGuardar().setText("Siguiente");
-//                    frmFinContrato.getBtnGuardar().setEnabled(true);
-//                    guardar = false;
-//                }
-//
-//            } else if (observacion.equals("") == false && fecha != null && posPrd > 0) {
-//                if (frmFinContrato.getLbl_ErrPeriodos().isVisible() == true) {
-//                    frmFinContrato.getBtnGuardar().setText("Guardar");
-//                    frmFinContrato.getBtnGuardar().setEnabled(false);
-//                    guardar = false;
-//                } else {
-//                    frmFinContrato.getBtnGuardar().setText("Guardar");
-//                    frmFinContrato.getBtnGuardar().setEnabled(true);
-//                    guardar = true;
-//                }
-//
-//            }
-//        }
         
         if(observacion.equals("") == false && fecha != null &&
                 posPrd > 0){
@@ -335,6 +284,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             docente.setFechaFinContratacion(convertirDate(fecha));
             docente.setIdDocente(docenteMD.getIdDocente());
             periodoMD.setId_PerioLectivo(periodoBD.buscarPeriodo(periodo).getId_PerioLectivo());
+            
             curso.setPeriodo(periodoMD);
             curso.setDocente(docente);
             if(dc.terminarContrato(docente) == true){
@@ -353,6 +303,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
                     if(cont == lista.size()){
                         JOptionPane.showMessageDialog(null, "Se finalizó el contrato del Docente con éxito");
                         frmFinContrato.getBtnReasignarMateria().setEnabled(true);
+                        this.periodo = periodoMD.getId_PerioLectivo();
                         botoninformeDocente();
                     } else{
                         JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este Docente");
@@ -360,6 +311,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 } else{
                     JOptionPane.showMessageDialog(null, "Se finalizó el contrato del Docente");
                     frmFinContrato.getBtnReasignarMateria().setEnabled(true);
+                    this.periodo = periodoMD.getId_PerioLectivo();
                     botoninformeDocente();
                 }
             } else{
@@ -440,9 +392,9 @@ public class JDFinContratacionCTR extends DVtnCTR {
 
     private void reasignarMateria() {
         posFila = frmFinContrato.getTblMateriasCursos().getSelectedRow();
-
         if (posFila >= 0) {
-            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString());
+            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString(),
+            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), this.periodo, docenteMD.getIdDocente());
             ctr.iniciar();
 
         } else {
