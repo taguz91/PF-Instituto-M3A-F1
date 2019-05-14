@@ -118,6 +118,10 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     public JButton getBtnTercera() {
         return btnTercera;
     }
+
+    public JButton getBtnCarta() {
+        return btnCarta;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -158,6 +162,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
         btnError = new javax.swing.JLabel();
         btnTercera = new javax.swing.JButton();
         btnSegunda = new javax.swing.JButton();
+        btnCarta = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lblNumMatriculas = new javax.swing.JLabel();
@@ -289,6 +294,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnSegunda.setText("C-Segunda");
 
+        btnCarta.setText(" Carta");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -301,6 +308,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                         .addGap(105, 105, 105))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCarta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnTercera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSegunda)
@@ -316,7 +325,8 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTercera)
-                            .addComponent(btnSegunda))
+                            .addComponent(btnSegunda)
+                            .addComponent(btnCarta))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5))
@@ -396,6 +406,7 @@ public class FrmAlumnoCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnuladas;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCarta;
     private javax.swing.JLabel btnError;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnHorarioAlmn;
