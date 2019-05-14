@@ -9,15 +9,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import vista.notas.VtnNotasAlumnoCurso;
+import vista.notas.VtnNotas;
 
 public class ReportesCTR {
 
-    private final VtnNotasAlumnoCurso vista;
+    private final VtnNotas vista;
 
     private final int idDocente;
 
-    public ReportesCTR(VtnNotasAlumnoCurso vista, int idDocente) {
+    public ReportesCTR(VtnNotas vista, int idDocente) {
         this.vista = vista;
         this.idDocente = idDocente;
     }

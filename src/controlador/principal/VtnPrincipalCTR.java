@@ -22,8 +22,8 @@ import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnActivarNotasCTR;
+import controlador.notas.VtnControlUBCTR;
 import controlador.notas.VtnNotasCTR;
-import controlador.periodoLectivoNotas.IngresoNotas.VtnPeriodoIngresoNotasCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -63,10 +63,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
-import modelo.ResourceManager;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
 import modelo.tipoDeNota.IngresoNotasBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -88,8 +86,7 @@ import vista.docente.VtnDocenteMateria;
 import vista.docente.VtnRolesPeriodos;
 import vista.materia.VtnMateria;
 import vista.notas.VtnActivarNotas;
-import vista.notas.VtnNotasAlumnoCurso;
-import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
+import vista.notas.VtnNotas;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
@@ -107,6 +104,7 @@ import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
+import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
 
 /**
@@ -253,6 +251,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
+        vtnPrin.getMnCtRendimientoAcademico().addActionListener(e-> abrirVtnControlUB(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -401,6 +400,18 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnAlmnCurso, this);
             ctrVtnAlmnCurso.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+    
+    
+ private void abrirVtnControlUB(ActionEvent e) {
+        VtnControlUB vtn = new VtnControlUB();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnControlUBCTR vtnCtr = new VtnControlUBCTR(vtnPrin, vtn, usuario, rolSeleccionado);
+            vtnCtr.Init();
         } else {
             errorNumVentanas();
         }
@@ -656,7 +667,7 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
-        VtnNotasAlumnoCurso vtn = new VtnNotasAlumnoCurso();
+        VtnNotas vtn = new VtnNotas();
         eventoInternal(vtn);
         if (numVtns < 5) {
             VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn, usuario, rolSeleccionado);
@@ -930,9 +941,8 @@ public class VtnPrincipalCTR {
 
     private void btnCerrarSesion(ActionEvent e) {
         ctrSelecRol.cierreSesion();
-        ResourceManager.cerrarSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+        LoginCTR login = new LoginCTR(new Login());
         login.Init();
     }
 
@@ -979,10 +989,9 @@ public class VtnPrincipalCTR {
 
     private void btnPrdIngrNotas(ActionEvent e) {
 
-        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-
-        vtn.Init();
-
+//        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
+//
+//        vtn.Init();
     }
 
     /**

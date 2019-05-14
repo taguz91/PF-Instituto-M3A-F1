@@ -54,7 +54,7 @@ public class FrmAsignarRolCTR {
      */
     public void Init() {
         //SE INICIALIZA LISTAS Y TABLAS
-        rolesDisponibles = RolBD.SelectAll();
+        rolesDisponibles = RolBD.selectAll();
         rolesDados = new ArrayList<>();
 
         tablaDisponibles = (DefaultTableModel) vista.getTabRolesDisp().getModel();
@@ -216,7 +216,7 @@ public class FrmAsignarRolCTR {
 
     private void EditarRoles() {
         listaBorrar = new ArrayList<>();
-        List<RolMD> listaTemporal = new ArrayList<>(RolBD.SelectAll());
+        List<RolMD> listaTemporal = new ArrayList<>(RolBD.selectAll());
 
         listaTemporal.stream()
                 .forEach(obj -> {

@@ -47,15 +47,15 @@ BEGIN
 	IF new.curso_activo = FALSE THEN
 		INSERT INTO public."HistorialUsuarios"(
 		usu_username, historial_fecha, historial_tipo_accion,
-		historial_nombre_tabla, historial_pk_tabla. historial_ip)
-		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso,inet_client_addr());
-  ELSE
-    INSERT INTO public."HistorialUsuarios"(
-    usu_username, historial_fecha, historial_tipo_accion,
-    historial_nombre_tabla, historial_pk_tabla, historial_ip)
-    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
+		historial_nombre_tabla, historial_pk_tabla, historial_ip)
+		VALUES(USER, now(), 'DELETE', TG_TABLE_NAME, old.id_curso, inet_client_addr());
+	ELSE
+	    INSERT INTO public."HistorialUsuarios"(
+	    usu_username, historial_fecha, historial_tipo_accion,
+	    historial_nombre_tabla, historial_pk_tabla, historial_ip)
+	    VALUES(USER, now(), 'ACTIVACION', TG_TABLE_NAME, old.id_curso, inet_client_addr());
 	END IF;
-	UPDATE public."AlumnoCurso" 
+	UPDATE public."AlumnoCurso"
 	SET almn_curso_activo = new.curso_activo
 	WHERE id_curso = old.id_curso;
 	RETURN NEW;
@@ -309,8 +309,6 @@ END;
 $almn_curso_elimlog$ LANGUAGE plpgsql;
 
 
-
-
 --MallaAlumno
 CREATE OR REPLACE FUNCTION malla_almn_elim()
 RETURNS TRIGGER AS $malla_almn_elim$
@@ -327,15 +325,59 @@ BEGIN
 			old.malla_almn_nota3 || '%' ||
 			old.malla_almn_estado || '%' ||
 			old.malla_almn_observacion,inet_client_addr());
-		RETURN OLD;
+		RETURN NEW;
 END;
 $malla_almn_elim$ LANGUAGE plpgsql;
 
+--Eliminamos anulacion de matricula
+CREATE OR REPLACE FUNCTION matricula_anulada_elim()
+RETURNS TRIGGER AS $matricula_anulada_elim$
+BEGIN
+	IF new.retiro_activo = FALSE THEN
+		UPDATE public."AlumnoCurso"
+			SET almn_curso_estado = 'REPROBADO', almn_curso_activo = True
+			WHERE id_almn_curso = new.id_almn_curso;
+
+		UPDATE public."MallaAlumno"
+		SET malla_almn_estado = 'M', malla_almn_num_matricula = malla_almn_num_matricula + 1
+		WHERE id_almn_carrera = (
+			SELECT id_almn_carrera
+			FROM public."AlumnosCarrera"
+			WHERE id_alumno = (
+				SELECT id_alumno
+				FROM public."AlumnoCurso"
+				WHERE id_almn_curso = new.id_almn_curso) AND
+			id_carrera = (
+				SELECT id_carrera
+				FROM public."Materias"
+				WHERE id_materia = (
+					SELECT id_materia
+					FROM public."Cursos"
+					WHERE id_curso = (
+						SELECT id_curso
+						FROM public."AlumnoCurso"
+						WHERE id_almn_curso = new.id_almn_curso
+					)
+				)
+			)
+		) AND id_materia = (
+			SELECT id_materia
+				FROM public."Cursos"
+				WHERE id_curso = (
+					SELECT id_curso
+					FROM public."AlumnoCurso"
+					WHERE id_almn_curso = new.id_almn_curso)
+		);
+	END IF;
+	RETURN NEW;
+END;
+$matricula_anulada_elim$ LANGUAGE plpgsql;
+
 --Materias
-CREATE TRIGGER auditoria_materia_elim
-BEFORE UPDATE OF materia_activa
-ON public."Materias" FOR EACH ROW
-EXECUTE PROCEDURE materia_elim();
+CREATE TRIGGER auditoria_anulacion_elim
+AFTER UPDATE OF retiro_activo
+ON public."AlumnoCursoRetirados" FOR EACH ROW
+EXECUTE PROCEDURE matricula_anulada_elim();
 
 
 --MallaAlumno
@@ -404,8 +446,3 @@ CREATE TRIGGER auditoria_almn_curso_elim
 BEFORE DELETE
 ON public."AlumnoCurso" FOR EACH ROW
 EXECUTE PROCEDURE almn_curso_elim();
-
-
-
-
-

@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +14,8 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 import modelo.lugar.LugarBD;
 
 /**
@@ -30,6 +30,13 @@ public class PersonaBD extends PersonaMD {
 
     //Esto se usara para cargar las fotos 
     InputStream is;
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rst;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     /**
      *
@@ -227,7 +234,7 @@ public class PersonaBD extends PersonaMD {
      * todos estos atributos
      *
      * @param aguja Se tiene que pasar un int como la Id de persona
-     * @return 
+     * @return
      */
     public boolean editarPersonaConFoto(int aguja) {
         String nsql;
@@ -285,13 +292,13 @@ public class PersonaBD extends PersonaMD {
                 ps.setBinaryStream(1, getFile(), getLogBytes());
                 ps.execute();
                 ps.close();
-                return true; 
+                return true;
                 //JOptionPane.showMessageDialog(null, "Persona editada correctamente");
             } catch (SQLException e) {
                 System.out.println("No se pudo editar persona con foto" + e.getMessage());
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
@@ -816,50 +823,6 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
-    public static List<PersonaMD> selectWhereUsername(String username) {
-
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Personas\".id_persona,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"Personas\".persona_identificacion\n"
-                + "FROM\n"
-                + "\"public\".\"Personas\"\n"
-                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
-                + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = '" + username + "'";
-
-        List<PersonaMD> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-
-            while (rs.next()) {
-                PersonaMD persona = new PersonaMD();
-
-                persona.setIdPersona(rs.getInt("id_persona"));
-                persona.setIdentificacion(rs.getString("persona_identificacion"));
-                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-
-                lista.add(persona);
-
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        return lista;
-    }
-
     public List<PersonaMD> filtrarEliminados() {
         String nsql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido, persona_fecha_nacimiento FROM public.\"Personas\"\n"
@@ -879,17 +842,18 @@ public class PersonaBD extends PersonaMD {
                 + "\"public\".\"Personas\"";
         Map<String, PersonaMD> map = new HashMap<>();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
         try {
-            while (rs.next()) {
+            while (rst.next()) {
                 PersonaMD persona = new PersonaMD();
-                persona.setIdPersona(rs.getInt("id_persona"));
+                persona.setIdPersona(rst.getInt("id_persona"));
 
-                String identificacion = rs.getString("persona_identificacion");
-                String primerApellido = rs.getString("persona_primer_apellido");
-                String segundoApellido = rs.getString("persona_segundo_apellido");
-                String primerNombre = rs.getString("persona_primer_nombre");
-                String segundoNombre = rs.getString("persona_segundo_nombre");
+                String identificacion = rst.getString("persona_identificacion");
+                String primerApellido = rst.getString("persona_primer_apellido");
+                String segundoApellido = rst.getString("persona_segundo_apellido");
+                String primerNombre = rst.getString("persona_primer_nombre");
+                String segundoNombre = rst.getString("persona_segundo_nombre");
 
                 persona.setSegundoNombre(segundoNombre);
                 persona.setIdentificacion(identificacion);
@@ -904,6 +868,8 @@ public class PersonaBD extends PersonaMD {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
 
         return map;

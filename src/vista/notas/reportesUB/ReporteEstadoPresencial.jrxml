@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.5644739300537839"/>
-	<property name="ireport.x" value="175"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="604"/>
+	<property name="ireport.y" value="104"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -30,13 +30,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./src/vista/notas/reportesPresencial/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./src/vista/notas/reportesUB/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 	p_alu.persona_identificacion,
 	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "APELLIDOS",
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "NOMBRES",
+	ROUND("AlumnoCurso".almn_curso_nota_final,0) AS "NotaFinal",
 	"Materias".materia_nombre,
 	"Cursos".curso_nombre,
 	"Carreras".carrera_nombre,
@@ -62,10 +63,10 @@ FROM
   INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
 	
 WHERE
-	"Cursos".id_docente = 49 
-	AND "PeriodoLectivo".prd_lectivo_nombre = 'TDS 11/2018 - 4/2019' 
-	AND "Cursos".curso_nombre= 'M2A' 
-	AND "public"."Materias".materia_nombre = 'ALGEBRA Y TRIGONOMETRÍA'
+	"Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "Cursos".curso_nombre= $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	
 	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido  ||' ' ||
 	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre]]>
@@ -73,6 +74,7 @@ WHERE
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="APELLIDOS" class="java.lang.String"/>
 	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="NotaFinal" class="java.math.BigDecimal"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -86,11 +88,11 @@ WHERE
 	<title>
 		<band height="203" splitType="Stretch">
 			<staticText>
-				<reportElement x="663" y="58" width="199" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement x="608" y="58" width="402" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
-				<text><![CDATA[REGISTRO DE ALUMNOS]]></text>
+				<text><![CDATA[REGISTRO DE N° DE ALUMNOS ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1034" y="81" width="88" height="20"/>
@@ -174,7 +176,7 @@ WHERE
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="861" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="943" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -238,6 +240,19 @@ WHERE
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="861" y="0" width="82" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOTA FINAL]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -287,7 +302,7 @@ WHERE
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="861" y="0" width="100" height="20"/>
+				<reportElement style="Aprobado" x="943" y="0" width="100" height="20"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -296,6 +311,17 @@ WHERE
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="861" y="0" width="82" height="20" backcolor="#FFEB9B"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NotaFinal}.toString()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

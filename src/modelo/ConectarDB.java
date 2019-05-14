@@ -59,36 +59,11 @@ public class ConectarDB {
             ct = DriverManager.getConnection(url, user, pass);
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
-            ResourceManager.setConecct(ct);
             System.out.println("Nos conectamos. Como invitados: " + user);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
             System.out.println("No se puede conectar." + ex.getMessage());
-        }
-    }
-
-    public ConectarDB(String user, String pass, String mensaje) {
-        try {
-            //Cargamos el driver
-            Class.forName("org.postgresql.Driver");
-            //Nos conectamos
-            this.user = user;
-            this.pass = pass;
-            this.vtnPrin = null;
-            this.url = generarURL();
-            ct = DriverManager.getConnection(url, user, pass);
-            ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
-            //ct = DriverManager.getConnection(url, user, pass);
-
-            ResourceManager.setConecct(ct);
-
-            System.out.println("Nos conectamos. Desde: " + mensaje);
-        } catch (ClassNotFoundException e) {
-            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
-        } catch (SQLException ex) {
-            System.out.println("No nos pudimos conectar.");
         }
     }
 
@@ -243,13 +218,6 @@ public class ConectarDB {
         }
     }
 
-    private String generarURL() {
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
-    }
-
     private void cursorCarga() {
         if (vtnPrin != null) {
             vtnPrin.setCursor(new Cursor(3));
@@ -268,6 +236,11 @@ public class ConectarDB {
 
     public PreparedStatement getPS(String sql) {
         try {
+            if (ct.isClosed()) {
+                ct = DriverManager.getConnection(url, user, pass);
+                ctrCt = new ConexionesCTR(ct);
+                ctrCt.iniciar("Obtener un PS");
+            }
             return ct.prepareStatement(sql);
         } catch (SQLException e) {
             System.out.println("No pudimos preparar el statement: " + e.getMessage());
@@ -292,6 +265,16 @@ public class ConectarDB {
             } catch (SQLException e) {
                 System.out.println("No se pudo cerrar el prepared statemente: " + e.getMessage());
             }
+        }
+    }
+
+    public ResultSet sql(PreparedStatement ps) {
+        try {
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println("No se pudo ejecutar el sql: " + e.getMessage());
+            return null;
         }
     }
 }

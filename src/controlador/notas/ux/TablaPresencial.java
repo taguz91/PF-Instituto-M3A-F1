@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import vista.notas.VtnNotasAlumnoCurso;
+import vista.notas.VtnNotas;
 
 /**
  *
@@ -15,9 +15,9 @@ public class TablaPresencial extends JTable {
     double dato;
     private double valorMinimo;
 
-    private VtnNotasAlumnoCurso vista;
+    private VtnNotas vista;
 
-    public TablaPresencial(VtnNotasAlumnoCurso vista) {
+    public TablaPresencial(VtnNotas vista) {
         this.vista = vista;
     }
 

@@ -307,7 +307,10 @@ public class JDHorarioCTR extends DVtnCTR {
             }
         });
     }
-
+    
+    /**
+     * Ponemos el formulario por defecto 
+     */
     private void limpiarFrm() {
         jd.getCmbDia().setSelectedIndex(0);
         jd.getTxtHoraFin().setText("");

@@ -1,15 +1,15 @@
 package modelo.materia;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
-import modelo.persona.PersonaMD;
 
 /**
  *
@@ -20,6 +20,14 @@ public class MateriaBD extends MateriaMD {
     private final ConectarDB conecta;
     private final CarreraBD car;
     private String sql;
+
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rst;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -362,7 +370,7 @@ public class MateriaBD extends MateriaMD {
             return null;
         }
     }
-    
+
     public MateriaMD buscarMateriaxCodigo(String codigo) {
         MateriaMD m = new MateriaMD();
         String sql = "SELECT id_materia, id_carrera, id_eje, materia_codigo,"
@@ -651,19 +659,21 @@ public class MateriaBD extends MateriaMD {
 
         List<MateriaMD> lista = new ArrayList<>();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
-            while (rs.next()) {
+            while (rst.next()) {
                 MateriaMD materia = new MateriaMD();
-                materia.setId(rs.getInt("id_materia"));
-                materia.setNombre(rs.getString("materia_nombre"));
-                materia.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
+                materia.setId(rst.getInt("id_materia"));
+                materia.setNombre(rst.getString("materia_nombre"));
+                materia.setHorasPresenciales(rst.getInt("materia_horas_presencial"));
                 lista.add(materia);
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
         return lista;
 
