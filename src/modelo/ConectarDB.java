@@ -38,8 +38,10 @@ public class ConectarDB {
     private VtnPrincipal vtnPrin;
     //Nombre de la tabla solo para testear 
     private String tabla;
+    //Pool 
+    private ConnDBPool pool;
 
-    public ConectarDB(String user, String pass, String mensaje) {
+    public ConectarDB(String user, String pass, String mensaje, ConnDBPool pool) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
@@ -49,10 +51,12 @@ public class ConectarDB {
             this.vtnPrin = null;
             this.url = generarURL();
             ct = DriverManager.getConnection(url, user, pass);
+            this.pool = pool;
+
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
-            //ct = DriverManager.getConnection(url, user, pass);
 
+            //ct = DriverManager.getConnection(url, user, pass);
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
@@ -235,18 +239,17 @@ public class ConectarDB {
     public void setVtnPrin(VtnPrincipal vtnPrin) {
         this.vtnPrin = vtnPrin;
     }
-    
-    //Comenzando todo para la migracion 
+
     public PreparedStatement getPS(String sql) {
         try {
-            return ct.prepareStatement(sql);
+            return pool.getConnection().prepareStatement(sql);
         } catch (SQLException e) {
             System.out.println("No pudimos preparar el statement: " + e.getMessage());
             return null;
         }
     }
 
-    public SQLException nsql(PreparedStatement ps) {
+    public SQLException nosql(PreparedStatement ps) {
         try {
             int a = ps.executeUpdate();
             System.out.println("Afecto a: " + a);

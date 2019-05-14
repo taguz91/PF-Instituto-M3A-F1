@@ -92,7 +92,7 @@ public class LoginCTR {
 
                     vista.dispose();
 
-                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login"), icono, ista, false);
+                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista, false);
                     vtn.Init();
 
                 } else {
