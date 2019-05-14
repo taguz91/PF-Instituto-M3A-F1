@@ -50,7 +50,7 @@ public class ConectarDB {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
             //Nos conectamos
-            url = "jdbc:postgresql://35.193.226.187:5432/BDcierre";
+            url = generarURL();
             this.user = user;
             this.pass = pass;
             this.vtnPrin = null;
@@ -81,13 +81,20 @@ public class ConectarDB {
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
             //ct = DriverManager.getConnection(url, user, pass);
 
-
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
             System.out.println("No nos pudimos conectar.");
         }
+    }
+
+    private String generarURL() {
+
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
     public PreparedStatement sqlPS(String nsql) {
@@ -239,13 +246,6 @@ public class ConectarDB {
         } catch (SQLException e) {
             System.out.println("Un error ocurrimio mientras se cerraba conexion. " + e.getMessage());
         }
-    }
-
-    private String generarURL() {
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
     private void cursorCarga() {
