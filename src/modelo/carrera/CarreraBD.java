@@ -1,5 +1,6 @@
 package modelo.carrera;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class CarreraBD extends CarreraMD {
                 + "	VALUES (" + getCoordinador().getIdDocente() + ", "
                 + " '" + getNombre() + "', '" + getCodigo() + "', '" + getFechaInicio() + "',"
                 + " '" + getModalidad() + "', " + getNumSemanas() + ");";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Guardamos correctamente \n" + getNombre());
             return true;
         } else {
@@ -47,8 +49,8 @@ public class CarreraBD extends CarreraMD {
                 + "carrera_codigo='" + getCodigo() + "', carrera_fecha_inicio='" + getFechaInicio() + "', \n"
                 + "carrera_modalidad='" + getModalidad() + "', carrera_semanas = " + getNumSemanas() + "\n"
                 + "WHERE id_carrera=" + idCarrera + ";";
-
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Editamos correctamente \n" + getNombre());
             return true;
         } else {
@@ -62,7 +64,8 @@ public class CarreraBD extends CarreraMD {
         String nsql = "UPDATE public.\"Carreras\"\n"
                 + "SET  carrera_activo='false'\n"
                 + "WHERE id_carrera=" + idCarrera + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Eliminamos correctamente ");
         }
     }
@@ -73,8 +76,8 @@ public class CarreraBD extends CarreraMD {
                 + " carrera_codigo, carrera_fecha_inicio, carrera_fecha_fin,"
                 + " carrera_modalidad, carrera_activo\n"
                 + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -98,6 +101,7 @@ public class CarreraBD extends CarreraMD {
 
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
                 }
+                ps.getConnection().close();
                 return carrera;
             } else {
                 System.out.println("No se pudo consultar una carreras");
@@ -122,8 +126,8 @@ public class CarreraBD extends CarreraMD {
                 + " carrera_codigo, carrera_fecha_inicio,"
                 + " carrera_modalidad \n"
                 + "FROM public.\"Carreras\" WHERE id_carrera = '" + idCarrera + "';";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -135,6 +139,7 @@ public class CarreraBD extends CarreraMD {
                     carrera.setFechaInicio(rs.getDate("carrera_fecha_inicio").toLocalDate());
                     carrera.setModalidad(rs.getString("carrera_modalidad"));
                 }
+                ps.getConnection().close();
                 return carrera;
             } else {
                 System.out.println("No se pudo consultar una carreras");
@@ -204,7 +209,8 @@ public class CarreraBD extends CarreraMD {
      */
     private ArrayList<CarreraMD> consultarCarrerasTbl(String sql) {
         ArrayList<CarreraMD> carreras = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         if (rs != null) {
             try {
@@ -232,6 +238,7 @@ public class CarreraBD extends CarreraMD {
 
                     carreras.add(carrera);
                 }
+                ps.getConnection().close();
                 return carreras;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar carreras");
