@@ -155,7 +155,7 @@ public class Controlador_plan_clases {
         lista_estrategias_metodologicas_antici=new ArrayList<>();
 
         
-        CARGA_ID_EVALUACION();
+//        CARGA_ID_EVALUACION();
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
