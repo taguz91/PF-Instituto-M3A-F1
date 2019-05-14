@@ -125,6 +125,35 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
+    public static List<UnidadSilaboMD> consultarUnidadesPlanClase(ConexionBD conexion, int clave) {
+
+        List<UnidadSilaboMD> unidades = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad\n"
+                    + "FROM public.\"UnidadSilabo\"\n"
+                    + "WHERE id_silabo=?");
+
+            st.setInt(1, clave);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                
+                
+                UnidadSilaboMD tmp = new UnidadSilaboMD();
+                tmp.setIdUnidad(rs.getInt(1));
+                tmp.setNumeroUnidad(rs.getInt(2));
+                unidades.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return unidades;
+    }
     public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo,int unidad) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();

@@ -193,7 +193,7 @@ private void clickCmbCarreras(){
        if(posS>0){
            estadoCmb_cursoUnidDES(true);
            String materia_silabo=materias_Silabos.get(posS -1).getNombre();
-           unidadesSilabo=UnidadSilaboBD.consultar(conexion,getIdSilabo(),1 );
+           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
            cursosSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
            LLENAR_COMBO_CURSOS(cursosSilabo);
