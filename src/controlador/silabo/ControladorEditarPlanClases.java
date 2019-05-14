@@ -98,6 +98,7 @@ public class ControladorEditarPlanClases {
             ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
             cP.iniciaControlador();
         });
+        fPlanClase.getBtnCancelarPC().setText("Cancelar");
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{
             agregarEstrategiasMetologicas();
         });
@@ -275,24 +276,31 @@ public class ControladorEditarPlanClases {
      }
      
      private void cargarEstrategiaPlanClase(List<EstrategiasMetodologicasMD> lista_estrategias_metodo){
-         DefaultListModel modelo_Anticipacion = new DefaultListModel();
-         DefaultListModel modelo_Construcciom = new DefaultListModel();
-         DefaultListModel modelo_Consolidacion = new DefaultListModel();
+
+        modelo_anticipacion= new DefaultListModel();
+        modelo_Construccion = new DefaultListModel();
+        modelo_Consolidacion = new DefaultListModel(); 
          for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
              if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
-                 modelo_Anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
                  
                  array_Anticipacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
                  
+                 
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
-                 modelo_Construcciom.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 
+                 array_Construccion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){
+                 
                 modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                array_Consolidacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
              }
              
          }
-                 fPlanClase.getListAnticipacionPC().setModel(modelo_Anticipacion);
-                 fPlanClase.getListConstruccionPC().setModel(modelo_Construcciom);
+                 fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                 fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
                  fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
      }
      
@@ -415,6 +423,7 @@ public class ControladorEditarPlanClases {
         }        
     }
     private void eliminarEstrategiasMto(){
+        
          try {
             String indice;
             String indice2;
