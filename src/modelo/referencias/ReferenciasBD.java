@@ -31,7 +31,7 @@ public class ReferenciasBD extends ReferenciasMD {
         this.conexion = conexion;
     }
 
-    public  static List<ReferenciasMD> consultarBiblioteca(ConexionBD conexion, String clave) {
+    public static List<ReferenciasMD> consultarBiblioteca(ConexionBD conexion, String clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
         try {
@@ -39,7 +39,7 @@ public class ReferenciasBD extends ReferenciasMD {
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
                     + "FROM public.\"Referencias\"\n"
                     + "WHERE tipo_referencia='Base'\n"
-                    + "AND descripcion_referencia ILIKE '%" + clave + "%'");
+                    + "AND existe_en_biblioteca=true AND descripcion_referencia ILIKE '%" + clave + "%'");
 
             ResultSet rs = st.executeQuery();
 
@@ -62,13 +62,53 @@ public class ReferenciasBD extends ReferenciasMD {
 
     }
     
+    public static List<ReferenciasMD> consultarVirtual(ConexionBD conexion, String clave) {
 
-    public void insertar(ReferenciasMD r) {
-
+        List<ReferenciasMD> referencias = new ArrayList<>();
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Referencias\"(\n"
-                    + "	 codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca)\n"
-                    + "	VALUES ( ?, ?, ?, false)");
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
+                    + "FROM public.\"Referencias\"\n"
+                    + "WHERE tipo_referencia='Base'\n"
+                    + "AND existe_en_biblioteca=false AND descripcion_referencia ILIKE '%" + clave + "%'");
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                ReferenciasMD tmp = new ReferenciasMD();
+                tmp.setIdReferencia(rs.getInt(1));
+                tmp.setCodigoReferencia(rs.getString(2));
+                tmp.setDescripcionReferencia(rs.getString(3));
+                tmp.setTipoReferencia(rs.getString(4));
+                tmp.setExisteEnBiblioteca(rs.getBoolean(5));
+
+                referencias.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciasBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return referencias;
+
+    }
+
+    public void insertar(ReferenciasMD r, int tipo) {
+
+        
+        try {
+            PreparedStatement st;
+            if (tipo == 0) {
+
+                st = conexion.getCon().prepareStatement("INSERT INTO public.\"Referencias\"(\n"
+                        + "	 codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca)\n"
+                        + "	VALUES ( ?, ?, ?, false)");
+            } else {
+
+                st = conexion.getCon().prepareStatement("INSERT INTO public.\"Referencias\"(\n"
+                        + "	 codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca)\n"
+                        + "	VALUES ( ?, ?, ?, true)");
+            }
 
             st.setString(1, r.getCodigoReferencia());
             st.setString(2, r.getDescripcionReferencia());
