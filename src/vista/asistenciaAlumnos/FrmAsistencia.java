@@ -5,6 +5,7 @@
  */
 package vista.asistenciaAlumnos;
 
+import controlador.notas.ux.RowStyle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,6 +25,12 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
      */
     public FrmAsistencia() {
         initComponents();
+        InitDiseño();
+    }
+
+    private void InitDiseño() {
+        RowStyle row = new RowStyle(7);
+        tblAsistencia.setDefaultRenderer(Object.class, row);
     }
 
     public JButton getBtnBuscarAsis() {
@@ -73,8 +80,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     public JTable getTblAsistencia() {
         return tblAsistencia;
     }
-    
-    
 
     public JLabel getLblCarreraAsis() {
         return lblCarreraAsis;
@@ -107,8 +112,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     public JTextField getTxtBuscarAsis() {
         return txtBuscarAsis;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,6 +146,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Asistencia Alumnos");
         setMaximumSize(new java.awt.Dimension(1243, 500));
         setMinimumSize(new java.awt.Dimension(1243, 500));
         setPreferredSize(new java.awt.Dimension(1074, 543));
@@ -153,11 +157,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         lblCicloAsis.setText("Ciclo:");
 
-        cmbPeriodoLectivoAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbPeriodoLectivoAsis.setMinimumSize(new java.awt.Dimension(28, 20));
         cmbPeriodoLectivoAsis.setPreferredSize(new java.awt.Dimension(28, 20));
-
-        cmbCicloAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblDocenteAsis.setText("Docente:");
 
@@ -165,11 +166,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Horas Presenciales:");
 
-        cmbDocenteAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbDocenteAsis.setMinimumSize(new java.awt.Dimension(28, 20));
         cmbDocenteAsis.setPreferredSize(new java.awt.Dimension(28, 20));
-
-        cmbAsignaturaAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnBuscarAsis.setText("Buscar");
 
@@ -181,17 +179,17 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas"
+                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

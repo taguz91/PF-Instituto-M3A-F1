@@ -565,7 +565,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public static List<PeriodoLectivoMD> SelectAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
-                + "FROM \"PeriodoLectivo\" ";
+                + "FROM \"PeriodoLectivo\" \n"
+                + "ORDER BY prd_lectivo_fecha_inicio ASC";
+
+        System.out.println("-->" + SELECT);
+
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
@@ -587,24 +591,45 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static Map<String, PeriodoLectivoMD> selectWhereEstadoAndActivo(boolean estado, boolean activo) {
-        String SELECT = "SELECT\n"
-                + "	\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "	\"public\".\"PeriodoLectivo\".id_carrera,\n"
-                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
-                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "	\"public\".\"Carreras\".carrera_nombre, \n"
-                + "	\"public\".\"Carreras\".carrera_modalidad \n"
+    public static Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
+        String SELECT = "SELECT DISTINCT\n"
+                + "	p1.id_prd_lectivo,\n"
+                + "	p1.id_carrera,\n"
+                + "	p1.prd_lectivo_nombre,\n"
+                + "	\"Carreras\".carrera_nombre,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
-                + "	\"public\".\"PeriodoLectivo\"\n"
-                + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "\"PeriodoLectivo\" p1\n"
+                + "	INNER JOIN \"public\".\"Carreras\" ON p1.id_carrera = \"public\".\"Carreras\".id_carrera \n"
                 + "WHERE\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_estado IS " + estado + " \n"
-                + "	AND \"PeriodoLectivo\".prd_lectivo_activo IS " + activo;
+                + "	7 != (\n"
+                + "	SELECT\n"
+                + "		\"count\" ( * ) \n"
+                + "	FROM\n"
+                + "		\"public\".\"TipoDeNota\" AS t2\n"
+                + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "	WHERE\n"
+                + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
+                + "		AND ( \"Carreras\".carrera_modalidad ='PRESENCIAL' OR \"Carreras\".carrera_modalidad ='TRADICIONAL' ) \n"
+                + "	) \n"
+                + "	AND 11 != (\n"
+                + "	SELECT\n"
+                + "		\"count\" ( * ) \n"
+                + "	FROM\n"
+                + "		\"public\".\"TipoDeNota\" AS t2\n"
+                + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "	WHERE\n"
+                + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
+                + "	AND ( \"Carreras\".carrera_modalidad ='DUAL' OR \"Carreras\".carrera_modalidad ='DUAL FOCALIZADA' ) \n"
+                + "	)\n"
+                + "	\n"
+                + "ORDER BY p1.prd_lectivo_nombre";
 
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
+        //System.out.println(SELECT);
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
 
@@ -614,8 +639,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
-                periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
-                periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rst.getInt("id_carrera"));
