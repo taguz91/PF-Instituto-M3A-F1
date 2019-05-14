@@ -34,20 +34,12 @@ public class JDFinContratacion extends javax.swing.JDialog {
         return Cbx_Periodos;
     }
 
-    public JButton getBtnAnterior() {
-        return btnAnterior;
-    }
-
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
 
     public JDateChooser getJdcFinContratacion() {
         return jdcFinContratacion;
-    }
-
-    public JButton getbtninforme_fin_docente() {
-        return btninforme_fin_docente;
     }
 
     public JLabel getLblErrorFechaFinContratacion() {
@@ -66,13 +58,6 @@ public class JDFinContratacion extends javax.swing.JDialog {
         this.btnReasignarMateria = btnReasignarMateria;
     }
 
-    public JButton getBtninforme_fin_docente() {
-        return btninforme_fin_docente;
-    }
-
-    public void setBtninforme_fin_docente(JButton btninforme_fin_docente) {
-        this.btninforme_fin_docente = btninforme_fin_docente;
-    }
 
     public JTable getTblMateriasCursos() {
         return tblMateriasCursos;
@@ -98,6 +83,14 @@ public class JDFinContratacion extends javax.swing.JDialog {
         this.Lbl_ErrPeriodos = Lbl_ErrPeriodos;
     }
 
+    public JButton getBtn_Cancelar() {
+        return Btn_Cancelar;
+    }
+
+    public void setBtn_Cancelar(JButton Btn_Cancelar) {
+        this.Btn_Cancelar = Btn_Cancelar;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,8 +102,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        btnAnterior = new javax.swing.JButton();
-        btninforme_fin_docente = new javax.swing.JButton();
+        Btn_Cancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         tpFrm = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -133,9 +125,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         btnGuardar.setText("Guardar");
 
-        btnAnterior.setText("Anterior");
-
-        btninforme_fin_docente.setText("informe");
+        Btn_Cancelar.setText("Cancelar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,10 +133,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btninforme_fin_docente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAnterior)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_Cancelar)
+                .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -156,8 +144,7 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnAnterior)
-                    .addComponent(btninforme_fin_docente)))
+                    .addComponent(Btn_Cancelar)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -194,9 +181,8 @@ public class JDFinContratacion extends javax.swing.JDialog {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(lblErrorObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jdcFinContratacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblErrorFechaFinContratacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
+                            .addComponent(jdcFinContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblErrorFechaFinContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 257, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -207,24 +193,29 @@ public class JDFinContratacion extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jdcFinContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(lblErrorFechaFinContratacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtObservacion, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorObservacion)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tpFrm.addTab("Fin Contrato", jPanel3);
 
-        jLabel3.setText("<html>Advertencia!! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setText("Seleccione en que periodo desea dar de baja al docente");
+        jLabel3.setText("<html>Advertencia!! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 0, 457, 38));
+
+        jLabel4.setText("Seleccione en que período desea dar de baja al docente");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 45, -1, -1));
 
         Cbx_Periodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
+        jPanel4.add(Cbx_Periodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 69, 229, -1));
 
         tblMateriasCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -244,46 +235,14 @@ public class JDFinContratacion extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblMateriasCursos);
 
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 123, 457, 121));
+
         Lbl_ErrPeriodos.setForeground(new java.awt.Color(255, 0, 0));
         Lbl_ErrPeriodos.setText("Seleccione una Opción");
+        jPanel4.add(Lbl_ErrPeriodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 140, -1));
 
         btnReasignarMateria.setText("Reasignar Materia");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(Lbl_ErrPeriodos, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReasignarMateria)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReasignarMateria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Lbl_ErrPeriodos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel4.add(btnReasignarMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 68, -1, -1));
 
         tpFrm.addTab("Lista de Cursos", jPanel4);
 
@@ -297,7 +256,9 @@ public class JDFinContratacion extends javax.swing.JDialog {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tpFrm))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -316,12 +277,11 @@ public class JDFinContratacion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_Cancelar;
     private javax.swing.JComboBox<String> Cbx_Periodos;
     private javax.swing.JLabel Lbl_ErrPeriodos;
-    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnReasignarMateria;
-    private javax.swing.JButton btninforme_fin_docente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
