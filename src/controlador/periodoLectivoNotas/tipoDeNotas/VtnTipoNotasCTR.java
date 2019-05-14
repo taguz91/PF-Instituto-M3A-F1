@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
+import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
@@ -32,7 +34,7 @@ public class VtnTipoNotasCTR {
     private final RolBD permisos;
 
     private List<TipoDeNotaMD> listaTiposNotas;
-
+    private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
     public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
@@ -55,6 +57,7 @@ public class VtnTipoNotasCTR {
 
         InitEventos();
         cargarTabla();
+        cargarCmbPeriodos();
     }
 
     private void InitEventos() {
@@ -100,6 +103,18 @@ public class VtnTipoNotasCTR {
         listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
 
         listaTiposNotas.forEach(agregarFilas());
+
+    }
+
+    private void cargarCmbPeriodos() {
+
+        listaPeriodos = PeriodoLectivoBD.SelectAll();
+
+        vista.getCmbPeriodos().addItem("-------------------------");
+        listaPeriodos
+                .stream()
+                .map(c -> c.getNombre_PerLectivo())
+                .forEach(vista.getCmbPeriodos()::addItem);
 
     }
 
