@@ -172,7 +172,12 @@ public class VtnAlumnoCarreraCTR extends DCTR {
             cargarAlmnsCarrera();
         }
     }
-
+    
+    /**
+     * Evento que se ejecuta al dar click en el check box
+     * Si esta seleccionado se cargan todos los eliminados, 
+     * case contrario se cargan los activos
+     */
     private void verEliminados() {
         if (vtnAlmCar.getCbxEliminados().isSelected()) {
             almnsCarr = almnCar.cargarAlumnoCarreraEliminados();

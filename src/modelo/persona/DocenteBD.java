@@ -1,5 +1,6 @@
 package modelo.persona;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modelo.ConectarDB;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 
@@ -20,6 +21,14 @@ public class DocenteBD extends DocenteMD {
     private PersonaMD p;
     //Para consultar personas  
     private final PersonaBD per;
+
+    private static ConnDBPool pool;
+    private static Connection conn;
+    private static ResultSet rs;
+
+    static {
+        pool = new ConnDBPool();
+    }
 
     public DocenteBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -616,33 +625,6 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-    public static Integer selectIdDocenteWhereUsername(String username) {
-
-        String SELECT = "SELECT\n"
-                + "\"Docentes\".id_docente\n"
-                + "FROM\n"
-                + "\"Docentes\"\n"
-                + "INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
-                + "INNER JOIN \"Usuarios\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
-                + "WHERE\n"
-                + "\"Usuarios\".usu_username = '" + username + "'";
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        Integer idDocente = null;
-
-        try {
-            while (rs.next()) {
-                idDocente = rs.getInt("id_docente");
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return idDocente;
-    }
-
     public static HashMap<String, DocenteMD> selectAll() {
 
         String SELECT = "SELECT \"Docentes\".id_docente,\n"
@@ -660,7 +642,8 @@ public class DocenteBD extends DocenteMD {
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
 
-        ResultSet rs = ResourceManager.Query(SELECT);
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
 
@@ -682,10 +665,11 @@ public class DocenteBD extends DocenteMD {
                 lista.put(key, docente);
 
             }
-            rs.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
         return lista;
 
@@ -713,12 +697,8 @@ public class DocenteBD extends DocenteMD {
                 + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
-        
-        
-        
-        
-        ResultSet rs = ResourceManager.Query(SELECT);
-
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, null);
         try {
 
             while (rs.next()) {
@@ -739,10 +719,10 @@ public class DocenteBD extends DocenteMD {
                 lista.put(key, docente);
 
             }
-            rs.close();
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
         return lista;
 

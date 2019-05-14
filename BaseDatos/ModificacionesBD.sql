@@ -390,3 +390,7 @@ ALTER TABLE "public"."Carreras"
 
 --Para que salga la hora
 ALTER TABLE public."AlumnoCurso" ALTER COLUMN "almn_curso_fecha_registro" TYPE TIMESTAMP;
+
+
+--
+ALTER TABLE public."Matricula" ADD COLUMN matricula_tipo character varying(20) NOT NULL DEFAULT 'ORDINARIA';

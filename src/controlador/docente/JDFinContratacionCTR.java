@@ -159,6 +159,8 @@ public class JDFinContratacionCTR extends DVtnCTR {
             modelo_Tabla.addRow(new Object[columnas]);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getMateria().getNombre(), i, 0);
             frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getNombre(), i, 1);
+            //System.out.println("materiassssss "+ lista.get(i).getMateria().getNombre() + lista.get(i).getNombre());
+            frmFinContrato.getTblMateriasCursos().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 3);
         }
     }
 
@@ -434,6 +436,19 @@ public class JDFinContratacionCTR extends DVtnCTR {
             default:
                 break;
         }
+    }
+
+    private void reasignarMateria() {
+        posFila = frmFinContrato.getTblMateriasCursos().getSelectedRow();
+
+        if (posFila >= 0) {
+            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString());
+            ctr.iniciar();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+        }
+
     }
 
 }

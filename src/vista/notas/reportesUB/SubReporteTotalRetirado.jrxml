@@ -42,7 +42,7 @@ WHERE
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="60" height="20"/>
+				<reportElement x="0" y="0" width="100" height="20"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

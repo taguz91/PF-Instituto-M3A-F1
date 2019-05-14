@@ -2,6 +2,7 @@ package controlador.notas.ux;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -11,7 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class RowStyle extends DefaultTableCellRenderer {
 
-    private int columna;
+    private final int columna;
 
     public RowStyle(int columna) {
         this.columna = columna;
@@ -33,9 +34,11 @@ public class RowStyle extends DefaultTableCellRenderer {
             } else {
                 setForeground(new Color(0, 0, 0));
             }
-
+            setHorizontalAlignment(CENTER);
+            setFont(new Font("Arial", Font.PLAIN, 11));
             table.setSelectionBackground(Color.lightGray);
-            //table.setSelectionForeground(Color.lightGray);
+
+            setHorizontalAlignment(0);
 
         } catch (NumberFormatException | NullPointerException e) {
 

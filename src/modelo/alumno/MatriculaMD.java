@@ -15,6 +15,7 @@ public class MatriculaMD {
     private PeriodoLectivoMD periodo; 
     private LocalDateTime fecha; 
     private boolean activo; 
+    private String tipo; 
 
     public MatriculaMD() {
     }
@@ -65,6 +66,14 @@ public class MatriculaMD {
     
     public String getSoloHora(){
         return fecha.getHour()+":"+fecha.getMinute(); 
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
 }

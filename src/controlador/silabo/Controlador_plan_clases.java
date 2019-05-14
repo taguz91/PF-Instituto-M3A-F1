@@ -10,8 +10,10 @@ import java.awt.event.MouseEvent;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
@@ -299,7 +301,7 @@ public class Controlador_plan_clases {
         return estrate_selecc.get();
     }
     
-      private void agregarEstrategiasMetologicas(){
+    private void agregarEstrategiasMetologicas(){
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();        
@@ -320,17 +322,10 @@ public class Controlador_plan_clases {
                         array_Anticipacion.add(lista_estrategiasSilabo.get(i).getIdEstrategia().getDescripcionEstrategia());
                         for (int j = 0; j < array_Anticipacion.size(); j++) {
                             modelo_anticipacion.addElement(array_Anticipacion.get(j));
-                            String nombre=(String) array_Anticipacion.get(j);
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD----------ANTICIPACION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION--------------ANTICIPACION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Anticipacion") );
+                            
                              
-                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY LIST-------------------ANTICIPACION");
                         }
                          fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
-                         
                     }
                 }
             }
@@ -350,15 +345,6 @@ public class Controlador_plan_clases {
                         for (int j = 0; j < array_Construccion.size(); j++) {
                             modelo_Construccion.addElement(array_Construccion.get(j));
                             
-                            String nombre=(String) array_Construccion.get(j);
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                            
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD-----CONSTRUCCION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------CONSTRUCCION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Construccion") );
-                             
-                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY --------CONSTRUCCIOM");
                         }
                          fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
                     }
@@ -381,14 +367,6 @@ public class Controlador_plan_clases {
                         for (int j = 0; j < array_Consolidacion.size(); j++) {
                             modelo_Consolidacion.addElement(array_Consolidacion.get(j));
                             
-                            String nombre=(String) array_Consolidacion.get(j);
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD---------CONSOLIDACION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------------CONSOLIDACION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Consolidacion") );
-                             
-                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY---------CONSOLIDACION");
                         }
                          fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
                     }
@@ -396,7 +374,7 @@ public class Controlador_plan_clases {
             }
         }        
     }
-      private void eliminarEstrategiasMto(){
+    private void eliminarEstrategiasMto(){
          try {
             String indice;
             String indice2;
@@ -411,12 +389,6 @@ public class Controlador_plan_clases {
                     array_Anticipacion.remove(indice);
                     fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
                     
-                     System.out.println("---------------------------->>>>>>>>>>><< HERE <<<<<<<<<<<<_------------------------------");
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(indice)).findFirst();
-                    lista_estrategias_metodologicas_antici.removeIf(em -> em.getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia().equals(indice));
-                     System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"---->>>>>>><ESTRATEGIA ELIMINADA DEL ARRAY LIST ANTICIPACION");
-                     System.out.println(lista_estrategias_metodologicas_antici.size()+"------------------->>>TAMAÑO ARRAY DESPUES DE BORRAR-----ANTICIPACION");
                     recargarElemwentos();
                 }
             }else if (fPlanClase.getjScrollPane11().isShowing()){
@@ -427,14 +399,6 @@ public class Controlador_plan_clases {
                     modelo_Construccion.removeElement(indice2);
                     array_Construccion.remove(indice2);
                     fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
-                    
-                     System.out.println("---------------------------->>>>>>>>>>><< HERE <<<<<<<<<<<<_------------------------------");
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(indice2)).findFirst();
-                    lista_estrategias_metodologicas_antici.removeIf(em -> em.getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia().equals(indice2));
-                     System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"---->>>>>>><ESTRATEGIA ELIMINADA DEL ARRAY LIST ----CONSTRUCCION");
-                     System.out.println(lista_estrategias_metodologicas_antici.size()+"------------------->>>TAMAÑO ARRAY DESPUES DE BORRAR------CONSTRUCCION");
-                     
                     recargarElemwentos2();
                 }
             }else if (fPlanClase.getjScrollPane9().isShowing()){
@@ -446,12 +410,6 @@ public class Controlador_plan_clases {
                     array_Consolidacion.remove(indice3);
                     fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
                     
-                     System.out.println("---------------------------->>>>>>>>>>><< HERE <<<<<<<<<<<<_------------------------------");
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(indice3)).findFirst();
-                    lista_estrategias_metodologicas_antici.removeIf(em -> em.getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia().equals(indice3));
-                     System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"---->>>>>>><ESTRATEGIA ELIMINADA DEL ARRAY LIST------- CONSOLIDACION");
-                     System.out.println(lista_estrategias_metodologicas_antici.size()+"------------------->>>TAMAÑO ARRAY DESPUES DE BORRAR-------CONSOLIDACION");
                     recargarElemwentos3();
                 }
             }
@@ -485,17 +443,15 @@ public class Controlador_plan_clases {
     
     private boolean validarCampos(){
          boolean valid=true;
-        if(fPlanClase.getTxrTrabajoAutonomo().equals("") || fPlanClase.getListAnticipacionPC().getModel().equals("")){
+        if(fPlanClase.getTxrTrabajoAutonomo().getText().equals("")){
             
             valid= false;
         }
-        if(lista_recursoMD1==null ){
+        if(lista_recursoMD1==null || lista_estrategias_metodologicas_antici==null){
             valid=false;
         }
         
-        if (lista_estrategias_metodologicas_antici==null) {
-            valid=false;
-        }
+
             
 
         return valid;
@@ -503,6 +459,45 @@ public class Controlador_plan_clases {
     }
       
     private void insertarEstrategiasMetodologicas(){
+
+                         for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
+                           if(fPlanClase.getListAnticipacionPC().getModel().getSize()>0){
+                          String nombre=fPlanClase.getListAnticipacionPC().getModel().getElementAt(j).toString();
+                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
+                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
+                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD----------ANTICIPACION");
+                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION--------------ANTICIPACION");
+                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Anticipacion") );
+                             
+                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY LIST-------------------ANTICIPACION");
+                           }
+                        }          
+                         for (int j = 0; j < fPlanClase.getListConstruccionPC().getModel().getSize(); j++) {
+                             if(fPlanClase.getListConstruccionPC().getModel().getSize()>0){
+                            String nombre=fPlanClase.getListConstruccionPC().getModel().getElementAt(j).toString();
+                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
+                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
+                            
+                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD-----CONSTRUCCION");
+                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------CONSTRUCCION");
+                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Construccion") );
+                             
+                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY --------CONSTRUCCIOM");
+                             }
+                        }          
+                         for (int j = 0; j < fPlanClase.getListConsolidacionPC().getModel().getSize(); j++) {
+                             if(fPlanClase.getListConsolidacionPC().getModel().getSize()>0){
+                              String nombre=fPlanClase.getListConsolidacionPC().getModel().getElementAt(j).toString();
+                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
+                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
+                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD---------CONSOLIDACION");
+                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------------CONSOLIDACION");
+                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Consolidacion") );
+                             
+                             System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY---------CONSOLIDACION");
+                             }
+                        }          
+        
         
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
             EstrategiasMetodologicasBD embd= new EstrategiasMetodologicasBD(conexion);
