@@ -125,9 +125,22 @@ public class CursoBD extends CursoMD {
         }
     }
     
-    public boolean nuevoAlumnoCurso(){
-        
-    }
+//    public boolean nuevoAlumnoCurso(int c){
+//        String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
+//                + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
+//                + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
+//                + "	curso_paralelo)\n"
+//                + "	VALUES (" + c.getMateria().getId() + ", " + c.getPeriodo().getId_PerioLectivo()
+//                + ", " + c.getDocente().getIdDocente() + ", " + c.getJornada().getId()
+//                + ", '" + c.getNombre() + "', " + c.getCapacidad() + ", " + c.getCiclo()
+//                + ", '" + c.getParalelo() + "');";
+//        if (conecta.nosql(nsql) == null) {
+//            return true;
+//        } else {
+//            System.out.println("Error");
+//            return false;
+//        }
+//    }
     
     public CursoMD atraparCurso(int materia, int periodo, int docente, String curso){
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
