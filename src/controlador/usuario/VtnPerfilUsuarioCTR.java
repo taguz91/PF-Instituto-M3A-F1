@@ -83,6 +83,7 @@ public class VtnPerfilUsuarioCTR {
                 if (modelo.editar(modelo.getUsername())) {
                     JOptionPane.showMessageDialog(desktop, "Contraseña Editada correctamente");
                     vista.getTxtContrasena().setText("");
+                    vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.GRAY));
                     vista.getTxtContrasena().setEnabled(false);
                 }
 
