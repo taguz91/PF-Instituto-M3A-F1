@@ -13,7 +13,6 @@ import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
