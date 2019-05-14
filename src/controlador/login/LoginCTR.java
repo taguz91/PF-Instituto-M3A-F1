@@ -52,6 +52,12 @@ public class LoginCTR {
     }
 
     //METODOS DE APOYO
+    private void activarForm(boolean estado) {
+        vista.getTxtUsername().setEnabled(estado);
+        vista.getTxtPassword().setEnabled(estado);
+        vista.getBtnIngresar().setEnabled(estado);
+    }
+
     private void login() {
 
         if (carga) {
@@ -62,6 +68,7 @@ public class LoginCTR {
                 String USERNAME = vista.getTxtUsername().getText();
                 String PASSWORD = vista.getTxtPassword().getText();
 
+                activarForm(false);
                 ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
 
                 modelo = new UsuarioBD();
@@ -85,6 +92,7 @@ public class LoginCTR {
                 } catch (NullPointerException e) {
                     Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                 } finally {
+                    activarForm(true);
                     Effects.setDefaultCursor(vista);
                 }
 
