@@ -93,8 +93,9 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases.getTxtBuscarPLC().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
-
+               if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
                 cargarPlanesDeClaseProfesor();
+                }
             }
         });
 
@@ -199,9 +200,7 @@ public class ControladorCRUDPlanClase {
     private CursoMD curso_selecc() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
         lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString());
-        System.out.println(lista_curso.get(0).getNombre() + "---------------------------ooooooooooooooooooooooooo");
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
-        System.out.println(curso_selecccionado.get().getNombre() + "----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
         return curso_selecccionado.get();
     }
 

@@ -200,6 +200,35 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return lista;
     }
 
+    public static List<String> selectNombreWhere(int idPeriodo) {
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"TipoDeNota\".tipo_nota_nombre\n"
+                + "FROM\n"
+                + "\"public\".\"TipoDeNota\"\n"
+                + "WHERE\n"
+                + "id_prd_lectivo = ?";
+        List<String> lista = new ArrayList<>();
+
+        Map<Integer, Object> parametros = new HashMap<>();
+
+        parametros.put(1, idPeriodo);
+
+        conn = pool.getConnection();
+        rs = pool.ejecutarQuery(SELECT, conn, parametros);
+        try {
+            while (rs.next()) {
+                lista.add(rs.getString("tipo_nota_nombre"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+
+        return lista;
+    }
+
     public boolean editar(int Pk) {
         String UPDATE = "UPDATE \"TipoDeNota\" \n"
                 + "SET \n"

@@ -71,7 +71,7 @@ public class ControladorConfiguracion_plan_clases {
         Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
             } else {
-                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD", "Aviso", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD\n Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
@@ -90,7 +90,6 @@ public class ControladorConfiguracion_plan_clases {
          String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
-         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
     }
@@ -280,7 +279,7 @@ private void clickCmbCarreras(){
       for(PlandeClasesMD plmd:lista_plan_clases){
           
       if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
-             && plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
+             || plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
           valid=false;
       }
       }
