@@ -2,7 +2,6 @@ package controlador;
 
 import controlador.login.LoginCTR;
 import java.awt.EventQueue;
-import javax.swing.UIManager;
 import vista.Login;
 
 /**

@@ -2,6 +2,7 @@ package modelo;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class ConnDBPool {
 
     private static HikariConfig config;
     private static HikariDataSource ds;
-    
+
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rs;
@@ -28,24 +29,28 @@ public class ConnDBPool {
     }
 
     public ConnDBPool(String username, String password) {
-        config = new HikariConfig();
-        config.setJdbcUrl(generarURL());
+        try {
+            
+            config = new HikariConfig();
+            config.setJdbcUrl(generarURL());
 
-        config.setUsername(username);
+            config.setUsername(username);
 
-        config.setPassword(password);
+            config.setPassword(password);
 
-        config.setMaximumPoolSize(3);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+            config.setMaximumPoolSize(2);
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
-        /*
-            CONFIG A PROBAR
-         */
-        config.addDataSourceProperty("allowMultiQueries", "true");
-        config.addDataSourceProperty("useServerPrepStmts", "true");
-        ds = new HikariDataSource(config);
+            /*
+                CONFIG A PROBAR
+             */
+//            config.addDataSourceProperty("allowMultiQueries", "true");
+//            config.addDataSourceProperty("useServerPrepStmts", "true");
+            ds = new HikariDataSource(config);
+        } catch (PoolInitializationException e) {
+        }
     }
 
     public Connection getConnection() {
@@ -61,7 +66,7 @@ public class ConnDBPool {
         Este metodo lee el archivo "configuracion.properties" de la raiz del proyecto
         y genera una URL con los valores que toma del archivo
      */
-    public String generarURL() {
+    private String generarURL() {
 
         String ip = Propiedades.getPropertie("ip");
         String port = Propiedades.getPropertie("port");
@@ -118,6 +123,9 @@ public class ConnDBPool {
 
             if (entry.getValue() instanceof LocalDate) {
                 stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+            }
+            if (entry.getValue() instanceof Boolean) {
+                stmt.setBoolean(posicion, (boolean) entry.getValue());
             }
             if (entry.getValue() instanceof Boolean) {
                 stmt.setBoolean(posicion, (boolean) entry.getValue());

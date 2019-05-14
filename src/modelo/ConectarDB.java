@@ -39,34 +39,6 @@ public class ConectarDB {
     //Nombre de la tabla solo para testear 
     private String tabla;
 
-    /**
-     * Base de datos de prueba
-     *
-     * @param user
-     * @param pass
-     */
-    public ConectarDB(String user, String pass) {
-        try {
-            //Cargamos el driver
-            Class.forName("org.postgresql.Driver");
-            //Nos conectamos
-            url = "jdbc:postgresql://35.193.226.187:5432/BDcierre";
-            this.user = user;
-            this.pass = pass;
-            this.vtnPrin = null;
-
-            //ct = DriverManager.getConnection(url, user, pass);
-            ct = DriverManager.getConnection(url, user, pass);
-            ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Constructor conectarBD || Modo Pruebas");
-            System.out.println("Nos conectamos. Como invitados: " + user);
-        } catch (ClassNotFoundException e) {
-            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
-        } catch (SQLException ex) {
-            System.out.println("No se puede conectar." + ex.getMessage());
-        }
-    }
-
     public ConectarDB(String user, String pass, String mensaje) {
         try {
             //Cargamos el driver
@@ -81,13 +53,20 @@ public class ConectarDB {
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
             //ct = DriverManager.getConnection(url, user, pass);
 
-
             System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
             System.out.println("No nos pudimos conectar.");
         }
+    }
+
+    private String generarURL() {
+
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
     public PreparedStatement sqlPS(String nsql) {
@@ -241,13 +220,6 @@ public class ConectarDB {
         }
     }
 
-    private String generarURL() {
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
-    }
-
     private void cursorCarga() {
         if (vtnPrin != null) {
             vtnPrin.setCursor(new Cursor(3));
@@ -263,7 +235,8 @@ public class ConectarDB {
     public void setVtnPrin(VtnPrincipal vtnPrin) {
         this.vtnPrin = vtnPrin;
     }
-
+    
+    //Comenzando todo para la migracion 
     public PreparedStatement getPS(String sql) {
         try {
             return ct.prepareStatement(sql);
@@ -273,9 +246,7 @@ public class ConectarDB {
         }
     }
 
-    //Para migrar todo bien chidorin
-    public SQLException nsql(String sql) {
-        PreparedStatement ps = getPS(sql);
+    public SQLException nsql(PreparedStatement ps) {
         try {
             int a = ps.executeUpdate();
             System.out.println("Afecto a: " + a);
@@ -292,4 +263,15 @@ public class ConectarDB {
             }
         }
     }
+
+    public ResultSet sql(PreparedStatement ps) {
+        try {
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println("No se pudo ejecutar el sql: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

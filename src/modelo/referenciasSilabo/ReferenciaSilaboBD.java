@@ -86,7 +86,7 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbReferenciaSilabo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReferenciaSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         
