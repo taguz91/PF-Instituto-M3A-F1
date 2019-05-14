@@ -136,12 +136,16 @@ public class ControladorEditarPlanClases {
          fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(validarCampos()==true){
                   if(actualizarPlanClase()==true){
                       fPlanClase.dispose();
                       JOptionPane.showMessageDialog(fPlanClase, "Se actualizó correctamente!");
                        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
                        cP.iniciaControlador();
                   }
+                }else{
+                      JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
+                }
 
             }
             
@@ -523,4 +527,26 @@ public class ControladorEditarPlanClases {
             embd.insertarEstrategiasMetodologicas(em);
         }
      }
+     
+     private boolean validarCampos(){
+         boolean valid=true;
+        if(fPlanClase.getTxrTrabajoAutonomo().getText().length()==0){
+            
+            valid= false;
+        }
+        if(lista_recursoMD1==null ){
+            valid=false;
+        }
+        if(fPlanClase.getListAnticipacionPC().getModel().getSize()<=0 && fPlanClase.getListConstruccionPC().getModel().getSize()<=0 &&
+                fPlanClase.getListConsolidacionPC().getModel()
+                        .getSize()<=0){
+            valid=false;
+        }
+        
+
+            
+
+        return valid;
+    
+    }
 }
