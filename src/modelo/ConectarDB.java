@@ -67,29 +67,6 @@ public class ConectarDB {
         }
     }
 
-    public ConectarDB(String user, String pass, String mensaje) {
-        try {
-            //Cargamos el driver
-            Class.forName("org.postgresql.Driver");
-            //Nos conectamos
-            this.user = user;
-            this.pass = pass;
-            this.vtnPrin = null;
-            this.url = generarURL();
-            ct = DriverManager.getConnection(url, user, pass);
-            ctrCt = new ConexionesCTR(ct);
-            ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
-            //ct = DriverManager.getConnection(url, user, pass);
-
-
-            System.out.println("Nos conectamos. Desde: " + mensaje);
-        } catch (ClassNotFoundException e) {
-            System.out.println("No pudimos conectarnos DB. " + e.getMessage());
-        } catch (SQLException ex) {
-            System.out.println("No nos pudimos conectar.");
-        }
-    }
-
     public PreparedStatement sqlPS(String nsql) {
         try {
             //ct = ResourceManager.getConnection();
@@ -290,6 +267,16 @@ public class ConectarDB {
             } catch (SQLException e) {
                 System.out.println("No se pudo cerrar el prepared statemente: " + e.getMessage());
             }
+        }
+    }
+
+    public ResultSet sql(PreparedStatement ps) {
+        try {
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println("No se pudo ejecutar el sql: " + e.getMessage());
+            return null;
         }
     }
 }
