@@ -48,7 +48,7 @@ public class FrmAsistenciaCTR {
     private DefaultTableModel tablaTrad;
     
     //JTables
-    private JTable jTblTrad;
+    private JTable jTbl;
     
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
@@ -64,7 +64,7 @@ public class FrmAsistenciaCTR {
     public void Init() {
         tablaTrad = (DefaultTableModel) vista.getTblAsistencia().getModel();
 
-        jTblTrad = vista.getTblAsistencia();
+        jTbl = vista.getTblAsistencia();
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
             listaDocentes = DocenteBD.selectAll(usuario.getUsername());
@@ -94,19 +94,19 @@ public class FrmAsistenciaCTR {
     }
     
     private void InitTablas(){
-        jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
+        jTbl.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
         
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
         items.add("Retirado");
         items.add("Desertor");
-        jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
+        jTbl.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
     }
     
     //Metodos de apoyo

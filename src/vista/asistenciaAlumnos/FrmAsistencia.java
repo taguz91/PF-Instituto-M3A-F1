@@ -143,6 +143,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Asistencia Alumnos");
         setMaximumSize(new java.awt.Dimension(1243, 500));
         setMinimumSize(new java.awt.Dimension(1243, 500));
         setPreferredSize(new java.awt.Dimension(1074, 543));
@@ -181,17 +182,17 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas"
+                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
