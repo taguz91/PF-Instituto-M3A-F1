@@ -88,6 +88,7 @@ public class ControladorSilaboU {
 
     private List<ReferenciasMD> biblioteca;
 
+
     private List<ReferenciaSilaboMD> referenciasSilabo;
 
     private DefaultListModel modeloBase;
@@ -845,7 +846,7 @@ public class ControladorSilaboU {
 
                 guardarSilabo();
                 silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
-                accion = true;
+                
 
                 try {
                     Thread.sleep(1000);
@@ -858,6 +859,7 @@ public class ControladorSilaboU {
                 JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
                 principal.getLblEstado().setText("");
 
+                accion = true;
             }).start();
         }
 
@@ -918,7 +920,7 @@ public class ControladorSilaboU {
                     guardarSilabo();
                     silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
 
-                    accion = true;
+                    
 
                     principal.getLblEstado().setText("");
 
@@ -959,6 +961,8 @@ public class ControladorSilaboU {
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
+        PlaceHolder holder = new PlaceHolder(bibliografia.getTxtCodigoExterna(), "Codigo");
+
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
@@ -969,6 +973,15 @@ public class ControladorSilaboU {
 
             }
 
+        });
+        
+        bibliografia.getCmbBiblioteca().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+            
+                  cargarBiblioteca();
+            }
+            
         });
 
         bibliografia.getTblBiblioteca().addMouseListener(new MouseAdapter() {
@@ -1380,7 +1393,12 @@ public class ControladorSilaboU {
 
         modeloTabla = (DefaultTableModel) bibliografia.getTblBiblioteca().getModel();
 
-        biblioteca = ReferenciasBD.consultarBiblioteca(conexion, bibliografia.getTxtBuscar().getText());
+        if (bibliografia.getCmbBiblioteca().getSelectedIndex() == 0) {
+            biblioteca = ReferenciasBD.consultarBiblioteca(conexion, bibliografia.getTxtBuscar().getText());
+        } else {
+
+            biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
+        }
 
         for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -1405,8 +1423,11 @@ public class ControladorSilaboU {
         List<String> b = new ArrayList<>();
 
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
+        ReferenciasMD referenciaExterna = new ReferenciasMD(bibliografia.getTxtCodigoExterna().getText(), bibliografia.getTxrBaseExterna().getText(), "Base");
 
         boolean nuevo = true;
+        boolean nuevo2 = true;
+
         int i = 0;
 
         while (nuevo && i < referenciasSilabo.size()) {
@@ -1415,11 +1436,28 @@ public class ControladorSilaboU {
                     getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
                 nuevo = false;
             }
+
+            i++;
+        }
+
+        while (nuevo2 && i < referenciasSilabo.size()) {
+            if (referenciasSilabo.
+                    get(i).getIdReferencia().
+                    getDescripcionReferencia().equals(referenciaExterna.getDescripcionReferencia())) {
+                nuevo2 = false;
+            }
+
             i++;
         }
 
         if (nuevo) {
             ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaSeleccionada, silabo);
+            referenciasSilabo.add(rsm);
+
+        }
+
+        if (nuevo2) {
+            ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaExterna, silabo);
             referenciasSilabo.add(rsm);
 
         }
@@ -1462,7 +1500,7 @@ public class ControladorSilaboU {
 
         if (bibliografia.getLstBibliografiaBase().getSelectedIndex() != -1) {
             bibliografia.getBtnQuitarBibliografiaBase().setEnabled(true);
-        }else{
+        } else {
             bibliografia.getBtnQuitarBibliografiaBase().setEnabled(false);
         }
     }
@@ -1590,12 +1628,12 @@ public class ControladorSilaboU {
         }
 
         ReferenciasBD r1 = new ReferenciasBD(conexion);
-        r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia());
+        r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
         ReferenciasBD r2 = new ReferenciasBD(conexion);
-        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
+        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
 
