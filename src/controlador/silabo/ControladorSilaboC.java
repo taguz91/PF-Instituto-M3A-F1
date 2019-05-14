@@ -446,6 +446,7 @@ public class ControladorSilaboC {
             public void mouseClicked(MouseEvent me) {
 
                 PlaceHolder holder = new PlaceHolder(gestion.getTxtNuevaEstrategia(), "Ingrese la nueva estrategia...");
+
                 gestion.getTxtNuevaEstrategia().setEnabled(true);
                 gestion.getLblGuardarEstrategia().setEnabled(true);
                 gestion.getLstEstrategiasPredeterminadas().requestFocusInWindow();
@@ -1059,8 +1060,6 @@ public class ControladorSilaboC {
 
                 }
 
-                accion = true;
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -1072,6 +1071,8 @@ public class ControladorSilaboC {
                 JOptionPane.showMessageDialog(null, "Cambios guardados exitosamente");
 
                 gestion.getBtnGuardar().setEnabled(true);
+
+                accion = true;
 
             }).start();
         }
@@ -1127,7 +1128,7 @@ public class ControladorSilaboC {
 
         if (accion3) {
             new Thread(() -> {
-                accion = false;
+                accion3 = false;
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
@@ -1191,6 +1192,8 @@ public class ControladorSilaboC {
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
+        PlaceHolder holder = new PlaceHolder(bibliografia.getTxtCodigoExterna(), "Codigo");
+
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
@@ -1209,6 +1212,14 @@ public class ControladorSilaboC {
 
                 bibliografia.getBtnAgregarBibliografiaBase().setEnabled(true);
 
+            }
+
+        });
+
+        bibliografia.getCmbBiblioteca().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cargarBiblioteca();
             }
 
         });
@@ -1652,7 +1663,13 @@ public class ControladorSilaboC {
 
         modeloTabla = (DefaultTableModel) bibliografia.getTblBiblioteca().getModel();
 
-        biblioteca = ReferenciasBD.consultarBiblioteca(conexion, bibliografia.getTxtBuscar().getText());
+        if (bibliografia.getCmbBiblioteca().getSelectedIndex() == 0) {
+            biblioteca = ReferenciasBD.consultarBiblioteca(conexion, bibliografia.getTxtBuscar().getText());
+        } else {
+
+            biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
+        }
+        
 
         for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -1811,12 +1828,12 @@ public class ControladorSilaboC {
         }
 
         ReferenciasBD r1 = new ReferenciasBD(conexion);
-        r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia());
+        r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
 
         ReferenciasBD r2 = new ReferenciasBD(conexion);
-        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
+        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
 

@@ -264,6 +264,7 @@ public class CarreraBD extends CarreraMD {
                 + "FROM public.\"Carreras\" \n"
                 + "WHERE carrera_activo = TRUE\n"
                 + "ORDER BY carrera_fecha_inicio DESC;";
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             if (rs != null) {
@@ -275,6 +276,7 @@ public class CarreraBD extends CarreraMD {
 
                     carreras.add(carrera);
                 }
+                ps.getConnection().close();
                 return carreras;
             } else {
                 System.out.println("No se pudo consultar una carreras");
