@@ -210,6 +210,25 @@ public class FrmAlumnoCursoCTR extends DCTR {
         frmAlmCurso.getBtnPendientes().addActionListener(e -> mostrarInformacion("P"));
         frmAlmCurso.getBtnHorarioAlmn().addActionListener(e -> horarioAlmn());
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
+        
+        //Para informe 
+        frmAlmCurso.getBtnSegunda().addActionListener(e -> clickSegundaMatricula());
+    }
+
+    private void clickSegundaMatricula() {
+        int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
+        int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
+        int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
+        if (posAl >= 0 && posPrd > 0 && posCurso > 0) {
+            System.out.println("Podemos imprimir: ");
+            System.out.println("Curso: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString());
+            System.out.println("Periodo: " + periodos.get(posPrd - 1).getId_PerioLectivo());
+            System.out.println("Carrera: " + periodos.get(posPrd - 1).getCarrera().getId());
+            System.out.println("Alumno carrera: " + alumnosCarrera.get(posAl).getId());
+            System.out.println("Ciclo: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString().charAt(1));
+        } else {
+            JOptionPane.showMessageDialog(null, "No podemos imprimir.");
+        }
     }
 
     /**
@@ -1242,10 +1261,8 @@ public class FrmAlumnoCursoCTR extends DCTR {
     }
 
     /**
-     * Buscamos el numero de matricula de una materia 
-     * Si es primera nos devolvera 1 
-     * Si es segunda nos devolvera 2 
-     * Si es tercera nos devolvera 3
+     * Buscamos el numero de matricula de una materia Si es primera nos
+     * devolvera 1 Si es segunda nos devolvera 2 Si es tercera nos devolvera 3
      */
     private int buscarNumeroMatricula(int idMateria) {
         int num = -1;
