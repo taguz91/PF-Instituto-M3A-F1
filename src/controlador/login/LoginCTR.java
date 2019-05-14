@@ -4,21 +4,13 @@ import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
-import modelo.propiedades.Propiedades;
+import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import modelo.usuario.UsuarioMD;
 import vista.Login;
 import vista.usuario.VtnSelectRol;
 
@@ -28,21 +20,16 @@ import vista.usuario.VtnSelectRol;
  */
 public class LoginCTR {
 
-    public static String USERNAME = "";
-    public static String PASSWORD = "";
-
     private final Login vista; //LO QUE VA A VISUALIZAR
-    private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
+    private UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
     //Icono de la aplicacion
     private final ImageIcon icono;
     private final Image ista;
 
-    //validacion
-    private boolean carga = true;
+    private final boolean carga = true;
 
-    public LoginCTR(Login vista, UsuarioBD modelo) {
+    public LoginCTR(Login vista) {
         this.vista = vista;
-        this.modelo = modelo;
         this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
         this.ista = icono.getImage();
         vista.setIconImage(ista);
@@ -51,139 +38,70 @@ public class LoginCTR {
 
     //Inits
     public void Init() {
-        btnHover();
-        //Ocultamos el boton que ya no se usa
-        //vista.getBtnIngSU().setEnabled(false);
-        vista.getLblAvisos().setText("");
-
         InitEventos();
-
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
-        //ocusltamos el error
-        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
-
-        vista.getTxtPassword().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
-
-        //Evento para ingresar rapido como JHONNY
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String txt = vista.getTxtUsername().getText().trim();
-                if (txt.length() <= 2) {
-                    ingresoVeloz(txt);
-                }
-            }
-        });
+        vista.getBtnIngresar().addActionListener(e -> login());
+        Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
+        vista.getTxtPassword().addKeyListener(eventoText());
+        vista.getTxtUsername().addKeyListener(eventoText());
+        vista.getBtnIngresar().addActionListener(e -> login());
     }
 
-    private void ingresoVeloz(String c) {
-        if (c.length() > 1 && c.length() <= 2) {
-            if (c.equalsIgnoreCase("J.")) {
-                vista.getTxtUsername().setText("JOHNNY");
-                //vista.getTxtPassword().
-            }
-        }
-    }
-
-    //Metodos de Apoyo
-    private void Login() {
+    //METODOS DE APOYO
+    private void login() {
 
         if (carga) {
 
             new Thread(() -> {
+
                 Effects.setLoadCursor(vista);
+                String USERNAME = vista.getTxtUsername().getText();
+                String PASSWORD = vista.getTxtPassword().getText();
 
-                USERNAME = vista.getTxtUsername().getText();
-                PASSWORD = vista.getTxtPassword().getText();
+                ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
 
-                ConectarDB conectar = new ConectarDB(USERNAME, PASSWORD, "Login");
+                modelo = new UsuarioBD();
 
-                Map<Object, Object> properties = new HashMap<>();
-
-                properties.put("username", USERNAME);
-                properties.put("password", PASSWORD);
-
-                Propiedades.generateUserProperties(properties);
-
-                ResourceManager.setConecct(conectar.getConecction("Al iniciar la aplicacion"));
-
-                modelo.setUsername(vista.getTxtUsername().getText());
-                modelo.setPassword(vista.getTxtPassword().getText());
+                modelo.setUsername(USERNAME);
+                modelo.setPassword(PASSWORD);
 
                 try {
-                    List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
+                    modelo = modelo.selectWhereUsernamePassword();
 
-                    if (!Lista.isEmpty()) {
-                        modelo.setPersona(Lista.get(0).getPersona());
+                    if (modelo != null) {
 
                         vista.dispose();
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, conectar, icono, ista);
-                        vtn.Init();
-                    } else {
 
-                        vista.getLblAvisos().setVisible(true);
-                        vista.getLblAvisos().setText("Revise la Informacion Ingresada");
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("JOHNNY", "DEV", "Login"), icono, ista, false);
+                        vtn.Init();
+
+                    } else {
+                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                     }
-                    Effects.setDefaultCursor(vista);
                 } catch (NullPointerException e) {
+                    Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                } finally {
                     Effects.setDefaultCursor(vista);
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
                 }
 
             }).start();
         }
     }
 
-    /**
-     * Recibimos la contraseña para ingresar al sistema
-     *
-     * @param e
-     */
-    //Procesadores de eventos
-    private void btnIngresarActionPerformance(ActionEvent e) {
-        Login();
-    }
-
-    private void txtOnKeyRelessed(KeyEvent e) {
-
-        if (e.getKeyCode() == 10) {
-            Login();
-        }
-
-    }
-
-    /**
-     * Animacion de hover en el boton
-     */
-    private void btnHover() {
-        vista.getBtnIngresar().addMouseListener(new MouseAdapter() {
+    //EVENTOS
+    private KeyAdapter eventoText() {
+        return new KeyAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(139, 195, 74));
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    login();
+                }
             }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(235, 192, 36));
-            }
-        });
+        };
     }
 
 }

@@ -1,15 +1,18 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -33,23 +36,34 @@ public abstract class AbstracForm {
     //Combo
     protected String[] carrerasTradicionales = {
         "APORTE 1",
-        "NOTA INTERCICLO",
         "EXAMEN INTERCICLO",
+        "NOTA INTERCICLO",
         "APORTE 2",
         "EXAMEN FINAL",
         "EXAMEN SUPLETORIO",
         "NOTA FINAL"
     };
 
+    /*
+        '*' <-- no agregar a la tabla notas
+     */
     protected String[] carrerasDuales = {
         "G. DE AULA 1",
         "G. DE AULA 2",
         "TOTAL GESTION",
         "EXAMEN FINAL",
         "EXAMEN DE RECUPERACION",
-        "NOTA FINAL"
+        "NOTA FINAL",//*
+        "PTI",//*
+        "FASE PRACTICA",//*
+        "NOTA FINAL TOTAL"//*
     };
 
+    protected List<String> tiposNota;
+    protected List<TipoDeNotaBD> listaTipos;
+
+    //TABLAS
+    protected DefaultTableModel tabla;
 
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
@@ -60,65 +74,60 @@ public abstract class AbstracForm {
 
     //INITS
     public void Init() {
-        new Thread(() -> {
-            try {
-                Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-                desktop.getDpnlPrincipal().add(vista);
-                vista.setSelected(true);
-                vista.show();
-            } catch (PropertyVetoException e) {
-                System.out.println(e.getMessage());
-            }
-        }).start();
-        activarFormulario(false);
+
+        tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
+
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
 
         cargarComboCarreras();
-//        cargarCmbNombreNota(carrerasTradicionales);
+
+        setlblCarrera();
+
+        cargarTabla();
+
         InitEventos();
+
     }
 
     private void InitEventos() {
         vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
 
-        String errorMessage = "ERROR INGRESE UN NUMERO EN ESTE FORMATO (15 o 15.66)";
-
-        Validaciones.validarDecimalJtextField(vista.getTxtNotaMax(), errorMessage, vista, 0, 2);
-
-        Validaciones.validarDecimalJtextField(vista.getTxtNotaMin(), errorMessage, vista, 0, 2);
-
-        vista.getTxtNotaMin().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                validarValorMenor(e);
-            }
-        });
-        vista.getTxtNotaMax().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                validarValorMenor(e);
-            }
-        });
-
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
-        vista.getCmbPeriodoLectivo().addActionListener(e -> cargarTiposNotas(e));
+        vista.getCmbPeriodoLectivo().addActionListener(e -> {
+            cargarTabla();
+            setlblCarrera();
+        });
+
+        tabla.addTableModelListener(new TableModelListener() {
+
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+
+                    active = true;
+
+                    validarNotas();
+
+                    active = false;
+                }
+
+            }
+        });
+
     }
 
     //METODOS DE APOYO
-    protected void cargarCmbNombreNota(String[] lista) {
-        vista.getCmbTipoDeNota().removeAllItems();
-        for (String obj : lista) {
-            vista.getCmbTipoDeNota().addItem(obj);
-        }
+    public int getRow() {
+        return vista.getTblTipoNota().getSelectedRow();
     }
 
-    protected void activarFormulario(boolean estado) {
-        vista.getCmbTipoDeNota().setEnabled(estado);
-        vista.getTxtNotaMax().setEnabled(estado);
-        vista.getTxtNotaMin().setEnabled(estado);
-        vista.getCmbPeriodoLectivo().setEnabled(estado);
+    public int getColum() {
+        return vista.getTblTipoNota().getSelectedColumn();
     }
 
     protected void cargarComboCarreras() {
@@ -128,84 +137,127 @@ public abstract class AbstracForm {
         });
     }
 
-    protected void validarValorMenor(FocusEvent e) {
-        if (!vista.getTxtNotaMax().getText().isEmpty() && !vista.getTxtNotaMin().getText().isEmpty()) {
+    private void setlblCarrera() {
 
-            double minimo = Double.valueOf(vista.getTxtNotaMin().getText());
-            double maximo = Double.valueOf(vista.getTxtNotaMax().getText());
-            if (minimo > maximo) {
-                JOptionPane.showMessageDialog(vista, "EL VALOR MINIMO NO PUEDE SER MAYOR AL VALOR MAXIMO!!");
-                vista.getTxtNotaMin().setText("");
-                vista.getTxtNotaMin().requestFocus();
-            } else if (minimo == maximo) {
-                JOptionPane.showMessageDialog(vista, "LOS VALORES NO PUEDEN SER IGUALES!!");
-                vista.getTxtNotaMin().setText("");
-                vista.getTxtNotaMin().requestFocus();
-            }
-
-        }
-    }
-
-    protected boolean validarFormulario() {
-        if (!vista.getTxtNotaMax().getText().isEmpty()) {
-            if (!vista.getTxtNotaMin().getText().isEmpty()) {
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MINIMA!!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOTA MAXIMA!!");
-        }
-
-        return false;
-    }
-
-    protected TipoDeNotaBD setObj() {
-        modelo = new TipoDeNotaBD();
-
-        modelo.setNombre(vista.getCmbTipoDeNota().getSelectedItem().toString());
-        modelo.setValorMaximo(Double.valueOf(vista.getTxtNotaMax().getText()));
-        modelo.setValorMinimo(Double.valueOf(vista.getTxtNotaMin().getText()));
-
-        String key = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-        Map<String, PeriodoLectivoMD> map = listaPeriodos
+        vista.getLblNombreCarrera().setText(listaPeriodos
                 .entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().equals(key))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-        map.entrySet()
+                .filter(item -> item.getKey().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getCarrera().getNombre())
+                .findFirst()
+                .orElse(""));
+
+    }
+
+    protected String getModalidad() {
+        return listaPeriodos
+                .entrySet()
                 .stream()
-                .forEach(entry -> {
-                    modelo.setPeriodoLectivo(entry.getValue());
+                .filter(item -> item.getKey().equalsIgnoreCase(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getCarrera().getModalidad())
+                .findAny()
+                .orElse("");
+    }
+
+    protected void cargarTabla() {
+        tabla.setRowCount(0);
+        if (getModalidad().toLowerCase().contains("dual")) {
+            tiposNota = Arrays.asList(carrerasDuales);
+            tiposNota
+                    .stream()
+                    .forEach(obj -> {
+                        tabla.addRow(new Object[]{obj, 0, 100});
+                    });
+
+        } else {
+            if (getModalidad().toLowerCase().contains("tradicional")) {
+                tiposNota = Arrays.asList(carrerasDuales);
+                tiposNota
+                        .stream()
+                        .forEach(obj -> {
+                            tabla.addRow(new Object[]{obj, 0, 100});
+
+                        });
+
+            }
+
+        }
+
+    }
+
+    protected void setObjs() {
+
+        listaTipos = new ArrayList<>();
+
+        tiposNota.stream()
+                .forEach(obj -> {
+                    int index = tiposNota.indexOf(obj);
+                    TipoDeNotaBD tipo = new TipoDeNotaBD();
+                    tipo.setNombre(obj);
+                    tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
+                    tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
+                    listaTipos.add(tipo);
+
+                    System.out.println("----->" + tipo);
                 });
 
-        return modelo;
+    }
+
+    protected void validacion() {
+        String v1 = "0";
+        String v2 = "0";
+        try {
+            v1 = tabla.getValueAt(getRow(), 1).toString();
+            v2 = tabla.getValueAt(getRow(), 2).toString();
+        } catch (NullPointerException e) {
+        }
+
+        if (Validaciones.isDecimal(v1)) {
+            if (!v2.isEmpty()) {
+                if (Validaciones.isDecimal(v2)) {
+
+                    double valor1 = Middlewares.conversor(v1);
+                    double valor2 = Middlewares.conversor(v2);
+                    if (valor1 > valor2 || valor1 == valor2 || valor2 == 0 || valor1 < 0) {
+                        JOptionPane.showMessageDialog(vista,
+                                "EL VALOR MINIMO NO PUEDE SER MENOR AL MAXIMO\n"
+                                + "EL VALOR MAXIMO NO PUEDE SER 0\n"
+                                + "EL VALOR MINIMO Y MAXIMO NO PUEDEN SER IGUALES"
+                        );
+                        tabla.setValueAt(0, getRow(), 1);
+                        tabla.setValueAt(100, getRow(), 2);
+                    }
+
+                } else {
+                    tabla.setValueAt(100, getRow(), 2);
+                }
+            }
+
+        } else {
+            cargarTabla();
+        }
+
     }
 
     //PROCESADORES DE EVENTOS
     private void btnCancelar(ActionEvent e) {
         vista.dispose();
+
     }
 
     protected abstract void btnGuardar(ActionEvent e);
 
-    private void cargarTiposNotas(ActionEvent e) {
-        String busqueda = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+    private void validarNotas() {
 
-        PeriodoLectivoMD periodo = listaPeriodos
-                .entrySet()
-                .stream()
-                .filter(item -> item.getKey().equals(busqueda))
-                .findAny()
-                .get()
-                .getValue();
-
-        String modalidad = periodo.getCarrera().getModalidad();
-
-        if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
-            cargarCmbNombreNota(carrerasTradicionales);
-        } else {
-            cargarCmbNombreNota(carrerasDuales);
+        switch (getColum()) {
+            case 1:
+                validacion();
+                break;
+            case 2:
+                validacion();
+                break;
+            default:
+                break;
         }
 
     }

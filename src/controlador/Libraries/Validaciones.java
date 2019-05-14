@@ -25,7 +25,10 @@ public final class Validaciones {
     }
 
     public static boolean isDecimal(String Number) {
-        return Number.matches("^[0-9]*+[.]{0,1}+[0-9]*");
+        if (Number.equalsIgnoreCase(".") || Number.equalsIgnoreCase(",")) {
+            Number = "0";
+        }
+        return Number.matches("^[\\d]*+[.]{0,1}+[\\d]*");
     }
 
     public static boolean isDecimalLimit(String number, int minimun, int maximun) {
