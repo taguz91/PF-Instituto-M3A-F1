@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa8ed3ab-6575-4564-b3a7-50228f795381">
-	<property name="ireport.zoom" value="1.6528925619834725"/>
-	<property name="ireport.x" value="22"/>
-	<property name="ireport.y" value="258"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="36"/>
 	<parameter name="idAlumno" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
@@ -47,54 +47,55 @@ AND cr.id_carrera = (
 	SELECT id_carrera
 	FROM public."PeriodoLectivo"
 	WHERE id_prd_lectivo = $P{idPeriodo}
-);]]>
+)AND curso_nombre = $P{curso};]]>
 	</queryString>
-	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="persona_primer_nombre" class="java.lang.String"/>
 	<field name="persona_segundo_nombre" class="java.lang.String"/>
 	<field name="persona_primer_apellido" class="java.lang.String"/>
 	<field name="persona_segundo_apellido" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="367" y="41" width="39" height="20" uuid="d2301504-ac6b-43ff-bb81-43d7351bbdfc"/>
+				<reportElement x="361" y="41" width="45" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Cuenca,]]></text>
 			</staticText>
 			<image>
-				<reportElement x="53" y="0" width="261" height="61" uuid="e7d2e8ac-dded-448a-9a1f-d08c7cc7e71a"/>
-				<imageExpression><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
+				<reportElement x="53" y="0" width="261" height="61"/>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="406" y="41" width="113" height="20" uuid="464a8d2c-1d45-4ee8-ab75-77655bba9403"/>
+				<reportElement x="406" y="41" width="113" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="175" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="22" width="555" height="20" uuid="f996ad85-8ddc-46fe-8a8b-e2df52b19e9a"/>
+				<reportElement x="0" y="22" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ACTA DE COMPROMISO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="35" y="54" width="484" height="59" uuid="700e32f8-f41d-4a71-a630-9dff0a170c37"/>
+				<reportElement x="35" y="54" width="484" height="59"/>
 				<textElement textAlignment="Justified">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA['Yo, '+$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}+ ', con cédula de ciudadanía Nro. '+$F{persona_identificacion}+' ,estudiante del '+$P{curso}+' , de la carrera '+$F{carrera_nombre}+', del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.']]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA['Yo, '+$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}+ ', con cédula de ciudadanía Nro. '+$F{persona_identificacion}+' ,estudiante del '+$P{curso}+' , de la carrera '+$F{carrera_nombre}+', del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.']]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="35" y="113" width="484" height="62" uuid="1c5e57e0-ef6d-4ba5-9335-4bc1b60555a9"/>
+				<reportElement x="35" y="113" width="484" height="62"/>
 				<textElement textAlignment="Justified">
 					<font size="11"/>
 				</textElement>
@@ -105,20 +106,20 @@ AND cr.id_carrera = (
 	<columnHeader>
 		<band height="30" splitType="Stretch">
 			<rectangle>
-				<reportElement x="93" y="10" width="224" height="20" uuid="c0ad5b5c-789c-4ff6-95d8-f8a530a17e89"/>
+				<reportElement x="93" y="10" width="224" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="93" y="10" width="224" height="20" uuid="9ef40859-d1b3-435e-bb44-26d01ca1fc93"/>
+				<reportElement x="93" y="10" width="224" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ASIGNATURA CON PÉRDIDA DE GRATUIDAD]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="317" y="10" width="133" height="20" uuid="d8442ebb-40dc-401a-8ead-d39f081379ca"/>
+				<reportElement x="317" y="10" width="133" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="317" y="10" width="133" height="20" uuid="ecd175f8-1531-4c25-9564-e59bcc7f5853"/>
+				<reportElement x="317" y="10" width="133" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -129,20 +130,20 @@ AND cr.id_carrera = (
 	<detail>
 		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement x="93" y="0" width="224" height="20" uuid="a5ca7f8a-6178-411e-9e6a-c99ff6469fdf"/>
+				<reportElement x="93" y="0" width="224" height="20"/>
 			</rectangle>
 			<textField>
-				<reportElement x="93" y="0" width="224" height="20" uuid="baed74c3-7760-41d1-9595-1dad6da67500"/>
+				<reportElement x="93" y="0" width="224" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="317" y="0" width="133" height="20" uuid="935b6772-9041-4344-a2fa-9229c9072c3f"/>
+				<reportElement x="317" y="0" width="133" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="317" y="0" width="133" height="20" uuid="7df83777-0d64-459c-95f4-803c1057bfb9"/>
+				<reportElement x="317" y="0" width="133" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -153,51 +154,51 @@ AND cr.id_carrera = (
 	<pageFooter>
 		<band height="139" splitType="Stretch">
 			<textField>
-				<reportElement x="53" y="79" width="226" height="20" uuid="1cba90e4-d7b8-4203-8b88-690c0167cf20"/>
+				<reportElement x="53" y="79" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="297" y="119" width="202" height="20" uuid="d7a84979-010b-480b-b28a-c156e1150775"/>
+				<reportElement x="297" y="119" width="202" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="297" y="100" width="202" height="19" uuid="6f23abf6-76cd-4b8c-a395-69037ed04109"/>
+				<reportElement x="297" y="100" width="202" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[SECRETARIA/O]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="297" y="80" width="202" height="20" uuid="078520a3-657f-4be7-95bb-f757269c30b4"/>
+				<reportElement x="297" y="80" width="202" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<text><![CDATA[Dr. Mauricio Avilés]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="119" width="226" height="20" uuid="66feaf34-013b-42cd-8412-e337219a98b7"/>
+				<reportElement x="53" y="119" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estudiante]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="99" width="226" height="20" uuid="fd0789b9-5f59-4f6a-8b5a-f577bd0b6c96"/>
+				<reportElement x="53" y="99" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="121" splitType="Stretch">
 			<staticText>
-				<reportElement x="35" y="14" width="484" height="107" uuid="0f7a834b-f441-4768-9c14-9148212d0104"/>
+				<reportElement x="35" y="14" width="484" height="107"/>
 				<textElement textAlignment="Justified">
 					<font size="11"/>
 				</textElement>
