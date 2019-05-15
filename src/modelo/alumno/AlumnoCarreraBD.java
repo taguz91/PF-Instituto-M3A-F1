@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +35,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
                 + " now() );";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente los campos.");
             return true;
         } else {
@@ -51,13 +53,15 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "AND ac.id_alumno = " + idAlm + " \n"
                 + "AND c.id_carrera = ac.id_carrera\n"
                 + "AND malla_almn_estado <> 'C';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
                     carrera = carrera + rs.getString("carrera_nombre") + "\n";
                 }
             }
+            ps.getConnection().close();
         } catch (SQLException e) {
             System.out.println("No pudimos consultar alumnos");
             System.out.println(e.getMessage());
@@ -160,7 +164,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	persona_identificacion ILIKE '%" + aguja + "%') "
                 + "AND persona_activa = true;";
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
 
@@ -184,6 +189,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     alms.add(ac);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return alms;
             } else {
                 return null;
@@ -197,7 +203,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -206,6 +213,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                         alms.add(ac);
                     }
                 }
+                ps.getConnection().close();
                 return alms;
             } else {
                 return null;
@@ -219,7 +227,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraTbl(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
 
@@ -243,6 +252,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     alms.add(ac);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return alms;
             } else {
                 return null;

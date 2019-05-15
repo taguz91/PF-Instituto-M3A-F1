@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                 + "	id_almn_curso, retiro_observacion)\n"
                 + "	VALUES (" + getAlumnoCurso().getId() + ", "
                 + " '" + getObservacion() + "');";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Anulada la matricula de: \n"
                     + getAlumnoCurso().getCurso().getMateria().getNombre());
         }
@@ -38,7 +40,8 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
         nsql = "UPDATE public.\"AlumnoCursoRetirados\" \n"
                 + "SET retiro_activo = false \n"
                 + "WHERE id_retirado = " + idRetirado + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se elimino la anulacion. ");
             return true;
         } else {
@@ -181,7 +184,8 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
 
     private ArrayList<AlumnoCursoRetiradoMD> consultarParaTbl(String sql) {
         ArrayList<AlumnoCursoRetiradoMD> retirados = new ArrayList<>();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -213,6 +217,7 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
 
                     retirados.add(r);
                 }
+                ps.getConnection().close();
                 return retirados;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar alumnos retirados." + e.getMessage());

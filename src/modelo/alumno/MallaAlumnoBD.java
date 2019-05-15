@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             default:
                 break;
         }
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             System.out.println("Se guardao correctamente la nota");
         }
     }
@@ -57,7 +59,9 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "malla_almn_nota3=" + nota3 + ", malla_almn_estado='" + estado + "', "
                 + "malla_almn_num_matricula = " + numMatri + " \n"
                 + "WHERE id_malla_alumno=" + idMalla + ";";
-        if (conecta.nosql(nsql) == null) {
+
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se actualizo la malla correctamente.");
             return true;
         } else {
@@ -255,7 +259,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "FROM public.\"MallaAlumno\" "
                 + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = " + idMateria + ";";
         MallaAlumnoMD mll = new MallaAlumnoMD();
-        ResultSet rs = conecta.sql(sqlc);
+        PreparedStatement ps = conecta.getPS(sqlc);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 AlumnoCarreraMD a = new AlumnoCarreraMD();
@@ -270,6 +275,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                     mll.setAlumnoCarrera(a);
 
                 }
+                ps.getConnection().close();
                 return mll;
             } else {
                 return null;
@@ -313,7 +319,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private ArrayList<MallaAlumnoMD> consultarMallaParaEstado() {
         ArrayList<MallaAlumnoMD> mallas = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -331,6 +338,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
                     mallas.add(mll);
                 }
+                ps.getConnection().close();
                 return mallas;
             } else {
                 return null;
@@ -363,7 +371,8 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private ArrayList<MallaAlumnoMD> consultaMallasTbl(String sql) {
         ArrayList<MallaAlumnoMD> mallas = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -392,6 +401,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
                     mallas.add(mll);
                 }
+                ps.getConnection().close();
                 return mallas;
             } else {
                 return null;
