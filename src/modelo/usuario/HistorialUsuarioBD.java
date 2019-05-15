@@ -1,5 +1,6 @@
 package modelo.usuario;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -354,7 +355,8 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
 
     private ArrayList<HistorialUsuarioMD> consultarTbl(String sql) {
         ArrayList<HistorialUsuarioMD> historial = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -369,6 +371,7 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
                     historial.add(h);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return historial;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar historial. " + e.getMessage());
@@ -409,7 +412,8 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
 
     private ArrayList<String> cargarClm(String sql) {
         ArrayList<String> acciones = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -418,6 +422,7 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
                     acciones.add(a);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return acciones;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar historial. " + e.getMessage());
@@ -433,13 +438,15 @@ public class HistorialUsuarioBD extends HistorialUsuarioMD {
                 + "FROM public.\"HistorialUsuarios\" \n"
                 + "WHERE id_historial_user = " + idHistorial + ";";
         String a = "";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
                     a = rs.getString("hitorial_observacion");
                 }
                 rs.close();
+                ps.getConnection().close();
                 return a;
             } catch (SQLException e) {
                 System.out.println("No se pudo consultar historial. " + e.getMessage());
