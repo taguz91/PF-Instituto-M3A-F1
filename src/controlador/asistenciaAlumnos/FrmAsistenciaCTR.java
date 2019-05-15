@@ -94,19 +94,13 @@ public class FrmAsistenciaCTR {
     }
     
     private void InitTablas(){
-        jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        jTbl.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-        jTbl.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
-        jTbl.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
-        jTbl.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
-        jTbl.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
-        
+        jTbl.getColumnModel().getColumn(5).setCellEditor(new TextFieldCellEditor(true));
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
         items.add("Retirado");
         items.add("Desertor");
-        jTbl.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
+        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
     }
     
     //Metodos de apoyo
