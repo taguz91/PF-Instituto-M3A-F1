@@ -152,7 +152,7 @@ AND cr.id_carrera = (
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="169" splitType="Stretch">
+		<band height="175" splitType="Stretch">
 			<textField>
 				<reportElement x="53" y="79" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">

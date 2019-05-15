@@ -134,7 +134,7 @@ AND p.id_persona = a.id_persona;]]>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="170" splitType="Stretch">
+		<band height="190" splitType="Stretch">
 			<textField>
 				<reportElement x="53" y="79" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">

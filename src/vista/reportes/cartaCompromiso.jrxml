@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="235"/>
 	<parameter name="curso" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -86,7 +86,7 @@ Para constancia se suscribe este acuerdo en dos ejemplares.]]></text>
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="130" splitType="Stretch">
+		<band height="174" splitType="Stretch">
 			<staticText>
 				<reportElement x="55" y="110" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">

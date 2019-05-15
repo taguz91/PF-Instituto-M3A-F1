@@ -76,7 +76,7 @@ Para constancia se suscribe este acuerdo en dos ejemplares.]]></text>
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="167" splitType="Stretch">
+		<band height="180" splitType="Stretch">
 			<staticText>
 				<reportElement x="62" y="110" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
