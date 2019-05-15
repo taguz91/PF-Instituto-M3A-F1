@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="consulta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idCarreras" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["vista/reportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[$P!{consulta}]]>
@@ -24,6 +30,15 @@
 	<field name="persona_primer_apellido" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
+	<variable name="malla_almn_nota1_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{malla_almn_nota1}]]></variableExpression>
+	</variable>
+	<variable name="malla_almn_nota2_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{malla_almn_nota2}]]></variableExpression>
+	</variable>
+	<variable name="malla_almn_nota3_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{malla_almn_nota3}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,7 +65,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Malla Alumno:]]></text>
+				<text><![CDATA[Reporte de Malla Alumno]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="139" width="60" height="20"/>
@@ -284,6 +299,37 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="215" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement x="454" y="0" width="33" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota1_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="487" y="0" width="34" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota2_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="522" y="0" width="33" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota3_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="400" y="0" width="54" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Promedio:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="115" width="555" height="100"/>
+				<subreportParameter name="idCarrera">
+					<subreportParameterExpression><![CDATA[$P{idCarreras}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["vista/reportes/mallaFirmas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</summary>
 </jasperReport>

@@ -44,7 +44,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private ArrayList<DocenteMD> docentesMD;
     //int materia = frmFinContrato.getTblMateriasCursos();
 
-    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String materia, String curso, int periodo, int docente) {
+    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre, String curso, int periodo, int idDocente) {
         super(ctrPrin);
         this.dc = new DocenteBD(ctrPrin.getConecta());
         this.materia = materia;
