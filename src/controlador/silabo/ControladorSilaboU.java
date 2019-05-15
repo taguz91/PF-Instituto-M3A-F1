@@ -957,7 +957,7 @@ public class ControladorSilaboU {
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
-        PlaceHolder holder = new PlaceHolder(bibliografia.getTxtCodigoExterna(), "Codigo");
+    
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1420,13 +1420,7 @@ public class ControladorSilaboU {
 
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
-        ReferenciasMD referenciaExterna = null;
-
-        if (!bibliografia.getTxtCodigoExterna().getText().equals("") && !bibliografia.getTxtCodigoExterna().getText().equals("Codigo") && !bibliografia.getTxrBaseExterna().getText().equals("")) {
-            referenciaExterna = new ReferenciasMD(bibliografia.getTxtCodigoExterna().getText(), bibliografia.getTxrBaseExterna().getText(), "Base");
-            System.out.println("==================================================>>>"+referenciaExterna.getCodigoReferencia());
-            referenciaExterna.setExisteEnBiblioteca(false);
-        }
+       
 
         boolean nuevo = true;
         boolean nuevo2 = true;
@@ -1449,24 +1443,7 @@ public class ControladorSilaboU {
 
         }
 
-        if (referenciaExterna != null) {
-            while (nuevo2 && i < referenciasSilabo.size()) {
-                if (referenciasSilabo.
-                        get(i).getIdReferencia().
-                        getDescripcionReferencia().equals(referenciaExterna.getDescripcionReferencia())) {
-                    nuevo2 = false;
-                }
-
-                i++;
-            }
-
-            if (nuevo2) {
-                ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaExterna, silabo);
-                
-                referenciasSilabo.add(rsm);
-
-            }
-        }
+        
 
         referenciasSilabo.forEach((rsm) -> {
             if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
@@ -1602,7 +1579,7 @@ public class ControladorSilaboU {
 
             umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd);
+            ubd.insertar(umd,silabo.getIdMateria().getId());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
@@ -1630,12 +1607,12 @@ public class ControladorSilaboU {
 
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
-            System.out.println(referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
-            if (referenciasSilabo.get(i).getIdReferencia().isExisteEnBiblioteca()==false) {
+            //System.out.println("============>"+referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
+            /*if (referenciasSilabo.get(i).getIdReferencia().isExisteEnBiblioteca()==false) {
                 
                 ReferenciasBD r = new ReferenciasBD(conexion);
                 r.insertar(referenciasSilabo.get(i).getIdReferencia(), 1);
-            }
+            }*/
 
             rbd.insertar(referenciasSilabo.get(i));
 

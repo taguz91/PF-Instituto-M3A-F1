@@ -1052,7 +1052,10 @@ public class ControladorSilaboC {
 
                 if (silaboNuevo.getIdSilabo() == null) {
                     guardarSilabo();
+                    
+
                     silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+
                 } else {
                     silaboNuevo.eliminar();
                     guardarSilabo();
@@ -1191,8 +1194,6 @@ public class ControladorSilaboC {
 
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
-
-        PlaceHolder holder = new PlaceHolder(bibliografia.getTxtCodigoExterna(), "Codigo");
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1694,14 +1695,6 @@ public class ControladorSilaboC {
 
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
-        ReferenciasMD referenciaExterna = null;
-
-        
-        if (!bibliografia.getTxtCodigoExterna().getText().equals("") && !bibliografia.getTxtCodigoExterna().getText().equals("Codigo") && !bibliografia.getTxrBaseExterna().getText().equals("")) {
-            referenciaExterna = new ReferenciasMD(bibliografia.getTxtCodigoExterna().getText(), bibliografia.getTxrBaseExterna().getText(), "Base");
-            referenciaExterna.setExisteEnBiblioteca(false);
-        }
-
         boolean nuevo = true;
         boolean nuevo2 = true;
 
@@ -1721,24 +1714,6 @@ public class ControladorSilaboC {
             ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaSeleccionada, silaboNuevo);
             referenciasSilabo.add(rsm);
 
-        }
-
-        if (referenciaExterna != null) {
-            while (nuevo2 && i < referenciasSilabo.size()) {
-                if (referenciasSilabo.
-                        get(i).getIdReferencia().
-                        getDescripcionReferencia().equals(referenciaExterna.getDescripcionReferencia())) {
-                    nuevo2 = false;
-                }
-
-                i++;
-            }
-
-            if (nuevo2) {
-                ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaExterna, silaboNuevo);
-                referenciasSilabo.add(rsm);
-
-            }
         }
 
         referenciasSilabo.forEach((rsm) -> {
@@ -1825,7 +1800,7 @@ public class ControladorSilaboC {
         for (UnidadSilaboMD umd : unidadesSilabo) {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd);
+            ubd.insertar(umd,silaboNuevo.getIdMateria().getId());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
@@ -1859,8 +1834,7 @@ public class ControladorSilaboC {
                 r.insertar(rbd.getIdReferencia(), 1);
             }
 
-                rbd.insertar(referenciasSilabo.get(i));
-           
+            rbd.insertar(referenciasSilabo.get(i));
 
         }
 
@@ -1884,6 +1858,18 @@ public class ControladorSilaboC {
         // exportarPDF();
 
     }
+
+    /*public void guardarSilaboPrimera() {
+
+        silaboNuevo.insertar();
+        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+        
+        
+        insertarUnidades();
+        insertarReferencias();
+        // exportarPDF();
+
+    }*/
 //    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
 //        String sql = "UPDATE \"Silabo\"VALUES (?)";
 //        //Creamos una cadena para después prepararla
