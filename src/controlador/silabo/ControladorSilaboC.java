@@ -1669,7 +1669,6 @@ public class ControladorSilaboC {
 
             biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
         }
-        
 
         for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -1695,13 +1694,26 @@ public class ControladorSilaboC {
 
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
+        ReferenciasMD referenciaExterna = null;
+
+        
+        if (!bibliografia.getTxtCodigoExterna().getText().equals("") && !bibliografia.getTxtCodigoExterna().getText().equals("Codigo") && !bibliografia.getTxrBaseExterna().getText().equals("")) {
+            referenciaExterna = new ReferenciasMD(bibliografia.getTxtCodigoExterna().getText(), bibliografia.getTxrBaseExterna().getText(), "Base");
+            referenciaExterna.setExisteEnBiblioteca(false);
+        }
+
         boolean nuevo = true;
+        boolean nuevo2 = true;
+
         int i = 0;
 
         while (nuevo && i < referenciasSilabo.size()) {
-            if (referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
+            if (referenciasSilabo.
+                    get(i).getIdReferencia().
+                    getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
                 nuevo = false;
             }
+
             i++;
         }
 
@@ -1711,13 +1723,30 @@ public class ControladorSilaboC {
 
         }
 
+        if (referenciaExterna != null) {
+            while (nuevo2 && i < referenciasSilabo.size()) {
+                if (referenciasSilabo.
+                        get(i).getIdReferencia().
+                        getDescripcionReferencia().equals(referenciaExterna.getDescripcionReferencia())) {
+                    nuevo2 = false;
+                }
+
+                i++;
+            }
+
+            if (nuevo2) {
+                ReferenciaSilaboMD rsm = new ReferenciaSilaboMD(referenciaExterna, silaboNuevo);
+                referenciasSilabo.add(rsm);
+
+            }
+        }
+
         referenciasSilabo.forEach((rsm) -> {
             if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
                 b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
             }
 
         });
-
         modeloBase = new DefaultListModel<>();
 
         b.forEach((s) -> {
@@ -1824,7 +1853,15 @@ public class ControladorSilaboC {
 
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
-            rbd.insertar(referenciasSilabo.get(i));
+
+            if (!rbd.getIdReferencia().isExisteEnBiblioteca()) {
+                ReferenciasBD r = new ReferenciasBD(conexion);
+                r.insertar(rbd.getIdReferencia(), 1);
+            }
+
+                rbd.insertar(referenciasSilabo.get(i));
+           
+
         }
 
         ReferenciasBD r1 = new ReferenciasBD(conexion);
