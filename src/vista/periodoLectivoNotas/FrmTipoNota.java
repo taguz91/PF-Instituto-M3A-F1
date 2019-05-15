@@ -102,6 +102,7 @@ public class FrmTipoNota extends JInternalFrame {
                 "Nombre", "Minimo", "Maximo", "ID"
             }
         ));
+        tblTipoNota.setSelectionBackground(new java.awt.Color(153, 153, 153));
         jScrollPane1.setViewportView(tblTipoNota);
         if (tblTipoNota.getColumnModel().getColumnCount() > 0) {
             tblTipoNota.getColumnModel().getColumn(1).setMinWidth(60);

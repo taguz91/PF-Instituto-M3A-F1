@@ -591,17 +591,16 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static Map<String, PeriodoLectivoMD> selectWhereEstadoAndActivo() {
+    public static Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
         String SELECT = "SELECT DISTINCT\n"
-                + "	t1.id_prd_lectivo,\n"
-                + "	\"public\".\"PeriodoLectivo\".id_carrera,\n"
-                + "	\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "	\"public\".\"Carreras\".carrera_nombre, \n"
-                + "	\"public\".\"Carreras\".carrera_modalidad\n"
+                + "	p1.id_prd_lectivo,\n"
+                + "	p1.id_carrera,\n"
+                + "	p1.prd_lectivo_nombre,\n"
+                + "	\"Carreras\".carrera_nombre,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
-                + "	\"public\".\"TipoDeNota\" AS t1\n"
-                + "	INNER JOIN \"public\".\"PeriodoLectivo\" ON t1.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "	INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "\"PeriodoLectivo\" p1\n"
+                + "	INNER JOIN \"public\".\"Carreras\" ON p1.id_carrera = \"public\".\"Carreras\".id_carrera \n"
                 + "WHERE\n"
                 + "	7 != (\n"
                 + "	SELECT\n"
@@ -611,10 +610,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
                 + "	WHERE\n"
-                + "		t2.id_prd_lectivo = t1.id_prd_lectivo \n"
-                + "		AND ( \"Carreras\".carrera_modalidad ILIKE'%PRESENCIAL%' OR \"Carreras\".carrera_modalidad ILIKE'%TRADICIONAL%' ) \n"
+                + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
+                + "		AND ( \"Carreras\".carrera_modalidad ='PRESENCIAL' OR \"Carreras\".carrera_modalidad ='TRADICIONAL' ) \n"
                 + "	) \n"
-                + "	AND 8 != (\n"
+                + "	AND 11 != (\n"
                 + "	SELECT\n"
                 + "		\"count\" ( * ) \n"
                 + "	FROM\n"
@@ -622,11 +621,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
                 + "	WHERE\n"
-                + "		t2.id_prd_lectivo = t1.id_prd_lectivo \n"
-                + "		AND ( \"Carreras\".carrera_modalidad ILIKE'%DUAL%' OR \"Carreras\".carrera_modalidad ILIKE'%DUAL FOCALIZADA%' ) \n"
-                + "	) \n"
-                + "	AND \"PeriodoLectivo\".prd_lectivo_estado IS TRUE \n"
-                + "	AND \"PeriodoLectivo\".prd_lectivo_activo IS TRUE";
+                + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
+                + "	AND ( \"Carreras\".carrera_modalidad ='DUAL' OR \"Carreras\".carrera_modalidad ='DUAL FOCALIZADA' ) \n"
+                + "	)\n"
+                + "	\n"
+                + "ORDER BY p1.prd_lectivo_nombre";
 
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
