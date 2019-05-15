@@ -3,10 +3,10 @@ package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
+import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -34,34 +34,10 @@ public abstract class AbstracForm {
     protected Map<String, PeriodoLectivoMD> listaPeriodos;
 
     //Combo
-    protected String[] carrerasTradicionales = {
-        "APORTE 1",
-        "EXAMEN INTERCICLO",
-        "NOTA INTERCICLO",
-        "APORTE 2",
-        "EXAMEN FINAL",
-        "EXAMEN SUPLETORIO",
-        "NOTA FINAL"
-    };
-
-    /*
-        '*' <-- no agregar a la tabla notas
-     */
-    protected String[] carrerasDuales = {
-        "G. DE AULA 1",
-        "G. DE AULA 2",
-        "TOTAL GESTION",
-        "EXAMEN FINAL",
-        "EXAMEN DE RECUPERACION",
-        "NOTA FINAL",//*
-        "PTI",//*
-        "FASE PRACTICA",//*
-        "NOTA FINAL TOTAL"//*
-    };
-
-    protected List<String> tiposNota;
+    protected List<String> listaDuales;
+    protected List<String> listaTradicionales;
     protected List<TipoDeNotaBD> listaTipos;
-
+    protected List<String> listaNombres;
     //TABLAS
     protected DefaultTableModel tabla;
 
@@ -74,29 +50,33 @@ public abstract class AbstracForm {
 
     //INITS
     public void Init() {
+        InitListas();
 
         tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
-        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        listaPeriodos = PeriodoLectivoBD.selectPeriodosFaltantes();
+        if (listaPeriodos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
+        } else {
 
-        listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
-
-        cargarComboCarreras();
-
-        setlblCarrera();
-
-        cargarTabla();
-
-        InitEventos();
-
+            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+            InitTablas();
+            cargarComboCarreras();
+            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
+            setlblCarrera();
+            cargarTabla();
+            InitEventos();
+        }
     }
 
     private void InitEventos() {
-        vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
-        vista.getCmbPeriodoLectivo().addActionListener(e -> {
+        vista.getCmbPeriodoLectivo().addItemListener(e -> {
+            InitListas();
+            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
             cargarTabla();
             setlblCarrera();
         });
@@ -118,7 +98,35 @@ public abstract class AbstracForm {
 
             }
         });
+    }
 
+    private void InitListas() {
+        listaDuales = new ArrayList<>();
+        listaDuales.add("G. DE AULA 1");
+        listaDuales.add("G. DE AULA 2");
+        listaDuales.add("TOTAL GESTION");
+        listaDuales.add("EXAMEN FINAL");
+        listaDuales.add("EXAMEN DE RECUPERACION");
+        listaDuales.add("NOTA FINAL");
+        listaDuales.add("PTI");
+        listaDuales.add("N. TUTOR EMPRESARIAL");
+        listaDuales.add("N. TUTOR ACADEMICO");
+        listaDuales.add("FASE PRACTICA");
+        listaDuales.add("NOTA FINAL TOTAL");
+
+        listaTradicionales = new ArrayList<>();
+        listaTradicionales.add("APORTE 1");
+        listaTradicionales.add("EXAMEN INTERCICLO");
+        listaTradicionales.add("NOTA INTERCICLO");
+        listaTradicionales.add("APORTE 2");
+        listaTradicionales.add("EXAMEN FINAL");
+        listaTradicionales.add("EXAMEN DE RECUPERACION");
+        listaTradicionales.add("NOTA FINAL");
+    }
+
+    private void InitTablas() {
+        vista.getTblTipoNota().getColumnModel().getColumn(1).setCellEditor(new TextFieldCellEditor(true));
+        vista.getTblTipoNota().getColumnModel().getColumn(2).setCellEditor(new TextFieldCellEditor(true));
     }
 
     //METODOS DE APOYO
@@ -139,13 +147,12 @@ public abstract class AbstracForm {
 
     private void setlblCarrera() {
 
-        vista.getLblNombreCarrera().setText(listaPeriodos
-                .entrySet()
-                .stream()
-                .filter(item -> item.getKey().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
-                .map(c -> c.getValue().getCarrera().getNombre())
-                .findFirst()
-                .orElse(""));
+        vista.getLblNombreCarrera().setText(
+                listaPeriodos.entrySet().stream()
+                        .filter(item -> item.getKey().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                        .map(c -> c.getValue().getCarrera().getNombre())
+                        .findFirst().orElse("")
+        );
 
     }
 
@@ -159,27 +166,31 @@ public abstract class AbstracForm {
                 .orElse("");
     }
 
+    protected int getIdPeriodo() {
+        return listaPeriodos
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equalsIgnoreCase(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getId_PerioLectivo())
+                .findFirst()
+                .get();
+    }
+
     protected void cargarTabla() {
+
         tabla.setRowCount(0);
+
         if (getModalidad().toLowerCase().contains("dual")) {
-            tiposNota = Arrays.asList(carrerasDuales);
-            tiposNota
-                    .stream()
-                    .forEach(obj -> {
-                        tabla.addRow(new Object[]{obj, 0, 100});
-                    });
 
-        } else {
-            if (getModalidad().toLowerCase().contains("tradicional")) {
-                tiposNota = Arrays.asList(carrerasDuales);
-                tiposNota
-                        .stream()
-                        .forEach(obj -> {
-                            tabla.addRow(new Object[]{obj, 0, 100});
-
-                        });
-
-            }
+            listaDuales.removeAll(listaNombres);
+            listaDuales.forEach(obj -> {
+                tabla.addRow(new Object[]{obj, 0, 100});
+            });
+        } else if (getModalidad().toLowerCase().contains("tradicional") || getModalidad().toLowerCase().contains("presencial")) {
+            listaTradicionales.removeAll(listaNombres);
+            listaTradicionales.forEach(obj -> {
+                tabla.addRow(new Object[]{obj, 0, 100});
+            });
 
         }
 
@@ -188,19 +199,28 @@ public abstract class AbstracForm {
     protected void setObjs() {
 
         listaTipos = new ArrayList<>();
+        if (getModalidad().equalsIgnoreCase("presencial") || getModalidad().equalsIgnoreCase("tradicional")) {
+            setObjLista(listaTradicionales);
+        } else {
+            setObjLista(listaDuales);
+        }
 
-        tiposNota.stream()
+    }
+
+    private void setObjLista(List<String> lista) {
+        lista.stream()
                 .forEach(obj -> {
-                    int index = tiposNota.indexOf(obj);
+                    int index = 0;
                     TipoDeNotaBD tipo = new TipoDeNotaBD();
                     tipo.setNombre(obj);
                     tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
                     tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
+                    PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                    periodo.setId_PerioLectivo(getIdPeriodo());
+                    tipo.setPeriodoLectivo(periodo);
                     listaTipos.add(tipo);
-
-                    System.out.println("----->" + tipo);
+                    index++;
                 });
-
     }
 
     protected void validacion() {
@@ -240,11 +260,6 @@ public abstract class AbstracForm {
     }
 
     //PROCESADORES DE EVENTOS
-    private void btnCancelar(ActionEvent e) {
-        vista.dispose();
-
-    }
-
     protected abstract void btnGuardar(ActionEvent e);
 
     private void validarNotas() {

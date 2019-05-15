@@ -93,8 +93,9 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases.getTxtBuscarPLC().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
-
+               if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
                 cargarPlanesDeClaseProfesor();
+                }
             }
         });
 

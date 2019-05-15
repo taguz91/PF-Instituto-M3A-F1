@@ -5,6 +5,7 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -38,6 +39,7 @@ import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
@@ -116,6 +118,8 @@ public class VtnNotasCTR {
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
+        
+        vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
 
         vista.getBtnBuscar().addActionListener(e -> buscarDocente());
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -990,6 +994,12 @@ public class VtnNotasCTR {
                 .orElse("")
         );
         activarForm(true);
+    }
+    
+    
+    private void btnAsistencia (ActionEvent e){
+        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado);
+        asistencia.Init();
     }
 
     // </editor-fold>  

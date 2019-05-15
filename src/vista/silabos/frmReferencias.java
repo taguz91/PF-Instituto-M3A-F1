@@ -10,6 +10,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -40,6 +41,40 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
 
     }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JLabel getLblBaseExterna() {
+        return lblBaseExterna;
+    }
+
+    public void setLblBaseExterna(JLabel lblBaseExterna) {
+        this.lblBaseExterna = lblBaseExterna;
+    }
+
+    public JTextArea getTxrBaseExterna() {
+        return txrBaseExterna;
+    }
+
+    public void setTxrBaseExterna(JTextArea txrBaseExterna) {
+        this.txrBaseExterna = txrBaseExterna;
+    }
+
+    public JTextField getTxtCodigoExterna() {
+        return txtCodigoExterna;
+    }
+
+    public void setTxtCodigoExterna(JTextField txtCodigoExterna) {
+        this.txtCodigoExterna = txtCodigoExterna;
+    }
+    
+    
 
     public JButton getBtnAtras() {
         return btnAtras;
@@ -81,13 +116,31 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         this.lblBibliografiaComplementaria = lblBibliografiaComplementaria;
     }
 
-    public JLabel getLblBiblioteca() {
-        return lblBiblioteca;
+    public JComboBox<String> getCmbBiblioteca() {
+        return cmbBiblioteca;
     }
 
-    public void setLblBiblioteca(JLabel lblBiblioteca) {
-        this.lblBiblioteca = lblBiblioteca;
+    public void setCmbBiblioteca(JComboBox<String> cmbBiblioteca) {
+        this.cmbBiblioteca = cmbBiblioteca;
     }
+
+    public JLabel getLblBibliotecs() {
+        return lblBibliotecs;
+    }
+
+    public void setLblBibliotecs(JLabel lblBibliotecs) {
+        this.lblBibliotecs = lblBibliotecs;
+    }
+
+    public JLabel getLblRecursos() {
+        return lblRecursos;
+    }
+
+    public void setLblRecursos(JLabel lblRecursos) {
+        this.lblRecursos = lblRecursos;
+    }
+
+    
 
     public JLabel getLblBuscar() {
         return lblBuscar;
@@ -213,7 +266,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         txrBibliografiaComplementaria = new javax.swing.JTextArea();
         scrBibliografiaBase = new javax.swing.JScrollPane();
         lstBibliografiaBase = new javax.swing.JList<>();
-        lblBiblioteca = new javax.swing.JLabel();
+        lblRecursos = new javax.swing.JLabel();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
@@ -221,6 +274,12 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         btnAtras = new javax.swing.JButton();
         btnAgregarBibliografiaBase = new javax.swing.JButton();
         btnQuitarBibliografiaBase = new javax.swing.JButton();
+        lblBaseExterna = new javax.swing.JLabel();
+        txtCodigoExterna = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txrBaseExterna = new javax.swing.JTextArea();
+        cmbBiblioteca = new javax.swing.JComboBox<>();
+        lblBibliotecs = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -278,7 +337,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
 
         scrBibliografiaBase.setViewportView(lstBibliografiaBase);
 
-        lblBiblioteca.setText("Recursos Disponibles en Bibliotecta:");
+        lblRecursos.setText("Recursos Disponibles en Bibliotecta:");
 
         lblBuscar.setText("Buscar:");
 
@@ -304,6 +363,16 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         btnQuitarBibliografiaBase.setText("<< Quitar");
         btnQuitarBibliografiaBase.setEnabled(false);
 
+        lblBaseExterna.setText("Nuevo Recurso Base Externo:");
+
+        txrBaseExterna.setColumns(20);
+        txrBaseExterna.setRows(5);
+        jScrollPane1.setViewportView(txrBaseExterna);
+
+        cmbBiblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Biblioteca Física ISTA", "Biblioteca Virtual UCUENCA" }));
+
+        lblBibliotecs.setText("Biblioteca:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -311,54 +380,56 @@ public class frmReferencias extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(scrBiblioteca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(23, 23, 23)
-                            .addComponent(lblBuscar)
-                            .addGap(26, 26, 26)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblBiblioteca))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAgregarBibliografiaBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnQuitarBibliografiaBase, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblBibliografiaComplementaria)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(scrBibliografiaComplementaria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(scrBibliografiaBase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblLinkografia)
-                            .addComponent(lblBibliografiaBase)
-                            .addComponent(scrLinkografia, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAtras)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnFinalizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblBuscar)
+                                            .addComponent(lblBibliotecs))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtBuscar)
+                                            .addComponent(cmbBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblRecursos)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(scrBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblBaseExterna)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtCodigoExterna, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAgregarBibliografiaBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnQuitarBibliografiaBase, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblBibliografiaComplementaria)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(scrBibliografiaComplementaria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(scrBibliografiaBase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblLinkografia)
+                                    .addComponent(lblBibliografiaBase)
+                                    .addComponent(scrLinkografia, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtras)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFinalizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar)
-                        .addGap(40, 40, 40))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 594, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBiblioteca)
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblBuscar)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregarBibliografiaBase))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scrBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnQuitarBibliografiaBase)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblBibliografiaBase)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -370,8 +441,33 @@ public class frmReferencias extends javax.swing.JInternalFrame {
                         .addGap(20, 20, 20)
                         .addComponent(lblLinkografia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrLinkografia, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(scrLinkografia, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRecursos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAgregarBibliografiaBase)
+                                .addGap(19, 19, 19)
+                                .addComponent(btnQuitarBibliografiaBase)
+                                .addGap(217, 217, 217))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblBuscar)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cmbBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblBibliotecs))
+                                .addGap(8, 8, 8)
+                                .addComponent(scrBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtCodigoExterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblBaseExterna))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFinalizar)
                     .addComponent(btnAtras)
@@ -432,20 +528,26 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnQuitarBibliografiaBase;
+    private javax.swing.JComboBox<String> cmbBiblioteca;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBaseExterna;
     private javax.swing.JLabel lblBibliografiaBase;
     private javax.swing.JLabel lblBibliografiaComplementaria;
-    private javax.swing.JLabel lblBiblioteca;
+    private javax.swing.JLabel lblBibliotecs;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblLinkografia;
+    private javax.swing.JLabel lblRecursos;
     private javax.swing.JList<String> lstBibliografiaBase;
     private javax.swing.JScrollPane scrBibliografiaBase;
     private javax.swing.JScrollPane scrBibliografiaComplementaria;
     private javax.swing.JScrollPane scrBiblioteca;
     private javax.swing.JScrollPane scrLinkografia;
     private javax.swing.JTable tblBiblioteca;
+    private javax.swing.JTextArea txrBaseExterna;
     private javax.swing.JTextArea txrBibliografiaComplementaria;
     private javax.swing.JTextArea txrLinkografia;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtCodigoExterna;
     // End of variables declaration//GEN-END:variables
 
 }
