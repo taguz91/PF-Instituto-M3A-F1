@@ -23,6 +23,30 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JCheckBox getCbxExistenciaBiblioteca() {
+        return cbxExistenciaBiblioteca;
+    }
+
+    public void setCbxExistenciaBiblioteca(JCheckBox cbxExistenciaBiblioteca) {
+        this.cbxExistenciaBiblioteca = cbxExistenciaBiblioteca;
+    }
+
+    public JLabel getLbObeservaciones() {
+        return lbObeservaciones;
+    }
+
+    public void setLbObeservaciones(JLabel lbObeservaciones) {
+        this.lbObeservaciones = lbObeservaciones;
+    }
+
+    public JTextField getTxtObservaciones() {
+        return txtObservaciones;
+    }
+
+    public void setTxtObservaciones(JTextField txtObservaciones) {
+        this.txtObservaciones = txtObservaciones;
+    }
+
     public JTextField getTxtCodigoLibro() {
         return txtCodigoLibro;
     }
@@ -156,6 +180,7 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton1 = new javax.swing.JRadioButton();
         lbTituloVentanaCBApa = new javax.swing.JLabel();
         lbAutor = new javax.swing.JLabel();
         txtAutor = new javax.swing.JTextField();
@@ -173,6 +198,11 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         GuardarB = new javax.swing.JButton();
         lbCodigoLibro = new javax.swing.JLabel();
         txtCodigoLibro = new javax.swing.JTextField();
+        txtObservaciones = new javax.swing.JTextField();
+        lbObeservaciones = new javax.swing.JLabel();
+        cbxExistenciaBiblioteca = new javax.swing.JCheckBox();
+
+        jRadioButton1.setText("jRadioButton1");
 
         setClosable(true);
         setIconifiable(true);
@@ -222,6 +252,21 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
             }
         });
 
+        txtObservaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtObservacionesActionPerformed(evt);
+            }
+        });
+
+        lbObeservaciones.setText("Observaciones");
+
+        cbxExistenciaBiblioteca.setText("EXISTENCIA EN BIBLIOTECA LOCAL");
+        cbxExistenciaBiblioteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxExistenciaBibliotecaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,50 +274,54 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addComponent(lbObeservaciones)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbEditor)
+                            .addComponent(lbAnio)
+                            .addComponent(lbTitulo)
+                            .addComponent(lbCiudad)
+                            .addComponent(lbAutor))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(282, 282, 282)
                                 .addComponent(btnCancelarB)
                                 .addGap(18, 18, 18)
                                 .addComponent(GuardarB))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbEditor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(CbxAutorCorporativo)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtAutorCorporativo, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbxExistenciaBiblioteca)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbAnio)
-                                    .addComponent(lbTitulo)
-                                    .addComponent(lbCiudad)
-                                    .addComponent(lbAutor)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lbCodigoLibro)))
+                        .addGap(170, 170, 170)
+                        .addComponent(lbTituloVentanaCBApa))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(lbCodigoLibro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCodigoLibro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(CbxAutorCorporativo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtAutorCorporativo, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(lbTituloVentanaCBApa)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(txtCodigoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(lbTituloVentanaCBApa)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxExistenciaBiblioteca)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbCodigoLibro))
@@ -300,11 +349,15 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbEditor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbObeservaciones))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarB)
                     .addComponent(GuardarB))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -326,16 +379,27 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEditorActionPerformed
 
+    private void txtObservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtObservacionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtObservacionesActionPerformed
+
+    private void cbxExistenciaBibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxExistenciaBibliotecaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxExistenciaBibliotecaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CbxAutorCorporativo;
     public javax.swing.JButton GuardarB;
     public javax.swing.JButton btnCancelarB;
+    private javax.swing.JCheckBox cbxExistenciaBiblioteca;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JLabel lbAnio;
     public javax.swing.JLabel lbAutor;
     private javax.swing.JLabel lbCiudad;
     public javax.swing.JLabel lbCodigoLibro;
     private javax.swing.JLabel lbEditor;
+    private javax.swing.JLabel lbObeservaciones;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbTituloVentanaCBApa;
     public javax.swing.JTextField txtAnio;
@@ -344,6 +408,7 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
     public javax.swing.JTextField txtCiudad;
     public javax.swing.JTextField txtCodigoLibro;
     public javax.swing.JTextField txtEditor;
+    public javax.swing.JTextField txtObservaciones;
     public javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

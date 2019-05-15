@@ -41,7 +41,14 @@ private String autor,autorCorporativo,titulo,año,ciudad,editor;
             JOptionPane.showMessageDialog(null, "Campos vacios no Permitido");
         }
         else{
-        boolean existe=true;
+             boolean existe;
+          if (frmBibliografia.getCbxExistenciaBiblioteca().isSelected()==true)  {
+             existe=true; 
+          }else
+          {
+            existe=false;
+          }
+        String observaciones=frmBibliografia.getTxtObservaciones().getText();
         String tipoD="Base";
         String contenedor="";
         autor=frmBibliografia.getTxtAutor().getText();
@@ -54,6 +61,7 @@ private String autor,autorCorporativo,titulo,año,ciudad,editor;
         BDbibliografia.setDescripcion_referencia(contenedor);
          BDbibliografia.setTipo_referencia(tipoD);
          BDbibliografia.setExiste_en_biblioteca(existe);
+          BDbibliografia.setObservaciones(observaciones);
          if (BDbibliografia.insertarReferencia()){
              JOptionPane.showMessageDialog(null, "Los Datos se guardaron Correctamente");
              

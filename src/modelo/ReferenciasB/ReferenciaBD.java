@@ -22,8 +22,8 @@ public class ReferenciaBD extends ReferenciasMD {
 
     public boolean insertarReferencia() {
         String nsql = "INSERT INTO public.\"Referencias\"(\n"
-                + "codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca)\n"
-                + " values ('" + getCodigo_referencia() + "','" + getDescripcion_referencia() + "','" + getTipo_referencia() + "'," + isExiste_en_biblioteca() + ");";
+                + "codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones)\n"
+                + " values ('" + getCodigo_referencia() + "','" + getDescripcion_referencia() + "','" + getTipo_referencia() + "'," + isExiste_en_biblioteca() + ",'" + getObservaciones()+ "');";
         if (conectar.nosql(nsql) == null) {
             return true;
         } else {
