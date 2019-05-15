@@ -70,7 +70,7 @@ public class VtnPersonaCTR extends DVtnCTR {
         vtnPersona.getBtnEditar().addActionListener(e -> editar());
 
         vtnPersona.getBtnEliminar().addActionListener(e -> eliminar());
-        String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento"};
+        String titulo[] = {"ID", "Identificacion", "Nombre Completo", "Fecha Nacimiento", "Celular", "Teléfono", "Correo"};
         String datos[][] = {};
 
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -173,12 +173,16 @@ public class VtnPersonaCTR extends DVtnCTR {
                 Object valores[] = {p.getIdPersona(), p.getIdentificacion(),
                     p.getPrimerNombre() + " " + p.getSegundoNombre() + " "
                     + p.getPrimerApellido() + " " + p.getSegundoApellido(),
-                    p.getFechaNacimiento()};
-                mdTbl.addRow(valores);
-            });
-            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
-        }
-        ctrPrin.getVtnPrin().getDpnlPrincipal().setCursor(new Cursor(0));
+                    p.getFechaNacimiento(), p.getCelular(), p.getTelefono(),
+                    p.getCorreo()};
+            mdTbl.addRow(valores);
+        });
+        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+    }
+
+    ctrPrin.getVtnPrin ()
+
+.getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
     //Buscamos persona

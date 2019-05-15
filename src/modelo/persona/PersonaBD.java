@@ -370,7 +370,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_correo, persona_celular, "
+                + "persona_telefono, persona_activa\n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' ORDER BY persona_primer_apellido ASC;";
         return consultarParaTabla(sql);
     }
@@ -379,7 +380,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT id_persona, persona_identificacion,"
                 + " persona_primer_apellido, persona_segundo_apellido, "
                 + "persona_primer_nombre, persona_segundo_nombre, "
-                + "persona_fecha_nacimiento, persona_activa\n"
+                + "persona_fecha_nacimiento, persona_correo, persona_celular, "
+                + "persona_telefono, persona_activa \n"
                 + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
@@ -392,7 +394,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT \"Personas\".id_persona, \n"
                 + "persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
-                + "persona_segundo_nombre, persona_fecha_nacimiento, persona_activa\n"
+                + "persona_segundo_nombre, persona_fecha_nacimiento, persona_correo, persona_celular, "
+                + "persona_telefono, persona_activa \n"
                 + "	FROM public.\"Personas\", public.\"Alumnos\" \n"
                 + "	WHERE \"Personas\".id_persona = \"Alumnos\".id_persona AND persona_activa = true;";
         return consultarParaTabla(sql);
@@ -402,7 +405,8 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT \"Personas\".id_persona, \n"
                 + "persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
-                + "persona_segundo_nombre, persona_fecha_nacimiento\n"
+                + "persona_segundo_nombre, persona_fecha_nacimiento persona_correo, persona_celular, "
+                + "persona_telefono, persona_activa \n"
                 + "	FROM public.\"Personas\", public.\"Docentes\" \n"
                 + "	WHERE \"Personas\".id_persona = \"Docentes\".id_persona AND persona_activa = true;";
         return consultarParaTabla(sql);
@@ -573,6 +577,9 @@ public class PersonaBD extends PersonaMD {
                     p.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                     p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+                    p.setCelular(rs.getString("persona_celular"));
+                    p.setTelefono(rs.getString("persona_telefono"));
+                    p.setCorreo(rs.getString("persona_correo"));
                     pers.add(p);
                 }
                 rs.close();

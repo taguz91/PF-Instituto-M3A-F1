@@ -68,6 +68,28 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
+    
+    public boolean reasignarAlumnoCurso(int curso_Old, int curso_New){
+        String nsql = "SELECT reasignarMaterias(" + curso_Old + ", " + curso_New + ");";
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
+    public boolean reasignarNotas(int curso_Old, int curso_New){
+        String nsql = "SELECT reasignarNotas(" + curso_Old + ", " + curso_New + ");";
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
@@ -568,7 +590,7 @@ public class DocenteBD extends DocenteMD {
         return consultarDocenteTbl(sql);
     }
     
-    public ArrayList<DocenteMD> buscarDocenteReasignarMateria(String aguja) {
+    public ArrayList<DocenteMD> buscarReasignarMateria(String aguja) {
         String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
                 + "persona_primer_nombre, persona_segundo_nombre,\n"
                 + "persona_primer_apellido, persona_segundo_apellido,\n"
