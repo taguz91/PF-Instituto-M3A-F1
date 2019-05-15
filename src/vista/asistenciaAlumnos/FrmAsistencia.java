@@ -85,9 +85,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         return jLabel3;
     }
 
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
 
     public JSeparator getjSeparator1() {
         return jSeparator1;
@@ -156,10 +153,10 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         btnImprimir = new javax.swing.JButton();
         txtBuscarAsis = new javax.swing.JTextField();
         lblResultados = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAsistencia = new javax.swing.JTable();
         lblSemana = new javax.swing.JLabel();
         cmbSemana = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblAsistencia = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -196,6 +193,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         lblResultados.setText("0 Resultados");
 
+        lblSemana.setText("Semana");
+
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -204,7 +203,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas"
+                "Nro.", "Cédula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -215,23 +214,12 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblAsistencia.setMaximumSize(new java.awt.Dimension(1640, 0));
-        tblAsistencia.setMinimumSize(new java.awt.Dimension(870, 0));
-        tblAsistencia.setPreferredSize(new java.awt.Dimension(1265, 0));
-        jScrollPane1.setViewportView(tblAsistencia);
-        if (tblAsistencia.getColumnModel().getColumnCount() > 0) {
-            tblAsistencia.getColumnModel().getColumn(1).setMinWidth(0);
-            tblAsistencia.getColumnModel().getColumn(1).setPreferredWidth(0);
-            tblAsistencia.getColumnModel().getColumn(1).setMaxWidth(0);
-        }
-
-        lblSemana.setText("Semana");
+        jScrollPane2.setViewportView(tblAsistencia);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +227,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -283,11 +272,11 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(btnVerAsistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(0, 71, Short.MAX_VALUE)))
+                                                .addGap(0, 56, Short.MAX_VALUE)))
                                         .addGap(10, 10, 10)
-                                        .addComponent(btnBuscarAsis))))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                                        .addComponent(btnBuscarAsis)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,10 +314,12 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                         .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnImprimir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -348,7 +339,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbSemana;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCarreraAsis;
     private javax.swing.JLabel lblCarreraAsistencia;
