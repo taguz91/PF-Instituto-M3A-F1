@@ -86,9 +86,9 @@ public class ConnDBPool {
             stmt.executeUpdate();
 
             parametros = null;
-            System.out.println("*******************************************");
-            System.out.println("*PreparedStatement ejecutado correctamente*");
-            System.out.println("*******************************************");
+//            System.out.println("*******************************************");
+//            System.out.println("*PreparedStatement ejecutado correctamente*");
+//            System.out.println("*******************************************");
             return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -104,7 +104,9 @@ public class ConnDBPool {
         stmt = conn.prepareStatement(sql);
 
         for (Map.Entry<Integer, Object> entry : parametros.entrySet()) {
+            
             int posicion = entry.getKey();
+            
             if (entry.getValue() instanceof Integer) {
                 stmt.setInt(posicion, (int) entry.getValue());
             }
@@ -146,9 +148,9 @@ public class ConnDBPool {
             rs = stmt.executeQuery();
 
             parametros = null;
-            System.out.println("*******************************");
-            System.out.println("*QUERY Ejecutado Correctamente*");
-            System.out.println("*******************************");
+//            System.out.println("*******************************");
+//            System.out.println("*QUERY Ejecutado Correctamente*");
+//            System.out.println("*******************************");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;

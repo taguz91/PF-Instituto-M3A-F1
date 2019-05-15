@@ -5,6 +5,7 @@
  */
 package vista.asistenciaAlumnos;
 
+import controlador.notas.ux.RowStyle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,6 +25,16 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
      */
     public FrmAsistencia() {
         initComponents();
+        //InitDiseño();
+    }
+//
+//    private void InitDiseño() {
+//        RowStyle row = new RowStyle(7);
+//        tblAsistencia.setDefaultRenderer(Object.class, row);
+    //}
+
+    public void setCmbSemana(JComboBox<String> cmbSemana) {
+        this.cmbSemana = cmbSemana;
     }
 
     public JButton getBtnBuscarAsis() {
@@ -73,8 +84,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     public JTable getTblAsistencia() {
         return tblAsistencia;
     }
-    
-    
 
     public JLabel getLblCarreraAsis() {
         return lblCarreraAsis;
@@ -107,8 +116,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     public JTextField getTxtBuscarAsis() {
         return txtBuscarAsis;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,10 +146,13 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         lblResultados = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAsistencia = new javax.swing.JTable();
+        lblSemana = new javax.swing.JLabel();
+        cmbSemana = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Asistencia Alumnos");
         setMaximumSize(new java.awt.Dimension(1243, 500));
         setMinimumSize(new java.awt.Dimension(1243, 500));
         setPreferredSize(new java.awt.Dimension(1074, 543));
@@ -153,11 +163,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         lblCicloAsis.setText("Ciclo:");
 
-        cmbPeriodoLectivoAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbPeriodoLectivoAsis.setMinimumSize(new java.awt.Dimension(28, 20));
         cmbPeriodoLectivoAsis.setPreferredSize(new java.awt.Dimension(28, 20));
-
-        cmbCicloAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblDocenteAsis.setText("Docente:");
 
@@ -165,11 +172,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Horas Presenciales:");
 
-        cmbDocenteAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbDocenteAsis.setMinimumSize(new java.awt.Dimension(28, 20));
         cmbDocenteAsis.setPreferredSize(new java.awt.Dimension(28, 20));
-
-        cmbAsignaturaAsis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnBuscarAsis.setText("Buscar");
 
@@ -181,17 +185,17 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas"
+                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -204,6 +208,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
             tblAsistencia.getColumnModel().getColumn(1).setPreferredWidth(0);
             tblAsistencia.getColumnModel().getColumn(1).setMaxWidth(0);
         }
+
+        lblSemana.setText("Semana");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,6 +230,10 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                         .addComponent(lblCicloAsis)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(lblSemana)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel3))
                                     .addGroup(layout.createSequentialGroup()
@@ -257,7 +267,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(btnVerAsistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(0, 96, Short.MAX_VALUE)))
+                                                .addGap(0, 71, Short.MAX_VALUE)))
                                         .addGap(10, 10, 10)
                                         .addComponent(btnBuscarAsis))))
                             .addComponent(jScrollPane1))
@@ -294,7 +304,9 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                         .addComponent(lblCicloAsis)
                         .addComponent(jLabel3)
                         .addComponent(lblHorasAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSemana)
+                        .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnImprimir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,6 +329,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbCicloAsis;
     private javax.swing.JComboBox<String> cmbDocenteAsis;
     private javax.swing.JComboBox<String> cmbPeriodoLectivoAsis;
+    private javax.swing.JComboBox<String> cmbSemana;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -328,6 +341,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblHorasAsis;
     private javax.swing.JLabel lblPeriodoLectivoAsis;
     private javax.swing.JLabel lblResultados;
+    private javax.swing.JLabel lblSemana;
     private javax.swing.JTable tblAsistencia;
     private javax.swing.JTextField txtBuscarAsis;
     // End of variables declaration//GEN-END:variables

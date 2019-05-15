@@ -60,6 +60,10 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         return btnHistoria;
     }
 
+    public JButton getBtnCartaCompromiso() {
+        return btnCartaCompromiso;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,6 +88,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
         btnImprimirFicha = new javax.swing.JButton();
         lblNumResultados = new javax.swing.JLabel();
         btnHistoria = new javax.swing.JButton();
+        btnCartaCompromiso = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -181,6 +186,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCartaCompromiso.setText("Cartas Compromiso");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,8 +197,10 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblNumResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNumResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCartaCompromiso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnHistoria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnImprimirFicha)))
@@ -205,7 +214,8 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimirFicha)
                     .addComponent(lblNumResultados)
-                    .addComponent(btnHistoria))
+                    .addComponent(btnHistoria)
+                    .addComponent(btnCartaCompromiso))
                 .addGap(5, 5, 5))
         );
 
@@ -235,6 +245,7 @@ public class VtnMatricula extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCartaCompromiso;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnHistoria;
     private javax.swing.JButton btnImprimirFicha;

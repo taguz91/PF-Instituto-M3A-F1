@@ -71,7 +71,7 @@ public class ControladorConfiguracion_plan_clases {
         Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
             } else {
-                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD", "Aviso", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD\n Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
@@ -90,7 +90,6 @@ public class ControladorConfiguracion_plan_clases {
          String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
-         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");
          return silabosdocente;
          
     }
@@ -157,7 +156,7 @@ public class ControladorConfiguracion_plan_clases {
     private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos){
         frm_cong_PlanClase.getCmb_Periodos().removeAllItems();
         if (periodos!=null) {
-            frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE UN PERIODO!");
+            frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE SU PERIODO ACTUAL!");
             periodos.forEach(pl-> {
                 frm_cong_PlanClase.getCmb_Periodos().addItem(pl.getNombre_PerLectivo());
             });
@@ -194,7 +193,7 @@ private void clickCmbCarreras(){
        if(posS>0){
            estadoCmb_cursoUnidDES(true);
            String materia_silabo=materias_Silabos.get(posS -1).getNombre();
-           unidadesSilabo=UnidadSilaboBD.consultar(conexion,getIdSilabo(),1 );
+           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
            cursosSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
            LLENAR_COMBO_CURSOS(cursosSilabo);
@@ -202,7 +201,7 @@ private void clickCmbCarreras(){
            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
            } else {
-              JOptionPane.showMessageDialog(null, "ESTA MATERIA NO ESTA ASIGNADA CON EL NUEVO PERIODO LECTIVO", "Aviso", JOptionPane.ERROR_MESSAGE);                      
+              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
            }
                

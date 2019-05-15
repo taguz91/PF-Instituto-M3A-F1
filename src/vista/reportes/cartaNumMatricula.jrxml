@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="73"/>
+	<parameter name="idAlumno" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numMatricula" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPeriodo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[21]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT persona_primer_nombre,
+persona_segundo_nombre,
+persona_primer_apellido,
+persona_segundo_apellido,
+persona_identificacion,
+carrera_nombre,
+materia_nombre,
+curso_nombre
+FROM public."Carreras" cr, public."Cursos" c,
+public."Alumnos" a, public."Personas" p,
+public."Materias" m
+WHERE p.id_persona = a.id_persona
+AND a.id_alumno = $P{idAlumno}
+AND c.id_curso IN (SELECT id_curso
+	FROM public."AlumnoCurso"
+	WHERE id_alumno =  $P{idAlumno}
+	AND id_prd_lectivo = $P{idPeriodo})
+AND c.id_materia IN (SELECT id_materia
+	FROM public."MallaAlumno"
+	WHERE id_almn_carrera = (
+		SELECT id_almn_carrera
+		FROM public."AlumnosCarrera"
+		WHERE id_carrera = cr.id_carrera
+		AND id_alumno = $P{idAlumno}
+	)AND malla_almn_num_matricula = $P{numMatricula}
+	 AND malla_almn_estado = 'M')
+AND m.id_materia = c.id_materia
+AND cr.id_carrera = (
+	SELECT id_carrera
+	FROM public."PeriodoLectivo"
+	WHERE id_prd_lectivo = $P{idPeriodo}
+)AND curso_nombre = $P{curso};]]>
+	</queryString>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<image>
+				<reportElement x="53" y="0" width="261" height="61"/>
+				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="338" y="41" width="43" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cuenca,]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="381" y="41" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="175" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTA DE COMPROMISO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="35" y="54" width="484" height="59"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA['Yo, '+$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}+ ', con cédula de ciudadanía Nro. '+$F{persona_identificacion}+' ,estudiante del '+$P{curso}+' , de la carrera '+$F{carrera_nombre}+', del Instituto Superior Tecnológico del Azuay , ubicado en el cantón Cuenca, provincia del Azuay.']]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="35" y="113" width="484" height="62"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Reconozco que de acuerdo a lo establecido en el artículo 80, literal c), de la Ley Orgánica de Educación Superior y lo establecido en el Reglamento para garantizar la gratuidad de la Educación Superior; he perdido de manera (parcial/total) el derecho a la gratuidad y, por tanto me comprometo a cancelar el valor de matrícula y aranceles correspondientes de las siguientes asignaturas: ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="93" y="10" width="224" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="93" y="10" width="224" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASIGNATURA CON PÉRDIDA DE GRATUIDAD]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="317" y="10" width="133" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="317" y="10" width="133" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEGUNDA MATRÍCULA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="93" y="0" width="224" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="93" y="0" width="224" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="317" y="0" width="133" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="317" y="0" width="133" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="175" splitType="Stretch">
+			<staticText>
+				<reportElement x="273" y="107" width="243" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
+			</staticText>
+			<line>
+				<reportElement x="61" y="68" width="180" height="1"/>
+			</line>
+			<line>
+				<reportElement x="302" y="69" width="192" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="35" y="88" width="226" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="273" y="88" width="243" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA/O ABOGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="108" width="226" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estudiante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="68" width="243" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Dr. Mauricio Avilés]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="35" y="68" width="226" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="14" width="484" height="107"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[El valor a pagar me será notificado por las autoridades del Instituto, de conformidad a los lineamientos establecidos por la Secretaría de Educación Superior, Ciencia, Tecnología e Innovación. 
+                                    
+A efectos del presente procedimiento de matriculación, ACEPTO y RECONOZCO que mi matrícula será efectivizada una vez que se cumpla con el pago de los valores y condiciones descritas en el presente documento. 
+                                    
+Para constancia se suscribe este acuerdo en dos ejemplares.
+]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

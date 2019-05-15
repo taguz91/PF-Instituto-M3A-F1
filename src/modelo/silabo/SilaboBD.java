@@ -261,8 +261,7 @@ public class SilaboBD extends SilaboMD {
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
-                    + "s.id_materia, m.materia_nombre, m.materia_horas_docencia,m.materia_horas_practicas,m.materia_horas_auto_estudio, estado_silabo,\n"
-                    + "pr.id_prd_lectivo, pr.prd_lectivo_fecha_inicio, pr.prd_lectivo_fecha_fin\n"
+                    + "s.id_materia, m.materia_nombre\n"
                     + "FROM \"Silabo\" AS s\n"
                     + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
@@ -285,13 +284,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.setIdSilabo(rs.getInt(1));
                 tmp.getIdMateria().setId(rs.getInt(2));
                 tmp.getIdMateria().setNombre(rs.getString(3));
-                tmp.getIdMateria().setHorasDocencia(rs.getInt(4));
-                tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
-                tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
-                tmp.setEstadoSilabo(rs.getInt(7));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
-                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(9).toLocalDate());
-                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(10).toLocalDate());
+               
 
                 silabos.add(tmp);
             }

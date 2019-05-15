@@ -25,7 +25,7 @@ public class MatriculaBD extends MatriculaMD {
     public void ingresar() {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
                 + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '"+getTipo()+"');";
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '" + getTipo() + "');";
 
         System.out.println("SE matricula: ");
         System.out.println(nsql);
@@ -197,6 +197,29 @@ public class MatriculaBD extends MatriculaMD {
         } else {
             return 0;
         }
+    }
+
+    public ArrayList<String> cursosMatriculado(int idAlumno, int idPeriodo) {
+        ArrayList<String> nombres = null;
+        sql = "SELECT DISTINCT curso_nombre\n"
+                + "FROM public.\"Cursos\"\n"
+                + "WHERE id_curso IN (SELECT id_curso\n"
+                + "	FROM public.\"AlumnoCurso\"\n"
+                + "	WHERE id_alumno = " + idAlumno + "\n"
+                + "	AND id_prd_lectivo = " + idPeriodo + ")";
+        ResultSet rs = conecta.sql(sql);
+        if (rs != null) {
+            try {
+                nombres = new ArrayList<>();
+                while (rs.next()) {
+                    String n = rs.getString(1);
+                    nombres.add(n);
+                }
+            } catch (SQLException e) {
+                System.out.println("No se pudo realizar la consulta: " + e.getMessage());
+            }
+        }
+        return nombres;
     }
 
 }
