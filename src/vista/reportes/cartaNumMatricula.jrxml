@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="36"/>
+	<property name="ireport.y" value="73"/>
 	<parameter name="idAlumno" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
@@ -62,17 +62,17 @@ AND cr.id_carrera = (
 	</background>
 	<title>
 		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="361" y="41" width="45" height="20"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Cuenca,]]></text>
-			</staticText>
 			<image>
 				<reportElement x="53" y="0" width="261" height="61"/>
 				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="338" y="41" width="43" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cuenca,]]></text>
+			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="406" y="41" width="113" height="20"/>
+				<reportElement x="381" y="41" width="138" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
@@ -152,7 +152,7 @@ AND cr.id_carrera = (
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="139" splitType="Stretch">
+		<band height="169" splitType="Stretch">
 			<textField>
 				<reportElement x="53" y="79" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
