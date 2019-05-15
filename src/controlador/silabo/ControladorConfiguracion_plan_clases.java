@@ -71,7 +71,7 @@ public class ControladorConfiguracion_plan_clases {
         Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
             cpc.iniciaControlador();
             } else {
-                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD\n Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
           frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
