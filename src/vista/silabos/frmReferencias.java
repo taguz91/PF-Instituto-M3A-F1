@@ -45,6 +45,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
     
     
     
+    
 
     public JButton getBtnAtras() {
         return btnAtras;
@@ -329,7 +330,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         btnQuitarBibliografiaBase.setText("<< Quitar");
         btnQuitarBibliografiaBase.setEnabled(false);
 
-        cmbBiblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Biblioteca Física ISTA", "Biblioteca Virtual UCUENCA" }));
+        cmbBiblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Biblioteca Física ISTA", "Biblioteca de Convenios" }));
 
         lblBibliotecs.setText("Biblioteca:");
 
