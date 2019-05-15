@@ -6,6 +6,7 @@
 package vista.asistenciaAlumnos;
 
 import controlador.notas.ux.RowStyle;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -25,13 +28,22 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
      */
     public FrmAsistencia() {
         initComponents();
-        //InitDiseño();
+        
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
+        
+        
+        InitDiseño();
     }
-//
-//    private void InitDiseño() {
+
+    private void InitDiseño() {
 //        RowStyle row = new RowStyle(7);
 //        tblAsistencia.setDefaultRenderer(Object.class, row);
-    //}
+
+        tblAsistencia.setRowHeight(23);
+        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblAsistencia.getTableHeader().getDefaultRenderer();
+        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
+    }
 
     public void setCmbSemana(JComboBox<String> cmbSemana) {
         this.cmbSemana = cmbSemana;
@@ -152,10 +164,11 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Asistencia Alumnos");
-        setMaximumSize(new java.awt.Dimension(1243, 500));
-        setMinimumSize(new java.awt.Dimension(1243, 500));
-        setPreferredSize(new java.awt.Dimension(1074, 543));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1060, 550));
+        setPreferredSize(new java.awt.Dimension(1060, 558));
 
         lblPeriodoLectivoAsis.setText("Período Lectivo:");
 
@@ -202,6 +215,9 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblAsistencia.setMaximumSize(new java.awt.Dimension(1640, 0));
+        tblAsistencia.setMinimumSize(new java.awt.Dimension(870, 0));
+        tblAsistencia.setPreferredSize(new java.awt.Dimension(1265, 0));
         jScrollPane1.setViewportView(tblAsistencia);
         if (tblAsistencia.getColumnModel().getColumnCount() > 0) {
             tblAsistencia.getColumnModel().getColumn(1).setMinWidth(0);
