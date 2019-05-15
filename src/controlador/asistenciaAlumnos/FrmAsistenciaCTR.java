@@ -2,8 +2,11 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
+import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -91,17 +94,25 @@ public class FrmAsistenciaCTR {
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboCiclo());
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
+        vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
+        vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    String texto = vista.getTxtBuscarAsis().getText();
+                    if (texto.length() >= 10) {
+                        buscarDocentes();
+                    }
+                }
+            }
+        });
+
+        vista.getTxtBuscarAsis().addKeyListener(Validaciones.validarNumeros());
 
     }
 
     private void InitTablas() {
         jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        //List<String> items = new ArrayList<>();
-//        items.add("Asiste");
-//        items.add("No asiste");
-//        items.add("Retirado");
-//        items.add("Desertor");
-        //jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
     }
 
     //Metodos de apoyo
@@ -289,6 +300,12 @@ public class FrmAsistenciaCTR {
     }
 
     //Eventos
+    
+    private void btnImprimir(ActionEvent e){
+        
+    }
+    
+    
     private void btnVerAsistencia(ActionEvent e) {
         if (cargarTabla) {
             String modalidad = listaPeriodos.stream()
@@ -303,6 +320,19 @@ public class FrmAsistenciaCTR {
         }
 
         vista.setTitle("Asistencia Alumnos " + vista.getCmbCicloAsis().getSelectedItem().toString());
+    }
+    
+    private void buscarDocentes() {
+        activarForm(false);
+        vista.getCmbDocenteAsis().setSelectedItem(listaDocentes
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscarAsis().getText()))
+                .map(c -> c.getKey())
+                .findFirst()
+                .orElse("")
+        );
+        activarForm(true);
     }
 
 }
