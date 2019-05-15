@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["vista/reportes"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["vista/reportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[$P!{consulta}]]>
@@ -328,7 +328,7 @@
 					<subreportParameterExpression><![CDATA[$P{idCarreras}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "mallaFirmas.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["vista/reportes/mallaFirmas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
