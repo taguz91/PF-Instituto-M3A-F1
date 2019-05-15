@@ -44,7 +44,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private ArrayList<DocenteMD> docentesMD;
     //int materia = frmFinContrato.getTblMateriasCursos();
 
-    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre, String curso, int periodo, int idDocente) {
+    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String materia, String curso, int periodo, int docente) {
         super(ctrPrin);
         this.dc = new DocenteBD(ctrPrin.getConecta());
         this.materia = materia;
@@ -101,18 +101,16 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
             d.setIdDocente(dc.buscarDocente(frmReasignarMateria.getTblDocentesDisponibles().getValueAt(posFila, 0).toString()).getIdDocente());
             cursoMD.setDocente(d);
             System.out.println("docente " + d.getIdDocente());
-            
             if(bdCurso.nuevoCurso(cursoMD) == true){
-//                int nuevo_Curso = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), periodo, docente, curso);
-//                if(dc.reasignarAlumnoCurso(curso, d.getIdDocente())){
-////                    if(dc.reasignarNotas(, d.getIdDocente())){
-////                        JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");
-////                    } else{
-////                        JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  
-////                    }
-//                } else{
-//                    JOptionPane.showMessageDialog(null, "No se pudo reasignar las materias al docente seleccionado");
-//                }
+                if(dc.reasignarAlumnoCurso(docente, d.getIdDocente())){
+                    if(dc.reasignarNotas(docente, d.getIdDocente())){
+                        JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");
+                    } else{
+                        JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(null, "No se pudo reasignar las materias al docente seleccionado");
+                }
             } else{
                 JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este docente");
             }
