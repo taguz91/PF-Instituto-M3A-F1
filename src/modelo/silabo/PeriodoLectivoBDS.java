@@ -71,10 +71,12 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_nombre\n"
-                    + "FROM \"PeriodoLectivo\" AS p\n"
-                    + "JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n"
-                    + "WHERE c.carrera_nombre=?  AND  p.prd_lectivo_fecha_inicio>='2018-11-12' ORDER BY p.id_prd_lectivo DESC");
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_nombre\n" +
+"FROM \"PeriodoLectivo\" AS p\n" +
+"JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n" +
+"WHERE c.carrera_nombre=? \n" +
+"AND  p.prd_lectivo_fecha_inicio=(select max(prd_lectivo_fecha_inicio) from \"PeriodoLectivo\")\n" +
+"ORDER BY p.id_prd_lectivo DESC");
 
             st.setString(1, carrera);
 

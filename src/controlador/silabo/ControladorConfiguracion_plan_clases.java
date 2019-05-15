@@ -156,7 +156,7 @@ public class ControladorConfiguracion_plan_clases {
     private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos){
         frm_cong_PlanClase.getCmb_Periodos().removeAllItems();
         if (periodos!=null) {
-            frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE UN PERIODO!");
+            frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE SU PERIODO ACTUAL!");
             periodos.forEach(pl-> {
                 frm_cong_PlanClase.getCmb_Periodos().addItem(pl.getNombre_PerLectivo());
             });
@@ -201,7 +201,7 @@ private void clickCmbCarreras(){
            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
            } else {
-              JOptionPane.showMessageDialog(null, "ESTA MATERIA NO ESTA ASIGNADA CON EL NUEVO PERIODO LECTIVO", "Aviso", JOptionPane.ERROR_MESSAGE);                      
+              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
            }
                
@@ -279,7 +279,7 @@ private void clickCmbCarreras(){
       for(PlandeClasesMD plmd:lista_plan_clases){
           
       if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
-             || plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
+             && plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
           valid=false;
       }
       }

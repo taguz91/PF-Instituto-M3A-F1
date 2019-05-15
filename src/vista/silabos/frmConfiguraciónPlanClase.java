@@ -122,7 +122,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
 
         btn_cancelar.setText("Cancelar");
 
-        jLabel4.setText("Configuración Plan de Clase:");
+        jLabel4.setText("Cree su Plan de Clase:");
 
         jLabel5.setText("Cursos:");
 

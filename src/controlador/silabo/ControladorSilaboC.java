@@ -1052,7 +1052,10 @@ public class ControladorSilaboC {
 
                 if (silaboNuevo.getIdSilabo() == null) {
                     guardarSilabo();
+                    
+
                     silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+
                 } else {
                     silaboNuevo.eliminar();
                     guardarSilabo();
@@ -1191,8 +1194,6 @@ public class ControladorSilaboC {
 
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
-
-        PlaceHolder holder = new PlaceHolder(bibliografia.getTxtCodigoExterna(), "Codigo");
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1669,7 +1670,6 @@ public class ControladorSilaboC {
 
             biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
         }
-        
 
         for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -1696,12 +1696,17 @@ public class ControladorSilaboC {
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
         boolean nuevo = true;
+        boolean nuevo2 = true;
+
         int i = 0;
 
         while (nuevo && i < referenciasSilabo.size()) {
-            if (referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
+            if (referenciasSilabo.
+                    get(i).getIdReferencia().
+                    getDescripcionReferencia().equals(referenciaSeleccionada.getDescripcionReferencia())) {
                 nuevo = false;
             }
+
             i++;
         }
 
@@ -1717,7 +1722,6 @@ public class ControladorSilaboC {
             }
 
         });
-
         modeloBase = new DefaultListModel<>();
 
         b.forEach((s) -> {
@@ -1796,7 +1800,7 @@ public class ControladorSilaboC {
         for (UnidadSilaboMD umd : unidadesSilabo) {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd);
+            ubd.insertar(umd,silaboNuevo.getIdMateria().getId());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
@@ -1824,7 +1828,14 @@ public class ControladorSilaboC {
 
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
+
+            if (!rbd.getIdReferencia().isExisteEnBiblioteca()) {
+                ReferenciasBD r = new ReferenciasBD(conexion);
+                r.insertar(rbd.getIdReferencia(), 1);
+            }
+
             rbd.insertar(referenciasSilabo.get(i));
+
         }
 
         ReferenciasBD r1 = new ReferenciasBD(conexion);
@@ -1847,6 +1858,18 @@ public class ControladorSilaboC {
         // exportarPDF();
 
     }
+
+    /*public void guardarSilaboPrimera() {
+
+        silaboNuevo.insertar();
+        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+        
+        
+        insertarUnidades();
+        insertarReferencias();
+        // exportarPDF();
+
+    }*/
 //    public void guardaArchivo(String ruta) throws SQLException, FileNotFoundException {
 //        String sql = "UPDATE \"Silabo\"VALUES (?)";
 //        //Creamos una cadena para después prepararla

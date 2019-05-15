@@ -148,7 +148,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n Plan de Clase:"/>
+        <Property name="text" type="java.lang.String" value="Cree su Plan de Clase:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="Cmb_carreras">
