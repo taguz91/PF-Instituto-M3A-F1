@@ -7,7 +7,6 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -45,24 +44,28 @@ public abstract class AbstracForm {
         "NOTA FINAL"
     };
 
-    /*
-        '*' <-- no agregar a la tabla notas
-     */
-    protected String[] carrerasDuales = {
-        "G. DE AULA 1",
-        "G. DE AULA 2",
-        "TOTAL GESTION",
-        "EXAMEN FINAL",
-        "EXAMEN DE RECUPERACION",
-        "NOTA FINAL",//*
-        "PTI",//*
-        "FASE PRACTICA",//*
-        "NOTA FINAL TOTAL"//*
-    };
-
-    protected List<String> tiposNota;
+    protected List<String> duales;
+    protected List<String> tradicionales;
     protected List<TipoDeNotaBD> listaTipos;
     protected List<String> listaNombres;
+
+    {
+        duales = new ArrayList<>();
+        duales.add("G. DE AULA 1");
+        duales.add("G. DE AULA 2");
+        duales.add("TOTAL GESTION");
+        duales.add("EXAMEN FINAL");
+        duales.add("EXAMEN DE RECUPERACION");
+        duales.add("NOTA FINAL");
+        duales.add("PTI");
+        duales.add("N. TUTOR EMPRESARIAL");
+        duales.add("N. TUTOR ACADEMICO");
+        duales.add("FASE PRACTICA");
+        duales.add("NOTA FINAL TOTAL");
+
+        tradicionales = new ArrayList<>();
+
+    }
 
     //TABLAS
     protected DefaultTableModel tabla;
@@ -177,27 +180,27 @@ public abstract class AbstracForm {
         tabla.setRowCount(0);
 
         if (getModalidad().toLowerCase().contains("dual")) {
-            tiposNota = Arrays.asList(carrerasDuales);
+            //duales = Arrays.asList(carrerasDuales);
 
-            System.out.println(tiposNota.indexOf("NOTA FINAL"));
+            System.out.println(duales.indexOf("NOTA FINAL"));
 
             listaNombres.forEach(obj -> {
-                int index = tiposNota.indexOf(obj);
+                int index = duales.indexOf(obj);
             });
-            tiposNota.remove("NOTA FINAL");
-
+            duales.remove(1);
+            System.out.println(duales);
 //            listaNombres.forEach(obj -> {
 //                tiposNota.remove(tiposNota.indexOf(obj));
 //            });
 
-            tiposNota.forEach(obj -> {
+            duales.forEach(obj -> {
                 tabla.addRow(new Object[]{obj, 0, 100});
             });
         } else {
             if (getModalidad().toLowerCase().contains("tradicional")) {
 
-                tiposNota = Arrays.asList(carrerasTradicionales);
-                tiposNota.forEach(obj -> {
+                duales = Arrays.asList(carrerasTradicionales);
+                duales.forEach(obj -> {
                     tabla.addRow(new Object[]{obj, 0, 100});
                 });
             }
@@ -210,9 +213,9 @@ public abstract class AbstracForm {
 
         listaTipos = new ArrayList<>();
 
-        tiposNota.stream()
+        duales.stream()
                 .forEach(obj -> {
-                    int index = tiposNota.indexOf(obj);
+                    int index = duales.indexOf(obj);
                     TipoDeNotaBD tipo = new TipoDeNotaBD();
                     tipo.setNombre(obj);
                     tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
