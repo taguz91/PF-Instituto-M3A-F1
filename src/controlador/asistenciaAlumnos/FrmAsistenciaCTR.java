@@ -273,7 +273,7 @@ public class FrmAsistenciaCTR {
     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
 
-            System.out.println(obj);
+            //System.out.println(obj);
 
             tabla.addRow(new Object[]{
                 tabla.getDataVector().size() + 1,
