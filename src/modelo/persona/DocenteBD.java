@@ -226,6 +226,17 @@ public class DocenteBD extends DocenteMD {
                 + "docente_activo = true AND docente_en_funcion = true;";
         return consultarDocenteTbl(sql);
     }
+    
+     public ArrayList<DocenteMD> cargarDocentesFinContrato() {
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = d.id_persona AND \n"
+                + "docente_activo = true AND docente_en_funcion = false;";
+        return consultarDocenteTbl(sql);
+    }
 
     public DocenteMD capturarFecha(int ID) {
         String sql = "SELECT docente_fecha_contrato, docente_codigo FROM public.\"Docentes\" \n"
@@ -550,6 +561,21 @@ public class DocenteBD extends DocenteMD {
                 + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
                 + "WHERE p.id_persona = d.id_persona AND \n"
                 + "docente_activo = true AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%'\n"
+                + ");";
+        return consultarDocenteTbl(sql);
+    }
+    
+    public ArrayList<DocenteMD> buscarDocenteReasignarMateria(String aguja) {
+        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_celular, persona_correo, persona_identificacion\n"
+                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
+                + "WHERE p.id_persona = d.id_persona AND \n"
+                + "docente_activo = true AND docente_en_funcion = true AND (\n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
                 + "	persona_identificacion ILIKE '%" + aguja + "%'\n"

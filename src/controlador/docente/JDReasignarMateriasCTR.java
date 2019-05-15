@@ -36,7 +36,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private DefaultTableModel mdTbl;
     //int materia = frmFinContrato.getTblMateriasCursos();
 
-    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre) {
+    public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String nombre, String curso, int periodo, int idDocente) {
         super(ctrPrin);
         this.docenteBD = new DocenteBD(ctrPrin.getConecta());
         this.nombre = nombre;
@@ -79,7 +79,8 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     }
 
     private void reasignarMaterias() {
-
+        
+        
     }
 
     private void cargarDocentes() {
@@ -89,7 +90,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     private void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            docentes = docenteBD.buscar(aguja);
+            docentes = docenteBD.buscarDocenteReasignarMateria(aguja);
             llenarTblDocentes(docentes);
         }
     }

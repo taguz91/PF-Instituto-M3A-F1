@@ -49,7 +49,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private int periodo;
     private final JDFinContratacion frmFinContrato;
     private static LocalDate fechaInicio;
-    //private DefaultTableModel mdTbl;
+    //private DefaultTableModel mdTbl;  
     private boolean guardar = false;
     private List<CursoMD> lista;
 
@@ -391,9 +391,9 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private void reasignarMateria() {
         posFila = frmFinContrato.getTblMateriasCursos().getSelectedRow();
         if (posFila >= 0) {
-//            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString(),
-//            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), this.periodo, docenteMD.getIdDocente());
-//            ctr.iniciar();
+            JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString(),
+            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), this.periodo, docenteMD.getIdDocente());
+            ctr.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
         }
