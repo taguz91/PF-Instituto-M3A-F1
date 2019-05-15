@@ -201,7 +201,7 @@ private void clickCmbCarreras(){
            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
            } else {
-              JOptionPane.showMessageDialog(null, "ESTA MATERIA NO ESTA ASIGNADA CON EL NUEVO PERIODO LECTIVO", "Aviso", JOptionPane.ERROR_MESSAGE);                      
+              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
            }
                
