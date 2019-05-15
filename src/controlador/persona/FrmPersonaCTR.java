@@ -1179,9 +1179,16 @@ public class FrmPersonaCTR extends DCTR {
 
     //Metodo para ocultar errores
     public void iniciarComponentes() {
-//        frmPersona.getCmbTipoId().setToolTipText("Seleccione un Tipo de Identificación");
-//        frmPersona.getTxtIdentificacion().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
-//        
+        frmPersona.getCmbTipoId().setToolTipText("Seleccione un Tipo de Identificación");
+        frmPersona.getTxtIdentificacion().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
+        frmPersona.getTxtPrimerNombre().setToolTipText("Ingrese su primer nombre");
+        frmPersona.getTxtSegundoNombre().setToolTipText("Ingrese su segundo nombre");
+        frmPersona.getTxtPrimerApellido().setToolTipText("Ingrese su primer apellido");
+        frmPersona.getTxtSegundoApellido().setToolTipText("Ingrese su segundo apellido");
+        frmPersona.getTxtCallePrincipal().setToolTipText("Ingrese su calle principal");
+        frmPersona.getTxtCalleSecundaria().setToolTipText("Ingrese su calle secundaria");
+        frmPersona.getTxtCarnetConadis().setToolTipText("");
+        
         frmPersona.getLblErrorCategoriaMigratoria().setVisible(false);
         frmPersona.getLblErrorCallePrin().setVisible(false);
         frmPersona.getLblErrorCalleSec().setVisible(false);
