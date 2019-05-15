@@ -926,6 +926,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnCtMiPerfil().setAccelerator(KeyStroke.getKeyStroke( 
+                KeyEvent.VK_M, ActionEvent.ALT_MASK));
 
     }
 
