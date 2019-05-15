@@ -4,6 +4,7 @@ package modelo.PlanClases;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,7 +50,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             st.setString(3, pl.getObservaciones());
             System.out.println(pl.getObservaciones()+"----------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             st.setDate(4, null);
-            st.setDate(5, null);
+            st.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
             st.setDate(6, null);
             st.setString(7, pl.getTrabajo_autonomo());
 //            st.setDate(4, java.sql.Date.valueOf(getFecha_revision()));
