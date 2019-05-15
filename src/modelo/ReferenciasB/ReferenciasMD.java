@@ -7,17 +7,27 @@ public class ReferenciasMD {
     private String codigo_referencia;
     private String descripcion_referencia;
     private String tipo_referencia;
+    private String observaciones;
     private boolean existe_en_biblioteca;
 
     public ReferenciasMD() {
     }
 
-    public ReferenciasMD(int id_referencia, String codigo_referencia, String descripcion_referencia, String tipo_referencia, boolean existe_en_biblioteca) {
+    public ReferenciasMD(int id_referencia, String codigo_referencia, String descripcion_referencia, String tipo_referencia, boolean existe_en_biblioteca, String observaciones) {
         this.id_referencia = id_referencia;
         this.codigo_referencia = codigo_referencia;
         this.descripcion_referencia = descripcion_referencia;
         this.tipo_referencia = tipo_referencia;
         this.existe_en_biblioteca = existe_en_biblioteca;
+        this.observaciones=observaciones;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     
     public int getId_referencia() {
