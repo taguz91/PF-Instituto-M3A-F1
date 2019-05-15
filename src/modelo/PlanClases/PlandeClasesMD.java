@@ -23,6 +23,7 @@ public class PlandeClasesMD {
    private LocalDate fecha_revision;
    private LocalDate fecha_generacion;
    private LocalDate fecha_cierre;
+   private String trabajo_autonomo;
 
    //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
    private MateriaMD id_materia;
@@ -116,6 +117,14 @@ public class PlandeClasesMD {
 
     public void setId_persona(PersonaMD id_persona) {
         this.id_persona = id_persona;
+    }
+
+    public String getTrabajo_autonomo() {
+        return trabajo_autonomo;
+    }
+
+    public void setTrabajo_autonomo(String trabajo_autonomo) {
+        this.trabajo_autonomo = trabajo_autonomo;
     }
     
    

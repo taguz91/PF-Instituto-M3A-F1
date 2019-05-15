@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="6.655000000000022"/>
-	<property name="ireport.x" value="485"/>
-	<property name="ireport.y" value="1627"/>
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="265"/>
+	<property name="ireport.y" value="48"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -444,26 +444,6 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
 			</subreport>
-			<subreport>
-				<reportElement x="1170" y="0" width="108" height="20"/>
-				<subreportParameter name="id_alumno">
-					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="id_docente">
-					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="prd_lectivo_nombre">
-					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="curso_nombre">
-					<subreportParameterExpression><![CDATA[$F{curso_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="materia_nombre">
-					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
 				<reportElement x="518" y="0" width="156" height="20"/>
 				<box>
@@ -508,6 +488,26 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="1170" y="0" width="108" height="20"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$F{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

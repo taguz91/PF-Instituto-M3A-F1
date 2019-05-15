@@ -127,6 +127,7 @@ public class ControladorCRUDPlanClase {
         cargarPlanesDeClaseProfesor();
         CARGAR_COMBO_PERIODOS_CARRERA();
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
+        fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
     }
 
     private void cargarPlanesDeClaseProfesor() {

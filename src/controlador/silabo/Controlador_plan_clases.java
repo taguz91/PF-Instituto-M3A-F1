@@ -25,8 +25,6 @@ import modelo.PlanClases.RecursosBD;
 import modelo.PlanClases.RecursosMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
-import modelo.PlanClases.TrabajoAutonomoBD;
-import modelo.PlanClases.TrabajoAutonomoMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -53,7 +51,6 @@ public class Controlador_plan_clases {
     private frmPlanClase fPlanClase;
     private SilaboMD silabo;
     private CursoMD curso;
-    private TrabajoAutonomoMD trabajo_autonoMD;
     private RecursosPlanClasesMD recursos_planMD;
     private EstrategiasMetodologicasMD estrate_metoMD;
     private List<EvaluacionSilaboMD> lista_evualacion_unidad;
@@ -155,7 +152,6 @@ public class Controlador_plan_clases {
         lista_estrategias_metodologicas_antici=new ArrayList<>();
 
         
-//        CARGA_ID_EVALUACION();
      }
     
     private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
@@ -259,9 +255,9 @@ public class Controlador_plan_clases {
         plan_claseMD.getId_curso().setId(curso.getId());
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
+        plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
         if (new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)) {
         insertarRecursosPlanClases();
-        insertarTrabajoAutonomo();
         insertarEstrategiasMetodologicas();
         return true;
          }else{
@@ -281,27 +277,8 @@ public class Controlador_plan_clases {
         
     }
     
-    private void CARGA_ID_EVALUACION(){
-        
-        lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
-        if(lista_evualacion_unidad.isEmpty()){
-            fPlanClase.getTxrTrabajoAutonomo().setEnabled(false);
-            
-        }
-        for (EvaluacionSilaboMD evs:lista_evualacion_unidad)
-            System.out.println(evs.getIdEvaluacion()+"---------------------------------------------------->>>>>>>>>>>>ID EVALUACION DE ESTE SILABO");
-    }
-    private void insertarTrabajoAutonomo(){
-        lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
-        
-        for (EvaluacionSilaboMD evaluacionSilaboMD : lista_evualacion_unidad) {
-            trabajo_autonoMD=new TrabajoAutonomoMD();
-            trabajo_autonoMD.getId_evaluacion().setIdEvaluacion(evaluacionSilaboMD.getIdEvaluacion());
-            trabajo_autonoMD.setAutonomo_plan_descripcion(fPlanClase.getTxrTrabajoAutonomo().getText());
-            
-            new TrabajoAutonomoBD(conexion).insertarTrabajoAutonomo1(trabajo_autonoMD);
-        }
-    }
+   
+   
      
     public EstrategiasUnidadMD estrategiaSeleccionado(){
         String item=fPlanClase.getCmbxEstrategiasPC().getSelectedItem().toString();

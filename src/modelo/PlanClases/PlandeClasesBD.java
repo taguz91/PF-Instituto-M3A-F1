@@ -42,8 +42,8 @@ public class PlandeClasesBD extends PlandeClasesMD {
             PreparedStatement st=conexion.getCon().prepareStatement(""
                     + "INSERT INTO public.\"PlandeClases\"(\n" +
 "	 id_curso, id_unidad, observaciones,\n" +
-"	 fecha_revision, fecha_generacion, fecha_cierre)\n" +
-"	VALUES (?, ?, ?, ?, ?, ?)");
+"	 fecha_revision, fecha_generacion, fecha_cierre,trabajo_autonomo)\n" +
+"	VALUES (?, ?, ?, ?, ?, ?,?)");
             st.setInt(1, pl.getId_curso().getId());
             st.setInt(2, pl.getId_unidad().getIdUnidad());
             st.setString(3, pl.getObservaciones());
@@ -51,6 +51,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             st.setDate(4, null);
             st.setDate(5, null);
             st.setDate(6, null);
+            st.setString(7, pl.getTrabajo_autonomo());
 //            st.setDate(4, java.sql.Date.valueOf(getFecha_revision()));
 //            st.setDate(5, java.sql.Date.valueOf(getFecha_generacion()));
 //            st.setDate(6, java.sql.Date.valueOf(getFecha_cierre()));
@@ -175,12 +176,13 @@ public class PlandeClasesBD extends PlandeClasesMD {
    public static List<PlandeClasesMD> consultarPlanClaseObservacion(ConexionBD conexion,int plan_clase){
          List<PlandeClasesMD> lista_plan=new ArrayList<>();
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("select observaciones from \"PlandeClases\" where id_plan_clases=?");
+            PreparedStatement st=conexion.getCon().prepareStatement("select observaciones,trabajo_autonomo from \"PlandeClases\" where id_plan_clases=?");
             st.setInt(1, plan_clase);
             ResultSet rs=st.executeQuery();
             while(rs.next()){
                 PlandeClasesMD pc=new PlandeClasesMD();
                 pc.setObservaciones(rs.getString(1));
+                pc.setTrabajo_autonomo(rs.getString(2));
                 lista_plan.add(pc);
             }
         } catch (SQLException ex) {
