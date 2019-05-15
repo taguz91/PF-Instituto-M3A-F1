@@ -279,7 +279,7 @@ private void clickCmbCarreras(){
       for(PlandeClasesMD plmd:lista_plan_clases){
           
       if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
-             || plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
+             && plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
           valid=false;
       }
       }
