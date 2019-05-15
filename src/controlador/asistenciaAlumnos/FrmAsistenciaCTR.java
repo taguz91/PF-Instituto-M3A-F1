@@ -1,19 +1,14 @@
-
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
@@ -36,11 +31,12 @@ import vista.principal.VtnPrincipal;
  * @author Lushito
  */
 public class FrmAsistenciaCTR {
+
     private final VtnPrincipal desktop;
     private final FrmAsistencia vista;
     private final UsuarioBD usuario;
     private final RolBD rolSeleccionado;
-    
+
     //LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -50,10 +46,10 @@ public class FrmAsistenciaCTR {
 
     //TABLA
     private DefaultTableModel tablaTrad;
-    
+
     //JTables
     private JTable jTbl;
-    
+
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
@@ -63,7 +59,7 @@ public class FrmAsistenciaCTR {
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
     }
-    
+
     //Inits
     public void Init() {
         tablaTrad = (DefaultTableModel) vista.getTblAsistencia().getModel();
@@ -88,17 +84,17 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
     }
-    
-    private void InitEventos(){
+
+    private void InitEventos() {
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboCiclo());
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
-        
+
     }
-    
-    private void InitTablas(){
+
+    private void InitTablas() {
         jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         //List<String> items = new ArrayList<>();
 //        items.add("Asiste");
@@ -107,11 +103,9 @@ public class FrmAsistenciaCTR {
 //        items.add("Desertor");
         //jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
     }
-    
+
     //Metodos de apoyo
-    
     //Encabezado
-    
     private void cargarComboDocente() {
         listaDocentes.entrySet().forEach((entry) -> {
             String key = entry.getKey();
@@ -122,7 +116,7 @@ public class FrmAsistenciaCTR {
         });
         tablaTrad.setRowCount(0);
     }
-    
+
     private void cargarComboPeriodos() {
         vista.getCmbPeriodoLectivoAsis().removeAllItems();
         vista.getLblCarreraAsistencia().setText("");
@@ -135,7 +129,7 @@ public class FrmAsistenciaCTR {
                 });
         tablaTrad.setRowCount(0);
     }
-    
+
     private void setLblCarrera() {
 
         vista.getLblCarreraAsistencia().setText(listaPeriodos
@@ -146,7 +140,7 @@ public class FrmAsistenciaCTR {
                 .orElse("")
         );
     }
-     
+
     private void cargarComboCiclo() {
         try {
             vista.getCmbCicloAsis().removeAllItems();
@@ -160,7 +154,7 @@ public class FrmAsistenciaCTR {
         }
         tablaTrad.setRowCount(0);
     }
-     
+
     private void cargarComboMaterias() {
         try {
             vista.getCmbAsignaturaAsis().removeAllItems();
@@ -190,15 +184,14 @@ public class FrmAsistenciaCTR {
         }
         tablaTrad.setRowCount(0);
     }
-     
+
     // Varios
-     
     private int getIdDocente() {
         return listaDocentes.entrySet().stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocenteAsis().getSelectedItem().toString())))
                 .map(c -> c.getValue().getIdDocente()).findAny().get();
     }
-    
+
     private int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
@@ -212,7 +205,7 @@ public class FrmAsistenciaCTR {
         }
         return -1;
     }
-    
+
     private void validarCombos() {
 
         if (vista.getCmbAsignaturaAsis().getItemCount() > 0) {
@@ -221,20 +214,19 @@ public class FrmAsistenciaCTR {
             vista.getBtnVerAsistencia().setEnabled(false);
         }
     }
-    
+
     private int getHoras() {
         return listaMaterias.stream()
                 .filter(item -> item.getNombre().equals(vista.getCmbAsignaturaAsis().getSelectedItem().toString()))
                 .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
     }
-    
+
 //    private int calcularPorcentaje(int faltas, int horas) {
 //        if (horas == 0) {
 //            horas = 1;
 //        }
 //        return (faltas * 100) / horas;
 //    }
-    
     private int getSelectedRowTrad() {
         return vista.getTblAsistencia().getSelectedRow();
     }
@@ -242,7 +234,7 @@ public class FrmAsistenciaCTR {
     private int getSelectedColumTrad() {
         return vista.getTblAsistencia().getSelectedColumn();
     }
-    
+
     private void activarForm(boolean estado) {
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
@@ -260,26 +252,29 @@ public class FrmAsistenciaCTR {
         vista.getCmbAsignaturaAsis().setEnabled(estado);
         vista.getTblAsistencia().setEnabled(estado);
     }
-    
-    
+
     private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
         new Thread(() -> {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
             listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            
             listaNotas.stream().forEach(obj -> {
                 funcionCarga.apply(obj, tabla);
             });
+
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
         }).start();
     }
-    
+
     //Agregar Filas
-    
-        private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
+
+            System.out.println(obj);
+
             tabla.addRow(new Object[]{
                 tabla.getDataVector().size() + 1,
                 obj.getAlumno().getIdentificacion(),
@@ -288,27 +283,20 @@ public class FrmAsistenciaCTR {
                 obj.getAlumno().getPrimerNombre(),
                 obj.getAlumno().getSegundoNombre(),
                 (int) Middlewares.conversor("" + obj.getNumFalta()),
-                //obj.getEstado(),
-                obj.getNumFalta(),
-                //calcularPorcentaje(obj.getNumFalta(), getHoras()),
-               //obj.getAsistencia()
-            });
+                obj.getNumFalta(),});
             return null;
         };
     }
-        
-    
-    //Eventos
 
+    //Eventos
     private void btnVerAsistencia(ActionEvent e) {
         if (cargarTabla) {
             String modalidad = listaPeriodos.stream()
                     .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
                     .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
-            
             jTbl.removeAll();
-                tablaTrad.setRowCount(0);
-                cargarTabla(tablaTrad, agregarFilasTrad());
+            tablaTrad.setRowCount(0);
+            cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
@@ -316,6 +304,5 @@ public class FrmAsistenciaCTR {
 
         vista.setTitle("Asistencia Alumnos " + vista.getCmbCicloAsis().getSelectedItem().toString());
     }
-    
-    
+
 }
