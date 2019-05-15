@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import modelo.ConectarDB;
+import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
@@ -87,12 +88,15 @@ public class VtnSelectRolCTR {
             System.out.println("Salimos del sistema como: " + usuario.getUsername());
         }
         conexion.cerrarConexion();
+        ConnDBPool pool = new ConnDBPool();
+        pool.closePool();
     }
 
     //Inits
     public void Init() {
         rolesDelUsuario = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
         vista.getLblUsuario().setText(usuario.getUsername());
+        System.out.println("Llamamos al rol una vez");
 
         rellenarCombo();
         InitEventos();
