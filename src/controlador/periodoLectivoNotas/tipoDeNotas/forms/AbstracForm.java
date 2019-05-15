@@ -34,36 +34,33 @@ public abstract class AbstracForm {
     protected Map<String, PeriodoLectivoMD> listaPeriodos;
 
     //Combo
-    protected String[] carrerasTradicionales = {
-        "APORTE 1",
-        "EXAMEN INTERCICLO",
-        "NOTA INTERCICLO",
-        "APORTE 2",
-        "EXAMEN FINAL",
-        "EXAMEN SUPLETORIO",
-        "NOTA FINAL"
-    };
-
-    protected List<String> duales;
-    protected List<String> tradicionales;
+    protected List<String> listaDuales;
+    protected List<String> listaTradicionales;
     protected List<TipoDeNotaBD> listaTipos;
     protected List<String> listaNombres;
 
     {
-        duales = new ArrayList<>();
-        duales.add("G. DE AULA 1");
-        duales.add("G. DE AULA 2");
-        duales.add("TOTAL GESTION");
-        duales.add("EXAMEN FINAL");
-        duales.add("EXAMEN DE RECUPERACION");
-        duales.add("NOTA FINAL");
-        duales.add("PTI");
-        duales.add("N. TUTOR EMPRESARIAL");
-        duales.add("N. TUTOR ACADEMICO");
-        duales.add("FASE PRACTICA");
-        duales.add("NOTA FINAL TOTAL");
+        listaDuales = new ArrayList<>();
+        listaDuales.add("G. DE AULA 1");
+        listaDuales.add("G. DE AULA 2");
+        listaDuales.add("TOTAL GESTION");
+        listaDuales.add("EXAMEN FINAL");
+        listaDuales.add("EXAMEN DE RECUPERACION");
+        listaDuales.add("NOTA FINAL");
+        listaDuales.add("PTI");
+        listaDuales.add("N. TUTOR EMPRESARIAL");
+        listaDuales.add("N. TUTOR ACADEMICO");
+        listaDuales.add("FASE PRACTICA");
+        listaDuales.add("NOTA FINAL TOTAL");
 
-        tradicionales = new ArrayList<>();
+        listaTradicionales = new ArrayList<>();
+        listaTradicionales.add("APORTE 1");
+        listaTradicionales.add("EXAMEN INTERCICLO");
+        listaTradicionales.add("NOTA INTERCICLO");
+        listaTradicionales.add("APORTE 2");
+        listaTradicionales.add("EXAMEN FINAL");
+        listaTradicionales.add("EXAMEN DE RECUPERACION");
+        listaTradicionales.add("NOTA FINAL");
 
     }
 
@@ -180,30 +177,17 @@ public abstract class AbstracForm {
         tabla.setRowCount(0);
 
         if (getModalidad().toLowerCase().contains("dual")) {
-            //duales = Arrays.asList(carrerasDuales);
 
-            System.out.println(duales.indexOf("NOTA FINAL"));
+            listaDuales.removeAll(listaNombres);
 
-            listaNombres.forEach(obj -> {
-                int index = duales.indexOf(obj);
-            });
-            duales.remove(1);
-            System.out.println(duales);
-//            listaNombres.forEach(obj -> {
-//                tiposNota.remove(tiposNota.indexOf(obj));
-//            });
-
-            duales.forEach(obj -> {
+            listaDuales.forEach(obj -> {
                 tabla.addRow(new Object[]{obj, 0, 100});
             });
-        } else {
-            if (getModalidad().toLowerCase().contains("tradicional")) {
-
-                duales = Arrays.asList(carrerasTradicionales);
-                duales.forEach(obj -> {
-                    tabla.addRow(new Object[]{obj, 0, 100});
-                });
-            }
+        } else if (getModalidad().toLowerCase().contains("tradicional") || getModalidad().toLowerCase().contains("presencial")) {
+            listaTradicionales.removeAll(listaNombres);
+            listaTradicionales.forEach(obj -> {
+                tabla.addRow(new Object[]{obj, 0, 100});
+            });
 
         }
 
@@ -213,9 +197,9 @@ public abstract class AbstracForm {
 
         listaTipos = new ArrayList<>();
 
-        duales.stream()
+        listaDuales.stream()
                 .forEach(obj -> {
-                    int index = duales.indexOf(obj);
+                    int index = listaDuales.indexOf(obj);
                     TipoDeNotaBD tipo = new TipoDeNotaBD();
                     tipo.setNombre(obj);
                     tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
