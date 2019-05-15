@@ -99,13 +99,13 @@ public class FrmAsistenciaCTR {
     }
     
     private void InitTablas(){
-        jTbl.getColumnModel().getColumn(5).setCellEditor(new TextFieldCellEditor(true));
-        List<String> items = new ArrayList<>();
-        items.add("Asiste");
-        items.add("No asiste");
-        items.add("Retirado");
-        items.add("Desertor");
-        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
+        jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+        //List<String> items = new ArrayList<>();
+//        items.add("Asiste");
+//        items.add("No asiste");
+//        items.add("Retirado");
+//        items.add("Desertor");
+        //jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
     }
     
     //Metodos de apoyo
@@ -228,12 +228,12 @@ public class FrmAsistenciaCTR {
                 .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
     }
     
-    private int calcularPorcentaje(int faltas, int horas) {
-        if (horas == 0) {
-            horas = 1;
-        }
-        return (faltas * 100) / horas;
-    }
+//    private int calcularPorcentaje(int faltas, int horas) {
+//        if (horas == 0) {
+//            horas = 1;
+//        }
+//        return (faltas * 100) / horas;
+//    }
     
     private int getSelectedRowTrad() {
         return vista.getTblAsistencia().getSelectedRow();
@@ -287,11 +287,11 @@ public class FrmAsistenciaCTR {
                 obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(),
                 obj.getAlumno().getSegundoNombre(),
-                (int) Middlewares.conversor("" + obj.getNotaFinal()),
-                obj.getEstado(),
+                (int) Middlewares.conversor("" + obj.getNumFalta()),
+                //obj.getEstado(),
                 obj.getNumFalta(),
-                calcularPorcentaje(obj.getNumFalta(), getHoras()),
-                obj.getAsistencia()
+                //calcularPorcentaje(obj.getNumFalta(), getHoras()),
+               //obj.getAsistencia()
             });
             return null;
         };
@@ -310,24 +310,11 @@ public class FrmAsistenciaCTR {
                 tablaTrad.setRowCount(0);
                 cargarTabla(tablaTrad, agregarFilasTrad());
 
-//            if (modalidad.equalsIgnoreCase("TRADICIONAL") || modalidad.equalsIgnoreCase("PRESENCIAL")) {
-//                //vista.getTabPane().setSelectedIndex(0);
-//                jTbl.clearSelection();
-//                jTbl.removeAll();
-//                tablaTrad.setRowCount(0);
-//                cargarTabla(tablaTrad, agregarFilasTrad());
-//            } else {
-//                vista.getTabPane().setSelectedIndex(1);
-//                jTblDual.clearSelection();
-//                jTblDual.removeAll();
-//                tablaDuales.setRowCount(0);
-//                cargarTabla(tablaDuales, agregarFilasDuales());
-//            }
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }
 
-        vista.setTitle("NOTAS " + vista.getCmbCicloAsis().getSelectedItem().toString());
+        vista.setTitle("Asistencia Alumnos " + vista.getCmbCicloAsis().getSelectedItem().toString());
     }
     
     
