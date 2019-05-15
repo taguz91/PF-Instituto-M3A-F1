@@ -119,11 +119,11 @@ public class CursoBD extends CursoMD {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
-                + "	curso_paralelo)\n"
+                + "	curso_paralelo, curso_activo)\n"
                 + "	VALUES (" + c.getMateria().getId() + ", " + c.getPeriodo().getId_PerioLectivo()
                 + ", " + c.getDocente().getIdDocente() + ", " + c.getJornada().getId()
                 + ", '" + c.getNombre() + "', " + c.getCapacidad() + ", " + c.getCiclo()
-                + ", '" + c.getParalelo() + "');";
+                + ", '" + c.getParalelo() + "', true);";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
             return true;

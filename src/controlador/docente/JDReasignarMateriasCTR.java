@@ -102,21 +102,17 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
             cursoMD.setDocente(d);
             System.out.println("docente " + d.getIdDocente());
             if(bdCurso.nuevoCurso(cursoMD) == true){
-                int cont = 0;
-                cursoMD = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), periodo, d.getIdDocente(), curso);
-                alumnoCurso = bdCurso.extraerAlumnosCurso(bdCurso.extraerId(curso).getId());
-                for (int i = 0; i < alumnoCurso.size(); i++) {
-                    if(bdCurso.nuevoAlumnoCurso(alumnoCurso.get(i), cursoMD.getId())){
-                        cont++;
+                if(dc.reasignarAlumnoCurso(docente, d.getIdDocente())){
+                    if(dc.reasignarNotas(docente, d.getIdDocente())){
+                        JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");
+                    } else{
+                        JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  
                     }
-                }
-                if(cont == alumnoCurso.size()){
-                    
                 } else{
-                    JOptionPane.showMessageDialog(null, "No se pudieron guardar los datos");
+                    JOptionPane.showMessageDialog(null, "No se pudo reasignar las materias al docente seleccionado");
                 }
             } else{
-                
+                JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este docente");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");

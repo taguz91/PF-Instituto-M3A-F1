@@ -1,6 +1,7 @@
 package modelo.persona;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,6 +67,28 @@ public class DocenteBD extends DocenteMD {
             System.out.println("Se guardo correctamente");
         }
 
+    }
+    
+    public boolean reasignarAlumnoCurso(int curso_Old, int curso_New){
+        String nsql = "SELECT reasignarMaterias(" + curso_Old + ", " + curso_New + ");";
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+    
+    public boolean reasignarNotas(int curso_Old, int curso_New){
+        String nsql = "SELECT reasignarNotas(" + curso_Old + ", " + curso_New + ");";
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
     }
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
