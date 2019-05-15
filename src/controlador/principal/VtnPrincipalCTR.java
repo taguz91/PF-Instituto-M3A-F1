@@ -39,6 +39,7 @@ import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
+import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
@@ -106,6 +107,7 @@ import vista.alumno.VtnMatricula;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
+import vista.usuario.VtnPerfilUsuario;
 
 /**
  *
@@ -274,6 +276,8 @@ public class VtnPrincipalCTR {
         String database = Propiedades.getPropertie("database");
 
         vtnPrin.getLblIP().setText(IP + "/" + database);
+        
+        vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
 
     }
 
@@ -922,6 +926,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnCtMiPerfil().setAccelerator(KeyStroke.getKeyStroke( 
+                KeyEvent.VK_M, ActionEvent.ALT_MASK));
 
     }
 
@@ -1027,6 +1034,12 @@ public class VtnPrincipalCTR {
     private void btnActivarNotas(ActionEvent e) {
 
         VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), new IngresoNotasBD(), rolSeleccionado);
+        vtn.Init();
+    }
+    
+    private void btnMiperfilActionPerformance(ActionEvent e){
+        
+        VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(new VtnPerfilUsuario(), usuario, vtnPrin);
         vtn.Init();
     }
 
