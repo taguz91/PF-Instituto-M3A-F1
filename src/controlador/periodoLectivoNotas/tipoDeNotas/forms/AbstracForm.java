@@ -7,6 +7,7 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -61,6 +62,7 @@ public abstract class AbstracForm {
 
     protected List<String> tiposNota;
     protected List<TipoDeNotaBD> listaTipos;
+    protected List<String> listaNombres;
 
     //TABLAS
     protected DefaultTableModel tabla;
@@ -79,12 +81,13 @@ public abstract class AbstracForm {
 
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
-        listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo(true, true);
+        listaPeriodos = PeriodoLectivoBD.selectWhereEstadoAndActivo();
 
         cargarComboCarreras();
 
         setlblCarrera();
 
+        listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
         cargarTabla();
 
         InitEventos();
@@ -99,6 +102,7 @@ public abstract class AbstracForm {
         vista.getCmbPeriodoLectivo().addActionListener(e -> {
             cargarTabla();
             setlblCarrera();
+            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
         });
 
         tabla.addTableModelListener(new TableModelListener() {
@@ -118,7 +122,6 @@ public abstract class AbstracForm {
 
             }
         });
-
     }
 
     //METODOS DE APOYO
@@ -159,26 +162,44 @@ public abstract class AbstracForm {
                 .orElse("");
     }
 
+    protected int getIdPeriodo() {
+        return listaPeriodos
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equalsIgnoreCase(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.getValue().getId_PerioLectivo())
+                .findFirst()
+                .get();
+    }
+
     protected void cargarTabla() {
+
         tabla.setRowCount(0);
+
         if (getModalidad().toLowerCase().contains("dual")) {
             tiposNota = Arrays.asList(carrerasDuales);
-            tiposNota
-                    .stream()
-                    .forEach(obj -> {
-                        tabla.addRow(new Object[]{obj, 0, 100});
-                    });
 
+            System.out.println(tiposNota.indexOf("NOTA FINAL"));
+
+            listaNombres.forEach(obj -> {
+                int index = tiposNota.indexOf(obj);
+            });
+            tiposNota.remove("NOTA FINAL");
+
+//            listaNombres.forEach(obj -> {
+//                tiposNota.remove(tiposNota.indexOf(obj));
+//            });
+
+            tiposNota.forEach(obj -> {
+                tabla.addRow(new Object[]{obj, 0, 100});
+            });
         } else {
             if (getModalidad().toLowerCase().contains("tradicional")) {
-                tiposNota = Arrays.asList(carrerasDuales);
-                tiposNota
-                        .stream()
-                        .forEach(obj -> {
-                            tabla.addRow(new Object[]{obj, 0, 100});
 
-                        });
-
+                tiposNota = Arrays.asList(carrerasTradicionales);
+                tiposNota.forEach(obj -> {
+                    tabla.addRow(new Object[]{obj, 0, 100});
+                });
             }
 
         }
