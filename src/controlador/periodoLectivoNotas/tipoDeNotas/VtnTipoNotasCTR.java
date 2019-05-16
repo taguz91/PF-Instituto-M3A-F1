@@ -159,15 +159,6 @@ public class VtnTipoNotasCTR {
         };
     }
 
-    private void setModel(int fila) {
-        int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 1);
-        modelo = new TipoDeNotaBD(listaTiposNotas
-                .stream()
-                .filter(item -> item.getIdTipoNota() == idTipoNota)
-                .findFirst().get()
-        );
-    }
-
     //PROCESADORES DE EVENTOS
     private void btnEditar(ActionEvent e) {
 
@@ -175,10 +166,15 @@ public class VtnTipoNotasCTR {
 
         if (fila != -1) {
 
-            setModel(fila);
+            int ID = Integer.valueOf(vista.getTblTipoNotas().getValueAt(fila, 1).toString());
+
+            modelo = new TipoDeNotaBD(listaTiposNotas.stream()
+                    .filter(item -> item.getIdTipoNota() == ID)
+                    .findFirst().get());
+
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);
             form.InitEditar();
-
+            
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA");
         }

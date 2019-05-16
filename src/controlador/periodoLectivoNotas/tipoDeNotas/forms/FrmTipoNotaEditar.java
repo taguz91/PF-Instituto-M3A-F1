@@ -1,6 +1,5 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -18,6 +17,8 @@ public class FrmTipoNotaEditar extends AbstracForm {
     public FrmTipoNotaEditar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         super(desktop, vista, modelo, vtnPadre);
     }
+    
+    
 
     //INITS
     public void InitEditar() {
@@ -28,10 +29,24 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         vista.setTitle("Editar Tipo De Nota");
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
+        
+        
+        
+        
+        
+        
     }
 
 }

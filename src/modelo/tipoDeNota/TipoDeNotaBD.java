@@ -245,4 +245,10 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     }
 
+//    public List<TipoDeNotaBD> selectWhere() {
+//        String SELECT = "";
+//        
+//        Li
+//        
+//    }
 }
