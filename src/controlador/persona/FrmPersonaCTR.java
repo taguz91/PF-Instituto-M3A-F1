@@ -542,21 +542,8 @@ public class FrmPersonaCTR extends DCTR {
         Genero = frmPersona.getCmbGenero().getSelectedItem().toString();
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
-//        FechaNaci = frmPersona.getJdfechaNacimiento().getCalendar().toString();
-//        Discapacidad = frmPersona.getCbxDiscapacidad().isSelected();
-//        if (Discapacidad) {
-//            TipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-//            CarnetConadis = frmPersona.getTxtCarnetConadis().getText();
-//            PorcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
-//        }
-
-//        TipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
         categoriaMigratoria = frmPersona.getCbxCategoriaMigratoria().isSelected();
-//        if (categoriaMigratoria) {
-//            comboCategoriaMigratoria = frmPersona.getCmbCategoriaMigratoria().getSelectedItem().toString();
-//        }
-
         if (confirmaError() == false) {
             if (TipoId.equals("SELECCIONE") == false
                     && Identificacion.equals("") == false
@@ -568,21 +555,7 @@ public class FrmPersonaCTR extends DCTR {
                     && Genero.equals("SELECCIONE") == false
                     && TipoSangre.equals("SELECCIONE") == false
                     && Etnia.equals("SELECCIONE") == false
-                    //      && FechaNaci.equals("") == false
-                    //   && TipoResidencia.equals("SELECCIONE") == false
                     && CallePrin.equals("") == false) {
-//                if (Discapacidad == true && TipoDiscapacidad.equals("SELECCIONE") == false
-//                        && CarnetConadis.equals("") == false && PorcentajeDiscapacidad.equals("") == false) {
-////                    if (categoriaMigratoria == true && comboCategoriaMigratoria.equals("SELECCIONE") == false) {
-////                        frmPersona.getBtnGuardarPersona().setEnabled(true);
-////                    } else {
-////                        frmPersona.getBtnGuardarPersona().setEnabled(false);
-////                    }
-//                    frmPersona.getBtnGuardarPersona().setEnabled(true);
-//                } else {
-//                    frmPersona.getBtnGuardarPersona().setEnabled(false);
-//                }
-
                 frmPersona.getBtnGuardarPersona().setEnabled(true);
             } else {
                 frmPersona.getBtnGuardarPersona().setEnabled(false);
@@ -636,12 +609,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
         segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
-//        if (!Validar.esLetras(segNombre)) {
-//            guardar = false;
-//            frmPersona.getLblErrorSegNombre().setVisible(true);
-//        } else {
-//            frmPersona.getLblErrorSegNombre().setVisible(false);
-//        }
+        
         priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
@@ -651,13 +619,6 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
         segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
-//        if (!Validar.esLetras(segApellido)) {
-//            guardar = false;
-//            frmPersona.getLblErrorSegApellido().setVisible(true);
-//        } else {
-//            frmPersona.getLblErrorSegApellido().setVisible(false);
-//        }
-        //Le pasamos la fecha que escribio en el calendario
         if (frmPersona.getJdfechaNacimiento().isValid()) {
             fecha = frmPersona.getJdfechaNacimiento().getDate();
 
@@ -743,18 +704,6 @@ public class FrmPersonaCTR extends DCTR {
 
             if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() < 1) {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(true);
-//                if (frmPersona.getCmbTipoDiscapacidad().getSelectedItem().equals("OTRA")) {
-//                    frmPersona.getLblEspecifiqueDiscapacidad().setVisible(true);
-//                    frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(true);
-//                    tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-//                    frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
-//                    especifiqueDiscapacidad = frmPersona.getTxtEspecifiqueDiscapacidad().getText().trim().toUpperCase();
-//                } else {
-//                    tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
-//                    frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
-//                    frmPersona.getLblEspecifiqueDiscapacidad().setVisible(false);
-//                    frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(false);
-//                }
             } else {
                 tipoDiscapacidad = frmPersona.getCmbTipoDiscapacidad().getSelectedItem().toString();
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
@@ -777,7 +726,6 @@ public class FrmPersonaCTR extends DCTR {
                 porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
                 frmPersona.getLblErrorPorcentaje().setVisible(false);
             }
-
         }
 
         if (frmPersona.getCmbIdiomas().getSelectedIndex() < 1) {
@@ -789,12 +737,7 @@ public class FrmPersonaCTR extends DCTR {
         }
 
         telefono = frmPersona.getTxtTelefono().getText().trim().toUpperCase();
-//        if (!Validar.esTelefono(telefono)) {
-//            guardar = false;
-//            frmPersona.getLblErrorTelefono().setVisible(true);
-//        } else {
-//            frmPersona.getLblErrorTelefono().setVisible(false);
-//        }
+        
         callePrin = frmPersona.getTxtCallePrincipal().getText().trim().toUpperCase();
         if (!Validar.esDireccion(callePrin)) {
             frmPersona.getLblErrorCallePrin().setVisible(true);
@@ -862,11 +805,7 @@ public class FrmPersonaCTR extends DCTR {
         correo = frmPersona.getTxtCorreo().getText().trim();
 
         if (guardar) {
-
-            // PersonaBD per = new PersonaBD();
-            //Llenar directo por el constructor
             PersonaBD per = new PersonaBD(ctrPrin.getConecta());
-
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
@@ -887,19 +826,14 @@ public class FrmPersonaCTR extends DCTR {
             per.setEtnia(etnia);
             per.setCorreo(correo);
             if (discapacidad) {
-
                 per.setDiscapacidad(discapacidad);
                 per.setCarnetConadis(carnetConadis);
                 per.setTipoDiscapacidad(tipoDiscapacidad);
                 per.setPorcentajeDiscapacidad(Integer.parseInt(porcentajeDiscapacidad));
-                //   per.setEspecifiqueDiscapacidad(especifiqueDiscapacidad);
-
             }
-
             if (categoriaMigra) {
                 per.setCategoriaMigratoria(comboCategoriaMigra);
             }
-
             per.setLugarNatal(lugarNac);
             per.setLugarResidencia(lugarRes);
             //Codigo postal
