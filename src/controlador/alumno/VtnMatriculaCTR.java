@@ -265,10 +265,10 @@ public class VtnMatriculaCTR extends DVtnCTR {
                     llamaReporteActa();
                     break;
                 case 1:
-                    llamaReporteNumMatricula(2);
+                    llamaReporteNumMatricula(2, "SEGUNDA MATRÍCULA");
                     break;
                 case 2:
-                    llamaReporteNumMatricula(3);
+                    llamaReporteNumMatricula(3,"TERCERA MATRÍCULA");
                     break;
             }
         } else {
@@ -366,7 +366,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
         }
     }
 
-    private void llamaReporteNumMatricula(int numMatricula) {
+    private void llamaReporteNumMatricula(int numMatricula,String matricula) {
         String curso = selecCurso();
         System.out.println("SELECIONE: " + curso);
         if (curso != null) {
@@ -377,6 +377,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
                 parametro.put("curso", curso);
                 parametro.put("numMatricula", numMatricula);
+                parametro.put("matricula", matricula);
                 System.out.println("Parametros: " + parametro);
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
