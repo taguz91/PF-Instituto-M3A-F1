@@ -87,7 +87,8 @@ public class ControladorConfiguracion_plan_clases {
 
    
      public List<SilaboMD> cargar_silabo(){
-         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
+         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),
+             String.valueOf(usuario.getPersona().getIdPersona()),frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString()};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
          return silabosdocente;
@@ -99,6 +100,7 @@ public class ControladorConfiguracion_plan_clases {
      }
  
     private SilaboMD silabo_seleccionado(){
+        silabosDocente=cargar_silabo();
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
                 filter(s -> s.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
                 findFirst();
@@ -197,7 +199,7 @@ private void clickCmbCarreras(){
            LLENAR_COMBO_UNIDADES(unidadesSilabo);
            cursosSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
            LLENAR_COMBO_CURSOS(cursosSilabo);
-           
+           System.out.println(getIdSilabo()+"------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
            } else {
