@@ -300,28 +300,6 @@
 	</pageFooter>
 	<summary>
 		<band height="215" splitType="Stretch">
-			<textField pattern="###0.00">
-				<reportElement x="454" y="0" width="33" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota1_1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="487" y="0" width="34" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota2_1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="522" y="0" width="33" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{malla_almn_nota3_1}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement mode="Opaque" x="400" y="0" width="54" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Promedio:]]></text>
-			</staticText>
 			<subreport>
 				<reportElement x="0" y="115" width="555" height="100"/>
 				<subreportParameter name="idCarrera">
