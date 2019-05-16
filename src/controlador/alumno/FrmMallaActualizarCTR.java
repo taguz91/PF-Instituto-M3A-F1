@@ -61,16 +61,29 @@ public class FrmMallaActualizarCTR extends DVtnCTR {
 
         cargarDatos();
         eventoActualizar(frmMalla.getTxtNota());
+        iniciarAtajosTeclado();
         //Validacion 
         frmMalla.getTxtNota().addKeyListener(new TxtVNota(frmMalla.getTxtNota()));
         //Eventos
         frmMalla.getCmbNumMatricula().addActionListener(e -> clickCmbNumMatricula());
         frmMalla.getCmbEstado().addActionListener(e -> clickEstados());
         frmMalla.getBtnGuardar().addActionListener(e -> guardar());
-
+        
         //Iniciamos el evento 
         ctrPrin.eventoJDCerrar(frmMalla);
         mostrarVtnMalla(frmMalla);
+    }
+    
+    
+    private void iniciarAtajosTeclado(){
+        frmMalla.getTxtNota().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                        guardar();
+                }            
+            } 
+        });
     }
     
     /**
