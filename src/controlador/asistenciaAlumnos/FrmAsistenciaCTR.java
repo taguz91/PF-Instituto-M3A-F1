@@ -90,9 +90,9 @@ public class FrmAsistenciaCTR {
 
     private void InitEventos() {
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
-        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboPeriodos());
+        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboCiclo());
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
-        vista.getCmbCicloAsis().addActionListener(e -> cargarComboCiclo());
+        vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
@@ -123,7 +123,7 @@ public class FrmAsistenciaCTR {
             DocenteMD value = entry.getValue();
 
             vista.getCmbDocenteAsis().addItem(key);
-
+            
         });
         tablaTrad.setRowCount(0);
     }
@@ -137,8 +137,9 @@ public class FrmAsistenciaCTR {
                 .stream()
                 .forEach(obj -> {
                     vista.getCmbPeriodoLectivoAsis().addItem(obj.getNombre_PerLectivo());
-                });
+                ;});
         tablaTrad.setRowCount(0);
+        
     }
 
     private void setLblCarrera() {
