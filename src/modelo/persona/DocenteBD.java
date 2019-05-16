@@ -1,5 +1,6 @@
 package modelo.persona;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,25 +71,60 @@ public class DocenteBD extends DocenteMD {
     }
     
     public boolean reasignarAlumnoCurso(int curso_Old, int curso_New){
-        String nsql = "SELECT reasignarMaterias(" + curso_Old + ", " + curso_New + ");";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
+        boolean exito = false;
+        CallableStatement cStmt;
+        try {
+            conn = pool.getConnection();
+            cStmt = conn.prepareCall("CALL reasignarMaterias(?, ?)");
+            cStmt.setInt(1, curso_Old);
+            cStmt.setInt(2, curso_New);
+            
+            if (conecta.call(cStmt) == null) {
+                exito = true;
+            } else {
+                System.out.println("Error");
+                exito = false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return exito;
     }
     
     public boolean reasignarNotas(int curso_Old, int curso_New){
-        String nsql = "SELECT reasignarNotas(" + curso_Old + ", " + curso_New + ");";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
+        
+        boolean exito = false;
+        CallableStatement cStmt;
+        try {
+            conn = pool.getConnection();
+            cStmt = conn.prepareCall("CALL reasignarNotas(?, ?)");
+            cStmt.setInt(1, curso_Old);
+            cStmt.setInt(2, curso_New);
+            
+            if (conecta.call(cStmt) == null) {
+                exito = true;
+            } else {
+                System.out.println("Error");
+                exito = false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return exito;
     }
 
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {

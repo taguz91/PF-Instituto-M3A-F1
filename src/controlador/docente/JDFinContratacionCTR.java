@@ -49,7 +49,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private int periodo;
     private final JDFinContratacion frmFinContrato;
     private static LocalDate fechaInicio;
-    //private DefaultTableModel mdTbl;  
+    //private DefaultTableModel mdTbl;
     private boolean guardar = false;
     private List<CursoMD> lista;
 
@@ -146,7 +146,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
         System.out.println("Periodo " + periodo);
         DocenteBD d = new DocenteBD(ctrPrin.getConecta());
         PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
-        lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
+        lista = d.capturarMaterias(p.capturarIdPeriodo(periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
     }
 
     public void llenarTabla() {
@@ -190,7 +190,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
             frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
         }
-        
+
         frmFinContrato.getTxtObservacion().addKeyListener(new KeyAdapter() {
 
             public void keyReleased(KeyEvent e) {
@@ -289,7 +289,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             docente.setObservacion(Observacion);
             docente.setFechaFinContratacion(convertirDate(fecha));
             docente.setIdDocente(docenteMD.getIdDocente());
-            periodoMD.setId_PerioLectivo(periodoBD.buscarPeriodo(periodo).getId_PerioLectivo());
+            periodoMD.setId_PerioLectivo(periodoBD.capturarIdPeriodo(periodo).getId_PerioLectivo());
             
             curso.setPeriodo(periodoMD);
             curso.setDocente(docente);

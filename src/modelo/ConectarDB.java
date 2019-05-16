@@ -2,6 +2,7 @@ package modelo;
 
 import controlador.principal.ConexionesCTR;
 import java.awt.Cursor;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -10,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.propiedades.Propiedades;
 import net.sf.jasperreports.engine.JRException;
@@ -277,4 +280,20 @@ public class ConectarDB {
         }
     }
 
+    public SQLException call(CallableStatement callStmt) {
+        try {
+            callStmt.execute();
+            return null;
+        } catch (SQLException e) {
+            return e;
+        } finally {
+            try {
+                callStmt.close();
+                callStmt.getConnection().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConectarDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
 }
