@@ -133,7 +133,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad\n"
                     + "FROM public.\"UnidadSilabo\"\n"
-                    + "WHERE id_silabo=?");
+                    + "WHERE id_silabo=? ORDER BY numero_unidad");
 
             st.setInt(1, clave);
 
