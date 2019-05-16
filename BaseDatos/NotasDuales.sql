@@ -76,4 +76,38 @@ WHERE
 	WHERE
 		t2.id_prd_lectivo = t1.id_prd_lectivo 
 	AND ( "Carreras".carrera_modalidad ILIKE'%DUAL%' OR "Carreras".carrera_modalidad ILIKE'%DUAL FOCALIZADA%' ) 
-	)
+	);
+
+SELECT
+	"public"."Notas".id_nota,
+	"public"."Notas".nota_valor,
+	"public"."Notas".id_tipo_nota,
+	"public"."TipoDeNota".tipo_nota_nombre 
+FROM
+	"public"."Notas"
+	INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota 
+WHERE
+	"public"."Notas".id_almn_curso = 7374 
+	AND tipo_nota_nombre IN ( 'EXAMEN FINAL', 'EXAMEN DE RECUPERACION' );
+
+
+
+
+	SELECT
+	"public"."AlumnoCurso".id_almn_curso,
+	"public"."AlumnoCurso".almn_curso_nota_final,
+	"public"."AlumnoCurso".almn_curso_estado,
+	"public"."AlumnoCurso".almn_curso_asistencia,
+	( 100 * "AlumnoCurso".almn_curso_num_faltas ) / "Materias".materia_horas_presencial AS "porcentaje" 
+FROM
+	"public"."AlumnoCurso"
+	INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+	INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia 
+WHERE
+	"public"."AlumnoCurso".almn_curso_activo IS TRUE 
+	AND "Cursos".id_prd_lectivo IN ( 4, 8 ) 
+	AND "AlumnoCurso".almn_curso_estado = 'REPROBADO' 
+	AND "AlumnoCurso".almn_curso_nota_final >= 70 
+	AND (( 100 * "AlumnoCurso".almn_curso_num_faltas ) / "Materias".materia_horas_presencial ) < 25 
+ORDER BY
+	"AlumnoCurso".id_almn_curso
