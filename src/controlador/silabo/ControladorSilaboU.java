@@ -1594,7 +1594,7 @@ public class ControladorSilaboU {
 
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd, silabo.getIdSilabo());
+                    esd.insertar(evd);
                 }
 
             }
@@ -1633,6 +1633,9 @@ public class ControladorSilaboU {
     public void guardarSilabo() {
 
         new SilaboBD(conexion).insertar(silabo);
+        
+         silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+        
         insertarUnidades();
 
         insertarReferencias();

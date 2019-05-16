@@ -36,12 +36,12 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         this.conexion = conexion;
     }
 
-    public void insertar(EvaluacionSilaboMD e, int is) {
+    public void insertar(EvaluacionSilaboMD e) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"EvaluacionSilabo\"(\n"
                     + "	 id_unidad, id_tipo_actividad, instrumento, valoracion, fecha_envio, fecha_presentacion, indicador)\n"
-                    + "	VALUES ( (SELECT MAX(id_unidad) FROM \"UnidadSilabo\" WHERE id_silabo="+is+"), ?, ?, ?, ?, ?, ?)");
+                    + "	VALUES ( (SELECT MAX(id_unidad) FROM \"UnidadSilabo\"), ?, ?, ?, ?, ?, ?)");
 
             st.setInt(1, e.getIdTipoActividad().getIdTipoActividad());
             st.setString(2, e.getInstrumento());
