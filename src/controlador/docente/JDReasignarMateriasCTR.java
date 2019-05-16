@@ -102,8 +102,9 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
             cursoMD.setDocente(d);
             System.out.println("docente " + d.getIdDocente());
             if(bdCurso.nuevoCurso(cursoMD) == true){
-                if(dc.reasignarAlumnoCurso(docente, d.getIdDocente())){
-                    if(dc.reasignarNotas(docente, d.getIdDocente())){
+                int curso_New = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), periodo, d.getIdDocente(), curso).getId();
+                if(dc.reasignarAlumnoCurso(cursoMD.getId(), curso_New)){
+                    if(dc.reasignarNotas(cursoMD.getId(), curso_New)){
                         JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");
                     } else{
                         JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  
@@ -141,6 +142,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
             modelo_Tabla.addRow(new Object[columnas]);
             frmReasignarMateria.getTblDocentesDisponibles().setValueAt(lista.get(i).getDocente().getNombreCompleto(), i, 0);
         }
+        frmReasignarMateria.getLblResultados().setText(lista.size() + "resultados obtenidos.");
 
     }
 
@@ -160,7 +162,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
                 mdTbl.addRow(valores);
             });
         }
-
+        
     }
 
 }

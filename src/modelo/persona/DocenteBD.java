@@ -415,7 +415,7 @@ public class DocenteBD extends DocenteMD {
                 + "docente_otro_trabajo, docente_categoria, "
                 + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
-                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura\n"
+                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura, docente_en_funcion\n"
                 + "FROM public.\"Docentes\" "
                 + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
         //System.out.println(sql);
@@ -509,6 +509,7 @@ public class DocenteBD extends DocenteMD {
 
             d.setTituloDocente(rs.getString("docente_titulo"));
             d.setAbreviaturaDocente(rs.getString("docente_abreviatura"));
+            d.setDocenteEnFuncion(rs.getBoolean("docente_en_funcion"));
             return d;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener docente");
@@ -609,7 +610,7 @@ public class DocenteBD extends DocenteMD {
     public DocenteMD buscarDocente(String identificacion) {
         String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
                 + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
-                + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura\n"
+                + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura, docente_en_funcion\n"
                 + "FROM public.\"Docentes\" WHERE "
                 + " docente_activo=true and docente_codigo ='" + identificacion + "'";
         //System.out.println(sql);

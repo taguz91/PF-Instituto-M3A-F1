@@ -178,11 +178,19 @@ public class JDFinContratacionCTR extends DVtnCTR {
     public void iniciarFinContrato() {
         frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
         frmFinContrato.getLblErrorObservacion().setVisible(false);
-        frmFinContrato.getBtnGuardar().setEnabled(false);
-        frmFinContrato.getBtnReasignarMateria().setEnabled(false);
-        frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
-        frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
-
+        if(docenteMD.isDocenteEnFuncion() == false){
+            frmFinContrato.getJdcFinContratacion().setEnabled(false);
+            frmFinContrato.getTxtObservacion().setEnabled(false);
+            frmFinContrato.getBtnGuardar().setEnabled(false);
+            frmFinContrato.getBtnReasignarMateria().setEnabled(true);
+            frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
+        } else{
+            frmFinContrato.getBtnGuardar().setEnabled(false);
+            frmFinContrato.getBtnReasignarMateria().setEnabled(false);
+            frmFinContrato.getBtnGuardar().addActionListener(e -> guardarFinContratacion());
+            frmFinContrato.getBtnReasignarMateria().addActionListener(e -> reasignarMateria());
+        }
+        
         frmFinContrato.getTxtObservacion().addKeyListener(new KeyAdapter() {
 
             public void keyReleased(KeyEvent e) {
