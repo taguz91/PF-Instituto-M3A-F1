@@ -81,6 +81,7 @@ public class Controlador_plan_clases {
     }
 
     public void iniciaControlador() {
+        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO"+silabo.getIdSilabo()+" -------------- ID_UNIDAD"+unidadsilabo.getIdUnidad());
         conexion.conectar();
         fPlanClase = new frmPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
