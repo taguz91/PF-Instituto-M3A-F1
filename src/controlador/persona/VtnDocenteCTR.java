@@ -89,6 +89,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
+        vtnDocente.getBtnReasignarM().addActionListener(e-> finContratacion());
         vtnDocente.getCbxDocentesEliminados().addActionListener(e -> cargarDocentes());
         cargarTipoDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -116,7 +117,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         });
 
         ctrPrin.agregarVtn(vtnDocente);
-        vtnDocente.getCmbTipoDocente().addActionListener(e-> cargarTipoDocentes());
+        vtnDocente.getCmbTipoDocente().addActionListener(e-> cargarTipoDocentes());        
     }
 
     private void cargarCmbTipoDocentes() {
@@ -439,7 +440,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
-
+    
     private void habilitarBotones() {
         vtnDocente.getBtnEliminar().setEnabled(true);
         vtnDocente.getBtnEditar().setEnabled(true);

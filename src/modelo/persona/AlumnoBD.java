@@ -1,11 +1,10 @@
 package modelo.persona;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaMD;
@@ -40,7 +39,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
                 + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
                 + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -53,7 +53,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "	 titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado)\n"
                 + "	VALUES ( '" + p.getTitulo_nombre() + "', '" + p.getTitulo_abreviatura() + "', '" + p.getTitulo_institucion() + "', "
                 + " true);";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -65,7 +66,8 @@ public class AlumnoBD extends AlumnoMD {
         String sql = "INSERT INTO public.\"PersonaProfesiones\"(\n"
                 + "	 id_persona, id_titulo, persona_profesion_observacion)\n"
                 + "	VALUES ( " + id + ", " + p.getId_Titulo() + ", '" + p.getTitulo_observacion() + "');";
-        if (conecta.nosql(sql) == null) {
+        PreparedStatement ps = conecta.getPS(sql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -87,7 +89,8 @@ public class AlumnoBD extends AlumnoMD {
                 + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
                 + "', alumno_parentesco_contacto = '" + getParentesco_Contacto() + "', alumno_numero_contacto = '" + getContacto_Emergencia() + "'\n"
                 + " WHERE id_persona = " + aguja + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -107,23 +110,26 @@ public class AlumnoBD extends AlumnoMD {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
                 + " alumno_activo = false, alumno_observacion = '" + a.getObservacion()
                 + "' WHERE id_persona = " + aguja + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
             return false;
         }
     }
-    
-    public ProfesionMD idProfesion(String nombre){
+
+    public ProfesionMD idProfesion(String nombre) {
         String sql = "SELECT id_titulo FROM public.\"Profesiones\" WHERE titulo_nombre LIKE '" + nombre + "';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         ProfesionMD p = new ProfesionMD();
         try {
             while (rs.next()) {
                 p.setId_Titulo(rs.getInt("id_titulo"));
             }
             rs.close();
+            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -131,16 +137,18 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
-    public ProfesionMD existeProfesion(int idPersona){
+
+    public ProfesionMD existeProfesion(int idPersona) {
         String sql = "SELECT id_titulo FROM public.\"PersonaProfesiones\" WHERE id_persona = " + idPersona + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         ProfesionMD p = new ProfesionMD();
         try {
             while (rs.next()) {
                 p.setId_Titulo(rs.getInt("id_titulo"));
             }
             rs.close();
+            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -148,11 +156,12 @@ public class AlumnoBD extends AlumnoMD {
             return null;
         }
     }
-    
-    public ProfesionMD capturarProfesiones(int id_persona){
-        String sql = "SELECT p.titulo_nombre, p.titulo_abrev FROM public.\"Profesiones\" p JOIN public.\"PersonaProfesiones\" a USING(id_titulo)\n" +
-        "WHERE a.id_persona = " + id_persona + ";";
-        ResultSet rs = conecta.sql(sql);
+
+    public ProfesionMD capturarProfesiones(int id_persona) {
+        String sql = "SELECT p.titulo_nombre, p.titulo_abrev FROM public.\"Profesiones\" p JOIN public.\"PersonaProfesiones\" a USING(id_titulo)\n"
+                + "WHERE a.id_persona = " + id_persona + ";";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         ProfesionMD p = new ProfesionMD();
         try {
             while (rs.next()) {
@@ -160,6 +169,7 @@ public class AlumnoBD extends AlumnoMD {
                 p.setTitulo_abreviatura(rs.getString("titulo_abrev"));
             }
             rs.close();
+            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -184,7 +194,8 @@ public class AlumnoBD extends AlumnoMD {
                 + " WHERE a.alumno_activo = 'true' AND p.persona_activa = 'true'"
                 + " ORDER BY p.persona_primer_apellido ASC;";
         //Esto estaba mal WHERE alumno_activo = 'true'
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PersonaMD m = new PersonaMD();
@@ -199,6 +210,7 @@ public class AlumnoBD extends AlumnoMD {
                 lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -222,7 +234,8 @@ public class AlumnoBD extends AlumnoMD {
                 + aguja + "%' OR p.persona_segundo_nombre LIKE '%" + aguja + "%' OR p.persona_primer_apellido LIKE '%"
                 + aguja + "%' OR p.persona_segundo_apellido LIKE '%" + aguja + "%' OR p.persona_correo LIKE '%"
                 + aguja + "%') AND p.persona_activa = true AND a.alumno_activo = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PersonaMD m = new PersonaMD();
@@ -236,9 +249,10 @@ public class AlumnoBD extends AlumnoMD {
                 lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos realizar la consulta.");
             return null;
         }
     }
@@ -254,7 +268,8 @@ public class AlumnoBD extends AlumnoMD {
         //List<PersonaMD> lista = new ArrayList();
         String sql = "SELECT id_persona, persona_identificacion, persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido"
                 + " FROM public.\"Personas\" WHERE persona_identificacion LIKE '%" + aguja + "%' AND persona_activa = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         PersonaMD m = new PersonaMD();
         try {
             while (rs.next()) {
@@ -264,12 +279,12 @@ public class AlumnoBD extends AlumnoMD {
                 m.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                 m.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 m.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                //lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return m;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos realizar la consulta. " + ex.getMessage());
             return null;
         }
     }
@@ -286,8 +301,9 @@ public class AlumnoBD extends AlumnoMD {
                 + "                p.persona_primer_apellido, p.persona_segundo_apellido,\n"
                 + "                p.persona_correo FROM public.\"Personas\" p JOIN public.\"Alumnos\" USING(id_persona)\n"
                 + "				WHERE persona_activa = 'false';";
-        List<PersonaMD> lista = new ArrayList<PersonaMD>();
-        ResultSet rs = conecta.sql(nsql);
+        List<PersonaMD> lista = new ArrayList<>();
+        PreparedStatement ps = conecta.getPS(nsql);
+        ResultSet rs = conecta.sql(ps);
         PersonaMD m = new PersonaMD();
         try {
             while (rs.next()) {
@@ -300,9 +316,10 @@ public class AlumnoBD extends AlumnoMD {
                 lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos llenar alumnos eliminados " + ex);
             return null;
         }
     }
@@ -323,7 +340,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "a.alumno_numero_contacto, a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto\n"
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE a.id_persona = " + aguja + " AND a.alumno_activo = true AND p.persona_activa = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             AlumnoMD a = new AlumnoMD();
             String palabra;
@@ -451,9 +469,10 @@ public class AlumnoBD extends AlumnoMD {
                 }
             }
             rs.close();
+            ps.getConnection().close();
             return a;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos consultar. " + ex.getMessage());
             return null;
         }
     }
@@ -475,7 +494,8 @@ public class AlumnoBD extends AlumnoMD {
                 + "a.alumno_numero_contacto, a.alumno_nombre_contacto_emergencia, a.alumno_parentesco_contacto\n"
                 + "FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)\n"
                 + "WHERE p.persona_identificacion LIKE '" + cedula + "' AND a.alumno_activo = true AND p.persona_activa = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             AlumnoMD a = new AlumnoMD();
 
@@ -568,9 +588,10 @@ public class AlumnoBD extends AlumnoMD {
                 }
             }
             rs.close();
+            ps.getConnection().close();
             return a;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos consultar alumnos: " + ex.getMessage());
             return null;
         }
     }
@@ -587,7 +608,8 @@ public class AlumnoBD extends AlumnoMD {
         String sql = "SELECT id_alumno, id_persona\n"
                 + "	FROM public.\"Alumnos\" WHERE alumno_activo = true AND "
                 + "id_alumno = " + idAlumno + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -596,6 +618,7 @@ public class AlumnoBD extends AlumnoMD {
                     PersonaMD p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
                     al.setPersona(p);
                 }
+                ps.getConnection().close();
                 return al;
             } else {
                 return null;
@@ -619,8 +642,9 @@ public class AlumnoBD extends AlumnoMD {
                 + "JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n"
                 + "WHERE malla_almn_estado LIKE 'A' AND a.alumno_activo = 'true' AND p.persona_activa = 'true' "
                 + "ORDER BY p.persona_primer_apellido ASC;";
+        PreparedStatement ps = conecta.getPS(nsql);
         List<AlumnoMD> lista = new ArrayList();
-        ResultSet rs = conecta.sql(nsql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 AlumnoMD m = new AlumnoMD();
@@ -634,6 +658,7 @@ public class AlumnoBD extends AlumnoMD {
                 m.setId_Alumno(rs.getInt("id_alumno"));
                 lista.add(m);
             }
+            ps.getConnection().close();
             rs.close();
             return lista;
         } catch (SQLException ex) {
@@ -655,7 +680,8 @@ public class AlumnoBD extends AlumnoMD {
         String nsql = "SELECT m.materia_nombre, d.malla_almn_estado FROM ((public.\"Alumnos\" a JOIN public.\"AlumnosCarrera\" c USING(id_alumno)) \n"
                 + "JOIN public.\"MallaAlumno\" d USING(id_almn_carrera)) JOIN public.\"Materias\" m USING(id_materia)\n"
                 + "WHERE a.id_persona = " + ID + " AND malla_almn_estado LIKE 'A';";
-        ResultSet rs = conecta.sql(nsql);
+        PreparedStatement ps = conecta.getPS(nsql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 MallaAlumnoMD m = new MallaAlumnoMD();
@@ -666,6 +692,7 @@ public class AlumnoBD extends AlumnoMD {
                 lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -717,7 +744,8 @@ public class AlumnoBD extends AlumnoMD {
      */
     private ArrayList<AlumnoMD> consultarAlumnos(String sql) {
         ArrayList<AlumnoMD> almns = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -732,6 +760,7 @@ public class AlumnoBD extends AlumnoMD {
 
                     almns.add(al);
                 }
+                ps.getConnection().close();
                 return almns;
             } else {
                 return null;

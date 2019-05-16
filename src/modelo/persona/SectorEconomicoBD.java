@@ -1,11 +1,10 @@
 package modelo.persona;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConectarDB;
 
 /**
@@ -23,7 +22,8 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
     public List<SectorEconomicoMD> capturarSectores() {
         List<SectorEconomicoMD> sectores = new ArrayList();
         String sql = "SELECT id_sec_economico, sec_economico_descripcion FROM public.\"SectorEconomico\" WHERE id_sec_economico > 0;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 SectorEconomicoMD s = new SectorEconomicoMD();
@@ -32,9 +32,10 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
                 sectores.add(s);
             }
             rs.close();
+            ps.getConnection().close();
             return sectores;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos consultar todos los sectores: "+ex.getMessage());
             return null;
         }
     }
@@ -43,15 +44,17 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
         SectorEconomicoMD sector = new SectorEconomicoMD();
         String sql = "SELECT id_sec_economico FROM public.\"SectorEconomico\" WHERE UPPER(sec_economico_descripcion) LIKE '%"
                 + aguja + "%';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 sector.setId_SecEconomico(rs.getInt("id_sec_economico"));
             }
             rs.close();
+            ps.getConnection().close();
             return sector;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Capturamos id de sectores. "+ex.getMessage());
             return null;
         }
     }
@@ -60,15 +63,17 @@ public class SectorEconomicoBD extends SectorEconomicoMD {
         SectorEconomicoMD sector = new SectorEconomicoMD();
         String sql = "SELECT sec_economico_descripcion FROM public.\"SectorEconomico\" WHERE id_sec_economico = "
                 + aguja + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 sector.setDescrip_SecEconomico(rs.getString("sec_economico_descripcion"));
             }
             rs.close();
+            ps.getConnection().close();
             return sector;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Capturamos todos los sectores. "+ex.getMessage());
             return null;
         }
     }
