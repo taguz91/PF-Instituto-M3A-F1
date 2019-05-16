@@ -278,14 +278,14 @@
 				<text><![CDATA[M: Matriculado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="50" height="20"/>
+				<reportElement x="0" y="0" width="60" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Descripción:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="50" y="0" width="289" height="20"/>
+				<reportElement x="60" y="0" width="289" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
