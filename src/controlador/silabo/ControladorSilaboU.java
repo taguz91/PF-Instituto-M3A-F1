@@ -900,7 +900,7 @@ public class ControladorSilaboU {
 
         if (accion3) {
             new Thread(() -> {
-                accion = false;
+                accion3 = false;
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
