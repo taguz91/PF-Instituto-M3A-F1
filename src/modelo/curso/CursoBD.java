@@ -180,7 +180,7 @@ public class CursoBD extends CursoMD {
     
     public CursoMD atraparCurso(int materia, int periodo, int docente, String curso){
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo, curso_activo\n"
                 + "	FROM public.\"Cursos\" WHERE id_materia = " + materia + "  AND id_prd_lectivo = " + periodo + ""
                 + "AND id_docente = " + docente + " AND curso_nombre LIKE '" + curso + "';";
         ResultSet rs = conecta.sql(sql);
@@ -206,6 +206,7 @@ public class CursoBD extends CursoMD {
                     c.setCapacidad(rs.getInt("curso_capacidad"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
                     c.setParalelo(rs.getString("curso_paralelo"));
+                    c.setActivo(rs.getBoolean("curso_activo"));
                 }
                 rs.close();
                 return c;
