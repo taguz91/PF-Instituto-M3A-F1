@@ -192,7 +192,7 @@ public class ConectarDB {
         }
         
     }
-    
+    /*
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         new Thread(() -> {
             try {
@@ -215,10 +215,10 @@ public class ConectarDB {
                 ctrCt.recetear("Terminando de imprimir un reporte.");
             }
         }).start();
-    }
+    }*/
 
     //Mostramos el reporte con el pool
-    public void mostrarReporte2(JasperReport jr, Map parametro, String titulo) {
+    public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         new Thread(() -> {
             Connection c = pool.getConnection();
             try {
