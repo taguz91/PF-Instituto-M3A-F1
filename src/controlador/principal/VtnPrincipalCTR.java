@@ -1016,7 +1016,7 @@ public class VtnPrincipalCTR {
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
             if (c.equals("e")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
+                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, this);
                 ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",

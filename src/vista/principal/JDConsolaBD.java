@@ -1,7 +1,10 @@
 package vista.principal;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 /**
@@ -36,6 +39,22 @@ public class JDConsolaBD extends javax.swing.JDialog {
         return txtArea;
     }
 
+    public JButton getBtnIngresarVersion() {
+        return btnIngresarVersion;
+    }
+
+    public JTable getTblVersiones() {
+        return tblVersiones;
+    }
+
+    public JPanel getPnlVersion() {
+        return pnlVersion;
+    }
+
+    public JCheckBox getCbxEliminados() {
+        return cbxEliminados;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,10 +69,15 @@ public class JDConsolaBD extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
+        cbxEliminados = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         lblError = new javax.swing.JLabel();
         btnEjecutar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        pnlVersion = new javax.swing.JPanel();
+        btnIngresarVersion = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblVersiones = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consola");
@@ -86,18 +110,28 @@ public class JDConsolaBD extends javax.swing.JDialog {
         txtArea.setMargin(new java.awt.Insets(4, 4, 4, 4));
         jScrollPane1.setViewportView(txtArea);
 
+        cbxEliminados.setText("Ver versiones inactivas");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cbxEliminados)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxEliminados)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(235, 192, 36));
@@ -110,7 +144,7 @@ public class JDConsolaBD extends javax.swing.JDialog {
         btnEjecutar.setBackground(new java.awt.Color(47, 76, 113));
         btnEjecutar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnEjecutar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEjecutar.setText("Ejecutar");
+        btnEjecutar.setText("Enviar");
         btnEjecutar.setBorder(null);
         btnEjecutar.setBorderPainted(false);
         btnEjecutar.setContentAreaFilled(false);
@@ -144,6 +178,44 @@ public class JDConsolaBD extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        btnIngresarVersion.setText("Ingresar");
+
+        tblVersiones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblVersiones);
+
+        javax.swing.GroupLayout pnlVersionLayout = new javax.swing.GroupLayout(pnlVersion);
+        pnlVersion.setLayout(pnlVersionLayout);
+        pnlVersionLayout.setHorizontalGroup(
+            pnlVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVersionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIngresarVersion)
+                .addContainerGap())
+        );
+        pnlVersionLayout.setVerticalGroup(
+            pnlVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVersionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlVersionLayout.createSequentialGroup()
+                        .addComponent(btnIngresarVersion)
+                        .addGap(0, 144, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,15 +223,18 @@ public class JDConsolaBD extends javax.swing.JDialog {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlVersion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlVersion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -167,13 +242,18 @@ public class JDConsolaBD extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEjecutar;
+    private javax.swing.JButton btnIngresarVersion;
+    private javax.swing.JCheckBox cbxEliminados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnlVersion;
+    private javax.swing.JTable tblVersiones;
     private javax.swing.JTextArea txtArea;
     // End of variables declaration//GEN-END:variables
 }

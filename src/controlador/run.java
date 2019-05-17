@@ -2,6 +2,9 @@ package controlador;
 
 import controlador.login.LoginCTR;
 import java.awt.EventQueue;
+import java.io.File;
+import javax.swing.JOptionPane;
+import modelo.Constantes;
 import vista.Login;
 
 /**
@@ -14,15 +17,21 @@ public class run {
         if (!iniciaEstilo("Windows")) {
             iniciaEstilo("Nimbus");
         }
+        File pv = new File(Constantes.V_DIR);
+        if (pv.exists()) {
+            
+            Constantes.ejecutarJAR("Version");
+        } else {
+            System.out.println("No tenemos el progragama para ver las versiones.");
+//          SplashCTR ctrSplash = new SplashCTR();
+//          ctrSplash.iniciar();
+            EventQueue.invokeLater(() -> {
 
-//        SplashCTR ctrSplash = new SplashCTR();
-//        ctrSplash.iniciar();
-        EventQueue.invokeLater(() -> {
+                LoginCTR login = new LoginCTR(new Login());
+                login.Init();
 
-            LoginCTR login = new LoginCTR(new Login());
-            login.Init();
-
-        });
+            });
+        }
 
     }
 
