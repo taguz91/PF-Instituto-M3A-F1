@@ -4,9 +4,11 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import controlador.notas.ReportesCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -95,6 +97,7 @@ public class FrmAsistenciaCTR {
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -303,7 +306,29 @@ public class FrmAsistenciaCTR {
     //Eventos
     
     private void btnImprimir(ActionEvent e){
-        
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vista,
+                    "Reporte de Asistencia de Alumnos\n"
+                    + "¿Elegir el tipo de Reporte?", "REPORTE ASISTENCIA",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Asistencia Alumnos"}, "Cancelar");
+
+            Effects.setLoadCursor(vista);
+
+            //ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
+             try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            desktop.getLblEstado().setText("");
+            Effects.setDefaultCursor(vista);
+            vista.getBtnVerAsistencia().setEnabled(true);
+        }).start();
+
     }
     
     
