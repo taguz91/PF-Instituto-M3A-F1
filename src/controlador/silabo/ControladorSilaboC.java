@@ -1800,7 +1800,7 @@ public class ControladorSilaboC {
         for (UnidadSilaboMD umd : unidadesSilabo) {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd,silaboNuevo.getIdSilabo());
+            ubd.insertar(umd,silaboNuevo.getIdMateria().getId());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
