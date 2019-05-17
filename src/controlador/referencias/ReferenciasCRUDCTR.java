@@ -77,7 +77,7 @@ public class ReferenciasCRUDCTR {
             modeloTabla.addRow(new Object[]{
                 rmd.getCodigo_referencia(),
                 rmd.getDescripcion_referencia()
-            });
+            });   
 
         }
           

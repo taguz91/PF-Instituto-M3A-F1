@@ -25,7 +25,9 @@ public class ReferenciasCTR {
         this.vtnPrin.getDpnlPrincipal().add(frmBibliografia);
         frmBibliografia.show();
         frmBibliografia.getCbxExistenciaBiblioteca().setSelected(true);
-
+        frmBibliografia.getTxtCodigoKoha().setEnabled(false);
+        frmBibliografia.getTxtCodigoKoha().setText("S/N");
+        
     }
 
     public void iniciarControlador() {
@@ -84,9 +86,12 @@ public class ReferenciasCTR {
                 frmBibliografia.getTxtCodigoISBM().setText("");
                 frmBibliografia.getTxtNumeroPaginas().setText("");
                 frmBibliografia.getCbxAutorCorporativo().setSelected(false);
-                frmBibliografia.getTxtCodigoKoha().setText("");
+                frmBibliografia.getTxtCodigoKoha().setText("S/N");
                 frmBibliografia.getTxtCodigoDewey().setText("");
                 frmBibliografia.getTxtArea().setText("");
+                frmBibliografia.getTxtAutor().setEnabled(true);
+                frmBibliografia.getTxtCodigoKoha().setEnabled(false);
+                        
 
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR  Datos no guardados");
