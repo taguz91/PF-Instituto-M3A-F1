@@ -845,7 +845,7 @@ public class ControladorSilaboU {
 
                 guardarSilabo();
                 silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
-                
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -956,8 +956,6 @@ public class ControladorSilaboU {
 
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
-
-    
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1420,8 +1418,6 @@ public class ControladorSilaboU {
 
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
-       
-
         boolean nuevo = true;
         boolean nuevo2 = true;
 
@@ -1442,8 +1438,6 @@ public class ControladorSilaboU {
             referenciasSilabo.add(rsm);
 
         }
-
-        
 
         referenciasSilabo.forEach((rsm) -> {
             if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
@@ -1579,22 +1573,28 @@ public class ControladorSilaboU {
 
             umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd,silabo.getIdMateria().getId());
+            ubd.insertar(umd, silabo.getIdMateria().getId());
+
+            Integer aux = umd.getIdSilabo().getIdSilabo();
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
-                if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
-                    EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
-                    ebd.insertar(emd);
+                if (aux.equals(silabo.getIdSilabo())) {
+                    if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                        EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
+                        ebd.insertar(emd);
+                    }
                 }
 
             }
 
             for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
 
-                if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
-                    EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd);
+                if (aux.equals(silabo.getIdSilabo())) {
+                    if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                        EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
+                        esd.insertar(evd);
+                    }
                 }
 
             }
@@ -1633,9 +1633,8 @@ public class ControladorSilaboU {
     public void guardarSilabo() {
 
         new SilaboBD(conexion).insertar(silabo);
-        
-         //silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
-        
+
+        //silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
         insertarUnidades();
 
         insertarReferencias();

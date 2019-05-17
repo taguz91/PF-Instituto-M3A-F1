@@ -1052,7 +1052,6 @@ public class ControladorSilaboC {
 
                 if (silaboNuevo.getIdSilabo() == null) {
                     guardarSilabo();
-                    
 
                     silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
 
@@ -1800,22 +1799,28 @@ public class ControladorSilaboC {
         for (UnidadSilaboMD umd : unidadesSilabo) {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd,silaboNuevo.getIdMateria().getId());
+            ubd.insertar(umd, silaboNuevo.getIdMateria().getId());
+
+            Integer aux = umd.getIdSilabo().getIdSilabo();
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
-                if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
-                    EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
-                    ebd.insertar(emd);
+                if (aux.equals(silaboNuevo.getIdSilabo())) {
+                    if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                        EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
+                        ebd.insertar(emd);
+                    }
                 }
 
             }
 
             for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
 
-                if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
-                    EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd);
+                if (aux.equals(silaboNuevo.getIdSilabo())) {
+                    if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                        EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
+                        esd.insertar(evd);
+                    }
                 }
 
             }
@@ -1853,7 +1858,7 @@ public class ControladorSilaboC {
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
-        
+
         //silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
         insertarUnidades();
         insertarReferencias();
@@ -1882,7 +1887,6 @@ public class ControladorSilaboC {
 //        stmt.setBinaryStream(1, fis, (int) archivo.length());
 //        //Asignamos el Stream al Statement
 //        stmt.execute();
-
 //    File file = new File("myimage.gif");
 //FileInputStream fis = new FileInputStream(file);
 //PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
