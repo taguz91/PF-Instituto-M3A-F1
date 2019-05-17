@@ -1,6 +1,7 @@
 package modelo.periodolectivo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -42,7 +43,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
                 + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -56,7 +58,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_fecha_inicio = '" + p.getFecha_Inicio() + "', prd_lectivo_fecha_fin = '" + p.getFecha_Fin()
                 + "', prd_lectivo_observacion = '" + p.getObservacion_PerLectivo()
                 + "' WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -68,8 +71,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
-
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -81,7 +84,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -90,10 +94,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     }
 
     public boolean abrirPeriodo(int id) {
-        String sql = "UPDATE public.\"PeriodoLectivo\" SET\n"
+        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
-        if (conecta.nosql(sql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
@@ -106,7 +111,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT DISTINCT p.prd_lectivo_nombre, p.id_prd_lectivo FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
                 + "public.\"Docentes\" d USING(id_docente)\n"
                 + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -115,9 +121,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 lista.add(p);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos consultar el periodo: " + ex.getMessage());
             return null;
         }
     }
@@ -126,7 +133,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         List<CarreraMD> lista = new ArrayList();
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
                 + "WHERE carrera_activo = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -137,9 +145,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                     lista.add(a);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return lista;
             } catch (SQLException ex) {
-                Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("No pude capturar una carrera: " + ex.getMessage());
                 return null;
             }
         } else {
@@ -151,16 +160,18 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public CarreraMD capturarIdCarrera(String aguja) {
         String sql = "SELECT id_carrera"
                 + " FROM public.\"Carreras\" WHERE carrera_nombre LIKE '%" + aguja + "%';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             CarreraMD c = new CarreraMD();
             while (rs.next()) {
                 c.setId(rs.getInt("id_carrera"));
             }
             rs.close();
+            ps.getConnection().close();
             return c;
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pude capturar id del periodo: " + ex.getMessage());
             return null;
         }
     }
@@ -168,16 +179,18 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public CarreraMD capturarNomCarrera(int aguja) {
         String sql = "SELECT carrera_nombre"
                 + " FROM public.\"Carreras\" WHERE id_carrera = " + aguja + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             CarreraMD c = new CarreraMD();
             while (rs.next()) {
                 c.setNombre(rs.getString("carrera_nombre"));
             }
             rs.close();
+            ps.getConnection().close();
             return c;
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Capturamos el nombre de la carrera: " + ex.getMessage());
             return null;
         }
     }
@@ -186,7 +199,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         List<PeriodoLectivoMD> lista = new ArrayList();
         String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin"
                 + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PeriodoLectivoMD m = new PeriodoLectivoMD();
@@ -200,9 +214,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 lista.add(m);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos consultar para llenar tabla: " + ex.getMessage());
             return null;
         }
     }
@@ -218,8 +233,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-        //System.out.println(sql);
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
@@ -239,10 +254,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
                 lista.add(p);
             }
+            ps.getConnection().close();
             rs.close();
             return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos capturar periodos: " + ex.getMessage());
             return null;
         }
     }
@@ -253,7 +269,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c USING(id_carrera)"
                 + " WHERE p.id_prd_lectivo = "
                 + ID + " AND prd_lectivo_activo = true;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             PeriodoLectivoMD m = new PeriodoLectivoMD();
             carrera = new CarreraMD();
@@ -269,9 +286,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 m.setCarrera(carrera);
             }
             rs.close();
+            ps.getConnection().close();
             return m;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No pudimos capturar solo un periodo lectivo: " + ex.getMessage());
             return null;
         }
     }
@@ -285,7 +303,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_activo = true "
                 + "AND carrera_activo = true\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
@@ -304,6 +323,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 lista.add(p);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos");
@@ -318,7 +338,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
                 + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "id_prd_lectivo = " + idPeriodo + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
 
@@ -333,6 +354,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
             }
             rs.close();
+            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos");
@@ -378,7 +400,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
      */
     private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
@@ -391,6 +414,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 prds.add(p);
             }
             rs.close();
+            ps.getConnection().close();
             return prds;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos para combo");
@@ -398,8 +422,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
-    public PeriodoLectivoMD capturarIdPeriodo(String nombrePer){
+
+    public PeriodoLectivoMD capturarIdPeriodo(String nombrePer) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
@@ -423,6 +447,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
                 + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
+        PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
@@ -438,6 +463,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
             }
             rs.close();
+            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos");
@@ -495,13 +521,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT COUNT(*) AS numeroAlumnos FROM (public.\"Carreras\" c JOIN public.\"AlumnosCarrera\" a\n"
                 + "					  USING(id_carrera)) JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n"
                 + "							WHERE c.id_carrera = " + ID + " AND m.malla_almn_estado LIKE 'M';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         String count = "";
         try {
             while (rs.next()) {
                 count = String.valueOf(rs.getInt("numeroAlumnos"));
             }
             rs.close();
+            ps.getConnection().close();
             return count;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos para combo");
@@ -516,12 +544,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "FROM public.\"PeriodoLectivo\"\n"
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
         ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {
                     fi = rs.getDate("prd_lectivo_fecha_inicio").toLocalDate();
                 }
+                ps.getConnection().close();
             } catch (SQLException e) {
+                System.out.println("No pudimos consultar fecha inicio del periodo: " + e.getMessage());
             }
         }
         return fi;
