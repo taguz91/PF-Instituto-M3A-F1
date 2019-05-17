@@ -708,4 +708,46 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return map;
     }
     
+    
+    public static List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
+        String SELECT = "SELECT DISTINCT\n"
+                + " \"public\".\"Docentes\".id_docente,\n"
+                + " \"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + " (prd_lectivo_fecha_fin - prd_lectivo_fecha_inicio)/7 AS semanas\n"
+                + " FROM\n"
+                + " \"public\".\"Carreras\"\n"
+                + " INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + " INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + " INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_docente = \"public\".\"Cursos\".id_docente\n"
+                + " INNER JOIN \"public\".\"Materias\" ON \"public\".\"Materias\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + " INNER JOIN \"public\".\"SesionClase\" ON \"public\".\"SesionClase\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + " WHERE\n"
+                + " \"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + " \"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPrd + "";
+        List<PeriodoLectivoMD> semana = new ArrayList<>();
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
+        
+        System.out.println("Query: \n"+SELECT);
+
+        try {
+            while (rst.next()) {
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                
+                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                System.out.println("Semanas "+rst.getInt(3) );
+                periodo.setNumSemanas(rst.getInt(3));
+                semana.add(periodo);
+            }
+        } catch (SQLException | NullPointerException e) {
+            if (e instanceof SQLException) {
+                System.out.println(e.getMessage());
+            }
+        } finally {
+            pool.close(conn);
+        }
+        return semana;
+
+    }
+    
 }
