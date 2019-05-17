@@ -108,7 +108,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<PeriodoLectivoMD> periodoDocente(int aguja) {
         System.out.println("docente " + aguja);
-        String sql = "SELECT DISTINCT p.prd_lectivo_nombre FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
+        String sql = "SELECT DISTINCT p.prd_lectivo_nombre, p.id_prd_lectivo FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
                 + "public.\"Docentes\" d USING(id_docente)\n"
                 + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
         PreparedStatement ps = conecta.getPS(sql);
@@ -416,6 +416,24 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             rs.close();
             ps.getConnection().close();
             return prds;
+        } catch (SQLException ex) {
+            System.out.println("No pudimos consultar periodos para combo");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public PeriodoLectivoMD capturarIdPeriodo(String nombrePer){
+        PeriodoLectivoMD p = new PeriodoLectivoMD();
+        String sql = "SELECT id_prd_lectivo FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
+                + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
+        ResultSet rs = conecta.sql(sql);
+        try {
+            while (rs.next()) {
+                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+            }
+            rs.close();
+            return p;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos para combo");
             System.out.println(ex.getMessage());

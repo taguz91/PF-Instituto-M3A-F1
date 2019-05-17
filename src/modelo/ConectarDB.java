@@ -282,7 +282,6 @@ public class ConectarDB {
 
     public SQLException call(CallableStatement callStmt) {
         try {
-
             callStmt.execute();
             return null;
         } catch (SQLException e) {
@@ -294,8 +293,7 @@ public class ConectarDB {
             } catch (SQLException ex) {
                 Logger.getLogger(ConectarDB.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
     }
-
+    
 }
