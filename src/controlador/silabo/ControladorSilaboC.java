@@ -1800,7 +1800,7 @@ public class ControladorSilaboC {
         for (UnidadSilaboMD umd : unidadesSilabo) {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd,silaboNuevo.getIdMateria().getId());
+            ubd.insertar(umd,silaboNuevo.getIdSilabo());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
@@ -1815,7 +1815,7 @@ public class ControladorSilaboC {
 
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd,umd.getIdSilabo().getIdSilabo(),silaboNuevo.getIdMateria().getId());
+                    esd.insertar(evd);
                 }
 
             }
