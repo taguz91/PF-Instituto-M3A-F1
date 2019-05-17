@@ -1,5 +1,6 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,11 +26,10 @@ public class MatriculaBD extends MatriculaMD {
     public void ingresar() {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
                 + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '"+getTipo()+"');";
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '" + getTipo() + "');";
 
-        System.out.println("SE matricula: ");
-        System.out.println(nsql);
-        if (conecta.nosql(nsql) != null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) != null) {
             JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
                     + "compruebe su conexion a internet.");
         }
@@ -72,7 +72,8 @@ public class MatriculaBD extends MatriculaMD {
         sql = "SELECT id_matricula, id_alumno, id_prd_lectivo, matricula_fecha \n"
                 + "FROM public.\"Matricula\" \n "
                 + "WHERE id_prd_lectivo = " + idPrd + " AND id_alumno = " + idAlm + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -80,6 +81,7 @@ public class MatriculaBD extends MatriculaMD {
                     m.setId(rs.getInt("id_matricula"));
                     m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
                 }
+                ps.getConnection().close();
                 return m;
             } catch (SQLException e) {
                 System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
@@ -115,7 +117,8 @@ public class MatriculaBD extends MatriculaMD {
 
     private ArrayList<MatriculaMD> consultarParaTbl(String sql) {
         ArrayList<MatriculaMD> matriculas = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -138,6 +141,7 @@ public class MatriculaBD extends MatriculaMD {
 
                     matriculas.add(m);
                 }
+                ps.getConnection().close();
                 return matriculas;
             } catch (SQLException e) {
                 System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
@@ -161,12 +165,14 @@ public class MatriculaBD extends MatriculaMD {
                 + "  SELECT id_curso\n"
                 + "  FROM public.\"Cursos\"\n"
                 + "  WHERE id_prd_lectivo = " + idPrd + ");";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
                     num = rs.getInt(1);
                 }
+                ps.getConnection().close();
                 return num;
             } catch (SQLException e) {
                 System.out.println("No podemos obetener el numero de matriculados en un periodo \n"
@@ -182,12 +188,14 @@ public class MatriculaBD extends MatriculaMD {
         int num = 0;
         sql = "SELECT count(*) FROM public.\"Matricula\"\n"
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
                     num = rs.getInt(1);
                 }
+                ps.getConnection().close();
                 return num;
             } catch (SQLException e) {
                 System.out.println("No podemos obetener el numero de matriculados en un periodo \n"
@@ -197,6 +205,31 @@ public class MatriculaBD extends MatriculaMD {
         } else {
             return 0;
         }
+    }
+
+    public ArrayList<String> cursosMatriculado(int idAlumno, int idPeriodo) {
+        ArrayList<String> nombres = null;
+        sql = "SELECT DISTINCT curso_nombre\n"
+                + "FROM public.\"Cursos\"\n"
+                + "WHERE id_curso IN (SELECT id_curso\n"
+                + "	FROM public.\"AlumnoCurso\"\n"
+                + "	WHERE id_alumno = " + idAlumno + "\n"
+                + "	AND id_prd_lectivo = " + idPeriodo + ")";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                nombres = new ArrayList<>();
+                while (rs.next()) {
+                    String n = rs.getString(1);
+                    nombres.add(n);
+                }
+                ps.getConnection().close();
+            } catch (SQLException e) {
+                System.out.println("No se pudo realizar la consulta: " + e.getMessage());
+            }
+        }
+        return nombres;
     }
 
 }

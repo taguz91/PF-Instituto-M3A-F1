@@ -22,8 +22,6 @@ import modelo.PlanClases.RecursosBD;
 import modelo.PlanClases.RecursosMD;
 import modelo.PlanClases.RecursosPlanClasesBD;
 import modelo.PlanClases.RecursosPlanClasesMD;
-import modelo.PlanClases.TrabajoAutonomoBD;
-import modelo.PlanClases.TrabajoAutonomoMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -52,10 +50,8 @@ public class ControladorEditarPlanClases {
     private SilaboMD silabo;
     private UnidadSilaboMD unidadsilabo;
     private PlandeClasesMD plan_claseMD;
-    private TrabajoAutonomoMD trabajo_autonoMD;
     private List<CursoMDS> lista_curso;
     private List<PlandeClasesMD> lista_plan;
-    private List<TrabajoAutonomoMD> lista_tra_aut;
     private List<RecursosPlanClasesMD> lista_recursoMD;
      private List<RecursosPlanClasesMD> lista_recursoMD1;
     private List<RecursosPlanClasesMD> lista_recursoBD;
@@ -173,8 +169,7 @@ public class ControladorEditarPlanClases {
        lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());
         cargarCampoObservacion(lista_plan);
         
-        lista_tra_aut=TrabajoAutonomoBD.consultarTrabajoAutonomo(conexion, planclase.getId_plan_clases());
-        cargarCampoAutonomo(lista_tra_aut);
+        
         
        lista_recursoBD=RecursosPlanClasesBD.consultarRecursosPlanClase(conexion, planclase.getId_plan_clases());
        
@@ -268,14 +263,11 @@ public class ControladorEditarPlanClases {
        
    }
      
-     private void cargarCampoAutonomo(List<TrabajoAutonomoMD> lista_tra_aut){
-         for (TrabajoAutonomoMD trabajoAutonomoMD : lista_tra_aut) {
-             fPlanClase.getTxrTrabajoAutonomo().setText(trabajoAutonomoMD.getAutonomo_plan_descripcion());
-         }
-     }
+    
      private void cargarCampoObservacion(List<PlandeClasesMD> lista_pla){
          for (PlandeClasesMD plandeClasesMD : lista_pla) {
              fPlanClase.getTxrObservacionesPc().setText(plandeClasesMD.getObservaciones());
+             fPlanClase.getTxrTrabajoAutonomo().setText(plandeClasesMD.getTrabajo_autonomo());
          }
      }
      
@@ -315,22 +307,13 @@ public class ControladorEditarPlanClases {
         plan_claseMD.getId_curso().setId(curso.getId());
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
+        plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
         new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
-        actualizarAutonomo();
         actualizarRecusosPlanClases();
         actulizarEstrategiasMetodologicas();
         return true;
      }
-     private void actualizarAutonomo(){
-           lista_evualacion_unidad=EvaluacionSilaboBD.recuperar_id_Unidad_plan_de_clase(conexion, unidadsilabo.getIdUnidad());
-        for (EvaluacionSilaboMD evaluacionSilaboMD : lista_evualacion_unidad) {
-            trabajo_autonoMD=new TrabajoAutonomoMD();
-            trabajo_autonoMD.getId_evaluacion().setIdEvaluacion(evaluacionSilaboMD.getIdEvaluacion());
-            trabajo_autonoMD.setAutonomo_plan_descripcion(fPlanClase.getTxrTrabajoAutonomo().getText());
-            
-            new TrabajoAutonomoBD(conexion).insertarTrabajoAutonomo1(trabajo_autonoMD);
-        }
-     }
+     
      
      private void actualizarRecusosPlanClases(){
           for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {

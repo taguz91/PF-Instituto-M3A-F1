@@ -55,7 +55,7 @@ public class VtnPrdLectivoCTR extends DCTR {
             }
         });
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
-        vtnPrdLectivo.getBtn_EliminarPL().addActionListener(e -> eliminarPeriodo());
+//        vtnPrdLectivo.getBtn_EliminarPL().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
         vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());

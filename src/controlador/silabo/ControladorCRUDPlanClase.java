@@ -127,6 +127,7 @@ public class ControladorCRUDPlanClase {
         cargarPlanesDeClaseProfesor();
         CARGAR_COMBO_PERIODOS_CARRERA();
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
+        fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
     }
 
     private void cargarPlanesDeClaseProfesor() {
@@ -200,9 +201,7 @@ public class ControladorCRUDPlanClase {
     private CursoMD curso_selecc() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
         lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString());
-        System.out.println(lista_curso.get(0).getNombre() + "---------------------------ooooooooooooooooooooooooo");
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
-        System.out.println(curso_selecccionado.get().getNombre() + "----------------------------nnnnnnnnnnnnnnnnnnnnnnn");
         return curso_selecccionado.get();
     }
 
@@ -267,7 +266,8 @@ public class ControladorCRUDPlanClase {
   }
    
    public List<SilaboMD> cargar_silabo(){
-         String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())};
+         String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())
+           ,fCrud_plan_Clases.getCmb_periodos().getSelectedItem().toString()};
          List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
          
 //         System.out.println(silabosdocente.get(0).getIdSilabo()+" CARGAR_SILABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO_IDDDDDD");

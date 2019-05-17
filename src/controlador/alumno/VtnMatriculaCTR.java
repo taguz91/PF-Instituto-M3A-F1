@@ -79,7 +79,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
         LocalDate fa = LocalDate.now();
         return fa.isBefore(fi.plusMonths(1));
     }
-    
+
     /**
      * Click anular para mostrarnos el formulario de anulacion de matricula.
      */
@@ -96,12 +96,10 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
-    
+
     /**
-     * Para mostrar el formulario de editar matricula, 
-     * aqui podemos cambiar de cursos  
-     * Paralelo 
-     * Ciclo
+     * Para mostrar el formulario de editar matricula, aqui podemos cambiar de
+     * cursos Paralelo Ciclo
      */
     private void clickEditar() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
@@ -113,9 +111,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una fila primero.");
         }
     }
-    
+
     /**
-     * Iniciamos el buscador de la ventana 
+     * Iniciamos el buscador de la ventana
      */
     private void iniciarBuscador() {
         vtnMatri.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -130,10 +128,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             }
         });
     }
-    
+
     /**
      * Funcion usada para buscar
-     * @param aguja 
+     *
+     * @param aguja
      */
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
@@ -143,7 +142,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
     }
 
     /**
-     * Iniciamos todas las acciones de esta ventana 
+     * Iniciamos todas las acciones de esta ventana
      */
     private void iniciarAcciones() {
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
@@ -152,8 +151,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
         vtnMatri.getBtnIngresar().addActionListener(e -> abrirFrm());
         vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
         vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
+        vtnMatri.getBtnCartaCompromiso().addActionListener(e -> clickCartaCompromiso());
     }
-    
+
     /**
      * Cargamos todas las matriculas que existan
      */
@@ -161,11 +161,10 @@ public class VtnMatriculaCTR extends DVtnCTR {
         matriculas = matr.cargarMatriculas();
         llenarTbl(matriculas);
     }
-    
+
     /**
-     * Al seleccionar un periodo se cargan las matriculas 
-     * por ese periodo  
-     * Si no seleeciona ningun periodo se cargan todas las matriculas
+     * Al seleccionar un periodo se cargan las matriculas por ese periodo Si no
+     * seleeciona ningun periodo se cargan todas las matriculas
      */
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
@@ -176,7 +175,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             cargarMatriculas();
         }
     }
-    
+
     /**
      * Llenamos el combo del periodo lectivo
      */
@@ -190,10 +189,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
             });
         }
     }
-    
+
     /**
      * Llenamos la tabla de matriculas
-     * @param matriculas 
+     *
+     * @param matriculas
      */
     private void llenarTbl(ArrayList<MatriculaMD> matriculas) {
         mdTbl.setRowCount(0);
@@ -210,17 +210,17 @@ public class VtnMatriculaCTR extends DVtnCTR {
             vtnMatri.getLblNumResultados().setText("0 Resultados obtenidos.");
         }
     }
-    
+
     /**
      * Abrimos e formulario de matricula
      */
     private void abrirFrm() {
         ctrPrin.abrirFrmMatricula();
     }
-    
+
     /**
-     * Para imprimir la ficha de matricula, preguntamos 
-     * Si quierela ficha con foto o sin foto 
+     * Para imprimir la ficha de matricula, preguntamos Si quierela ficha con
+     * foto o sin foto
      */
     private void clickImprimirFicha() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
@@ -245,10 +245,56 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una persona antes.");
         }
     }
-    
+
     /**
-     * Llamamos el reporte de la matricula, completo
-     * este nos imprime con foto
+     * Elegimos el tipo de carta compromiso que queremos
+     */
+    private void clickCartaCompromiso() {
+        posFila = vtnMatri.getTblMatricula().getSelectedRow();
+        if (posFila >= 0) {
+            int s = JOptionPane.showOptionDialog(vtnMatri,
+                    "Reporte de matricula\n"
+                    + "¿Elegir el tipo de carta compromiso?", "Cartas compromiso",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Acta", "Segunda Matricula", "Tercera Matricula",
+                        "Cancelar"}, "Acta");
+            switch (s) {
+                case 0:
+                    llamaReporteActa();
+                    break;
+                case 1:
+                    llamaReporteNumMatricula(2, "SEGUNDA MATRÍCULA");
+                    break;
+                case 2:
+                    llamaReporteNumMatricula(3,"TERCERA MATRÍCULA");
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una persona antes.");
+        }
+    }
+
+    private String selecCurso() {
+        ArrayList<String> cursos = matr.cursosMatriculado(matriculas.get(posFila).getAlumno().getId_Alumno(),
+                matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
+        Object np = JOptionPane.showInputDialog(null,
+                "Cursos en los que se matriculo: ", "Matricula",
+                JOptionPane.QUESTION_MESSAGE, null,
+                cursos.toArray(), "Seleccione");
+        //Se es null significa que no selecciono nada
+        if (np == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un curso");
+            selecCurso();
+            return null;
+        } else {
+            return np.toString();
+        }
+    }
+
+    /**
+     * Llamamos el reporte de la matricula, completo este nos imprime con foto
      */
     private void llamaReporteMatricula() {
         try {
@@ -262,10 +308,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     /**
-     * Llamamos el reporte de la matricula, 
-     * sin foto.
+     * Llamamos el reporte de la matricula, sin foto.
      */
     private void llamaReporteMatriculaSinFoto() {
         try {
@@ -279,10 +324,10 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     /**
-     * Llamamos al reporte de matriculas por periodo, todo el historial 
-     * de las matriculas en este periodo separado por ciclo
+     * Llamamos al reporte de matriculas por periodo, todo el historial de las
+     * matriculas en este periodo separado por ciclo
      */
     private void llamaReporteMatriculaPeriodo() {
         int posCombo = vtnMatri.getCmbPeriodos().getSelectedIndex();
@@ -297,6 +342,49 @@ public class VtnMatriculaCTR extends DVtnCTR {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un periodo lectivo, del combo.");
+        }
+    }
+
+    /**
+     * Llamamos el reporte de carta compromiso
+     */
+    private void llamaReporteActa() {
+        String curso = selecCurso();
+        if (curso != null) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/cartaCompromiso.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("idAlumno", matriculas.get(posFila).getAlumno().getId_Alumno());
+                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
+                parametro.put("curso", curso);
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No selecciono un curso.");
+        }
+    }
+
+    private void llamaReporteNumMatricula(int numMatricula,String matricula) {
+        String curso = selecCurso();
+        System.out.println("SELECIONE: " + curso);
+        if (curso != null) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/cartaNumMatricula.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("idAlumno", matriculas.get(posFila).getAlumno().getId_Alumno());
+                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId_PerioLectivo());
+                parametro.put("curso", curso);
+                parametro.put("numMatricula", numMatricula);
+                parametro.put("matricula", matricula);
+                System.out.println("Parametros: " + parametro);
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No selecciono un curso.");
         }
     }
 
