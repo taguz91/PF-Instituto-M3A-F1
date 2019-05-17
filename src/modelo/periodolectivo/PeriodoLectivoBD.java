@@ -401,7 +401,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
@@ -422,8 +422,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return null;
         }
     }
-    
-    public PeriodoLectivoMD capturarIdPeriodo(String nombrePer){
+
+    public PeriodoLectivoMD capturarIdPeriodo(String nombrePer) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
