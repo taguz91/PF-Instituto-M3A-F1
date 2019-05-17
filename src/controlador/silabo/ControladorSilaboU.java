@@ -845,7 +845,7 @@ public class ControladorSilaboU {
 
                 guardarSilabo();
                 silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
-
+                
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
