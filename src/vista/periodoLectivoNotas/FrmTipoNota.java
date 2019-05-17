@@ -66,9 +66,6 @@ public class FrmTipoNota extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -82,9 +79,9 @@ public class FrmTipoNota extends JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMinimumSize(new java.awt.Dimension(778, 400));
+        setMinimumSize(new java.awt.Dimension(575, 400));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(778, 400));
+        setPreferredSize(new java.awt.Dimension(575, 400));
         setRequestFocusEnabled(false);
 
         btnCancelar.setText("Cancelar");
@@ -127,7 +124,7 @@ public class FrmTipoNota extends JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
@@ -179,10 +176,7 @@ public class FrmTipoNota extends JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblNombreCarrera;
     private javax.swing.JTable tblTipoNota;

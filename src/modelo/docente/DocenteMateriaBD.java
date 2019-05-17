@@ -77,7 +77,6 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
                 + "	WHERE id_docente = " + idDocente + " AND id_materia = " + idMateria + ";";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
-        System.out.println(sql);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -198,7 +197,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
     private ArrayList<DocenteMateriaMD> consultar(String sql) {
         ArrayList<DocenteMateriaMD> dms = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {

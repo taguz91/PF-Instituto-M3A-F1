@@ -15,7 +15,6 @@ import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import modelo.tipoDeNota.TipoDeNotaMD;
 import vista.periodoLectivoNotas.FrmIngresoNotas;
 import vista.principal.VtnPrincipal;
 
@@ -32,7 +31,7 @@ public abstract class AbstractForm {
 
     //listas
     protected List<PeriodoLectivoMD> listaNomPeriodos;
-    protected List<TipoDeNotaMD> listaNomNotas;
+    protected List<TipoDeNotaBD> listaNomNotas;
 
     public AbstractForm(VtnPrincipal desktop, FrmIngresoNotas vista, PeriodoIngresoNotasBD modelo, VtnPeriodoIngresoNotasCTR vtnPadre) {
         this.desktop = desktop;

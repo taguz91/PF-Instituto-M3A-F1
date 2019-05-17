@@ -91,14 +91,6 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         this.btnCerrarPeriodo = btnCerrarPeriodo;
     }
 
-    public JButton getBtn_EliminarPL() {
-        return Btn_EliminarPL;
-    }
-
-    public void setBtn_EliminarPL(JButton Btn_EliminarPL) {
-        this.Btn_EliminarPL = Btn_EliminarPL;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +109,6 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         tblPrdLectivo = new javax.swing.JTable();
         lblResultados = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        Btn_EliminarPL = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -160,8 +151,6 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
-        Btn_EliminarPL.setText("Eliminar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,14 +166,12 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(Txt_Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(168, 168, 168)
+                        .addGap(162, 162, 162)
                         .addComponent(btnCerrarPeriodo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Btn_EliminarPL, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIngresar)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -198,10 +185,9 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(Txt_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
-                        .addComponent(btnCerrarPeriodo)
-                        .addComponent(Btn_EliminarPL)))
+                        .addComponent(btnCerrarPeriodo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados)
                 .addGap(9, 9, 9))
@@ -216,7 +202,6 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Btn_EliminarPL;
     private javax.swing.JTextField Txt_Buscar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrarPeriodo;

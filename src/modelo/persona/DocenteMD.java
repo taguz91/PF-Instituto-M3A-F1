@@ -13,7 +13,7 @@ public class DocenteMD extends PersonaMD {
 
     private String codigo, docenteTipoTiempo, estado, tituloDocente, abreviaturaDocente, tipoIdenticacion, observacion;
     private int docenteCategoria, idDocente;
-    private boolean docenteOtroTrabajo, docenteCapacitador;
+    private boolean docenteOtroTrabajo, docenteCapacitador, docenteEnFuncion;
     private LocalDate fechaInicioContratacion, fechaFinContratacion;
 
     public DocenteMD() {
@@ -23,7 +23,7 @@ public class DocenteMD extends PersonaMD {
             String tituloDocente, String abreviaturaDocente, String tipoIdenticacion,
             int docenteCategoria, int idDocente, boolean docenteOtroTrabajo,
             boolean docenteCapacitador, LocalDate fechaInicioContratacion,
-            LocalDate fechaFinContratacion, String observacion) {
+            LocalDate fechaFinContratacion, String observacion, boolean docenteEnFuncion) {
         this.codigo = codigo;
         this.docenteTipoTiempo = docenteTipoTiempo;
         this.estado = estado;
@@ -37,6 +37,7 @@ public class DocenteMD extends PersonaMD {
         this.fechaInicioContratacion = fechaInicioContratacion;
         this.fechaFinContratacion = fechaFinContratacion;
         this.observacion = observacion;
+        this.docenteEnFuncion = docenteEnFuncion;
     }
 
     public String getCodigo() {
@@ -141,6 +142,14 @@ public class DocenteMD extends PersonaMD {
 
     public void setTipoIdenticacion(String tipoIdenticacion) {
         this.tipoIdenticacion = tipoIdenticacion;
+    }
+
+    public boolean isDocenteEnFuncion() {
+        return docenteEnFuncion;
+    }
+
+    public void setDocenteEnFuncion(boolean docenteEnFuncion) {
+        this.docenteEnFuncion = docenteEnFuncion;
     }
 
     @Override
