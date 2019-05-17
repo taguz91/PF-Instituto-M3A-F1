@@ -900,7 +900,7 @@ public class ControladorSilaboU {
 
         if (accion3) {
             new Thread(() -> {
-                accion = false;
+                accion3 = false;
                 if (validarCampos()) {
 
                     gestion.getBtnGuardar().setEnabled(false);
@@ -1633,6 +1633,9 @@ public class ControladorSilaboU {
     public void guardarSilabo() {
 
         new SilaboBD(conexion).insertar(silabo);
+        
+         silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+        
         insertarUnidades();
 
         insertarReferencias();

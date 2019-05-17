@@ -48,7 +48,13 @@ public class ReferenciasCTR {
             String observaciones = frmBibliografia.getTxtObservaciones().getText();
             String tipoD = "Base";
             String contenedor = "";
-            autor = frmBibliografia.getTxtAutor().getText();
+            if(frmBibliografia.getCbxAutorCorporativo().isSelected()==true)
+            {
+              autor = frmBibliografia.getTxtAutorCorporativo().getText();
+              frmBibliografia.getTxtAutor().setEnabled(false);
+            }else{
+            autor = frmBibliografia.getTxtAutor().getText();}
+            
             titulo = frmBibliografia.getTxtTitulo().getText();
             año = frmBibliografia.getTxtAnio().getText();
             ciudad = frmBibliografia.getTxtCiudad().getText();
@@ -59,6 +65,12 @@ public class ReferenciasCTR {
             BDbibliografia.setTipo_referencia(tipoD);
             BDbibliografia.setExiste_en_biblioteca(existe);
             BDbibliografia.setObservaciones(observaciones);
+            BDbibliografia.setCodigo_isbn(frmBibliografia.getTxtCodigoISBM().getText());
+            BDbibliografia.setNumero_de_paginas(frmBibliografia.getTxtNumeroPaginas().getText());
+            BDbibliografia.setCodigo_koha(frmBibliografia.getTxtCodigoKoha().getText());
+            BDbibliografia.setCodigo_dewey(frmBibliografia.getTxtCodigoDewey().getText());
+            BDbibliografia.setArea_referencias(frmBibliografia.getTxtArea().getText());
+            
             if (BDbibliografia.insertarReferencia()) {
                 JOptionPane.showMessageDialog(null, "Los Datos se guardaron Correctamente");
                 frmBibliografia.getTxtAutor().setText("");
@@ -68,6 +80,13 @@ public class ReferenciasCTR {
                 frmBibliografia.getTxtEditor().setText("");
                 frmBibliografia.getTxtObservaciones().setText("");
                 frmBibliografia.getTxtCodigoLibro().setText("");
+                frmBibliografia.getTxtAutorCorporativo().setText("");
+                frmBibliografia.getTxtCodigoISBM().setText("");
+                frmBibliografia.getTxtNumeroPaginas().setText("");
+                frmBibliografia.getCbxAutorCorporativo().setSelected(false);
+                frmBibliografia.getTxtCodigoKoha().setText("");
+                frmBibliografia.getTxtCodigoDewey().setText("");
+                frmBibliografia.getTxtArea().setText("");
 
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR  Datos no guardados");

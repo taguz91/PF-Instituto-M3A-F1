@@ -1853,6 +1853,8 @@ public class ControladorSilaboC {
     public void guardarSilabo() {
 
         silaboNuevo.insertar();
+        
+        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
         insertarUnidades();
         insertarReferencias();
         // exportarPDF();
@@ -1862,7 +1864,6 @@ public class ControladorSilaboC {
     /*public void guardarSilaboPrimera() {
 
         silaboNuevo.insertar();
-        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
         
         
         insertarUnidades();
