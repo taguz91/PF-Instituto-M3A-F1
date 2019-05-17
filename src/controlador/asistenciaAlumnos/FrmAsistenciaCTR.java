@@ -4,9 +4,11 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import controlador.notas.ReportesCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -129,7 +131,10 @@ public class FrmAsistenciaCTR {
     }
 
     //Metodos de apoyo
+    
+    
     //Encabezado
+    
     private void cargarComboDocente() {
         listaDocentes.entrySet().forEach((entry) -> {
             String key = entry.getKey();
@@ -246,12 +251,7 @@ public class FrmAsistenciaCTR {
                 .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
     }
 
-//    private int calcularPorcentaje(int faltas, int horas) {
-//        if (horas == 0) {
-//            horas = 1;
-//        }
-//        return (faltas * 100) / horas;
-//    }
+    
     private int getSelectedRowTrad() {
         return vista.getTblAsistencia().getSelectedRow();
     }
@@ -337,7 +337,30 @@ public class FrmAsistenciaCTR {
     }
 
     //Eventos
-    private void btnImprimir(ActionEvent e) {
+    
+    private void btnImprimir(ActionEvent e){
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vista,
+                    "Reporte de Asistencia de Alumnos\n"
+                    + "¿Elegir el tipo de Reporte?", "REPORTE ASISTENCIA",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Asistencia Alumnos"}, "Cancelar");
+
+            Effects.setLoadCursor(vista);
+
+            //ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
+             try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            desktop.getLblEstado().setText("");
+            Effects.setDefaultCursor(vista);
+            vista.getBtnVerAsistencia().setEnabled(true);
+        }).start();
 
     }
 
