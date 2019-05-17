@@ -1634,7 +1634,7 @@ public class ControladorSilaboU {
 
         new SilaboBD(conexion).insertar(silabo);
         
-         silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+         //silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
         
         insertarUnidades();
 

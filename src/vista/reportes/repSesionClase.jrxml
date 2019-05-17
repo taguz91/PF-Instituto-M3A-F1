@@ -102,7 +102,7 @@ ORDER BY m.dia_sesion;]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="8" splitType="Stretch"/>
+		<band height="12" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="26" splitType="Stretch">

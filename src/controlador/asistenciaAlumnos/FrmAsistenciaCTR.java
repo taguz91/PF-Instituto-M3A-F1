@@ -188,7 +188,7 @@ public class FrmAsistenciaCTR {
                         vista.getLblHorasAsis().setText("" + obj.getHorasPresenciales());
                     });
 
-            listaValidaciones = TipoDeNotaBD.selectValidaciones(getIdPeriodoLectivo());
+            //listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {
@@ -270,7 +270,7 @@ public class FrmAsistenciaCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-            listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaNotas = AlumnoCursoBD.selectWhere(   cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
             
             listaNotas.stream().forEach(obj -> {
                 funcionCarga.apply(obj, tabla);

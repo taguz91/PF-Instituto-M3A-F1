@@ -41,21 +41,14 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     }
 
     public TipoDeNotaBD(TipoDeNotaMD obj) {
-        this.setIdTipoNota(obj.getIdTipoNota());
-        this.setNombre(obj.getNombre());
-        this.setValorMinimo(obj.getValorMinimo());
-        this.setValorMaximo(obj.getValorMaximo());
-        this.setFechaCreacion(obj.getFechaCreacion());
-        this.setEstado(obj.isEstado());
-        this.setPeriodoLectivo(obj.getPeriodoLectivo());
+        setIdTipoNota(obj.getIdTipoNota());
+        setNombre(obj.getNombre());
+        setValorMinimo(obj.getValorMinimo());
+        setValorMaximo(obj.getValorMaximo());
+        setFechaCreacion(obj.getFechaCreacion());
+        setEstado(obj.isEstado());
+        setPeriodoLectivo(obj.getPeriodoLectivo());
     }
-
-    private static final String ATRIBUTOS = "\"TipoDeNota\".id_tipo_nota,\n"
-            + "\"TipoDeNota\".tipo_nota_nombre,\n"
-            + "\"TipoDeNota\".tipo_nota_valor_minimo,\n"
-            + "\"TipoDeNota\".tipo_nota_valor_maximo,\n"
-            + "\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
-            + "\"TipoDeNota\".tipo_nota_estado";
 
     public boolean insertar() {
         String INSERT = "INSERT INTO  \"TipoDeNota\"  \n"
@@ -71,7 +64,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public static List<TipoDeNotaMD> selectAllWhereEstadoIs(boolean estado) {
+    public static List<TipoDeNotaBD> selectAllWhereEstadoIs(boolean estado) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
@@ -94,37 +87,8 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     }
 
-    public static TipoDeNotaMD selectWhere(int idTipoNota) {
-
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM  \"TipoDeNota\"  WHERE  \"TipoDeNota\".tipo_nota_estado  IS TRUE ";
-
-        TipoDeNotaMD tipoNota = new TipoDeNotaMD();
-
-        conn = pool.getConnection();
-
-        rs = pool.ejecutarQuery(SELECT, conn, null);
-
-        try {
-
-            while (rs.next()) {
-
-                tipoNota.setIdTipoNota(rs.getInt("id_tipo_nota"));
-                tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
-                tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
-                tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            pool.close(conn);
-        }
-
-        return tipoNota;
-    }
-
-    private static List<TipoDeNotaMD> SelectSimple(String QUERY) {
-        List<TipoDeNotaMD> Lista = new ArrayList<>();
+    private static List<TipoDeNotaBD> SelectSimple(String QUERY) {
+        List<TipoDeNotaBD> Lista = new ArrayList<>();
 
         conn = pool.getConnection();
 
@@ -133,7 +97,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         try {
             while (rs.next()) {
 
-                TipoDeNotaMD tipoNota = new TipoDeNotaMD();
+                TipoDeNotaBD tipoNota = new TipoDeNotaBD();
 
                 tipoNota.setIdTipoNota(rs.getInt("id_tipo_nota"));
                 tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
@@ -164,7 +128,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return Lista;
     }
 
-    public static List<TipoDeNotaMD> selectValidaciones(int idPeriodo) {
+    public static List<TipoDeNotaBD> selectWhere(int idPeriodo) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
@@ -172,18 +136,17 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo\n"
                 + "FROM\n"
                 + "\"public\".\"TipoDeNota\"\n"
-                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "WHERE \n"
-                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo + "";
+                + "\"public\".\"TipoDeNota\".id_prd_lectivo = " + idPeriodo + "";
 
-        List<TipoDeNotaMD> lista = new ArrayList<>();
+        List<TipoDeNotaBD> lista = new ArrayList<>();
 
         conn = pool.getConnection();
         rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
-                TipoDeNotaMD tipo = new TipoDeNotaMD();
+                TipoDeNotaBD tipo = new TipoDeNotaBD();
                 tipo.setIdTipoNota(rs.getInt("id_tipo_nota"));
                 tipo.setNombre(rs.getString("tipo_nota_nombre"));
                 tipo.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
@@ -244,5 +207,4 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return pool.ejecutar(UPDATE, conn, null) == null;
 
     }
-
 }

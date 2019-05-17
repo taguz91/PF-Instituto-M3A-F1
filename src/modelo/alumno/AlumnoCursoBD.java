@@ -514,6 +514,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
+            pool.close(rs);
+            pool.closeStmt();
             pool.close(conn);
         }
         return lista;

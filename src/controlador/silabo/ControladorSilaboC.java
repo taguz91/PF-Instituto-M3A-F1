@@ -1854,7 +1854,7 @@ public class ControladorSilaboC {
 
         silaboNuevo.insertar();
         
-        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+        //silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
         insertarUnidades();
         insertarReferencias();
         // exportarPDF();

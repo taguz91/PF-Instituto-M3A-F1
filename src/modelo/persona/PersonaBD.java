@@ -428,7 +428,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "SELECT \"Personas\".id_persona, \n"
                 + "persona_identificacion, persona_primer_apellido, \n"
                 + "persona_segundo_apellido, persona_primer_nombre, \n"
-                + "persona_segundo_nombre, persona_fecha_nacimiento persona_correo, persona_celular, "
+                + "persona_segundo_nombre, persona_fecha_nacimiento, persona_correo, persona_celular, "
                 + "persona_telefono, persona_activa \n"
                 + "	FROM public.\"Personas\", public.\"Docentes\" \n"
                 + "	WHERE \"Personas\".id_persona = \"Docentes\".id_persona AND persona_activa = true;";
