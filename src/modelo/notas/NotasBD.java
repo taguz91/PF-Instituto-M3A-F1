@@ -63,6 +63,8 @@ public class NotasBD extends NotasMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
+            pool.closeStmt();
+            pool.close(rs);
             pool.close(conn);
         }
 
