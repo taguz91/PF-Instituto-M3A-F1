@@ -57,7 +57,7 @@ public class VtnNotasCTR {
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
-    private List<TipoDeNotaMD> listaValidaciones;
+    private List<TipoDeNotaBD> listaValidaciones;
 
     //TABLA
     private DefaultTableModel tablaTrad;
@@ -277,7 +277,7 @@ public class VtnNotasCTR {
                         vista.getLblHoras().setText("" + obj.getHorasPresenciales());
                     });
 
-            listaValidaciones = TipoDeNotaBD.selectValidaciones(getIdPeriodoLectivo());
+            listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {

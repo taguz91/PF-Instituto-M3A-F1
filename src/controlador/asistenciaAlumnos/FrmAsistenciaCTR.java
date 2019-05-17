@@ -188,7 +188,7 @@ public class FrmAsistenciaCTR {
                         vista.getLblHorasAsis().setText("" + obj.getHorasPresenciales());
                     });
 
-            listaValidaciones = TipoDeNotaBD.selectValidaciones(getIdPeriodoLectivo());
+            //listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {
