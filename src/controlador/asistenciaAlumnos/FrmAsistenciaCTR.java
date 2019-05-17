@@ -119,7 +119,10 @@ public class FrmAsistenciaCTR {
     }
 
     //Metodos de apoyo
+    
+    
     //Encabezado
+    
     private void cargarComboDocente() {
         listaDocentes.entrySet().forEach((entry) -> {
             String key = entry.getKey();
@@ -236,12 +239,7 @@ public class FrmAsistenciaCTR {
                 .map(c -> c.getHorasPresenciales()).findFirst().orElse(1);
     }
 
-//    private int calcularPorcentaje(int faltas, int horas) {
-//        if (horas == 0) {
-//            horas = 1;
-//        }
-//        return (faltas * 100) / horas;
-//    }
+    
     private int getSelectedRowTrad() {
         return vista.getTblAsistencia().getSelectedRow();
     }
