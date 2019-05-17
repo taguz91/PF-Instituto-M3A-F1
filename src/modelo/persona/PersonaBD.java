@@ -105,6 +105,15 @@ public class PersonaBD extends PersonaMD {
         }
     }
 
+    public void insertarIdentificacion(){
+        String nsql = "INSERT INTO public. \"Personas\"(persona_identificacion) VALUES ('" + getIdentificacion() + "');";
+        
+          PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se guardo correctamente");
+        }
+    }
+    
     //persona_categoria_migratoria
     public void insertarPersonaConFoto() {
         //Aqui id_persona ya no va porque es autoincrementable
@@ -224,6 +233,20 @@ public class PersonaBD extends PersonaMD {
         PreparedStatement ps = conecta.getPS(sql);
         if (conecta.nosql(ps) == null) {
             System.out.println("Se edito correctamente");
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    public boolean editarIdentificacion(int aguja) {
+        String sql = "UPDATE public. \"Personas\" SET persona_identificacion ='" + getIdentificacion() + "'\n"
+                + "WHERE id_persona= " + aguja + ";";
+
+        PreparedStatement ps = conecta.getPS(sql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se edito correctamente la identificacion");
             return true;
         } else {
             System.out.println("Error");
