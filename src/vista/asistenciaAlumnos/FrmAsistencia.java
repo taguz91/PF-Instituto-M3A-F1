@@ -198,11 +198,11 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nro.", "Cédula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
+                "Nro.", "Cédula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, true, true, true, true, true
+                false, false, false, false, false, false, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

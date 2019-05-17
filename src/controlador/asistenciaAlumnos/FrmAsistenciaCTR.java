@@ -330,7 +330,7 @@ public class FrmAsistenciaCTR {
                 obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(),
                 obj.getAlumno().getSegundoNombre(),
-                (int) Middlewares.conversor("" + obj.getNumFalta()),
+                //(int) Middlewares.conversor("" + obj.getNumFalta()),
                 obj.getNumFalta(),});
             return null;
         };
@@ -366,9 +366,9 @@ public class FrmAsistenciaCTR {
 
     private void btnVerAsistencia(ActionEvent e) {
         if (cargarTabla) {
-            String modalidad = listaPeriodos.stream()
-                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                    .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
+            //String modalidad = listaPeriodos.stream()
+                    //.filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                    //.map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
             cargarTabla(tablaTrad, agregarFilasTrad());
@@ -395,8 +395,9 @@ public class FrmAsistenciaCTR {
 
     public void CargarCombo(JTable tabla, TableColumn columna) {
         JComboBox c = new JComboBox();
-        c.addItem("Aprobado");
-        c.addItem("Reprobado");
+        c.addItem("1");
+        c.addItem("2");
+        c.addItem("3");
 
         columna.setCellEditor(new DefaultCellEditor(c));
         DefaultTableCellRenderer r = new DefaultTableCellRenderer();
