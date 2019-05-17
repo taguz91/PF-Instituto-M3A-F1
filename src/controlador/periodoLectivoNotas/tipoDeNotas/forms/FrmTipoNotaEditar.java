@@ -25,14 +25,14 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         ID_PERIODO = modelo.getPeriodoLectivo().getId_PerioLectivo();
 
-        System.out.println("-------->" + vista.getCmbPeriodoLectivo().getSelectedItem().toString());
-
         vista.getCmbPeriodoLectivo().setSelectedItem(modelo.getPeriodoLectivo().getNombre_PerLectivo());
 
-        System.out.println("-------->" + vista.getCmbPeriodoLectivo().getSelectedItem().toString());
+        System.out.println("---->" + modelo.getPeriodoLectivo().getNombre_PerLectivo());
+
         listaTipos = TipoDeNotaBD.selectWhere(ID_PERIODO);
 
         vista.setTitle("Editar Tipo De Nota");
+
         cargarUpdate();
     }
 

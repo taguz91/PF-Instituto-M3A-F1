@@ -51,21 +51,24 @@ public abstract class AbstracForm {
     //INITS
     public void Init() {
         InitListas();
+        InitTablas();
 
         tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
         listaPeriodos = PeriodoLectivoBD.selectPeriodosFaltantes();
-        if (listaPeriodos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
-        } else {
 
-            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
-            InitTablas();
-            cargarComboCarreras();
-            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
-            setlblCarrera();
-            cargarTabla();
-            InitEventos();
+        if (modelo != null) {
+            if (listaPeriodos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
+            } else {
+
+                Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+                cargarComboCarreras();
+                listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
+                setlblCarrera();
+                cargarTabla();
+                InitEventos();
+            }
         }
     }
 
