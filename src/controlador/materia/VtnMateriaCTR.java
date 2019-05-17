@@ -92,7 +92,7 @@ public class VtnMateriaCTR extends DVtnCTR {
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
         vtnMateria.getBtnIngresarMateria().addActionListener(e -> ingresarMaterias());
         vtnMateria.getBtnEditarMateria().addActionListener(e -> editarMaterias());
-        vtnMateria.getBtnEliminarMateria().addActionListener(e -> eliminarMaterias());
+//        vtnMateria.getBtnEliminarMateria().addActionListener(e -> eliminarMaterias());
         vtnMateria.getBtnReporteMaterias().addActionListener(e -> llamaReporteMaterias());
         //Iniciamos el buscador
         vtnMateria.getBtnBuscar().addActionListener(e -> buscarMaterias(vtnMateria.getTxtBuscar().getText().trim()));
@@ -112,6 +112,7 @@ public class VtnMateriaCTR extends DVtnCTR {
         vtnMateria.getBtnInfo().addActionListener(e -> infoMateria());
 
         ctrPrin.agregarVtn(vtnMateria);
+        vtnMateria.getBtnEliminarMateria().setVisible(false);
     }
 
     /**
