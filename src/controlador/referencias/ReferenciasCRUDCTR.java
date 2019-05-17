@@ -82,6 +82,27 @@ public class ReferenciasCRUDCTR {
         }
           
         }
+        public void cargartabla1(){
+             List<ReferenciasMD> referencias=BDbibliotecaC.consultarBibliotecaTabla(conexion);
+              DefaultTableModel modeloTabla;
+
+        modeloTabla=(DefaultTableModel)frmCRUDBibliografiaC.getTblTablaCB().getModel();
+         for (int j = frmCRUDBibliografiaC.getTblTablaCB().getRowCount() - 1; j >= 0; j--) {
+            modeloTabla.removeRow(j);
+        }
+       for (ReferenciasMD rmd : referencias) {
+
+            modeloTabla.addRow(new Object[]{
+                rmd.getCodigo_referencia(),
+                rmd.getDescripcion_referencia()
+            });   
+
+        }
+          
+        }
+        
+        
+        
         public void AbrirFormularioRefe (){
             frmBibliografia frmBibliografiaC= new frmBibliografia ();
             ReferenciasCTR  ReferenciasCTRC = new ReferenciasCTR(conecta,ctrPrin,vtnPrin, frmBibliografiaC);
@@ -93,7 +114,7 @@ public class ReferenciasCRUDCTR {
                 String codigo=frmCRUDBibliografiaC.getTblTablaCB().getValueAt(select, 0).toString();
             System.out.println(" "+codigo);
             BDbibliotecaC.eliminar(conexion, codigo); 
-           
+            cargartabla1();
             }else{
                 JOptionPane.showMessageDialog(null, "Selecione una fila");
             }
