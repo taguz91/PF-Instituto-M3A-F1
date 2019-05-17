@@ -609,7 +609,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
         segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
-        
+
         priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
@@ -619,6 +619,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
         segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
+
         if (frmPersona.getJdfechaNacimiento().isValid()) {
             fecha = frmPersona.getJdfechaNacimiento().getDate();
 
@@ -737,7 +738,7 @@ public class FrmPersonaCTR extends DCTR {
         }
 
         telefono = frmPersona.getTxtTelefono().getText().trim().toUpperCase();
-        
+
         callePrin = frmPersona.getTxtCallePrincipal().getText().trim().toUpperCase();
         if (!Validar.esDireccion(callePrin)) {
             frmPersona.getLblErrorCallePrin().setVisible(true);
@@ -951,12 +952,6 @@ public class FrmPersonaCTR extends DCTR {
         } else {
             frmPersona.getCmbEstadoCivil().setSelectedItem(per.getEstadoCivil());
         }
-//        if (per.getTipoDiscapacidad() == null) {
-//            frmPersona.getCmbTipoDiscapacidad().setSelectedItem("SELECCIONE");
-//        } else {
-//            frmPersona.getCmbTipoDiscapacidad().setSelectedItem(per.getTipoDiscapacidad());
-//        }
-
         //Discapacidad
         if (per.isDiscapacidad() == false) {
             activarDiscapacidad();
@@ -1124,8 +1119,7 @@ public class FrmPersonaCTR extends DCTR {
         frmPersona.getTxtCarnetConadis().setToolTipText("Ingrese un carnet de conadis valido");
         frmPersona.getTxtCelular().setToolTipText("Ingrese su numero de celular");
         frmPersona.getTxtCodigoPostal().setToolTipText("Ingrese su codigo postal");
-        
-        
+
         frmPersona.getLblErrorCategoriaMigratoria().setVisible(false);
         frmPersona.getLblErrorCallePrin().setVisible(false);
         frmPersona.getLblErrorCalleSec().setVisible(false);
@@ -1269,10 +1263,13 @@ public class FrmPersonaCTR extends DCTR {
     }
 
     public void cargarCodigoPostal() {
+
         int posPa = frmPersona.getCmbParroquiaReside().getSelectedIndex();
         if (posPa > 0 && posPa < parroquias.size()) {
+
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
         } else {
+
             frmPersona.getTxtCodigoPostal().setText("");
         }
     }
