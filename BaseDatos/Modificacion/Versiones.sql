@@ -1,4 +1,4 @@
-CREATE TABLE "versiones"(
+CREATE TABLE "Versiones"(
   id_version serial NOT NULL,
   usu_username VARCHAR(50) NOT NULL,
   version character varying(5),
