@@ -30,7 +30,7 @@ public class ConnDBPool {
 
     public ConnDBPool(String username, String password) {
         try {
-            
+
             config = new HikariConfig();
             config.setJdbcUrl(generarURL());
 
@@ -96,6 +96,7 @@ public class ConnDBPool {
             return e;
         } finally {
             close(conn);
+            closeStmt();
         }
     }
 
@@ -104,9 +105,9 @@ public class ConnDBPool {
         stmt = conn.prepareStatement(sql);
 
         for (Map.Entry<Integer, Object> entry : parametros.entrySet()) {
-            
+
             int posicion = entry.getKey();
-            
+
             if (entry.getValue() instanceof Integer) {
                 stmt.setInt(posicion, (int) entry.getValue());
             }
@@ -166,7 +167,7 @@ public class ConnDBPool {
 //                System.out.println("*******************************");
                 conn.close();
 //                System.out.println("*******************************");
-//                System.out.println("*Conexio cerrada? " + conn.isClosed() + "*");
+//                System.out.println("*Conexion cerrada? " + conn.isClosed() + "*");
 //                System.out.println("*******************************");
 
             }
@@ -174,8 +175,24 @@ public class ConnDBPool {
             System.out.println(ex.getMessage());
         }
     }
-    // </editor-fold>  
 
+    public void close(ResultSet rs) {
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void closeStmt() {
+        try {
+            stmt.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // </editor-fold>  
     public void closePool() {
         if (ConnDBPool.ds != null && !ConnDBPool.ds.isClosed()) {
             ConnDBPool.ds.close();

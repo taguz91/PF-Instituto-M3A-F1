@@ -21,6 +21,7 @@ public class CursoMD {
     private int ciclo;
     private String paralelo; 
     private int numMatriculados;
+    private boolean activo;
 
     public CursoMD() {
     }
@@ -107,6 +108,14 @@ public class CursoMD {
     
     public int getCapaciadActual(){
         return capacidad - numMatriculados;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }

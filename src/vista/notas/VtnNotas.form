@@ -154,11 +154,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblHoras" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="btnImprimir" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="btnAsistencia" alignment="1" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnAsistencia" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="tabPane" pref="393" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">

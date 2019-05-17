@@ -1633,6 +1633,9 @@ public class ControladorSilaboU {
     public void guardarSilabo() {
 
         new SilaboBD(conexion).insertar(silabo);
+        
+         //silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
+        
         insertarUnidades();
 
         insertarReferencias();

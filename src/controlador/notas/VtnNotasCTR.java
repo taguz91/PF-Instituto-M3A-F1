@@ -6,7 +6,6 @@ import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -58,7 +57,7 @@ public class VtnNotasCTR {
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
-    private List<TipoDeNotaMD> listaValidaciones;
+    private List<TipoDeNotaBD> listaValidaciones;
 
     //TABLA
     private DefaultTableModel tablaTrad;
@@ -118,7 +117,7 @@ public class VtnNotasCTR {
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
-        
+
         vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
 
         vista.getBtnBuscar().addActionListener(e -> buscarDocente());
@@ -140,8 +139,7 @@ public class VtnNotasCTR {
 
     private void InitTablas() {
         String funcion = "";
-        
-        
+
         tablaTrad.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -179,18 +177,14 @@ public class VtnNotasCTR {
         jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
-        
-        
-            /*jTblTrad.getColumnModel().getColumn(6).setWidth(0);
+
+        /*jTblTrad.getColumnModel().getColumn(6).setWidth(0);
             jTblTrad.getColumnModel().getColumn(7).setWidth(0);
             jTblTrad.getColumnModel().getColumn(8).setWidth(0);
             jTblTrad.getColumnModel().getColumn(9).setWidth(0);
             jTblTrad.getColumnModel().getColumn(10).setWidth(0);
             jTblTrad.getColumnModel().getColumn(11).setWidth(0);
             jTblTrad.getColumnModel().getColumn(12).setWidth(0);  */
-      
-        
-
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
@@ -283,7 +277,7 @@ public class VtnNotasCTR {
                         vista.getLblHoras().setText("" + obj.getHorasPresenciales());
                     });
 
-            listaValidaciones = TipoDeNotaBD.selectValidaciones(getIdPeriodoLectivo());
+            listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {
@@ -995,9 +989,8 @@ public class VtnNotasCTR {
         );
         activarForm(true);
     }
-    
-    
-    private void btnAsistencia (ActionEvent e){
+
+    private void btnAsistencia(ActionEvent e) {
         FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado);
         asistencia.Init();
     }
