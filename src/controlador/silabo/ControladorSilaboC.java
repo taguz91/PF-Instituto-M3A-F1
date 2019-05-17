@@ -1801,27 +1801,27 @@ public class ControladorSilaboC {
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd, silaboNuevo.getIdMateria().getId());
 
-            Integer aux = umd.getIdSilabo().getIdSilabo();
+            //Integer aux = umd.getIdSilabo().getIdSilabo();
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
-                if (aux.equals(silaboNuevo.getIdSilabo())) {
+              //  if (aux.equals(silaboNuevo.getIdSilabo())) {
                     if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
                         ebd.insertar(emd);
                     }
-                }
+                //}
 
             }
 
             for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
 
-                if (aux.equals(silaboNuevo.getIdSilabo())) {
+                //if (aux.equals(silaboNuevo.getIdSilabo())) {
                     if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                         esd.insertar(evd);
                     }
-                }
+                //}
 
             }
         }

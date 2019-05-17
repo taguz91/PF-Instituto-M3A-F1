@@ -1575,27 +1575,27 @@ public class ControladorSilaboU {
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd, silabo.getIdMateria().getId());
 
-            Integer aux = umd.getIdSilabo().getIdSilabo();
+            //Integer aux = umd.getIdSilabo().getIdSilabo();
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
-                if (aux.equals(silabo.getIdSilabo())) {
+                //if (aux.equals(silabo.getIdSilabo())) {
                     if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
                         ebd.insertar(emd);
                     }
-                }
+                //}
 
             }
 
             for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
 
-                if (aux.equals(silabo.getIdSilabo())) {
+                //if (aux.equals(silabo.getIdSilabo())) {
                     if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                         esd.insertar(evd);
                     }
-                }
+                //}
 
             }
         }
