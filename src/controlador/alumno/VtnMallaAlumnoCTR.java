@@ -452,13 +452,15 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      * Llamamos al reporte de la malla alumno
      */
     public void llamaReporteMallaALumno() {
-        if (mallaAlm.getSql().length() > 0) {
-            if (vtnMallaAlm.getCmbAlumnos().getSelectedIndex() > 0 || mallas.size() < 45) {
+        int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
+        if (mallaAlm.getSql().length() > 0 && posCar > 0) {
+            if (vtnMallaAlm.getCmbAlumnos().getSelectedIndex() > 0 || mallas.size() < 50) {
                 JasperReport jr;
                 String path = "/vista/reportes/repMalaAlumno.jasper";
                 try {
                     Map parametro = new HashMap();
                     parametro.put("consulta", mallaAlm.getSql());
+                    parametro.put("idCarreras", carreras.get(posCar - 1).getId());
                     jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                     ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
                 } catch (JRException ex) {

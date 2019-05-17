@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="179"/>
 	<parameter name="curso" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -33,7 +33,7 @@ AND p.id_persona = a.id_persona;]]>
 	<title>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="362" y="41" width="43" height="20"/>
+				<reportElement x="337" y="41" width="43" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Cuenca,]]></text>
 			</staticText>
@@ -42,7 +42,7 @@ AND p.id_persona = a.id_persona;]]>
 				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/fondo.png"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="405" y="41" width="113" height="20"/>
+				<reportElement x="380" y="41" width="138" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
@@ -76,44 +76,50 @@ Para constancia se suscribe este acuerdo en dos ejemplares.]]></text>
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="130" splitType="Stretch">
+		<band height="195" splitType="Stretch">
 			<staticText>
-				<reportElement x="53" y="110" width="226" height="20"/>
+				<reportElement x="275" y="132" width="243" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
+			</staticText>
+			<line>
+				<reportElement x="63" y="93" width="180" height="1"/>
+			</line>
+			<line>
+				<reportElement x="304" y="94" width="192" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="37" y="113" width="226" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="113" width="243" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA/O ABOGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="133" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estudiante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="291" y="90" width="202" height="19"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[SECRETARIA/O]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="291" y="109" width="202" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="291" y="70" width="202" height="20"/>
+				<reportElement x="275" y="93" width="243" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<text><![CDATA[Dr. Mauricio Avilés]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="70" width="226" height="20"/>
+				<reportElement x="37" y="93" width="226" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_primer_apellido}+' '+$F{persona_segundo_apellido} +' '+$F{persona_primer_nombre}+' '+$F{persona_segundo_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="53" y="90" width="226" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

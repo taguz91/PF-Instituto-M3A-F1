@@ -48,7 +48,6 @@ public class LoginCTR {
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
         vista.getTxtPassword().addKeyListener(eventoText());
         vista.getTxtUsername().addKeyListener(eventoText());
-        vista.getBtnIngresar().addActionListener(e -> login());
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
@@ -73,6 +72,7 @@ public class LoginCTR {
         if (carga) {
 
             new Thread(() -> {
+                ConnDBPool conex = null;
                 try {
 
                     Effects.setLoadCursor(vista);
@@ -80,7 +80,7 @@ public class LoginCTR {
                     String PASSWORD = vista.getTxtPassword().getText();
 
                     activarForm(false);
-                    ConnDBPool conex = new ConnDBPool(USERNAME, PASSWORD);
+                    conex = new ConnDBPool(USERNAME, PASSWORD);
 
                     modelo = new UsuarioBD();
 
@@ -93,17 +93,21 @@ public class LoginCTR {
 
                         vista.dispose();
 
-                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista, false);
-                    vtn.Init();
-
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista, false);
+                        vtn.Init();
                     } else {
                         Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                         Effects.setDefaultCursor(vista);
+                        conex.closePool();
                     }
 
                 } catch (NullPointerException e) {
                     Effects.setDefaultCursor(vista);
                     Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+
+                    if (conex != null) {
+                        conex.closePool();
+                    }
                 } finally {
 
                     Effects.setDefaultCursor(vista);

@@ -270,11 +270,11 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND prd_lectivo_nombre=?");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
-
+            st.setString(3, clave[2]);
             System.out.println(st);
             ResultSet rs = st.executeQuery();
 

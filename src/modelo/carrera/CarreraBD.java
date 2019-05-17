@@ -265,7 +265,7 @@ public class CarreraBD extends CarreraMD {
                 + "WHERE carrera_activo = TRUE\n"
                 + "ORDER BY carrera_fecha_inicio DESC;";
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {

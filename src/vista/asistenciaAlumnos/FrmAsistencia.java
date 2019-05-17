@@ -6,6 +6,7 @@
 package vista.asistenciaAlumnos;
 
 import controlador.notas.ux.RowStyle;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -25,12 +28,25 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
      */
     public FrmAsistencia() {
         initComponents();
+        
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
+        
+        
         InitDiseño();
     }
 
     private void InitDiseño() {
-        RowStyle row = new RowStyle(7);
-        tblAsistencia.setDefaultRenderer(Object.class, row);
+//        RowStyle row = new RowStyle(7);
+//        tblAsistencia.setDefaultRenderer(Object.class, row);
+
+        tblAsistencia.setRowHeight(23);
+        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblAsistencia.getTableHeader().getDefaultRenderer();
+        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    public void setCmbSemana(JComboBox<String> cmbSemana) {
+        this.cmbSemana = cmbSemana;
     }
 
     public JButton getBtnBuscarAsis() {
@@ -62,16 +78,13 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     }
 
     public JLabel getjLabel2() {
-        return jLabel2;
+        return lblAsignaturaAsis;
     }
 
     public JLabel getjLabel3() {
-        return jLabel3;
+        return lblHorasPresencialesAsis;
     }
 
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
 
     public JSeparator getjSeparator1() {
         return jSeparator1;
@@ -129,8 +142,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         lblCarreraAsistencia = new javax.swing.JLabel();
         cmbCicloAsis = new javax.swing.JComboBox<>();
         lblDocenteAsis = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblAsignaturaAsis = new javax.swing.JLabel();
+        lblHorasPresencialesAsis = new javax.swing.JLabel();
         cmbDocenteAsis = new javax.swing.JComboBox<>();
         cmbAsignaturaAsis = new javax.swing.JComboBox<>();
         lblHorasAsis = new javax.swing.JLabel();
@@ -140,16 +153,19 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         btnImprimir = new javax.swing.JButton();
         txtBuscarAsis = new javax.swing.JTextField();
         lblResultados = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        lblSemana = new javax.swing.JLabel();
+        cmbSemana = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tblAsistencia = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Asistencia Alumnos");
-        setMaximumSize(new java.awt.Dimension(1243, 500));
-        setMinimumSize(new java.awt.Dimension(1243, 500));
-        setPreferredSize(new java.awt.Dimension(1074, 543));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1060, 550));
+        setPreferredSize(new java.awt.Dimension(1060, 558));
 
         lblPeriodoLectivoAsis.setText("Período Lectivo:");
 
@@ -162,9 +178,9 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         lblDocenteAsis.setText("Docente:");
 
-        jLabel2.setText("Asignatura:");
+        lblAsignaturaAsis.setText("Asignatura:");
 
-        jLabel3.setText("Horas Presenciales:");
+        lblHorasPresencialesAsis.setText("Horas Presenciales:");
 
         cmbDocenteAsis.setMinimumSize(new java.awt.Dimension(28, 20));
         cmbDocenteAsis.setPreferredSize(new java.awt.Dimension(28, 20));
@@ -177,37 +193,34 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         lblResultados.setText("0 Resultados");
 
+        lblSemana.setText("Semana");
+
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Nro.", "Cedula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "% Faltas", "Estado"
+                "Nro.", "Cédula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Faltas", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false, true
+                false, false, false, false, false, false, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblAsistencia);
+        jScrollPane2.setViewportView(tblAsistencia);
         if (tblAsistencia.getColumnModel().getColumnCount() > 0) {
-            tblAsistencia.getColumnModel().getColumn(1).setMinWidth(0);
-            tblAsistencia.getColumnModel().getColumn(1).setPreferredWidth(0);
-            tblAsistencia.getColumnModel().getColumn(1).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(6).setResizable(false);
+            tblAsistencia.getColumnModel().getColumn(7).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,15 +228,20 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblCicloAsis)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(lblSemana)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3))
+                                        .addComponent(lblHorasPresencialesAsis))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -238,7 +256,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                         .addGap(59, 59, 59)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(lblDocenteAsis)
-                                            .addComponent(jLabel2))))
+                                            .addComponent(lblAsignaturaAsis))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -255,11 +273,11 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(btnVerAsistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(0, 96, Short.MAX_VALUE)))
+                                                .addGap(0, 56, Short.MAX_VALUE)))
                                         .addGap(10, 10, 10)
-                                        .addComponent(btnBuscarAsis))))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                                        .addComponent(btnBuscarAsis)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +299,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                 .addComponent(lblCarreraAsis))
                             .addComponent(lblCarreraAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
+                                .addComponent(lblAsignaturaAsis)
                                 .addComponent(cmbAsignaturaAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
@@ -290,15 +308,19 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblCicloAsis)
-                        .addComponent(jLabel3)
+                        .addComponent(lblHorasPresencialesAsis)
                         .addComponent(lblHorasAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSemana)
+                        .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnImprimir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -315,17 +337,19 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbCicloAsis;
     private javax.swing.JComboBox<String> cmbDocenteAsis;
     private javax.swing.JComboBox<String> cmbPeriodoLectivoAsis;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> cmbSemana;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAsignaturaAsis;
     private javax.swing.JLabel lblCarreraAsis;
     private javax.swing.JLabel lblCarreraAsistencia;
     private javax.swing.JLabel lblCicloAsis;
     private javax.swing.JLabel lblDocenteAsis;
     private javax.swing.JLabel lblHorasAsis;
+    private javax.swing.JLabel lblHorasPresencialesAsis;
     private javax.swing.JLabel lblPeriodoLectivoAsis;
     private javax.swing.JLabel lblResultados;
+    private javax.swing.JLabel lblSemana;
     private javax.swing.JTable tblAsistencia;
     private javax.swing.JTextField txtBuscarAsis;
     // End of variables declaration//GEN-END:variables

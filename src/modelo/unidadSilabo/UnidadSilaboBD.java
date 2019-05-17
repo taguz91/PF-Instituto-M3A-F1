@@ -37,12 +37,12 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         this.conexion = conexion;
     }
 
-    public void insertar(UnidadSilaboMD u) {
+    public void insertar(UnidadSilaboMD u, int im) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"UnidadSilabo\"(\n"
                     + "	 numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, id_silabo, titulo_unidad)\n"
-                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT MAX(id_silabo) FROM \"Silabo\"), ?)");
+                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia="+im+" ), ?)");
 
             st.setInt(1, u.getNumeroUnidad());
             st.setString(2, u.getObjetivoEspecificoUnidad());
@@ -84,7 +84,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, titulo_unidad\n"
                     + "FROM public.\"UnidadSilabo\"\n"
-                    + "WHERE id_silabo=?");
+                    + "WHERE id_silabo=? ORDER BY numero_unidad");
 
             st.setInt(1, clave);
 
@@ -133,7 +133,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad\n"
                     + "FROM public.\"UnidadSilabo\"\n"
-                    + "WHERE id_silabo=?");
+                    + "WHERE id_silabo=? ORDER BY numero_unidad");
 
             st.setInt(1, clave);
 

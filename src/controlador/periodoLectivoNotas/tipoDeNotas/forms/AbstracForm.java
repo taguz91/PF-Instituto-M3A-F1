@@ -51,26 +51,29 @@ public abstract class AbstracForm {
     //INITS
     public void Init() {
         InitListas();
+        InitTablas();
 
         tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
         listaPeriodos = PeriodoLectivoBD.selectPeriodosFaltantes();
-        if (listaPeriodos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
-        } else {
 
-            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
-            InitTablas();
-            cargarComboCarreras();
-            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
-            setlblCarrera();
-            cargarTabla();
-            InitEventos();
+        if (modelo != null) {
+            if (listaPeriodos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
+            } else {
+
+                Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+                cargarComboCarreras();
+                listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
+                setlblCarrera();
+                cargarTabla();
+                InitEventos();
+            }
         }
     }
 
     private void InitEventos() {
-        vista.getBtnCancelar().addActionListener(e -> btnCancelar(e));
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
 
         vista.getBtnGuardar().addActionListener(e -> btnGuardar(e));
 
@@ -183,7 +186,6 @@ public abstract class AbstracForm {
         if (getModalidad().toLowerCase().contains("dual")) {
 
             listaDuales.removeAll(listaNombres);
-
             listaDuales.forEach(obj -> {
                 tabla.addRow(new Object[]{obj, 0, 100});
             });
@@ -200,19 +202,28 @@ public abstract class AbstracForm {
     protected void setObjs() {
 
         listaTipos = new ArrayList<>();
+        if (getModalidad().equalsIgnoreCase("presencial") || getModalidad().equalsIgnoreCase("tradicional")) {
+            setObjLista(listaTradicionales);
+        } else {
+            setObjLista(listaDuales);
+        }
 
-        listaDuales.stream()
+    }
+
+    private void setObjLista(List<String> lista) {
+        lista.stream()
                 .forEach(obj -> {
-                    int index = listaDuales.indexOf(obj);
+                    int index = 0;
                     TipoDeNotaBD tipo = new TipoDeNotaBD();
                     tipo.setNombre(obj);
                     tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
                     tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
+                    PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                    periodo.setId_PerioLectivo(getIdPeriodo());
+                    tipo.setPeriodoLectivo(periodo);
                     listaTipos.add(tipo);
-
-                    System.out.println("----->" + tipo);
+                    index++;
                 });
-
     }
 
     protected void validacion() {
@@ -252,11 +263,6 @@ public abstract class AbstracForm {
     }
 
     //PROCESADORES DE EVENTOS
-    private void btnCancelar(ActionEvent e) {
-        vista.dispose();
-
-    }
-
     protected abstract void btnGuardar(ActionEvent e);
 
     private void validarNotas() {

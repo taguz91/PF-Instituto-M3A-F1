@@ -1,6 +1,7 @@
 package modelo.alumno;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,7 +60,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     }
 
     public boolean guardarAlmnCurso() {
-        if (conecta.nosql(nsqlMatri) == null) {
+        PreparedStatement ps = conecta.getPS(nsqlMatri);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "No pudimos matricular al alumno, revise \n"
@@ -76,8 +78,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     }
 
     public boolean actualizarMatricula() {
-        System.out.println(nsqlMatriUpdate);
-        if (conecta.nosql(nsqlMatriUpdate) == null) {
+        PreparedStatement ps = conecta.getPS(nsqlMatriUpdate);
+        if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Editamos correctamente la matricula.");
             return true;
         } else {
@@ -85,7 +87,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                     + "su conexion a internet.");
             return false;
         }
-//        return true;
     }
 
     public void borrarActualizarMatricula() {
@@ -142,12 +143,14 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "almn_curso_num_faltas\n"
                 + "FROM public.\"AlumnoCurso\" "
                 + "WHERE id_almn_curso = " + idAlmnCurso + ";";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
                     almn = obtenerAlmCurso(rs);
                 }
+                ps.getConnection().close();
                 return almn;
             } else {
                 return null;
@@ -161,12 +164,14 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private ArrayList<AlumnoCursoMD> consultarAlmnCursos(String sql) {
         ArrayList<AlumnoCursoMD> almns = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
                     almns.add(obtenerAlmCurso(rs));
                 }
+                ps.getConnection().close();
                 return almns;
             } else {
                 return null;
@@ -194,8 +199,9 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	AND m.id_materia = c.id_materia\n"
                 + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + " "
                 + "     AND almn_curso_estado <> 'RETIRADO';";
+        PreparedStatement ps = conecta.getPS(sql);
         ArrayList<AlumnoCursoMD> cursos = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -213,6 +219,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                     cursos.add(ac);
                 }
+                ps.getConnection().close();
                 return cursos;
             } else {
                 return null;
@@ -264,7 +271,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private ArrayList<AlumnoCursoMD> consultaParaTblRetirados(String sql) {
         ArrayList<AlumnoCursoMD> almns = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -291,6 +299,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                     almns.add(ac);
                 }
+                ps.getConnection().close();
                 return almns;
             } else {
                 return null;
@@ -384,7 +393,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private ArrayList<AlumnoCursoMD> consultarAlmnCursosParaTblSimple(String sql) {
         ArrayList<AlumnoCursoMD> almns = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -400,6 +410,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                     almns.add(a);
                 }
+                ps.getConnection().close();
                 return almns;
             } else {
                 return null;
@@ -503,6 +514,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
+            pool.close(rs);
+            pool.closeStmt();
             pool.close(conn);
         }
         return lista;

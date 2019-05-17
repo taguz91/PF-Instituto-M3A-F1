@@ -3,6 +3,10 @@
 --con el mismo docente en la misma jornada
 ALTER TABLE public."Cursos" ADD UNIQUE(id_materia, id_prd_lectivo, id_docente,
 	id_jornada, curso_ciclo, curso_paralelo);
+
+ALTER TABLE public."Cursos" ADD UNIQUE(id_materia, id_prd_lectivo, id_docente,
+	id_jornada, curso_ciclo, curso_paralelo,curso_activo);
+
 ALTER TABLE public."Cursos" ADD UNIQUE(id_materia, id_prd_lectivo, id_jornada, curso_ciclo, curso_paralelo);
 
 ALTER TABLE public."MateriaRequisitos" ADD UNIQUE(id_materia, id_materia_requisito);

@@ -55,6 +55,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     private PersonaMD perEditar;
     private final PersonaBD per;
+    private final String tipoDocntes[] = {"Finalizado Contrato"};
 
     public VtnDocenteCTR(VtnDocente vtnDocente,
             VtnPrincipalCTR ctrPrin) {
@@ -71,6 +72,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
+        cargarCmbTipoDocentes();
         String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
 
@@ -87,7 +89,9 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
+        vtnDocente.getBtnReasignarM().addActionListener(e-> finContratacion());
         vtnDocente.getCbxDocentesEliminados().addActionListener(e -> cargarDocentes());
+        cargarTipoDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -113,6 +117,35 @@ public class VtnDocenteCTR extends DVtnCTR {
         });
 
         ctrPrin.agregarVtn(vtnDocente);
+        vtnDocente.getCmbTipoDocente().addActionListener(e-> cargarTipoDocentes());        
+    }
+
+    private void cargarCmbTipoDocentes() {
+
+        vtnDocente.getCmbTipoDocente().removeAllItems();
+        vtnDocente.getCmbTipoDocente().addItem("Todos");
+        for (String t : tipoDocntes) {
+            vtnDocente.getCmbTipoDocente().addItem(t);
+        }
+    }
+
+    public void cargarTipoDocentes() {
+        String tipo = vtnDocente.getCmbTipoDocente().getSelectedItem().toString();
+
+        switch (tipo) {
+
+            case "Finalizado Contrato":
+                docentesMD = docente.cargarDocentesFinContrato();
+                llenarTabla(docentesMD);
+                break;
+
+            default:
+                docentesMD = docente.cargarDocentes();
+                llenarTabla(docentesMD);
+                break;
+
+        }
+        System.out.println(" Tipo Docentes " + tipo);
     }
 
     private void cargarDocentes() {
@@ -407,7 +440,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
-
+    
     private void habilitarBotones() {
         vtnDocente.getBtnEliminar().setEnabled(true);
         vtnDocente.getBtnEditar().setEnabled(true);

@@ -78,7 +78,7 @@ public final class Middlewares {
             System.out.println("PATH ---------->" + path);
             conn = pool.getConnection();
             JasperPrint print = JasperFillManager.fillReport(jasper, parametros, conn);
-
+            
             JasperViewer view = new JasperViewer(print, false);
 
             view.setTitle(tituloVentana);
@@ -86,7 +86,6 @@ public final class Middlewares {
             view.setVisible(true);
 
         } catch (JRException ex) {
-
             JOptionPane.showMessageDialog(null, ex.getMessage());
             JOptionPane.showMessageDialog(null, "PATH\n" + path);
             JOptionPane.showMessageDialog(null, "PATH PROYECTO" + getProjectPath());

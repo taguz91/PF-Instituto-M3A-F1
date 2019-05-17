@@ -1,5 +1,6 @@
 package modelo.lugar;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class LugarBD extends LugarMD {
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
                 + "WHERE id_lugar ='" + idLugar + "'; ";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -33,6 +35,7 @@ public class LugarBD extends LugarMD {
                     lg.setNivel(rs.getString("lugar_nivel"));
                     lg.setNombre(rs.getString("lugar_nombre"));
                 }
+                ps.getConnection().close();
                 return lg;
             } else {
                 return null;
@@ -50,8 +53,8 @@ public class LugarBD extends LugarMD {
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
                 + "WHERE id_lugar_referencia IS NULL ORDER BY lugar_nombre;";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -65,6 +68,7 @@ public class LugarBD extends LugarMD {
 
                     lugares.add(lg);
                 }
+                ps.getConnection().close();
                 return lugares;
             } else {
                 return null;
@@ -83,8 +87,8 @@ public class LugarBD extends LugarMD {
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
                 + "WHERE id_lugar_referencia = '" + idReferencia + "' "
                 + "ORDER BY lugar_nombre;";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -98,6 +102,7 @@ public class LugarBD extends LugarMD {
 
                     lugares.add(lg);
                 }
+                ps.getConnection().close();
                 return lugares;
             } else {
                 return null;
@@ -115,8 +120,8 @@ public class LugarBD extends LugarMD {
         String sql = "SELECT id_lugar, lugar_codigo, lugar_nombre, lugar_nivel, "
                 + "id_lugar_referencia\n FROM public.\"Lugares\" "
                 + "WHERE lugar_nivel = '" + nivel + "';";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
 
         try {
             if (rs != null) {
@@ -130,6 +135,7 @@ public class LugarBD extends LugarMD {
 
                     lugares.add(lg);
                 }
+                ps.getConnection().close();
                 return lugares;
             } else {
                 return null;
