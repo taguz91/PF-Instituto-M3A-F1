@@ -96,13 +96,12 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
             CursoBD bdCurso = new CursoBD(ctrPrin.getConecta());
             DocenteMD d = new DocenteMD();
             MateriaBD bdMateria = new MateriaBD(ctrPrin.getConecta());
-            List<AlumnoCursoMD> alumnoCurso = new ArrayList<AlumnoCursoMD>();
-            cursoMD = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), periodo, docente, curso);
+            cursoMD = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), this.periodo, docente, curso);
             d.setIdDocente(dc.buscarDocente(frmReasignarMateria.getTblDocentesDisponibles().getValueAt(posFila, 0).toString()).getIdDocente());
             cursoMD.setDocente(d);
             System.out.println("docente " + d.getIdDocente());
             if(bdCurso.nuevoCurso(cursoMD) == true){
-                int curso_New = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), periodo, d.getIdDocente(), curso).getId();
+                int curso_New = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), this.periodo, d.getIdDocente(), curso).getId();
                 if(dc.reasignarAlumnoCurso(cursoMD.getId(), curso_New)){
                     if(dc.reasignarNotas(cursoMD.getId(), curso_New)){
                         JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");

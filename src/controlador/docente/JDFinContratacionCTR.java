@@ -142,11 +142,11 @@ public class JDFinContratacionCTR extends DVtnCTR {
 
     }
     
-    public void filtrarMaterias(String periodo){
-        System.out.println("Periodo " + periodo);
+    public void filtrarMaterias(String nombre_Periodo){
         DocenteBD d = new DocenteBD(ctrPrin.getConecta());
         PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
-        lista = d.capturarMaterias(p.capturarIdPeriodo(periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
+        lista = d.capturarMaterias(p.capturarIdPeriodo(nombre_Periodo).getId_PerioLectivo(), docenteMD.getIdDocente());
+        periodo = p.capturarIdPeriodo(nombre_Periodo).getId_PerioLectivo();
     }
 
     public void llenarTabla() {
@@ -399,8 +399,9 @@ public class JDFinContratacionCTR extends DVtnCTR {
     private void reasignarMateria() {
         posFila = frmFinContrato.getTblMateriasCursos().getSelectedRow();
         if (posFila >= 0) {
+            System.out.println("periodo" + periodo);
             JDReasignarMateriasCTR ctr = new JDReasignarMateriasCTR(ctrPrin, frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 0).toString(),
-            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), this.periodo, docenteMD.getIdDocente());
+            frmFinContrato.getTblMateriasCursos().getValueAt(posFila, 1).toString(), periodo, docenteMD.getIdDocente());
             ctr.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");

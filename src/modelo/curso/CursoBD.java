@@ -116,8 +116,6 @@ public class CursoBD extends CursoMD {
     }
 
     public boolean nuevoCurso(CursoMD c) {
-        System.out.println("curso " + c.getMateria().getId());
-        System.out.println("periodo " + c.getPeriodo().getId_PerioLectivo());
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
