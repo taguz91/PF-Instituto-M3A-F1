@@ -1271,10 +1271,13 @@ public class FrmPersonaCTR extends DCTR {
     }
 
     public void cargarCodigoPostal() {
+
         int posPa = frmPersona.getCmbParroquiaReside().getSelectedIndex();
         if (posPa > 0 && posPa < parroquias.size()) {
+
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
         } else {
+
             frmPersona.getTxtCodigoPostal().setText("");
         }
     }

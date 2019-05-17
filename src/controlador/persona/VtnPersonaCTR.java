@@ -230,8 +230,9 @@ public class VtnPersonaCTR extends DVtnCTR {
         posFila = vtnPersona.getTblPersona().getSelectedRow();
         if (posFila >= 0) {
             System.out.println("Este es el ID Persona: " + personas.get(posFila).getIdPersona());
+            System.out.println("Nombre Persona " + personas.get(posFila).getNombreCompleto());
             vtnPersona.getLblError().setVisible(false);
-            JDEditarIdentificacionCTR ctr = new JDEditarIdentificacionCTR(ctrPrin, vtnPersona.getTblPersona().getValueAt(posFila, 0).toString());
+            JDEditarIdentificacionCTR ctr = new JDEditarIdentificacionCTR(ctrPrin, vtnPersona.getTblPersona().getValueAt(posFila, 0).toString(), vtnPersona.getTblPersona().getValueAt(posFila, 2).toString());
             ctr.iniciar();
 
             PersonaMD perEditar = dbp.buscarPersona(

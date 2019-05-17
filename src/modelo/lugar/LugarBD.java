@@ -47,6 +47,34 @@ public class LugarBD extends LugarMD {
         }
     }
 
+    public void insertarLugar() {
+        LugarMD lu = new LugarMD();
+        String nsql = "INSERT INTO public.\"Lugares\"(id_lugar, lugar_codigo, "
+                + "lugar_nombre, lugar_nivel, id_lugar_referencia) \n"
+                + "values(" + getId() + ",'" + getCodigo() + "' ,'" + getNombre() 
+                + "'," + getNivel() + "," + getIdReferencia() + ");";
+
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se guardo correctamente");
+        }
+
+    }
+
+    public boolean editarLugar(int aguja) {
+        String sql = "UPDATE public.\"Lugares\" SET lugar_codigo = " + getCodigo() 
+                + " WHERE id_lugar = " + aguja + ";";
+
+        PreparedStatement ps = conecta.getPS(sql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se edito correctamente la identificacion");
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
     public ArrayList<LugarMD> buscarPaises() {
         ArrayList<LugarMD> lugares = new ArrayList();
 

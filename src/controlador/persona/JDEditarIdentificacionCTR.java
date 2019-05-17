@@ -7,6 +7,7 @@ package controlador.persona;
 
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JOptionPane;
@@ -15,7 +16,6 @@ import modelo.persona.PersonaMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVCedula;
 import modelo.validaciones.Validar;
-import vista.persona.FrmPersona;
 import vista.persona.JDEditarIdentificacion;
 
 /**
@@ -27,16 +27,17 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
     private final PersonaBD personaBD;
     private PersonaMD personaMD;
     private final JDEditarIdentificacion jdEditarIdentificacion;
-    private final String identificacion;
+    private final String identificacion, nombrePersona;
     private int idPersona = 0;
     private boolean editar = false;
     private int numAccion = 2;
     private TxtVCedula valCe;
 
-    public JDEditarIdentificacionCTR(VtnPrincipalCTR ctrPrin, String identificacion) {
+    public JDEditarIdentificacionCTR(VtnPrincipalCTR ctrPrin, String identificacion, String nombrePersona) {
         super(ctrPrin);
         this.personaBD = new PersonaBD(ctrPrin.getConecta());
         this.identificacion = identificacion;
+        this.nombrePersona = nombrePersona;
         this.jdEditarIdentificacion = new JDEditarIdentificacion(ctrPrin.getVtnPrin(), false);
         this.jdEditarIdentificacion.setLocationRelativeTo(ctrPrin.getVtnPrin());
         this.jdEditarIdentificacion.setVisible(true);
@@ -45,6 +46,10 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
     }
 
     public void iniciar() {
+        //Clase para mostrar el tecto en Negrita
+        Font negrita = new Font("Tahoma", Font.BOLD, 13);
+        jdEditarIdentificacion.getLblNombrePersona().setFont(negrita);
+        jdEditarIdentificacion.getLblNombrePersona().setText(nombrePersona);
         //Desactivamos el campo de identificacion porque debe ingresar primero el tipo de identificacion
         jdEditarIdentificacion.getTxtIdentificacion().setEnabled(false);
         personaMD = personaBD.buscarPersona(identificacion);
@@ -98,7 +103,7 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
     public void guardarIdentificacion() {
         String identifi;
         int tipoIdentifi;
-        boolean guardar = true; 
+        boolean guardar = true;
 
         identifi = jdEditarIdentificacion.getTxtIdentificacion().getText().trim().toUpperCase();
 
