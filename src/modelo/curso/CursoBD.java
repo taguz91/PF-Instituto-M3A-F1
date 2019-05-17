@@ -132,12 +132,13 @@ public class CursoBD extends CursoMD {
             return false;
         }
     }
-    
-    public List<AlumnoCursoMD> extraerAlumnosCurso(int curso){
+
+    public List<AlumnoCursoMD> extraerAlumnosCurso(int curso) {
         String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_asistencia, almn_curso_nota_final,"
                 + " almn_curso_num_faltas WHERE id_curso = " + curso + ";";
+        PreparedStatement ps = conecta.getPS(sql);
         List<AlumnoCursoMD> lista = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
                 AlumnoCursoMD c = new AlumnoCursoMD();
@@ -154,6 +155,7 @@ public class CursoBD extends CursoMD {
                 lista.add(c);
             }
             rs.close();
+            ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
@@ -161,8 +163,8 @@ public class CursoBD extends CursoMD {
             return null;
         }
     }
-    
-    public boolean nuevoAlumnoCurso(AlumnoCursoMD a, int curso){
+
+    public boolean nuevoAlumnoCurso(AlumnoCursoMD a, int curso) {
         String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
                 + "	id_alumno, id_curso, almn_curso_asistencia, almn_curso_nota_final, \n"
                 + "	almn_curso_estado, almn_curso_num_faltas, almn_curso_fecha_registro,\n"
@@ -170,20 +172,22 @@ public class CursoBD extends CursoMD {
                 + "	VALUES (" + a.getAlumno().getId_Alumno() + ", " + curso
                 + ", " + a.getAsistencia() + ", " + a.getNotaFinal()
                 + ", true, '" + a.getNumFalta() + "', now(), true);";
-        if (conecta.nosql(nsql) == null) {
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
             return true;
         } else {
             System.out.println("Error");
             return false;
         }
     }
-    
-    public CursoMD atraparCurso(int materia, int periodo, int docente, String curso){
+
+    public CursoMD atraparCurso(int materia, int periodo, int docente, String curso) {
         String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo\n"
+                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo, curso_activo\n"
                 + "	FROM public.\"Cursos\" WHERE id_materia = " + materia + "  AND id_prd_lectivo = " + periodo + ""
                 + "AND id_docente = " + docente + " AND curso_nombre LIKE '" + curso + "';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         CursoMD c = new CursoMD();
         try {
             if (rs != null) {
@@ -206,8 +210,10 @@ public class CursoBD extends CursoMD {
                     c.setCapacidad(rs.getInt("curso_capacidad"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
                     c.setParalelo(rs.getString("curso_paralelo"));
+                    c.setActivo(rs.getBoolean("curso_activo"));
                 }
                 rs.close();
+                ps.getConnection().close();
                 return c;
             } else {
                 return null;
@@ -380,7 +386,8 @@ public class CursoBD extends CursoMD {
                 + "m.id_materia = c.id_materia AND\n"
                 + "id_prd_lectivo = " + idPrdLectivo + " AND curso_activo = true;";
         ArrayList<CursoMD> cursos = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -397,6 +404,7 @@ public class CursoBD extends CursoMD {
 
                     cursos.add(c);
                 }
+                ps.getConnection().close();
                 return cursos;
             } else {
                 return null;
@@ -407,16 +415,18 @@ public class CursoBD extends CursoMD {
             return null;
         }
     }
-    
-    public CursoMD extraerId(String nombre){
+
+    public CursoMD extraerId(String nombre) {
         String sql = "SELECT id_curso FROM public.\"Cursos\" WHERE curso_nombre LIKE '" + nombre + "';";
         CursoMD c = new CursoMD();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
                     c.setId(rs.getInt("id_curso"));
                 }
+                ps.getConnection().close();
                 return c;
             } else {
                 return null;
@@ -454,7 +464,8 @@ public class CursoBD extends CursoMD {
                 + "d.id_docente = c.id_docente AND\n"
                 + "p.id_persona = d.id_persona AND curso_activo = true ;";
         ArrayList<CursoMD> cursos = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -474,6 +485,7 @@ public class CursoBD extends CursoMD {
 
                     cursos.add(c);
                 }
+                ps.getConnection().close();
                 return cursos;
             } else {
                 return null;
@@ -589,7 +601,7 @@ public class CursoBD extends CursoMD {
     private ArrayList<String> consultarNombreCursos(String sql) {
         ArrayList<String> nombres = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -611,7 +623,7 @@ public class CursoBD extends CursoMD {
     private CursoMD consultarCurso(String sql) {
         CursoMD c = null;
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {

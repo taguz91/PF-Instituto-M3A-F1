@@ -1,6 +1,5 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
-import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -13,7 +12,7 @@ import vista.principal.VtnPrincipal;
  */
 public class FrmTipoNotaEditar extends AbstracForm {
 
-    protected Integer PK = null;
+    protected int ID_PERIODO;
 
     public FrmTipoNotaEditar(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         super(desktop, vista, modelo, vtnPadre);
@@ -24,14 +23,35 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         Init();
 
-        PK = modelo.getIdTipoNota();
+        ID_PERIODO = modelo.getPeriodoLectivo().getId_PerioLectivo();
+
+        System.out.println("-------->" + vista.getCmbPeriodoLectivo().getSelectedItem().toString());
+
+        vista.getCmbPeriodoLectivo().setSelectedItem(modelo.getPeriodoLectivo().getNombre_PerLectivo());
+
+        System.out.println("-------->" + vista.getCmbPeriodoLectivo().getSelectedItem().toString());
+        listaTipos = TipoDeNotaBD.selectWhere(ID_PERIODO);
 
         vista.setTitle("Editar Tipo De Nota");
+        cargarUpdate();
+    }
+
+    public void cargarUpdate() {
+        tabla.setRowCount(0);
+        listaTipos.forEach(obj -> {
+            tabla.addRow(new Object[]{
+                obj.getNombre(),
+                obj.getValorMinimo(),
+                obj.getValorMaximo(),
+                obj.getIdTipoNota()
+            });
+        });
     }
 
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
+
     }
 
 }
