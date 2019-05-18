@@ -1821,7 +1821,7 @@ public class ControladorSilaboC {
                         EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                         esd.insertar(evd);
                     }
-                // hola}
+                // }
 
             }
         }
