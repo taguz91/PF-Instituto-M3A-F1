@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -99,6 +100,8 @@ public class FrmAsistenciaCTR {
     private void InitEventos() {
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboCiclo());
+        vista.getCmbDocenteAsis().addActionListener(e -> cargarComboSemanas());
+        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboSemanas());
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
@@ -296,7 +299,9 @@ public class FrmAsistenciaCTR {
 
     private void cargarComboSemanas() {
         try {
-
+              LocalDate fechaActual = LocalDate.now();
+              
+                      
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
 
@@ -366,9 +371,9 @@ public class FrmAsistenciaCTR {
 
     private void btnVerAsistencia(ActionEvent e) {
         if (cargarTabla) {
-            String modalidad = listaPeriodos.stream()
-                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                    .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
+//           // String modalidad = listaPeriodos.stream()
+//                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+//                    .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
             cargarTabla(tablaTrad, agregarFilasTrad());
