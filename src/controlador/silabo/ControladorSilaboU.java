@@ -844,7 +844,6 @@ public class ControladorSilaboU {
                 new SilaboBD(conexion).eliminar(silabo);
 
                 guardarSilabo();
-                silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
 
                 try {
                     Thread.sleep(1000);
@@ -876,7 +875,6 @@ public class ControladorSilaboU {
                     new SilaboBD(conexion).eliminar(silabo);
 
                     guardarSilabo();
-                    silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
                     JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
 
                     principal.getLblEstado().setText("");
@@ -916,7 +914,6 @@ public class ControladorSilaboU {
                     new SilaboBD(conexion).eliminar(silabo);
 
                     guardarSilabo();
-                    silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
 
                     principal.getLblEstado().setText("");
 
@@ -1554,6 +1551,9 @@ public class ControladorSilaboU {
     }
 
     public void insertarUnidades() {
+        
+         silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId(), silabo.getIdPeriodoLectivo().getId_PerioLectivo()).getIdSilabo());
+
 
         /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
         
@@ -1573,7 +1573,7 @@ public class ControladorSilaboU {
 
             umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd, silabo.getIdMateria().getId());
+            ubd.insertar(umd, umd.getIdSilabo().getIdSilabo());
 
             //Integer aux = umd.getIdSilabo().getIdSilabo();
 
@@ -1582,7 +1582,7 @@ public class ControladorSilaboU {
                 //if (aux.equals(silabo.getIdSilabo())) {
                     if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
-                        ebd.insertar(emd);
+                        ebd.insertar(emd,UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo()).getIdUnidad());
                     }
                 //}
 
@@ -1593,7 +1593,7 @@ public class ControladorSilaboU {
                 //if (aux.equals(silabo.getIdSilabo())) {
                     if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                         EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                        esd.insertar(evd);
+                        esd.insertar(evd,UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo()).getIdUnidad());
                     }
                 //}
 

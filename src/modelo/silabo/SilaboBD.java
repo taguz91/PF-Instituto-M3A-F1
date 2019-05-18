@@ -389,12 +389,13 @@ public class SilaboBD extends SilaboMD {
     }
     
     
-    public static SilaboMD consultarUltimo(ConexionBD conexion,int id){
+    public static SilaboMD consultarUltimo(ConexionBD conexion,int im,int ip){
         SilaboMD silabo = null;
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia=?");
-            st.setInt(1, id);
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo FROM \"Silabo\" WHERE id_materia=? AND id_prd_lectivo=?");
+            st.setInt(1, im);
+            st.setInt(2, ip);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 silabo = new SilaboMD();

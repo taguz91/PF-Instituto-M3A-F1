@@ -37,12 +37,12 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         this.conexion = conexion;
     }
 
-    public void insertar(UnidadSilaboMD u, int im) {
+    public void insertar(UnidadSilaboMD u, int is) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"UnidadSilabo\"(\n"
                     + "	 numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, id_silabo, titulo_unidad)\n"
-                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia="+im+" ), ?)");
+                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,"+is+", ?)");
 
             st.setInt(1, u.getNumeroUnidad());
             st.setString(2, u.getObjetivoEspecificoUnidad());
@@ -189,5 +189,26 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return unidades;
+    }
+    
+    public static UnidadSilaboMD consultarUltima(ConexionBD conexion,int is){
+        UnidadSilaboMD unidad = null;
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_unidad) FROM \"UnidadSilabo\" WHERE id_silabo=?");
+            st.setInt(1, is);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                unidad = new UnidadSilaboMD();
+
+                unidad.setIdUnidad(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return unidad;
     }
 }
