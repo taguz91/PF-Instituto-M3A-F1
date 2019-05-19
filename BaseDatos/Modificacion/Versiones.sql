@@ -10,6 +10,13 @@ CREATE TABLE "Versiones"(
   CONSTRAINT verison_pk PRIMARY KEY("id_version")
 ) WITH (OIDS = FALSE);
 
+--Select
+SELECT id_version, usu_username,
+version, nombre
+FROM public."Versiones"
+WHERE version_activa = true
+ORDER BY fecha DESC;
+
 --Insertamos
 INSERT INTO public."Versiones"(usu_username,
   version, nombre, url, notas)

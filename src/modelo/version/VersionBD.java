@@ -2,7 +2,9 @@ package modelo.version;
 
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 
@@ -83,6 +85,49 @@ public class VersionBD extends VersionMD {
             System.out.println("No pudimos eliminar: " + e.getMessage());
             return false;
         }
+    }
+
+    public ArrayList<VersionMD> cargarVersionesActivas() {
+        String sql = "SELECT id_version, usu_username,\n"
+                + "version, nombre\n"
+                + "FROM public.\"Versiones\"\n"
+                + "WHERE version_activa = true\n"
+                + "ORDER BY fecha DESC;";
+        PreparedStatement ps = conecta.getPS(sql);
+        return consultarParaTbl(ps);
+    }
+
+    public ArrayList<VersionMD> cargarVersionesEliminadas() {
+        String sql = "SELECT id_version, usu_username,\n"
+                + "version, nombre\n"
+                + "FROM public.\"Versiones\"\n"
+                + "WHERE version_activa = false\n"
+                + "ORDER BY fecha DESC;";
+        PreparedStatement ps = conecta.getPS(sql);
+        return consultarParaTbl(ps);
+    }
+
+    private ArrayList<VersionMD> consultarParaTbl(PreparedStatement ps) {
+        ArrayList<VersionMD> versiones = null;
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                versiones = new ArrayList<>();
+                while (rs.next()) {
+                    VersionMD v = new VersionMD();
+                    v.setId(rs.getInt("id_version"));
+                    v.setNombre(rs.getString("nombre"));
+                    v.setVersion(rs.getString("version"));
+                    v.setUsername(rs.getString("usu_username"));
+
+                    versiones.add(v);
+                }
+            } catch (SQLException e) {
+                System.out.println("No pudimos consultar versiones: " + e.getMessage());
+            }
+        }
+        conecta.cerrar(ps);
+        return versiones;
     }
 
 }

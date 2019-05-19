@@ -1,5 +1,6 @@
 package controlador.principal;
 
+import controlador.version.JDVersionCTR;
 import controlador.Libraries.Effects;
 import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
@@ -1016,7 +1017,7 @@ public class VtnPrincipalCTR {
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
             if (c.equals("e")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, this);
+                JDVersionCTR ctr = new JDVersionCTR(vtnPrin, this);
                 ctr.iniciar();
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",

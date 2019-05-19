@@ -1,8 +1,6 @@
 package modelo;
 
 import java.io.File;
-import java.io.IOException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,8 +8,15 @@ import javax.swing.JOptionPane;
  */
 public class Constantes {
 
+    //Modo del proyecto 
+    public static final boolean M_DESARROLLO = true;
+    //Nombre de las propiedadesde la base de matos
+    public static final String BD_DATABASE = "database", BD_IP = "ip", BD_PUERTO = "port";
     //Direccion de las propiedades de base de datos
     public static final String BD_DIR = "configuracion.properties";
+    //Nombre de las propiedades la version
+    public static final String V_AUTOR = "Autor", V_NOMBRE = "Nombre", V_VERSION = "Version",
+            V_NOTAS = "Notas", V_FECHA = "Fecha";
     //Direccion de las propiedades de version  
     public static final String V_DIR = "version.properties";
 
@@ -19,23 +24,6 @@ public class Constantes {
     public static String getDir() {
         File dir = new File("./");
         return dir.getAbsolutePath();
-    }
-
-    //Para ejecutar jars 
-    public static void ejecutarJAR(String nombre) {
-        //Corremos el programa desde consola
-        try {
-            String cmd = nombre + ".jar";
-            File jar = new File(cmd);
-            System.out.println(cmd);
-            String cmda = "java -jar " + jar.getAbsolutePath();
-            System.out.println(cmda);
-            Runtime.getRuntime().exec(cmda);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Permisos denegados \n"
-                    + "ejecute el programa manualmente.");
-        }
-
     }
 
 }
