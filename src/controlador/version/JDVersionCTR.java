@@ -37,7 +37,9 @@ public class JDVersionCTR extends DVtnCTR {
     }
 
     private void iniciarAcciones() {
-        jd.getBtnIngresarVersion().addActionListener(e -> ingresar());
+        jd.getBtnIngresar().addActionListener(e -> clickIngresar());
+        jd.getBtnEditar().addActionListener(e -> clickEditar());
+        jd.getBtnEliminar().addActionListener(e -> clickEliminar());
         jd.getCbxEliminados().addActionListener(e -> clickEliminados());
     }
 
@@ -50,8 +52,12 @@ public class JDVersionCTR extends DVtnCTR {
     private void clickEliminados() {
         if (jd.getCbxEliminados().isSelected()) {
             cargarEliminados();
+            jd.getBtnEditar().setEnabled(false);
+            jd.getBtnEliminar().setEnabled(false);
         } else {
             cargarDatos();
+            jd.getBtnEditar().setEnabled(true);
+            jd.getBtnEliminar().setEnabled(true);
         }
     }
 
@@ -60,7 +66,7 @@ public class JDVersionCTR extends DVtnCTR {
         llenarTbl(versiones);
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         versiones = ver.cargarVersionesActivas();
         llenarTbl(versiones);
     }
@@ -75,9 +81,27 @@ public class JDVersionCTR extends DVtnCTR {
         }
     }
 
-    private void ingresar() {
-        FrmVersionCTR ctr = new FrmVersionCTR(ctrPrin, ver);
+    private void clickIngresar() {
+        FrmVersionCTR ctr = new FrmVersionCTR(ctrPrin, ver, this);
         ctr.iniciar();
+    }
+
+    private void clickEditar() {
+        posFila = jd.getTblVersiones().getSelectedRow();
+        if (posFila >= 0) {
+            FrmVersionCTR ctr = new FrmVersionCTR(ctrPrin, ver, this);
+            ctr.iniciar();
+            ctr.editar(versiones.get(posFila).getId());
+        }
+    }
+
+    private void clickEliminar() {
+        posFila = jd.getTblVersiones().getSelectedRow();
+        if (posFila >= 0) {
+            if (ver.eliminar(versiones.get(posFila).getId())) {
+                cargarDatos();
+            }
+        }
     }
 
 }

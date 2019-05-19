@@ -26,8 +26,8 @@ public class JDVersion extends javax.swing.JDialog {
         return lblTitulo;
     }
 
-    public JButton getBtnIngresarVersion() {
-        return btnIngresarVersion;
+    public JButton getBtnIngresar() {
+        return btnIngresar;
     }
 
     public JTable getTblVersiones() {
@@ -40,6 +40,14 @@ public class JDVersion extends javax.swing.JDialog {
 
     public JCheckBox getCbxEliminados() {
         return cbxEliminados;
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
     }
 
     /**
@@ -55,7 +63,9 @@ public class JDVersion extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         cbxEliminados = new javax.swing.JCheckBox();
-        btnIngresarVersion = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         pnlVersion = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -85,9 +95,13 @@ public class JDVersion extends javax.swing.JDialog {
             .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        cbxEliminados.setText("Ver versiones inactivas");
+        cbxEliminados.setText("Ver eliminados");
 
-        btnIngresarVersion.setText("Ingresar");
+        btnIngresar.setText("Ingresar");
+
+        btnEditar.setText("Editar");
+
+        btnEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -95,7 +109,11 @@ public class JDVersion extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnIngresarVersion)
+                .addComponent(btnIngresar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbxEliminados)
                 .addContainerGap())
@@ -106,7 +124,9 @@ public class JDVersion extends javax.swing.JDialog {
                 .addGap(0, 7, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxEliminados)
-                    .addComponent(btnIngresarVersion)))
+                    .addComponent(btnIngresar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar)))
         );
 
         jPanel3.setBackground(new java.awt.Color(235, 192, 36));
@@ -178,7 +198,9 @@ public class JDVersion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresarVersion;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JCheckBox cbxEliminados;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

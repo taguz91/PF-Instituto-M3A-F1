@@ -1013,12 +1013,28 @@ public class VtnPrincipalCTR {
         pass.setFocusable(true);
         pass.requestFocus();
         pass.selectAll();
+        //Para comprobar si puede entrar o no 
+        boolean entrar = true;
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("e")) {
-                JDVersionCTR ctr = new JDVersionCTR(vtnPrin, this);
-                ctr.iniciar();
+            if (c.length() > 3) {
+                if (c.charAt(c.length() - 1) != c.charAt(0)) {
+                    entrar = false;
+                }
+                
+                if (c.charAt(c.length() - 3) != c.charAt(2)) {
+                    entrar = false;
+                }
+
+                if (entrar) {
+                    JDVersionCTR ctr = new JDVersionCTR(vtnPrin, this);
+                    ctr.iniciar();
+                } else {
+                    JOptionPane.showMessageDialog(vtnPrin, "Entrar aqui es peligroso.\n"
+                            + "Es mejor que corras esponja!!!", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
                         JOptionPane.WARNING_MESSAGE);
@@ -1027,6 +1043,7 @@ public class VtnPrincipalCTR {
                 JOptionPane.showMessageDialog(vtnPrin, "Quieto ahi esponja.", "Error",
                         JOptionPane.WARNING_MESSAGE);
             }
+
         }
 
     }

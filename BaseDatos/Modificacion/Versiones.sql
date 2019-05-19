@@ -10,6 +10,12 @@ CREATE TABLE "Versiones"(
   CONSTRAINT verison_pk PRIMARY KEY("id_version")
 ) WITH (OIDS = FALSE);
 
+--Slect todo
+SELECT id_version, usu_username,
+version, nombre, url, notas
+FROM public."Versiones"
+WHERE id_version = ?;
+
 --Select
 SELECT id_version, usu_username,
 version, nombre
@@ -30,4 +36,13 @@ UPDATE public."Versiones"
 --Activamos
 UPDATE public."Versiones"
   SET version_activa = true
+  WHERE id_version = ?;
+
+--Editamos
+UPDATE public."Versiones" SET
+  usu_username = ?,
+  version = ?,
+  nombre = ?,
+  url = ?,
+  notas = ?
   WHERE id_version = ?;

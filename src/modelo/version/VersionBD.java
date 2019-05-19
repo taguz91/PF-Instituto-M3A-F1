@@ -34,10 +34,41 @@ public class VersionBD extends VersionMD {
             ps.setString(5, getNotas());
 
             if (conecta.nosql(ps) == null) {
-                JOptionPane.showMessageDialog(null, "Se guardar correctamente la version.");
+                JOptionPane.showMessageDialog(null, "Se guardo correctamente la version.");
                 return true;
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo guardar la version.");
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar el statement: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean editar(int idVersion) {
+        String nsql = "UPDATE public.\"Versiones\" SET \n"
+                + "  usu_username = ?, \n"
+                + "  version = ?, \n"
+                + "  nombre = ?, \n"
+                + "  url = ?,\n"
+                + "  notas = ?\n"
+                + "  WHERE id_version = ?;";
+        PreparedStatement ps = conecta.getPS(nsql);
+
+        try {
+            ps.setString(1, getUsername());
+            ps.setString(2, getVersion());
+            ps.setString(3, getNombre());
+            ps.setString(4, getUrl());
+            ps.setString(5, getNotas());
+            ps.setInt(6, idVersion);
+
+            if (conecta.nosql(ps) == null) {
+                JOptionPane.showMessageDialog(null, "Se edito correctamente la version.");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo editar la version.");
                 return false;
             }
         } catch (SQLException e) {
@@ -52,7 +83,7 @@ public class VersionBD extends VersionMD {
                 + "  WHERE id_version = ?;";
         PreparedStatement ps = conecta.getPS(nsql);
         try {
-            ps.setInt(0, idVersion);
+            ps.setInt(1, idVersion);
             if (conecta.nosql(ps) == null) {
                 JOptionPane.showMessageDialog(null, "Se elimino correctamente la version.");
                 return true;
@@ -64,7 +95,6 @@ public class VersionBD extends VersionMD {
             System.out.println("No pudimos eliminar: " + e.getMessage());
             return false;
         }
-
     }
 
     public boolean activar(int idVersion) {
@@ -73,7 +103,7 @@ public class VersionBD extends VersionMD {
                 + "  WHERE id_version = ?;";
         PreparedStatement ps = conecta.getPS(nsql);
         try {
-            ps.setInt(0, idVersion);
+            ps.setInt(1, idVersion);
             if (conecta.nosql(ps) == null) {
                 JOptionPane.showMessageDialog(null, "Se activo correctamente la version.");
                 return true;
@@ -128,6 +158,69 @@ public class VersionBD extends VersionMD {
         }
         conecta.cerrar(ps);
         return versiones;
+    }
+
+    public VersionMD existeVersion(String nombre, String version) {
+        String sql = "SELECT id_version, usu_username \n"
+                + "FROM public.\"Versiones\"\n"
+                + "WHERE nombre ILIKE '%" + nombre + "%' \n"
+                + "AND version = ? \n"
+                + "AND version_activa = true;";
+        VersionMD v = null;
+        PreparedStatement ps = conecta.getPS(sql);
+        try {
+            ps.setString(1, version);
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar la consulta: " + e.getMessage());
+        }
+
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                v = new VersionMD();
+                while (rs.next()) {
+                    v.setId(rs.getInt(1));
+                    v.setUsername(rs.getString(2));
+                }
+            } catch (SQLException e) {
+                System.out.println("No pudimos consultar la version: " + e.getMessage());
+            }
+        }
+        conecta.cerrar(ps);
+        return v;
+    }
+
+    public VersionMD consultarVersion(int idVersion) {
+        String sql = "SELECT id_version, usu_username,\n"
+                + "version, nombre, url, notas\n"
+                + "FROM public.\"Versiones\"\n"
+                + "WHERE id_version = ?;";
+        VersionMD v = null;
+        PreparedStatement ps = conecta.getPS(sql);
+        try {
+            ps.setInt(1, idVersion);
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar la consulta: " + e.getMessage());
+        }
+
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                v = new VersionMD();
+                while (rs.next()) {
+                    v.setId(rs.getInt("id_version"));
+                    v.setUsername(rs.getString("usu_username"));
+                    v.setVersion(rs.getString("version"));
+                    v.setNombre(rs.getString("nombre"));
+                    v.setUrl(rs.getString("url"));
+                    v.setNotas(rs.getString("notas"));
+                }
+            } catch (SQLException e) {
+                System.out.println("No pudimos consultar la version: " + e.getMessage());
+            }
+        }
+        conecta.cerrar(ps);
+        return v;
     }
 
 }
