@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.persona.AlumnoBD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
@@ -25,12 +22,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private static ConnDBPool pool;
+    private final static ConnDBPool POOL;
     private static Connection conn;
     private static ResultSet rst;
 
     static {
-        pool = new ConnDBPool();
+        POOL = new ConnDBPool();
     }
 
     public PeriodoLectivoBD(ConectarDB conecta) {
@@ -107,7 +104,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     }
 
     public List<PeriodoLectivoMD> periodoDocente(int aguja) {
-        System.out.println("docente " + aguja);
         String sql = "SELECT DISTINCT p.prd_lectivo_nombre, p.id_prd_lectivo FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
                 + "public.\"Docentes\" d USING(id_docente)\n"
                 + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
@@ -579,8 +575,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
 
-        conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        conn = POOL.getConnection();
+        rst = POOL.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -606,7 +602,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            POOL.close(conn);
         }
         return lista;
     }
@@ -620,8 +616,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         System.out.println("-->" + SELECT);
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
-        conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        conn = POOL.getConnection();
+        rst = POOL.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -635,7 +631,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
-            pool.close(conn);
+            POOL.close(conn);
         }
         return lista;
     }
@@ -679,8 +675,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
         //System.out.println(SELECT);
-        conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        conn = POOL.getConnection();
+        rst = POOL.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -702,7 +698,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            POOL.close(conn);
         }
 
         return map;

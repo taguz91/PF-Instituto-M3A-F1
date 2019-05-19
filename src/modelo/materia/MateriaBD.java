@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
 
@@ -19,20 +18,18 @@ import modelo.curso.CursoMD;
 public class MateriaBD extends MateriaMD {
 
     private final ConectarDB conecta;
-    private final CarreraBD car;
     private String sqlg;
 
-    private static ConnDBPool pool;
+    private final static ConnDBPool POOL;
     private static Connection conn;
     private static ResultSet rst;
 
     static {
-        pool = new ConnDBPool();
+        POOL = new ConnDBPool();
     }
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.car = new CarreraBD(conecta);
     }
 
     public boolean insertarMateria() {
@@ -579,14 +576,14 @@ public class MateriaBD extends MateriaMD {
             m.setCodigo(rs.getString("materia_codigo"));
             m.setNombre(rs.getString("materia_nombre"));
             numero = rs.getInt("materia_ciclo");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setCiclo(0);
             } else {
                 m.setCiclo(numero);
             }
 
             numero = rs.getInt("materia_creditos");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setCreditos(0);
             } else {
                 m.setCreditos(numero);
@@ -614,35 +611,35 @@ public class MateriaBD extends MateriaMD {
             }
 
             numero = rs.getInt("materia_horas_docencia");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setHorasDocencia(0);
             } else {
                 m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
             }
 
             numero = rs.getInt("materia_horas_practicas");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setHorasPracticas(0);
             } else {
                 m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
             }
 
             numero = rs.getInt("materia_horas_presencial");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setHorasPresenciales(0);
             } else {
                 m.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
             }
 
             numero = rs.getInt("materia_horas_auto_estudio");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setHorasAutoEstudio(0);
             } else {
                 m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
             }
 
             numero = rs.getInt("materia_total_horas");
-            if (numero == null) {
+            if (numero == 0) {
                 m.setTotalHoras(0);
             } else {
                 m.setTotalHoras(rs.getInt("materia_total_horas"));
@@ -709,8 +706,8 @@ public class MateriaBD extends MateriaMD {
 
         List<MateriaMD> lista = new ArrayList<>();
 
-        conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        conn = POOL.getConnection();
+        rst = POOL.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -723,7 +720,7 @@ public class MateriaBD extends MateriaMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            POOL.close(conn);
         }
         return lista;
 

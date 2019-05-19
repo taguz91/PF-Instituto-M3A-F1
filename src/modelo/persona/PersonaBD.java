@@ -532,29 +532,29 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
-    //Buscar Persona con aguja
-    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
-        String sql = "SELECT id_persona, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-                + " persona_celular "
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-                + " id_persona = " + idPersona + ";";
+//    //Buscar Persona con aguja
+//    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
+//        String sql = "SELECT id_persona, persona_identificacion,"
+//                + " persona_primer_apellido, persona_segundo_apellido, "
+//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+//                + " persona_celular "
+//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+//                + " id_persona = " + idPersona + ";";
+//
+//        return consultarParaReferencia(sql);
+//    }
 
-        return consultarParaReferencia(sql);
-    }
-
-    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
-        String sql = "SELECT id_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-                + " persona_celular "
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-                + " persona_identificacion ='" + identificacion + "'";
-
-        return consultarParaReferencia(sql);
-    }
+//    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
+//        String sql = "SELECT id_persona, id_lugar_natal, "
+//                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+//                + " persona_primer_apellido, persona_segundo_apellido, "
+//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+//                + " persona_celular "
+//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+//                + " persona_identificacion ='" + identificacion + "'";
+//
+//        return consultarParaReferencia(sql);
+//    }
 
     private PersonaMD consultarParaReferencia(String sql) {
         PersonaMD p = new PersonaMD();

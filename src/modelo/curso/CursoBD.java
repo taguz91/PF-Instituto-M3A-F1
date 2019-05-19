@@ -10,14 +10,10 @@ import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
-import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
-import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
-import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
-import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
 /**
@@ -26,26 +22,18 @@ import modelo.persona.DocenteMD;
  */
 public class CursoBD extends CursoMD {
 
-    private final MateriaBD mat;
-    private final PeriodoLectivoBD prd;
-    private final DocenteBD doc;
-    private final JornadaBD jrd;
     private final ConectarDB conecta;
 
-    private static ConnDBPool pool;
+    private final static ConnDBPool POOL;
     private static Connection conn;
-    private static ResultSet rs;
+    private static ResultSet rst;
 
     static {
-        pool = new ConnDBPool();
+        POOL = new ConnDBPool();
     }
 
     public CursoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.mat = new MateriaBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        this.doc = new DocenteBD(conecta);
-        this.jrd = new JornadaBD(conecta);
     }
 
     private void iniciarIngresoNotas() {
@@ -699,17 +687,17 @@ public class CursoBD extends CursoMD {
                 + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
 
         List<String> lista = new ArrayList<>();
-        conn = pool.getConnection();
-        rs = pool.ejecutarQuery(SELECT, conn, null);
+        conn = POOL.getConnection();
+        rst = POOL.ejecutarQuery(SELECT, conn, null);
 
         try {
-            while (rs.next()) {
-                lista.add(rs.getString("curso_nombre"));
+            while (rst.next()) {
+                lista.add(rst.getString("curso_nombre"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            POOL.close(conn);
         }
         return lista;
     }

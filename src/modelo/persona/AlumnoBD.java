@@ -355,13 +355,13 @@ public class AlumnoBD extends AlumnoMD {
                 a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                 a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 numero = rs.getInt("id_alumno");
-                if (numero == null) {
+                if (numero == 0) {
                     a.setId_Alumno(0);
                 } else {
                     a.setId_Alumno(numero);
                 }
                 numero = rs.getInt("id_sec_economico");
-                if (numero == null) {
+                if (numero == 0) {
                     sector.setId_SecEconomico(0);
                     a.setSectorEconomico(sector);
                 } else {
@@ -592,40 +592,6 @@ public class AlumnoBD extends AlumnoMD {
             return a;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar alumnos: " + ex.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Este método extrae todos las IDs de un Alumno (Persona, Alumno) en
-     * específico
-     *
-     * @param idAlumno. Se debe insertar un int como Id de Alumno
-     * @return Retorna un objeto de la Clase AlumnoMD con los datos filtrados
-     */
-    public AlumnoMD buscarAlumnoParaReferencia(int idAlumno) {
-        AlumnoMD al = new AlumnoMD();
-        String sql = "SELECT id_alumno, id_persona\n"
-                + "	FROM public.\"Alumnos\" WHERE alumno_activo = true AND "
-                + "id_alumno = " + idAlumno + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-
-                    al.setId_Alumno(rs.getInt("id_alumno"));
-                    PersonaMD p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
-                    al.setPersona(p);
-                }
-                ps.getConnection().close();
-                return al;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudo consultar alumnos");
-            System.out.println(e.getMessage());
             return null;
         }
     }
