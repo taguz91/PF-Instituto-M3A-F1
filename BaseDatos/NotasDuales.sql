@@ -92,7 +92,7 @@ WHERE
 
 
 
-
+------ SELECT  REPROADOS > 70
 	SELECT
 	"public"."AlumnoCurso".id_almn_curso,
 	"public"."AlumnoCurso".almn_curso_nota_final,
@@ -111,3 +111,31 @@ WHERE
 	AND (( 100 * "AlumnoCurso".almn_curso_num_faltas ) / "Materias".materia_horas_presencial ) < 25 
 ORDER BY
 	"AlumnoCurso".id_almn_curso
+
+
+-------- SELECT APROBADOS < 70
+SELECT
+"public"."AlumnoCurso".id_almn_curso,
+"public"."AlumnoCurso".almn_curso_nota_final,
+"public"."AlumnoCurso".almn_curso_estado,
+"public"."AlumnoCurso".almn_curso_asistencia,
+( 100 * "AlumnoCurso".almn_curso_num_faltas ) / "Materias".materia_horas_presencial AS porcentaje,
+"public"."PeriodoLectivo".prd_lectivo_nombre,
+"public"."Docentes".docente_codigo,
+"public"."Cursos".curso_nombre
+FROM
+"public"."AlumnoCurso"
+INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia
+INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+WHERE
+"public"."AlumnoCurso".almn_curso_activo AND
+"public"."Cursos".id_prd_lectivo IN (4, 8) AND
+"public"."AlumnoCurso".almn_curso_estado = 'APROBADO' AND
+"public"."AlumnoCurso".almn_curso_nota_final < 70 AND
+((((( 100 * "AlumnoCurso".almn_curso_num_faltas ) / "Materias".materia_horas_presencial ) < 25)))
+ORDER BY
+"public"."AlumnoCurso".id_almn_curso ASC
+
+

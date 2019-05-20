@@ -143,7 +143,7 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
         btnActualizar.setText("Actualizar");
 
         lblEstado.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        lblEstado.setForeground(new java.awt.Color(153, 255, 153));
+        lblEstado.setForeground(new java.awt.Color(0, 0, 0));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setText("Buscar");
