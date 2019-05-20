@@ -6,6 +6,6 @@ CREATE TABLE "versiones"(
   url character varying(500) NOT NULL,
   notas text NOT NULL DEFAULT,
   fecha TIMESTAMP DEFAULT now(),
-  version_activa boolean DEFAULT 'false',
+  version_activa boolean DEFAULT 'true',
   CONSTRAINT verison_pk PRIMARY KEY("id_version")
 ) WITH (OIDS = FALSE);

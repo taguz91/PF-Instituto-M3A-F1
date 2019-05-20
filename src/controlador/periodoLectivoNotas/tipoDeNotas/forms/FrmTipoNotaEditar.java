@@ -1,7 +1,10 @@
 package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 
+import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
+import javax.swing.table.DefaultTableModel;
+import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -19,20 +22,26 @@ public class FrmTipoNotaEditar extends AbstracForm {
     }
 
     //INITS
-    public void InitEditar() {
+    @Override
+    public void Init() {
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
-        Init();
+        tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
         ID_PERIODO = modelo.getPeriodoLectivo().getId_PerioLectivo();
 
-        vista.getCmbPeriodoLectivo().setSelectedItem(modelo.getPeriodoLectivo().getNombre_PerLectivo());
+        vista.getCmbPeriodoLectivo().addItem(modelo.getPeriodoLectivo().getNombre_PerLectivo());
 
-        System.out.println("---->" + modelo.getPeriodoLectivo().getNombre_PerLectivo());
+        listaPeriodos = new PeriodoLectivoBD().selectWhere(modelo.getPeriodoLectivo().getNombre_PerLectivo());
+
+        setlblCarrera();
 
         listaTipos = TipoDeNotaBD.selectWhere(ID_PERIODO);
-
+        vista.getCmbPeriodoLectivo().setEditable(false);
         vista.setTitle("Editar Tipo De Nota");
-
+        InitEventos();
+        InitTablas();
+        InitListas();
         cargarUpdate();
     }
 
@@ -51,7 +60,19 @@ public class FrmTipoNotaEditar extends AbstracForm {
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
+        new Thread(() -> {
 
+            Effects.setText(vtnPadre.getVista().getLblEstado(), "SE ESTA EDITANDO LAS NOTAS", 2);
+
+            setObjs();
+
+            listaTipos.forEach(obj -> {
+                obj.editar(obj.getIdTipoNota());
+            });
+
+            Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
+        }).start();
+        vista.dispose();
     }
 
 }

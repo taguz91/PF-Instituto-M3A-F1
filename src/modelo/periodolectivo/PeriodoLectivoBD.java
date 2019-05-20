@@ -9,19 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.persona.AlumnoBD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     //Para guardar carrera en un periodo  
-    private final CarreraBD car;
+    private CarreraBD car;
 
     private CarreraMD carrera;
 
@@ -31,6 +28,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     static {
         pool = new ConnDBPool();
+    }
+
+    public PeriodoLectivoBD() {
     }
 
     public PeriodoLectivoBD(ConectarDB conecta) {
@@ -611,7 +611,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static List<PeriodoLectivoMD> SelectAll() {
+    public static List<PeriodoLectivoMD> selectIdNombreAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
@@ -676,6 +676,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\n"
                 + "ORDER BY p1.prd_lectivo_nombre";
 
+        System.out.println(SELECT);
+
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
         //System.out.println(SELECT);
@@ -707,5 +709,54 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         return map;
     }
-    
+
+    public Map<String, PeriodoLectivoMD> selectWhere(String nombrePeriodo) {
+
+        String SELECT = "SELECT DISTINCT\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".id_carrera,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"Carreras\".carrera_nombre,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
+                + "FROM\n"
+                + "	\"PeriodoLectivo\" \n"
+                + "	INNER JOIN \"public\".\"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre = ?";
+        Map<String, PeriodoLectivoMD> map = new HashMap<>();
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, nombrePeriodo);
+
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, parametros);
+
+        System.out.println("--->" + pool.getStmt());
+
+        try {
+            while (rst.next()) {
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+
+                CarreraMD carreraMap = new CarreraMD();
+                carreraMap.setId(rst.getInt("id_carrera"));
+                carreraMap.setNombre(rst.getString("carrera_nombre"));
+                carreraMap.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(carreraMap);
+
+                String key = rst.getString("prd_lectivo_nombre");
+
+                map.put(key, periodo);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+
+        return map;
+    }
+
 }

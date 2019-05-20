@@ -96,4 +96,8 @@ public class PeriodoLectivoMD {
         return "PeriodoLectivoMD{" + "id_PerioLectivo=" + id_PerioLectivo + ", nombre_PerLectivo=" + nombre_PerLectivo + ", observacion_PerLectivo=" + observacion_PerLectivo + ", activo_PerLectivo=" + activo_PerLectivo + ", estado_PerLectivo=" + estado_PerLectivo + ", fecha_Inicio=" + fecha_Inicio + ", fecha_Fin=" + fecha_Fin + ", carrera=" + carrera + '}';
     }
 
+    public PeriodoLectivoMD get() {
+        return this;
+    }
+
 }
