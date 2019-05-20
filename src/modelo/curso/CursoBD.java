@@ -114,10 +114,35 @@ public class CursoBD extends CursoMD {
                 + ", '" + c.getParalelo() + "', true);";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
+            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
             return true;
         } else {
             System.out.println("Error");
             return false;
+        }
+    }
+    
+    public List<Integer> consultaCursos(){
+        String sql = "SELECT id_materia\n" +
+                    "FROM public.\"Cursos\"\n" +
+                    "GROUP BY id_materia, id_prd_lectivo, curso_nombre\n" +
+                    "HAVING count(*) > 1";
+        List<Integer> lista = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            while (rs.next()) {
+                Integer num = 0;
+                num = rs.getInt("id_materia");
+                lista.add(num);
+            }
+            rs.close();
+            ps.getConnection().close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No se pudieron consultar alumnos");
+            System.out.println(ex.getMessage());
+            return null;
         }
     }
 
