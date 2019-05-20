@@ -69,7 +69,7 @@ public class FrmAsistenciaCTR {
 
     // JTables
     private JTable jTbl;
-
+    
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
@@ -80,7 +80,7 @@ public class FrmAsistenciaCTR {
         this.rolSeleccionado = rolSeleccionado;
     }
 
-    // Inits
+  // <editor-fold defaultstate="collapsed" desc="INITS">  
     public void Init() {
         tablaTrad = (DefaultTableModel) vista.getTblAsistencia().getModel();
 
@@ -150,12 +150,83 @@ public class FrmAsistenciaCTR {
         jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
         jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
     }
+    // </editor-fold>  
+  // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">  
+      private static void CalculoSemana(int NumeroDia) {
+        switch (NumeroDia) {
+            case 1:
+                IniSemana = fechaInicial.minusDays(0);
+                FinSemana = fechaInicial.plusDays(6);
 
-    // Metodos de apoyo
+                CalculoSemanaPorSemana();
+                break;
+            case 2:
+                IniSemana = fechaInicial.minusDays(1);
+                FinSemana = fechaInicial.plusDays(5);
 
-    // Encabezado
+                CalculoSemanaPorSemana();
+                break;
+            case 3:
+                IniSemana = fechaInicial.minusDays(2);
+                FinSemana = fechaInicial.plusDays(4);
 
-    private void cargarComboDocente() {
+                CalculoSemanaPorSemana();
+                break;
+            case 4:
+                IniSemana = fechaInicial.minusDays(3);
+                FinSemana = fechaInicial.plusDays(3);
+
+                CalculoSemanaPorSemana();
+                break;
+            case 5:
+                IniSemana = fechaInicial.minusDays(4);
+                FinSemana = fechaInicial.plusDays(2);
+
+                CalculoSemanaPorSemana();
+                break;
+            case 6:
+                IniSemana = fechaInicial.minusDays(5);
+                FinSemana = fechaInicial.plusDays(1);
+
+                CalculoSemanaPorSemana();
+                break;
+            case 7:
+                IniSemana = fechaInicial.minusDays(6);
+                FinSemana = fechaInicial.plusDays(0);
+
+                CalculoSemanaPorSemana();
+
+                break;
+
+        }
+
+    }
+     public static void CalculoSemanaPorSemana() {
+
+         for (int i = 0; i < semanas; i++) {
+             System.out.println("----------------------");
+             System.out.println("Semana" + i);
+             System.out.println("----------------------");
+             
+             items.add(IniSemana.plusWeeks(i));
+             items.add(FinSemana.plusWeeks(i));
+             lista_fechas.add(IniSemana.plusWeeks(i).toString());
+             lista_fechas.add(FinSemana.plusWeeks(i).toString());
+             
+             // items.forEach(item -> item.c);
+       
+           System.out.println(IniSemana.plusWeeks(i));
+            System.out.println(FinSemana.plusWeeks(i));
+            
+        }
+
+    }
+    
+    
+    
+    // </editor-fold> 
+  // <editor-fold defaultstate="collapsed" desc="ENCABEZADO"> 
+         private void cargarComboDocente() {
         listaDocentes.entrySet().forEach((entry) -> {
             String key = entry.getKey();
             DocenteMD value = entry.getValue();
@@ -225,9 +296,9 @@ public class FrmAsistenciaCTR {
         }
         tablaTrad.setRowCount(0);
     }
-
-    // Varios
-    private int getIdDocente() {
+     // </editor-fold> 
+  // <editor-fold defaultstate="collapsed" desc="VARIOS"> 
+        private int getIdDocente() {
         return listaDocentes.entrySet().stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocenteAsis().getSelectedItem().toString())))
                 .map(c -> c.getValue().getIdDocente()).findAny().get();
@@ -304,6 +375,7 @@ public class FrmAsistenciaCTR {
         try {
             //listaPeriodos = 
             
+            
             CalculoSemana(2);
 
             System.out.println("-------------------------------------->  metodo carga de semanas");
@@ -312,6 +384,8 @@ public class FrmAsistenciaCTR {
             listaPeriodos = PeriodoLectivoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
             if (listaPeriodos.size() > 0) {
                 PeriodoLectivoMD periodo = listaPeriodos.get(0);
+                
+                System.out.println(periodo.getFecha_Inicio());
                 System.out.println(periodo.getNumSemanas());
                 semanas = periodo.getNumSemanas();
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
@@ -344,80 +418,9 @@ public class FrmAsistenciaCTR {
             return null;
         };
     }
-    
-     private static void CalculoSemana(int NumeroDia) {
-        switch (NumeroDia) {
-            case 1:
-                IniSemana = fechaInicial.minusDays(0);
-                FinSemana = fechaInicial.plusDays(6);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 2:
-                IniSemana = fechaInicial.minusDays(1);
-                FinSemana = fechaInicial.plusDays(5);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 3:
-                IniSemana = fechaInicial.minusDays(2);
-                FinSemana = fechaInicial.plusDays(4);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 4:
-                IniSemana = fechaInicial.minusDays(3);
-                FinSemana = fechaInicial.plusDays(3);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 5:
-                IniSemana = fechaInicial.minusDays(4);
-                FinSemana = fechaInicial.plusDays(2);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 6:
-                IniSemana = fechaInicial.minusDays(5);
-                FinSemana = fechaInicial.plusDays(1);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 7:
-                IniSemana = fechaInicial.minusDays(6);
-                FinSemana = fechaInicial.plusDays(0);
-
-                CalculoSemanaPorSemana();
-
-                break;
-
-        }
-
-    }
-     public static void CalculoSemanaPorSemana() {
-
-         for (int i = 0; i < semanas; i++) {
-             System.out.println("----------------------");
-             System.out.println("Semana" + i);
-             System.out.println("----------------------");
-             
-             items.add(IniSemana.plusWeeks(i));
-             items.add(FinSemana.plusWeeks(i));
-             lista_fechas.add(IniSemana.plusWeeks(i).toString());
-             lista_fechas.add(FinSemana.plusWeeks(i).toString());
-             
-             // items.forEach(item -> item.c);
-       
-           System.out.println(IniSemana.plusWeeks(i));
-            System.out.println(FinSemana.plusWeeks(i));
-            
-        }
-
-    }
-
-    // Eventos
-
-    private void btnImprimir(ActionEvent e) {
+     // </editor-fold> 
+  // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
+            private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 
             int r = JOptionPane.showOptionDialog(vista,
@@ -476,5 +479,6 @@ public class FrmAsistenciaCTR {
         r.setToolTipText("Seleccionar");
         columna.setCellRenderer(r);
     }*/
-
+     // </editor-fold> 
+  
 }
