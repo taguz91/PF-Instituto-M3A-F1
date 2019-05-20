@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from "EstrategiasAprendizaje" j,"EstrategiasUnidad" e where j.id_estrategia=e.id_estrategia and id_unidad=$P!{id_u}]]>
+		<![CDATA[select distinct * from "EstrategiasAprendizaje" j,"EstrategiasUnidad" e where j.id_estrategia=e.id_estrategia and id_unidad=$P!{id_u}]]>
 	</queryString>
 	<field name="id_estrategia" class="java.lang.Integer"/>
 	<field name="descripcion_estrategia" class="java.lang.String"/>
