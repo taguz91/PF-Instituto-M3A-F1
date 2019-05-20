@@ -389,18 +389,6 @@ public class ControladorSilaboC {
 
         gestion.getCmbUnidad().setSelectedIndex(0);
 
-//        gestion.addInternalFrameListener(new InternalFrameAdapter(){
-//            @Override
-//            
-//            public void internalFrameClosing(InternalFrameEvent ife) {
-//                int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
-//                if (reply == JOptionPane.YES_OPTION) {
-//                    gestion.dispose();
-//                    principal.getMnCtSilabos().doClick();
-//                }
-//            }
-//            
-//        });
         
         
         gestion.getCmbUnidad().addActionListener(new ActionListener() {

@@ -959,6 +959,7 @@ public class ControladorSilaboU {
         bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
+        
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
