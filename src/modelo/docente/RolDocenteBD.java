@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
-import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
 /**
@@ -15,13 +14,9 @@ import modelo.persona.DocenteMD;
 public class RolDocenteBD extends RolDocenteMD {
 
     private final ConectarDB conecta;
-    private final DocenteBD docentes;
-    private final RolPeriodoBD prdRol;
 
     public RolDocenteBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.docentes = new DocenteBD(conecta);
-        this.prdRol = new RolPeriodoBD(conecta);
     }
 
     public boolean InsertarRol() {

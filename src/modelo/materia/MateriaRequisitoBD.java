@@ -14,12 +14,9 @@ import modelo.ConectarDB;
 public class MateriaRequisitoBD extends MateriaRequisitoMD {
 
     private final ConectarDB conecta;
-    private final MateriaBD mat;
 
     public MateriaRequisitoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.mat = new MateriaBD(conecta);
-
     }
 
     public boolean insertarMateriaRequisito() {

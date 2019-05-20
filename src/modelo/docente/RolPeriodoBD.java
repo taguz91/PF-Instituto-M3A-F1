@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.ConectarDB;
-import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
@@ -16,12 +15,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
 
     private final ConectarDB conecta;
 
-    //Para consultar periodos
-    private final PeriodoLectivoBD perLec;
-
     public RolPeriodoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.perLec = new PeriodoLectivoBD(conecta);
     }
 
     public boolean InsertarRol() {

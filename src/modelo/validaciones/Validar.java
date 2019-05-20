@@ -12,14 +12,14 @@ public class Validar {
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\s\\/]+");
     }
 
-    public static boolean esLetras2(String cadena){
+    public static boolean esLetras2(String cadena) {
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\,\\s\\/]+");
     }
-    
-    public static boolean esLetras3(String cadena){
+
+    public static boolean esLetras3(String cadena) {
         return cadena.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\.\\s\\/]+");
     }
-    
+
     public static boolean esObservacion(String cadena) {
         //Es letras si continene uno de estos elementos puede contener espacios 
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍ\\.,ÓÚÑñ\\-\\s]+");
@@ -35,7 +35,7 @@ public class Validar {
     public static boolean esLetrasYNumeros(String cadena) {
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
     }
-    
+
     public static boolean esLetrasYNumeros2(String cadena) {
         return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\_0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\-0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
     }
@@ -142,9 +142,32 @@ public class Validar {
     public static boolean esCarnetConadis(String entrada) {
         return entrada.matches("[0-9]{1,2}+\\.+[0-9]{1,6}");
     }
-    
-    public static boolean esHora(String entrada){
+
+    public static boolean esHora(String entrada) {
         return entrada.matches("[0-9]{1,2}+:+[0-9]{1,2}");
     }
- 
+
+    /**
+     * Validamos que la dirreccion url sea un . zip
+     *
+     * @param entrada
+     * @return
+     */
+    public static boolean esUrlZip(String entrada) {
+        return entrada.matches("https://+[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+[a-zA-Z0-9]+\\.zip+")
+                || entrada.matches("https://+[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+\\.zip+")
+                || entrada.matches("http://+[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+\\.zip+");
+    }
+
+    public static boolean esLetrasSimple(String entrada) {
+        return entrada.matches("[a-zA-Z0-9\\.\\-\\_]+");
+    }
+
+    public static boolean esVersion(String entrada) {
+        return entrada.matches("[0-9]{1}+\\.+[0-9]{1,2}") || entrada.matches("[0-9]{1}+\\.+[0-9]{1,2}+\\.+[0-9]{1,2}");
+    }
+
+    public static boolean esDescripcion(String entrada) {
+        return entrada.matches("[A-Za-záéíóúÁÉÍÓÚÑñkK\\,\\s\\/\\:\\.\\-0-9]+");
+    }
 }
