@@ -191,12 +191,13 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         return unidades;
     }
     
-    public static UnidadSilaboMD consultarUltima(ConexionBD conexion,int is){
+    public static UnidadSilaboMD consultarUltima(ConexionBD conexion,int is,int iu){
         UnidadSilaboMD unidad = null;
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_unidad) FROM \"UnidadSilabo\" WHERE id_silabo=?");
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad FROM \"UnidadSilabo\" WHERE id_silabo=? AND numero_unidad=?");
             st.setInt(1, is);
+            st.setInt(2, iu);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 unidad = new UnidadSilaboMD();
