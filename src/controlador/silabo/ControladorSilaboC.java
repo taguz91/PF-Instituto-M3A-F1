@@ -1798,14 +1798,15 @@ public class ControladorSilaboC {
             umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd,umd.getIdSilabo().getIdSilabo());
-
+            
+            umd.setIdUnidad(UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(),umd.getNumeroUnidad()).getIdUnidad());
             //Integer aux = umd.getIdSilabo().getIdSilabo();
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
                 //  if (aux.equals(silaboNuevo.getIdSilabo())) {
                 if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
-                    ebd.insertar(emd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(),umd.getNumeroUnidad()).getIdUnidad());
+                    ebd.insertar(emd, umd.getIdUnidad() );
                 }
                 //}
 
@@ -1816,7 +1817,7 @@ public class ControladorSilaboC {
                 //if (aux.equals(silaboNuevo.getIdSilabo())) {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd,UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(),umd.getNumeroUnidad()).getIdUnidad());
+                    esd.insertar(evd,umd.getIdUnidad());
                 }
                 // }
 
