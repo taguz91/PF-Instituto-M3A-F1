@@ -496,7 +496,6 @@ public class Controlador_plan_clases {
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
             em.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
             EstrategiasMetodologicasBD embd= new EstrategiasMetodologicasBD(conexion);
-//            embd.insertarEstrategiasMetodologicas(em);
               embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getId_plan_clases());
         }
 
