@@ -22,12 +22,12 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private final static ConnDBPool POOL;
+    private final static ConnDBPool pool;
     private static Connection conn;
     private static ResultSet rst;
 
     static {
-        POOL = new ConnDBPool();
+        pool = new ConnDBPool();
     }
 
     public PeriodoLectivoBD() {
@@ -578,8 +578,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
 
-        conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -605,7 +605,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            pool.close(conn);
         }
         return lista;
     }
@@ -619,8 +619,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         System.out.println("-->" + SELECT);
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
-        conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -634,7 +634,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
-            POOL.close(conn);
+            pool.close(conn);
         }
         return lista;
     }
@@ -661,7 +661,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
                 + "		AND ( \"Carreras\".carrera_modalidad ='PRESENCIAL' OR \"Carreras\".carrera_modalidad ='TRADICIONAL' ) \n"
                 + "	) \n"
-                + "	AND 11 != (\n"
+                + "	AND 12 != (\n"
                 + "	SELECT\n"
                 + "		\"count\" ( * ) \n"
                 + "	FROM\n"
@@ -680,8 +680,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
         //System.out.println(SELECT);
-        conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
@@ -703,12 +703,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            pool.close(conn);
         }
 
         return map;
     }
-
 
     public Map<String, PeriodoLectivoMD> selectWhere(String nombrePeriodo) {
 
@@ -759,9 +758,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return map;
     }
 
-
-    
-    
     public static List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
         String SELECT = "SELECT DISTINCT\n"
                 + " \"public\".\"Docentes\".id_docente,\n"
@@ -780,15 +776,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         List<PeriodoLectivoMD> semana = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
-        
-        System.out.println("Query: \n"+SELECT);
+
+        System.out.println("Query: \n" + SELECT);
 
         try {
             while (rst.next()) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                
+
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
-                System.out.println("Semanas "+rst.getInt(3) );
+                System.out.println("Semanas " + rst.getInt(3));
                 periodo.setNumSemanas(rst.getInt(3));
                 semana.add(periodo);
             }
@@ -802,6 +798,5 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return semana;
 
     }
-    
 
 }

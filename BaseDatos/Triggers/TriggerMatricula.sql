@@ -220,7 +220,7 @@ RETURNS VOID AS $detalle_notas$
   materia CHARACTER VARYING(100) :=  'M';
 
   reg_n RECORD;
-  tipos_nota CURSOR FOR  SELECT id_tipo_nota
+  tipos_nota CURSOR FOR  SELECT id_tipo_nota, tipo_nota_nombre
   FROM public."TipoDeNota"
   WHERE tipo_nota_nombre <> 'NOTA FINAL'
   AND tipo_nota_estado = TRUE
@@ -264,13 +264,17 @@ BEGIN
 
     IF modalidad = 'DUAL' THEN
       RAISE NOTICE 'Modalidad: %', modalidad;
-      dual := dual + dual;
-      IF materia ILIKE '%PTI%' THEN
-        RAISE NOTICE 'Es PTI, %', reg_n.id_tipo_nota;
-      ELSIF materia ILIKE '%FASE PRACTICA%' THEN
-        RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
-      ELSE
-        RAISE NOTICE 'Es otra materia, %', reg_n.id_tipo_nota;
+      dual := dual + 1;
+      IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL', 
+      'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL') 
+      AND materia NOT ILIKE IN ('%PTI%', '%FASE PRACTICA%') THEN 
+          RAISE NOTICE 'Es otra materia, %', reg_n.id_tipo_nota;
+      ELSE 
+                IF materia ILIKE '%PTI%' THEN
+          RAISE NOTICE 'Es PTI, %', reg_n.id_tipo_nota;
+        ELSIF materia ILIKE '%FASE PRACTICA%' THEN
+          RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
+        ELSE
       END IF;
     ELSE
       presencial := presencial + 1;
