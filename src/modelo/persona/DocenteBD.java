@@ -75,7 +75,7 @@ public class DocenteBD extends DocenteMD {
         CallableStatement cStmt;
         try {
             conn = pool.getConnection();
-            cStmt = conn.prepareCall("CALL reasignarMaterias(?, ?)");
+            cStmt = conn.prepareCall("SELECT reasignarMaterias(?, ?);");
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
             
@@ -104,7 +104,7 @@ public class DocenteBD extends DocenteMD {
         CallableStatement cStmt;
         try {
             conn = pool.getConnection();
-            cStmt = conn.prepareCall("CALL reasignarNotas(?, ?)");
+            cStmt = conn.prepareCall("SELECT reasignarNotas(?, ?)");
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
             

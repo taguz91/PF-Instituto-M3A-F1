@@ -89,7 +89,6 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
-        vtnDocente.getBtnReasignarM().addActionListener(e-> finContratacion());
         vtnDocente.getCbxDocentesEliminados().addActionListener(e -> cargarDocentes());
         cargarTipoDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
+import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -62,18 +63,46 @@ public class VtnPrdLectivoCTR extends DCTR {
         //Validacion del buscador
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(),
                 vtnPrdLectivo.getBtnBuscar()));
+        vtnPrdLectivo.getCmbx_Filtrar().addActionListener(e -> filtrarCarreras());
         TblEstilo.formatoTbl(vtnPrdLectivo.getTblPrdLectivo());
         TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 3, 120);
         TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 4, 120);
         TblEstilo.columnaMedida(vtnPrdLectivo.getTblPrdLectivo(), 5, 100);
         //Llenamos la tabla 
         cargarPeriodos();
+        cargarCarreras();
     }
 
     //Permite visualizar el Formulario de Período Lectivo
     public void abrirFrmPrdLectivo() {
         ctrPrin.abrirFrmPrdLectivo();
         vtnPrdLectivo.dispose();
+    }
+    
+    public void cargarCarreras(){
+        CarreraBD bdCarrera = new CarreraBD(ctrPrin.getConecta());
+        carreras = bdCarrera.cargarCarreras();
+        for (int i = 0; i < carreras.size(); i++) {
+            vtnPrdLectivo.getCmbx_Filtrar().addItem(carreras.get(i).getNombre());
+        }
+    }
+    
+    public void filtrarCarreras(){
+        String nombre;
+        int idCarrera = 0;
+        List<PeriodoLectivoMD> lista;
+        if(vtnPrdLectivo.getCmbx_Filtrar().getSelectedIndex() > 0){
+            nombre = vtnPrdLectivo.getCmbx_Filtrar().getSelectedItem().toString();
+            for (int i = 0; i < carreras.size(); i++) {
+                if(carreras.get(i).getNombre().equals(nombre)){
+                    idCarrera = carreras.get(i).getId();
+                }
+            }
+            lista = bdPerLectivo.llenarPeriodosxCarreras(idCarrera);
+            llenarTabla(lista);
+        } else{
+            llenarTabla(periodos);
+        }
     }
 
     //Oculta la columna del ID del Período Lectivo
@@ -109,12 +138,12 @@ public class VtnPrdLectivoCTR extends DCTR {
             mes_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getMonthValue());
             anio_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getYear());
 
-            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
-                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
+//            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
+//                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
 
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(nombre, i, 2);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre_PerLectivo(), i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
             if (periodos.get(i).isEstado_PerLectivo() == true) {
