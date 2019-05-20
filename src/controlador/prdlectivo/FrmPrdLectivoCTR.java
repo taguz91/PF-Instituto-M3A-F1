@@ -270,7 +270,8 @@ public class FrmPrdLectivoCTR extends DCTR {
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
 
-        periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText());
+        periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText() + "   " + dia_Inicio + "   "
+                    + dia_Fin);
         periodo.setFecha_Inicio(dia_Inicio);
         periodo.setFecha_Fin(dia_Fin);
         periodo.setObservacion_PerLectivo(frmPrdLectivo.getTxtObservacion().getText());
