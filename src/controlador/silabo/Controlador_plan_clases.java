@@ -142,6 +142,10 @@ public class Controlador_plan_clases {
                       JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
                        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrincipal);
                         cP.iniciaControlador();
+                  }else{
+                     JOptionPane.showMessageDialog(null, "Falló al guardar ", "Aviso", JOptionPane.ERROR_MESSAGE);
+                      fPlanClase.dispose();
+                      
                   }
                 }else{
                      JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
