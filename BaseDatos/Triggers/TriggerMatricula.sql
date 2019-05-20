@@ -197,7 +197,7 @@ BEGIN
     ingresados := ingresados + 1;
 
     SELECT detalle_notas(reg_c.id_curso, periodo) INTO afectados;
-    RAISE NOTICE 'Afecto a %', afectados;  
+    RAISE NOTICE 'Afecto a %', afectados;
 
     FETCH alumnos_curso INTO reg_c;
   END LOOP;
@@ -260,21 +260,22 @@ BEGIN
 
   WHILE ( FOUND ) LOOP
     ingresados := ingresados + 1;
-    
+
 
     IF modalidad = 'DUAL' THEN
       RAISE NOTICE 'Modalidad: %', modalidad;
       dual := dual + 1;
-      IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL', 
-      'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL') 
-      AND materia NOT ILIKE IN ('%PTI%', '%FASE PRACTICA%') THEN 
-          RAISE NOTICE 'Es otra materia, %', reg_n.id_tipo_nota;
-      ELSE 
-                IF materia ILIKE '%PTI%' THEN
+      IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL',
+      'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL')
+      AND materia NOT ILIKE IN ('%PTI%', '%FASE PRACTICA%') THEN
+          RAISE NOTICE 'Tiene todas las notas, %', reg_n.id_tipo_nota;
+      ELSE
+        IF materia ILIKE '%PTI%' THEN
           RAISE NOTICE 'Es PTI, %', reg_n.id_tipo_nota;
-        ELSIF materia ILIKE '%FASE PRACTICA%' THEN
+        ELSE reg_n.tipo_nota_nombre ILIKE IN('N. TUTOR EMPRESARIAL',
+        'N. TUTOR ACADEMICO') THEN
           RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
-        ELSE
+        END IF;
       END IF;
     ELSE
       presencial := presencial + 1;
