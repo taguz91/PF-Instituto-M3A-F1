@@ -18,7 +18,9 @@ public class RecursosPlanClasesMD {
     }
 
     public RecursosPlanClasesMD(RecursosMD id_recursos) {
+        
         this.id_recursos = id_recursos;
+         this.id_plan_clases=new PlandeClasesMD();
     }
     
 

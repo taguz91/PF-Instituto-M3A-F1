@@ -192,5 +192,23 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return lista_plan;
    }
    
+   public static PlandeClasesMD consultarUltimoPlanClase(ConexionBD conexion, int id_curso,int id_unidad){
+        PlandeClasesMD planClase =null;
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("select id_plan_clases "
+                    + "from \"PlandeClases\" where id_curso=? AND id_unidad=?");
+            st.setInt(1, id_curso);
+            st.setInt(2, id_unidad);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                planClase=new PlandeClasesMD();
+                planClase.setId_plan_clases(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return planClase;
+   }
+   
    
 }
