@@ -779,6 +779,7 @@ public class ControladorSilaboU {
                 int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     gestion.dispose();
+                    principal.getMnCtSilabos().doClick();
                 }
             }
 
@@ -1024,6 +1025,7 @@ public class ControladorSilaboU {
                 if (reply == JOptionPane.YES_OPTION) {
                     bibliografia.dispose();
                     gestion.dispose();
+                    principal.getMnCtSilabos().doClick();
                 }
             }
 
