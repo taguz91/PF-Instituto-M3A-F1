@@ -250,8 +250,6 @@ nombre_curso VARCHAR := '';
 
 reg RECORD;
 
-
-
 SELECT
 	"public"."Carreras".carrera_modalidad,
 	"public"."Cursos".curso_nombre
@@ -262,17 +260,12 @@ FROM
 	INNER JOIN "public"."Carreras" ON "public"."PeriodoLectivo".id_carrera = "public"."Carreras".id_carrera 
 WHERE
 	"public"."Cursos".id_curso = NEW.id_curso;
-	
-
-	
-
 BEGIN
 	IF
 		modalidad = 'DUAL' THEN
 		IF
 			NEW.almn_curso_estado = 'RETIRADO' 
 			OR NEW.almn_curso_estado = 'REPROBADO' THEN
-
 				registros_almn_materias_nucleo CURSOR FOR SELECT
 				"public"."Materias".materia_nucleo,
 				"public"."AlumnoCurso".id_almn_curso,
@@ -295,8 +288,6 @@ BEGIN
 					
 				SET;
 			END LOOP;
-
-
 		END IF;
 		
 	END IF;

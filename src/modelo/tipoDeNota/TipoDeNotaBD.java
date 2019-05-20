@@ -193,6 +193,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     }
 
     public boolean editar(int Pk) {
+
+        System.out.println("------>" + getPeriodoLectivo().getId_PerioLectivo());
+
         String UPDATE = "UPDATE \"TipoDeNota\" \n"
                 + "SET \n"
                 + "	tipo_nota_nombre = '" + getNombre() + "',\n"

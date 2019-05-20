@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
@@ -288,5 +289,8 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
+    
+    
+    
 
 }

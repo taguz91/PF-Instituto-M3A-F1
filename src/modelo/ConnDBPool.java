@@ -192,7 +192,11 @@ public class ConnDBPool {
         }
     }
 
+    public PreparedStatement getStmt() {
+        return stmt;
+    }
     // </editor-fold>  
+
     public void closePool() {
         if (ConnDBPool.ds != null && !ConnDBPool.ds.isClosed()) {
             ConnDBPool.ds.close();

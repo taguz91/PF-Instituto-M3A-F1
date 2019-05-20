@@ -57,7 +57,7 @@ public class VtnActivarNotasCTR {
 
         new Thread(() -> {
             Effects.setLoadCursor(vista);
-            listaPeriodos = PeriodoLectivoBD.SelectAll();
+            //listaPeriodos = PeriodoLectivoBD.SelectAll();
             cargarComboPeriodos();
             setSelectedItemInCombo();
             Effects.setDefaultCursor(vista);
