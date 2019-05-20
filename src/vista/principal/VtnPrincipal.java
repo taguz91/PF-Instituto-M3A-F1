@@ -645,7 +645,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda.setBorderPainted(false);
         btnAyuda.setContentAreaFilled(false);
         btnAyuda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAyuda.setOpaque(true);
 
         btnConsola.setBackground(new java.awt.Color(51, 51, 51));
         btnConsola.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

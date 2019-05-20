@@ -875,6 +875,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
         pnlUnidad = new javax.swing.JPanel();
         cmbUnidad = new javax.swing.JComboBox<>();
         txtTitulo = new javax.swing.JTextField();
@@ -1395,7 +1396,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, -1, 20));
 
         lblEstrategiasPredeterminadas.setText("Seleccione la(s) Estrategias de Enseñanza:");
-        pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
+        pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 330, -1));
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
@@ -1413,7 +1414,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
-        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, -1, -1));
+        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, -1, -1));
 
         txtNuevaEstrategia.setEnabled(false);
         txtNuevaEstrategia.addActionListener(new java.awt.event.ActionListener() {
@@ -1434,20 +1435,17 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         lblAcumuladoGestion.setText("0/60");
         pnlUnidad.add(lblAcumuladoGestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 350, 60, 30));
 
+        jScrollPane1.setViewportView(pnlUnidad);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlUnidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlUnidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -1464,48 +1462,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private void txtNuevaEstrategiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaEstrategiaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNuevaEstrategiaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmGestionSilabo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmGestionSilabo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmGestionSilabo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmGestionSilabo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmGestionSilabo().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarA;
@@ -1530,6 +1486,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAC;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionAD;
     private com.toedter.calendar.JDateChooser dchFechaPresentacionP;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAcumuladoGestion;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
