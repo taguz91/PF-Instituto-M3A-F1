@@ -4,10 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.validaciones.TxtVBuscador;
-import vista.principal.VtnPrincipal;
 
 /**
  * En esta clase sera la padre de CTR aqui agregaremos dependencias, ya sean

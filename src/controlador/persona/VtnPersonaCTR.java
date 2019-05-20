@@ -107,6 +107,8 @@ public class VtnPersonaCTR extends DVtnCTR {
         });
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
+        vtnPersona.getBtnEditarIdentificacion().addActionListener(e -> editarIdentificacion());
+
     }
 
     private void cargarCmbTipoPersonas() {
@@ -175,14 +177,13 @@ public class VtnPersonaCTR extends DVtnCTR {
                     + p.getPrimerApellido() + " " + p.getSegundoApellido(),
                     p.getFechaNacimiento(), p.getCelular(), p.getTelefono(),
                     p.getCorreo()};
-            mdTbl.addRow(valores);
-        });
-        vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
-    }
+                mdTbl.addRow(valores);
+            });
+            vtnPersona.getLblResultados().setText(personas.size() + " resultados obtenidos.");
+        }
 
-    ctrPrin.getVtnPrin ()
-
-.getDpnlPrincipal().setCursor(new Cursor(0));
+        ctrPrin.getVtnPrin()
+                .getDpnlPrincipal().setCursor(new Cursor(0));
     }
 
     //Buscamos persona
@@ -223,6 +224,26 @@ public class VtnPersonaCTR extends DVtnCTR {
         } else {
             vtnPersona.getLblError().setVisible(true);
         }
+    }
+
+    private void editarIdentificacion() {
+        posFila = vtnPersona.getTblPersona().getSelectedRow();
+        if (posFila >= 0) {
+            System.out.println("Este es el ID Persona: " + personas.get(posFila).getIdPersona());
+            System.out.println("Nombre Persona " + personas.get(posFila).getNombreCompleto());
+            vtnPersona.getLblError().setVisible(false);
+            JDEditarIdentificacionCTR ctr = new JDEditarIdentificacionCTR(ctrPrin, vtnPersona.getTblPersona().getValueAt(posFila, 0).toString(), vtnPersona.getTblPersona().getValueAt(posFila, 2).toString());
+            ctr.iniciar();
+
+            PersonaMD perEditar = dbp.buscarPersona(
+                    Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            ctr.editarIdentificacion(perEditar);
+            cargarTipoPersona();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila ");
+        }
+
     }
 
     private void eliminar() {
@@ -295,4 +316,5 @@ public class VtnPersonaCTR extends DVtnCTR {
             vtnPersona.getBtnReportePersona().setEnabled(false);
         }
     }
+
 }

@@ -30,7 +30,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private static ConnDBPool pool;
     private static Connection conn;
-    private static ResultSet rs;
+    private static ResultSet rst;
 
     static {
         pool = new ConnDBPool();
@@ -91,95 +91,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     public void borrarActualizarMatricula() {
         nsqlMatriUpdate = "";
-    }
-
-    public ArrayList<AlumnoCursoMD> cargarAlumnosCursos() {
-        String sql = "SELECT "
-                + "id_almn_curso,\n"
-                + "id_alumno, \n"
-                + "id_curso,\n"
-                + "almn_curso_nt_1_parcial,\n"
-                + "almn_curso_nt_examen_interciclo,\n"
-                + "almn_curso_nt_2_parcial,\n"
-                + "almn_curso_nt_examen_final,\n"
-                + "almn_curso_nt_examen_supletorio,\n"
-                + "almn_curso_asistencia,\n"
-                + "almn_curso_nota_final,\n"
-                + "almn_curso_estado,\n"
-                + "almn_curso_num_faltas\n"
-                + "FROM "
-                + "public.\"AlumnoCurso\";";
-        return consultarAlmnCursos(sql);
-    }
-
-    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorAlumno(int idAlumno) {
-        String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
-                + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
-                + "almn_curso_nt_examen_final, almn_curso_nt_examen_supletorio,\n"
-                + "almn_curso_asistencia, almn_curso_nota_final, almn_curso_estado,\n"
-                + "almn_curso_num_faltas\n"
-                + "FROM public.\"AlumnoCurso\" "
-                + "WHERE id_alumno = " + idAlumno + ";";
-        return consultarAlmnCursos(sql);
-    }
-
-    public ArrayList<AlumnoCursoMD> cargarAlumnosCursosPorCurso(int idCurso) {
-        String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
-                + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
-                + "almn_curso_nt_examen_final, almn_curso_nt_examen_supletorio,\n"
-                + "almn_curso_asistencia, almn_curso_nota_final, almn_curso_estado,\n"
-                + "almn_curso_num_faltas\n"
-                + "FROM public.\"AlumnoCurso\" "
-                + "WHERE id_curso = " + idCurso + ";";
-        return consultarAlmnCursos(sql);
-    }
-
-    public AlumnoCursoMD buscarAlumnoCurso(int idAlmnCurso) {
-        AlumnoCursoMD almn = new AlumnoCursoMD();
-        String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_nt_1_parcial,\n"
-                + "almn_curso_nt_examen_interciclo, almn_curso_nt_2_parcial,\n"
-                + "almn_curso_nt_examen_final, almn_curso_nt_examen_supletorio,\n"
-                + "almn_curso_asistencia, almn_curso_nota_final, almn_curso_estado,\n"
-                + "almn_curso_num_faltas\n"
-                + "FROM public.\"AlumnoCurso\" "
-                + "WHERE id_almn_curso = " + idAlmnCurso + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    almn = obtenerAlmCurso(rs);
-                }
-                ps.getConnection().close();
-                return almn;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudo buscar alumno curso");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    private ArrayList<AlumnoCursoMD> consultarAlmnCursos(String sql) {
-        ArrayList<AlumnoCursoMD> almns = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    almns.add(obtenerAlmCurso(rs));
-                }
-                ps.getConnection().close();
-                return almns;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No se pudieron consultar los cursos");
-            return null;
-        }
     }
 
     /**
@@ -421,29 +332,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    private AlumnoCursoMD obtenerAlmCurso(ResultSet rs) {
-        try {
-            AlumnoCursoMD a = new AlumnoCursoMD();
-            a.setId(rs.getInt("id_almn_curso"));
-            a.setAlumno(alm.buscarAlumnoParaReferencia(rs.getInt("id_alumno")));
-            a.setCurso(cur.buscarCurso(rs.getInt("id_curso")));
-            a.setNota1Parcial(rs.getDouble("almn_curso_nt_1_parcial"));
-            a.setNotaExamenInter(rs.getDouble("almn_curso_nt_examen_interciclo"));
-            a.setNota2Parcial(rs.getDouble("almn_curso_nt_2_parcial"));
-            a.setNotaExamenFinal(rs.getDouble("almn_curso_nt_examen_final"));
-            a.setNotaExamenSupletorio(rs.getDouble("almn_curso_nt_examen_supletorio"));
-            a.setAsistencia(rs.getString("almn_curso_asistencia"));
-            a.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
-            a.setEstado(rs.getString("almn_curso_estado"));
-            a.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-            return a;
-        } catch (SQLException e) {
-            System.out.println("No pudimos obtener alumnocurso");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
 
         String SELECT = "SELECT\n"
@@ -483,23 +371,23 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
         try {
             conn = pool.getConnection();
-            rs = pool.ejecutarQuery(SELECT, conn, null);
-            while (rs.next()) {
+            rst = pool.ejecutarQuery(SELECT, conn, null);
+            while (rst.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
-                alumnoCurso.setId(rs.getInt("id_almn_curso"));
-                alumnoCurso.setAsistencia(rs.getString("almn_curso_asistencia"));
-                alumnoCurso.setEstado(rs.getString("almn_curso_estado"));
-                alumnoCurso.setNumFalta(rs.getInt("almn_curso_num_faltas"));
-                alumnoCurso.setNotaFinal(rs.getDouble("almn_curso_nota_final"));
+                alumnoCurso.setId(rst.getInt("id_almn_curso"));
+                alumnoCurso.setAsistencia(rst.getString("almn_curso_asistencia"));
+                alumnoCurso.setEstado(rst.getString("almn_curso_estado"));
+                alumnoCurso.setNumFalta(rst.getInt("almn_curso_num_faltas"));
+                alumnoCurso.setNotaFinal(rst.getDouble("almn_curso_nota_final"));
 
                 AlumnoMD alumno = new AlumnoMD();
-                alumno.setId_Alumno(rs.getInt("id_alumno"));
-                alumno.setIdentificacion(rs.getString("persona_identificacion"));
-                alumno.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                alumno.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                alumno.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                alumno.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                alumno.setId_Alumno(rst.getInt("id_alumno"));
+                alumno.setIdentificacion(rst.getString("persona_identificacion"));
+                alumno.setPrimerApellido(rst.getString("persona_primer_apellido"));
+                alumno.setSegundoApellido(rst.getString("persona_segundo_apellido"));
+                alumno.setPrimerNombre(rst.getString("persona_primer_nombre"));
+                alumno.setSegundoNombre(rst.getString("persona_segundo_nombre"));
 
                 alumnoCurso.setAlumno(alumno);
 
@@ -514,6 +402,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
+            pool.close(rst);
+            pool.closeStmt();
             pool.close(conn);
         }
         return lista;

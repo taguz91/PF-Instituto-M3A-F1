@@ -119,7 +119,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	AND dia_sesion = " + dia + " ;";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {

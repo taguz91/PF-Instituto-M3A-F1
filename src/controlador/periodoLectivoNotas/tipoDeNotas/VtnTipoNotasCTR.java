@@ -33,7 +33,7 @@ public class VtnTipoNotasCTR {
     private TipoDeNotaBD modelo;
     private final RolBD permisos;
 
-    private List<TipoDeNotaMD> listaTiposNotas;
+    private List<TipoDeNotaBD> listaTiposNotas;
     private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
@@ -110,7 +110,7 @@ public class VtnTipoNotasCTR {
     }
 
     //METODOS DE APOYO
-    public void cargarTabla(List<TipoDeNotaMD> lista) {
+    public void cargarTabla(List<TipoDeNotaBD> lista) {
         tablaTiposNotas.setRowCount(0);
 
         lista.forEach(agregarFilas());
@@ -121,7 +121,7 @@ public class VtnTipoNotasCTR {
 
         listaPeriodos = PeriodoLectivoBD.SelectAll();
 
-        vista.getCmbPeriodos().addItem("----------------------------------------------");
+        vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos
                 .stream()
                 .map(c -> c.getNombre_PerLectivo())
@@ -139,7 +139,8 @@ public class VtnTipoNotasCTR {
                         || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
                         || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
                 )
-                .collect(Collectors.toList()).forEach(agregarFilas());
+                .collect(Collectors.toList())
+                .forEach(agregarFilas());
     }
 
     private Consumer<TipoDeNotaMD> agregarFilas() {
@@ -159,15 +160,6 @@ public class VtnTipoNotasCTR {
         };
     }
 
-    private void setModel(int fila) {
-        int idTipoNota = (Integer) vista.getTblTipoNotas().getValueAt(fila, 1);
-        modelo = new TipoDeNotaBD(listaTiposNotas
-                .stream()
-                .filter(item -> item.getIdTipoNota() == idTipoNota)
-                .findFirst().get()
-        );
-    }
-
     //PROCESADORES DE EVENTOS
     private void btnEditar(ActionEvent e) {
 
@@ -175,7 +167,12 @@ public class VtnTipoNotasCTR {
 
         if (fila != -1) {
 
-            setModel(fila);
+            int ID = Integer.valueOf(vista.getTblTipoNotas().getValueAt(fila, 1).toString());
+
+            modelo = listaTiposNotas.stream()
+                    .filter(item -> item.getIdTipoNota() == ID)
+                    .findFirst().get();
+
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);
             form.InitEditar();
 

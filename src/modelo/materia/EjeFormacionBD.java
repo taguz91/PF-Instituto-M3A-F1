@@ -53,7 +53,7 @@ public class EjeFormacionBD extends EjeFormacionMD {
         String sql = "SELECT id_eje, id_carrera, eje_codigo, eje_nombre\n"
                 + "FROM public.\"EjesFormacion\";";
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -84,7 +84,7 @@ public class EjeFormacionBD extends EjeFormacionMD {
         String sql = "SELECT id_eje, id_carrera, eje_codigo, eje_nombre\n"
                 + "FROM public.\"EjesFormacion\" WHERE id_carrera = '" + idCarrera + "';";
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         CarreraMD carrera = new CarreraMD();
         carrera.setId(idCarrera);
         try {
