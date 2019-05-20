@@ -151,6 +151,78 @@ public class FrmAsistenciaCTR {
         jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
     }
     // </editor-fold>  
+  // <editor-fold defaultstate="collapsed" desc="ENCABEZADO"> 
+         private void cargarComboDocente() {
+        listaDocentes.entrySet().forEach((entry) -> {
+            String key = entry.getKey();
+            DocenteMD value = entry.getValue();
+
+            vista.getCmbDocenteAsis().addItem(key);
+
+        });
+        tablaTrad.setRowCount(0);
+    }
+
+    private void cargarComboPeriodos() {
+        vista.getCmbPeriodoLectivoAsis().removeAllItems();
+        vista.getLblCarreraAsistencia().setText("");
+
+        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
+        listaPeriodos.stream().forEach(obj -> {
+            vista.getCmbPeriodoLectivoAsis().addItem(obj.getNombre_PerLectivo());
+            ;
+        });
+        tablaTrad.setRowCount(0);
+
+    }
+
+    private void setLblCarrera() {
+
+        vista.getLblCarreraAsistencia()
+                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                        .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
+    }
+
+    private void cargarComboCiclo() {
+        try {
+            vista.getCmbCicloAsis().removeAllItems();
+
+            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream().forEach(obj -> {
+                vista.getCmbCicloAsis().addItem(obj + "");
+            });
+        } catch (NullPointerException e) {
+        }
+        tablaTrad.setRowCount(0);
+    }
+
+    private void cargarComboMaterias() {
+        try {
+            vista.getCmbAsignaturaAsis().removeAllItems();
+
+            CursoMD curso = new CursoMD();
+            DocenteMD docente = new DocenteMD();
+            docente.setIdDocente(getIdDocente());
+            curso.setDocente(docente);
+            PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
+            curso.setPeriodo(periodo);
+            curso.setNombre(vista.getCmbCicloAsis().getSelectedItem().toString());
+
+            listaMaterias = MateriaBD.selectWhere(curso);
+
+            listaMaterias.stream().forEach(obj -> {
+                vista.getCmbAsignaturaAsis().addItem(obj.getNombre());
+                vista.getLblHorasAsis().setText("" + obj.getHorasPresenciales());
+            });
+
+            // listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
+            validarCombos();
+        } catch (NullPointerException e) {
+            vista.getCmbAsignaturaAsis().removeAllItems();
+        }
+        tablaTrad.setRowCount(0);
+    }
+     // </editor-fold> 
   // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">  
       private static void CalculoSemana(int NumeroDia) {
         switch (NumeroDia) {
@@ -225,78 +297,6 @@ public class FrmAsistenciaCTR {
     
     
     // </editor-fold> 
-  // <editor-fold defaultstate="collapsed" desc="ENCABEZADO"> 
-         private void cargarComboDocente() {
-        listaDocentes.entrySet().forEach((entry) -> {
-            String key = entry.getKey();
-            DocenteMD value = entry.getValue();
-
-            vista.getCmbDocenteAsis().addItem(key);
-
-        });
-        tablaTrad.setRowCount(0);
-    }
-
-    private void cargarComboPeriodos() {
-        vista.getCmbPeriodoLectivoAsis().removeAllItems();
-        vista.getLblCarreraAsistencia().setText("");
-
-        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos.stream().forEach(obj -> {
-            vista.getCmbPeriodoLectivoAsis().addItem(obj.getNombre_PerLectivo());
-            ;
-        });
-        tablaTrad.setRowCount(0);
-
-    }
-
-    private void setLblCarrera() {
-
-        vista.getLblCarreraAsistencia()
-                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                        .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
-    }
-
-    private void cargarComboCiclo() {
-        try {
-            vista.getCmbCicloAsis().removeAllItems();
-
-            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream().forEach(obj -> {
-                vista.getCmbCicloAsis().addItem(obj + "");
-            });
-        } catch (NullPointerException e) {
-        }
-        tablaTrad.setRowCount(0);
-    }
-
-    private void cargarComboMaterias() {
-        try {
-            vista.getCmbAsignaturaAsis().removeAllItems();
-
-            CursoMD curso = new CursoMD();
-            DocenteMD docente = new DocenteMD();
-            docente.setIdDocente(getIdDocente());
-            curso.setDocente(docente);
-            PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
-            curso.setPeriodo(periodo);
-            curso.setNombre(vista.getCmbCicloAsis().getSelectedItem().toString());
-
-            listaMaterias = MateriaBD.selectWhere(curso);
-
-            listaMaterias.stream().forEach(obj -> {
-                vista.getCmbAsignaturaAsis().addItem(obj.getNombre());
-                vista.getLblHorasAsis().setText("" + obj.getHorasPresenciales());
-            });
-
-            // listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
-            validarCombos();
-        } catch (NullPointerException e) {
-            vista.getCmbAsignaturaAsis().removeAllItems();
-        }
-        tablaTrad.setRowCount(0);
-    }
-     // </editor-fold> 
   // <editor-fold defaultstate="collapsed" desc="VARIOS"> 
         private int getIdDocente() {
         return listaDocentes.entrySet().stream()
