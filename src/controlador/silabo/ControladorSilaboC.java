@@ -1448,6 +1448,9 @@ public class ControladorSilaboC {
         } else {
             gestion.getCmbUnidad().setSelectedIndex(unidadSeleccionada.getNumeroUnidad() - 1);
         }
+        
+        mostrarTotalGestion();
+        
 
     }
 
