@@ -4,11 +4,16 @@
 /dist
 #Codigo compilado
 /build/
+#Librerias al compilar
+/lib/
+#Txt readme
+README.TXT
+
 
 #Foto creada temporalmente
 foto.png
 
-#Para pdfs de silabo 
+#Para pdfs de silabo
 *.pdf
 
 # Compiled class file
