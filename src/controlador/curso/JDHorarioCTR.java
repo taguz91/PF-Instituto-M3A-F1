@@ -134,7 +134,7 @@ public class JDHorarioCTR extends DVtnCTR {
             horaT = Integer.parseInt(hs[0]);
             minutoT = Integer.parseInt(hs[1]);
             //Siempre validamos que sea antes de las 22 y superior a las 7 
-            if (horaC > 22 || horaC < 7 || horaT > 22 || horaC < 7 || minutoC != 0 || minutoT != 0) {
+            if (horaC > 22 || horaC < 7 || horaT > 22 || horaC < 7) {
                 guardar = false;
                 jd.getLblError().setText("<html>Esta fuera de rango recuerde el formato: <br>08:00 - 20:00</html>");
             } else {
@@ -153,27 +153,27 @@ public class JDHorarioCTR extends DVtnCTR {
             }
         }
         //Si todo sigue correcto hasta ahora validamos que sean horas en la jornada especificada
-        if (guardar) {
-            guardar = false;
-            for (String hSelec : ctrHClase.gethSelec()) {
-                if (hSelec.equals(horaIni)) {
-                    guardar = true;
-                }
-            }
-
-            for (String hSelec : ctrHClase.gethSelec()) {
-                if (hSelec.equals(horaFin)) {
-                    guardar = true;
-                }
-            }
-            if (!guardar) {
-                jd.getLblError().setText("<html>Recuerde que esta en " + jornada + "<br>  Horario: "
-                        + ctrHClase.gethSelec()[0] + " - "
-                        + ctrHClase.gethSelec()[ctrHClase.gethSelec().length - 1] + "</html>");
-            } else {
-                jd.getLblError().setText("");
-            }
-        }
+//        if (guardar) {
+//            guardar = false;
+//            for (String hSelec : ctrHClase.gethSelec()) {
+//                if (hSelec.equals(horaIni)) {
+//                    guardar = true;
+//                }
+//            }
+//
+//            for (String hSelec : ctrHClase.gethSelec()) {
+//                if (hSelec.equals(horaFin)) {
+//                    guardar = true;
+//                }
+//            }
+//            if (!guardar) {
+//                jd.getLblError().setText("<html>Recuerde que esta en " + jornada + "<br>  Horario: "
+//                        + ctrHClase.gethSelec()[0] + " - "
+//                        + ctrHClase.gethSelec()[ctrHClase.gethSelec().length - 1] + "</html>");
+//            } else {
+//                jd.getLblError().setText("");
+//            }
+//        }
 
         if (guardar) {
             String nsql = "";
