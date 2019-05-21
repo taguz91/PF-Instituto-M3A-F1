@@ -56,7 +56,7 @@ public class VtnCursoCTR extends DVtnCTR {
         cargarCmbPrdLectio();
         cargarNombreCursos();
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Periodo", "Materia", "Docente", "Ciclo", "Curso", "Capacidad"};
+        String titulo[] = {"id", "Periodo", "Materia", "Cedula", "Docente", "Ciclo", "Curso", "Capacidad"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnCurso.getTblCurso().setModel(mdTbl);
@@ -64,9 +64,9 @@ public class VtnCursoCTR extends DVtnCTR {
         TblEstilo.formatoTbl(vtnCurso.getTblCurso());
         TblEstilo.ocualtarID(vtnCurso.getTblCurso());
         //le pasamos un tamaño a las columnas
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 4, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
-        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 70);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 60);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 7, 70);
         cargarCursos();
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
@@ -240,6 +240,7 @@ public class VtnCursoCTR extends DVtnCTR {
                     c.getId(),
                     c.getPeriodo().getNombre_PerLectivo(),
                     c.getMateria().getNombre(),
+                    c.getDocente().getIdentificacion(),
                     c.getDocente().getPrimerNombre() + " "
                     + c.getDocente().getPrimerApellido(),
                     c.getCiclo(),
