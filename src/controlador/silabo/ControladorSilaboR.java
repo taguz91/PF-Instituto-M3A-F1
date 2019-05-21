@@ -61,8 +61,7 @@ public class ControladorSilaboR {
     }
 
     public void iniciarControlador() {
-        
-        
+
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
 
         crud.getChbProgramaAnalitico().addActionListener(new ActionListener() {
@@ -81,7 +80,7 @@ public class ControladorSilaboR {
             }
 
         });
-        
+
     }
 
     public void imprimirSilabo() {
@@ -99,8 +98,10 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Sílabo");
 
+            existeCarpeta();
+
             //EXPORTACION A PDF
-            File f = new File(("../PF-Instituto-M3A-F1/pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            File f = new File(("pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             OutputStream output = new FileOutputStream(f);
             JasperExportManager.exportReportToPdfStream(jp, output);
             //byte[] d=JasperExportManager.exportReportToPdf(jp);
@@ -113,6 +114,16 @@ public class ControladorSilaboR {
             JOptionPane.showMessageDialog(null, "error " + e);
         }
 
+    }
+
+    private void existeCarpeta() {
+        File carpeta = new File("pdfs/");
+        if (!carpeta.exists()) {
+            if (carpeta.mkdir()) {
+                JOptionPane.showMessageDialog(null, "Creamos la carpeta pdfs en la que\n"
+                        + "se guardaran los documentos.");
+            }
+        }
     }
 
     public void imprimirProgramaAnalitico() {
@@ -163,8 +174,9 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Programa Analítico");
 
+            existeCarpeta();
             //EXPORTACION A PDF
-            File fl = new File(("../PF-Instituto-M3A-F1/pdfs/" + "PA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            File fl = new File(("pdfs/" + "PA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             OutputStream output = new FileOutputStream(fl);
             JasperExportManager.exportReportToPdfStream(jp, output);
             //byte[] d=JasperExportManager.exportReportToPdf(jp);

@@ -62,11 +62,6 @@ AND a.alumno_activo = true;]]>
 				<reportElement x="1" y="2" width="555" height="99"/>
 				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="348" y="40" width="207" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="1" y="121" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -81,6 +76,11 @@ AND a.alumno_activo = true;]]>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="417" y="43" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

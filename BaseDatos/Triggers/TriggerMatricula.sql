@@ -171,38 +171,29 @@ RETURNS VOID AS $probar_notas$
   afectados CHARACTER VARYING(100) := 0;
 
   reg_c RECORD;
-  alumnos_curso CURSOR FOR  SELECT id_almn_curso,
-  id_curso, id_alumno
-  FROM public."AlumnoCurso"
-  WHERE id_curso IN (
-    SELECT id_curso
+  cursos_prd CURSOR FOR  SELECT id_curso
     FROM public."Cursos"
-    WHERE id_prd_lectivo = periodo
-  );
+    WHERE id_prd_lectivo = periodo;
 
 BEGIN
 
   SELECT count(*) INTO total
-  FROM public."AlumnoCurso"
-  WHERE id_curso IN (
-    SELECT id_curso
-    FROM public."Cursos"
-    WHERE id_prd_lectivo = periodo
-  );
+  FROM public."Cursos"
+  WHERE id_prd_lectivo = periodo;
 
-  OPEN alumnos_curso;
-  FETCH alumnos_curso INTO reg_c;
+  OPEN cursos_prd;
+  FETCH cursos_prd INTO reg_c;
 
   WHILE ( FOUND ) LOOP
     ingresados := ingresados + 1;
 
     SELECT detalle_notas(reg_c.id_curso, periodo) INTO afectados;
-    RAISE NOTICE 'Afecto a %', afectados;  
+    RAISE NOTICE 'Afecto a %', afectados;
 
-    FETCH alumnos_curso INTO reg_c;
+    FETCH cursos_prd INTO reg_c;
   END LOOP;
   RAISE NOTICE 'Total de insertados: % Todos se ingreasaron: %', ingresados, total = ingresados;
-  CLOSE alumnos_curso;
+  CLOSE cursos_prd;
   RETURN;
 END;
 $probar_notas$ LANGUAGE plpgsql;
@@ -220,21 +211,21 @@ RETURNS VOID AS $detalle_notas$
   materia CHARACTER VARYING(100) :=  'M';
 
   reg_n RECORD;
-  tipos_nota CURSOR FOR  SELECT id_tipo_nota, tipo_nota_nombre
+  tipos_nota CURSOR FOR SELECT id_tipo_nota, tipo_nota_nombre
   FROM public."TipoDeNota"
-  WHERE tipo_nota_nombre <> 'NOTA FINAL'
+  WHERE tipo_nota_nombre NOT SIMILAR TO
+  '%(NOTA FINAL|PTI|SUBTOTAL FASE PRACTICA|NOTA FINAL TOTAL)%'
   AND tipo_nota_estado = TRUE
   AND id_prd_lectivo = periodo;
 
 BEGIN
 
   SELECT count(*) INTO total
-  FROM public."AlumnoCurso"
-  WHERE id_curso IN (
-    SELECT id_curso
-    FROM public."Cursos"
-    WHERE id_prd_lectivo = periodo
-  );
+  FROM public."TipoDeNota"
+  WHERE tipo_nota_nombre NOT SIMILAR TO
+  '%(NOTA FINAL|PTI|SUBTOTAL FASE PRACTICA|NOTA FINAL TOTAL)%'
+  AND tipo_nota_estado = TRUE
+  AND id_prd_lectivo = periodo;
 
   SELECT carrera_modalidad INTO modalidad
   FROM public."Carreras" c, public."PeriodoLectivo" pl
@@ -245,7 +236,8 @@ BEGIN
     WHERE id_curso = curso
   );
 
-  SELECT materia_nombre INTO materia
+  SELECT TRANSLATE(materia_nombre,'ÁÉÍÓÚáéíóú','AEIOUaeiou')
+  INTO materia
   FROM public."Materias"
   WHERE id_materia = (
     SELECT id_materia
@@ -259,23 +251,32 @@ BEGIN
   FETCH tipos_nota INTO reg_n;
 
   WHILE ( FOUND ) LOOP
-    ingresados := ingresados + 1;
-    
 
     IF modalidad = 'DUAL' THEN
       RAISE NOTICE 'Modalidad: %', modalidad;
       dual := dual + 1;
-      IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL', 
-      'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL') 
-      AND materia NOT ILIKE IN ('%PTI%', '%FASE PRACTICA%') THEN 
-          RAISE NOTICE 'Es otra materia, %', reg_n.id_tipo_nota;
-      ELSE 
-                IF materia ILIKE '%PTI%' THEN
-          RAISE NOTICE 'Es PTI, %', reg_n.id_tipo_nota;
-        ELSIF materia ILIKE '%FASE PRACTICA%' THEN
+
+      IF materia ILIKE '%PTI%' THEN
+        RAISE NOTICE 'Es PTI, %, No tiene notas', reg_n.id_tipo_nota;
+        ingresados := ingresados + 1;
+      ELSIF materia ILIKE '%FASE PRACTICA%' THEN
+        RAISE NOTICE 'Es FASE PRACTICA';
+        RAISE NOTICE 'Tiene dos notas ';
+        IF reg_n.tipo_nota_nombre SIMILAR TO '%(N. TUTOR EMPRESARIAL|N. TUTOR ACADEMICO)%' THEN
           RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
-        ELSE
+          ingresados := ingresados + 1;
+        END IF;
+
+      ELSE
+        RAISE NOTICE 'Tiene TODAS LAS NOTAS';
+        IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL',
+        'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL')
+        AND COALESCE(materia, '') NOT SIMILAR TO '%(PTI|FASE PRACTICA)%' THEN
+            RAISE NOTICE 'Tiene todas las notas, %', reg_n.id_tipo_nota;
+            ingresados := ingresados + 1;
+        END IF;
       END IF;
+
     ELSE
       presencial := presencial + 1;
       RAISE NOTICE 'Modalidad: %', modalidad;

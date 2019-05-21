@@ -68,7 +68,7 @@ public class FrmDocenteCTR extends DCTR {
     }
 
     public void iniciar() {
-        ctrPrin.agregarVtn(persona);
+        ctrPrin.agregarVtn(frmDocente);
         // frmDocente.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
         //frmDocente.getBtnGuardar().addActionListener(e -> guardarDocente());
         //Accion de buscar una persona  
