@@ -25,6 +25,7 @@ import javax.swing.table.TableColumn;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -56,11 +57,13 @@ public class FrmAsistenciaCTR {
     private static int semanas;
     private static List<LocalDate> items = new ArrayList<>();
     private static String dia_String;
+    private static int dia;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
+    private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
 
     // TABLA
@@ -145,6 +148,8 @@ public class FrmAsistenciaCTR {
     }
 
     private void InitTablas() {
+        
+        ConstruirTabla(tablaTrad);
         jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         List<String> items = new ArrayList<>();
         items.add("1");
@@ -155,6 +160,9 @@ public class FrmAsistenciaCTR {
         jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
         jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
     }
+    
+    
+    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="ENCABEZADO">
@@ -280,7 +288,6 @@ public class FrmAsistenciaCTR {
         }
 
     }
-
     public static void CalculoSemanaPorSemana() {
 
         for (int i = 0; i < semanas; i++) {
@@ -301,17 +308,15 @@ public class FrmAsistenciaCTR {
     }
 
     public static void ConstruirTabla(DefaultTableModel modelo) {
-        // modelo = (DefaultTableModel) vista.tab.getModel();
+         modelo = (DefaultTableModel) vista.getTblAsistencia().getModel();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
 
-            // modelo.addColumn(DiaDeLaSemana(dia));
-            // dia++;
+             modelo.addColumn(DiaDeLaSemana(1));
+             dia++;
         }
 
-        // Vista_Tabla.tblPrueba.setModel(modelo);
-
-        vista.setVisible(true);
+        vista.getTblAsistencia().setModel(modelo);
 
     }
 
