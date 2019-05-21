@@ -72,7 +72,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
                     + "AND m.materia_nombre ILIKE '%" + clave[1] + "%'\n"
-                    + "AND p.id_persona=?");
+                    + "AND p.id_persona=? AND cr.id_prd_lectivo=s.id_prd_lectivo");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[2]));
@@ -389,12 +389,13 @@ public class SilaboBD extends SilaboMD {
     }
     
     
-    public static SilaboMD consultarUltimo(ConexionBD conexion,int id){
+    public static SilaboMD consultarUltimo(ConexionBD conexion,int im,int ip){
         SilaboMD silabo = null;
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT MAX(id_silabo) FROM \"Silabo\" WHERE id_materia=?");
-            st.setInt(1, id);
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo FROM \"Silabo\" WHERE id_materia=? AND id_prd_lectivo=?");
+            st.setInt(1, im);
+            st.setInt(2, ip);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 silabo = new SilaboMD();

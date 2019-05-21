@@ -142,6 +142,10 @@ public class Controlador_plan_clases {
                       JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
                        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrincipal);
                         cP.iniciaControlador();
+                  }else{
+                     JOptionPane.showMessageDialog(null, "Falló al guardar ", "Aviso", JOptionPane.ERROR_MESSAGE);
+                      fPlanClase.dispose();
+                      
                   }
                 }else{
                      JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -268,12 +272,12 @@ public class Controlador_plan_clases {
         
         }
     private void insertarRecursosPlanClases(){
-       
+        plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
         for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
-            
+            recursoPlam.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
             RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
-            rcp.insertarRecursosPlanClases(recursoPlam);
-            
+             rcp.insertarRecursosPlanClases2(recursoPlam, recursoPlam.getId_plan_clases().getId_plan_clases());
         }
         
     }
@@ -491,10 +495,12 @@ public class Controlador_plan_clases {
                              }
                         }          
         
-        
+        plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
+            em.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
             EstrategiasMetodologicasBD embd= new EstrategiasMetodologicasBD(conexion);
-            embd.insertarEstrategiasMetodologicas(em);
+              embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getId_plan_clases());
         }
 
     }

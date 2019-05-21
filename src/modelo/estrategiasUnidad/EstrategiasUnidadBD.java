@@ -35,12 +35,12 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
 
     
 
-    public void insertar(EstrategiasUnidadMD e) {
+    public void insertar(EstrategiasUnidadMD e, int iu) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasUnidad\"(\n"
                     + "	 id_unidad, id_estrategia)\n"
-                    + "	VALUES ((SELECT MAX(id_unidad) FROM \"UnidadSilabo\"), ?)");
+                    + "	VALUES ("+iu+", ?)");
 
            
             st.setInt(1, e.getIdEstrategia().getIdEstrategia());

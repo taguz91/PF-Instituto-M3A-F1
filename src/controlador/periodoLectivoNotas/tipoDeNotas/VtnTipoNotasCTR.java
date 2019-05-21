@@ -67,9 +67,12 @@ public class VtnTipoNotasCTR {
 
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
 
-        vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).InitAgregar());
+        vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).Init());
 
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(TipoDeNotaBD.selectAllWhereEstadoIs(true)));
+        vista.getBtnActualizar().addActionListener(e -> {
+            listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+            cargarTabla(listaTiposNotas);
+        });
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -119,7 +122,7 @@ public class VtnTipoNotasCTR {
 
     private void cargarCmbPeriodos() {
 
-        listaPeriodos = PeriodoLectivoBD.SelectAll();
+        listaPeriodos = PeriodoLectivoBD.selectIdNombreAll();
 
         vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos
@@ -174,7 +177,7 @@ public class VtnTipoNotasCTR {
                     .findFirst().get();
 
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);
-            form.InitEditar();
+            form.Init();
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA");
