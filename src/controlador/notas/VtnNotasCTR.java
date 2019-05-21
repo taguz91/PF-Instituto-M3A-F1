@@ -6,6 +6,7 @@ import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -69,12 +70,16 @@ public class VtnNotasCTR {
 
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
-
-    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    
+    private VtnPrincipalCTR ctrPrin;
+            
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado, 
+           VtnPrincipalCTR ctrPrin) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
+        this.ctrPrin = ctrPrin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
@@ -991,7 +996,7 @@ public class VtnNotasCTR {
     }
 
     private void btnAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado);
+        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado, ctrPrin);
         asistencia.Init();
     }
 

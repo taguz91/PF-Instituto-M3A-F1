@@ -4,6 +4,7 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
@@ -59,6 +61,8 @@ public class FrmAsistenciaCTR {
     private List<MateriaMD> listaMaterias;
     private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
+    private VtnPrincipalCTR ctrPrin; 
+    private SesionClaseBD sclase; 
 
     // TABLA
     private DefaultTableModel tablaTrad;
@@ -69,11 +73,14 @@ public class FrmAsistenciaCTR {
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, 
+            RolBD rolSeleccionado, VtnPrincipalCTR ctrPrin) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
+        this.ctrPrin = ctrPrin;
+        this.sclase = new SesionClaseBD(ctrPrin.getConecta());
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -422,7 +429,10 @@ public class FrmAsistenciaCTR {
         } catch (Exception e) {
         }
     }
-
+    
+    public void CargarDiasClase(){
+        listaSesionClase = sclase.cargarDiasClase(dia_String, dia, semanas, dia_String);
+    }
     // Agregar Filas
     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
