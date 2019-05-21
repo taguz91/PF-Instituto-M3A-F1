@@ -269,6 +269,11 @@ public class JDFinContratacionCTR extends DVtnCTR {
         }
     }
 
+    private void editarFinContrato(DocenteMD docente){
+        
+        
+    }
+    
     private void guardarFinContratacion() {
 
         String Observacion = "", periodo = "";
@@ -338,9 +343,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este Docente");
             }
 
-//            VtnPeriodosDocenteCTR vtnPeriodoDocenteCTR = new VtnPeriodosDocenteCTR(conecta, vtnPrin, docenteMD);
-//            vtnPeriodoDocenteCTR.iniciarPeriodosDocente();
-//            frmFinContrato.dispose();
             System.out.println("Se guarda en base de datos");
 
         } else {

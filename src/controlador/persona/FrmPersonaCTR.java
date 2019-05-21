@@ -609,6 +609,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
         segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
+
         priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
@@ -618,7 +619,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
         segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
-        //Le pasamos la fecha que escribio en el calendario
+
         if (frmPersona.getJdfechaNacimiento().isValid()) {
             fecha = frmPersona.getJdfechaNacimiento().getDate();
 
@@ -726,7 +727,6 @@ public class FrmPersonaCTR extends DCTR {
                 porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
                 frmPersona.getLblErrorPorcentaje().setVisible(false);
             }
-
         }
 
         if (frmPersona.getCmbIdiomas().getSelectedIndex() < 1) {
@@ -738,6 +738,7 @@ public class FrmPersonaCTR extends DCTR {
         }
 
         telefono = frmPersona.getTxtTelefono().getText().trim().toUpperCase();
+
         callePrin = frmPersona.getTxtCallePrincipal().getText().trim().toUpperCase();
         if (!Validar.esDireccion(callePrin)) {
             frmPersona.getLblErrorCallePrin().setVisible(true);
@@ -805,11 +806,7 @@ public class FrmPersonaCTR extends DCTR {
         correo = frmPersona.getTxtCorreo().getText().trim();
 
         if (guardar) {
-
-            // PersonaBD per = new PersonaBD();
-            //Llenar directo por el constructor
             PersonaBD per = new PersonaBD(ctrPrin.getConecta());
-
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
@@ -830,19 +827,14 @@ public class FrmPersonaCTR extends DCTR {
             per.setEtnia(etnia);
             per.setCorreo(correo);
             if (discapacidad) {
-
                 per.setDiscapacidad(discapacidad);
                 per.setCarnetConadis(carnetConadis);
                 per.setTipoDiscapacidad(tipoDiscapacidad);
                 per.setPorcentajeDiscapacidad(Integer.parseInt(porcentajeDiscapacidad));
-                //   per.setEspecifiqueDiscapacidad(especifiqueDiscapacidad);
-
             }
-
             if (categoriaMigra) {
                 per.setCategoriaMigratoria(comboCategoriaMigra);
             }
-
             per.setLugarNatal(lugarNac);
             per.setLugarResidencia(lugarRes);
             //Codigo postal

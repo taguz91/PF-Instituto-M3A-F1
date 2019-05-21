@@ -121,12 +121,12 @@ public class CursoBD extends CursoMD {
             return false;
         }
     }
-    
-    public List<Integer> consultaCursos(){
-        String sql = "SELECT id_materia\n" +
-                    "FROM public.\"Cursos\"\n" +
-                    "GROUP BY id_materia, id_prd_lectivo, curso_nombre\n" +
-                    "HAVING count(*) > 1";
+
+    public List<Integer> consultaCursos() {
+        String sql = "SELECT id_materia\n"
+                + "FROM public.\"Cursos\"\n"
+                + "GROUP BY id_materia, id_prd_lectivo, curso_nombre\n"
+                + "HAVING count(*) > 1";
         List<Integer> lista = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
@@ -264,7 +264,8 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<CursoMD> cargarCursos() {
         String sql = "SELECT id_curso, materia_nombre, \n"
-                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_primer_nombre, persona_primer_apellido, "
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
                 + "prd_lectivo_nombre \n"
@@ -287,7 +288,8 @@ public class CursoBD extends CursoMD {
      */
     public ArrayList<CursoMD> cargarCursosEliminados() {
         String sql = "SELECT id_curso, materia_nombre, \n"
-                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_primer_nombre, persona_primer_apellido, "
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
                 + "prd_lectivo_nombre \n"
@@ -305,7 +307,8 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<CursoMD> cargarCursosPorPeriodo(int idPrdLectivo) {
         String sql = "SELECT id_curso, materia_nombre, \n"
-                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_primer_nombre, persona_primer_apellido, "
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, prd_lectivo_nombre\n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m, \n"
@@ -323,7 +326,8 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<CursoMD> cargarCursosPorNombre(String nombre) {
         String sql = "SELECT id_curso, materia_nombre, \n"
-                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_primer_nombre, persona_primer_apellido, "
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
                 + "prd_lectivo_nombre \n"
@@ -341,7 +345,8 @@ public class CursoBD extends CursoMD {
 
     public ArrayList<CursoMD> cargarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
         String sql = "SELECT id_curso, materia_nombre, \n"
-                + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_primer_nombre, persona_primer_apellido,"
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
                 + "prd_lectivo_nombre \n"
@@ -362,6 +367,7 @@ public class CursoBD extends CursoMD {
     public ArrayList<CursoMD> buscarCursos(String aguja) {
         String sql = "SELECT id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
+                + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
                 + "c.id_prd_lectivo, c.id_materia, c.id_docente, \n"
                 + "prd_lectivo_nombre \n"
@@ -688,6 +694,7 @@ public class CursoBD extends CursoMD {
             d.setIdDocente(rs.getInt("id_docente"));
             d.setPrimerNombre(rs.getString("persona_primer_nombre"));
             d.setPrimerApellido(rs.getString("persona_primer_apellido"));
+            d.setIdentificacion(rs.getString("persona_identificacion"));
             c.setDocente(d);
             c.setNombre(rs.getString("curso_nombre"));
             c.setCapacidad(rs.getInt("curso_capacidad"));
