@@ -1,11 +1,9 @@
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.notas.ReportesCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,13 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -31,7 +25,6 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -108,20 +101,17 @@ public class FrmAsistenciaCTR {
     }
 
     private void InitEventos() {
+
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
-        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboCiclo());
-        vista.getCmbDocenteAsis().addActionListener(e -> cargarComboSemanas());
-        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> cargarComboSemanas());
+        vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
+            cargarComboCiclo();
+            //cargarComboSemanas();
+        });
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
+
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
+
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
-        vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(7));
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(8));
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(9));
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(10));
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(11));
-//        CargarCombo(FrmAsistencia.tblAsistencia, FrmAsistencia.tblAsistencia.getColumnModel().getColumn(12));
 
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
             @Override
@@ -154,13 +144,7 @@ public class FrmAsistenciaCTR {
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="ENCABEZADO"> 
     private void cargarComboDocente() {
-        listaDocentes.entrySet().forEach((entry) -> {
-            String key = entry.getKey();
-            DocenteMD value = entry.getValue();
-
-            vista.getCmbDocenteAsis().addItem(key);
-
-        });
+        listaDocentes.entrySet().stream().map(c -> c.getKey()).forEach(vista.getCmbDocenteAsis()::addItem);
         tablaTrad.setRowCount(0);
     }
 
@@ -169,10 +153,7 @@ public class FrmAsistenciaCTR {
         vista.getLblCarreraAsistencia().setText("");
 
         listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos.stream().forEach(obj -> {
-            vista.getCmbPeriodoLectivoAsis().addItem(obj.getNombre_PerLectivo());
-
-        });
+        listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivoAsis()::addItem);
         tablaTrad.setRowCount(0);
 
     }
@@ -188,9 +169,7 @@ public class FrmAsistenciaCTR {
         try {
             vista.getCmbCicloAsis().removeAllItems();
 
-            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream().forEach(obj -> {
-                vista.getCmbCicloAsis().addItem(obj + "");
-            });
+            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).forEach(vista.getCmbCicloAsis()::addItem);
         } catch (NullPointerException e) {
         }
         tablaTrad.setRowCount(0);
@@ -211,13 +190,17 @@ public class FrmAsistenciaCTR {
 
             listaMaterias = MateriaBD.selectWhere(curso);
 
-            listaMaterias.stream().forEach(obj -> {
-                vista.getCmbAsignaturaAsis().addItem(obj.getNombre());
-                vista.getLblHorasAsis().setText("" + obj.getHorasPresenciales());
-            });
+            listaMaterias.stream().map(c -> c.getNombre()).forEach(vista.getCmbAsignaturaAsis()::addItem);
 
-            // listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
-            validarCombos();
+            String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+
+            vista.getLblHorasAsis().setText(listaMaterias
+                    .stream()
+                    .filter(item -> item.getNombre().equals(materia))
+                    .map(c -> c.getHorasPresenciales())
+                    .findFirst()
+                    .orElse(-1) + ""
+            );
         } catch (NullPointerException e) {
             vista.getCmbAsignaturaAsis().removeAllItems();
         }
@@ -301,7 +284,7 @@ public class FrmAsistenciaCTR {
     private int getIdDocente() {
         return listaDocentes.entrySet().stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocenteAsis().getSelectedItem().toString())))
-                .map(c -> c.getValue().getIdDocente()).findAny().get();
+                .map(c -> c.getValue().getIdDocente()).findFirst().get();
     }
 
     private int getIdPeriodoLectivo() {
@@ -357,17 +340,17 @@ public class FrmAsistenciaCTR {
 
     private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
         //new Thread(() -> {
-            cargarTabla = false;
-            String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
-            String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-            listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+        cargarTabla = false;
+        String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
+        String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+        listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
 
-            listaNotas.stream().forEach(obj -> {
-                funcionCarga.apply(obj, tabla);
-            });
+        listaNotas.stream().forEach(obj -> {
+            funcionCarga.apply(obj, tabla);
+        });
 
-            cargarTabla = true;
-            vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+        cargarTabla = true;
+        vista.getLblResultados().setText(listaNotas.size() + " Resultados");
         //}).start();
     }
 
