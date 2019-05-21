@@ -44,6 +44,7 @@ public class FrmAsistenciaCTR {
     private final RolBD rolSeleccionado;
 
     // CALCULOS SEMANAS
+    private List<PeriodoLectivoMD> listaPrdSemana;
     private static LocalDate IniSemana;
     private static LocalDate FinSemana;
     private static LocalDate fechaInicial = LocalDate.now();
@@ -139,11 +140,10 @@ public class FrmAsistenciaCTR {
         List<String> items = new ArrayList<>();
         items.add("1");
         items.add("2");
-        items.add("3");
-        items.add("4");
-        jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
-        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
-        jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
+     
+//        jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+//        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
+//        jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
     }
 
     // </editor-fold>
@@ -399,9 +399,9 @@ public class FrmAsistenciaCTR {
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
 
-            listaPeriodos = PeriodoLectivoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
-            if (listaPeriodos.size() > 0) {
-                PeriodoLectivoMD periodo = listaPeriodos.get(0);
+            listaPrdSemana = PeriodoLectivoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
+            if (listaPrdSemana.size() > 0) {
+                PeriodoLectivoMD periodo = listaPrdSemana.get(0);
 
                 System.out.println(periodo.getFecha_Inicio());
                 System.out.println(periodo.getNumSemanas());
