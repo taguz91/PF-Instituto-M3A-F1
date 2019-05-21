@@ -684,11 +684,12 @@ public class DocenteBD extends DocenteMD {
     }
 
     public DocenteMD buscarDocente(String identificacion) {
-        String sql = "SELECT id_docente, id_persona, docente_codigo, docente_otro_trabajo, "
-                + "docente_categoria, docente_fecha_contrato, docente_fecha_fin, "
-                + "docente_tipo_tiempo, docente_capacitador,docente_titulo,docente_abreviatura, docente_en_funcion\n"
-                + "FROM public.\"Docentes\" WHERE "
-                + " docente_activo=true and docente_codigo ='" + identificacion + "'";
+        String sql = "SELECT d.id_docente, p.id_persona, d.docente_codigo, d.docente_otro_trabajo, "
+                + "d.docente_categoria, d.docente_fecha_contrato, d.docente_fecha_fin, "
+                + "d.docente_tipo_tiempo, d.docente_capacitador, d.docente_titulo, d.docente_abreviatura, d.docente_en_funcion,\n"
+                + " p.persona_primer_nombre, p.persona_primer_apellido, p.persona_identificacion\n"
+                + " FROM public.\"Docentes\" d JOIN public.\"Personas\" p USING(id_persona) "
+                + "WHERE d.docente_activo = true AND d.docente_codigo = '" + identificacion + "';";
         //System.out.println(sql);
         return consultarPor(sql);
     }

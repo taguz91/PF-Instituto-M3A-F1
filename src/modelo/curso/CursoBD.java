@@ -114,7 +114,7 @@ public class CursoBD extends CursoMD {
                 + ", '" + c.getParalelo() + "', true);";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
+//            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
             return true;
         } else {
             System.out.println("Error");
