@@ -172,7 +172,8 @@ public class ControladorCRUDPlanClase {
         carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
 
         if (carreras_docente == null) {
-            JOptionPane.showMessageDialog(null, "No tiene carreras asignadas");
+            JOptionPane.showMessageDialog(null, "             Sin conexión\nVuelva a abrir la ventana!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            fCrud_plan_Clases.dispose();
         } else {
             carreras_docente.forEach((cmd) -> {
                 fCrud_plan_Clases.getCmb_Carreras().addItem(cmd.getNombre());
