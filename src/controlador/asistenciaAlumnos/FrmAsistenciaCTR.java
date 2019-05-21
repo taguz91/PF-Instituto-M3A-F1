@@ -52,8 +52,11 @@ public class FrmAsistenciaCTR {
     private static LocalDate fechaInicial = LocalDate.now();
     private static int semanas;
     private static List<LocalDate> items = new ArrayList<>();
+    private static ArrayList<String> lista_fecha = new ArrayList<>();
+    
     private static String dia_String;
     private static int dia;
+    private static String Fecha;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -114,9 +117,10 @@ public class FrmAsistenciaCTR {
 
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
-            cargarComboCiclo();
-            // cargarComboSemanas();
+           cargarComboCiclo();
+           cargarComboSemanas();
         });
+        
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
@@ -268,7 +272,7 @@ public class FrmAsistenciaCTR {
 
     public static void CalculoSemanaPorSemana() {
 
-        for (int i = 0; i < semanas; i++) {
+        for (int i = 1; i <= semanas; i++) {
             System.out.println("----------------------");
             System.out.println("Semana" + i);
             System.out.println("----------------------");
@@ -277,8 +281,11 @@ public class FrmAsistenciaCTR {
             items.add(FinSemana.plusWeeks(i));
 
             // items.forEach(item -> item.c);
-            System.out.println(IniSemana.plusWeeks(i));
+            Fecha= "Semana "+ i +" "+IniSemana.plusWeeks(i) +"  a  "+ FinSemana.plusWeeks(i)+"";
+            lista_fecha.add(Fecha);
+            System.out.println(IniSemana.plusWeeks(i).getDayOfWeek().name());
             System.out.println(FinSemana.plusWeeks(i));
+            System.out.println(Fecha);
 
         }
 
@@ -414,18 +421,16 @@ public class FrmAsistenciaCTR {
                 System.out.println(periodo.getNumSemanas());
                 semanas = periodo.getNumSemanas();
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
+               
 
-                for (int i = 1; i <= periodo.getNumSemanas(); i++) {
+                      lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
 
-                    vista.getCmbSemana().addItem("Semana " + String.valueOf(i) + items.toString());
-
-                }
+                
+                    
+                
             }
-
-            // listaPeriodos.forEach(p -> {
-            // System.out.println("Semana: "+p.getNumSemanas());
-            //
-            // });
+          
+             lista_fecha.forEach(t -> System.out.println(t));
         } catch (Exception e) {
         }
     }

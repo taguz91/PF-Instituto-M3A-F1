@@ -40,6 +40,22 @@ public class EstrategiasMetodologicasBD extends EstrategiasMetodologicasMD {
          }
          return true;
     }
+    public boolean  insertarEstrategiasMetodologicas2(EstrategiasMetodologicasMD em,int id_plan_Clase){
+        
+         try {
+             PreparedStatement st =conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasMetodologias\"(\n" +
+                     "	tipo_estrategias_metodologias, id_plan_de_clases, id_estrategias_unidad)\n" +
+                     "	VALUES ( ?, "+id_plan_Clase+", ?)");
+             
+             st.setString(1, em.getTipo_estrategias_metodologicas());
+             st.setInt(2, em.getId_estrategias_unidad().getIdEstrategiaUnidad());
+             st.executeUpdate();
+             System.out.println(st);
+         } catch (SQLException ex) {
+             Logger.getLogger(EstrategiasMetodologicasBD.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         return true;
+    }
     
     public static List<EstrategiasMetodologicasMD> consultarEstrategiasMetologicas(ConexionBD conexion,int id_plan_clase){
         List<EstrategiasMetodologicasMD> lista_est_meto=new ArrayList<>();

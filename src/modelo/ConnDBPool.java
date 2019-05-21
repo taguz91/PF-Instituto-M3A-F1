@@ -3,6 +3,7 @@ package modelo;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
+import controlador.Libraries.Middlewares;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -77,6 +79,11 @@ public class ConnDBPool {
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         //this.conn = conn;
         try {
+
+            while (!Middlewares.isConnected()) {
+                JOptionPane.showMessageDialog(null, "POR FAVOR CONECTECE A INTERNET!!!!");
+            }
+
             if (parametros == null) {
                 stmt = conn.prepareStatement(sql);
             } else {

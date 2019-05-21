@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="08dca793-f7b5-4b08-a675-5f560e4be80e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="615"/>
+	<parameter name="id_materia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from "Materias" where id_materia=$P!{id_materia}]]>
+	</queryString>
+	<field name="id_materia" class="java.lang.Integer"/>
+	<field name="id_carrera" class="java.lang.Integer"/>
+	<field name="id_eje" class="java.lang.Integer"/>
+	<field name="materia_codigo" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="materia_ciclo" class="java.lang.Integer"/>
+	<field name="materia_creditos" class="java.lang.Integer"/>
+	<field name="materia_tipo" class="java.lang.String"/>
+	<field name="materia_categoria" class="java.lang.String"/>
+	<field name="materia_tipo_acreditacion" class="java.lang.String"/>
+	<field name="materia_horas_docencia" class="java.lang.Integer"/>
+	<field name="materia_horas_practicas" class="java.lang.Integer"/>
+	<field name="materia_horas_auto_estudio" class="java.lang.Integer"/>
+	<field name="materia_horas_presencial" class="java.lang.Integer"/>
+	<field name="materia_total_horas" class="java.lang.Integer"/>
+	<field name="materia_activa" class="java.lang.Boolean"/>
+	<field name="materia_objetivo" class="java.lang.String"/>
+	<field name="materia_descripcion" class="java.lang.String"/>
+	<field name="materia_objetivo_especifico" class="java.lang.String"/>
+	<field name="materia_organizacion_curricular" class="java.lang.String"/>
+	<field name="materia_campo_formacion" class="java.lang.String"/>
+	<field name="materia_nucleo" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="498" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="14" width="531" height="101" uuid="a50433c5-8bd4-4f3d-922f-430a07535167"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[La evaluación del estudiante tendrá las características siguientes:
+
+a)Diagnóstica: Se realizará una evaluación diagnóstica para determinar los conocimientos previos de los estudiantes.
+b)Procesual: Se realizarán evaluaciones durante el ciclo, mediante trabajos prácticos a fin de determinar los niveles de aprendizaje alcanzados y realizar la retroalimentación respectiva.
+c)Sumativa: Se realizará evaluaciones sumativas  durante todo el periodo académico.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="341" height="14" forecolor="#006699" uuid="97e6935b-3990-40aa-bf03-71d7dded6ef1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 7.CRITERIOS PARA LA ACREDITACIÓN DE LA ASIGNATURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="115" width="531" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="81f8bdc1-1523-44ee-afa8-88e1fadc5b2d"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[I.	NOTA FASE TEÓRICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="146" width="58" height="165" uuid="3a216f09-f78b-4f2e-be0d-8407432b8754"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="146" width="403" height="114" uuid="b46aeb98-e15c-4b81-b154-b05790afb5ba"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Gestión en aula: 
+ En el 1er aporte: 30%, de los cuales: 
+ El 15% en Trabajos de investigación, grupales y de laboratorio, etc.
+ Y una/varias evaluación/es escrita de 15%.
+ Fecha de presentación de este primer aporte según el calendario académico
+ En el 2do aporte: 30%, de los cuales: 
+ El 15% en Trabajos de investigación, grupales y de laboratorio, etc.
+ Y una/varias evaluación/es escrita de 15%.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="146" width="35" height="114" uuid="6c45fac0-f07a-4232-a18d-70f8dfd1f0c1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[60%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="260" width="403" height="51" uuid="50614f22-dbcf-4179-9f7f-67f26cf4ed97"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Examen final: 
+ Examen de la materia vista durante todo el período académico. Nota mínima 10 puntos
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="260" width="35" height="51" uuid="e6abe8e0-2b16-445f-a6ea-09779966be0c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="146" width="35" height="165" uuid="29f5d386-0120-4424-a92f-5023cc08426e"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="311" width="461" height="20" uuid="f918258e-da6f-4df4-a18f-d1c366431ee4"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Proyecto de tutoría Integrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="311" width="35" height="20" uuid="963606a0-63cf-4dff-a281-fbe86056c128"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="311" width="35" height="20" uuid="77487394-c917-4f14-88a3-5a50474f1d72"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="331" width="496" height="20" uuid="066450ee-44d4-473a-ac92-33e4213f9b52"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(A)SUBTOTAL FASE TEORICA (promedio)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="331" width="35" height="20" uuid="dd157875-fcc3-432f-b016-f104ab4fabdd"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="367" width="531" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="8157e785-51b4-414c-b83a-d38fffde3260"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[II.	NOTA FASE PRÁCTICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="398" width="418" height="20" uuid="044576f5-0ccd-447f-898b-fc3cf4b2a860"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Desempeño en la Institución Formadora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="398" width="54" height="20" uuid="00db00f3-516c-4708-ac30-55b331760e6d"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="398" width="59" height="20" uuid="73c527de-ca93-4d53-89b4-879832da8791"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="418" width="269" height="20" uuid="ff5005ef-ea67-49c1-bc1b-c34bf01223c4"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Calificación tutor empresarial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="438" width="269" height="20" uuid="d814b356-1c1e-496b-bfb4-784c61960ddb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Calificación tutor académico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="418" width="149" height="40" uuid="20885383-e671-4ba1-b67a-6b947aa9b7b3"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Proyecto Empresarial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="438" width="54" height="20" uuid="f7d9aa15-9c0f-48af-a1af-e34e7eb001a8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="418" width="54" height="20" uuid="4bdd4fdc-5074-4b17-ab8b-8e454a0ad867"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="418" width="59" height="40" uuid="e715cd35-99d7-4ac2-9367-692ef5ff048d"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="458" width="472" height="20" uuid="684256c2-908d-48c3-9312-338f0c294c68"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(B) SUBTOTAL FASE PRÁCTICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="478" width="472" height="20" uuid="fdbc9c42-c7f6-4c14-b4c1-e1896a48d122"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL (Promedio A y B)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="458" width="59" height="20" uuid="de3f0da0-6e56-41aa-a53b-c4a7f5bfbbc8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="478" width="59" height="20" uuid="c8df780b-8e91-46d9-877d-0cccccb5ea5e"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="351" width="531" height="16" uuid="cdcdf387-a405-40ea-a72a-e30f1055f70f"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+		<band height="504">
+			<staticText>
+				<reportElement x="11" y="0" width="531" height="181" uuid="43ed55ac-0280-4755-bf9d-98be781778ba"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[
+Considerandos: 
+
+•Exámenes Supletorios del Periodo Académico.- Son los que rinde el estudiante cuando por fuerza mayor o caso fortuito, dejó de presentar una prueba parcial o examen final, previa autorización del Vicerrectorado de la institución a la solicitud escrita del estudiante en tal sentido. La forma como se realizan los exámenes supletorios, así como su grado de dificultad, deberá ser igual a la de los exámenes regulares con que se evaluó la correspondiente asignatura.
+•Exámenes de Recuperación: Son aquellos que el estudiante puede presentar en el caso de obtener una calificación final inferior a la nota mínima aprobatoria de 70 puntos en una asignatura. El estudiante deberá presentar los exámenes de recuperación en las fechas que se determinen en el calendario académico, posteriores a haber finalizado la asignatura en cuestión. El examen de recuperación puede presentarse por escrito, oral o de manera práctica, tendrá la misma duración establecida para el examen final y debe abarcar el contenido total de la asignatura. 
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="258" width="531" height="208" uuid="79bc9942-e4cf-4325-b2a7-c9aedbce9d93"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[•La calificación final de una o varias de las asignaturas del núcleo estructurante (incluyendo el examen de recuperación) sea menor a 70 puntos;
+•Haya superado el 25% de inasistencia de las horas presenciales de clase de las asignaturas del núcleo estructurante o de la fase práctica en la empresa receptora;
+•Haya obtenido una nota inferior a 70 puntos en la calificación del Núcleo Estructurante; esta situación puede darse a pesar de que el estudiante haya aprobado las asignaturas de núcleo estructurante.
+•En estos casos se deberá dar aviso a la entidad formadora y de no aceptar recibir al estudiante para la repetición de la fase práctica, la Coordinación de la Carrera procurará ubicarlo en una nueva entidad con la que se mantenga convenio y manifieste disponibilidad de recibirlo; este proceso de reubicación se dará por una sola vez durante todo el proceso formativo del estudiante. En caso de no disponer de entidades que reciban al estudiante, se pondrá a consideración del CAS su retiro definitivo de la carrera.
+•Por otra parte, si el estudiante ha obtenido una nota inferior a 70 puntos en la calificación final de una o varias de las asignaturas que no pertenecen al núcleo estructurante (definidas en su proyecto de carrera) o ha superado el máximo de 25% de faltas en las horas presenciales de estas asignaturas deberá repetir únicamente estas asignaturas y continuar con su proceso formativo en aquellas que no estén enlazadas (pre y co-requisitos) correspondientes al siguiente periodo académico.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="466" width="531" height="38" uuid="bbbae1a1-4f8c-49f3-8e15-698097dc0907"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observación:
+Lo estipulado anteriormente consta Sistema de Evaluación Estudiantil (SEE).
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="181" width="531" height="77" uuid="51e6ceae-fdff-45e4-a718-d60f39e45cd5"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[•Los estudiantes que no han obtenido la calificación mínima equivalente a 70 puntos deberán rendir, por una sola vez durante cada periodo académico, un examen de recuperación por asignatura; la calificación de esta evaluación reemplazará la nota del examen final.
+•El estudiante deberá repetir en un período académico, las asignaturas correspondientes al núcleo estructurante (definidas en su proyecto de carrera), el proyecto de tutoría integradora y la fase práctica
+ en la empresa receptora cuando:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
