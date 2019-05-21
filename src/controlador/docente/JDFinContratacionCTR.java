@@ -181,7 +181,6 @@ public class JDFinContratacionCTR extends DVtnCTR {
 
     private void aceptar() {
         frmFinContrato.getJcbPeriodos().getSelectedItem();
-
     }
 
     private void pnlAnterior() {
