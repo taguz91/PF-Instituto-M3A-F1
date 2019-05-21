@@ -72,7 +72,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
-        vtnDocente.getBtnReasignarM().setEnabled(false);
+      
         cargarCmbTipoDocentes();
         String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
@@ -138,7 +138,6 @@ public class VtnDocenteCTR extends DVtnCTR {
             case "Finalizado Contrato":
                 docentesMD = docente.cargarDocentesFinContrato();
                 llenarTabla(docentesMD);
-                vtnDocente.getBtnReasignarM().setEnabled(true);
                 break;
             default:
                 docentesMD = docente.cargarDocentes();
