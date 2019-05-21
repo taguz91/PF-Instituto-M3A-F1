@@ -45,6 +45,9 @@ public class SesionClaseBD extends SesionClaseMD {
 
     public void ingresarHorarios(String nsql) {
         PreparedStatement ps = conecta.getPS(nsql);
+        System.out.println("----------");
+        System.out.println(nsql);
+        System.out.println("----------");
         if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
         } else {
