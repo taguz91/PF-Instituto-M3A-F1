@@ -45,7 +45,7 @@ import vista.principal.VtnPrincipal;
 public class FrmAsistenciaCTR {
 
     private final VtnPrincipal desktop;
-    private final FrmAsistencia vista;
+    private static FrmAsistencia vista;
     private final UsuarioBD usuario;
     private final RolBD rolSeleccionado;
     
@@ -55,8 +55,7 @@ public class FrmAsistenciaCTR {
      private static LocalDate fechaInicial = LocalDate.now();
      private static int semanas;
      private static List<LocalDate> items = new ArrayList<>();
-     private static List<String> lista_fechas = new ArrayList<>();
-
+      private static String dia_String;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -282,8 +281,7 @@ public class FrmAsistenciaCTR {
              
              items.add(IniSemana.plusWeeks(i));
              items.add(FinSemana.plusWeeks(i));
-             lista_fechas.add(IniSemana.plusWeeks(i).toString());
-             lista_fechas.add(FinSemana.plusWeeks(i).toString());
+            
              
              // items.forEach(item -> item.c);
        
@@ -293,6 +291,45 @@ public class FrmAsistenciaCTR {
         }
 
     }
+     
+     public static void ConstruirTabla(DefaultTableModel modelo){
+        // modelo = (DefaultTableModel) vista.tab.getModel();
+        
+         for (int i = 0; i < 6; i++) {
+              
+            // modelo.addColumn(DiaDeLaSemana(dia));
+          //  dia++;
+        }
+        
+       // Vista_Tabla.tblPrueba.setModel(modelo);
+        
+        vista.setVisible(true);
+        
+    }
+     public static String DiaDeLaSemana(int diaValue){
+         
+          switch (diaValue) {
+            case 1:
+                 dia_String="LUNES";
+                break;
+            case 2:
+                dia_String="MARTES";
+                break;
+            case 3:
+                dia_String="MIERCOLES";
+                break;
+            case 4:
+                  dia_String="JUEVES";
+                break;
+            case 5:
+                 dia_String="VIERNES";
+                 break;
+            case 6:
+                  dia_String="SABADO";
+                break;
+        }
+         return dia_String;
+     }
     
     
     
