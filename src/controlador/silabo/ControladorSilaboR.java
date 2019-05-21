@@ -119,8 +119,41 @@ public class ControladorSilaboR {
         try {
 
             System.out.println("Imprimiendo.......");
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
-            Map parametro = new HashMap();
+           //JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
+              JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
+
+           Map parametro = new HashMap();
+            String par = "47";
+
+            parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
+            parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+            JasperViewer pv = new JasperViewer(jp, false);
+            pv.setVisible(true);
+            pv.setTitle("Silabo Duales");
+
+            //EXPORTACION A PDF
+            File f = new File(("../PF-Instituto-M3A-F1/pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            OutputStream output = new FileOutputStream(f);
+            JasperExportManager.exportReportToPdfStream(jp, output);
+            //byte[] d=JasperExportManager.exportReportToPdf(jp);
+            FileInputStream fis = new FileInputStream(f);
+            SilaboBD.guardarSilabo(conexion, fis, f, silabo);
+            System.out.println("Se guardo pdf");
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, " error " + e);
+        }
+    }
+      public void imprimirProgramaAnalitico1() {
+        try {
+
+            System.out.println("Imprimiendo.......");
+           JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
+              //JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
+
+           Map parametro = new HashMap();
             String par = "47";
 
             parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));

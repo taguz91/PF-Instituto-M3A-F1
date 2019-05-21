@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c47e6153-456e-4ea1-82e0-152336cb9e75">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_materia" class="java.lang.String"/>
+	<parameter name="id_silabo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct hora,string_agg(lu,'') as Lunes,string_agg(ma,'') as Martes,string_agg(mi,'') as Miércoles,string_agg(ju,'') as Jueves,string_agg(vi,'') as Viernes,string_agg(sa,'') as S from(
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			case when g.dia_sesion=1 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
+				 as "lu",null as ma,null as mi,null as ju,null as vi,null as sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+union
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			'' as lu,
+			case when g.dia_sesion=2 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
+				 as ma,null as mi,null as ju,null as vi,null as sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where      c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+	union
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			'' as lu,
+	        '' as ma,
+			case when g.dia_sesion=3 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
+				 as mi,null as ju,null as vi,null as sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+	union
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			'' as lu,
+	        '' as ma,
+	        '' as mi,
+			case when g.dia_sesion=4 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
+				 as ju,null as vi,null as sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+	union
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			'' as lu,
+	        '' as ma,
+	        '' as mi,
+	        '' as ju,
+			case when g.dia_sesion=5 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) end
+				 as vi,null as sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+	union
+select CONCAT(extract(hour from g.hora_inicio_sesion),':',extract(minute from g.hora_inicio_sesion),'0',' a ', extract(hour from g.hora_fin_sesion),':',extract(minute from g.hora_fin_sesion),'0') as hora, 
+			'' as lu,
+	        '' as ma,
+	        '' as mi,
+	        '' as ju,
+	        '' as vi,
+			case when g.dia_sesion=6 then 
+				concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) else ' ' end
+				 as  sa
+from "SesionClase" g join "Cursos"  c on g.id_curso=c.id_curso join "Jornadas" a on c.id_jornada=a.id_jornada 
+where     c.id_materia=$P!{id_materia} and c.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})
+
+) as x
+group by hora
+order by hora ]]>
+	</queryString>
+	<field name="hora" class="java.lang.String"/>
+	<field name="lunes" class="java.lang.String"/>
+	<field name="martes" class="java.lang.String"/>
+	<field name="miércoles" class="java.lang.String"/>
+	<field name="jueves" class="java.lang.String"/>
+	<field name="viernes" class="java.lang.String"/>
+	<field name="s" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement x="30" y="0" width="161" height="20" forecolor="#006699" uuid="49d3683c-fe80-4fea-96f2-9a74bcccd55b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.2 Horario de clases]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="104" y="0" width="68" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="520d9916-9b47-41c9-bdd2-372e6e2ca1ed"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lunes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="172" y="0" width="74" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="3a8610ba-c7af-4c3a-872b-1692cda469ea"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Martes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="246" y="0" width="74" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="ba8c6808-987a-4710-b8f2-d183ea6d9beb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Miércoles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="320" y="0" width="73" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="c5cdb02d-27dc-4633-a6be-70a8cba5bb7f"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jueves]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="0" width="93" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="1a7dec97-c9b7-490d-9e22-61a578437674"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="466" y="0" width="72" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="e93d606e-27fa-4c58-a8f5-abc97166a36b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sábado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="393" y="0" width="73" height="21" forecolor="#FFFFFF" backcolor="#006699" uuid="cdd103fa-5c9b-4c06-98a9-9a71be29d1df"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Viernes]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="HH:mm">
+				<reportElement x="11" y="0" width="93" height="21" uuid="1721824d-c49f-44cd-801a-54768631b694"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="74" height="21" uuid="7b4d6303-17c0-4c0e-82a9-fef7cad2fa31"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{miércoles}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="0" width="74" height="21" uuid="247eb346-f9e5-4599-b3de-aaea4d2b8554"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{martes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="68" height="21" uuid="9ea72625-6da1-4e91-b37f-388c1abc4b79"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lunes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="73" height="21" uuid="0998683f-3bf9-4076-9267-ca65eef4c384"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jueves}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="73" height="21" uuid="968075a4-3a30-403f-848f-6994f4ad7987"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{viernes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="0" width="72" height="21" uuid="2cef8ad9-fe66-43b5-95e1-68a74d8a2935"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{s}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

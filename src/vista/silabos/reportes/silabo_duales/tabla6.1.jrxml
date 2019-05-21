@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e4591019-9666-4012-961a-df4df05871f5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from "Silabo" where id_silabo=$P!{parameter1}]]>
+	</queryString>
+	<field name="id_silabo" class="java.lang.Integer"/>
+	<field name="id_materia" class="java.lang.Integer"/>
+	<field name="estado_silabo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="208" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="a16eed39-c8d4-4aa4-9988-f48ae07e8228"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ACTIVIDADES DE APRENDIZAJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="208" y="0" width="180" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="294b3a68-097e-479a-8b7f-4afe10657a6c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[EVALUACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="388" y="0" width="167" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="8290c504-ed9c-4a1d-9b7a-b7f513d90bba"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50" uuid="831d66e8-981c-4912-a3d4-3c291e9b91f9"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "trabajoAsistido.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50" uuid="736c79d9-791a-4561-8bb4-55a8e2833462"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "TrabajoColaborativo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50" uuid="517947e6-6356-40f7-83d0-eeffcb197c29"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "GestionDeLaPractica.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50" uuid="810984dd-cf90-4c7d-b421-c4ae8fba3db0"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "GestionDeTrabajoAutonomo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="60">
+			<staticText>
+				<reportElement x="0" y="20" width="313" height="20" uuid="df26b60e-296d-4f40-b36c-1811de7440e4"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL EXÁMENES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="313" height="20" uuid="6cab6f98-612b-49d6-b1fd-a552159aa6e9"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GESTIÓN DE AULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="313" height="20" uuid="58ff5391-94b2-4504-852d-05cc6f7608d7"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL CICLO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="313" y="0" width="75" height="20" uuid="67d7b5c8-1255-4419-97a9-56494c32f30c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[60]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="20" width="75" height="20" uuid="e3080301-3a29-4483-aa68-f3bbb95d9b55"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[40]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="40" width="75" height="20" uuid="07daab28-5816-4454-b3f1-e6d547439f92"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[100]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
