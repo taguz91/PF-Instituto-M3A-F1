@@ -171,27 +171,18 @@ RETURNS VOID AS $probar_notas$
   afectados CHARACTER VARYING(100) := 0;
 
   reg_c RECORD;
-  alumnos_curso CURSOR FOR  SELECT id_almn_curso,
-  id_curso, id_alumno
-  FROM public."AlumnoCurso"
-  WHERE id_curso IN (
-    SELECT id_curso
+  cursos_prd CURSOR FOR  SELECT id_curso
     FROM public."Cursos"
-    WHERE id_prd_lectivo = periodo
-  );
+    WHERE id_prd_lectivo = periodo;
 
 BEGIN
 
   SELECT count(*) INTO total
-  FROM public."AlumnoCurso"
-  WHERE id_curso IN (
-    SELECT id_curso
-    FROM public."Cursos"
-    WHERE id_prd_lectivo = periodo
-  );
+  FROM public."Cursos"
+  WHERE id_prd_lectivo = periodo;
 
-  OPEN alumnos_curso;
-  FETCH alumnos_curso INTO reg_c;
+  OPEN cursos_prd;
+  FETCH cursos_prd INTO reg_c;
 
   WHILE ( FOUND ) LOOP
     ingresados := ingresados + 1;
@@ -199,10 +190,10 @@ BEGIN
     SELECT detalle_notas(reg_c.id_curso, periodo) INTO afectados;
     RAISE NOTICE 'Afecto a %', afectados;
 
-    FETCH alumnos_curso INTO reg_c;
+    FETCH cursos_prd INTO reg_c;
   END LOOP;
   RAISE NOTICE 'Total de insertados: % Todos se ingreasaron: %', ingresados, total = ingresados;
-  CLOSE alumnos_curso;
+  CLOSE cursos_prd;
   RETURN;
 END;
 $probar_notas$ LANGUAGE plpgsql;
