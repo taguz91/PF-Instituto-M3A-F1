@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
@@ -92,9 +93,10 @@ public class LoginCTR {
                     if (modelo != null) {
 
                         vista.dispose();
-
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista, false);
+                        CONS.setUsuario(modelo);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista);
                         vtn.Init();
+
                     } else {
                         Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
                         Effects.setDefaultCursor(vista);

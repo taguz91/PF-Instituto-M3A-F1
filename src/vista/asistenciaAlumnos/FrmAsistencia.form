@@ -46,7 +46,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -66,12 +66,6 @@
                                           <Component id="lblDocenteAsis" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblAsignaturaAsis" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="cmbDocenteAsis" max="32767" attributes="0"/>
-                                          <Component id="cmbAsignaturaAsis" pref="269" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblCicloAsis" min="-2" max="-2" attributes="0"/>
@@ -80,12 +74,24 @@
                                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                       <Component id="lblSemana" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cmbSemana" min="-2" pref="215" max="-2" attributes="0"/>
-                                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                                      <Component id="cmbSemana" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="cmbDocenteAsis" max="32767" attributes="0"/>
+                                          <Component id="cmbAsignaturaAsis" pref="269" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                       <Component id="lblHorasPresencialesAsis" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="lblHorasAsis" min="-2" pref="93" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
