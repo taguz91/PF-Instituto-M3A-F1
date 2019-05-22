@@ -9,10 +9,7 @@
 	<queryString>
 		<![CDATA[select distinct descripcion_estrategia from "EstrategiasAprendizaje" j,"EstrategiasUnidad" e where j.id_estrategia=e.id_estrategia and id_unidad=$P!{id_u}]]>
 	</queryString>
-	<field name="id_estrategia" class="java.lang.Integer"/>
 	<field name="descripcion_estrategia" class="java.lang.String"/>
-	<field name="id_estrategia_unidad" class="java.lang.Integer"/>
-	<field name="id_unidad" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
