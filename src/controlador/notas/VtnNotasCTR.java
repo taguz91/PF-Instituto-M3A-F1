@@ -5,8 +5,6 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -39,7 +37,6 @@ import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
@@ -70,16 +67,12 @@ public class VtnNotasCTR {
 
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
-    
-    private VtnPrincipalCTR ctrPrin;
-            
-    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado, 
-           VtnPrincipalCTR ctrPrin) {
+
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
-        this.ctrPrin = ctrPrin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
@@ -123,8 +116,7 @@ public class VtnNotasCTR {
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
-        vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
-
+        //vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
         vista.getBtnBuscar().addActionListener(e -> buscarDocente());
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -977,10 +969,9 @@ public class VtnNotasCTR {
         activarForm(true);
     }
 
-    private void btnAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado, ctrPrin);
-        asistencia.Init();
-    }
-
+//    private void btnAsistencia(ActionEvent e) {
+//        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado, ctrPrin);
+//        asistencia.Init();
+//    }
     // </editor-fold>  
 }
