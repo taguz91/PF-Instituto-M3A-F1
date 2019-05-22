@@ -1806,7 +1806,7 @@ public class ControladorSilaboC {
         mostrarTotalGestion();
     }
 
-    public void insertarUnidades() {
+    public int insertarUnidades() {
 
         silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId(), silaboNuevo.getIdPeriodoLectivo().getId_PerioLectivo()).getIdSilabo());
 
@@ -1840,9 +1840,11 @@ public class ControladorSilaboC {
 
             }
         }
+        
+        return silaboNuevo.getIdSilabo();
     }
 
-    public void insertarReferencias() {
+    public void insertarReferencias(int is) {
 
         agregarBibliografiaNoBase();
 
@@ -1854,19 +1856,19 @@ public class ControladorSilaboC {
                 r.insertar(rbd.getIdReferencia(), 1);
             }
 
-            rbd.insertar(referenciasSilabo.get(i));
+            rbd.insertar(referenciasSilabo.get(i),is);
 
         }
 
         ReferenciasBD r1 = new ReferenciasBD(conexion);
         r1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd1 = new ReferenciaSilaboBD(conexion);
-        rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2));
+        rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2),is);
 
         ReferenciasBD r2 = new ReferenciasBD(conexion);
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia(), 0);
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
-        rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1));
+        rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1),is);
 
     }
 
@@ -1875,8 +1877,8 @@ public class ControladorSilaboC {
         silaboNuevo.insertar();
         
         //silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
-        insertarUnidades();
-        insertarReferencias();
+        int is=insertarUnidades();
+        insertarReferencias(is);
         // exportarPDF();
 
     }
