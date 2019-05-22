@@ -114,7 +114,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
-        //CargarDiasClase();
+       // CargarDiasClase();
     }
 
     private void InitEventos() {
@@ -406,8 +406,8 @@ public class FrmAsistenciaCTR {
         //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
 
         try {
-            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            System.out.println(fechaInicial);
+            //fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
+            //System.out.println(fechaInicial);
         
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
