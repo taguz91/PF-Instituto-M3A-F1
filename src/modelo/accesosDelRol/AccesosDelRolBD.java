@@ -12,9 +12,9 @@ import modelo.ConnDBPool;
  */
 public class AccesosDelRolBD extends AccesosDelRolMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
     public AccesosDelRolBD(int idAccesoRol, int idRol, int idAcceso) {
         super(idAccesoRol, idRol, idAcceso);

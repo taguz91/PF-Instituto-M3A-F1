@@ -12,11 +12,11 @@ import modelo.ConnDBPool;
  */
 public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -38,7 +38,7 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
         conn = pool.getConnection();
         return pool.ejecutar(INSERTAR, conn, parametros) == null;
     }
-  
+
     public boolean eliminarWhere(int idRol, String username) {
         String ELIMINAR = "DELETE \n"
                 + "FROM\n"

@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnPerfilUsuario;
@@ -19,9 +20,9 @@ public class VtnPerfilUsuarioCTR {
     private UsuarioBD modelo;
     private VtnPrincipal desktop;
 
-    public VtnPerfilUsuarioCTR(VtnPerfilUsuario vista, UsuarioBD modelo, VtnPrincipal desktop) {
-        this.vista = vista;
-        this.modelo = modelo;
+    public VtnPerfilUsuarioCTR(VtnPrincipal desktop) {
+        this.vista = new VtnPerfilUsuario();
+        this.modelo = CONS.USUARIO;
         this.desktop = desktop;
     }
 
@@ -62,7 +63,7 @@ public class VtnPerfilUsuarioCTR {
      */
     private void btnCambiarContrasenaActionPerformance(ActionEvent e) {
         vista.getTxtContrasena().setEnabled(true);
-        vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.BLUE,1));
+        vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
 
     }
 

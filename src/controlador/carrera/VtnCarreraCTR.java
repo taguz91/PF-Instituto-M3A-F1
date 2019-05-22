@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -140,28 +139,28 @@ public class VtnCarreraCTR extends DVtnCTR {
             }
         }
     }
-    
+
     /**
-     * Abrimos el formulario de la carrera 
+     * Abrimos el formulario de la carrera
      */
     private void abrirFrmCarrera() {
         ctrPrin.abrirFrmCarrera();
         vtnCarrera.dispose();
         ctrPrin.cerradoJIF();
     }
-    
+
     /**
-     * Consultamos todas las carreras, y las
-     * cargamos en la tabla 
+     * Consultamos todas las carreras, y las cargamos en la tabla
      */
     public void cargarCarreras() {
         carreras = car.cargarCarreras();
         llenarTbl(carreras);
     }
-    
+
     /**
      * LLenamos todos los datos de las carreras
-     * @param carreras 
+     *
+     * @param carreras
      */
     public void llenarTbl(ArrayList<CarreraMD> carreras) {
         mdTbl.setRowCount(0);
@@ -187,7 +186,7 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
 
     }
-    
+
     /**
      * Llamamos al reporte de listado de alumnos por carrera
      */
@@ -209,7 +208,7 @@ public class VtnCarreraCTR extends DVtnCTR {
         }
 
     }
-    
+
     /**
      * Docentes de esta carrera por periodo lectivo
      */
@@ -229,7 +228,7 @@ public class VtnCarreraCTR extends DVtnCTR {
                 break;
         }
     }
-    
+
     /**
      * Seleecionamos un periodo para poder llamar al reporte.
      */
@@ -269,24 +268,7 @@ public class VtnCarreraCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
-
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
+        
     }
 
     public void validarBotonesReportes() {

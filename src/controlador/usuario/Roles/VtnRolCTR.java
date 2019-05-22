@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
@@ -31,23 +32,22 @@ public class VtnRolCTR {
 
     private final RolBD permisos;
 
-    private List<RolMD> listaRoles;
+    private List<RolBD> listaRoles;
 
     private static DefaultTableModel tabla;
 
     private boolean cargarTabla = true;
-    
-    public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo, RolBD rol) {
+
+    public VtnRolCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
-        this.vista = vista;
-        this.modelo = modelo;
-        this.permisos = rol;
+        this.vista = new VtnRol();
+        this.modelo = new RolBD();
+        this.permisos = CONS.ROL;
     }
 
     public VtnRol getVista() {
         return vista;
     }
-    
 
     //Inits
     public void Init() {
@@ -101,7 +101,6 @@ public class VtnRolCTR {
 //                vista.getBtnEditarPermisos().setEnabled(true);
 //            }
 //        }
-
     }
 
     //Metodos de Apoyo
@@ -117,7 +116,7 @@ public class VtnRolCTR {
 
                 cargarTabla = false;
 
-                listaRoles = RolBD.selectAll();
+                listaRoles = modelo.selectAll();
 
                 listaRoles.stream().forEach(VtnRolCTR::agregarFila);
 
