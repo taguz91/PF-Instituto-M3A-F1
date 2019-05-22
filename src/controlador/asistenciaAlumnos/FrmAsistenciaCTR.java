@@ -4,6 +4,7 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
@@ -50,8 +52,11 @@ public class FrmAsistenciaCTR {
     private static LocalDate fechaInicial = LocalDate.now();
     private static int semanas;
     private static List<LocalDate> items = new ArrayList<>();
+    private static ArrayList<String> lista_fecha = new ArrayList<>();
+    
     private static String dia_String;
     private static int dia;
+    private static String Fecha;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -59,6 +64,8 @@ public class FrmAsistenciaCTR {
     private List<MateriaMD> listaMaterias;
     private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
+    private VtnPrincipalCTR ctrPrin; 
+    private SesionClaseBD sclase; 
 
     // TABLA
     private DefaultTableModel tablaTrad;
@@ -69,11 +76,14 @@ public class FrmAsistenciaCTR {
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, 
+            RolBD rolSeleccionado, VtnPrincipalCTR ctrPrin) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
+        this.ctrPrin = ctrPrin;
+        this.sclase = new SesionClaseBD(ctrPrin.getConecta());
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -107,9 +117,10 @@ public class FrmAsistenciaCTR {
 
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
-            cargarComboCiclo();
-            // cargarComboSemanas();
+           cargarComboCiclo();
+           cargarComboSemanas();
         });
+        
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
@@ -261,7 +272,7 @@ public class FrmAsistenciaCTR {
 
     public static void CalculoSemanaPorSemana() {
 
-        for (int i = 0; i < semanas; i++) {
+        for (int i = 1; i <= semanas; i++) {
             System.out.println("----------------------");
             System.out.println("Semana" + i);
             System.out.println("----------------------");
@@ -270,8 +281,11 @@ public class FrmAsistenciaCTR {
             items.add(FinSemana.plusWeeks(i));
 
             // items.forEach(item -> item.c);
-            System.out.println(IniSemana.plusWeeks(i));
+            Fecha= "Semana "+ i +" "+IniSemana.plusWeeks(i) +"  a  "+ FinSemana.plusWeeks(i)+"";
+            lista_fecha.add(Fecha);
+            System.out.println(IniSemana.plusWeeks(i).getDayOfWeek().name());
             System.out.println(FinSemana.plusWeeks(i));
+            System.out.println(Fecha);
 
         }
 
@@ -407,22 +421,23 @@ public class FrmAsistenciaCTR {
                 System.out.println(periodo.getNumSemanas());
                 semanas = periodo.getNumSemanas();
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
+               
 
-                for (int i = 1; i <= periodo.getNumSemanas(); i++) {
+                      lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
 
-                    vista.getCmbSemana().addItem("Semana " + String.valueOf(i) + items.toString());
-
-                }
+                
+                    
+                
             }
-
-            // listaPeriodos.forEach(p -> {
-            // System.out.println("Semana: "+p.getNumSemanas());
-            //
-            // });
+          
+             lista_fecha.forEach(t -> System.out.println(t));
         } catch (Exception e) {
         }
     }
-
+    
+    public void CargarDiasClase(){
+        listaSesionClase = sclase.cargarDiasClase(dia_String, dia, semanas, dia_String);
+    }
     // Agregar Filas
     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
