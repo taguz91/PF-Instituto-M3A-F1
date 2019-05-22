@@ -650,6 +650,18 @@ public class VtnPrincipalCTR {
         }
 
     }
+    
+    private void abrirAsistencia(ActionEvent e) {
+        FrmAsistencia frm = new FrmAsistencia();
+        eventoInternal(frm);
+        if(numVtns < 5){
+            FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
+            asistencia.Init();
+        }else{
+            errorNumVentanas();
+        }
+
+    }
 
     private void controladorCRUD() {
 
@@ -1071,10 +1083,7 @@ public class VtnPrincipalCTR {
         System.gc();
     }
     
-     private void abrirAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
-        asistencia.Init();
-    }
+
 
     private void InitPermisos() {
         List<AccesosMD> listaPermisos = AccesosBD.selectWhereLIKE(rolSeleccionado.getId(), "CONSULTAR");
