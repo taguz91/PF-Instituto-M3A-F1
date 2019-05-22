@@ -128,7 +128,12 @@ public class PnlHorarioClaseCTR {
                 llenatLunesSabado();
                 break;
             default:
-
+                mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
+                formatoTbl(pnl.getTblHorario());
+                llenarHoras(hnc);
+                hSelec = hn;
+                jSelec = tn;
+                llenatLunesSabado();
                 break;
         }
     }
@@ -183,6 +188,11 @@ public class PnlHorarioClaseCTR {
                 posF = i;
                 break;
             }
+        }
+
+        if (posI == posF) {
+            System.out.println("No tiene una celda ");
+            //mdTbl.addRow(s.getId()+"%Clase ");
         }
 
         for (int i = posI; i < posF; i++) {
