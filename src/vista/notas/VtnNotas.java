@@ -38,12 +38,6 @@ public class VtnNotas extends JInternalFrame {
 
     }
 
-    public JButton getBtnAsistencia() {
-        return btnAsistencia;
-    }
-    
-    
-
     public JButton getBtnImprimir() {
         return btnImprimir;
     }
