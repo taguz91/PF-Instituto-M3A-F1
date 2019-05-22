@@ -126,7 +126,7 @@ public class NotasBD extends NotasMD {
     }
     private boolean ejecutar = false;
 
-    public boolean editar() {
+    public synchronized boolean editar() {
         new Thread(() -> {
             String UPDATE = "UPDATE \"Notas\" \n"
                     + "SET nota_valor = " + getNotaValor() + " \n"
