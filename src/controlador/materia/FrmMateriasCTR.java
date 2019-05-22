@@ -602,24 +602,25 @@ public class FrmMateriasCTR extends DCTR {
                 habilitarGuardar();
             }
         };
-        
-        FocusListener horas = new FocusAdapter(){
+
+        FocusListener horas = new FocusAdapter() {
             public void focusLost(FocusEvent e) {
                 String docencia = frmMaterias.getTxtHorasDocencia().getText();
                 String auto = frmMaterias.getTxtHorasAutoEstudio().getText();
                 String practicas = frmMaterias.getTxtHorasPracticas().getText();
-                if(docencia.equals("") == false && practicas.equals("") == false){
+                if (docencia.equals("") == false && practicas.equals("") == false) {
                     int horas_Docencia = Integer.valueOf(frmMaterias.getTxtHorasDocencia().getText());
                     int horas_Practicas = Integer.valueOf(frmMaterias.getTxtHorasPracticas().getText());
                     int horasPresenciales = horas_Docencia + horas_Practicas;
                     frmMaterias.getTxtHorasPresenciales().setText(String.valueOf(horasPresenciales));
-                } else if(docencia.equals("") == false && practicas.equals("") == false && auto.equals("") == false){
+                }
+                if (docencia.equals("") == false && practicas.equals("") == false && auto.equals("") == false) {
                     int horas_Docencia = Integer.valueOf(frmMaterias.getTxtHorasDocencia().getText());
                     int horas_Auto = Integer.valueOf(frmMaterias.getTxtHorasAutoEstudio().getText());
                     int horas_Practicas = Integer.valueOf(frmMaterias.getTxtHorasPracticas().getText());
                     int horasTotales = horas_Docencia + horas_Practicas + horas_Auto;
                     frmMaterias.getTxtTotalHoras().setText(String.valueOf(horasTotales));
-                } 
+                }
             }
         };
 
