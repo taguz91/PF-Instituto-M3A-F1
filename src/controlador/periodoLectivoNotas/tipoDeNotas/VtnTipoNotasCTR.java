@@ -150,7 +150,7 @@ public class VtnTipoNotasCTR {
         return obj -> {
             tablaTiposNotas.addRow(new Object[]{
                 tablaTiposNotas.getDataVector().size() + 1,
-                obj.getIdTipoNota(),
+                obj.getId(),
                 obj.getNombre(),
                 obj.getPeriodoLectivo().getNombre_PerLectivo(),
                 obj.getPeriodoLectivo().getCarrera().getNombre(),
@@ -173,7 +173,7 @@ public class VtnTipoNotasCTR {
             int ID = Integer.valueOf(vista.getTblTipoNotas().getValueAt(fila, 1).toString());
 
             modelo = listaTiposNotas.stream()
-                    .filter(item -> item.getIdTipoNota() == ID)
+                    .filter(item -> item.getId() == ID)
                     .findFirst().get();
 
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);

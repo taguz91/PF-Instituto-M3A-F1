@@ -41,7 +41,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     }
 
     public TipoDeNotaBD(TipoDeNotaMD obj) {
-        setIdTipoNota(obj.getIdTipoNota());
+        setId(obj.getId());
         setNombre(obj.getNombre());
         setValorMinimo(obj.getValorMinimo());
         setValorMaximo(obj.getValorMaximo());
@@ -99,7 +99,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
                 TipoDeNotaBD tipoNota = new TipoDeNotaBD();
 
-                tipoNota.setIdTipoNota(rs.getInt("id_tipo_nota"));
+                tipoNota.setId(rs.getInt("id_tipo_nota"));
                 tipoNota.setNombre(rs.getString("tipo_nota_nombre"));
                 tipoNota.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
                 tipoNota.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
@@ -143,15 +143,16 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
         conn = pool.getConnection();
         rs = pool.ejecutarQuery(SELECT, conn, null);
-
+        PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+        periodo.setId_PerioLectivo(idPeriodo);
         try {
             while (rs.next()) {
                 TipoDeNotaBD tipo = new TipoDeNotaBD();
-                tipo.setIdTipoNota(rs.getInt("id_tipo_nota"));
+                tipo.setId(rs.getInt("id_tipo_nota"));
                 tipo.setNombre(rs.getString("tipo_nota_nombre"));
                 tipo.setValorMinimo(rs.getDouble("tipo_nota_valor_minimo"));
                 tipo.setValorMaximo(rs.getDouble("tipo_nota_valor_maximo"));
-
+                tipo.setPeriodoLectivo(periodo);
                 lista.add(tipo);
             }
         } catch (SQLException e) {
@@ -193,8 +194,6 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     }
 
     public boolean editar(int Pk) {
-
-        System.out.println("------>" + getPeriodoLectivo().getId_PerioLectivo());
 
         String UPDATE = "UPDATE \"TipoDeNota\" \n"
                 + "SET \n"

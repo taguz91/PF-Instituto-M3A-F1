@@ -31,11 +31,11 @@ public class TipoDeNotaMD {
     public TipoDeNotaMD() {
     }
 
-    public int getIdTipoNota() {
+    public int getId() {
         return idTipoNota;
     }
 
-    public void setIdTipoNota(int idTipoNota) {
+    public void setId(int idTipoNota) {
         this.idTipoNota = idTipoNota;
     }
 
