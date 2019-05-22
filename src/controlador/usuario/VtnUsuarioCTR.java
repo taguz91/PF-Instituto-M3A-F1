@@ -50,7 +50,7 @@ public class VtnUsuarioCTR {
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
-        listaUsuarios = UsuarioBD.selectAll();
+        listaUsuarios = modelo.selectAll();
         cargarTabla(listaUsuarios);
         //InitPermisos();
         InitEventos();
@@ -64,7 +64,7 @@ public class VtnUsuarioCTR {
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
         vista.getBtnActualizar().addActionListener(e -> {
-            listaUsuarios = UsuarioBD.selectAll();
+            listaUsuarios = modelo.selectAll();
             cargarTabla(listaUsuarios);
         });
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
@@ -182,7 +182,7 @@ public class VtnUsuarioCTR {
                     }
                     modelo.cambiarEstado(Username, false);
 
-                    cargarTabla(UsuarioBD.selectAll());
+                    cargarTabla(listaUsuarios = modelo.selectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");
