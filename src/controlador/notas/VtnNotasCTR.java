@@ -24,6 +24,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
@@ -68,14 +69,30 @@ public class VtnNotasCTR {
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    // private VtnPrincipalCTR ctrPrin;
+    private final PeriodoLectivoBD peridoBD;
+    private final AlumnoCursoBD almnCursoBD;
+    private final TipoDeNotaBD tipoNotaBD;
+    private final CarreraBD carreraBD;
+    private final CursoBD cursoBD;
+    private final MateriaBD materiaBD;
+    private final DocenteBD docenteBD;
 
+    {
+        peridoBD = new PeriodoLectivoBD();
+        almnCursoBD = new AlumnoCursoBD();
+        tipoNotaBD = new TipoDeNotaBD();
+        carreraBD = new CarreraBD();
+        cursoBD = new CursoBD();
+        materiaBD = new MateriaBD();
+        docenteBD = new DocenteBD();
+    }
+
+    // private VtnPrincipalCTR ctrPrin;
     public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
-        // his.ctrPrin = ctrPrin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -87,9 +104,9 @@ public class VtnNotasCTR {
         jTblDual = vista.getTblDual();
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
-            listaDocentes = DocenteBD.selectAll(usuario.getUsername());
+            listaDocentes = docenteBD.selectAll(usuario.getUsername());
         } else {
-            listaDocentes = DocenteBD.selectAll();
+            listaDocentes = docenteBD.selectAll();
         }
 
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
@@ -204,7 +221,7 @@ public class VtnNotasCTR {
         vista.getCmbPeriodoLectivo().removeAllItems();
         vista.getLblCarrera().setText("");
 
-        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
+        listaPeriodos = peridoBD.selectPeriodoWhere(getIdDocente());
         listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivo()::addItem);
         tablaTrad.setRowCount(0);
         tablaDuales.setRowCount(0);
@@ -221,7 +238,7 @@ public class VtnNotasCTR {
         try {
             vista.getCmbCiclo().removeAllItems();
 
-            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream()
+            cursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream()
                     .forEach(vista.getCmbCiclo()::addItem);
         } catch (NullPointerException e) {
         }
@@ -242,14 +259,14 @@ public class VtnNotasCTR {
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
-            listaMaterias = MateriaBD.selectWhere(curso);
+            listaMaterias = materiaBD.selectWhere(curso);
 
             listaMaterias.stream().map(c -> c.getNombre()).forEach(vista.getCmbAsignatura()::addItem);
             vista.getLblHoras().setText("" + listaMaterias.stream()
                     .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
                     .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1));
 
-            listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
+            listaValidaciones = tipoNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {
@@ -443,7 +460,7 @@ public class VtnNotasCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-            listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
             listaNotas.stream().forEach(loader);
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
@@ -465,50 +482,50 @@ public class VtnNotasCTR {
         String valueText;
         String tipoNota;
         switch (columna) {
-        case 6:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "APORTE 1";
-            guardarTRAD(fila, valueText, tipoNota);
-            break;
-        case 7:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "EXAMEN INTERCICLO";
-            guardarTRAD(fila, valueText, tipoNota);
-            break;
-        case 9:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "APORTE 2";
-            guardarTRAD(fila, valueText, tipoNota);
-            break;
-        case 10:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "EXAMEN FINAL";
-            guardarTRAD(fila, valueText, tipoNota);
-            break;
-        case 11:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "EXAMEN DE RECUPERACION";
-            guardarTRAD(fila, valueText, tipoNota);
-            break;
-        case 14:
-            editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad(), sumarTrad());
-            break;
-        case 16:
-            String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
-            int colEstado = getIndex.apply(tabla, "Estado");
+            case 6:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "APORTE 1";
+                guardarTRAD(fila, valueText, tipoNota);
+                break;
+            case 7:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "EXAMEN INTERCICLO";
+                guardarTRAD(fila, valueText, tipoNota);
+                break;
+            case 9:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "APORTE 2";
+                guardarTRAD(fila, valueText, tipoNota);
+                break;
+            case 10:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "EXAMEN FINAL";
+                guardarTRAD(fila, valueText, tipoNota);
+                break;
+            case 11:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "EXAMEN DE RECUPERACION";
+                guardarTRAD(fila, valueText, tipoNota);
+                break;
+            case 14:
+                editarFaltas(fila, tabla, agregarFilasTrad(), editarTrad(), sumarTrad());
+                break;
+            case 16:
+                String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+                int colEstado = getIndex.apply(tabla, "Estado");
 
-            if (asistencia.equalsIgnoreCase("retirado")) {
-                tabla.setValueAt("RETIRADO", fila, colEstado);
-                editarTrad().apply(null);
-            } else if (asistencia.equalsIgnoreCase("asiste")) {
-                tabla.setValueAt("REPROBADO", fila, colEstado);
-                sumarTrad().apply(null);
-                editarTrad().apply("");
-            } else {
-                tabla.setValueAt("REPROBADO", fila, colEstado);
-                editarTrad().apply("");
-            }
-            break;
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    tabla.setValueAt("RETIRADO", fila, colEstado);
+                    editarTrad().apply(null);
+                } else if (asistencia.equalsIgnoreCase("asiste")) {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    sumarTrad().apply(null);
+                    editarTrad().apply("");
+                } else {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    editarTrad().apply("");
+                }
+                break;
         }
 
     }
@@ -517,17 +534,17 @@ public class VtnNotasCTR {
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
-            tablaTrad.addRow(new Object[] { tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-                    obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                    obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
-                    obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
-                    obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
-                    obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
-                    obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
-                    obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
-                    obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
-                    (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
-                    calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia() });
+            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
+                obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
+                calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
         };
     }
 
@@ -535,17 +552,17 @@ public class VtnNotasCTR {
         return (obj) -> {
 
             tablaDuales
-                    .addRow(new Object[] { tablaDuales.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-                            obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                            obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
-                            obj.getNotas().stream().filter(buscar("G. DE AULA 1")).findAny().get().getNotaValor(),
-                            obj.getNotas().stream().filter(buscar("G. DE AULA 2")).findAny().get().getNotaValor(),
-                            obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor(),
-                            obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
-                            obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get()
-                                    .getNotaValor(),
-                            (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
-                            carcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia() });
+                    .addRow(new Object[]{tablaDuales.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
+                obj.getNotas().stream().filter(buscar("G. DE AULA 1")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("G. DE AULA 2")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get()
+                .getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
+                carcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
         };
     }
 
@@ -740,51 +757,51 @@ public class VtnNotasCTR {
         String tipoNota;
 
         switch (columna) {
-        case 6:
-            valueText = tabla.getValueAt(fila, columna).toString();
-            tipoNota = "G. DE AULA 1";
-            guardarDUAL(fila, valueText, tipoNota);
-            break;
-        case 7:
-            tipoNota = "G. DE AULA 2";
-            valueText = tabla.getValueAt(fila, columna).toString();
-            guardarDUAL(fila, valueText, tipoNota);
+            case 6:
+                valueText = tabla.getValueAt(fila, columna).toString();
+                tipoNota = "G. DE AULA 1";
+                guardarDUAL(fila, valueText, tipoNota);
+                break;
+            case 7:
+                tipoNota = "G. DE AULA 2";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
 
-            break;
-        case 9:
-            tipoNota = "EXAMEN FINAL";
-            valueText = tabla.getValueAt(fila, columna).toString();
-            guardarDUAL(fila, valueText, tipoNota);
+                break;
+            case 9:
+                tipoNota = "EXAMEN FINAL";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
 
-            break;
-        case 10:
-            tipoNota = "EXAMEN DE RECUPERACION";
-            valueText = tabla.getValueAt(fila, columna).toString();
-            guardarDUAL(fila, valueText, tipoNota);
+                break;
+            case 10:
+                tipoNota = "EXAMEN DE RECUPERACION";
+                valueText = tabla.getValueAt(fila, columna).toString();
+                guardarDUAL(fila, valueText, tipoNota);
 
-            break;
+                break;
 
-        case 13:// FALTAS
-            editarFaltas(fila, tabla, agregarFilasDuales(), editarDuales(), sumarDual());
-            break;
+            case 13:// FALTAS
+                editarFaltas(fila, tabla, agregarFilasDuales(), editarDuales(), sumarDual());
+                break;
 
-        case 15:
-            String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
-            int colEstado = getIndex.apply(tabla, "Estado");
-            if (asistencia.equalsIgnoreCase("retirado")) {
-                tabla.setValueAt("RETIRADO", fila, colEstado);
-                editarDuales().apply(null);
-            } else if (asistencia.equalsIgnoreCase("asiste")) {
-                tabla.setValueAt("REPROBADO", fila, colEstado);
-                sumarDual().apply(null);
-                editarDuales().apply("");
-            } else {
-                tabla.setValueAt("REPROBADO", fila, colEstado);
-                editarDuales().apply("");
-            }
-            break;
-        default:
-            break;
+            case 15:
+                String asistencia = tabla.getValueAt(fila, columna).toString().toLowerCase();
+                int colEstado = getIndex.apply(tabla, "Estado");
+                if (asistencia.equalsIgnoreCase("retirado")) {
+                    tabla.setValueAt("RETIRADO", fila, colEstado);
+                    editarDuales().apply(null);
+                } else if (asistencia.equalsIgnoreCase("asiste")) {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    sumarDual().apply(null);
+                    editarDuales().apply("");
+                } else {
+                    tabla.setValueAt("REPROBADO", fila, colEstado);
+                    editarDuales().apply("");
+                }
+                break;
+            default:
+                break;
         }
 
     }
@@ -863,8 +880,8 @@ public class VtnNotasCTR {
 
             int r = JOptionPane.showOptionDialog(vista, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
                     "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[] { "Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
-                            "Alumnos entre 90 a 100", "Reporte Completo" },
+                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
+                        "Alumnos entre 90 a 100", "Reporte Completo"},
                     "Cancelar");
 
             Effects.setLoadCursor(vista);
@@ -872,46 +889,46 @@ public class VtnNotasCTR {
             ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
 
             switch (r) {
-            case 0:
+                case 0:
 
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                reportes.generarReporteMenos70();
-                desktop.getLblEstado().setText("COMPLETADO");
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteMenos70();
+                    desktop.getLblEstado().setText("COMPLETADO");
 
-                break;
+                    break;
 
-            case 1:
+                case 1:
 
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                reportes.generarReporteEntre70_80();
-                desktop.getLblEstado().setText("COMPLETADO");
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre70_80();
+                    desktop.getLblEstado().setText("COMPLETADO");
 
-                break;
+                    break;
 
-            case 2:
+                case 2:
 
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                reportes.generarReporteEntre80_90();
-                desktop.getLblEstado().setText("COMPLETADO");
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre80_90();
+                    desktop.getLblEstado().setText("COMPLETADO");
 
-                break;
+                    break;
 
-            case 3:
+                case 3:
 
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                reportes.generarReporteEntre90_100();
-                desktop.getLblEstado().setText("COMPLETADO");
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteEntre90_100();
+                    desktop.getLblEstado().setText("COMPLETADO");
 
-                break;
+                    break;
 
-            case 4:
-                desktop.getLblEstado().setText("CARGANDO REPORTE....");
-                reportes.generarReporteCompleto();
-                desktop.getLblEstado().setText("COMPLETADO");
-                break;
+                case 4:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteCompleto();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
 
             try {

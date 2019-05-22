@@ -24,16 +24,20 @@ public class CursoBD extends CursoMD {
 
     private final ConectarDB conecta;
 
-    private final static ConnDBPool POOL;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool POOL;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         POOL = new ConnDBPool();
     }
 
     public CursoBD(ConectarDB conecta) {
         this.conecta = conecta;
+    }
+
+    public CursoBD() {
+        this.conecta = null;
     }
 
     private void iniciarIngresoNotas() {
@@ -114,7 +118,7 @@ public class CursoBD extends CursoMD {
                 + ", '" + c.getParalelo() + "', true);";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
+//            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
             return true;
         } else {
             System.out.println("Error");
@@ -707,7 +711,7 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
+    public List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"Cursos\".curso_nombre\n"

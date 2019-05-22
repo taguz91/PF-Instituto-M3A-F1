@@ -38,6 +38,8 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnListaSilabos" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnListaAlumnos" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -102,12 +104,13 @@
                   <Component id="cbxEliminados" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="303" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="307" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblResultados" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnListaAlumnos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnListaSilabos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
           </Group>
@@ -230,6 +233,11 @@
     <Component class="javax.swing.JButton" name="btnHorario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Horario"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnListaSilabos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lista para S&#xed;labos"/>
       </Properties>
     </Component>
   </SubComponents>

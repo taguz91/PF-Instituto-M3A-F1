@@ -37,6 +37,10 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         return btnBuscar;
     }
 
+    public JButton getBtnListaSilabos() {
+        return btnListaSilabos;
+    }
+
     public JButton getBtnEditar() {
         return btnEditar;
     }
@@ -98,6 +102,7 @@ public class VtnCurso extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         cbxEliminados = new javax.swing.JCheckBox();
         btnHorario = new javax.swing.JButton();
+        btnListaSilabos = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -149,6 +154,8 @@ public class VtnCurso extends javax.swing.JInternalFrame {
 
         btnHorario.setText("Horario");
 
+        btnListaSilabos.setText("Lista para Sílabos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,6 +169,8 @@ public class VtnCurso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnListaSilabos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnListaAlumnos))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,12 +222,13 @@ public class VtnCurso extends javax.swing.JInternalFrame {
                     .addComponent(cmbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxEliminados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados)
                     .addComponent(btnListaAlumnos)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(btnListaSilabos))
                 .addGap(4, 4, 4))
         );
 
@@ -233,6 +243,7 @@ public class VtnCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnHorario;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnListaAlumnos;
+    private javax.swing.JButton btnListaSilabos;
     private javax.swing.JCheckBox cbxEliminados;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbPeriodoLectivo;

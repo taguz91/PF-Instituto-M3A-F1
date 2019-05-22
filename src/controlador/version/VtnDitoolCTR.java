@@ -8,9 +8,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import modelo.Constantes;
+import modelo.CONS;
 import modelo.version.VersionMD;
 import vista.Login;
 import vista.version.VtnDitool;
@@ -26,6 +30,8 @@ public class VtnDitoolCTR {
     private boolean aCorrecto = true;
     private final ImageIcon icono;
     private boolean cerrar = false;
+    //Cancion al descargar el sistema.
+    private Clip sonido;
 
     //Iconos para el sprit 
     private final ImageIcon estados[] = {
@@ -45,6 +51,8 @@ public class VtnDitoolCTR {
 
     public void iniciar() {
         mostrarVtn();
+        //Accion del boton 
+        vtnDitool.getBtnPausar().addActionListener(e -> clickPausar());
         mostrarInformacion();
         if (validarVersion()) {
             if (aCorrecto) {
@@ -58,18 +66,17 @@ public class VtnDitoolCTR {
     }
 
     private void mostrarInformacion() {
-        File pv = new File(Constantes.V_DIR);
+        File pv = new File(CONS.V_DIR);
         Properties p = new Properties();
         if (pv.exists()) {
             if (comprobarRequisitos(p, pv)) {
                 try {
                     p.load(new FileReader(pv));
-                    vtnDitool.getLblAutor().setText(p.getProperty(Constantes.V_AUTOR));
-                    vtnDitool.getLblNombre().setText(version.getNombreSinExtension(
-                            p.getProperty(Constantes.V_NOMBRE)));
-                    vtnDitool.getLblVersion().setText(p.getProperty(Constantes.V_VERSION));
+                    vtnDitool.getLblAutor().setText(p.getProperty(CONS.V_AUTOR));
+                    vtnDitool.getLblNombre().setText(version.getNombreSinExtension(p.getProperty(CONS.V_NOMBRE)));
+                    vtnDitool.getLblVersion().setText(p.getProperty(CONS.V_VERSION));
                     //Ponemos la version del sistema en el titulo
-                    vtnDitool.setTitle(vtnDitool.getTitle() + " " + p.getProperty(Constantes.V_VERSION));
+                    vtnDitool.setTitle(vtnDitool.getTitle() + " " + p.getProperty(CONS.V_VERSION));
                 } catch (IOException e) {
                     System.out.println("No pudimos leer las propiedades de version: " + e.getMessage());
                 }
@@ -106,7 +113,7 @@ public class VtnDitoolCTR {
     }
 
     public void comprobarVersion() {
-        File pv = new File(Constantes.V_DIR);
+        File pv = new File(CONS.V_DIR);
         Properties p = new Properties();
         if (pv.exists()) {
             if (comprobarRequisitos(p, pv)) {
@@ -141,8 +148,9 @@ public class VtnDitoolCTR {
         switch (s) {
             case 0:
                 iniciarSprint();
+                musicaDescarga();
                 vtnDitool.getLblEstado().setText("Descargando...");
-                File pv = new File(Constantes.V_DIR);
+                File pv = new File(CONS.V_DIR);
                 Properties p = new Properties();
                 Descarga descarga = new Descarga(version);
                 if (descarga.descargar()) {
@@ -169,8 +177,8 @@ public class VtnDitoolCTR {
         String pVersion = "";
         try {
             p.load(new FileReader(bd));
-            pNombre = p.getProperty(Constantes.V_NOMBRE);
-            pVersion = p.getProperty(Constantes.V_VERSION);
+            pNombre = p.getProperty(CONS.V_NOMBRE);
+            pVersion = p.getProperty(CONS.V_VERSION);
         } catch (IOException e) {
             System.out.println("No pudimos leer las propiedades de version: " + e.getMessage());
         }
@@ -190,11 +198,11 @@ public class VtnDitoolCTR {
         boolean creado = false;
         try {
             FileOutputStream fo = new FileOutputStream(bd);
-            p.setProperty(Constantes.V_AUTOR, version.getUsername());
-            p.setProperty(Constantes.V_NOMBRE, version.getNombre());
-            p.setProperty(Constantes.V_VERSION, version.getVersion());
-            p.setProperty(Constantes.V_FECHA, version.getFecha().toString());
-            p.setProperty(Constantes.V_NOTAS, version.getNotas());
+            p.setProperty(CONS.V_AUTOR, version.getUsername());
+            p.setProperty(CONS.V_NOMBRE, version.getNombre());
+            p.setProperty(CONS.V_VERSION, version.getVersion());
+            p.setProperty(CONS.V_FECHA, version.getFecha().toString());
+            p.setProperty(CONS.V_NOTAS, version.getNotas());
             p.store(fo, "Descripcion de la version del sistema: ");
             creado = true;
         } catch (FileNotFoundException e) {
@@ -209,23 +217,23 @@ public class VtnDitoolCTR {
         boolean todas = true;
         try {
             p.load(new FileReader(bd));
-            if (p.getProperty(Constantes.V_AUTOR) == null) {
+            if (p.getProperty(CONS.V_AUTOR) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.V_FECHA) == null) {
+            if (p.getProperty(CONS.V_FECHA) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.V_NOMBRE) == null) {
+            if (p.getProperty(CONS.V_NOMBRE) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.V_NOTAS) == null) {
+            if (p.getProperty(CONS.V_NOTAS) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.V_VERSION) == null) {
+            if (p.getProperty(CONS.V_VERSION) == null) {
                 todas = false;
             }
 
@@ -266,6 +274,47 @@ public class VtnDitoolCTR {
         } catch (InterruptedException e) {
             System.out.println("No se durmio el hilo " + e.getMessage());
         }
+    }
+
+    private void musicaDescarga() {
+        try {
+            File a = new File("dancin8bits.wav");
+            if (a.exists()) {
+                sonido = AudioSystem.getClip();
+
+                sonido.open(AudioSystem.getAudioInputStream(a));
+                sonido.start();
+            } else {
+                JOptionPane.showMessageDialog(vtnDitool, "No encontramos el audio.");
+            }
+
+        } catch (LineUnavailableException e) {
+            System.out.println("No pudimos encontrar el audio. " + e.getMessage());
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            System.out.println("No encontramos el archivo de audio. " + ex.getMessage());
+        }
+    }
+
+    private void clickPausar() {
+        if (vtnDitool.getBtnPausar().getText().equals("Pausar")) {
+            vtnDitool.getBtnPausar().setText("Reanudar");
+            pausar();
+        } else {
+            vtnDitool.getBtnPausar().setText("Pausar");
+            reanudar();
+        }
+    }
+
+    private void pausar() {
+        sonido.stop();
+    }
+
+    private void reanudar() {
+        sonido.start();
+    }
+
+    private void silenciar() {
+        sonido.close();
     }
 
 }

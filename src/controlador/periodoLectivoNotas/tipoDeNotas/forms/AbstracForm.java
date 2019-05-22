@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
@@ -40,6 +41,12 @@ public abstract class AbstracForm {
     //TABLAS
     protected DefaultTableModel tabla;
 
+    protected PeriodoLectivoBD periodoBD;
+
+    {
+        periodoBD = new PeriodoLectivoBD();
+    }
+
     public AbstracForm(VtnPrincipal desktop, FrmTipoNota vista, TipoDeNotaBD modelo, VtnTipoNotasCTR vtnPadre) {
         this.desktop = desktop;
         this.vista = vista;
@@ -57,7 +64,7 @@ public abstract class AbstracForm {
 
         vista.getCmbPeriodoLectivo().addItemListener(e -> {
             InitListas();
-            listaNombres = TipoDeNotaBD.selectNombreWhere(getIdPeriodo());
+            listaNombres = modelo.selectNombreWhere(getIdPeriodo());
             cargarTabla();
             setlblCarrera();
         });
@@ -198,10 +205,10 @@ public abstract class AbstracForm {
             public void accept(String obj) {
                 TipoDeNotaBD tipo = new TipoDeNotaBD();
                 tipo.setNombre(obj);
-                
+
                 tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
                 tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
-                
+
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(getIdPeriodo());
                 tipo.setPeriodoLectivo(periodo);

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
@@ -149,10 +148,9 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             llenatTbl(almns);
         }
     }
-    
+
     /**
-     * Si seleecionamos un ciclo se carga los alumnos 
-     * por cada ciclo
+     * Si seleecionamos un ciclo se carga los alumnos por cada ciclo
      */
     private void cargarTblPorCiclo() {
         if (posCiclo > 0) {
@@ -205,7 +203,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             });
         }
     }
-    
+
     /**
      * LLenamos el combo de ciclos por carrera
      */
@@ -219,7 +217,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             });
         }
     }
-    
+
     /**
      * Al hacer click en un ciclo se cargan todos los alumnos por ciclo
      */
@@ -227,10 +225,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         posCiclo = vtnAlmnCurso.getCmbCiclo().getSelectedIndex();
         cargarTblPorCiclo();
     }
-    
+
     /**
-     * Al hacer click en un periodo se consultan todos sus ciclos 
-     * y todos los cursos que tiene este periodo
+     * Al hacer click en un periodo se consultan todos sus ciclos y todos los
+     * cursos que tiene este periodo
      */
     private void clickCmbPrd() {
         posPrd = vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
@@ -238,19 +236,18 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         cargarCursoPorPrd();
         cargarTblPorPrd();
     }
-    
+
     /**
-     * Accion al hacer click en el combo de curso  
-     * y llenamos la tabla por curso
+     * Accion al hacer click en el combo de curso y llenamos la tabla por curso
      */
     private void clickCmbCurso() {
         posCur = vtnAlmnCurso.getCmbCursos().getSelectedIndex();
         cargarTblPorCurso();
     }
-    
+
     /**
-     * Llenamos el combo de cursos con todo los cursos 
-     * que se abran en este periodo
+     * Llenamos el combo de cursos con todo los cursos que se abran en este
+     * periodo
      */
     private void cargarCursoPorPrd() {
         if (posPrd > 0) {
@@ -266,10 +263,10 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             vtnAlmnCurso.getCmbCursos().removeAllItems();
         }
     }
-    
+
     /**
-     * Mostramos el JD con informacion de todas las materias 
-     * que tomo en este curso
+     * Mostramos el JD con informacion de todas las materias que tomo en este
+     * curso
      */
     private void materiasCurso() {
         posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
@@ -280,9 +277,9 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un alumno primero.");
         }
     }
-    
+
     /**
-     * Llamamos el reporte de alumnos por curso 
+     * Llamamos el reporte de alumnos por curso
      */
     public void reporteAlumno() {
         JasperReport jr;
@@ -298,7 +295,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     /**
      * Validamos para poder abrir el reporte de lista de alumnos
      */
@@ -311,7 +308,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             reporteAlumno();
         }
     }
-    
+
     /**
      * Llamamos el reporte de lista de alumnos
      */
@@ -329,7 +326,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     /**
      * Validamos para que se pueda abrir el reporte por periodo y ciclo
      */
@@ -345,23 +342,5 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
 
     private void InitPermisos() {
 
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
-
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 }
