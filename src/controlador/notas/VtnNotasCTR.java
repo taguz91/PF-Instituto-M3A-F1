@@ -71,15 +71,15 @@ public class VtnNotasCTR {
     //ACTIVACION DE HILOS
     private boolean cargarTabla = true;
     
-    private VtnPrincipalCTR ctrPrin;
+    //private VtnPrincipalCTR ctrPrin;
             
-    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado, 
-           VtnPrincipalCTR ctrPrin) {
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado 
+           ) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
-        this.ctrPrin = ctrPrin;
+        //his.ctrPrin = ctrPrin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">    
@@ -123,7 +123,7 @@ public class VtnNotasCTR {
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
-        vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
+     
 
         vista.getBtnBuscar().addActionListener(e -> buscarDocente());
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -977,10 +977,7 @@ public class VtnNotasCTR {
         activarForm(true);
     }
 
-    private void btnAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado, ctrPrin);
-        asistencia.Init();
-    }
+   
 
     // </editor-fold>  
 }

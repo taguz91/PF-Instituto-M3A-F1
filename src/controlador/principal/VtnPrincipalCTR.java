@@ -14,6 +14,7 @@ import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
+import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
@@ -105,6 +106,7 @@ import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
+import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
@@ -255,6 +257,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
+        vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirAsistencia(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -1066,6 +1069,11 @@ public class VtnPrincipalCTR {
         vtn.Init();
         vtnPrin.setVisible(false);
         System.gc();
+    }
+    
+     private void abrirAsistencia(ActionEvent e) {
+        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
+        asistencia.Init();
     }
 
     private void InitPermisos() {

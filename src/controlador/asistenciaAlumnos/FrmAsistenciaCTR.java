@@ -77,7 +77,7 @@ public class FrmAsistenciaCTR {
     private boolean cargarTabla = true;
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, 
-            RolBD rolSeleccionado, VtnPrincipalCTR ctrPrin) {
+            RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
