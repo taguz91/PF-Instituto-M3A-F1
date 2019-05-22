@@ -58,8 +58,7 @@ PRESENTACIÓN]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[ASISTIDO POR 
- EL PROFESOR]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="313" y="0" width="75" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="3185fefc-af9b-484f-9311-b94abf0b6096"/>
