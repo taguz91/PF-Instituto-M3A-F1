@@ -66,6 +66,7 @@ public class FrmAsistenciaCTR {
     private List<TipoDeNotaMD> listaValidaciones;
     private VtnPrincipalCTR ctrPrin;
     private SesionClaseBD sclase;
+    private SesionClaseMD sclaseMD;
 
     // TABLA
     private DefaultTableModel tablaTrad;
@@ -81,8 +82,8 @@ public class FrmAsistenciaCTR {
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
-        this.ctrPrin = ctrPrin;
-        this.sclase = new SesionClaseBD(ctrPrin.getConecta());
+        //this.ctrPrin = ctrPrin;
+        //this.sclase = new SesionClaseBD(ctrPrin.getConecta());
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -110,6 +111,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
+        CargarDiasClase();
     }
 
     private void InitEventos() {
@@ -434,7 +436,12 @@ public class FrmAsistenciaCTR {
     }
 
     public void CargarDiasClase() {
-        listaSesionClase = sclase.cargarDiasClase(dia_String, dia, semanas, dia_String);
+        String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
+        String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString(); 
+        listaSesionClase = sclase.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
+        sclaseMD.getNumeroDias();
+        
+        System.out.println(sclaseMD.getNumeroDias());
     }
 
     // Agregar Filas

@@ -304,6 +304,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     CursoMD c = new CursoMD();
                     c.setId(rs.getInt("id_curso"));
                     s.setDia(rs.getInt("dia_sesion"));
+                    s.setNumeroDias(rs.getInt(1));
                     diasClase.add(s);
                 }
                 ps.getConnection().close();
