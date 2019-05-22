@@ -6,14 +6,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
@@ -172,11 +170,10 @@ public class VtnAlumnoCarreraCTR extends DCTR {
             cargarAlmnsCarrera();
         }
     }
-    
+
     /**
-     * Evento que se ejecuta al dar click en el check box
-     * Si esta seleccionado se cargan todos los eliminados, 
-     * case contrario se cargan los activos
+     * Evento que se ejecuta al dar click en el check box Si esta seleccionado
+     * se cargan todos los eliminados, case contrario se cargan los activos
      */
     private void verEliminados() {
         if (vtnAlmCar.getCbxEliminados().isSelected()) {
@@ -192,23 +189,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
+
     }
 
 }

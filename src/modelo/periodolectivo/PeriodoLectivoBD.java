@@ -22,11 +22,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private final static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -105,8 +105,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             return false;
         }
     }
-    
-    public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera){
+
+    public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
         String sql = "SELECT p.id_prd_lectivo, c.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, \n"
                 + "p.prd_lectivo_fecha_fin, p.prd_lectivo_estado, c.carrera_nombre FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c"
                 + " USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
@@ -587,7 +587,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return fi;
     }
 
-    public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
+    public List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
@@ -640,7 +640,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static List<PeriodoLectivoMD> selectIdNombreAll() {
+    public List<PeriodoLectivoMD> selectIdNombreAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
@@ -669,7 +669,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
+    public Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
         String SELECT = "SELECT DISTINCT\n"
                 + "	p1.id_prd_lectivo,\n"
                 + "	p1.id_carrera,\n"
@@ -788,7 +788,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return map;
     }
 
-    public static List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
+    public List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
         String SELECT = "SELECT DISTINCT\n"
                 + " \"public\".\"Docentes\".id_docente,\n"
                 + " \"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"

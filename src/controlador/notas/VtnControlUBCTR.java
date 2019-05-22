@@ -45,6 +45,18 @@ public class VtnControlUBCTR {
     protected static int idPeriodoLectivo = -1;
     protected static int idCurso = -1;
 
+    private final PeriodoLectivoBD periodoBD;
+    private final CursoBD cursoBD;
+    private final MateriaBD materiaBD;
+    private final DocenteBD docenteBD;
+
+    {
+        periodoBD = new PeriodoLectivoBD();
+        cursoBD = new CursoBD();
+        materiaBD = new MateriaBD();
+        docenteBD = new DocenteBD();
+    }
+
     public VtnControlUBCTR(VtnPrincipal desktop, VtnControlUB vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
@@ -55,9 +67,9 @@ public class VtnControlUBCTR {
 
     public void Init() {
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
-            listaDocentes = DocenteBD.selectAll(usuario.getUsername());
+            listaDocentes = docenteBD.selectAll(usuario.getUsername());
         } else {
-            listaDocentes = DocenteBD.selectAll();
+            listaDocentes = docenteBD.selectAll();
         }
 
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
@@ -71,7 +83,6 @@ public class VtnControlUBCTR {
         InitEventos();
         activarForm(true);
     }
-
 
     private void InitEventos() {
 
@@ -104,7 +115,7 @@ public class VtnControlUBCTR {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Cargado de Combos">
-     private void cargarComboDocente() {
+    private void cargarComboDocente() {
         listaDocentes.entrySet().forEach((entry) -> {
             String key = entry.getKey();
             DocenteMD value = entry.getValue();
@@ -112,14 +123,14 @@ public class VtnControlUBCTR {
             vista.getCmbDocente().addItem(key);
 
         });
-       
+
     }
 
     private void cargarComboPeriodos() {
-       vista.getCmbPeriodoLectivo().removeAllItems();
+        vista.getCmbPeriodoLectivo().removeAllItems();
         vista.getLblCarrera().setText("");
 
-        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
+        listaPeriodos = periodoBD.selectPeriodoWhere(getIdDocente());
         listaPeriodos
                 .stream()
                 .forEach(obj -> {
@@ -127,7 +138,7 @@ public class VtnControlUBCTR {
                 });
     }
 
-     private void setLblCarrera() {
+    private void setLblCarrera() {
 
         vista.getLblCarrera().setText(listaPeriodos
                 .stream()
@@ -138,11 +149,12 @@ public class VtnControlUBCTR {
         );
 
     }
+
     private void cargarComboCiclo() {
         try {
             vista.getCmbCiclo().removeAllItems();
 
-            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo())
+            cursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo())
                     .stream()
                     .forEach(obj -> {
                         vista.getCmbCiclo().addItem(obj + "");
@@ -164,7 +176,7 @@ public class VtnControlUBCTR {
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
-            listaMaterias = MateriaBD.selectWhere(curso);
+            listaMaterias = materiaBD.selectWhere(curso);
 
             listaMaterias.stream()
                     .forEach(obj -> {
@@ -179,12 +191,11 @@ public class VtnControlUBCTR {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Metodos de Apoyo">
-   private int getIdDocente() {
+    private int getIdDocente() {
         return listaDocentes.entrySet().stream()
                 .filter((entry) -> (entry.getKey().equals(vista.getCmbDocente().getSelectedItem().toString())))
                 .map(c -> c.getValue().getIdDocente()).findAny().get();
     }
-
 
     private void validarCombos() {
 
@@ -211,8 +222,7 @@ public class VtnControlUBCTR {
 //        }
 //        return idPeriodoLectivo;
 //    }
-    
-     private int getIdPeriodoLectivo() {
+    private int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
             return listaPeriodos
@@ -276,8 +286,7 @@ public class VtnControlUBCTR {
 
             Effects.setLoadCursor(vista);
 
-          
-           Reportes_ubCRT reportes = new Reportes_ubCRT(vista, getIdDocente());
+            Reportes_ubCRT reportes = new Reportes_ubCRT(vista, getIdDocente());
 
             switch (b) {
                 case 0:
@@ -296,7 +305,7 @@ public class VtnControlUBCTR {
 
                 case 2:
 
-                   desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteRendimientoCiclo();
                     desktop.getLblEstado().setText("COMPLETADO");
                     break;

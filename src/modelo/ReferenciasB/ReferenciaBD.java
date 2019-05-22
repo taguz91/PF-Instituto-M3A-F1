@@ -39,7 +39,7 @@ public class ReferenciaBD extends ReferenciasMD {
         List<ReferenciasMD> referencias = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  codigo_referencia, descripcion_referencia\n"
                     + "                     FROM public.\"Referencias\"\n"
                     + "                    WHERE tipo_referencia='Base'");
 
@@ -48,11 +48,8 @@ public class ReferenciaBD extends ReferenciasMD {
             while (rs.next()) {
 
                 ReferenciasMD tmp = new ReferenciasMD();
-                tmp.setId_referencia(rs.getInt(1));
-                tmp.setCodigo_referencia(rs.getString(2));
-                tmp.setDescripcion_referencia(rs.getString(3));
-                tmp.setTipo_referencia(rs.getString(4));
-                tmp.setExiste_en_biblioteca(rs.getBoolean(5));
+                tmp.setCodigo_referencia(rs.getString(1));
+                tmp.setDescripcion_referencia(rs.getString(2));
 
                 referencias.add(tmp);
             }

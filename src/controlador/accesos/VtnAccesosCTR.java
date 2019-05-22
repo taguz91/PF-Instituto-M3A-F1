@@ -51,7 +51,7 @@ public class VtnAccesosCTR {
 
         new Thread(() -> {
             Effects.setLoadCursor(vista);
-            listaAccesosbd = AccesosBD.SelectAll();
+            listaAccesosbd = modelo.SelectAll();
             cargarTabla(listaAccesosbd);
             Effects.setDefaultCursor(vista);
         }).start();
@@ -65,7 +65,7 @@ public class VtnAccesosCTR {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VtnActivarNotasCTR.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         InitEventos();
 
     }
@@ -79,8 +79,8 @@ public class VtnAccesosCTR {
                 txtBuscarKeyReleased(e);
             }
         });
-        
-        vista.getBtnEditar().addActionListener(e-> btnEditarActonPerformance(e));
+
+        vista.getBtnEditar().addActionListener(e -> btnEditarActonPerformance(e));
 
     }
 
@@ -105,7 +105,6 @@ public class VtnAccesosCTR {
 
                 Effects.setDefaultCursor(vista);
 
-
             }
 
         }).start();
@@ -126,55 +125,56 @@ public class VtnAccesosCTR {
 
         List<AccesosMD> listaTemporal = listaAccesosbd
                 .stream()
-                .filter(item ->
-                        item.getNombre().toUpperCase().contains(aguja.toUpperCase())
+                .filter(item
+                        -> item.getNombre().toUpperCase().contains(aguja.toUpperCase())
                 )
                 .collect(Collectors.toList());
 
         listaTemporal.forEach(VtnAccesosCTR::agregarFila);
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
     }
-    
-    private void setObjFromTable(int fila){
-        
-        listaAccesosbd = AccesosBD.SelectAll();
-        
+
+    private void setObjFromTable(int fila) {
+
+        listaAccesosbd = modelo.SelectAll();
+
         String acceso = (String) vista.getTblAccesosDeRol().getValueAt(fila, 2);
-        
+
         modelo = new AccesosBD();
-        
+
         listaAccesosbd
                 .stream()
                 .filter(item -> item.getNombre().equals(acceso))
                 .collect(Collectors.toList())
-                .forEach(obj->{
+                .forEach(obj -> {
                     modelo.setNombre(obj.getNombre());
                     modelo.setDescripcion(obj.getDescripcion());
-                });              
+                });
     }
 
     //EVENTOS
     private void txtBuscarKeyReleased(KeyEvent e) {
         cargarTablaFilter(vista.getTxtBuscar().getText());
     }
-    
-    private void btnEditarActonPerformance(ActionEvent e){
-        
+
+    private void btnEditarActonPerformance(ActionEvent e) {
+
         int fila = vista.getTblAccesosDeRol().getSelectedRow();
-        
+
         if (fila != -1) {
-            setObjFromTable(fila);           
+            setObjFromTable(fila);
             FrmAccesosEditarCTR form = new FrmAccesosEditarCTR(desktop, new FrmAccesosEditar(), modelo, conecta);
             form.Init();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
-        }if (modelo.editar(Pk)) {
-                JOptionPane.showMessageDialog(desktop, "SE HA EDITADO EL ACCESO CORRECTAMENTE");
-                vista.dispose();
-            }else{
-                JOptionPane.showMessageDialog(desktop, "DATOS NO EDITADOS");
-            }
-             
+        }
+        if (modelo.editar(Pk)) {
+            JOptionPane.showMessageDialog(desktop, "SE HA EDITADO EL ACCESO CORRECTAMENTE");
+            vista.dispose();
+        } else {
+            JOptionPane.showMessageDialog(desktop, "DATOS NO EDITADOS");
+        }
+
     }
 
 }
