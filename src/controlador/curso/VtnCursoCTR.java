@@ -62,7 +62,7 @@ public class VtnCursoCTR extends DVtnCTR {
         vtnCurso.getTblCurso().setModel(mdTbl);
         //Formato de la tabla
         TblEstilo.formatoTbl(vtnCurso.getTblCurso());
-        TblEstilo.ocualtarID(vtnCurso.getTblCurso());
+        //TblEstilo.ocualtarID(vtnCurso.getTblCurso());
         //le pasamos un tamaño a las columnas
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 60);

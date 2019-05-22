@@ -20,7 +20,7 @@ public class PnlHorarioClaseCTR {
     private final CursoMD curso;
     private final SesionClaseBD bd;
     private ArrayList<SesionClaseMD> sesionLunes, sesionMartes, sesionMiercoles, sesionJueves, sesionViernes,
-            sesionSabado;
+            sesionSabado, sesiones;
     private DefaultTableModel mdTbl;
     private final String[][] datos = {};
     private final String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
@@ -86,6 +86,14 @@ public class PnlHorarioClaseCTR {
     }
 
     public void iniciar() {
+        sesiones = bd.cargarHorarioCurso(curso);
+        if (sesiones != null) {
+            System.out.println("---------");
+            sesiones.forEach(s -> {
+                System.out.println("Dia: "+s.getDia()+"  Horas: "+s.getHoraIni()+ "    "+s.getHoraFin());
+            });
+            System.out.println("---------");
+        }
         iniciaTbl();
         System.out.println("Numero de columnas " + mdTbl.getColumnCount());
     }
