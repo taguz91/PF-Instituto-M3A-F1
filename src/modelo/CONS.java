@@ -1,12 +1,14 @@
 package modelo;
 
 import java.io.File;
+import modelo.usuario.RolBD;
+import modelo.usuario.UsuarioBD;
 
 /**
  *
  * @author alumno
  */
-public class Constantes {
+public class CONS {
 
     //Modo del proyecto 
     public static final boolean M_DESARROLLO = true;
@@ -24,6 +26,18 @@ public class Constantes {
     public static String getDir() {
         File dir = new File("./");
         return dir.getAbsolutePath();
+    }
+
+    public static UsuarioBD USUARIO;
+
+    public static void setUsuario(UsuarioBD USUARIO) {
+        CONS.USUARIO = USUARIO;
+    }
+
+    public static RolBD ROL;
+
+    public static void setRol(RolBD ROL) {
+        CONS.ROL = ROL;
     }
 
 }
