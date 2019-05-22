@@ -275,23 +275,14 @@ public class FrmAsistenciaCTR {
     }
 
     public static void CalculoSemanaPorSemana() {
-
+           
         for (int i = 1; i <= semanas; i++) {
-            System.out.println("----------------------");
-            System.out.println("Semana" + i);
-            System.out.println("----------------------");
+         
 
-            items.add(IniSemana.plusWeeks(i));
-            items.add(FinSemana.plusWeeks(i));
-
-            // items.forEach(item -> item.c);
-            Fecha = "Semana " + i + " " + IniSemana.plusWeeks(i) + "  a  " + FinSemana.plusWeeks(i) + "";
+            Fecha = "Semana " + i + "    " + IniSemana.plusWeeks(i).getDayOfMonth() + " de  "+ IniSemana.plusWeeks(i).getMonth() + "  a  " + FinSemana.plusWeeks(i).getDayOfMonth() + " de "+ FinSemana.plusWeeks(i).getMonth() ;
             lista_fecha.add(Fecha);
-            System.out.println(IniSemana.plusWeeks(i).getDayOfWeek().name());
-            System.out.println(FinSemana.plusWeeks(i));
-            System.out.println(Fecha);
-
         }
+        
 
     }
 
@@ -410,9 +401,6 @@ public class FrmAsistenciaCTR {
 
     private void cargarComboSemanas() {
         try {
-            // listaPeriodos =
-
-            CalculoSemana(2);
 
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
@@ -421,8 +409,6 @@ public class FrmAsistenciaCTR {
             if (listaPrdSemana.size() > 0) {
                 PeriodoLectivoMD periodo = listaPrdSemana.get(0);
 
-                System.out.println(periodo.getFecha_Inicio());
-                System.out.println(periodo.getNumSemanas());
                 semanas = periodo.getNumSemanas();
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
 
@@ -431,6 +417,7 @@ public class FrmAsistenciaCTR {
             }
 
             lista_fecha.forEach(t -> System.out.println(t));
+        
         } catch (Exception e) {
         }
     }
