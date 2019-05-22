@@ -1682,10 +1682,12 @@ public class ControladorSilaboC {
             biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
         }
 
-        for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
-
-            modeloTabla.removeRow(j);
-        }
+//        for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
+//
+//            modeloTabla.removeRow(j);
+//        }
+        
+        modeloTabla.setRowCount(0);
 
         for (ReferenciasMD rmd : biblioteca) {
 
