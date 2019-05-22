@@ -1,4 +1,4 @@
-spackage controlador.asistenciaAlumnos;
+package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
