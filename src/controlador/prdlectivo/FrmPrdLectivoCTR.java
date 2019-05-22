@@ -239,7 +239,7 @@ public class FrmPrdLectivoCTR extends DCTR {
 //                    TipoDeNotaMD m = new TipoDeNotaMD();
                     TipoDeNotaBD modelo = new TipoDeNotaBD();
                     RolBD permisos = new RolBD();
-                    VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(ctrPrin.getVtnPrin(), vista, modelo, permisos);
+                    VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(ctrPrin.getVtnPrin());
                     controlador.Init();
 //                    reiniciarComponentes(frmPrdLectivo);
                 } else {
@@ -271,7 +271,7 @@ public class FrmPrdLectivoCTR extends DCTR {
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
 
         periodo.setNombre_PerLectivo(frmPrdLectivo.getTxt_Nombre().getText() + "   " + dia_Inicio + "   "
-                    + dia_Fin);
+                + dia_Fin);
         periodo.setFecha_Inicio(dia_Inicio);
         periodo.setFecha_Fin(dia_Fin);
         periodo.setObservacion_PerLectivo(frmPrdLectivo.getTxtObservacion().getText());

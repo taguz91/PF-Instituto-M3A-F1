@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
@@ -22,6 +21,11 @@ public class CarreraBD extends CarreraMD {
     public CarreraBD(ConectarDB conecta) {
         this.conecta = conecta;
         this.doc = new DocenteBD(conecta);
+    }
+
+    public CarreraBD() {
+        this.conecta = null;
+        this.doc = null;
     }
 
     public boolean guardarCarrera() {
@@ -289,8 +293,5 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-    
-    
-    
 
 }

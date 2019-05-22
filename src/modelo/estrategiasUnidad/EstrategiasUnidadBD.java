@@ -90,7 +90,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
         List<EstrategiasUnidadMD> lista = new ArrayList<>();
         try {
             
-             PreparedStatement st = conexion.getCon().prepareStatement("SELECT \"EstrategiasUnidad\".id_estrategia,\"EstrategiasAprendizaje\".descripcion_estrategia,\"EstrategiasUnidad\".id_estrategia_unidad\n" +
+             PreparedStatement st = conexion.getCon().prepareStatement("SELECT distinct \"EstrategiasUnidad\".id_estrategia,\"EstrategiasAprendizaje\".descripcion_estrategia,\"EstrategiasUnidad\".id_estrategia_unidad\n" +
 "                     FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n" +
 "                     WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n" +
 "                     AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n" +

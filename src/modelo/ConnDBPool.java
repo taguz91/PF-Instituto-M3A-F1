@@ -57,9 +57,9 @@ public class ConnDBPool {
 
     public Connection getConnection() {
         try {
-            while (!Middlewares.isConnected()) {
-                JOptionPane.showMessageDialog(null, "POR FAVOR CONECTECE A INTERNET!!!!");
-            }
+//            while (!Middlewares.isConnected()) {
+//                JOptionPane.showMessageDialog(null, "POR FAVOR CONECTECE A INTERNET!!!!");
+//            }
             return ds.getConnection();
         } catch (SQLException e) {
             return null;

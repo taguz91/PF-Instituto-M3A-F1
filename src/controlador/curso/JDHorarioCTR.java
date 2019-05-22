@@ -176,6 +176,17 @@ public class JDHorarioCTR extends DVtnCTR {
 //        }
 
         if (guardar) {
+            //Vemos si no guardamos ya ese horario
+            inicio = LocalTime.of(horaC, minutoC);
+            fin = LocalTime.of(horaT, minutoT);
+            SesionClaseMD s = bd.existeSesion(curso.getId(), dia, inicio, fin);
+            if (s.getCurso() != null) {
+                JOptionPane.showMessageDialog(pnlCurso, "Ya ingreso este horario.");
+                guardar = false;
+            }
+        }
+
+        if (guardar) {
             String nsql = "";
 //            for (int i = horaC; i < horaT; i++) {
 //                inicio = LocalTime.of(i, minutoC);

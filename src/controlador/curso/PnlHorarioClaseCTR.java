@@ -25,15 +25,16 @@ public class PnlHorarioClaseCTR {
     private final String[][] datos = {};
     private final String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
     private final String[] tn = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
-    private final String[] hm = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
+    private final String[] hm = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
         "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hmc = {
+        "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
-        "--------------------------",
+        "<html>13:00<br>14:00</html>",
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
         "<html>16:00<br>17:00</html>",
@@ -42,15 +43,16 @@ public class PnlHorarioClaseCTR {
         "<html>19:00<br>20:00</html>",
         "<html>20:00<br>21:00</html>",
         "<html>21:00<br>22:00</html>"};
-    private final String[] hv = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
+    private final String[] hv = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
         "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hvc = {
+        "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
-        "--------------------------",
+        "<html>13:00<br>14:00</html>",
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
         "<html>16:00<br>17:00</html>",
@@ -59,15 +61,16 @@ public class PnlHorarioClaseCTR {
         "<html>19:00<br>20:00</html>",
         "<html>20:00<br>21:00</html>",
         "<html>21:00<br>22:00</html>"};
-    private final String[] hn = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
+    private final String[] hn = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
         "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hnc = {
+        "<html>07:00<br>08:00</html>",
         "<html>08:00<br>09:00</html>",
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
-        "--------------------------",
+        "<html>13:00<br>14:00</html>",
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
         "<html>16:00<br>17:00</html>",
@@ -90,7 +93,7 @@ public class PnlHorarioClaseCTR {
         if (sesiones != null) {
             System.out.println("---------");
             sesiones.forEach(s -> {
-                System.out.println("Dia: "+s.getDia()+"  Horas: "+s.getHoraIni()+ "    "+s.getHoraFin());
+                System.out.println("Dia: " + s.getDia() + "  Horas: " + s.getHoraIni() + "    " + s.getHoraFin());
             });
             System.out.println("---------");
         }
@@ -106,7 +109,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hmc);
                 hSelec = hm;
                 jSelec = t;
-                llenarLunesViernes();
+                llenatLunesSabado();
                 break;
             case 'V':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, t);
@@ -114,7 +117,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hvc);
                 hSelec = hv;
                 jSelec = t;
-                llenarLunesViernes();
+                llenatLunesSabado();
                 break;
             case 'N':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
@@ -191,17 +194,18 @@ public class PnlHorarioClaseCTR {
     private String horaString, minutoString;
 
     private String tranformar(LocalTime hora) {
+        if (hora.getMinute() >= 45) {
+            minutoString = "0" + hora.getMinute();
+            hora = hora.plusHours(1);
+        }
+
         if (hora.getHour() < 10) {
             horaString = "0" + hora.getHour();
         } else {
             horaString = "" + hora.getHour();
         }
 
-        if (hora.getMinute() < 10) {
-            minutoString = "0" + hora.getMinute();
-        } else {
-            minutoString = "" + hora.getMinute();
-        }
+        minutoString = "00";
         return horaString + ":" + minutoString;
     }
 

@@ -16,11 +16,11 @@ import modelo.persona.PersonaMD;
  */
 public final class UsuarioBD extends UsuarioMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -59,7 +59,7 @@ public final class UsuarioBD extends UsuarioMD {
 
     }
 
-    public static List<UsuarioMD> selectAll() {
+    public List<UsuarioMD> selectAll() {
         String SELECT = "SELECT\n"
                 + "    \"Usuarios\".usu_username,\n"
                 + "    \"Usuarios\".usu_password,\n"
@@ -82,7 +82,7 @@ public final class UsuarioBD extends UsuarioMD {
 
     }
 
-    private static List<UsuarioMD> selectSimple(String QUERY, Map<Integer, Object> parametros) {
+    private List<UsuarioMD> selectSimple(String QUERY, Map<Integer, Object> parametros) {
         List<UsuarioMD> lista = new ArrayList<>();
         try {
             conn = pool.getConnection();
