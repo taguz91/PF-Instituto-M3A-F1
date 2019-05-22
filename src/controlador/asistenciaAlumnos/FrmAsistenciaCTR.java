@@ -56,6 +56,7 @@ public class FrmAsistenciaCTR {
     private static String dia_String;
     private static int dia;
     private static String Fecha;
+    
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -66,6 +67,8 @@ public class FrmAsistenciaCTR {
     private VtnPrincipalCTR ctrPrin;
     private SesionClaseBD sclase;
     private SesionClaseMD sclaseMD;
+    
+    private PeriodoLectivoBD prd = new PeriodoLectivoBD();
 
     // TABLA
     private DefaultTableModel tablaTrad;
@@ -124,7 +127,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
-        CargarDiasClase();
+        //CargarDiasClase();
     }
 
     private void InitEventos() {
@@ -411,8 +414,12 @@ public class FrmAsistenciaCTR {
     }
 
     private void cargarComboSemanas() {
-        try {
+        //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
 
+        try {
+            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
+            System.out.println(fechaInicial);
+        
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
 

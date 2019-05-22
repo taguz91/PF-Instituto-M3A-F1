@@ -257,7 +257,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
-        vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirAsistencia(e));
+        vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -615,6 +615,18 @@ public class VtnPrincipalCTR {
             VtnAccesosCTR ctrVtnAcceso = new VtnAccesosCTR(vtnPrin, vtnAcceso, conecta, this);
             ctrVtnAcceso.Init();
         } else {
+            errorNumVentanas();
+        }
+
+    }
+    
+    private void abrirFrmAsistencia(ActionEvent e) {
+        FrmAsistencia frm = new FrmAsistencia();
+        eventoInternal(frm);
+        if(numVtns < 5){
+            FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
+            asistencia.Init();
+        }else{
             errorNumVentanas();
         }
 
@@ -1040,10 +1052,7 @@ public class VtnPrincipalCTR {
         System.gc();
     }
     
-     private void abrirAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
-        asistencia.Init();
-    }
+
 
 
     private void InitPermisosTesterYDocente() {
