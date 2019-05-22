@@ -35,7 +35,7 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
         this.conexion = conexion;
     }
 
-    public void insertar(ReferenciaSilaboMD r, int is) {
+    public void insertar(ReferenciaSilaboMD r, int is, int ir) {
 
         PreparedStatement st=null;
         
@@ -49,7 +49,7 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
             }else{
                   st = conexion.getCon().prepareStatement("INSERT INTO public.\"ReferenciaSilabo\"(\n"
                     + "	 id_referencia, id_silabo)\n"
-                    + "	VALUES ( (SELECT MAX(id_referencia) FROM \"Referencias\"), (SELECT MAX(id_silabo) FROM \"Silabo\"))");
+                    + "	VALUES ( (SELECT MAX(id_referencia) FROM \"Referencias\"),"+is+")");
 
             }
 
