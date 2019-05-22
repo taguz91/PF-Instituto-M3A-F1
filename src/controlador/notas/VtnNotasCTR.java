@@ -133,13 +133,6 @@ public class VtnNotasCTR {
             }
         });
 
-        vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
-
-    }
-
-    private void InitTablas() {
-        String funcion = "";
-
         tablaTrad.addTableModelListener(new TableModelListener() {
 
             boolean active = false;
@@ -170,6 +163,12 @@ public class VtnNotasCTR {
 
             }
         });
+        vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
+
+    }
+
+    private void InitTablas() {
+        String funcion = "";
         //TABLA TRADICIONALES
         jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
@@ -178,13 +177,6 @@ public class VtnNotasCTR {
         jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
 
-        /*jTblTrad.getColumnModel().getColumn(6).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(7).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(8).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(9).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(10).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(11).setWidth(0);
-            jTblTrad.getColumnModel().getColumn(12).setWidth(0);  */
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
@@ -204,13 +196,7 @@ public class VtnNotasCTR {
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="ENCABEZADO">    
     private void cargarComboDocente() {
-        listaDocentes.entrySet().forEach((entry) -> {
-            String key = entry.getKey();
-            DocenteMD value = entry.getValue();
-
-            vista.getCmbDocente().addItem(key);
-
-        });
+        listaDocentes.entrySet().stream().map(c -> c.getKey()).forEach(vista.getCmbDocente()::addItem);
         tablaTrad.setRowCount(0);
         tablaDuales.setRowCount(0);
     }
@@ -222,15 +208,13 @@ public class VtnNotasCTR {
         listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
         listaPeriodos
                 .stream()
-                .forEach(obj -> {
-                    vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
-                });
+                .map(c -> c.getNombre_PerLectivo())
+                .forEach(vista.getCmbPeriodoLectivo()::addItem);
         tablaTrad.setRowCount(0);
         tablaDuales.setRowCount(0);
     }
 
     private void setLblCarrera() {
-
         vista.getLblCarrera().setText(listaPeriodos
                 .stream()
                 .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
@@ -246,10 +230,7 @@ public class VtnNotasCTR {
             vista.getCmbCiclo().removeAllItems();
 
             CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo())
-                    .stream()
-                    .forEach(obj -> {
-                        vista.getCmbCiclo().addItem(obj + "");
-                    });
+                    .stream().forEach(vista.getCmbCiclo()::addItem);
         } catch (NullPointerException e) {
         }
         tablaTrad.setRowCount(0);
@@ -271,11 +252,13 @@ public class VtnNotasCTR {
 
             listaMaterias = MateriaBD.selectWhere(curso);
 
-            listaMaterias.stream()
-                    .forEach(obj -> {
-                        vista.getCmbAsignatura().addItem(obj.getNombre());
-                        vista.getLblHoras().setText("" + obj.getHorasPresenciales());
-                    });
+            listaMaterias.stream().map(c -> c.getNombre()).forEach(vista.getCmbAsignatura()::addItem);
+            vista.getLblHoras().setText("" + listaMaterias.stream()
+                    .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
+                    .map(c -> c.getHorasPresenciales())
+                    .findFirst()
+                    .orElse(-1)
+            );
 
             listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
 
@@ -306,12 +289,10 @@ public class VtnNotasCTR {
         Effects.setTextInLabel(vista.getLblEstado(), "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), Effects.ERROR_COLOR, 2);
     }
 
-    private void refreshTabla(BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcion, DefaultTableModel tabla) {
+    private void refreshTabla(Consumer<AlumnoCursoBD> loader, DefaultTableModel tabla) {
         activarForm(false);
         tabla.setRowCount(0);
-        listaNotas.stream().forEach(obj -> {
-            funcion.apply(obj, tabla);
-        });
+        listaNotas.stream().forEach(loader);
         activarForm(true);
     }
 
@@ -354,9 +335,17 @@ public class VtnNotasCTR {
         return vista.getTblDual().getSelectedColumn();
     }
 
-    public static BiFunction<JTable, String, Integer> getIndex = (tabla, nombre) -> {
+    private final BiFunction<JTable, String, Integer> getIndex = (tabla, nombre) -> {
         return tabla.getColumnModel().getColumnIndex(nombre);
     };
+
+    private String getModalidad() {
+        return listaPeriodos.stream()
+                .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .map(c -> c.getCarrera().getModalidad())
+                .findFirst()
+                .orElse("");
+    }
 
     private int getHoras() {
         return listaMaterias.stream()
@@ -405,7 +394,7 @@ public class VtnNotasCTR {
         return (faltas * 100) / horas;
     }
 
-    private void editarFaltas(int fila, JTable tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilas,
+    private void editarFaltas(int fila, JTable tabla, Consumer<AlumnoCursoBD> loader,
             Function<String, Void> editar, Function<Void, Void> sumar) {
 
         int colFaltas = getIndex.apply(tabla, "Faltas");
@@ -451,28 +440,26 @@ public class VtnNotasCTR {
                         editar.apply("");
                     } else {
                         Effects.setTextInLabel(vista.getLblEstado(), "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
-                        refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
+                        refreshTabla(loader, (DefaultTableModel) tabla.getModel());
                     }
                 }
             } catch (NumberFormatException e) {
                 Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", Effects.ERROR_COLOR, 2);
-                refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
+                refreshTabla(loader, (DefaultTableModel) tabla.getModel());
             }
         } else {
             Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", Effects.ERROR_COLOR, 2);
-            refreshTabla(agregarFilas, (DefaultTableModel) tabla.getModel());
+            refreshTabla(loader, (DefaultTableModel) tabla.getModel());
         }
     }
 
-    private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
+    private void cargarTabla(Consumer<AlumnoCursoBD> loader) {
         new Thread(() -> {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
             listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
-            listaNotas.stream().forEach(obj -> {
-                funcionCarga.apply(obj, tabla);
-            });
+            listaNotas.stream().forEach(loader);
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
         }).start();
@@ -544,10 +531,10 @@ public class VtnNotasCTR {
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
-            tabla.addRow(new Object[]{
-                tabla.getDataVector().size() + 1,
+    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+        return (obj) -> {
+            tablaTrad.addRow(new Object[]{
+                tablaTrad.getDataVector().size() + 1,
                 obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(),
                 obj.getAlumno().getSegundoApellido(),
@@ -565,15 +552,14 @@ public class VtnNotasCTR {
                 calcularPorcentaje(obj.getNumFalta(), getHoras()),
                 obj.getAsistencia()
             });
-            return null;
         };
     }
 
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasDuales() {
-        return (obj, tabla) -> {
+    private Consumer<AlumnoCursoBD> agregarFilasDuales() {
+        return (obj) -> {
 
-            tabla.addRow(new Object[]{
-                tabla.getDataVector().size() + 1,
+            tablaDuales.addRow(new Object[]{
+                tablaDuales.getDataVector().size() + 1,
                 obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(),
                 obj.getAlumno().getSegundoApellido(),
@@ -590,7 +576,6 @@ public class VtnNotasCTR {
                 carcularPorcentaje(obj.getNumFalta(), getHoras()),
                 obj.getAsistencia()
             });
-            return null;
         };
     }
 
@@ -882,22 +867,19 @@ public class VtnNotasCTR {
     // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
-            String modalidad = listaPeriodos.stream()
-                    .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                    .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
 
-            if (modalidad.equalsIgnoreCase("TRADICIONAL") || modalidad.equalsIgnoreCase("PRESENCIAL")) {
+            if (getModalidad().equalsIgnoreCase("TRADICIONAL") || getModalidad().equalsIgnoreCase("PRESENCIAL")) {
                 vista.getTabPane().setSelectedIndex(0);
                 jTblTrad.clearSelection();
                 jTblTrad.removeAll();
                 tablaTrad.setRowCount(0);
-                cargarTabla(tablaTrad, agregarFilasTrad());
+                cargarTabla(agregarFilasTrad());
             } else {
                 vista.getTabPane().setSelectedIndex(1);
                 jTblDual.clearSelection();
                 jTblDual.removeAll();
                 tablaDuales.setRowCount(0);
-                cargarTabla(tablaDuales, agregarFilasDuales());
+                cargarTabla(agregarFilasDuales());
             }
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");

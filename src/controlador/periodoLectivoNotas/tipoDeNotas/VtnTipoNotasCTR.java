@@ -69,7 +69,10 @@ public class VtnTipoNotasCTR {
 
         vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).Init());
 
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(TipoDeNotaBD.selectAllWhereEstadoIs(true)));
+        vista.getBtnActualizar().addActionListener(e -> {
+            listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+            cargarTabla(listaTiposNotas);
+        });
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
