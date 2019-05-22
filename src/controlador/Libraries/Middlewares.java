@@ -1,9 +1,10 @@
 package controlador.Libraries;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -78,7 +79,7 @@ public final class Middlewares {
             System.out.println("PATH ---------->" + path);
             conn = pool.getConnection();
             JasperPrint print = JasperFillManager.fillReport(jasper, parametros, conn);
-            
+
             JasperViewer view = new JasperViewer(print, false);
 
             view.setTitle(tituloVentana);
@@ -122,14 +123,17 @@ public final class Middlewares {
         return tabla.getColumnModel().getColumnIndex(nombre);
     };
 
-    public static void destruirVariables(Object... variables) {
-        Arrays.asList(variables).forEach(obj -> {
-            obj = null;
-        });
-        System.gc();
-        System.out.println("======================");
-        System.out.println("*VARAIBLES DESTRUIDAS*");
-        System.out.println("======================");
+    public static boolean isConnected() {
+        try {
+
+            URL ruta = new URL("http://www.google.es");
+            URLConnection rutaC = ruta.openConnection();
+            rutaC.connect();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+
     }
 
 }
